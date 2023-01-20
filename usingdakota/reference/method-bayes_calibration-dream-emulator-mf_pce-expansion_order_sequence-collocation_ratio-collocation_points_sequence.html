@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>collocation_points_sequence &mdash; dakota  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/dakota_theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/sandiaheaderlite.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="least_squares" href="method-bayes_calibration-dream-emulator-mf_pce-expansion_order_sequence-collocation_ratio-least_squares.html" />
+    <link rel="prev" title="collocation_ratio" href="method-bayes_calibration-dream-emulator-mf_pce-expansion_order_sequence-collocation_ratio.html" /> 
+  
+  <meta name="sandia.approval_type" content="formal"/>
+  <meta property="sandia.approved" content="SAND2022-15651 O"/>
+  <meta name="description" content="The Dakota project delivers both state-of-the-art research and robust, usable software for optimization and UQ."/>
+  <meta name="keywords" content="Dakota, optimization, UQ, uncertainty quantification, parametric analysis, design exploration, model calibration, risk analysis"/>
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> dakota
+            <img src="../../_static/dakota_Arrow_Name_Tag_horiz_transparent.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../setupdakota.html">Getting Started</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../usingdakota.html">Using Dakota</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../introduction/aboutdakota.html">About Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../introduction/helloworld.html">Dakota Beginner’s Tutorial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples.html">Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../introduction/couplingtosimulations.html">Coupling Dakota to a Simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../inputfile.html">Dakota Input File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../running.html">Running Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../output.html">Dakota Output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../studytypes.html">Study Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../topics.html">Topics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../advanced.html">Advanced Topics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../theory.html">Dakota Theory</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../reference.html">Keyword Reference</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="environment.html">environment</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="method.html">method</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="method-id_method.html">id_method</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-output.html">output</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-final_solutions.html">final_solutions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-hybrid.html">hybrid</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-multi_start.html">multi_start</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-pareto_set.html">pareto_set</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-branch_and_bound.html">branch_and_bound</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-surrogate_based_local.html">surrogate_based_local</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-surrogate_based_global.html">surrogate_based_global</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-dot_frcg.html">dot_frcg</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-dot_mmfd.html">dot_mmfd</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-dot_bfgs.html">dot_bfgs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-dot_slp.html">dot_slp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-dot_sqp.html">dot_sqp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-conmin_frcg.html">conmin_frcg</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-conmin_mfd.html">conmin_mfd</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-dl_solver.html">dl_solver</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-npsol_sqp.html">npsol_sqp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-nlssol_sqp.html">nlssol_sqp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-nlpql_sqp.html">nlpql_sqp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-optpp_cg.html">optpp_cg</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-optpp_q_newton.html">optpp_q_newton</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-optpp_fd_newton.html">optpp_fd_newton</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-optpp_g_newton.html">optpp_g_newton</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-optpp_newton.html">optpp_newton</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-optpp_pds.html">optpp_pds</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-demo_tpl.html">demo_tpl</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-rol.html">rol</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-asynch_pattern_search.html">asynch_pattern_search</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-mesh_adaptive_search.html">mesh_adaptive_search</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-nowpac.html">nowpac</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-snowpac.html">snowpac</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-moga.html">moga</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-soga.html">soga</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-coliny_pattern_search.html">coliny_pattern_search</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-coliny_solis_wets.html">coliny_solis_wets</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-coliny_cobyla.html">coliny_cobyla</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-coliny_direct.html">coliny_direct</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-coliny_ea.html">coliny_ea</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-coliny_beta.html">coliny_beta</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-nl2sol.html">nl2sol</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-nonlinear_cg.html">nonlinear_cg</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-ncsu_direct.html">ncsu_direct</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-genie_opt_darts.html">genie_opt_darts</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-genie_direct.html">genie_direct</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-efficient_global.html">efficient_global</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-surrogate_based_uq.html">surrogate_based_uq</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-function_train.html">function_train</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-multifidelity_function_train.html">multifidelity_function_train</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-multilevel_function_train.html">multilevel_function_train</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-polynomial_chaos.html">polynomial_chaos</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-multifidelity_polynomial_chaos.html">multifidelity_polynomial_chaos</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-multilevel_polynomial_chaos.html">multilevel_polynomial_chaos</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-stoch_collocation.html">stoch_collocation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-multifidelity_stoch_collocation.html">multifidelity_stoch_collocation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-sampling.html">sampling</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-multilevel_sampling.html">multilevel_sampling</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-multifidelity_sampling.html">multifidelity_sampling</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-multilevel_multifidelity_sampling.html">multilevel_multifidelity_sampling</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-approximate_control_variate.html">approximate_control_variate</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-importance_sampling.html">importance_sampling</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-gpais.html">gpais</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-adaptive_sampling.html">adaptive_sampling</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-pof_darts.html">pof_darts</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-rkd_darts.html">rkd_darts</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-global_evidence.html">global_evidence</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-global_interval_est.html">global_interval_est</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="method-bayes_calibration.html">bayes_calibration</a><ul class="current">
+<li class="toctree-l5"><a class="reference internal" href="method-bayes_calibration-queso.html">queso</a></li>
+<li class="toctree-l5"><a class="reference internal" href="method-bayes_calibration-gpmsa.html">gpmsa</a></li>
+<li class="toctree-l5"><a class="reference internal" href="method-bayes_calibration-wasabi.html">wasabi</a></li>
+<li class="toctree-l5 current"><a class="reference internal" href="method-bayes_calibration-dream.html">dream</a><ul class="current">
+<li class="toctree-l6"><a class="reference internal" href="method-bayes_calibration-dream-chain_samples.html">chain_samples</a></li>
+<li class="toctree-l6"><a class="reference internal" href="method-bayes_calibration-dream-seed.html">seed</a></li>
+<li class="toctree-l6"><a class="reference internal" href="method-bayes_calibration-dream-chains.html">chains</a></li>
+<li class="toctree-l6"><a class="reference internal" href="method-bayes_calibration-dream-num_cr.html">num_cr</a></li>
+<li class="toctree-l6"><a class="reference internal" href="method-bayes_calibration-dream-crossover_chain_pairs.html">crossover_chain_pairs</a></li>
+<li class="toctree-l6"><a class="reference internal" href="method-bayes_calibration-dream-gr_threshold.html">gr_threshold</a></li>
+<li class="toctree-l6"><a class="reference internal" href="method-bayes_calibration-dream-jump_step.html">jump_step</a></li>
+<li class="toctree-l6 current"><a class="reference internal" href="method-bayes_calibration-dream-emulator.html">emulator</a><ul class="current">
+<li class="toctree-l7"><a class="reference internal" href="method-bayes_calibration-dream-emulator-gaussian_process.html">gaussian_process</a></li>
+<li class="toctree-l7"><a class="reference internal" href="method-bayes_calibration-dream-emulator-pce.html">pce</a></li>
+<li class="toctree-l7"><a class="reference internal" href="method-bayes_calibration-dream-emulator-ml_pce.html">ml_pce</a></li>
+<li class="toctree-l7 current"><a class="reference internal" href="method-bayes_calibration-dream-emulator-mf_pce.html">mf_pce</a><ul class="current">
+<li class="toctree-l8"><a class="reference internal" href="method-bayes_calibration-dream-emulator-mf_pce-p_refinement.html">p_refinement</a></li>
+<li class="toctree-l8"><a class="reference internal" href="method-bayes_calibration-dream-emulator-mf_pce-max_refinement_iterations.html">max_refinement_iterations</a></li>
+<li class="toctree-l8"><a class="reference internal" href="method-bayes_calibration-dream-emulator-mf_pce-allocation_control.html">allocation_control</a></li>
+<li class="toctree-l8"><a class="reference internal" href="method-bayes_calibration-dream-emulator-mf_pce-discrepancy_emulation.html">discrepancy_emulation</a></li>
+<li class="toctree-l8"><a class="reference internal" href="method-bayes_calibration-dream-emulator-mf_pce-quadrature_order_sequence.html">quadrature_order_sequence</a></li>
+<li class="toctree-l8"><a class="reference internal" href="method-bayes_calibration-dream-emulator-mf_pce-sparse_grid_level_sequence.html">sparse_grid_level_sequence</a></li>
+<li class="toctree-l8 current"><a class="reference internal" href="method-bayes_calibration-dream-emulator-mf_pce-expansion_order_sequence.html">expansion_order_sequence</a><ul class="current">
+<li class="toctree-l9"><a class="reference internal" href="method-bayes_calibration-dream-emulator-mf_pce-expansion_order_sequence-dimension_preference.html">dimension_preference</a></li>
+<li class="toctree-l9"><a class="reference internal" href="method-bayes_calibration-dream-emulator-mf_pce-expansion_order_sequence-basis_type.html">basis_type</a></li>
+<li class="toctree-l9 current"><a class="reference internal" href="method-bayes_calibration-dream-emulator-mf_pce-expansion_order_sequence-collocation_ratio.html">collocation_ratio</a><ul class="current">
+<li class="toctree-l10 current"><a class="current reference internal" href="#">collocation_points_sequence</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l10"><a class="reference internal" href="method-bayes_calibration-dream-emulator-mf_pce-expansion_order_sequence-collocation_ratio-least_squares.html">least_squares</a></li>
+<li class="toctree-l10"><a class="reference internal" href="method-bayes_calibration-dream-emulator-mf_pce-expansion_order_sequence-collocation_ratio-orthogonal_matching_pursuit.html">orthogonal_matching_pursuit</a></li>
+<li class="toctree-l10"><a class="reference internal" href="method-bayes_calibration-dream-emulator-mf_pce-expansion_order_sequence-collocation_ratio-basis_pursuit.html">basis_pursuit</a></li>
+<li class="toctree-l10"><a class="reference internal" href="method-bayes_calibration-dream-emulator-mf_pce-expansion_order_sequence-collocation_ratio-basis_pursuit_denoising.html">basis_pursuit_denoising</a></li>
+<li class="toctree-l10"><a class="reference internal" href="method-bayes_calibration-dream-emulator-mf_pce-expansion_order_sequence-collocation_ratio-least_angle_regression.html">least_angle_regression</a></li>
+<li class="toctree-l10"><a class="reference internal" href="method-bayes_calibration-dream-emulator-mf_pce-expansion_order_sequence-collocation_ratio-least_absolute_shrinkage.html">least_absolute_shrinkage</a></li>
+<li class="toctree-l10"><a class="reference internal" href="method-bayes_calibration-dream-emulator-mf_pce-expansion_order_sequence-collocation_ratio-cross_validation.html">cross_validation</a></li>
+<li class="toctree-l10"><a class="reference internal" href="method-bayes_calibration-dream-emulator-mf_pce-expansion_order_sequence-collocation_ratio-ratio_order.html">ratio_order</a></li>
+<li class="toctree-l10"><a class="reference internal" href="method-bayes_calibration-dream-emulator-mf_pce-expansion_order_sequence-collocation_ratio-response_scaling.html">response_scaling</a></li>
+<li class="toctree-l10"><a class="reference internal" href="method-bayes_calibration-dream-emulator-mf_pce-expansion_order_sequence-collocation_ratio-use_derivatives.html">use_derivatives</a></li>
+<li class="toctree-l10"><a class="reference internal" href="method-bayes_calibration-dream-emulator-mf_pce-expansion_order_sequence-collocation_ratio-tensor_grid.html">tensor_grid</a></li>
+<li class="toctree-l10"><a class="reference internal" href="method-bayes_calibration-dream-emulator-mf_pce-expansion_order_sequence-collocation_ratio-reuse_points.html">reuse_points</a></li>
+<li class="toctree-l10"><a class="reference internal" href="method-bayes_calibration-dream-emulator-mf_pce-expansion_order_sequence-collocation_ratio-max_solver_iterations.html">max_solver_iterations</a></li>
+</ul>
+</li>
+<li class="toctree-l9"><a class="reference internal" href="method-bayes_calibration-dream-emulator-mf_pce-expansion_order_sequence-expansion_samples_sequence.html">expansion_samples_sequence</a></li>
+<li class="toctree-l9"><a class="reference internal" href="method-bayes_calibration-dream-emulator-mf_pce-expansion_order_sequence-import_build_points_file.html">import_build_points_file</a></li>
+</ul>
+</li>
+<li class="toctree-l8"><a class="reference internal" href="method-bayes_calibration-dream-emulator-mf_pce-orthogonal_least_interpolation.html">orthogonal_least_interpolation</a></li>
+<li class="toctree-l8"><a class="reference internal" href="method-bayes_calibration-dream-emulator-mf_pce-askey.html">askey</a></li>
+<li class="toctree-l8"><a class="reference internal" href="method-bayes_calibration-dream-emulator-mf_pce-wiener.html">wiener</a></li>
+<li class="toctree-l8"><a class="reference internal" href="method-bayes_calibration-dream-emulator-mf_pce-normalized.html">normalized</a></li>
+<li class="toctree-l8"><a class="reference internal" href="method-bayes_calibration-dream-emulator-mf_pce-export_expansion_file.html">export_expansion_file</a></li>
+<li class="toctree-l8"><a class="reference internal" href="method-bayes_calibration-dream-emulator-mf_pce-diagonal_covariance.html">diagonal_covariance</a></li>
+<li class="toctree-l8"><a class="reference internal" href="method-bayes_calibration-dream-emulator-mf_pce-full_covariance.html">full_covariance</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="method-bayes_calibration-dream-emulator-sc.html">sc</a></li>
+<li class="toctree-l7"><a class="reference internal" href="method-bayes_calibration-dream-emulator-mf_sc.html">mf_sc</a></li>
+</ul>
+</li>
+<li class="toctree-l6"><a class="reference internal" href="method-bayes_calibration-dream-standardized_space.html">standardized_space</a></li>
+<li class="toctree-l6"><a class="reference internal" href="method-bayes_calibration-dream-export_chain_points_file.html">export_chain_points_file</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="method-bayes_calibration-muq.html">muq</a></li>
+<li class="toctree-l5"><a class="reference internal" href="method-bayes_calibration-experimental_design.html">experimental_design</a></li>
+<li class="toctree-l5"><a class="reference internal" href="method-bayes_calibration-calibrate_error_multipliers.html">calibrate_error_multipliers</a></li>
+<li class="toctree-l5"><a class="reference internal" href="method-bayes_calibration-burn_in_samples.html">burn_in_samples</a></li>
+<li class="toctree-l5"><a class="reference internal" href="method-bayes_calibration-posterior_stats.html">posterior_stats</a></li>
+<li class="toctree-l5"><a class="reference internal" href="method-bayes_calibration-chain_diagnostics.html">chain_diagnostics</a></li>
+<li class="toctree-l5"><a class="reference internal" href="method-bayes_calibration-model_evidence.html">model_evidence</a></li>
+<li class="toctree-l5"><a class="reference internal" href="method-bayes_calibration-model_discrepancy.html">model_discrepancy</a></li>
+<li class="toctree-l5"><a class="reference internal" href="method-bayes_calibration-sub_sampling_period.html">sub_sampling_period</a></li>
+<li class="toctree-l5"><a class="reference internal" href="method-bayes_calibration-probability_levels.html">probability_levels</a></li>
+<li class="toctree-l5"><a class="reference internal" href="method-bayes_calibration-convergence_tolerance.html">convergence_tolerance</a></li>
+<li class="toctree-l5"><a class="reference internal" href="method-bayes_calibration-max_iterations.html">max_iterations</a></li>
+<li class="toctree-l5"><a class="reference internal" href="method-bayes_calibration-model_pointer.html">model_pointer</a></li>
+<li class="toctree-l5"><a class="reference internal" href="method-bayes_calibration-scaling.html">scaling</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="method-dace.html">dace</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-fsu_cvt.html">fsu_cvt</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-psuade_moat.html">psuade_moat</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-local_evidence.html">local_evidence</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-local_interval_est.html">local_interval_est</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-local_reliability.html">local_reliability</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-global_reliability.html">global_reliability</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-fsu_quasi_mc.html">fsu_quasi_mc</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-vector_parameter_study.html">vector_parameter_study</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-list_parameter_study.html">list_parameter_study</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-centered_parameter_study.html">centered_parameter_study</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-multidim_parameter_study.html">multidim_parameter_study</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-richardson_extrap.html">richardson_extrap</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="model.html">model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="variables.html">variables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="interface.html">interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="responses.html">responses</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../usingdakotagui/usingdakotagui.html">Using Dakota GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../externaltools/externaltools.html">Using External Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developingdakota/developingdakota.html">Developing Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../misc/misc.html">Miscellaneous</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">dakota</a>
+      </nav>
+
+	  <!-- SNL Lite header -->
+	  <div class="snlheader-subsite--wrapper-default">
+		<snlheader class="snlheader-subsite" role="snlbanner">
+		  <div class="wrapper">
+			<a href="https://www.sandia.gov/index.html">
+			  <div class="logo-transparent"><p class="logo">Sandia National Laboratories</p></div>
+			</a>
+			<div class="nav-top">
+			  <a class="visuallyhidden" name="mainnav"></a>
+			  <div aria-label="main navigation" class="core-nav-transparent core-nav-transparent--visible" role="navigation">
+				<ul role="navigation" class="secondary-links">
+				  <li id="search-text-link">
+					<a aria-label="Search" href="https://www.sandia.gov/search/">Search Sandia.gov</a>
+				  </li>
+				  <li id="directory-text-link">
+					<a href="https://www.sandia.gov/directory.html" aria-expanded="false" aria-label="Site Directory">All Sandia Websites</a>
+				  </li>
+				</ul>
+			  </div>
+			</div>
+		  </div> 
+		</snlheader>
+	  </div>	  
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../usingdakota.html">Using Dakota</a> &raquo;</li>
+          <li><a href="../reference.html">Keyword Reference</a> &raquo;</li>
+          <li><a href="method.html">method</a> &raquo;</li>
+          <li><a href="method-bayes_calibration.html">bayes_calibration</a> &raquo;</li>
+          <li><a href="method-bayes_calibration-dream.html">dream</a> &raquo;</li>
+          <li><a href="method-bayes_calibration-dream-emulator.html">emulator</a> &raquo;</li>
+          <li><a href="method-bayes_calibration-dream-emulator-mf_pce.html">mf_pce</a> &raquo;</li>
+          <li><a href="method-bayes_calibration-dream-emulator-mf_pce-expansion_order_sequence.html">expansion_order_sequence</a> &raquo;</li>
+          <li><a href="method-bayes_calibration-dream-emulator-mf_pce-expansion_order_sequence-collocation_ratio.html">collocation_ratio</a> &raquo;</li>
+      <li>collocation_points_sequence</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/usingdakota/reference/method-bayes_calibration-dream-emulator-mf_pce-expansion_order_sequence-collocation_ratio-collocation_points_sequence.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="collocation-points-sequence">
+<span id="method-bayes-calibration-dream-emulator-mf-pce-expansion-order-sequence-collocation-ratio-collocation-points-sequence"></span><h1>collocation_points_sequence<a class="headerlink" href="#collocation-points-sequence" title="Permalink to this headline"></a></h1>
+<p>Sequence of collocation point counts used in a multi-stage expansion</p>
+<div class="toctree-wrapper compound">
+</div>
+<p><strong>Specification</strong></p>
+<ul class="simple">
+<li><p><em>Alias:</em> pilot_samples</p></li>
+<li><p><em>Arguments:</em> INTEGERLIST</p></li>
+</ul>
+<p><strong>Description</strong></p>
+<p>Each level entry of the <code class="docutils literal notranslate"><span class="pre">collocation_points_sequence</span></code> applies to one
+expansion within a multi-stage expansion.  Current multi-stage
+expansions that support collocation point sequences include multilevel
+and multifidelity polynomial chaos and multilevel and multifidelity
+function train expansions.</p>
+<p>If adaptive refinement is active, then this sequence specifies the
+starting point for each level within either an individual or
+integrated refinement approach.</p>
+<p>A corresponding scalar specification is documented at, e.g.,
+<a class="reference internal" href="method-polynomial_chaos-expansion_order-collocation_points.html#method-polynomial-chaos-expansion-order-collocation-points"><span class="std std-ref">method-polynomial_chaos-expansion_order-collocation_points</span></a></p>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="method-bayes_calibration-dream-emulator-mf_pce-expansion_order_sequence-collocation_ratio.html" class="btn btn-neutral float-left" title="collocation_ratio" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="method-bayes_calibration-dream-emulator-mf_pce-expansion_order_sequence-collocation_ratio-least_squares.html" class="btn btn-neutral float-right" title="least_squares" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <!--
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Sandia National Laboratories.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+  --> 
+
+</footer>
+        </div>
+      </div>
+	  
+	  <div style="background-color: #0f0f0f;color:#fafafa;padding:20px">
+	    <div>
+		  <h2><em>Exceptional service in the national interest</em></h2>
+		</div>
+		<p>© 2022 National Technology and Engineering Solutions of Sandia, LLC. | <a href="https://www.sandia.gov/contact_us/index.html">Questions &amp; Comments</a> | <a href="https://www.sandia.gov/general/privacy-security/index.html">Privacy &amp; Security</a></p>
+		<p><a href="http://energy.gov" rel="noopener noreferrer" target="_blank"><img alt="U.S. Department of Energy" longdesc="https://energy.gov" src="https://www.sandia.gov/_common/images/doe_logo_white.png" style="height:37px; width:140px"></a> <a href="http://nnsa.energy.gov/" rel="noopener noreferrer" target="_blank"> <img alt="National Nuclear Security Administration" longdesc="http://nnsa.gov" src="https://www.sandia.gov/_common/images/nnsa_logo_white.png" style="height:37px; width:116px"></a></p>
+		<p><a href="https://www.sandia.gov">Sandia National Laboratories</a> is a multimission laboratory managed and operated by National Technology and Engineering Solutions of Sandia, LLC., a wholly owned subsidiary of Honeywell International, Inc., for the U.S. Department of Energy’s National Nuclear Security Administration under contract DE-NA-0003525.</p>
+	  </div>	  	  
+	  
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

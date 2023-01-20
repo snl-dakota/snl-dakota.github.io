@@ -1,0 +1,96 @@
+.. _method-local_interval_est:
+
+""""""""""""""""""
+local_interval_est
+""""""""""""""""""
+
+
+Interval analysis using local optimization
+
+
+
+**Topics**
+
+
+uncertainty_quantification, epistemic_uncertainty_quantification_methods, interval_estimation
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-local_interval_est-sqp
+   method-local_interval_est-nip
+   method-local_interval_est-convergence_tolerance
+   method-local_interval_est-model_pointer
+
+
+**Specification**
+
+- *Alias:* nond_local_interval_est 
+
+- *Arguments:* None
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+---------------------------+---------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword            | Dakota Keyword Description                  |
+|                         | Group              |                           |                                             |
++=========================+====================+===========================+=============================================+
+| Optional (Choose One)   | Optimization       | `sqp`__                   | Uses a sequential quadratic programming     |
+|                         | Solver             |                           | method for underlying optimization          |
+|                         |                    +---------------------------+---------------------------------------------+
+|                         |                    | `nip`__                   | Uses a nonlinear interior point method for  |
+|                         |                    |                           | underlying optimization                     |
++-------------------------+--------------------+---------------------------+---------------------------------------------+
+| Optional                                     | `convergence_tolerance`__ | Stopping criterion based on objective       |
+|                                              |                           | function or statistics convergence          |
++----------------------------------------------+---------------------------+---------------------------------------------+
+| Optional                                     | `model_pointer`__         | Identifier for model block to be used by a  |
+|                                              |                           | method                                      |
++----------------------------------------------+---------------------------+---------------------------------------------+
+
+.. __: method-local_interval_est-sqp.html
+__ method-local_interval_est-nip.html
+__ method-local_interval_est-convergence_tolerance.html
+__ method-local_interval_est-model_pointer.html
+
+
+
+**Description**
+
+
+Interval analysis using local methods ( ``local_interval_est``).
+If the problem is amenable to local optimization
+methods (e.g. can provide derivatives or use finite difference
+method to calculate derivatives), then one can use one of two local
+methods to calculate these bounds.
+
+- ``sqp``
+- ``nip``
+
+*Additional Resources*
+
+Refer to :ref:`topic-variable_support<topic-variable_support>` for information on supported
+variable types.
+
+
+
+**Theory**
+
+
+In interval analysis, one assumes that nothing is known about
+an epistemic uncertain variable except that its value lies
+somewhere within an interval. In this situation, it is NOT
+assumed that the value has a uniform probability of occuring
+within the interval. Instead, the interpretation is that
+any value within the interval is a possible value or a potential
+realization of that variable. In interval analysis, the
+uncertainty quantification problem is one of determining the
+resulting bounds on the output (defining the output interval)
+given interval bounds on the inputs. Again, any output response
+that falls within the output interval is a possible output
+with no frequency information assigned to it.
+
+

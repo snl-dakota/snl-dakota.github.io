@@ -1,0 +1,71 @@
+.. _environment-pre_run-output:
+
+""""""
+output
+""""""
+
+
+Base filename for pre-run mode data output
+
+
+
+**Topics**
+
+
+dakota_IO
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   environment-pre_run-output-custom_annotated
+   environment-pre_run-output-annotated
+   environment-pre_run-output-freeform
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* STRING
+
+- *Default:* no pre-run specific output written
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+----------------------+---------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword       | Dakota Keyword Description                  |
+|                         | Group              |                      |                                             |
++=========================+====================+======================+=============================================+
+| Optional (Choose One)   | Tabular Format     | `custom_annotated`__ | Selects custom-annotated tabular file       |
+|                         |                    |                      | format                                      |
+|                         |                    +----------------------+---------------------------------------------+
+|                         |                    | `annotated`__        | Selects annotated tabular file format       |
+|                         |                    +----------------------+---------------------------------------------+
+|                         |                    | `freeform`__         | Selects freeform file format                |
++-------------------------+--------------------+----------------------+---------------------------------------------+
+
+.. __: environment-pre_run-output-custom_annotated.html
+__ environment-pre_run-output-annotated.html
+__ environment-pre_run-output-freeform.html
+
+
+
+**Description**
+
+
+Specify a base filename to which Dakota will write any
+pre-run output data (typically parameter sets to be evaluated). This
+option is overridden by any command-line -pre_run arguments.
+
+*Usage Tips*
+
+Dakota exports tabular data in one of three formats:
+
+- ``annotated`` (default)
+- ``custom_annotated``
+- ``freeform``
+
+

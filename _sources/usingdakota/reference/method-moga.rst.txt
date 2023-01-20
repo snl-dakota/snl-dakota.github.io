@@ -1,0 +1,280 @@
+.. _method-moga:
+
+""""
+moga
+""""
+
+
+Multi-objective Genetic Algorithm (a.k.a Evolutionary Algorithm)
+
+
+
+**Topics**
+
+
+package_jega
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-moga-fitness_type
+   method-moga-replacement_type
+   method-moga-niching_type
+   method-moga-convergence_type
+   method-moga-postprocessor_type
+   method-moga-max_iterations
+   method-moga-max_function_evaluations
+   method-moga-scaling
+   method-moga-population_size
+   method-moga-log_file
+   method-moga-print_each_pop
+   method-moga-initialization_type
+   method-moga-crossover_type
+   method-moga-mutation_type
+   method-moga-seed
+   method-moga-convergence_tolerance
+   method-moga-model_pointer
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+------------------------------+---------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword               | Dakota Keyword Description                  |
+|                         | Group              |                              |                                             |
++=========================+====================+==============================+=============================================+
+| Optional                                     | `fitness_type`__             | Select the fitness type for JEGA methods    |
++----------------------------------------------+------------------------------+---------------------------------------------+
+| Optional                                     | `replacement_type`__         | Select a replacement type for JEGA methods  |
++----------------------------------------------+------------------------------+---------------------------------------------+
+| Optional                                     | `niching_type`__             | Specify the type of niching pressure        |
++----------------------------------------------+------------------------------+---------------------------------------------+
+| Optional                                     | `convergence_type`__         | Select the convergence type for JEGA        |
+|                                              |                              | methods                                     |
++----------------------------------------------+------------------------------+---------------------------------------------+
+| Optional                                     | `postprocessor_type`__       | Post process the final solution from        |
+|                                              |                              | ``moga``                                    |
++----------------------------------------------+------------------------------+---------------------------------------------+
+| Optional                                     | `max_iterations`__           | Number of iterations allowed for optimizers |
+|                                              |                              | and adaptive UQ methods                     |
++----------------------------------------------+------------------------------+---------------------------------------------+
+| Optional                                     | `max_function_evaluations`__ | Number of function evaluations allowed for  |
+|                                              |                              | optimizers                                  |
++----------------------------------------------+------------------------------+---------------------------------------------+
+| Optional                                     | `scaling`__                  | Turn on scaling for variables, responses,   |
+|                                              |                              | and constraints                             |
++----------------------------------------------+------------------------------+---------------------------------------------+
+| Optional                                     | `population_size`__          | Set the initial population size in JEGA     |
+|                                              |                              | methods                                     |
++----------------------------------------------+------------------------------+---------------------------------------------+
+| Optional                                     | `log_file`__                 | Specify the name of a log file              |
++----------------------------------------------+------------------------------+---------------------------------------------+
+| Optional                                     | `print_each_pop`__           | Print every population to a population file |
++----------------------------------------------+------------------------------+---------------------------------------------+
+| Optional                                     | `initialization_type`__      | Specify how to initialize the population    |
++----------------------------------------------+------------------------------+---------------------------------------------+
+| Optional                                     | `crossover_type`__           | Select a crossover type for JEGA methods    |
++----------------------------------------------+------------------------------+---------------------------------------------+
+| Optional                                     | `mutation_type`__            | Select a mutation type for JEGA methods     |
++----------------------------------------------+------------------------------+---------------------------------------------+
+| Optional                                     | `seed`__                     | Seed of the random number generator         |
++----------------------------------------------+------------------------------+---------------------------------------------+
+| Optional                                     | `convergence_tolerance`__    | Stopping criterion based on objective       |
+|                                              |                              | function or statistics convergence          |
++----------------------------------------------+------------------------------+---------------------------------------------+
+| Optional                                     | `model_pointer`__            | Identifier for model block to be used by a  |
+|                                              |                              | method                                      |
++----------------------------------------------+------------------------------+---------------------------------------------+
+
+.. __: method-moga-fitness_type.html
+__ method-moga-replacement_type.html
+__ method-moga-niching_type.html
+__ method-moga-convergence_type.html
+__ method-moga-postprocessor_type.html
+__ method-moga-max_iterations.html
+__ method-moga-max_function_evaluations.html
+__ method-moga-scaling.html
+__ method-moga-population_size.html
+__ method-moga-log_file.html
+__ method-moga-print_each_pop.html
+__ method-moga-initialization_type.html
+__ method-moga-crossover_type.html
+__ method-moga-mutation_type.html
+__ method-moga-seed.html
+__ method-moga-convergence_tolerance.html
+__ method-moga-model_pointer.html
+
+
+
+**Description**
+
+
+``moga`` stands for Multi-objective Genetic Algorithm, which is a
+global optimization method that does Pareto optimization for multiple
+objectives.  It supports general constraints and a mixture of real and
+discrete variables.
+
+*Constraints*
+
+``moga`` can utilize linear constraints using the keywords:
+
+-* linear_inequality_constraint_matrix
+-* linear_inequality_lower_bounds
+-* linear_inequality_upper_bounds
+-* linear_inequality_scale_types
+-* linear_inequality_scales
+-* linear_equality_constraint_matrix
+-* linear_equality_targets
+-* linear_equality_scale_types
+-* linear_equality_scales
+
+*Configuration*
+
+The genetic algorithm configurations are:
+
+
+-fitness
+-replacement
+-niching
+-convergence
+-postprocessor
+-initialization
+-crossover
+-mutation
+-population size
+
+The steps followed by the algorithm are listed below. The
+configurations will effect how the algorithm completes each step.
+
+*Stopping Criteria*
+
+The ``moga`` method respects the ``max_iterations`` and
+``max_function_evaluations`` method independent controls to provide
+integer limits for the maximum number of generations and function
+evaluations, respectively.
+
+The algorithm also stops when convergence is reached. This involves
+repeated assessment of the algorithm's progress in solving the
+problem, until some criterion is met.
+
+The specification for convergence in a moga can either be
+``metric_tracker`` or can be omitted all together. If omitted, no
+convergence algorithm will be used and the algorithm will rely on
+stopping criteria only.
+
+
+*Expected Outputs*
+
+The ``moga`` method respects the ``output`` method independent control
+to vary the amount of information presented to the user during
+execution.
+
+The final results are written to the Dakota tabular output. Additional
+information is also available - see the ``log_file`` and
+``print_each_pop`` keywords.
+
+Note that moga and SOGA create additional output files during
+execution. "finaldata.dat" is a file that holds the final set of
+Pareto optimal solutions after any post-processing is
+complete. "discards.dat" holds solutions that were discarded from the
+population during the course of evolution.
+
+It can often be useful to plot objective function values from these
+files to visually see the Pareto front and ensure that finaldata.dat
+solutions dominate discards.dat solutions. The solutions are written
+to these output files in the format
+"Input1...InputN..Output1...OutputM".
+
+*Expected HDF5 Output*
+
+If Dakota was built with HDF5 support and run with the
+:ref:`environment-results_output-hdf5<environment-results_output-hdf5>` keyword, this method
+writes the following results to HDF5:
+
+
+- :ref:`hdf5_results-best_params<hdf5_results-best_params>`
+- :ref:`hdf5_results-best_obj_fncs<hdf5_results-best_obj_fncs>` (when :ref:`responses-objective_functions<responses-objective_functions>`) are specified)
+- :ref:`hdf5_results-best_constraints<hdf5_results-best_constraints>`
+- :ref:`hdf5_results-calibration<hdf5_results-calibration>` (when :ref:`responses-calibration_terms<responses-calibration_terms>` are specified)
+
+*Important Notes*
+
+The pool of potential members is the current population and the
+current set of offspring.
+
+Choice of fitness assessors is strongly related to the type of
+replacement algorithm being used and can have a profound effect on the
+solutions selected for the next generation.
+
+If using the fitness types ``layer_rank`` or ``domination_count``, it is
+strongly recommended that you use the ``replacement_type``
+``below_limit`` (although the roulette wheel selectors can also be used).
+
+The functionality of the domination_count selector of JEGA v1.0 can
+now be achieved using the ``domination_count`` fitness type and
+``below_limit`` replacement type.
+
+
+
+**Theory**
+
+
+The basic steps of the ``moga`` algorithm are as follows:
+
+
+1. Initialize the population
+
+2. Evaluate the population (calculate the values of the objective function and constraints for each population member)
+
+3. Loop until converged, or stopping criteria reached
+
+
+  1. Perform crossover
+
+  2. Perform mutation
+
+  3. Evaluate the new population
+
+  4. Assess the fitness of each member in the population
+
+  5. Replace the population with members selected to continue in the next generation
+
+  6. Apply niche pressure to the population
+
+  7. Test for convergence
+
+
+8. Perform post processing
+
+
+If moga is used in a hybrid optimization method (which requires one
+optimal solution from each individual optimization method to be passed
+to the subsequent optimization method as its starting point), the
+solution in the Pareto set closest to the "utopia" point is given as
+the best solution. This solution is also reported in the Dakota
+output.
+
+This "best" solution in the Pareto set has minimum distance from the
+utopia point. The utopia point is defined as the point of extreme
+(best) values for each objective function. For example, if the Pareto
+front is bounded by (1,100) and (90,2), then (1,2) is the utopia
+point. There will be a point in the Pareto set that has minimum
+L2-norm distance to this point, for example (10,10) may be such a
+point.
+
+If moga is used in a method which may require passing multiple
+solutions to the next level (such as the ``surrogate_based_global``
+method or ``hybrid`` methods), the ``orthogonal_distance``
+postprocessor type may be used to specify the distances between each
+solution value to winnow down the solutions in the full Pareto front
+to a subset which will be passed to the next iteration.
+
+

@@ -1,0 +1,117 @@
+.. _method-richardson_extrap:
+
+"""""""""""""""""
+richardson_extrap
+"""""""""""""""""
+
+
+Estimate order of convergence of a response as model fidelity increases
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-richardson_extrap-estimate_order
+   method-richardson_extrap-converge_order
+   method-richardson_extrap-converge_qoi
+   method-richardson_extrap-refinement_rate
+   method-richardson_extrap-convergence_tolerance
+   method-richardson_extrap-max_iterations
+   method-richardson_extrap-model_pointer
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+---------------------------+---------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword            | Dakota Keyword Description                  |
+|                         | Group              |                           |                                             |
++=========================+====================+===========================+=============================================+
+| Required (Choose One)   | Verification Mode  | `estimate_order`__        | Compute the best estimate of the            |
+|                         |                    |                           | convergence order from three points         |
+|                         |                    +---------------------------+---------------------------------------------+
+|                         |                    | `converge_order`__        | Refine until the estimated covergence order |
+|                         |                    |                           | converges                                   |
+|                         |                    +---------------------------+---------------------------------------------+
+|                         |                    | `converge_qoi`__          | Refine until the response converges         |
++-------------------------+--------------------+---------------------------+---------------------------------------------+
+| Optional                                     | `refinement_rate`__       | Rate at which the state variables are       |
+|                                              |                           | refined                                     |
++----------------------------------------------+---------------------------+---------------------------------------------+
+| Optional                                     | `convergence_tolerance`__ | Stopping criterion based on objective       |
+|                                              |                           | function or statistics convergence          |
++----------------------------------------------+---------------------------+---------------------------------------------+
+| Optional                                     | `max_iterations`__        | Number of iterations allowed for optimizers |
+|                                              |                           | and adaptive UQ methods                     |
++----------------------------------------------+---------------------------+---------------------------------------------+
+| Optional                                     | `model_pointer`__         | Identifier for model block to be used by a  |
+|                                              |                           | method                                      |
++----------------------------------------------+---------------------------+---------------------------------------------+
+
+.. __: method-richardson_extrap-estimate_order.html
+__ method-richardson_extrap-converge_order.html
+__ method-richardson_extrap-converge_qoi.html
+__ method-richardson_extrap-refinement_rate.html
+__ method-richardson_extrap-convergence_tolerance.html
+__ method-richardson_extrap-max_iterations.html
+__ method-richardson_extrap-model_pointer.html
+
+
+
+**Description**
+
+
+Solution verification procedures estimate the order of convergence of
+the simulation response data during the course of a refinement study.
+This branch of methods is new and currently only contains one algorithm:
+Richardson extrapolation.
+
+*Refinement of the model*
+
+The model fidelity must be parameterized by one or more continuous state variable(s).
+
+The refinement path is
+determined from the ``initial_state`` of the ``continuous_state``
+variables specification in combination with the
+``refinement_rate``, where each of the state variables is treated as an
+independent refinement factor and each of the initial state values is
+repeatedly divided by the refinement rate value to define new
+discretization states.
+
+*Results*
+
+Three algorithm options are currently provided:
+
+
+- ``estimate_order``
+- ``converge_order``
+- ``converge_qoi``
+
+*Stopping Criteria*
+
+The method employs the
+``max_iterations`` and ``convergence_tolerance`` method independent
+controls as stopping criteria.
+
+
+
+**Theory**
+
+
+In each of these cases, convergence order for a response quantity of
+interest (QoI) is estimated from
+
+.. math:: p = ln\left(\frac{QoI_3 - QoI_2}{QoI_2 - QoI_1}\right)/ln(r)
+
+where :math:`r`  is the uniform refinement rate specified by
+``refinement_rate``.
+
+
+

@@ -1,0 +1,1202 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bayesian Methods &mdash; dakota  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/dakota_theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/sandiaheaderlite.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Surrogate Models" href="surrogates.html" />
+    <link rel="prev" title="Epistemic Methods" href="epistemic.html" /> 
+  
+  <meta name="sandia.approval_type" content="formal"/>
+  <meta property="sandia.approved" content="SAND2022-15651 O"/>
+  <meta name="description" content="The Dakota project delivers both state-of-the-art research and robust, usable software for optimization and UQ."/>
+  <meta name="keywords" content="Dakota, optimization, UQ, uncertainty quantification, parametric analysis, design exploration, model calibration, risk analysis"/>
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> dakota
+            <img src="../../_static/dakota_Arrow_Name_Tag_horiz_transparent.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../setupdakota.html">Getting Started</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../usingdakota.html">Using Dakota</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../introduction/aboutdakota.html">About Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../introduction/helloworld.html">Dakota Beginner’s Tutorial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples.html">Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../introduction/couplingtosimulations.html">Coupling Dakota to a Simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../inputfile.html">Dakota Input File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../running.html">Running Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../output.html">Dakota Output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../studytypes.html">Study Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../topics.html">Topics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../advanced.html">Advanced Topics</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../theory.html">Dakota Theory</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="sampling.html">Sampling Methods</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reliability.html">Reliability Methods</a></li>
+<li class="toctree-l3"><a class="reference internal" href="stochastic.html">Stochastic Expansion Methods</a></li>
+<li class="toctree-l3"><a class="reference internal" href="epistemic.html">Epistemic Methods</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Bayesian Methods</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#fundamentals">Fundamentals</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#proposal-densities">Proposal Densities</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pre-solve-for-map-point">Pre-solve for MAP point</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#rosenbrock-example">Rosenbrock Example</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#chain-diagnostics">Chain Diagnostics</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#confidence-intervals">Confidence Intervals</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#model-discrepancy">Model Discrepancy</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#scalar-responses-example">Scalar Responses Example</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#field-responses-example">Field Responses Example</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#experimental-design">Experimental Design</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#batch-point-selection">Batch Point Selection</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#information-theoretic-tools">Information Theoretic Tools</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#measure-theoretic-stochastic-inversion">Measure-theoretic Stochastic Inversion</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="surrogates.html">Surrogate Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="surrogatebasedoptimization.html">Surrogate-Based Local Minimization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="surrogatebasedglobaloptimization.html">Effcient Global Optimization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dimensionreductionstrategies.html">Dimension Reduction Strategies</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ouu.html">Optimization Under Uncertainty (OUU)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../reference.html">Keyword Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../usingdakotagui/usingdakotagui.html">Using Dakota GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../externaltools/externaltools.html">Using External Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developingdakota/developingdakota.html">Developing Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../misc/misc.html">Miscellaneous</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">dakota</a>
+      </nav>
+
+	  <!-- SNL Lite header -->
+	  <div class="snlheader-subsite--wrapper-default">
+		<snlheader class="snlheader-subsite" role="snlbanner">
+		  <div class="wrapper">
+			<a href="https://www.sandia.gov/index.html">
+			  <div class="logo-transparent"><p class="logo">Sandia National Laboratories</p></div>
+			</a>
+			<div class="nav-top">
+			  <a class="visuallyhidden" name="mainnav"></a>
+			  <div aria-label="main navigation" class="core-nav-transparent core-nav-transparent--visible" role="navigation">
+				<ul role="navigation" class="secondary-links">
+				  <li id="search-text-link">
+					<a aria-label="Search" href="https://www.sandia.gov/search/">Search Sandia.gov</a>
+				  </li>
+				  <li id="directory-text-link">
+					<a href="https://www.sandia.gov/directory.html" aria-expanded="false" aria-label="Site Directory">All Sandia Websites</a>
+				  </li>
+				</ul>
+			  </div>
+			</div>
+		  </div> 
+		</snlheader>
+	  </div>	  
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../usingdakota.html">Using Dakota</a> &raquo;</li>
+          <li><a href="../theory.html">Dakota Theory</a> &raquo;</li>
+      <li>Bayesian Methods</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/usingdakota/theory/bayesian.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <blockquote>
+<div></div></blockquote>
+<section id="bayesian-methods">
+<span id="uq-bayes"></span><h1>Bayesian Methods<a class="headerlink" href="#bayesian-methods" title="Permalink to this headline"></a></h1>
+<p>This chapter covers various topics relating to Bayesian methods for
+inferring input parameter distributions for computer models, which is
+sometimes called “Bayesian calibration of computer models.” One common
+solution approach for Bayesian calibration involves Markov Chain Monte
+Carlo (MCMC) sampling.</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#uq-bayes-basic"><span class="std std-ref">Fundamentals</span></a>,
+<a class="reference internal" href="#uq-bayes-prop"><span class="std std-ref">Proposal Densities</span></a>,
+<a class="reference internal" href="#uq-bayes-map"><span class="std std-ref">Pre-solve for MAP point</span></a>, and
+<a class="reference internal" href="#uq-bayes-ex"><span class="std std-ref">Rosenbrock Example</span></a> describe Bayesian fundamentals and then cover
+specialized approaches for accelerating the MCMC sampling process used
+within Bayesian inference.</p></li>
+<li><p>Chain diagnostic metrics for analyzing the convergence of the MCMC chain are discussed in
+<a class="reference internal" href="#uq-chain-diagnostics"><span class="std std-ref">Chain Diagnostics</span></a>.</p></li>
+<li><p><a class="reference internal" href="#uq-model-disc"><span class="std std-ref">Model Discrepancy</span></a> describes ways of handling a
+discrepancy between the model estimate and the responses.</p></li>
+<li><p><a class="reference internal" href="#uq-bayes-experimental-design"><span class="std std-ref">Experimental Design</span></a> describes a way of
+determining the optimal experimental design to identify high-fidelity
+runs that can be used to best inform the calibration of a low-fidelity
+model. This is followed by a discussion of information-theoretic metrics
+in <a class="reference internal" href="#uq-info-theory"><span class="std std-ref">Information Theoretic Tools</span></a>.</p></li>
+<li><p>Finally, we conclude this chapter with a discussion of a new Bayesian approach in
+<a class="reference internal" href="#uq-cbayes"><span class="std std-ref">Measure-theoretic Stochastic Inverstion</span></a> which does not use MCMC and relies on a
+measure-theoretic approach for stochastic inference instead of MCMC. In
+Dakota, the Bayesian methods called QUESO, GPMSA, and DREAM use Markov
+Chain Monte Carlo sampling. The Bayesian method called WASABI implements
+the measure-theoretic approach.</p></li>
+</ul>
+<section id="fundamentals">
+<span id="uq-bayes-basic"></span><h2>Fundamentals<a class="headerlink" href="#fundamentals" title="Permalink to this headline"></a></h2>
+<p>Bayes Theorem <span id="id1">[<a class="reference internal" href="../../misc/bibliography.html#id154" title="E. T. Jaynes and G. Larry. Bretthorst. Probability theory : the logic of science. Cambridge University Press, Cambridge, UK; New York, NY, 2003.">JB03</a>]</span>, shown in
+<a class="reference internal" href="#equation-bayesthm">(153)</a>, is used for performing inference.
+In particular, we derive the plausible parameter values based on the
+prior probability density and the data <span class="math notranslate nohighlight">\(\boldsymbol{d}\)</span>. A typical
+case involves the use of a conservative prior notion of an uncertainty,
+which is then constrained to be consistent with the observational data.
+The result is the posterior parameter density of the parameters
+<span class="math notranslate nohighlight">\(f_{\boldsymbol{\Theta |D}}\left( \boldsymbol{\theta |d} \right)\)</span>.</p>
+<div class="math notranslate nohighlight" id="equation-bayesthm">
+<span class="eqno">(153)<a class="headerlink" href="#equation-bayesthm" title="Permalink to this equation"></a></span>\[{f_{\boldsymbol{\Theta |D}}}\left( \boldsymbol{\theta |d} \right) = \frac{{{f_{\boldsymbol{\Theta}}}\left( \boldsymbol{\theta}  \right)\mathcal{L}\left( \boldsymbol{\theta;d} \right)}}{{{f_{\boldsymbol{D}}}\left( \boldsymbol{d} \right)}}\]</div>
+<p>The likelihood function is used to describe how well a model’s
+predictions are supported by the data. The specific likelihood function
+currently used in Dakota is a Gaussian likelihood. This means that we
+assume the difference between the model quantity of interest (e.g.
+result from a computer simulation) and the experimental observations are
+Gaussian:</p>
+<div class="math notranslate nohighlight" id="equation-bayes-model">
+<span class="eqno">(154)<a class="headerlink" href="#equation-bayes-model" title="Permalink to this equation"></a></span>\[d_i = q_i(\boldsymbol{\theta}) + \epsilon_i,\]</div>
+<p>where <span class="math notranslate nohighlight">\(\boldsymbol{\theta}\)</span> are the parameters of a model quantity
+of interest <span class="math notranslate nohighlight">\(q_i\)</span> and <span class="math notranslate nohighlight">\(\epsilon_i\)</span> is a random variable that
+can encompass both measurement errors on <span class="math notranslate nohighlight">\(d_i\)</span> and modeling errors
+associated with the simulation quantity of interest
+<span class="math notranslate nohighlight">\(q_i(\boldsymbol{\theta})\)</span>. If we have <span class="math notranslate nohighlight">\(n\)</span> observations, the
+probabilistic model defined by <a class="reference internal" href="#equation-bayes-model">(154)</a> results
+in a likelihood function for <span class="math notranslate nohighlight">\(\boldsymbol{\theta}\)</span> as shown in
+<a class="reference internal" href="#equation-bayes-likelihood">(155)</a>:</p>
+<div class="math notranslate nohighlight" id="equation-bayes-likelihood">
+<span class="eqno">(155)<a class="headerlink" href="#equation-bayes-likelihood" title="Permalink to this equation"></a></span>\[\mathcal{L}(\boldsymbol{\theta;d}) =
+\frac{1}{\sqrt{(2\pi)^n |\boldsymbol{\Sigma_d}|}}
+\exp \left(
+-\frac{1}{2} \boldsymbol{r}^T \boldsymbol{\Sigma}_{\boldsymbol{d}}^{-1} \boldsymbol{r}
+\right),\]</div>
+<p>where the residual vector <span class="math notranslate nohighlight">\(\boldsymbol{r}\)</span> is defined from the
+differences between the model predictions and the corresponding
+observational data (i.e., <span class="math notranslate nohighlight">\(r_i = q_i(\boldsymbol{\theta}) - d_i\)</span>
+for <span class="math notranslate nohighlight">\(i = 1,\dots,n\)</span>), and <span class="math notranslate nohighlight">\(\boldsymbol{\Sigma_d}\)</span> is the
+covariance matrix of the Gaussian data uncertainties.</p>
+<p>The negative log-likelihood is comprised of the misfit function</p>
+<div class="math notranslate nohighlight" id="equation-bayes-misfit">
+<span class="eqno">(156)<a class="headerlink" href="#equation-bayes-misfit" title="Permalink to this equation"></a></span>\[M(\boldsymbol{\theta;d})
+  = \frac{1}{2} \boldsymbol{r}^T \boldsymbol{\Sigma}_{\boldsymbol{d}}^{-1} \boldsymbol{r}\]</div>
+<p>plus contributions from the leading normalization factor
+(<span class="math notranslate nohighlight">\(\frac{n}{2}\log(2\pi)\)</span> and
+<span class="math notranslate nohighlight">\(\frac{1}{2}\log(|\boldsymbol{\Sigma_d}|)\)</span>). It is evident that
+dropping <span class="math notranslate nohighlight">\(\boldsymbol{\Sigma_d}\)</span> from
+<a class="reference internal" href="#equation-bayes-misfit">(156)</a> (or equivalently, taking it to be the
+identity) results in the ordinary least squares (OLS) approach commonly
+used in deterministic calibration. For a fixed
+<span class="math notranslate nohighlight">\(\boldsymbol{\Sigma_d}\)</span> (no hyper-parameters in the calibration),
+minimizing the misfit function is equivalent to maximizing the
+likelihood function and results in a solution known as the maximum
+likelihood estimate (MLE), which will be the same as the OLS estimate
+when the residuals have no relative weighting (any multiple of identity
+in the data covariance matrix).</p>
+<p>When incorporating the prior density, the maximum <em>a posteriori</em>
+probability (MAP) point is the solution that maximizes the posterior
+probability in <a class="reference internal" href="#equation-bayesthm">(153)</a>. This point will
+differ from the MLE for cases of non-uniform prior probability.</p>
+<p>In the sections to follow, we describe approaches for preconditioning
+the MCMC process by computing a locally-accurate proposal density and
+for jump-starting the MCMC process by pre-solving for the MAP point.
+Within Dakota, these are separate options: one can configure a run to
+use either or both, although it is generally advantageous to employ both
+when the necessary problem structure (i.e., derivative support) is
+present.</p>
+</section>
+<section id="proposal-densities">
+<span id="uq-bayes-prop"></span><h2>Proposal Densities<a class="headerlink" href="#proposal-densities" title="Permalink to this headline"></a></h2>
+<p>When derivatives of <span class="math notranslate nohighlight">\(q(\theta)\)</span> are readily available (e.g., from
+adjoint-capable simulations or from emulator models such as polynomial
+chaos, stochastic collocation, or Gaussian processes), we can form
+derivatives of the misfit function as</p>
+<div class="math notranslate nohighlight" id="equation-grad-misfit">
+<span class="eqno">(157)<a class="headerlink" href="#equation-grad-misfit" title="Permalink to this equation"></a></span>\[\nabla_{\boldsymbol{\theta}} M(\boldsymbol{\theta}) = \nabla_{\boldsymbol{\theta}} \boldsymbol{q}(\boldsymbol{\theta})^T\,\boldsymbol{\Sigma}_{\boldsymbol{d}}^{-1}\,\boldsymbol{r}\]</div>
+<div class="math notranslate nohighlight" id="equation-hess-misfit">
+<span class="eqno">(158)<a class="headerlink" href="#equation-hess-misfit" title="Permalink to this equation"></a></span>\[\nabla^2_{\boldsymbol{\theta}} M(\boldsymbol{\theta}) = \nabla_{\boldsymbol{\theta}} \boldsymbol{q}(\boldsymbol{\theta})^T\,\boldsymbol{\Sigma}_{\boldsymbol{d}}^{-1}\,\nabla_{\boldsymbol{\theta}} \boldsymbol{q}(\boldsymbol{\theta}) + \nabla^2_{\boldsymbol{\theta}} \boldsymbol{q}(\boldsymbol{\theta}) \cdot \left[\boldsymbol{\Sigma}_{\boldsymbol{d}}^{-1}\,\boldsymbol{r}\right]\]</div>
+<p>Neglecting the second term in <a class="reference internal" href="#equation-hess-misfit">(158)</a>
+(a three-dimensional Hessian tensor dotted with the residual vector)
+results in the Gauss-Newton approximation to the misfit Hessian:</p>
+<div class="math notranslate nohighlight" id="equation-hess-misfit-gn">
+<span class="eqno">(159)<a class="headerlink" href="#equation-hess-misfit-gn" title="Permalink to this equation"></a></span>\[\nabla^2_{\boldsymbol{\theta}} M(\boldsymbol{\theta}) \approx \nabla_{\boldsymbol{\theta}} \boldsymbol{q}(\boldsymbol{\theta})^T\,\boldsymbol{\Sigma}_{\boldsymbol{d}}^{-1}\,\nabla_{\boldsymbol{\theta}} \boldsymbol{q}(\boldsymbol{\theta})\]</div>
+<p>This approximation requires only gradients of the residuals, enabling
+its use in cases where models or model emulators only provide
+first-order derivative information. Since the second term in
+<a class="reference internal" href="#equation-hess-misfit">(158)</a> includes the residual vector,
+it becomes less important as the residuals are driven toward zero. This
+makes the Gauss-Newton approximation a good approximation for solutions
+with small residuals. It also has the feature of being at least positive
+semi-definite, whereas the full misfit Hessian may be indefinite in
+general.</p>
+<p>We are interested in preconditioning the MCMC sampling using an accurate
+local representation of the curvature of the posterior distribution, so
+we will define the MCMC proposal covariance to be the inverse of the
+Hessian of the negative log posterior. From <a class="reference internal" href="#equation-bayesthm">(153)</a> and simplifying notation to
+<span class="math notranslate nohighlight">\(\pi_{\rm post}\)</span> for the posterior and <span class="math notranslate nohighlight">\(\pi_0\)</span> for the
+prior, we have</p>
+<div class="math notranslate nohighlight" id="equation-hess-post">
+<span class="eqno">(160)<a class="headerlink" href="#equation-hess-post" title="Permalink to this equation"></a></span>\[\nabla^2_{\boldsymbol{\theta}}
+  \left[ -\log(\pi_{\rm post}(\boldsymbol{\theta})) \right] =
+  \nabla^2_{\boldsymbol{\theta}} M(\boldsymbol{\theta}) -
+  \nabla^2_{\boldsymbol{\theta}} \left[ \log(\pi_0(\boldsymbol{\theta})) \right]\]</div>
+<p>A typical approach for defining a proposal density is to utilize a
+multivariate normal (MVN) distribution with mean centered at the current
+point in the chain and prescribed covariance. Thus, in the specific case
+of an MVN proposal, we will utilize the fact that the Hessian of the
+negative log prior for a normal prior distribution is just the inverse
+covariance:</p>
+<div class="math notranslate nohighlight" id="equation-normal-prior-hess">
+<span class="eqno">(161)<a class="headerlink" href="#equation-normal-prior-hess" title="Permalink to this equation"></a></span>\[-\nabla^2_{\boldsymbol{\theta}} \left[ \log(\pi_0(\boldsymbol{\theta})) \right]
+= \boldsymbol{\Sigma}_{\boldsymbol{0}}^{-1}\]</div>
+<p>For non-normal prior distributions, this is not true and, in the case of
+uniform or exponential priors, the Hessian of the negative log prior is
+in fact zero. However, as justified by the approximation of an MVN
+proposal distribution and the desire to improve the conditioning of the
+resulting Hessian, we will employ <a class="reference internal" href="#equation-normal-prior-hess">(161)</a> for all prior
+distribution types.</p>
+<p>From here, we follow <span id="id2">[<a class="reference internal" href="../../misc/bibliography.html#id212" title="N. Petra, J. Martin, G. Stadler, and O. Ghattas. A computational framework for infinite-dimensional bayesian inverse problems; part II: stochastic newton mcmc with application to ice sheet flow inverse problems. SIAM J. Sci. Comput., 36(4):A1525–A1555, 2014.">PMSG14</a>]</span> and decompose the
+prior covariance into its Cholesky factors, resulting in</p>
+<div class="math notranslate nohighlight" id="equation-bayes-cholesky-factors">
+<span class="eqno">(162)<a class="headerlink" href="#equation-bayes-cholesky-factors" title="Permalink to this equation"></a></span>\[\begin{split}\begin{aligned}
+\boldsymbol{H_{\rm nlpost}}
+  &amp;=&amp; \boldsymbol{H_M} + \boldsymbol{\Sigma}_{\boldsymbol{0}}^{-1} \\
+  &amp;=&amp; \boldsymbol{H_M} +
+      \boldsymbol{L}_{\boldsymbol{0}}^{-T}\boldsymbol{L}_{\boldsymbol{0}}^{-1} \\
+  &amp;=&amp; \boldsymbol{L}_{\boldsymbol{0}}^{-T}
+      \left[\boldsymbol{L}_{\boldsymbol{0}}^T \boldsymbol{H_M}
+            \boldsymbol{L}_{\boldsymbol{0}} + \boldsymbol{I} \right]
+      \boldsymbol{L}_{\boldsymbol{0}}^{-1}\end{aligned}\end{split}\]</div>
+<p>where we again simplify notation to represent
+<span class="math notranslate nohighlight">\(\nabla^2_{\boldsymbol{\theta}} \left[ -\log(\pi_{\rm post}(\boldsymbol{\theta})) \right]\)</span> as
+<span class="math notranslate nohighlight">\(\boldsymbol{H_{\rm nlpost}}\)</span> and
+<span class="math notranslate nohighlight">\(\nabla^2_{\boldsymbol{\theta}} M(\boldsymbol{\theta})\)</span> as
+<span class="math notranslate nohighlight">\(\boldsymbol{H_M}\)</span>. The inverse of this matrix is then</p>
+<div class="math notranslate nohighlight" id="equation-inv-hess-nlpost">
+<span class="eqno">(163)<a class="headerlink" href="#equation-inv-hess-nlpost" title="Permalink to this equation"></a></span>\[\boldsymbol{H}_{\boldsymbol{\rm nlpost}}^{-1} =
+  \boldsymbol{L}_{\boldsymbol{0}} \left[\boldsymbol{L}_{\boldsymbol{0}}^T \boldsymbol{H_M} \boldsymbol{L}_{\boldsymbol{0}} +
+  \boldsymbol{I} \right]^{-1} \boldsymbol{L}_{\boldsymbol{0}}^T\]</div>
+<p>Note that the use of <span class="math notranslate nohighlight">\(\boldsymbol{\Sigma}_{\boldsymbol{0}}^{-1}\)</span>
+for the Hessian of the negative log prior in
+<a class="reference internal" href="#equation-normal-prior-hess">(161)</a> provides some
+continuity between the default proposal covariance and the proposal
+covariance from Hessian-based preconditioning: if the contributions from
+<span class="math notranslate nohighlight">\(\boldsymbol{H_M}\)</span> are neglected, then
+<span class="math notranslate nohighlight">\(\boldsymbol{H}_{\boldsymbol{\rm nlpost}}^{-1} = \boldsymbol{\Sigma_0}\)</span>,
+the default.</p>
+<p>To address the indefiniteness of <span class="math notranslate nohighlight">\(\boldsymbol{H_M}\)</span> (or to reduce
+the cost for large-scale problems by using a low-rank Hessian
+approximation), we perform a symmetric eigenvalue decomposition of this
+prior-preconditioned misfit and truncate any eigenvalues below a
+prescribed tolerance, resulting in</p>
+<div class="math notranslate nohighlight" id="equation-bayes-decomp-result">
+<span class="eqno">(164)<a class="headerlink" href="#equation-bayes-decomp-result" title="Permalink to this equation"></a></span>\[ \boldsymbol{L}_{\boldsymbol{0}}^T \boldsymbol{H_M} \boldsymbol{L}_{\boldsymbol{0}}
+ \approx \boldsymbol{V}_r \boldsymbol{\Lambda}_r \boldsymbol{V}_r^T.\]</div>
+<p>for a matrix <span class="math notranslate nohighlight">\(\boldsymbol{V}_r\)</span> of truncated eigenvectors and a
+diagonal matrix of truncated eigenvalues
+<span class="math notranslate nohighlight">\(\boldsymbol{\Lambda}_r = {\rm diag}(\lambda_1, \lambda_2, \dots, \lambda_r)\)</span>.
+We then apply the Sherman-Morrison-Woodbury formula to invert the sum of
+the decomposed matrix and identity as</p>
+<div class="math notranslate nohighlight" id="equation-bayes-invert-result">
+<span class="eqno">(165)<a class="headerlink" href="#equation-bayes-invert-result" title="Permalink to this equation"></a></span>\[\left[\boldsymbol{V}_r \boldsymbol{\Lambda}_r \boldsymbol{V}_r^T +
+  \boldsymbol{I} \right]^{-1} = \boldsymbol{I} -
+  \boldsymbol{V}_r \boldsymbol{D}_r \boldsymbol{V}_r^T.\]</div>
+<p>for
+<span class="math notranslate nohighlight">\(\boldsymbol{D}_r = {\rm diag}(\frac{\lambda_1}{\lambda_1+1}, \frac{\lambda_2}{\lambda_2+1}, \dots, \frac{\lambda_r}{\lambda_r+1})\)</span>.
+We now arrive at our final result for the covariance of the MVN proposal
+density:</p>
+<div class="math notranslate nohighlight" id="equation-inv-hess-nlpost-approx">
+<span class="eqno">(166)<a class="headerlink" href="#equation-inv-hess-nlpost-approx" title="Permalink to this equation"></a></span>\[\boldsymbol{\Sigma_{MVN}} = \boldsymbol{H}_{\boldsymbol{\rm nlpost}}^{-1} \approx
+  \boldsymbol{L}_{\boldsymbol{0}} \left[ \boldsymbol{I} -
+  \boldsymbol{V}_r \boldsymbol{D}_r \boldsymbol{V}_r^T \right]
+  \boldsymbol{L}_{\boldsymbol{0}}^T\]</div>
+</section>
+<section id="pre-solve-for-map-point">
+<span id="uq-bayes-map"></span><h2>Pre-solve for MAP point<a class="headerlink" href="#pre-solve-for-map-point" title="Permalink to this headline"></a></h2>
+<p>When an emulator model is in use, it is inexpensive to pre-solve for the
+MAP point by finding the optimal values for <span class="math notranslate nohighlight">\(\boldsymbol{\theta}\)</span>
+that maximize the log posterior (minimize the negative log posterior):</p>
+<div class="math notranslate nohighlight" id="equation-map-soln">
+<span class="eqno">(167)<a class="headerlink" href="#equation-map-soln" title="Permalink to this equation"></a></span>\[\boldsymbol{\theta}_{MAP} = \text{arg min}_{\boldsymbol{\theta}}
+\left[ -\log(\pi_{\rm post}(\boldsymbol{\theta})) \right]\]</div>
+<p>This effectively eliminates the burn-in procedure for an MCMC chain
+where some initial portion of the Markov chain is discarded, as the MCMC
+chain can instead be initiated from a high probability starting point:
+the MAP solution. Further, a full Newton optimization solver can be used
+with the Hessian defined from <a class="reference internal" href="#equation-hess-post">(160)</a>,
+irregardless of whether the misfit Hessian is a full Hessian (residual
+values, gradients, and Hessians are available for
+<a class="reference internal" href="#equation-hess-misfit">(158)</a>) or a Gauss-Newton Hessian
+(residual gradients are available for
+<a class="reference internal" href="#equation-hess-misfit-gn">(159)</a>). Note that, in this
+case, there is no MVN approximation as in <a class="reference internal" href="#uq-bayes-prop"><span class="std std-ref">Proposal Densities</span></a>,
+so we will not employ <a class="reference internal" href="#equation-normal-prior-hess">(161)</a>. Rather, we
+employ the actual Hessians of the negative log priors for the prior
+distributions in use.</p>
+</section>
+<section id="rosenbrock-example">
+<span id="uq-bayes-ex"></span><h2>Rosenbrock Example<a class="headerlink" href="#rosenbrock-example" title="Permalink to this headline"></a></h2>
+<p>Defining two residuals as:</p>
+<div class="math notranslate nohighlight" id="equation-bayes-rosen-residuals">
+<span class="eqno">(168)<a class="headerlink" href="#equation-bayes-rosen-residuals" title="Permalink to this equation"></a></span>\[\begin{split}\begin{aligned}
+r_1 &amp;=&amp; 10 (\theta_2 - \theta_1^2) \\
+r_2 &amp;=&amp; 1 - \theta_1 \end{aligned}\end{split}\]</div>
+<p>with <span class="math notranslate nohighlight">\(\boldsymbol{d} = \boldsymbol{0}\)</span> and
+<span class="math notranslate nohighlight">\(\boldsymbol{\Sigma_d} =
+\text{diag}(\boldsymbol{.5})\)</span>, it is evident from
+<a class="reference internal" href="#equation-bayes-misfit">(156)</a> that <span class="math notranslate nohighlight">\(M(\theta;d)\)</span> is exactly the
+Rosenbrock function <a class="footnote-reference brackets" href="#id22" id="id3">1</a> with its well-known banana-shaped contours.</p>
+<p>Assuming a uniform prior on <span class="math notranslate nohighlight">\([-2,2]\)</span>,
+<a class="reference internal" href="#fig-rosen-prop-covar-a"><span class="std std-numref">Fig. 70</span></a> and <a class="reference internal" href="#fig-rosen-prop-covar-b"><span class="std std-numref">Fig. 71</span></a>
+show the effect of different proposal covariance components, with the default
+prior covariance
+(<span class="math notranslate nohighlight">\(\boldsymbol{\Sigma_{MVN}} = \boldsymbol{\Sigma_0}\)</span>) in
+<a class="reference internal" href="#fig-rosen-prop-covar-a"><span class="std std-numref">Fig. 70</span></a> and a
+misfit Hessian-based proposal covariance
+(<span class="math notranslate nohighlight">\(\boldsymbol{\Sigma_{MVN}} = \boldsymbol{H}_{\boldsymbol{M}}^{-1}\)</span>)
+in <a class="reference internal" href="#fig-rosen-prop-covar-b"><span class="std std-numref">Fig. 71</span></a>.</p>
+<figure class="align-center" id="fig-rosen-prop-covar-a">
+<a class="reference internal image-reference" href="../../_images/rosen_00_prior.png"><img alt="Proposal covariance defined from uniform prior." src="../../_images/rosen_00_prior.png" style="width: 600px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 70 </span><span class="caption-text">Proposal covariance defined from uniform prior.</span><a class="headerlink" href="#fig-rosen-prop-covar-a" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<figure class="align-center" id="fig-rosen-prop-covar-b">
+<a class="reference internal image-reference" href="../../_images/rosen_00_pce_hessian.png"><img alt="Proposal covariance defined from misfit Hessian." src="../../_images/rosen_00_pce_hessian.png" style="width: 600px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 71 </span><span class="caption-text">Proposal covariance defined from uniform prior.</span><a class="headerlink" href="#fig-rosen-prop-covar-b" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<p>Rejection rates for 2000 MCMC samples were 73.4% for the former and
+25.6% for the latter. Reducing the number of MCMC samples to 40, for
+purposes of assessing local proposal accuracy, results in a similar
+72.5% rejection rate for prior-based proposal covariance and a reduced
+17.5% rate for misfit Hessian-based proposal covariance. The prior-based
+proposal covariance only provides a global scaling and omits information
+on the structure of the likelihood; as a result, the rejection rates are
+relatively high for this problem and are not a strong function of
+location or chain length. The misfit Hessian-based proposal covariance,
+on the other hand, provides accurate local information on the structure
+of the likelihood, resulting in low rejection rates for samples in the
+vicinity of this Hessian update. Once the chain moves away from this
+vicinity, however, the misfit Hessian-based approach may become
+inaccurate and actually impede progress. This implies the need to
+regularly update a Hessian-based proposal covariance to sustain these
+MCMC improvements.</p>
+<figure class="align-center" id="fig-rosen-restart-a">
+<a class="reference internal image-reference" href="../../_images/rosen_restart_mle_map.png"><img alt="Restarted chain" src="../../_images/rosen_restart_mle_map.png" style="width: 600px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 72 </span><span class="caption-text">Restarted chain</span><a class="headerlink" href="#fig-rosen-restart-a" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<figure class="align-center" id="fig-rosen-restart-b">
+<a class="reference internal image-reference" href="../../_images/rosen_pce_m11_50up_stdnormal_rejection.png"><img alt="Rejection rates" src="../../_images/rosen_pce_m11_50up_stdnormal_rejection.png" style="width: 600px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 73 </span><span class="caption-text">Rejection rates</span><a class="headerlink" href="#fig-rosen-restart-b" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<p>In <a class="reference internal" href="#fig-rosen-restart-a"><span class="std std-numref">Fig. 72</span></a>, we show a result
+for a total of 2000 MCMC samples initiated from <span class="math notranslate nohighlight">\((-1,1)\)</span>, where we
+restart the chain with an updated Hessian-based proposal covariance
+every 40 samples:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>samples = 2000
+proposal_updates = 50
+</pre></div>
+</div>
+<p>This case uses a standard
+normal prior, resulting in differences in the MLE and MAP estimates, as
+shown in <a class="reference internal" href="#fig-rosen-restart-a"><span class="std std-numref">Fig. 72</span></a>.
+<a class="reference internal" href="#fig-rosen-restart-b"><span class="std std-numref">Fig. 73</span></a> shows the
+history of rejection rates for each of the 50 chains for misfit
+Hessian-based proposals
+(<span class="math notranslate nohighlight">\(\boldsymbol{\Sigma_{MVN}} = \boldsymbol{H}_{\boldsymbol{M}}^{-1}\)</span>)
+and negative log posterior Hessian-based proposals
+(<span class="math notranslate nohighlight">\(\boldsymbol{\Sigma_{MVN}} = \boldsymbol{H}_{\boldsymbol{\rm nlpost}}^{-1}\)</span>)
+compared to the rejection rate for a single 2000-sample chain using
+prior-based proposal covariance
+(<span class="math notranslate nohighlight">\(\boldsymbol{\Sigma_{MVN}} = \boldsymbol{\Sigma_0}\)</span>).</p>
+<p>A standard normal prior is not a strong prior in this case, and the
+posterior is likelihood dominated. This leads to similar performance
+from the two Hessian-based proposals, with average rejection rates of
+70%, 19.5%, and 16.4% for prior-based, misfit Hessian-based, and
+posterior Hessian-based cases, respectively.</p>
+</section>
+<section id="chain-diagnostics">
+<span id="uq-chain-diagnostics"></span><h2>Chain Diagnostics<a class="headerlink" href="#chain-diagnostics" title="Permalink to this headline"></a></h2>
+<p>The implementation of a number of metrics for assessing the convergence
+of the MCMC chain drawn during Bayesian calibration is undergoing active
+development in Dakota. As of Dakota 6.10,
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-bayes_calibration-chain_diagnostics-confidence_intervals.html"><span class="pre">confidence_intervals</span></a></code> is
+the only diagnostic implemented.</p>
+<section id="confidence-intervals">
+<h3>Confidence Intervals<a class="headerlink" href="#confidence-intervals" title="Permalink to this headline"></a></h3>
+<p>Suppose <span class="math notranslate nohighlight">\(g\)</span> is a function that represents some characteristic of
+the probability distribution <span class="math notranslate nohighlight">\(\pi\)</span> underlying the MCMC
+chain <span id="id4">[<a class="reference internal" href="../../misc/bibliography.html#id90" title="J. M. Flegal and G. L. Jones. Batch means and spectral variance estimators in Markov chain Monte Carlo. The Annals of Statistics, 38(2):1034–1070, 2010.">FJ10</a>]</span>, such as the mean or variance. Then
+under the standard assumptions of an MCMC chain, the true expected value
+of this function, <span class="math notranslate nohighlight">\(\mathbb{E}_{\pi}g\)</span> can be approximated by
+taking the mean over the <span class="math notranslate nohighlight">\(n\)</span> samples in the MCMC chain, denoted
+<span class="math notranslate nohighlight">\(X = \{X_{1}, X_{2}, \ldots, X_{n} \}\)</span>,</p>
+<div class="math notranslate nohighlight" id="equation-ci-eq-1">
+<span class="eqno">(169)<a class="headerlink" href="#equation-ci-eq-1" title="Permalink to this equation"></a></span>\[\bar{g}_{n} = \frac{1}{n} \sum_{i = 1}^{n} g(X_{i}).\]</div>
+<p>The error in this approximation converges to zero, such that</p>
+<div class="math notranslate nohighlight" id="equation-ci-eq-2">
+<span class="eqno">(170)<a class="headerlink" href="#equation-ci-eq-2" title="Permalink to this equation"></a></span>\[\sqrt{n}\left( \bar{g}_{n} - \mathbb{E}_{\pi}g \right) \rightarrow
+  \mathcal{N}(0, \sigma_{g}^{2}), \quad n \rightarrow \infty.\]</div>
+<p>Thus, in particular, we would like to estimate the variance of this
+error, <span class="math notranslate nohighlight">\(\sigma_{g}^{2}\)</span>. Let <span class="math notranslate nohighlight">\(\hat{\sigma}_{n}^{2}\)</span> be a
+consistent estimator of the true variance <span class="math notranslate nohighlight">\(\sigma_{g}^{2}\)</span>. Then</p>
+<div class="math notranslate nohighlight" id="equation-ci-eq-3">
+<span class="eqno">(171)<a class="headerlink" href="#equation-ci-eq-3" title="Permalink to this equation"></a></span>\[\bar{g}_{n} \pm t_{*} \frac{\hat{\sigma}_{n}}{\sqrt{n}}\]</div>
+<p>is an asymptotically valid interval estimator of
+<span class="math notranslate nohighlight">\(\mathbb{E}_{\pi}g\)</span>, where <span class="math notranslate nohighlight">\(t_{*}\)</span> is a Student’s <span class="math notranslate nohighlight">\(t\)</span>
+quantile. In Dakota, confidence intervals are computed for the mean and
+variance of the parameters and of the responses, all confidence
+intervals are given at the 95th percentile, and <span class="math notranslate nohighlight">\(\hat{\sigma}_{n}\)</span>
+is calculated via non-overlapping batch means, or “batch means” for
+simplicity.</p>
+<p>When batch means is used to calculate <span class="math notranslate nohighlight">\(\hat{\sigma}_{n}\)</span>, the MCMC
+chain <span class="math notranslate nohighlight">\(X\)</span> is divided into blocks of equal size. Thus, we have
+<span class="math notranslate nohighlight">\(a_{n}\)</span> batches of size <span class="math notranslate nohighlight">\(b_{n}\)</span>, and <span class="math notranslate nohighlight">\(n = a_{n}b_{n}\)</span>.
+Then the batch means estimate of <span class="math notranslate nohighlight">\(\sigma_{g}^{2}\)</span> is given by</p>
+<div class="math notranslate nohighlight" id="equation-ci-eq-4">
+<span class="eqno">(172)<a class="headerlink" href="#equation-ci-eq-4" title="Permalink to this equation"></a></span>\[\hat{\sigma}_{n}^{2} = \frac{b_{n}}{a_{n} -1} \sum_{k = 0}^{a_{n}-1}
+                         \left( \bar{g}_{k} - \bar{g}_{n} \right)^{2},\]</div>
+<p>where <span class="math notranslate nohighlight">\(\bar{g}_{k}\)</span> is the expected value of <span class="math notranslate nohighlight">\(g\)</span> for batch
+<span class="math notranslate nohighlight">\(k = 0, \ldots,
+a_{n}-1\)</span>,</p>
+<div class="math notranslate nohighlight" id="equation-ci-eq-5">
+<span class="eqno">(173)<a class="headerlink" href="#equation-ci-eq-5" title="Permalink to this equation"></a></span>\[\bar{g}_{k} = \frac{1}{b_{n}} \sum_{i = 1}^{b_{n}}
+                g\left(X_{kb_{n}+i}\right).\]</div>
+<p>It has been found that an appropriate batch size is
+<span class="math notranslate nohighlight">\(b_{n} = \left
+\lfloor{\sqrt{n}}\right \rfloor\)</span>. Further discussion and comparison to
+alternate estimators of <span class="math notranslate nohighlight">\(\sigma_{g}^{2}\)</span> can be found
+in <span id="id5">[<a class="reference internal" href="../../misc/bibliography.html#id90" title="J. M. Flegal and G. L. Jones. Batch means and spectral variance estimators in Markov chain Monte Carlo. The Annals of Statistics, 38(2):1034–1070, 2010.">FJ10</a>]</span>.</p>
+<p>Confidence intervals may be used as a chain diagnostic by setting
+fixed-width stopping rules <span id="id6">[<a class="reference internal" href="../../misc/bibliography.html#id225" title="N. L. Robertson, M. Khalil, and B. M. Adams. Comparing MCMC diagnostics and stopping rules. In A. Cangi and M. L. Parks, editors, Center for Computing Research Summer Proceedings 2018, 132–144. Sandia National Laboratories, 2018. Technical Report SAND2019-5093R.">RKA18</a>]</span>. For example, if
+the width of one or more intervals is below some threshold value, that
+may indicate that enough samples have been drawn. Common choices for the
+threshold value include:</p>
+<ul class="simple">
+<li><p>Fixed width: <span class="math notranslate nohighlight">\(\epsilon\)</span></p></li>
+<li><p>Relative magnitude: <span class="math notranslate nohighlight">\(\epsilon \| \bar{g}_{n} \|\)</span></p></li>
+<li><p>Relative standard deviation: <span class="math notranslate nohighlight">\(\epsilon \| \hat{\sigma}_{n} \|\)</span></p></li>
+</ul>
+<p>If the chosen threshold is exceeded, <code class="docutils literal notranslate"><span class="pre">samples</span></code> may need to be
+increased. Sources <span id="id7">[<a class="reference internal" href="../../misc/bibliography.html#id90" title="J. M. Flegal and G. L. Jones. Batch means and spectral variance estimators in Markov chain Monte Carlo. The Annals of Statistics, 38(2):1034–1070, 2010.">FJ10</a>, <a class="reference internal" href="../../misc/bibliography.html#id225" title="N. L. Robertson, M. Khalil, and B. M. Adams. Comparing MCMC diagnostics and stopping rules. In A. Cangi and M. L. Parks, editors, Center for Computing Research Summer Proceedings 2018, 132–144. Sandia National Laboratories, 2018. Technical Report SAND2019-5093R.">RKA18</a>]</span> suggest increasing
+the sample size by 10% and reevaluating the diagnostics for signs of
+chain convergence.</p>
+<p>If <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-output.html"><span class="pre">output</span></a></code> is set to <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-output-debug.html"><span class="pre">debug</span></a></code>,
+the sample mean and variance for each batch (for each parameter and response)
+is output to the screen. The user can then analyze the convergence of these
+batch means in order to deduce whether the MCMC chain has converged.</p>
+</section>
+</section>
+<section id="model-discrepancy">
+<span id="uq-model-disc"></span><h2>Model Discrepancy<a class="headerlink" href="#model-discrepancy" title="Permalink to this headline"></a></h2>
+<p>Whether in a Bayesian setting or otherwise, the goal of model
+calibration is to minimize the difference between the observational data
+<span class="math notranslate nohighlight">\(d_i\)</span> and the corresponding model response
+<span class="math notranslate nohighlight">\(q_i(\boldsymbol{\theta})\)</span>. That is, one seeks to minimize the
+misfit <a class="reference internal" href="#equation-bayes-misfit">(156)</a>. For a given set of data, this
+formulation explicitly depends on model parameters that are to be
+adjusted and implicitly on conditions that may vary between experiments,
+such as temperature or pressure. These experimental conditions can be
+represented in Dakota by configuration variables, in which case
+<a class="reference internal" href="#equation-bayes-model">(154)</a> can be rewritten,</p>
+<div class="math notranslate nohighlight" id="equation-model-discrepancy-1">
+<span class="eqno">(174)<a class="headerlink" href="#equation-model-discrepancy-1" title="Permalink to this equation"></a></span>\[d_i(x) = q_i(\boldsymbol{\theta}, x) + \epsilon_i,\]</div>
+<p>where <span class="math notranslate nohighlight">\(x\)</span> represents the configuration variables. Updated forms of
+the likelihood <a class="reference internal" href="#equation-bayes-likelihood">(155)</a> and misfit <a class="reference internal" href="#equation-bayes-misfit">(156)</a> are easily obtained.</p>
+<p>It is often the case that the calibrated model provides an insufficient
+fit to the experimental data. This is generally attributed to model form
+or structural error, and can be corrected to some extent with the use of
+a model discrepancy term. The seminal work in model discrepancy
+techniques, Kennedy and O’Hagan <span id="id8">[<a class="reference internal" href="../../misc/bibliography.html#id158" title="M. C. Kennedy and A. O'Hagan. Bayesian calibration of computer models. Journal of the Royal Statistical Society, 63:425–464, 2001.">KOHagan01</a>]</span>, introduces
+an additive formulation</p>
+<div class="math notranslate nohighlight" id="equation-koh-discrep">
+<span class="eqno">(175)<a class="headerlink" href="#equation-koh-discrep" title="Permalink to this equation"></a></span>\[d_i(x) = q_i\left(\boldsymbol{\theta}, x\right) + \delta_i(x) + \epsilon_i,\]</div>
+<p>where <span class="math notranslate nohighlight">\(\delta_i(x)\)</span> represents the model discrepancy. For scalar
+responses, <span class="math notranslate nohighlight">\(\delta_i\)</span> depends <em>only</em> on the configuration
+variables, and one discrepancy model is calculated for <em>each</em> observable
+<span class="math notranslate nohighlight">\(d_i\)</span>, <span class="math notranslate nohighlight">\(i = 1,
+\ldots, n\)</span>, yielding <span class="math notranslate nohighlight">\(\delta_1, \ldots, \delta_n\)</span>. For field
+responses in which the observational data and corresponding model
+responses are also functions of independent field coordinates such as
+time or space, <a class="reference internal" href="#equation-koh-discrep">(175)</a> can be rewritten as</p>
+<div class="math notranslate nohighlight" id="equation-model-discrepancy-2">
+<span class="eqno">(176)<a class="headerlink" href="#equation-model-discrepancy-2" title="Permalink to this equation"></a></span>\[d(t,x) = q(t, \boldsymbol{\theta}, x) + \delta(t,x) + \epsilon.\]</div>
+<p>In this case, a single, global discrepancy model <span class="math notranslate nohighlight">\(\delta\)</span> is
+calculated over the entire field. The current model discrepancy
+implementation in Dakota has not been tested for cases in which scalar
+and field responses are mixed.</p>
+<p>The Dakota implementation of model discrepancy for scalar responses also
+includes the calculation of prediction intervals for each prediction
+configuration <span class="math notranslate nohighlight">\(x_{k,new}\)</span>. These intervals capture the uncertainty
+in the discrepancy approximation as well as the experimental uncertainty
+in the response functions. It is assumed that the uncertainties,
+representated by their respective variance values, are combined
+additively for each observable <span class="math notranslate nohighlight">\(i\)</span> such that</p>
+<div class="math notranslate nohighlight" id="equation-md-totalvar">
+<span class="eqno">(177)<a class="headerlink" href="#equation-md-totalvar" title="Permalink to this equation"></a></span>\[\Sigma_{total,i}(x) = \Sigma_{\delta,i}(x) + \sigma^2_{exp,i}(x)I,\]</div>
+<p>where <span class="math notranslate nohighlight">\(\Sigma_{\delta,i}\)</span> is the variance of the discrepancy
+function, and <span class="math notranslate nohighlight">\(\sigma^2_{exp,i}\)</span> is taken from the user-provided
+experimental variances. The experimental variance provided for parameter
+calibration may vary for the same observable from experiment to
+experiment, thus <span class="math notranslate nohighlight">\(\sigma^{2}_{exp,i}\)</span> is taken to be the maximum
+variance given for each observable. That is,</p>
+<div class="math notranslate nohighlight" id="equation-model-discrepancy-3">
+<span class="eqno">(178)<a class="headerlink" href="#equation-model-discrepancy-3" title="Permalink to this equation"></a></span>\[\sigma^2_{exp,i} = \max_{j} \sigma^2_{i}(x_j),\]</div>
+<p>where <span class="math notranslate nohighlight">\(\sigma^2_{i}(x_j)\)</span> is the variance provided for the
+<span class="math notranslate nohighlight">\(i^{th}\)</span> observable <span class="math notranslate nohighlight">\(d_i\)</span>, computed or measured with the
+configuration variable <span class="math notranslate nohighlight">\(x_j\)</span>. When a Gaussian process discrepancy
+function is used, the variance is calculated according to
+<a class="reference internal" href="surrogates.html#equation-krigvar">(212)</a>. For polynomial discrepancy
+functions, the variance is given by <a class="reference internal" href="surrogates.html#equation-poly-var">(233)</a>.</p>
+<p>It should be noted that a Gaussian process discrepancy function is used
+when the response is a field instead of a scalar; the option to use a
+polynomial discrepancy function has not yet been activated. The variance
+of the discrepancy function <span class="math notranslate nohighlight">\(\Sigma_{\delta, i}\)</span> is calculated
+according to <a class="reference internal" href="surrogates.html#equation-krigvar">(212)</a>. Future work includes
+extending this capability to include polynomial discrepancy formulations
+for field responses, as well as computation of prediction intervals
+which include experimental variance information.</p>
+<section id="scalar-responses-example">
+<span id="uq-model-disc-scalar-example"></span><h3>Scalar Responses Example<a class="headerlink" href="#scalar-responses-example" title="Permalink to this headline"></a></h3>
+<p>For the purposes of illustrating the model discrepancy capability
+implemented in Dakota, consider the following example. Let the “truth”
+be given by</p>
+<div class="math notranslate nohighlight" id="equation-md-truth">
+<span class="eqno">(179)<a class="headerlink" href="#equation-md-truth" title="Permalink to this equation"></a></span>\[y(t,x) = 10.5 x \log(t-0.1) - \frac{x}{(t-0.1-\theta^{*})^2},\]</div>
+<p>where <span class="math notranslate nohighlight">\(t\)</span> is the independent variable, <span class="math notranslate nohighlight">\(x\)</span> is the
+configuration parameter, and <span class="math notranslate nohighlight">\(\theta^{*}\)</span> is <span class="math notranslate nohighlight">\(7.75\)</span>, the
+“true” value of the parameter <span class="math notranslate nohighlight">\(\theta\)</span>. Let the “model” be given
+by</p>
+<div class="math notranslate nohighlight" id="equation-md-model">
+<span class="eqno">(180)<a class="headerlink" href="#equation-md-model" title="Permalink to this equation"></a></span>\[m(t,\theta, x) = \frac{10 x \log(t) (t-\theta)^2 - x}{(t-8)^2}.\]</div>
+<p>Again, <span class="math notranslate nohighlight">\(t\)</span> is the independent variable and <span class="math notranslate nohighlight">\(x\)</span> is the
+configuration parameter, and <span class="math notranslate nohighlight">\(\theta\)</span> now represents the model
+parameter to be calibrated. It is clear from the given formulas that the
+model is structurally different from the truth and will be inadequate.</p>
+<p>The “experimental” data is produced by considering two configurations,
+<span class="math notranslate nohighlight">\(x=10\)</span> and <span class="math notranslate nohighlight">\(x=15\)</span>. Data points are taken over the range
+<span class="math notranslate nohighlight">\(t \in [1.2, 7.6]\)</span> at intervals of length <span class="math notranslate nohighlight">\(\Delta t = 0.4\)</span>.
+Normally distributed noise <span class="math notranslate nohighlight">\(\epsilon_i\)</span> is added such that</p>
+<div class="math notranslate nohighlight" id="equation-md-data">
+<span class="eqno">(181)<a class="headerlink" href="#equation-md-data" title="Permalink to this equation"></a></span>\[d_i(x_j) = y(t_i, x_j) + \epsilon_i,\]</div>
+<p>with <span class="math notranslate nohighlight">\(i = 1, \ldots, 17\)</span> and <span class="math notranslate nohighlight">\(j = 1,2\)</span>. Performing a
+Bayesian update in Dakota yields a posterior distribution of
+<span class="math notranslate nohighlight">\(\theta\)</span> that is tightly peaked around the value
+<span class="math notranslate nohighlight">\(\bar{\theta} = 7.9100\)</span>. Graphs of <span class="math notranslate nohighlight">\(m(t, \bar{\theta}, 10)\)</span>
+and <span class="math notranslate nohighlight">\(m(t, \bar{\theta}, 15)\)</span> are compared to <span class="math notranslate nohighlight">\(y(t, 10)\)</span> and
+<span class="math notranslate nohighlight">\(y(t, 15)\)</span>, respectively, for <span class="math notranslate nohighlight">\(t \in [1.2, 7.6]\)</span> in
+<a class="reference internal" href="#fig-md-uncorr"><span class="std std-numref">Fig. 74</span></a>, from which it is clear that the model
+insufficiently captures the given experimental data.</p>
+<figure class="align-center" id="fig-md-uncorr">
+<a class="reference internal image-reference" href="../../_images/moddiscrep_TruthExpModel.png"><img alt="Graphs of the uncorrected model output :math:`m(t,x)`, the truth :math:`y(t,x)`, and experimental data :math:`d(t,x)` for configurations :math:`x = 10` and :math:`x = 15`." src="../../_images/moddiscrep_TruthExpModel.png" style="width: 600px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 74 </span><span class="caption-text">Graphs of the uncorrected model output <span class="math notranslate nohighlight">\(m(t,x)\)</span>, the truth
+<span class="math notranslate nohighlight">\(y(t,x)\)</span>, and experimental data <span class="math notranslate nohighlight">\(d(t,x)\)</span> for
+configurations <span class="math notranslate nohighlight">\(x = 10\)</span> and <span class="math notranslate nohighlight">\(x = 15\)</span>.</span><a class="headerlink" href="#fig-md-uncorr" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<p>Following the Bayesian update, Dakota calculates the model discrepancy
+values</p>
+<div class="math notranslate nohighlight" id="equation-md-discrep">
+<span class="eqno">(182)<a class="headerlink" href="#equation-md-discrep" title="Permalink to this equation"></a></span>\[\delta_i(x_j) = d_i(x_j) - m_i(\bar{\theta}, x_j)\]</div>
+<p>for the experimental data points, <em>i.e.</em> for <span class="math notranslate nohighlight">\(i = 1, \ldots, 17\)</span>
+and <span class="math notranslate nohighlight">\(j = 1,2\)</span>. Dakota then approximates the model discrepancy
+functions <span class="math notranslate nohighlight">\(\delta_1(x), \ldots \delta_{17}(x)\)</span>, and computes the
+responses and prediction intervals of the corrected model
+<span class="math notranslate nohighlight">\(m_i(\bar{\theta}, x_{j,new})
++ \delta_i(x_{j,new})\)</span> for each prediction configuration. The prediction
+intervals have a radius of two times the standard deviation calculated
+with <a class="reference internal" href="#equation-md-totalvar">(177)</a>. The discrepancy function in
+this example was taken to be a Gaussian process with a quadratic trend,
+which is the default setting for the model discrepancy capability in
+Dakota.</p>
+<p>The prediction configurations are taken to be
+<span class="math notranslate nohighlight">\(x_{new} = 5, 5.5, \ldots, 20\)</span>. Examples of two corrected models
+are shown in <a class="reference internal" href="#fig-md-corr"><span class="std std-numref">Fig. 75</span></a>. The substantial
+overlap in the measurement error bounds and the corrected model
+prediction intervals indicate that the corrected model is sufficiently
+accurate. This conclusion is supported by <a class="reference internal" href="#fig-md-pred"><span class="std std-numref">Fig. 78</span></a>,
+in which the “truth” models for three prediction figurations are
+compared to the corrected model output. In each case, the truth falls
+within the prediction intervals.</p>
+<figure class="align-center" id="fig-md-corr">
+<a class="reference internal image-reference" href="../../_images/moddiscrep_TruthExpModelGPlines.png"><img alt="Locations of the corrected models shown below." src="../../_images/moddiscrep_TruthExpModelGPlines.png" style="width: 600px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 75 </span><span class="caption-text">Locations of the corrected models shown below.</span><a class="headerlink" href="#fig-md-corr" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<figure class="align-center" id="fig-md-corr-b">
+<a class="reference internal image-reference" href="../../_images/moddiscrep_GPt5.png"><img alt="Corrected model values with prediction intervals for t = 5.2" src="../../_images/moddiscrep_GPt5.png" style="width: 600px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 76 </span><span class="caption-text">Corrected model values with prediction intervals for t = 5.2</span><a class="headerlink" href="#fig-md-corr-b" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<figure class="align-center" id="fig-md-corr-c">
+<a class="reference internal image-reference" href="../../_images/moddiscrep_GPt7.png"><img alt="Corrected model values with prediction intervals for t = 7.2" src="../../_images/moddiscrep_GPt7.png" style="width: 600px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 77 </span><span class="caption-text">Corrected model values with prediction intervals for t = 7.2</span><a class="headerlink" href="#fig-md-corr-c" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<figure class="align-center" id="fig-md-pred">
+<a class="reference internal image-reference" href="../../_images/moddiscrep_correctedlowmidhigh.png"><img alt="The graphs of :math:`y(t,x)` for :math:`x = 7.5, 12.5, 17.5` are compared to the corrected model and its prediction intervals. The uncorrected model is also shown to illustrate its inadequacy." src="../../_images/moddiscrep_correctedlowmidhigh.png" style="width: 600px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 78 </span><span class="caption-text">The graphs of <span class="math notranslate nohighlight">\(y(t,x)\)</span> for <span class="math notranslate nohighlight">\(x = 7.5, 12.5, 17.5\)</span> are
+compared to the corrected model and its prediction intervals. The
+uncorrected model is also shown to illustrate its inadequacy.</span><a class="headerlink" href="#fig-md-pred" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+</section>
+<section id="field-responses-example">
+<span id="uq-model-disc-field-example"></span><h3>Field Responses Example<a class="headerlink" href="#field-responses-example" title="Permalink to this headline"></a></h3>
+<p>To illustrate the model discrepancy capability for field responses,
+consider the stress-strain experimental data shown in
+<a class="reference internal" href="#fig-mat-exp"><span class="std std-numref">Fig. 79</span></a>. The configuration variable in this
+example represents temperature. Unlike the example discussed in the
+previous section, the domain of the independent variable (strain)
+differs from temperature to temperature, as do the shapes of the stress
+curves. This presents a challenge for the simulation model as well as
+the discrepancy model.</p>
+<p>Let the “model” be given by</p>
+<div class="math notranslate nohighlight" id="equation-bayes-field-responses-1">
+<span class="eqno">(183)<a class="headerlink" href="#equation-bayes-field-responses-1" title="Permalink to this equation"></a></span>\[m(t, \boldsymbol{\theta}, x) = \theta_{1} \left[ \frac{\log(100t + 1)}{x^0.5}
+  - \frac{1}{x^{0.2}\left(100t - 1.05\left(\frac{x}{100} - 6.65\right)^{2}
+\theta_{2}\right)^{2}} \right],\]</div>
+<p>where <span class="math notranslate nohighlight">\(t\)</span> is the independent variable (strain) and <span class="math notranslate nohighlight">\(x\)</span> is
+the configuration parameter (temperature). Note that there are two
+parameters to be calibrated,
+<span class="math notranslate nohighlight">\(\boldsymbol{\theta} = (\theta_{1}, \theta_{2})\)</span>.</p>
+<p>The average and standard deviation of the experimental data at
+temperatures <span class="math notranslate nohighlight">\(x = 373.15\)</span>, <span class="math notranslate nohighlight">\(x = 673.15\)</span>, and
+<span class="math notranslate nohighlight">\(x = 973.15\)</span> are calculated and used as calibration data. The four
+remaining temperatures will be used to evaluate the performance of the
+corrected model. The calibration data and the resulting calibrated model
+are shown in Figure <a class="reference external" href="#fig:mat_uncorr">1.4</a>. With experimental data,
+the observations may not be taken at the same independent field
+coordinates, so the keyword <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/responses-calibration_terms-calibration_data-interpolate.html"><span class="pre">interpolate</span></a></code>
+can be used in the <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/responses.html"><span class="pre">responses</span></a></code> block of the Dakota input file.
+The uncorrected model does not adequately capture the experimental data.</p>
+<figure class="align-center" id="fig-mat-exp">
+<a class="reference internal image-reference" href="../../_images/moddiscrep_ExpAllData.png"><img alt="Graphs of the experimental data :math:`d(t,x)` for configurations (temperatures) ranging from :math:`x = 296.15K` to :math:`x = 1073.15K`." src="../../_images/moddiscrep_ExpAllData.png" style="width: 600px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 79 </span><span class="caption-text">Graphs of the experimental data <span class="math notranslate nohighlight">\(d(t,x)\)</span> for configurations
+(temperatures) ranging from <span class="math notranslate nohighlight">\(x = 296.15K\)</span> to <span class="math notranslate nohighlight">\(x = 1073.15K\)</span>.</span><a class="headerlink" href="#fig-mat-exp" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<p>Following the Bayesian update, Dakota calculates the build points of the
+model discrepancy,</p>
+<div class="math notranslate nohighlight" id="equation-bayes-field-responses-2">
+<span class="eqno">(184)<a class="headerlink" href="#equation-bayes-field-responses-2" title="Permalink to this equation"></a></span>\[\delta(t_{i}, x_{j}) = d(t_{i}, x_{j}) - m(t_{i}, \boldsymbol{\theta}, x_j),\]</div>
+<p>for each experimental data point. Dakota then approximates the global
+discrepancy function <span class="math notranslate nohighlight">\(\delta(t, x)\)</span> and computes the corrected
+model responses
+<span class="math notranslate nohighlight">\(m(t_{i}, \boldsymbol{\theta}, x_{j, new}) + \delta(t_{i}, x_{j, new})\)</span>
+and variance of the discrepancy model
+<span class="math notranslate nohighlight">\(\sigma_{\delta, x_{j, new}}\)</span> for each prediction configuration.
+The corrected model for the prediction configurations is shown in
+<a class="reference internal" href="#fig-mat-uncorr"><span class="std std-numref">Fig. 80</span></a>. The corrected model is able
+to capture the shape of the stress-strain curve quite well in all four
+cases; however, the point of failure is difficult to capture for the
+extrapolated temperatures. The difference in shape and point of failure
+between temperatures may also explain the large variance in the
+discrepancy model.</p>
+<figure class="align-center" id="fig-mat-uncorr">
+<a class="reference internal image-reference" href="../../_images/moddiscrep_ExpUncorr.png"><img alt="Graphs of the calibration data :math:`d(t,x)` and uncorrected calibrated model :math:`m(t, \boldsymbol{\theta}, x)` for configurations (temperatures) :math:`x = 373.15K`, :math:`x = 673.15K`, and :math:`x = 973.15K`." src="../../_images/moddiscrep_ExpUncorr.png" style="width: 600px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 80 </span><span class="caption-text">Graphs of the calibration data <span class="math notranslate nohighlight">\(d(t,x)\)</span> and uncorrected
+calibrated model <span class="math notranslate nohighlight">\(m(t, \boldsymbol{\theta}, x)\)</span> for
+configurations (temperatures) <span class="math notranslate nohighlight">\(x =
+373.15K\)</span>, <span class="math notranslate nohighlight">\(x = 673.15K\)</span>, and <span class="math notranslate nohighlight">\(x = 973.15K\)</span>.</span><a class="headerlink" href="#fig-mat-uncorr" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+</section>
+</section>
+<section id="experimental-design">
+<span id="uq-bayes-experimental-design"></span><h2>Experimental Design<a class="headerlink" href="#experimental-design" title="Permalink to this headline"></a></h2>
+<p>Experimental design algorithms seek to add observational data that
+informs model parameters and reduces their uncertainties. Typically, the
+observational data <span class="math notranslate nohighlight">\(\boldsymbol{d}\)</span> used in the Bayesian
+update <a class="reference internal" href="#equation-bayesthm">(153)</a> is taken from physical
+experiments. However, it is also common to use the responses or output
+from a high-fidelity model as <span class="math notranslate nohighlight">\(\boldsymbol{d}\)</span> in the calibration
+of a low-fidelity model. Furthermore, this calibration can be done with
+a single Bayesian update or iteratively with the use of experimental
+design. The context of experimental design mandates that the
+high-fidelity model or physical experiment depend on design conditions
+or configurations, such as temperature or spatial location. After a
+preliminary Bayesian update using an initial set of high-fidelity (or
+experimental) data, the next “best” design points are determined and
+used in the high-fidelity model to augment <span class="math notranslate nohighlight">\(\boldsymbol{d}\)</span>, which
+is used in subsequent Bayesian updates of the low-fidelity model
+parameters.</p>
+<p>The question then becomes one of determining the meaning of “best.” In
+information theory, the mutual information is a measure of the reduction
+in the uncertainty of one random variable due to the knowledge of
+another <span id="id9">[<a class="reference internal" href="../../misc/bibliography.html#id44" title="T.M. Cover and J.A. Thomas. Elements of Information Theory. A Wiley-Interscience publication. Wiley, 2006.">CT06</a>]</span>. Recast into the context of
+experimental design, the mutual information represents how much the
+proposed experiment and resulting observation would reduce the
+uncertainties in the model parameters. Therefore, given a set of
+experimental design conditions, that which maximizes the mutual
+information is the most desirable. This is the premise that motivates
+the Bayesian experimental design algorithm implemented in Dakota.</p>
+<p>The initial set of high-fidelity data may be either user-specified or
+generated within Dakota by performing Latin Hypercube Sampling on the
+space of configuration variables specified in the input file. If
+Dakota-generated, the design variables will be run through the
+high-fidelity model specified by the user to produce the initial data
+set. Whether user-specified or Dakota-generated, this initial data is
+used in a Bayesian update of the low-fidelity model parameters.</p>
+<p>It is important to note that the low-fidelity model depends on both
+parameters to be calibrated <span class="math notranslate nohighlight">\(\boldsymbol{\theta}\)</span> and the design
+conditions <span class="math notranslate nohighlight">\(\boldsymbol{\xi}\)</span>. During Bayesian calibration,
+<span class="math notranslate nohighlight">\(\boldsymbol{\xi}\)</span> are not calibrated; they do, however, play an
+integral role in the calculation of the likelihood. Let us rewrite
+Bayes’ Rule as</p>
+<div class="math notranslate nohighlight" id="equation-expdesign-bayes">
+<span class="eqno">(185)<a class="headerlink" href="#equation-expdesign-bayes" title="Permalink to this equation"></a></span>\[{f_{\boldsymbol{\Theta |D}}}\left( \boldsymbol{\theta |d(\xi)} \right)
+= \frac{{{f_{\boldsymbol{\Theta}}}\left( \boldsymbol{\theta} \right)
+\mathcal{L}\left( \boldsymbol{\theta;d(\xi)} \right)}}
+{{{f_{\boldsymbol{D}}}\left( \boldsymbol{d(\xi)} \right)}},\]</div>
+<p>making explicit the dependence of the data on the design conditions. As
+in <a class="reference internal" href="#uq-bayes-basic"><span class="std std-ref">Fundamentals</span></a>, the difference between the
+high-fidelity and low-fidelity model responses is assumed to be Gaussian
+such that</p>
+<div class="math notranslate nohighlight" id="equation-expdesign-bayes-2">
+<span class="eqno">(186)<a class="headerlink" href="#equation-expdesign-bayes-2" title="Permalink to this equation"></a></span>\[d_{i}(\boldsymbol{\xi_{j}}) = q_{i}(\boldsymbol{\theta,\xi}_{j}) + \epsilon_{i},\]</div>
+<p>where <span class="math notranslate nohighlight">\(\boldsymbol{\xi}_{j}\)</span> are the configuration specifications
+of the <span class="math notranslate nohighlight">\(j\)</span>th experiment. The experiments are considered to be
+independent, making the misfit</p>
+<div class="math notranslate nohighlight" id="equation-expdesign-bayes-3">
+<span class="eqno">(187)<a class="headerlink" href="#equation-expdesign-bayes-3" title="Permalink to this equation"></a></span>\[M(\boldsymbol{\theta, d(\xi)}) = \frac{1}{2} \sum_{j = 1}^{m}
+\left( \boldsymbol{d}(\boldsymbol{\xi}_{j}) -
+\boldsymbol{q}(\boldsymbol{\theta, \xi}_{j}) \right)^{T}
+\boldsymbol{\Sigma}_{\boldsymbol{d}}^{-1}
+\left( \boldsymbol{d}(\boldsymbol{\xi}_{j}) -
+\boldsymbol{q}(\boldsymbol{\theta, \xi}_{j}) \right).\]</div>
+<p>At the conclusion of the initial calibration, a set of candidate design
+conditions is proposed. As before, these may be either user-specified or
+generated within Dakota via Latin Hypercube Sampling of the design
+space. Among these candidates, we seek that which maximizes the mutual
+information,</p>
+<div class="math notranslate nohighlight" id="equation-optimal-design">
+<span class="eqno">(188)<a class="headerlink" href="#equation-optimal-design" title="Permalink to this equation"></a></span>\[\boldsymbol{\xi}^{*} = \text{arg max}_{\boldsymbol{\xi}_{j}} I(\boldsymbol{\theta},
+\boldsymbol{d}(\boldsymbol{\xi}_{j}) ),\]</div>
+<p>where the mutual information is given by</p>
+<div class="math notranslate nohighlight" id="equation-mutual-info">
+<span class="eqno">(189)<a class="headerlink" href="#equation-mutual-info" title="Permalink to this equation"></a></span>\[I(\boldsymbol{\theta}, \boldsymbol{d}(\boldsymbol{\xi}_{j})) = \iint
+{f_{\boldsymbol{\Theta ,D}}}\left( \boldsymbol{\theta ,d(\xi}_{j}) \right)
+\log \frac{ {f_{\boldsymbol{\Theta,D}}}\left( \boldsymbol{\theta,d(\xi}_{j})
+\right)}{f_{\boldsymbol{\Theta}}\left(\boldsymbol{\theta} \right)
+f_{\boldsymbol{D}}\left(\boldsymbol{d}(\boldsymbol{\xi}_{j}) \right) }
+d\boldsymbol{\theta} d\boldsymbol{d}.\]</div>
+<p>The mutual information must, therefore, be computed for each candidate
+design point <span class="math notranslate nohighlight">\(\boldsymbol{\xi}_{j}\)</span>. There are two
+<span class="math notranslate nohighlight">\(k\)</span>-nearest neighbor methods available in Dakota that can be used
+to approximate <a class="reference internal" href="#equation-mutual-info">(189)</a>, both of which
+are derived in <span id="id10">[<a class="reference internal" href="../../misc/bibliography.html#id171" title="Alexander Kraskov, Harald Stögbauer, and Peter Grassberger. Estimating mutual information. Physical review E, 69(6):066138, 2004.">KStogbauerG04</a>]</span>. Within Dakota, the posterior
+distribution
+<span class="math notranslate nohighlight">\(f_{\boldsymbol{\Theta | D}}\left(\boldsymbol{\theta | d(\xi)}\right)\)</span>
+is given by MCMC samples. From these, <span class="math notranslate nohighlight">\(N\)</span> samples are drawn and
+run through the low-fidelity model with <span class="math notranslate nohighlight">\(\boldsymbol{\xi}_{j}\)</span>
+fixed. This creates a matrix whose rows consist of the vector
+<span class="math notranslate nohighlight">\(\boldsymbol{\theta}^{i}\)</span> and the low-fidelity model responses
+<span class="math notranslate nohighlight">\(\tilde{\boldsymbol{d}}(\boldsymbol{\theta}^{i},
+\boldsymbol{\xi}_{j})\)</span> for <span class="math notranslate nohighlight">\(i = 1, \ldots, N\)</span>. These rows
+represent the joint distribution between the parameters and model
+responses. For each row <span class="math notranslate nohighlight">\(X_{i}\)</span>, the distance to its
+<span class="math notranslate nohighlight">\(k^{th}\)</span>-nearest neighbor among the other rows is approximated
+<span class="math notranslate nohighlight">\(\varepsilon_{i} = \| X_{i} - X_{k(i)} \|_{\infty}\)</span>. As noted
+in <span id="id11">[<a class="reference internal" href="../../misc/bibliography.html#id173" title="Allison Lewis, Ralph Smith, Brian Williams, and Victor Figueroa. An information theoretic approach to use high-fidelity codes to calibrate low-fidelity codes. Journal of Computational Physics, 324:24 - 43, 2016.">LSWF16</a>]</span>, <span class="math notranslate nohighlight">\(k\)</span> is often taken to be six. The
+treatment of the marginal distributions is where the two mutual
+information algorithms differ. In the first algorithm, the marginal
+distributions are considered by calculating
+<span class="math notranslate nohighlight">\(n_{\boldsymbol{\theta},i}\)</span>, which is the number of parameter
+samples that lie within <span class="math notranslate nohighlight">\(\varepsilon_{i}\)</span> of
+<span class="math notranslate nohighlight">\(\boldsymbol{\theta}^{i}\)</span>, and <span class="math notranslate nohighlight">\(n_{\boldsymbol{d},i}\)</span>, which
+is the number of responses that lie within <span class="math notranslate nohighlight">\(\varepsilon_{i}\)</span> of
+<span class="math notranslate nohighlight">\(\tilde{\boldsymbol{d}}(\boldsymbol{\theta}^{i},
+\boldsymbol{\xi}_{j})\)</span>. The mutual information then is approximated
+as <span id="id12">[<a class="reference internal" href="../../misc/bibliography.html#id171" title="Alexander Kraskov, Harald Stögbauer, and Peter Grassberger. Estimating mutual information. Physical review E, 69(6):066138, 2004.">KStogbauerG04</a>]</span></p>
+<div class="math notranslate nohighlight" id="equation-ksg1">
+<span class="eqno">(190)<a class="headerlink" href="#equation-ksg1" title="Permalink to this equation"></a></span>\[I(\boldsymbol{\theta}, \boldsymbol{d}(\boldsymbol{\xi}_{j})) \approx
+\psi(k) + \psi(N) - \frac{1}{N-1} \sum_{i = 1}^{N} \left[
+\psi(n_{\boldsymbol{\theta},i}) - \psi(n_{\boldsymbol{d},i}) \right],\]</div>
+<p>where <span class="math notranslate nohighlight">\(\psi(\cdot)\)</span> is the digamma function.</p>
+<p>In the second mutual information approximation method, <span class="math notranslate nohighlight">\(X_{i}\)</span> and
+all of its <span class="math notranslate nohighlight">\(k\)</span>-nearest neighbors such that
+<span class="math notranslate nohighlight">\(\| X_{i} - X_{l} \|_{\infty} &lt;
+\varepsilon_{i}\)</span> are projected into the marginal subspaces for
+<span class="math notranslate nohighlight">\(\boldsymbol{\theta}\)</span> and <span class="math notranslate nohighlight">\(\tilde{\boldsymbol{d}}\)</span>. The
+quantity <span class="math notranslate nohighlight">\(\varepsilon_{\boldsymbol{\theta},i}\)</span> is then defined as
+the radius of the <span class="math notranslate nohighlight">\(l_{\infty}\)</span>-ball containing all <span class="math notranslate nohighlight">\(k+1\)</span>
+projected values of <span class="math notranslate nohighlight">\(\boldsymbol{\theta}_{l}\)</span>. Similarly,
+<span class="math notranslate nohighlight">\(\varepsilon_{\boldsymbol{d},i}\)</span> is defined as the radius of the
+<span class="math notranslate nohighlight">\(l_{\infty}\)</span>-ball containing all <span class="math notranslate nohighlight">\(k+1\)</span> projected values of
+<span class="math notranslate nohighlight">\(\tilde{\boldsymbol{d}}(\boldsymbol{\theta}_{l},
+\boldsymbol{\xi}_{j})\)</span> <span id="id13">[<a class="reference internal" href="../../misc/bibliography.html#id98" title="S. Gao, G. Ver Steeg, and A Galstyan. Efficient estimation of mutual information for strongly dependent variables. CoRR, 2014. URL: http://arxiv.org/abs/1411.2003, arXiv:1411.2003.">GVSG14</a>]</span>. In this version of the
+mutual information calculation, <span class="math notranslate nohighlight">\(n_{\boldsymbol{\theta},i}\)</span> is the
+number of parameter samples that lie within
+<span class="math notranslate nohighlight">\(\varepsilon_{\boldsymbol{\theta},i}\)</span> of
+<span class="math notranslate nohighlight">\(\boldsymbol{\theta}^{i}\)</span>, and <span class="math notranslate nohighlight">\(n_{\boldsymbol{d},i}\)</span> is the
+number of responses that lie within
+<span class="math notranslate nohighlight">\(\varepsilon_{\boldsymbol{d}, i}\)</span> of
+<span class="math notranslate nohighlight">\(\tilde{\boldsymbol{d}}(\boldsymbol{\theta}^{i}, \boldsymbol{\xi}_{j})\)</span>.
+The mutual information then is approximated as <span id="id14">[<a class="reference internal" href="../../misc/bibliography.html#id171" title="Alexander Kraskov, Harald Stögbauer, and Peter Grassberger. Estimating mutual information. Physical review E, 69(6):066138, 2004.">KStogbauerG04</a>]</span></p>
+<div class="math notranslate nohighlight" id="equation-ksg2">
+<span class="eqno">(191)<a class="headerlink" href="#equation-ksg2" title="Permalink to this equation"></a></span>\[I(\boldsymbol{\theta}, \boldsymbol{d}(\boldsymbol{\xi}_{j})) \approx
+\psi(k) + \psi(N) - \frac{1}{k} - \frac{1}{N-1} \sum_{i = 1}^{N} \left[
+\psi(n_{\boldsymbol{\theta},i}) - \psi(n_{\boldsymbol{d},i}) \right].\]</div>
+<p>By default, Dakota uses <a class="reference internal" href="#equation-ksg1">(190)</a> to approximate the
+mutual information. The user may decide to use
+<a class="reference internal" href="#equation-ksg2">(191)</a> by including the keyword <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-bayes_calibration-experimental_design-ksg2.html"><span class="pre">ksg2</span></a></code> in the
+Dakota input file.</p>
+<p>Users also have the option of specifying
+statistical noise in the low-fidelity model through the
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/responses-calibration_terms-simulation_variance.html"><span class="pre">simulation_variance</span></a></code> keyword.
+When this option is included in the
+Dakota input file, a random “error” is added to the low-fidelity model
+responses when the matrix <span class="math notranslate nohighlight">\(X\)</span> is built. This random error is
+normally distributed, with variance equal to <code class="docutils literal notranslate"><span class="pre">simulation_variance</span></code>.</p>
+<p>Once the optimal design <span class="math notranslate nohighlight">\(\boldsymbol{\xi}^{*}\)</span> is identified, it
+is run through the high-fidelity model to produce a new data point
+<span class="math notranslate nohighlight">\(\boldsymbol{d}(
+\boldsymbol{\xi}^{*})\)</span>, which is added to the calibration data.
+Theoretically, the current posterior
+<span class="math notranslate nohighlight">\(f_{\boldsymbol{\Theta | D}}\left(\boldsymbol{\theta |
+d(\xi)}\right)\)</span> would become the prior in the new Bayesian update, and
+the misfit would compare the low-fidelity model output <em>only</em> to the new
+data point. However, as previously mentioned, we do not have the
+posterior distribution; we merely have a set of samples of it. Thus,
+each time the set of data is modified, the <em>user-specified</em> prior
+distribution is used and a full Bayesian update is performed from
+scratch. If none of the three stopping criteria is met,
+<span class="math notranslate nohighlight">\(\boldsymbol{\xi}^{*}\)</span> is removed from the set of candidate
+points, and the mutual information is approximated for those that remain
+using the newly updated parameters. These stopping criteria are:</p>
+<ul class="simple">
+<li><p>the user-specified maximum number of high-fidelity model evaluations
+is reached (this does not include those needed to create the initial
+data set)</p></li>
+<li><p>the relative change in mutual information from one iteration to the
+next is sufficiently small (less than <span class="math notranslate nohighlight">\(5\%\)</span>)</p></li>
+<li><p>the set of proposed candidate design conditions has been exhausted</p></li>
+</ul>
+<p>If any one of these criteria is met, the algorithm is considered
+complete.</p>
+<section id="batch-point-selection">
+<h3>Batch Point Selection<a class="headerlink" href="#batch-point-selection" title="Permalink to this headline"></a></h3>
+<p>The details of the experimental design algorithm above assume only one
+optimal design point is being selected for each iteration of the
+algorithm. The user may specify the number of optimal design points to
+be concurrently selected by including the <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-bayes_calibration-experimental_design-batch_size.html"><span class="pre">batch_size</span></a></code>
+in the input file. The optimality condition <a class="reference internal" href="#equation-optimal-design">(188)</a> is then replaced by</p>
+<div class="math notranslate nohighlight" id="equation-batch-xi-true">
+<span class="eqno">(192)<a class="headerlink" href="#equation-batch-xi-true" title="Permalink to this equation"></a></span>\[\left\{ \boldsymbol{\xi}^{*} \right\} = \text{arg max} I\left(\boldsymbol{\theta},
+\left\{ \boldsymbol{d}(\boldsymbol{\xi})\right\}\right),\]</div>
+<p>where <span class="math notranslate nohighlight">\(\left\{ \boldsymbol{\xi}^{*} \right\} = \left\{ \boldsymbol{\xi}^{*}_{1},
+\boldsymbol{\xi}_{2}^{*}, \ldots, \boldsymbol{\xi}_{s}^{*} \right\}\)</span> is
+the set of optimal designs, <span class="math notranslate nohighlight">\(s\)</span> being defined by <code class="docutils literal notranslate"><span class="pre">batch_size</span></code>.
+If the set of design points from which the optimal designs are selected
+is of size <span class="math notranslate nohighlight">\(m\)</span>, finding <span class="math notranslate nohighlight">\(\left\{ \boldsymbol{\xi}^{*} \right\}\)</span> as
+in <a class="reference internal" href="#equation-batch-xi-true">(192)</a> would require <span class="math notranslate nohighlight">\(m!/(m-s)!\)</span> mutual information
+calculations, which may become quite costly. Dakota therefore implements a
+greedy batch point selection algorithm in which the first optimal design,</p>
+<div class="math notranslate nohighlight" id="equation-bayes-bps-1">
+<span class="eqno">(193)<a class="headerlink" href="#equation-bayes-bps-1" title="Permalink to this equation"></a></span>\[\boldsymbol{\xi}^{*}_{1} = \text{arg max}_{\boldsymbol{\xi}_{j}} I(\boldsymbol{\theta},
+\boldsymbol{d}(\boldsymbol{\xi}_{j}) ),\]</div>
+<p>is identified, and then used to find the second,</p>
+<div class="math notranslate nohighlight" id="equation-bayes-bps-2">
+<span class="eqno">(194)<a class="headerlink" href="#equation-bayes-bps-2" title="Permalink to this equation"></a></span>\[\boldsymbol{\xi}^{*}_{2} = \text{arg max}_{\boldsymbol{\xi}_{j}}
+I(\boldsymbol{\theta}, \boldsymbol{d}(\boldsymbol{\xi}_{j}) |
+\boldsymbol{d}(\boldsymbol{\xi}_{1}^{*})).\]</div>
+<p>Generally, the <span class="math notranslate nohighlight">\(i^{th}\)</span> selected design will satisfy</p>
+<div class="math notranslate nohighlight" id="equation-bayes-bps-3">
+<span class="eqno">(195)<a class="headerlink" href="#equation-bayes-bps-3" title="Permalink to this equation"></a></span>\[\boldsymbol{\xi}^{*}_{i} = \text{arg max}_{\boldsymbol{\xi}_{j}}
+I(\boldsymbol{\theta}, \boldsymbol{d}(\boldsymbol{\xi}_{j}) |
+\boldsymbol{d}(\boldsymbol{\xi}_{1}^{*}), \ldots,
+\boldsymbol{d}(\boldsymbol{\xi}_{i-1}^{*})).\]</div>
+<p>The same mutual information calculation
+algorithms <a class="reference internal" href="#equation-ksg1">(190)</a> and <a class="reference internal" href="#equation-ksg2">(191)</a>
+described above are applied when calculating the conditional mutual
+information. The additional low-fidelity model information is appended
+to the responses portion of the matrix <span class="math notranslate nohighlight">\(X\)</span>, and the calculation of
+<span class="math notranslate nohighlight">\(\varepsilon_{i}\)</span> or <span class="math notranslate nohighlight">\(\varepsilon_{\boldsymbol{d}, i}\)</span> as
+well as <span class="math notranslate nohighlight">\(n_{\boldsymbol{d}, i}\)</span> are adjusted accordingly.</p>
+</section>
+</section>
+<section id="information-theoretic-tools">
+<span id="uq-info-theory"></span><h2>Information Theoretic Tools<a class="headerlink" href="#information-theoretic-tools" title="Permalink to this headline"></a></h2>
+<p>The notion of the entropy of a random variable was introduced by C.E.
+Shannon in 1948 <span id="id15">[<a class="reference internal" href="../../misc/bibliography.html#id237" title="C.E. Shannon. A mathematical theory of communication. Bell System Technical Journal, 27(3):379–423, 1948.">Sha48</a>]</span>. So named for its
+resemblance to the statistical mechanical entropy, the Shannon entropy
+(or simply the entropy), is characterized by the probability
+distribution of the random variable being investigated. For a random
+variable <span class="math notranslate nohighlight">\(X \in \mathcal{X}\)</span> with probability distribution
+function <span class="math notranslate nohighlight">\(p\)</span>, the entropy <span class="math notranslate nohighlight">\(h\)</span> is given by</p>
+<div class="math notranslate nohighlight" id="equation-ent-cont">
+<span class="eqno">(196)<a class="headerlink" href="#equation-ent-cont" title="Permalink to this equation"></a></span>\[h(p) = -\int_{\mathcal{X}} p(x) \log p(x) dx.\]</div>
+<p>The entropy captures the average uncertainty in a random
+variable <span id="id16">[<a class="reference internal" href="../../misc/bibliography.html#id44" title="T.M. Cover and J.A. Thomas. Elements of Information Theory. A Wiley-Interscience publication. Wiley, 2006.">CT06</a>]</span>, and is therefore quite commonly
+used in predictive science. The entropy also provides the basis for
+other information measures, such as the relative entropy and the mutual
+information, both of which compare the information content between two
+random variables but have different purposes and interpretations.</p>
+<p>The relative entropy provides a measure of the difference between two
+probability distributions. It is characterized by the Kullback-Leibler
+Divergence,</p>
+<div class="math notranslate nohighlight" id="equation-dkl-discrete">
+<span class="eqno">(197)<a class="headerlink" href="#equation-dkl-discrete" title="Permalink to this equation"></a></span>\[D_{KL}(p \| q) = \int p(x) \log \frac{p(x)}{q(x)} dx,\]</div>
+<p>which can also be written as</p>
+<div class="math notranslate nohighlight" id="equation-dkl-discrete-2">
+<span class="eqno">(198)<a class="headerlink" href="#equation-dkl-discrete-2" title="Permalink to this equation"></a></span>\[D_{KL}( p \| q)  = h(p,q) - h(p),\]</div>
+<p>where <span class="math notranslate nohighlight">\(h(p,q)\)</span> is the cross entropy of two distributions,</p>
+<div class="math notranslate nohighlight" id="equation-dkl-discrete-3">
+<span class="eqno">(199)<a class="headerlink" href="#equation-dkl-discrete-3" title="Permalink to this equation"></a></span>\[h(p,q) = \int p(x) \log q(x) dx.\]</div>
+<p>Because it is not symmetric
+(<span class="math notranslate nohighlight">\(D_{KL} (p \| q) \neq D_{KL} (q \| p)\)</span>), the Kullback-Leibler
+Divergence is sometimes referred to as a pseudo-metric. However, it is
+non-negative, and equals zero if and only if <span class="math notranslate nohighlight">\(p = q\)</span>.</p>
+<p>As in <a class="reference internal" href="#uq-bayes-experimental-design"><span class="std std-ref">Experimental Design</span></a>, the
+Kullback-Leibler Divergence is approximated with the <span class="math notranslate nohighlight">\(k\)</span>-nearest
+neighbor method advocated in <span id="id17">[<a class="reference internal" href="../../misc/bibliography.html#id210" title="Fernando Pérez-Cruz. Kullback-leibler divergence estimation of continuous distributions. In 2008 IEEE international symposium on information theory, 1666–1670. IEEE, 2008.">PerezC08</a>]</span>. Let the
+distributions <span class="math notranslate nohighlight">\(p\)</span> and <span class="math notranslate nohighlight">\(q\)</span> be represented by a collection of
+samples of size <span class="math notranslate nohighlight">\(n\)</span> and <span class="math notranslate nohighlight">\(m\)</span>, respectively. For each sample
+<span class="math notranslate nohighlight">\(x_{i}\)</span> in <span class="math notranslate nohighlight">\(p\)</span>, let <span class="math notranslate nohighlight">\(\nu_{k}(i)\)</span> be the distance to
+it’s <span class="math notranslate nohighlight">\(k^{th}\)</span>-nearest neighbor among the remaining samples of
+<span class="math notranslate nohighlight">\(p\)</span>. Furthermore, let <span class="math notranslate nohighlight">\(\rho_{k}(i)\)</span> be the distance between
+<span class="math notranslate nohighlight">\(x_{i}\)</span> and its <span class="math notranslate nohighlight">\(k^{th}\)</span>-nearest neighbor among the samples
+of <span class="math notranslate nohighlight">\(q\)</span>. If either of these distances is zero, the first non-zero
+neighbor distance is found, yielding a more general notation:
+<span class="math notranslate nohighlight">\(\nu_{k_i}(i)\)</span> and <span class="math notranslate nohighlight">\(\rho_{l_i}(i)\)</span>, where <span class="math notranslate nohighlight">\(k_{i}\)</span> and
+<span class="math notranslate nohighlight">\(l_{i}\)</span> are the new neighbor counts and are greather than or equal
+to <span class="math notranslate nohighlight">\(k\)</span>. Then</p>
+<div class="math notranslate nohighlight" id="equation-itt-eq-misc-1">
+<span class="eqno">(200)<a class="headerlink" href="#equation-itt-eq-misc-1" title="Permalink to this equation"></a></span>\[D_{KL}(p \| q) \approx \frac{d}{n} \sum_{i=1}^{n} \left[ \log \frac{
+\nu_{k_{i}}(i)}{\rho_{l_{i}}(i)} \right] + \frac{1}{n} \sum_{i=1}^{n}
+\left[ \psi(l_{i}) - \psi(k_{i}) \right] + \log \frac{m}{n-1},\]</div>
+<p>where <span class="math notranslate nohighlight">\(\psi(\cdot)\)</span> is the digamma function. In Dakota, <span class="math notranslate nohighlight">\(k\)</span>
+is taken to be six.</p>
+<p>The Kullback-Leibler Divergence is used within Dakota to quantify the
+amount of information gained during Bayesian calibration,</p>
+<div class="math notranslate nohighlight" id="equation-itt-eq-misc-2">
+<span class="eqno">(201)<a class="headerlink" href="#equation-itt-eq-misc-2" title="Permalink to this equation"></a></span>\[IG( f_{\boldsymbol{\Theta | D}}(\boldsymbol{\theta| d});
+f_{\boldsymbol{\Theta}}(\boldsymbol{\theta}))
+= D_{KL}( f_{\boldsymbol{\Theta | D}}(\boldsymbol{\theta| d}) \|
+f_{\boldsymbol{\Theta}}(\boldsymbol{\theta}) ).\]</div>
+<p>If specified in the input file, the approximate value will be output to
+the screen at the end of the calibration.</p>
+<p>In the presence of two (possibly multi-variate) random variables, the
+mutual information quantifies how much information they contain about
+each other. In this sense, it is a measure of the mutual dependence of
+two random variables. For continuous <span class="math notranslate nohighlight">\(X\)</span> and <span class="math notranslate nohighlight">\(Y\)</span>,</p>
+<div class="math notranslate nohighlight" id="equation-itt-eq-misc-3">
+<span class="eqno">(202)<a class="headerlink" href="#equation-itt-eq-misc-3" title="Permalink to this equation"></a></span>\[I(X, Y) = \iint p(x,y) \log \frac{ p(x,y) }{p(x)p(y)} \; dx \, dy,\]</div>
+<p>where <span class="math notranslate nohighlight">\(p(x,y)\)</span> is the joint pdf of <span class="math notranslate nohighlight">\(X\)</span> and <span class="math notranslate nohighlight">\(Y\)</span>, while
+<span class="math notranslate nohighlight">\(p(x)\)</span> and <span class="math notranslate nohighlight">\(p(y)\)</span> are the marginal pdfs of <span class="math notranslate nohighlight">\(X\)</span> and
+<span class="math notranslate nohighlight">\(Y\)</span>, respectively. The mutual information is symmetric and
+non-negative, with zero indicating the independence of <span class="math notranslate nohighlight">\(X\)</span> and
+<span class="math notranslate nohighlight">\(Y\)</span>. It is related to the Kullback-Leibler Divergence through the
+expression</p>
+<div class="math notranslate nohighlight" id="equation-itt-eq-misc-4">
+<span class="eqno">(203)<a class="headerlink" href="#equation-itt-eq-misc-4" title="Permalink to this equation"></a></span>\[I(X,Y) = D_{KL} ( p(x,y) \| p(x) p(y) ).\]</div>
+<p>The uses of the mutual information within Dakota have been noted in
+<a class="reference internal" href="#uq-bayes-experimental-design"><span class="std std-ref">Experimental Design</span></a>.</p>
+</section>
+<section id="measure-theoretic-stochastic-inversion">
+<span id="uq-cbayes"></span><h2>Measure-theoretic Stochastic Inversion<a class="headerlink" href="#measure-theoretic-stochastic-inversion" title="Permalink to this headline"></a></h2>
+<p>In this section we present an overview of a specific implementation of
+the measure-theoretic approach for solving a stochastic inverse problem
+that incorporates prior information and Bayes’ rule to define a unique
+solution. This approach differs from the standard Bayesian counterpart
+described in previous sections in that the posterior satisfies a
+consistency requirement with the model and the observed data. The
+material in this section is based on the foundational work in
+<span id="id18">[<a class="reference internal" href="../../misc/bibliography.html#id299" title="T. Butler, J. D. Jakeman, and T. M. Wildey. A consistent bayesian formulation for stochastic inverse problems based on push-forward measures. arXiv, math.NA:1704.00680, 2017. URL: http://arxiv.org/abs/1704.00680.">BJW17</a>, <a class="reference internal" href="../../misc/bibliography.html#id300" title="S. N. Walsh, T. M. Wildey, and J. D. Jakeman. Optimal experimental design using a consistent bayesian approach. arXiv, stat.CO:1705.09395, 2017. URL: http://arxiv.org/abs/1705.09395.">WWJ17</a>]</span>. A more thorough description
+of this consistent Bayesian approach and a comparison with the standard
+Bayesian approach can be found in <span id="id19">[<a class="reference internal" href="../../misc/bibliography.html#id299" title="T. Butler, J. D. Jakeman, and T. M. Wildey. A consistent bayesian formulation for stochastic inverse problems based on push-forward measures. arXiv, math.NA:1704.00680, 2017. URL: http://arxiv.org/abs/1704.00680.">BJW17</a>]</span> and an
+extension to solve an optimal experimental design problem can be found
+in <span id="id20">[<a class="reference internal" href="../../misc/bibliography.html#id300" title="S. N. Walsh, T. M. Wildey, and J. D. Jakeman. Optimal experimental design using a consistent bayesian approach. arXiv, stat.CO:1705.09395, 2017. URL: http://arxiv.org/abs/1705.09395.">WWJ17</a>]</span>.</p>
+<p>Let <span class="math notranslate nohighlight">\(M(Y,\lambda)\)</span> denote a deterministic model with solution
+<span class="math notranslate nohighlight">\(Y(\lambda)\)</span> that is an implicit function of model parameters
+<span class="math notranslate nohighlight">\(\lambda\in\mathbf{\Lambda}\subset \mathbb{R}^n\)</span>. The set
+<span class="math notranslate nohighlight">\(\mathbf{\Lambda}\)</span> represents the largest physically meaningful
+domain of parameter values, and, for simplicity, we assume that
+<span class="math notranslate nohighlight">\(\mathbf{\Lambda}\)</span> is compact. We assume we are only concerned
+with computing a relatively small set of quantities of interest (QoI),
+<span class="math notranslate nohighlight">\(\{Q_i(Y)\}_{i=1}^m\)</span>, where each <span class="math notranslate nohighlight">\(Q_i\)</span> is a real-valued
+functional dependent on the model solution <span class="math notranslate nohighlight">\(Y\)</span>. Since <span class="math notranslate nohighlight">\(Y\)</span> is
+a function of parameters <span class="math notranslate nohighlight">\(\lambda\)</span>, so are the QoI and we write
+<span class="math notranslate nohighlight">\(Q_i(\lambda)\)</span> to make this dependence explicit. Given a set of
+QoI, we define the QoI map
+<span class="math notranslate nohighlight">\(Q(\lambda) := (Q_1(\lambda), \cdots, Q_m(\lambda))^\top:\mathbf{\Lambda}\to\mathbf{\mathcal{D}}\subset\mathbb{R}^m\)</span>
+where <span class="math notranslate nohighlight">\(\mathbf{\mathcal{D}}:= Q(\mathbf{\Lambda})\)</span> denotes the
+range of the QoI map.</p>
+<p>We assume
+<span class="math notranslate nohighlight">\((\mathbf{\Lambda}, \mathcal{B}_{\mathbf{\Lambda}}, \mu_{\mathbf{\Lambda}})\)</span>
+and
+<span class="math notranslate nohighlight">\((\mathbf{\mathcal{D}}, \mathcal{B}_{\mathbf{\mathcal{D}}}, \mu_{\mathbf{\mathcal{D}}})\)</span>
+are measure spaces and let <span class="math notranslate nohighlight">\(\mathcal{B}_{\mathbf{\Lambda}}\)</span> and
+<span class="math notranslate nohighlight">\(\mathcal{B}_{\mathbf{\mathcal{D}}}\)</span> denote the Borel
+<span class="math notranslate nohighlight">\(\sigma\)</span>-algebras inherited from the metric topologies on
+<span class="math notranslate nohighlight">\(\mathbb{R}^n\)</span> and <span class="math notranslate nohighlight">\(\mathbb{R}^m\)</span>, respectively. We also
+assume that the QoI map <span class="math notranslate nohighlight">\(Q\)</span> is at least piecewise smooth implying
+that <span class="math notranslate nohighlight">\(Q\)</span> is a measurable map between the measurable spaces
+<span class="math notranslate nohighlight">\((\mathbf{\Lambda}, \mathcal{B}_{\mathbf{\Lambda}})\)</span> and
+<span class="math notranslate nohighlight">\((\mathbf{\mathcal{D}}, \mathcal{B}_{\mathbf{\mathcal{D}}})\)</span>. For
+any <span class="math notranslate nohighlight">\(A\in\mathcal{B}_{\mathbf{\mathcal{D}}}\)</span>, we then have</p>
+<div class="math notranslate nohighlight" id="equation-mtsi-eq-misc-1">
+<span class="eqno">(204)<a class="headerlink" href="#equation-mtsi-eq-misc-1" title="Permalink to this equation"></a></span>\[Q^{-1}(A) = \left\{ \lambda \in \mathbf{\Lambda}\ | \ Q(\lambda) \in A \right\}\in\mathcal{B}_{\mathbf{\Lambda}}, \quad \text{and} \quad Q(Q^{-1}(A))=A.\]</div>
+<p>Furthermore, given any <span class="math notranslate nohighlight">\(B\in\mathcal{B}_{\mathbf{\Lambda}}\)</span>,</p>
+<div class="math notranslate nohighlight" id="equation-mapprops">
+<span class="eqno">(205)<a class="headerlink" href="#equation-mapprops" title="Permalink to this equation"></a></span>\[B \subseteq Q^{-1}(Q(B)),\]</div>
+<p>although we note that in most cases <span class="math notranslate nohighlight">\(B\neq Q^{-1}(Q(B))\)</span> even when
+<span class="math notranslate nohighlight">\(n=m\)</span>.</p>
+<p>Finally, we assume that an observed probability measure,
+<span class="math notranslate nohighlight">\(P_{\mathbf{\mathcal{D}}}^{\text{obs}}\)</span>, is given on
+<span class="math notranslate nohighlight">\((\mathbf{\mathcal{D}},\mathcal{B}_{\mathbf{\mathcal{D}}})\)</span>, and
+the stochastic inverse problem seeks a probability measure
+<span class="math notranslate nohighlight">\(P_\mathbf{\Lambda}\)</span> such that the subsequent push-forward measure
+induced by the map, <span class="math notranslate nohighlight">\(Q(\lambda)\)</span>, satisfies</p>
+<div class="math notranslate nohighlight" id="equation-invdefn">
+<span class="eqno">(206)<a class="headerlink" href="#equation-invdefn" title="Permalink to this equation"></a></span>\[P_\mathbf{\Lambda}(Q^{-1}(A)) = P^{Q(P_\mathbf{\Lambda})}_\mathbf{\mathcal{D}}(A) = P_{\mathbf{\mathcal{D}}}^{\text{obs}}(A),\]</div>
+<p>for any <span class="math notranslate nohighlight">\(A\in \mathcal{B}_{\mathbf{\mathcal{D}}}\)</span>.</p>
+<p>This inverse problem may not have a unique solution, i.e., there may be
+multiple probability measures that have the proper push-forward measure.
+A unique solution may be obtained by imposing additional constraints or
+structure on the stochastic inverse problem. The approach we consider in
+this section incorporates prior information and Bayes rule to construct
+a unique solution to the stochastic inverse problem. The prior
+probability measure and the map induce a push-forward measure
+<span class="math notranslate nohighlight">\(P_{\mathbf{\mathcal{D}}}^{Q(\text{prior})}\)</span> on
+<span class="math notranslate nohighlight">\(\mathbf{\mathcal{D}}\)</span>, which is defined for all
+<span class="math notranslate nohighlight">\(A\in \mathcal{B}_{\mathbf{\mathcal{D}}}\)</span>,</p>
+<div class="math notranslate nohighlight" id="equation-pfprior">
+<span class="eqno">(207)<a class="headerlink" href="#equation-pfprior" title="Permalink to this equation"></a></span>\[P_{\mathbf{\mathcal{D}}}^{Q(\text{prior})}(A) = P_{\mathbf{\Lambda}}^{\text{prior}}(Q^{-1}(A)).\]</div>
+<p>We assume that all of the probability measures (prior, observed and
+push-forward of the prior) are absolutely continuous with respect to
+some reference measure and can be described in terms of a probability
+densities. We use <span class="math notranslate nohighlight">\(\pi_{\mathbf{\Lambda}}^{\text{prior}}\)</span>,
+<span class="math notranslate nohighlight">\(\pi_{\mathbf{\mathcal{D}}}^{\text{obs}}\)</span> and
+<span class="math notranslate nohighlight">\(\pi_{\mathbf{\mathcal{D}}}^{Q(\text{prior})}\)</span> to denote the
+probability densities associated with
+<span class="math notranslate nohighlight">\(P_{\mathbf{\Lambda}}^{\text{prior}}\)</span>,
+<span class="math notranslate nohighlight">\(P_{\mathbf{\mathcal{D}}}^{\text{obs}}\)</span> and
+<span class="math notranslate nohighlight">\(P_{\mathbf{\mathcal{D}}}^{Q(\text{prior})}\)</span> respectively. From
+<span id="id21">[<a class="reference internal" href="../../misc/bibliography.html#id299" title="T. Butler, J. D. Jakeman, and T. M. Wildey. A consistent bayesian formulation for stochastic inverse problems based on push-forward measures. arXiv, math.NA:1704.00680, 2017. URL: http://arxiv.org/abs/1704.00680.">BJW17</a>]</span>, the following posterior probability
+density, when interpreted through a disintegration theorem, solves the
+stochastic inverse problem:</p>
+<div class="math notranslate nohighlight" id="equation-postpdf">
+<span class="eqno">(208)<a class="headerlink" href="#equation-postpdf" title="Permalink to this equation"></a></span>\[\pi_{\mathbf{\Lambda}}^{\text{post}}(\lambda) = \pi_{\mathbf{\Lambda}}^{\text{prior}}(\lambda)\frac{\pi_{\mathbf{\mathcal{D}}}^{\text{obs}}(Q(\lambda))}{\pi_{\mathbf{\mathcal{D}}}^{Q(\text{prior})}(Q(\lambda))}, \quad \lambda \in \mathbf{\Lambda}.\]</div>
+<p>One can immediately observe that if
+<span class="math notranslate nohighlight">\(\pi_{\mathbf{\mathcal{D}}}^{Q(\text{prior})}= \pi_{\mathbf{\mathcal{D}}}^{\text{obs}}\)</span>,
+i.e., if the prior solves the stochastic inverse problem in the sense
+that the push-forward of the prior matches the observations, then the
+posterior will be equal to the prior. Approximating this posterior
+density requires an approximation of the push-forward of the prior,
+which is simply a forward propagation of uncertainty.</p>
+<dl class="footnote brackets">
+<dt class="label" id="id22"><span class="brackets"><a class="fn-backref" href="#id3">1</a></span></dt>
+<dd><p>The two-dimensional Rosenbrock test function is defined as
+<span class="math notranslate nohighlight">\(100 (x_2 - x_1^2)^2 + (1 - x_1)^2\)</span></p>
+</dd>
+</dl>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="epistemic.html" class="btn btn-neutral float-left" title="Epistemic Methods" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="surrogates.html" class="btn btn-neutral float-right" title="Surrogate Models" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <!--
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Sandia National Laboratories.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+  --> 
+
+</footer>
+        </div>
+      </div>
+	  
+	  <div style="background-color: #0f0f0f;color:#fafafa;padding:20px">
+	    <div>
+		  <h2><em>Exceptional service in the national interest</em></h2>
+		</div>
+		<p>© 2022 National Technology and Engineering Solutions of Sandia, LLC. | <a href="https://www.sandia.gov/contact_us/index.html">Questions &amp; Comments</a> | <a href="https://www.sandia.gov/general/privacy-security/index.html">Privacy &amp; Security</a></p>
+		<p><a href="http://energy.gov" rel="noopener noreferrer" target="_blank"><img alt="U.S. Department of Energy" longdesc="https://energy.gov" src="https://www.sandia.gov/_common/images/doe_logo_white.png" style="height:37px; width:140px"></a> <a href="http://nnsa.energy.gov/" rel="noopener noreferrer" target="_blank"> <img alt="National Nuclear Security Administration" longdesc="http://nnsa.gov" src="https://www.sandia.gov/_common/images/nnsa_logo_white.png" style="height:37px; width:116px"></a></p>
+		<p><a href="https://www.sandia.gov">Sandia National Laboratories</a> is a multimission laboratory managed and operated by National Technology and Engineering Solutions of Sandia, LLC., a wholly owned subsidiary of Honeywell International, Inc., for the U.S. Department of Energy’s National Nuclear Security Administration under contract DE-NA-0003525.</p>
+	  </div>	  	  
+	  
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

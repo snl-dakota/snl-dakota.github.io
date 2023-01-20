@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>New Script-Based Dakota Driver &mdash; dakota  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/dakota_theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/sandiaheaderlite.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="New Workflow-Based Driver" href="NewWorkflowDriver.html" />
+    <link rel="prev" title="New Dakota Study" href="NewDakotaStudy.html" /> 
+  
+  <meta name="sandia.approval_type" content="formal"/>
+  <meta property="sandia.approved" content="SAND2022-15651 O"/>
+  <meta name="description" content="The Dakota project delivers both state-of-the-art research and robust, usable software for optimization and UQ."/>
+  <meta name="keywords" content="Dakota, optimization, UQ, uncertainty quantification, parametric analysis, design exploration, model calibration, risk analysis"/>
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> dakota
+            <img src="../../_static/dakota_Arrow_Name_Tag_horiz_transparent.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../setupdakota.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../usingdakota/usingdakota.html">Using Dakota</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../usingdakotagui.html">Using Dakota GUI</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#introduction">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#example-search">Example Search</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../usingdakotagui.html#wizards">Wizards</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="NewDakotaProject.html">New Dakota Project</a></li>
+<li class="toctree-l3"><a class="reference internal" href="NewDakotaStudy.html">New Dakota Study</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">New Script-Based Dakota Driver</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#page-1-welcome">Page 1 (Welcome)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#page-2-python-file-creation">Page 2 (Python File Creation)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#page-3-data-source-files-selection">Page 3 (Data Source Files Selection)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#page-4-map-variables-to-simulation-model-input">Page 4 (Map Variables to Simulation Model Input)</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#text-markup-aprepro-or-dprepro">Text Markup (APREPRO or DPREPRO)</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#positional-pre-processing">Positional Pre-processing</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#page-5-map-simulation-model-output-to-dakota-responses">Page 5 (Map Simulation Model Output to Dakota Responses)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#page-6-execution">Page 6 (Execution)</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#finishing">Finishing</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="NewWorkflowDriver.html">New Workflow-Based Driver</a></li>
+<li class="toctree-l3"><a class="reference internal" href="NewDakotaWrapperWorkflow.html">New Dakota Wrapper Workflow</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#editing-dakota-input-files">Editing Dakota Input Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#simulation-models">Simulation Models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#running-dakota">Running Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#output-from-dakota">Output from Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#gui-tools">GUI Tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#miscellaneous">Miscellaneous</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../externaltools/externaltools.html">Using External Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developingdakota/developingdakota.html">Developing Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../misc/misc.html">Miscellaneous</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">dakota</a>
+      </nav>
+
+	  <!-- SNL Lite header -->
+	  <div class="snlheader-subsite--wrapper-default">
+		<snlheader class="snlheader-subsite" role="snlbanner">
+		  <div class="wrapper">
+			<a href="https://www.sandia.gov/index.html">
+			  <div class="logo-transparent"><p class="logo">Sandia National Laboratories</p></div>
+			</a>
+			<div class="nav-top">
+			  <a class="visuallyhidden" name="mainnav"></a>
+			  <div aria-label="main navigation" class="core-nav-transparent core-nav-transparent--visible" role="navigation">
+				<ul role="navigation" class="secondary-links">
+				  <li id="search-text-link">
+					<a aria-label="Search" href="https://www.sandia.gov/search/">Search Sandia.gov</a>
+				  </li>
+				  <li id="directory-text-link">
+					<a href="https://www.sandia.gov/directory.html" aria-expanded="false" aria-label="Site Directory">All Sandia Websites</a>
+				  </li>
+				</ul>
+			  </div>
+			</div>
+		  </div> 
+		</snlheader>
+	  </div>	  
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../usingdakotagui.html">Using Dakota GUI</a> &raquo;</li>
+      <li>New Script-Based Dakota Driver</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/usingdakotagui/wizards/NewScriptDriver.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="new-script-based-dakota-driver">
+<span id="wizards-scriptdriver-main"></span><h1>New Script-Based Dakota Driver<a class="headerlink" href="#new-script-based-dakota-driver" title="Permalink to this headline"></a></h1>
+<p>The Script-Based Dakota Driver Wizard allows you to create an <a class="reference internal" href="../../usingdakota/introduction/couplingtosimulations.html#couplingtosimulations-main"><span class="std std-ref">analysis driver for Dakota</span></a> that is a script file.  This script file
+will facilitate the transfer of input parameters and output responses between a Dakota study and your external simulation model.</p>
+<p>You can use this wizard even before you’ve created your Dakota study - all you need is a list of supported variable labels and supported response labels that you want
+the driver script to handle.  We recommend using the <a class="reference internal" href="../bmf/BMF.html#bmf-main"><span class="std std-ref">BMF</span></a> file format to define this list of variables and responses if you don’t yet have a Dakota study.
+If you do already have a Dakota study, you can simply provide the Dakota study as the source of variables and responses.</p>
+<p>In this version of Dakota GUI, <a class="reference external" href="https://www.python.org/downloads">Python 3</a> is the only language that is supported for generated driver scripts, so you will need
+to have Python 3 installed to run the generated script.  The GUI no longer supports generating Dakota driver scripts that are compatible with Python 2.</p>
+<p>Open the Script-Based Dakota Driver wizard by going to File &gt; New &gt; Script-Based Dakota Driver.</p>
+<section id="page-1-welcome">
+<span id="wizards-scriptdriver-welcome"></span><h2>Page 1 (Welcome)<a class="headerlink" href="#page-1-welcome" title="Permalink to this headline"></a></h2>
+<p>The first page of the wizard is a welcome page that provides some overview information about this wizard.  There is nothing that needs to be done on this page.</p>
+</section>
+<section id="page-2-python-file-creation">
+<span id="wizards-scriptdriver-filecreation"></span><h2>Page 2 (Python File Creation)<a class="headerlink" href="#page-2-python-file-creation" title="Permalink to this headline"></a></h2>
+<p>Select the project location and name of your new Python driver script.</p>
+<img alt="Python File Creation" src="../../_images/NewDakotaStudy_Drivers_Python_2.png" />
+</section>
+<section id="page-3-data-source-files-selection">
+<span id="wizards-scriptdriver-datasource"></span><h2>Page 3 (Data Source Files Selection)<a class="headerlink" href="#page-3-data-source-files-selection" title="Permalink to this headline"></a></h2>
+<p>On this page, we provide our driver script with two things – information about the parameters and responses we’ll be using, and the path to our simulation model executable.</p>
+<img alt="Data Source Files Selection" src="../../_images/NewDakotaStudy_Drivers_Python_3.png" />
+<p>For the first file selector field (“Select variable/response source file”), click on the ellipsis button and choose your source of variables and responses.
+As discussed earlier, this could be a <a class="reference internal" href="../bmf/BMF.html#bmf-main"><span class="std std-ref">BMF</span></a> file, or possibly a Dakota study file.  After selecting a file, this wizard should register the
+number of variables and responses found in that file:</p>
+<img alt="It found variables and responses" src="../../_images/NewDakotaStudy_Drivers_Python_4.png" />
+<p>For the second file selector field (“Select a simulation model file”), you are not required to use resources imported into the Dakota GUI workspace.
+You can browse to anywhere on your file system to get the simulation model file.  You could also simply type in the name of your simulation model executable file
+(for instance, if it is on your system PATH).</p>
+<img alt="Added a simulation model executable" src="../../_images/NewDakotaStudy_Drivers_Python_5.png" />
+</section>
+<section id="page-4-map-variables-to-simulation-model-input">
+<span id="wizards-scriptdriver-prepro"></span><h2>Page 4 (Map Variables to Simulation Model Input)<a class="headerlink" href="#page-4-map-variables-to-simulation-model-input" title="Permalink to this headline"></a></h2>
+<p>This page of the wizard covers the pre-processing step.  There are two ways to pre-process a file in this wizard - you can either provide text-based pre-processing markup, or define positional pre-processors.</p>
+<section id="text-markup-aprepro-or-dprepro">
+<h3>Text Markup (APREPRO or DPREPRO)<a class="headerlink" href="#text-markup-aprepro-or-dprepro" title="Permalink to this headline"></a></h3>
+<p>If you’ve defined APREPRO or DPREPRO as your preferred pre-processor in the <a class="reference internal" href="../miscgui/Preferences.html#gui-preferences-highlighter"><span class="std std-ref">global Preferences for Dakota GUI</span></a>, you will see the following page:</p>
+<img alt="The pre-processing page" src="../../_images/NewDakotaStudy_Drivers_Python_17.png" />
+<p>All that is required on this page is to provide a marked-up template file using the “Template File” file selector:</p>
+<img alt="A previously marked-up template file imported into the wizard" src="../../_images/NewDakotaStudy_Drivers_Python_19.png" />
+<p>After selecting a marked-up template file, the wizard will perform a check that compares detected markup in your file against the list of variable labels you provided earlier.
+If everything is good, all variables will have green checkmarks next to them in the “Markup Summary” group.  If a variable label could not be matched to any markup in the file,
+then a red X will appear next to that variable:</p>
+<img alt="Note that {t} does not appear anywhere in the markup file" src="../../_images/NewDakotaStudy_Drivers_Python_18.png" />
+<p>On the other hand, partial matches that the wizard is suspicious of will receive a yellow caution sign.  These might still be replaceable at runtime, depending on whether
+you are using APREPRO or DPREPRO, but it’s not guaranteed to work.</p>
+<p>![alt text](img/NewDakotaStudy_Drivers_Python_20.png “Note that the markup for thickness uses APREPRO style markup instead of DPREPRO style markup”)</p>
+<p>If you need help marking up a template input file in the first place, we recommend exiting the wizard and using the <a class="reference internal" href="../miscgui/ContextMenuTools.html#gui-context-tools-markup"><span class="std std-ref">Markup File tool</span></a>.</p>
+</section>
+<section id="positional-pre-processing">
+<h3>Positional Pre-processing<a class="headerlink" href="#positional-pre-processing" title="Permalink to this headline"></a></h3>
+<p>If you’ve defined Positional Pre-processing as your preferred pre-processor in the <a class="reference internal" href="../miscgui/Preferences.html#gui-preferences-highlighter"><span class="std std-ref">global Preferences for Dakota GUI</span></a>, you will see the following page:</p>
+<img alt="The pre-processing page" src="../../_images/NewDakotaStudy_Drivers_Python_6.png" />
+<p>The “Template File” file selector allows you to provide an example input file that will be pre-processed at runtime.</p>
+<img alt="Pre-processing table populated" src="../../_images/NewDakotaStudy_Drivers_Python_7.png" />
+<p>Note that this wizard auto-populates the table with variable labels.  These variable labels came from the variable/response source file that you provided earlier.
+You may add or remove variables from this list if you wish (adding variables is not really recommended, but not disallowed either).</p>
+<p>To add pre-processor information, select a variable from the list and then select “Edit Pre-processor.”</p>
+<img alt="Select a good text segment to pre-process" src="../../_images/NewDakotaStudy_Drivers_Python_8.png" />
+<p>In this new dialog, highlight the portion of text you want to replace at runtime.  In the example screenshot below, the text “500” will be replaced by whatever value that Dakota
+provides for the input variable “horizontal”.</p>
+<img alt="A section of text has been selected" src="../../_images/NewDakotaStudy_Drivers_Python_9.png" />
+<p>When you’re done, select OK.  Here is an example of what your wizard page could look like after filling in all of the input variables with positional pre-processor information.</p>
+<img alt="All pre-processing variables are now associated with segments of text" src="../../_images/NewDakotaStudy_Drivers_Python_10.png" />
+</section>
+</section>
+<section id="page-5-map-simulation-model-output-to-dakota-responses">
+<span id="wizards-scriptdriver-postpro"></span><h2>Page 5 (Map Simulation Model Output to Dakota Responses)<a class="headerlink" href="#page-5-map-simulation-model-output-to-dakota-responses" title="Permalink to this headline"></a></h2>
+<p>This page of the wizard is concerned with quantity of interest (QOI) extraction.</p>
+<img alt="The post-processing page" src="../../_images/NewDakotaStudy_Drivers_Python_11.png" />
+<p>Again, the table is pre-populated with response labels extracted from your selected variable/response source file.  Like with the pre-processing page,
+you may add or remove responses (not recommended, but possible).</p>
+<p>The Script-Based Dakota Driver wizard knows how to extract QOIs from two potential sources:</p>
+<ul class="simple">
+<li><p>The standard output stream (i.e. console text) of your simulation model.</p></li>
+<li><p>A single destination file on your system (i.e. a log file).  This is not recommended if you plan to run Dakota with multiple threads.</p></li>
+</ul>
+<p>You may opt to provide an example file to aid in QOI extraction, but this is an optional step.</p>
+<p>For each response label that is imported, click on its row in the table and select “Edit QOI Extractor”.  <a class="reference internal" href="../qoi/QOI.html#qoi-main"><span class="std std-ref">If you’ve never used a QOI extractor before, take a detour to learn about QOIs and how to extract them.</span></a></p>
+<p>When you’re done, this page of the wizard will look something like this:</p>
+<img alt="The post-processing page, completed" src="../../_images/NewDakotaStudy_Drivers_Python_14.png" />
+</section>
+<section id="page-6-execution">
+<span id="wizards-scriptdriver-execution"></span><h2>Page 6 (Execution)<a class="headerlink" href="#page-6-execution" title="Permalink to this headline"></a></h2>
+<p>This last page of the wizard has several controls to help with the task of actually executing your simulation model.</p>
+<img alt="The execution page" src="../../_images/NewDakotaStudy_Drivers_Python_15.png" />
+<p>Let’s go through the options one by one:</p>
+<ul class="simple">
+<li><p><strong>Command Line Syntax</strong> This text field allows you to specify how to execute your simulation model on the command line.  The driver wizard tries to be smart and provide you with some recommended
+default command line syntax, but most likely, you will need to change it.</p>
+<ul>
+<li><p>There are two tokens you can use to perform runtime replacements of your command-line syntax – <cite>${input_file}</cite> and <cite>${output_file}</cite>.  Because our generated driver script will be creating
+new input files for the simulation model, we can’t hard-code an input file name, but we can use <cite>${input_file}</cite> to tell the driver script to provide the <strong>newest input file to the simulation model</strong>, whatever
+that input file may be at runtime.  <cite>${output_file}</cite> works similarly, in that you can tell the driver script about the <strong>newest output file destination for the simulation model</strong>.</p></li>
+</ul>
+</li>
+<li><p><strong>Simulation Model Echo</strong> When your simulation model runs, it will often print to the console.  You can instruct Dakota to include the simulation model’s standard output stream in its own output
+stream if the “Echo simulation model’s stdout to Dakota console” box is checked.  If your Dakota study will be running multiple iterations in parallel (which is recommended), you run the risk of
+many simulation model output streams becoming tangled in one console output window.  To resolve this, you can prepend your simulation model’s output stream with numbers that indicate which Dakota
+iteration it’s on.  Use the second checkbox to achieve this.</p></li>
+<li><p><strong>Dakota Interface</strong> There should only be a single checkbox in this field – “Create an interface manifest (.im) file.”  What is an interface manifest?  Because a Python script does not have any
+inherent mechanism for declaring what variables and responses it expects to handle for Dakota, this information can be stored in an interface manifest file that sits next to the generated Python script.
+Do not uncheck this box if you want to use <a class="reference internal" href="NewDakotaStudy.html#wizards-newdakotastudy"><span class="std std-ref">the Dakota Study wizard</span></a> next; that wizard requires that analysis drivers declare their compatible variables and responses.</p></li>
+</ul>
+<section id="finishing">
+<h3>Finishing<a class="headerlink" href="#finishing" title="Permalink to this headline"></a></h3>
+<p>When you’re all done, click Finish.  If all went well, your new Python driver script should appear as a new file in your Dakota GUI project.  It should also receive an additional interface manifest (.im) file.</p>
+<img alt="Our completed driver file" src="../../_images/NewDakotaStudy_Drivers_Python_16.png" />
+<p>If you know the Python language, you are now free to make additional modifications to the script if you so desire.</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="NewDakotaStudy.html" class="btn btn-neutral float-left" title="New Dakota Study" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="NewWorkflowDriver.html" class="btn btn-neutral float-right" title="New Workflow-Based Driver" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <!--
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Sandia National Laboratories.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+  --> 
+
+</footer>
+        </div>
+      </div>
+	  
+	  <div style="background-color: #0f0f0f;color:#fafafa;padding:20px">
+	    <div>
+		  <h2><em>Exceptional service in the national interest</em></h2>
+		</div>
+		<p>© 2022 National Technology and Engineering Solutions of Sandia, LLC. | <a href="https://www.sandia.gov/contact_us/index.html">Questions &amp; Comments</a> | <a href="https://www.sandia.gov/general/privacy-security/index.html">Privacy &amp; Security</a></p>
+		<p><a href="http://energy.gov" rel="noopener noreferrer" target="_blank"><img alt="U.S. Department of Energy" longdesc="https://energy.gov" src="https://www.sandia.gov/_common/images/doe_logo_white.png" style="height:37px; width:140px"></a> <a href="http://nnsa.energy.gov/" rel="noopener noreferrer" target="_blank"> <img alt="National Nuclear Security Administration" longdesc="http://nnsa.gov" src="https://www.sandia.gov/_common/images/nnsa_logo_white.png" style="height:37px; width:116px"></a></p>
+		<p><a href="https://www.sandia.gov">Sandia National Laboratories</a> is a multimission laboratory managed and operated by National Technology and Engineering Solutions of Sandia, LLC., a wholly owned subsidiary of Honeywell International, Inc., for the U.S. Department of Energy’s National Nuclear Security Administration under contract DE-NA-0003525.</p>
+	  </div>	  	  
+	  
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

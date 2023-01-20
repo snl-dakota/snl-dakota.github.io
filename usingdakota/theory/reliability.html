@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Reliability Methods &mdash; dakota  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/dakota_theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/sandiaheaderlite.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Stochastic Expansion Methods" href="stochastic.html" />
+    <link rel="prev" title="Sampling Methods" href="sampling.html" /> 
+  
+  <meta name="sandia.approval_type" content="formal"/>
+  <meta property="sandia.approved" content="SAND2022-15651 O"/>
+  <meta name="description" content="The Dakota project delivers both state-of-the-art research and robust, usable software for optimization and UQ."/>
+  <meta name="keywords" content="Dakota, optimization, UQ, uncertainty quantification, parametric analysis, design exploration, model calibration, risk analysis"/>
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> dakota
+            <img src="../../_static/dakota_Arrow_Name_Tag_horiz_transparent.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../setupdakota.html">Getting Started</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../usingdakota.html">Using Dakota</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../introduction/aboutdakota.html">About Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../introduction/helloworld.html">Dakota Beginner’s Tutorial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples.html">Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../introduction/couplingtosimulations.html">Coupling Dakota to a Simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../inputfile.html">Dakota Input File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../running.html">Running Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../output.html">Dakota Output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../studytypes.html">Study Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../topics.html">Topics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../advanced.html">Advanced Topics</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../theory.html">Dakota Theory</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="sampling.html">Sampling Methods</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Reliability Methods</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#local-reliability-methods">Local Reliability Methods</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#mean-value">Mean Value</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#mpp-search-methods">MPP Search Methods</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#limit-state-approximations">Limit state approximations</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#probability-integrations">Probability integrations</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#hessian-approximations">Hessian approximations</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#optimization-algorithms">Optimization algorithms</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#warm-starting-of-mpp-searches">Warm Starting of MPP Searches</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#global-reliability-methods">Global Reliability Methods</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#importance-sampling">Importance Sampling</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#efficient-global-optimization">Efficient Global Optimization</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#expected-feasibility-function">Expected Feasibility Function</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="stochastic.html">Stochastic Expansion Methods</a></li>
+<li class="toctree-l3"><a class="reference internal" href="epistemic.html">Epistemic Methods</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bayesian.html">Bayesian Methods</a></li>
+<li class="toctree-l3"><a class="reference internal" href="surrogates.html">Surrogate Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="surrogatebasedoptimization.html">Surrogate-Based Local Minimization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="surrogatebasedglobaloptimization.html">Effcient Global Optimization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dimensionreductionstrategies.html">Dimension Reduction Strategies</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ouu.html">Optimization Under Uncertainty (OUU)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../reference.html">Keyword Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../usingdakotagui/usingdakotagui.html">Using Dakota GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../externaltools/externaltools.html">Using External Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developingdakota/developingdakota.html">Developing Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../misc/misc.html">Miscellaneous</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">dakota</a>
+      </nav>
+
+	  <!-- SNL Lite header -->
+	  <div class="snlheader-subsite--wrapper-default">
+		<snlheader class="snlheader-subsite" role="snlbanner">
+		  <div class="wrapper">
+			<a href="https://www.sandia.gov/index.html">
+			  <div class="logo-transparent"><p class="logo">Sandia National Laboratories</p></div>
+			</a>
+			<div class="nav-top">
+			  <a class="visuallyhidden" name="mainnav"></a>
+			  <div aria-label="main navigation" class="core-nav-transparent core-nav-transparent--visible" role="navigation">
+				<ul role="navigation" class="secondary-links">
+				  <li id="search-text-link">
+					<a aria-label="Search" href="https://www.sandia.gov/search/">Search Sandia.gov</a>
+				  </li>
+				  <li id="directory-text-link">
+					<a href="https://www.sandia.gov/directory.html" aria-expanded="false" aria-label="Site Directory">All Sandia Websites</a>
+				  </li>
+				</ul>
+			  </div>
+			</div>
+		  </div> 
+		</snlheader>
+	  </div>	  
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../usingdakota.html">Using Dakota</a> &raquo;</li>
+          <li><a href="../theory.html">Dakota Theory</a> &raquo;</li>
+      <li>Reliability Methods</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/usingdakota/theory/reliability.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="reliability-methods">
+<span id="theory-uq-reliability"></span><h1>Reliability Methods<a class="headerlink" href="#reliability-methods" title="Permalink to this headline"></a></h1>
+<p id="theory-uq-reliability-local">This theory chapter explores local and global reliability methods in greater
+detail the overview in <a class="reference internal" href="../studytypes/uq.html#uq"><span class="std std-ref">Uncertainty Quantification</span></a>.</p>
+<section id="local-reliability-methods">
+<h2>Local Reliability Methods<a class="headerlink" href="#local-reliability-methods" title="Permalink to this headline"></a></h2>
+<p>Local reliability methods include the Mean Value method and the family
+of most probable point (MPP) search methods. Each of these methods is
+gradient-based, employing local approximations and/or local optimization
+methods.</p>
+<section id="mean-value">
+<span id="theory-uq-reliability-local-mv"></span><h3>Mean Value<a class="headerlink" href="#mean-value" title="Permalink to this headline"></a></h3>
+<p>The Mean Value method (MV, also known as MVFOSM in
+<span id="id1">[<a class="reference internal" href="../../misc/bibliography.html#id134" title="A. Haldar and S. Mahadevan. Probability, Reliability, and Statistical Methods in Engineering Design. Wiley, New York, 2000.">HM00</a>]</span>) is the simplest, least-expensive reliability
+method because it estimates the response means, response standard
+deviations, and all CDF/CCDF response-probability-reliability levels
+from a single evaluation of response functions and their gradients at
+the uncertain variable means. This approximation can have acceptable
+accuracy when the response functions are nearly linear and their
+distributions are approximately Gaussian, but can have poor accuracy in
+other situations.</p>
+<p>The expressions for approximate response mean <span class="math notranslate nohighlight">\(\mu_g\)</span> and
+approximate response variance <span class="math notranslate nohighlight">\(\sigma^2_g\)</span> are</p>
+<div class="math notranslate nohighlight" id="equation-eq-mv">
+<span class="eqno">(49)<a class="headerlink" href="#equation-eq-mv" title="Permalink to this equation"></a></span>\[\begin{split}\mu_g      &amp; = g(\mu_{\bf x})  &amp; \text{ (a)} \label{eq:mv_mean1} \\
+\sigma^2_g &amp; = \sum_i \sum_j Cov(i,j) \frac{dg}{dx_i}(\mu_{\bf x})
+               \frac{dg}{dx_j}(\mu_{\bf x}) &amp; \text{ (b)} \label{eq:mv_std_dev}\end{split}\]</div>
+<p>where <span class="math notranslate nohighlight">\({\bf x}\)</span> are the uncertain values in the space of the
+original uncertain variables (“x-space”), <span class="math notranslate nohighlight">\(g({\bf x})\)</span> is the
+limit state function (the response function for which
+probability-response level pairs are needed), and the use of a linear
+Taylor series approximation is evident. These two moments are then used
+for mappings from response target to approximate reliability level
+(<span class="math notranslate nohighlight">\(\bar{z} \to \beta\)</span>) and from reliability target to approximate
+response level (<span class="math notranslate nohighlight">\(\bar{\beta} \to z\)</span>) using</p>
+<div class="math notranslate nohighlight" id="equation-eq-mv-ria-pma">
+<span class="eqno">(50)<a class="headerlink" href="#equation-eq-mv-ria-pma" title="Permalink to this equation"></a></span>\[\begin{split}\bar{z} \rightarrow \beta: &amp; ~
+\beta_{\rm CDF} = \frac{\mu_g - \bar{z}}{\sigma_g}, ~~~~~
+\beta_{\rm CCDF} = \frac{\bar{z} - \mu_g}{\sigma_g} &amp; \text{ (RIA)} \label{eq:mv_ria} \\
+\bar{\beta} \rightarrow z: &amp; ~
+z = \mu_g - \sigma_g \bar{\beta}_{\rm CDF}, ~~~~~
+z = \mu_g + \sigma_g \bar{\beta}_{\rm CCDF} &amp; \text{ (PMA)} \label{eq:mv_pma}\end{split}\]</div>
+<p>respectively, where <span class="math notranslate nohighlight">\(\beta_{\rm CDF}\)</span> and <span class="math notranslate nohighlight">\(\beta_{\rm CCDF}\)</span>
+are the reliability indices corresponding to the cumulative and
+complementary cumulative distribution functions (CDF and CCDF),
+respectively.</p>
+<p>With the introduction of second-order limit state information, MVSOSM
+calculates a second-order mean as</p>
+<div class="math notranslate nohighlight" id="equation-eq-mv-mean2">
+<span class="eqno">(51)<a class="headerlink" href="#equation-eq-mv-mean2" title="Permalink to this equation"></a></span>\[\mu_g = g(\mu_{\bf x}) + \frac{1}{2} \sum_i \sum_j Cov(i,j)
+\frac{d^2g}{dx_i dx_j}(\mu_{\bf x})\]</div>
+<p>This is commonly combined with a first-order variance
+((b) in <a class="reference internal" href="#equation-eq-mv">(49)</a>), since
+second-order variance involves higher order distribution moments
+(skewness, kurtosis) <span id="id2">[<a class="reference internal" href="../../misc/bibliography.html#id134" title="A. Haldar and S. Mahadevan. Probability, Reliability, and Statistical Methods in Engineering Design. Wiley, New York, 2000.">HM00</a>]</span> which are often unavailable.</p>
+<p>The first-order CDF probability <span class="math notranslate nohighlight">\(p(g \le z)\)</span>, first-order CCDF
+probability <span class="math notranslate nohighlight">\(p(g &gt; z)\)</span>, <span class="math notranslate nohighlight">\(\beta_{\rm CDF}\)</span>, and
+<span class="math notranslate nohighlight">\(\beta_{\rm CCDF}\)</span> are related to one another through</p>
+<div class="math notranslate nohighlight" id="equation-eq-beta-cdf-ccdf">
+<span class="eqno">(52)<a class="headerlink" href="#equation-eq-beta-cdf-ccdf" title="Permalink to this equation"></a></span>\[\begin{split}p(g \le z)  &amp; =  \Phi(-\beta_{\rm CDF})      &amp; \text{ (a)} \label{eq:p_cdf} \\
+p(g &gt; z)    &amp; =  \Phi(-\beta_{\rm CCDF})     &amp; \text{ (b)} \label{eq:p_ccdf} \\
+\beta_{\rm CDF}  &amp; =  -\Phi^{-1}(p(g \le z)) &amp; \text{ (c)} \label{eq:beta_cdf} \\
+\beta_{\rm CCDF} &amp; =  -\Phi^{-1}(p(g &gt; z))   &amp; \text{ (d)} \label{eq:beta_ccdf} \\
+\beta_{\rm CDF}  &amp; =  -\beta_{\rm CCDF}      &amp; \text{ (e)} \label{eq:beta_cdf_ccdf} \\
+p(g \le z)  &amp; =  1 - p(g &gt; z)                &amp; \text{ (f)} \label{eq:p_cdf_ccdf}\end{split}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\Phi()\)</span> is the standard normal cumulative distribution
+function, indicating the introduction of a Gaussian assumption on the
+output distributions. A common convention in the literature is to define
+<span class="math notranslate nohighlight">\(g\)</span> in such a way that the CDF probability for a response level
+<span class="math notranslate nohighlight">\(z\)</span> of zero (i.e., <span class="math notranslate nohighlight">\(p(g \le 0)\)</span>) is the response metric of
+interest. Dakota is not restricted to this convention and is designed to
+support CDF or CCDF mappings for general response, probability, and
+reliability level sequences.</p>
+<p>With the Mean Value method, it is possible to obtain importance factors
+indicating the relative contribution of the input variables to the
+output variance. The importance factors can be viewed as an extension of
+linear sensitivity analysis combining deterministic gradient information
+with input uncertainty information, <em>i.e.</em> input variable standard
+deviations. The accuracy of the importance factors is contingent of the
+validity of the linear Taylor series approximation used to approximate
+the response quantities of interest. The importance factors are
+determined as follows for each of <span class="math notranslate nohighlight">\(n\)</span> random variables:</p>
+<div class="math notranslate nohighlight">
+\[{\rm ImportFactor}_i = \left[ \frac{\sigma_{x_i}}{\sigma_g}
+  \frac{dg}{dx_i}(\mu_{\bf x}) \right]^2, ~~~~ i = 1, \dots, n\]</div>
+<p>where it is evident that these importance factors correspond to the
+diagonal terms in <a class="reference internal" href="#equation-eq-mv">(49)</a>, (b) normalized by
+the total response variance. In the case where the input variables are
+correlated resulting in off-diagonal terms for the input covariance, we
+can also compute a two-way importance factor as</p>
+<div class="math notranslate nohighlight">
+\[{\rm ImportFactor}_{ij} = 2 \frac{\sigma^2_{x_{ij}}}{\sigma^2_g}
+  \frac{dg}{dx_i}(\mu_{\bf x}) \frac{dg}{dx_j}(\mu_{\bf x}),
+  ~~~~ i = 1, \dots, n; ~~~~ j = 1, \dots, i-1\]</div>
+<p>These two-way factors differ from the Sobol’ interaction terms that are
+computed in variance-based decomposition (refer to
+<a class="reference internal" href="stochastic.html#theory-uq-expansion-vbd"><span class="std std-ref">Global sensitivity analysis: variance-based decomposition</span></a>) due to the
+non-orthogonality of the Taylor series basis. Due to this
+non-orthogonality, two-way importance factors may be negative, and due
+to normalization by the total response variance, the set of importance
+factors will always sum to one.</p>
+</section>
+<section id="mpp-search-methods">
+<span id="theory-uq-reliability-local-mpp"></span><h3>MPP Search Methods<a class="headerlink" href="#mpp-search-methods" title="Permalink to this headline"></a></h3>
+<p>All other local reliability methods solve an equality-constrained
+nonlinear optimization problem to compute a most probable point (MPP)
+and then integrate about this point to compute probabilities. The MPP
+search is performed in uncorrelated standard normal space (“u-space”)
+since it simplifies the probability integration: the distance of the MPP
+from the origin has the meaning of the number of input standard
+deviations separating the mean response from a particular response
+threshold. The transformation from correlated non-normal distributions
+(x-space) to uncorrelated standard normal distributions (u-space) is
+denoted as <span class="math notranslate nohighlight">\({\bf u} = T({\bf x})\)</span> with the reverse transformation
+denoted as <span class="math notranslate nohighlight">\({\bf x} = T^{-1}({\bf u})\)</span>. These transformations are
+nonlinear in general, and possible approaches include the
+Rosenblatt <span id="id3">[<a class="reference internal" href="../../misc/bibliography.html#id228" title="M. Rosenblatt. Remarks on a multivariate transformation. Annals of Mathematical Statistics, 23(3):470–472, 1952.">Ros52</a>]</span>, Nataf <span id="id4">[<a class="reference internal" href="../../misc/bibliography.html#id53" title="A. Der Kiureghian and P. L. Liu. Structural reliability under incomplete information. J. Eng. Mech., ASCE, 112(EM-1):85–104, 1986.">DKL86</a>]</span>,
+and Box-Cox <span id="id5">[<a class="reference internal" href="../../misc/bibliography.html#id29" title="G. E. P. Box and D. R. Cox. An analysis of transformations. J. Royal Stat. Soc., Series B, 26:211–252, 1964.">BC64</a>]</span> transformations. The nonlinear
+transformations may also be linearized, and common approaches for this
+include the Rackwitz-Fiessler <span id="id6">[<a class="reference internal" href="../../misc/bibliography.html#id217" title="R. Rackwitz and B. Fiessler. Structural reliability under combined random load sequences. Comput. Struct., 9:489–494, 1978.">RF78</a>]</span> two-parameter
+equivalent normal and the Chen-Lind <span id="id7">[<a class="reference internal" href="../../misc/bibliography.html#id37" title="X. Chen and N.C. Lind. Fast probability integration by three-parameter normal tail approximation. Struct. Saf., 1:269–276, 1983.">CL83</a>]</span> and
+Wu-Wirsching <span id="id8">[<a class="reference internal" href="../../misc/bibliography.html#id276" title="Y.-T. Wu and P.H. Wirsching. A new algorithm for structural reliability estimation. J. Eng. Mech., ASCE, 113:1319–1336, 1987.">WW87</a>]</span> three-parameter equivalent
+normals. Dakota employs the Nataf nonlinear transformation which is
+suitable for the common case when marginal distributions and a
+correlation matrix are provided, but full joint distributions are not
+known <a class="footnote-reference brackets" href="#id32" id="id9">1</a>. This transformation occurs in the following two steps. To
+transform between the original correlated x-space variables and
+correlated standard normals (“z-space”), a CDF matching condition is
+applied for each of the marginal distributions:</p>
+<div class="math notranslate nohighlight">
+\[\Phi(z_i) = F(x_i) \label{eq:trans_zx}\]</div>
+<p>where <span class="math notranslate nohighlight">\(F()\)</span> is the cumulative distribution function of the
+original probability distribution. Then, to transform between correlated
+z-space variables and uncorrelated u-space variables, the Cholesky
+factor <span class="math notranslate nohighlight">\({\bf L}\)</span> of a modified correlation matrix is used:</p>
+<div class="math notranslate nohighlight">
+\[{\bf z} = {\bf L} {\bf u} \label{eq:trans_zu}\]</div>
+<p>where the original correlation matrix for non-normals in x-space has
+been modified to represent the corresponding “warped” correlation in
+z-space <span id="id10">[<a class="reference internal" href="../../misc/bibliography.html#id53" title="A. Der Kiureghian and P. L. Liu. Structural reliability under incomplete information. J. Eng. Mech., ASCE, 112(EM-1):85–104, 1986.">DKL86</a>]</span>.</p>
+<p>The forward reliability analysis algorithm of computing CDF/CCDF
+probability/reliability levels for specified response levels is called
+the reliability index approach (RIA), and the inverse reliability
+analysis algorithm of computing response levels for specified CDF/CCDF
+probability/reliability levels is called the performance measure
+approach (PMA) <span id="id11">[<a class="reference internal" href="../../misc/bibliography.html#id257" title="J. Tu, K. K. Choi, and Y. H. Park. A new study on reliability-based design optimization. J. Mech. Design, 121:557–564, 1999.">TCP99</a>]</span>. The differences between the RIA
+and PMA formulations appear in the objective function and equality
+constraint formulations used in the MPP searches. For RIA, the MPP
+search for achieving the specified response level <span class="math notranslate nohighlight">\(\bar{z}\)</span> is
+formulated as computing the minimum distance in u-space from the origin
+to the <span class="math notranslate nohighlight">\(\bar{z}\)</span> contour of the limit state response function:</p>
+<div class="math notranslate nohighlight" id="equation-eq-ria-opt">
+<span class="eqno">(53)<a class="headerlink" href="#equation-eq-ria-opt" title="Permalink to this equation"></a></span>\[ \begin{align}\begin{aligned}\texttt{minimize }   &amp; {\bf u}^T {\bf u}\\\texttt{subject to } &amp; G({\bf u}) = \bar{z}\end{aligned}\end{align} \]</div>
+<p>where <span class="math notranslate nohighlight">\({\bf u}\)</span> is a vector centered at the origin in u-space and
+<span class="math notranslate nohighlight">\(g({\bf x}) \equiv G({\bf u})\)</span> by definition. For PMA, the MPP
+search for achieving the specified reliability level <span class="math notranslate nohighlight">\(\bar{\beta}\)</span>
+or first-order probability level <span class="math notranslate nohighlight">\(\bar{p}\)</span> is formulated as
+computing the minimum/maximum response function value corresponding to a
+prescribed distance from the origin in u-space:</p>
+<div class="math notranslate nohighlight" id="equation-eq-pma-opt">
+<span class="eqno">(54)<a class="headerlink" href="#equation-eq-pma-opt" title="Permalink to this equation"></a></span>\[ \begin{align}\begin{aligned}\texttt{minimize }   &amp; \pm G({\bf u})\\\texttt{subject to } &amp; {\bf u}^T {\bf u} = \bar{\beta}^2\end{aligned}\end{align} \]</div>
+<p>where <span class="math notranslate nohighlight">\(\bar{\beta}\)</span> is computed from <span class="math notranslate nohighlight">\(\bar{p}\)</span> using (c)
+and (d) in <a class="reference internal" href="#equation-eq-beta-cdf-ccdf">(52)</a> in the latter case of a prescribed
+first-order probability level. For a specified generalized reliability
+level <span class="math notranslate nohighlight">\(\bar{\beta^*}\)</span> or second-order probability level
+<span class="math notranslate nohighlight">\(\bar{p}\)</span>, the equality constraint is reformulated in terms of the
+generalized reliability index:</p>
+<div class="math notranslate nohighlight" id="equation-eq-pma2-opt">
+<span class="eqno">(55)<a class="headerlink" href="#equation-eq-pma2-opt" title="Permalink to this equation"></a></span>\[ \begin{align}\begin{aligned}\texttt{minimize }   &amp; \pm G({\bf u})\\\texttt{subject to } &amp; \beta^*({\bf u}) = \bar{\beta^*}\end{aligned}\end{align} \]</div>
+<p>where <span class="math notranslate nohighlight">\(\bar{\beta^*}\)</span> is computed from <span class="math notranslate nohighlight">\(\bar{p}\)</span> using
+<a class="reference internal" href="ouu.html#equation-eq-gen-beta">(266)</a> (or its CCDF complement) in the
+latter case of a prescribed second-order probability level.</p>
+<p>In the RIA case, the optimal MPP solution <span class="math notranslate nohighlight">\({\bf u}^*\)</span> defines the
+reliability index from <span class="math notranslate nohighlight">\(\beta = \pm \|{\bf u}^*\|_2\)</span>, which in
+turn defines the CDF/CCDF probabilities (using (a) and (b) in
+<a class="reference internal" href="#equation-eq-beta-cdf-ccdf">(52)</a> in the
+case of first-order integration). The sign of <span class="math notranslate nohighlight">\(\beta\)</span> is defined
+by</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}G({\bf u}^*) &gt; G({\bf 0}): \beta_{\rm CDF} &lt; 0, \beta_{\rm CCDF} &gt; 0 \\
+G({\bf u}^*) &lt; G({\bf 0}): \beta_{\rm CDF} &gt; 0, \beta_{\rm CCDF} &lt; 0\end{split}\]</div>
+<p>where <span class="math notranslate nohighlight">\(G({\bf 0})\)</span> is the median limit state response computed at
+the origin in u-space <a class="footnote-reference brackets" href="#id33" id="id12">2</a> (where <span class="math notranslate nohighlight">\(\beta_{\rm CDF}\)</span> =
+<span class="math notranslate nohighlight">\(\beta_{\rm CCDF}\)</span> = 0 and first-order <span class="math notranslate nohighlight">\(p(g \le z)\)</span> =
+<span class="math notranslate nohighlight">\(p(g &gt; z)\)</span> = 0.5). In the PMA case, the sign applied to
+<span class="math notranslate nohighlight">\(G({\bf u})\)</span> (equivalent to minimizing or maximizing
+<span class="math notranslate nohighlight">\(G({\bf u})\)</span>) is similarly defined by either <span class="math notranslate nohighlight">\(\bar{\beta}\)</span>
+(for a specified reliability or first-order probability level) or from a
+<span class="math notranslate nohighlight">\(\bar{\beta}\)</span> estimate <a class="footnote-reference brackets" href="#id34" id="id13">3</a> computed from <span class="math notranslate nohighlight">\(\bar{\beta^*}\)</span>
+(for a specified generalized reliability or second-order probability
+level)</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\bar{\beta}_{\rm CDF} &lt; 0, \bar{\beta}_{\rm CCDF} &gt; 0: {\rm maximize \ } G({\bf u}) \\
+\bar{\beta}_{\rm CDF} &gt; 0, \bar{\beta}_{\rm CCDF} &lt; 0: {\rm minimize \ } G({\bf u})\end{split}\]</div>
+<p>where the limit state at the MPP (<span class="math notranslate nohighlight">\(G({\bf u}^*)\)</span>) defines the
+desired response level result.</p>
+<section id="limit-state-approximations">
+<span id="theory-uq-reliability-local-mpp-approx"></span><h4>Limit state approximations<a class="headerlink" href="#limit-state-approximations" title="Permalink to this headline"></a></h4>
+<p>There are a variety of algorithmic variations that are available for use
+within RIA/PMA reliability analyses. First, one may select among several
+different limit state approximations that can be used to reduce
+computational expense during the MPP searches. Local, multipoint, and
+global approximations of the limit state are possible.
+<span id="id14">[<a class="reference internal" href="../../misc/bibliography.html#id81" title="M. S. Eldred, H. Agarwal, V. M. Perez, S. F. Wojtkiewicz, Jr., and J. E. Renaud. Investigation of reliability method formulations in DAKOTA/UQ. Structure &amp; Infrastructure Engineering: Maintenance, Management, Life-Cycle Design &amp; Performance, 3(3):199–213, 2007.">EAP+07</a>]</span> investigated local first-order limit state
+approximations, and <span id="id15">[<a class="reference internal" href="../../misc/bibliography.html#id78" title="M. S. Eldred and B. J. Bichon. Second-order reliability formulations in DAKOTA/UQ. In Proceedings of the 47th AIAA/ASME/ASCE/AHS/ASC Structures, Structural Dynamics and Materials Conference, number AIAA-2006-1828. Newport, RI, May 1–4 2006.">EB06</a>]</span> investigated local
+second-order and multipoint approximations. These techniques include:</p>
+<ol class="arabic">
+<li><p>a single Taylor series per response/reliability/probability level in
+x-space centered at the uncertain variable means. The first-order
+approach is commonly known as the Advanced Mean Value (AMV) method:</p>
+<div class="math notranslate nohighlight" id="equation-eq-linear-x-mean">
+<span class="eqno">(56)<a class="headerlink" href="#equation-eq-linear-x-mean" title="Permalink to this equation"></a></span>\[g({\bf x}) \cong g(\mu_{\bf x}) + \nabla_x g(\mu_{\bf x})^T
+({\bf x} - \mu_{\bf x})\]</div>
+<p>and the second-order approach has been named AMV<span class="math notranslate nohighlight">\(^2\)</span>:</p>
+<div class="math notranslate nohighlight" id="equation-eq-taylor2-x-mean">
+<span class="eqno">(57)<a class="headerlink" href="#equation-eq-taylor2-x-mean" title="Permalink to this equation"></a></span>\[g({\bf x}) \cong g(\mu_{\bf x}) + \nabla_{\bf x} g(\mu_{\bf x})^T
+({\bf x} - \mu_{\bf x}) + \frac{1}{2} ({\bf x} - \mu_{\bf x})^T
+\nabla^2_{\bf x} g(\mu_{\bf x}) ({\bf x} - \mu_{\bf x})\]</div>
+</li>
+<li><p>same as AMV/AMV<span class="math notranslate nohighlight">\(^2\)</span>, except that the Taylor series is
+expanded in u-space. The first-order option has been termed the
+u-space AMV method:</p>
+<div class="math notranslate nohighlight" id="equation-eq-linear-u-mean">
+<span class="eqno">(58)<a class="headerlink" href="#equation-eq-linear-u-mean" title="Permalink to this equation"></a></span>\[G({\bf u}) \cong G(\mu_{\bf u}) + \nabla_u G(\mu_{\bf u})^T
+({\bf u} - \mu_{\bf u})\]</div>
+<p>where <span class="math notranslate nohighlight">\(\mu_{\bf u} = T(\mu_{\bf x})\)</span> and is nonzero in general,
+and the second-order option has been named the u-space
+AMV<span class="math notranslate nohighlight">\(^2\)</span> method:</p>
+<div class="math notranslate nohighlight" id="equation-eq-taylor2-u-mean">
+<span class="eqno">(59)<a class="headerlink" href="#equation-eq-taylor2-u-mean" title="Permalink to this equation"></a></span>\[G({\bf u}) \cong G(\mu_{\bf u}) + \nabla_{\bf u} G(\mu_{\bf u})^T
+({\bf u} - \mu_{\bf u}) + \frac{1}{2} ({\bf u} - \mu_{\bf u})^T
+\nabla^2_{\bf u} G(\mu_{\bf u}) ({\bf u} - \mu_{\bf u})\]</div>
+</li>
+<li><p>an initial Taylor series approximation in x-space at the uncertain
+variable means, with iterative expansion updates at each MPP estimate
+(<span class="math notranslate nohighlight">\({\bf x}^*\)</span>) until the MPP converges. The first-order option
+is commonly known as AMV+:</p>
+<div class="math notranslate nohighlight" id="equation-eq-linear-x-mpp">
+<span class="eqno">(60)<a class="headerlink" href="#equation-eq-linear-x-mpp" title="Permalink to this equation"></a></span>\[g({\bf x}) \cong g({\bf x}^*) + \nabla_x g({\bf x}^*)^T ({\bf x} - {\bf x}^*)\]</div>
+<p>and the second-order option has been named AMV<span class="math notranslate nohighlight">\(^2\)</span>+:</p>
+<div class="math notranslate nohighlight" id="equation-eq-taylor2-x-mpp">
+<span class="eqno">(61)<a class="headerlink" href="#equation-eq-taylor2-x-mpp" title="Permalink to this equation"></a></span>\[g({\bf x}) \cong g({\bf x}^*) + \nabla_{\bf x} g({\bf x}^*)^T
+({\bf x} - {\bf x}^*) + \frac{1}{2} ({\bf x} - {\bf x}^*)^T
+\nabla^2_{\bf x} g({\bf x}^*) ({\bf x} - {\bf x}^*)\]</div>
+</li>
+<li><p>same as AMV+/AMV<span class="math notranslate nohighlight">\(^2\)</span>+, except that the expansions are
+performed in u-space. The first-order option has been termed the
+u-space AMV+ method.</p>
+<div class="math notranslate nohighlight" id="equation-eq-linear-u-mpp">
+<span class="eqno">(62)<a class="headerlink" href="#equation-eq-linear-u-mpp" title="Permalink to this equation"></a></span>\[G({\bf u}) \cong G({\bf u}^*) + \nabla_u G({\bf u}^*)^T ({\bf u} - {\bf u}^*)\]</div>
+<p>and the second-order option has been named the u-space
+AMV<span class="math notranslate nohighlight">\(^2\)</span>+ method:</p>
+<div class="math notranslate nohighlight" id="equation-eq-taylor2-u-mpp">
+<span class="eqno">(63)<a class="headerlink" href="#equation-eq-taylor2-u-mpp" title="Permalink to this equation"></a></span>\[G({\bf u}) \cong G({\bf u}^*) + \nabla_{\bf u} G({\bf u}^*)^T
+({\bf u} - {\bf u}^*) + \frac{1}{2} ({\bf u} - {\bf u}^*)^T
+\nabla^2_{\bf u} G({\bf u}^*) ({\bf u} - {\bf u}^*)\]</div>
+</li>
+<li><p>a multipoint approximation in x-space. This approach involves a
+Taylor series approximation in intermediate variables where the
+powers used for the intermediate variables are selected to match
+information at the current and previous expansion points. Based on
+the two-point exponential approximation concept (TPEA,
+<span id="id16">[<a class="reference internal" href="../../misc/bibliography.html#id86" title="G. M. Fadel, M. F. Riley, and J.-F. M. Barthelemy. Two point exponential approximation method for structural optimization. Structural Optimization, 2(2):117–124, 1990.">FRB90</a>]</span>), the two-point adaptive nonlinearity
+approximation (TANA-3, <span id="id17">[<a class="reference internal" href="../../misc/bibliography.html#id284" title="S. Xu and R. V. Grandhi. Effective two-point function approximation for design optimization. AIAA J., 36(12):2269–2275, 1998.">XG98</a>]</span>) approximates the
+limit state as:</p>
+<div class="math notranslate nohighlight" id="equation-eq-tana-g">
+<span class="eqno">(64)<a class="headerlink" href="#equation-eq-tana-g" title="Permalink to this equation"></a></span>\[g({\bf x}) \cong g({\bf x}_2) + \sum_{i=1}^n
+\frac{\partial g}{\partial x_i}({\bf x}_2) \frac{x_{i,2}^{1-p_i}}{p_i}
+(x_i^{p_i} - x_{i,2}^{p_i}) + \frac{1}{2} \epsilon({\bf x}) \sum_{i=1}^n
+(x_i^{p_i} - x_{i,2}^{p_i})^2\]</div>
+<p>where <span class="math notranslate nohighlight">\(n\)</span> is the number of uncertain variables and:</p>
+<div class="math notranslate nohighlight" id="equation-eq-tana-g-details">
+<span class="eqno">(65)<a class="headerlink" href="#equation-eq-tana-g-details" title="Permalink to this equation"></a></span>\[ \begin{align}\begin{aligned}p_i &amp; = 1 + \ln \left[ \frac{\frac{\partial g}{\partial x_i}({\bf x}_1)}
+{\frac{\partial g}{\partial x_i}({\bf x}_2)} \right] \left/
+\ln \left[ \frac{x_{i,1}}{x_{i,2}} \right] \right. &amp; \text{ (a)} \label{eq:tana_pi_x}\\\epsilon({\bf x}) &amp; = \frac{H}{\sum_{i=1}^n (x_i^{p_i} - x_{i,1}^{p_i})^2 +
+\sum_{i=1}^n (x_i^{p_i} - x_{i,2}^{p_i})^2}  &amp; \text{ (b)} \label{eq:tana_eps_x}\\H &amp; = 2 \left[ g({\bf x}_1) - g({\bf x}_2) - \sum_{i=1}^n
+\frac{\partial g}{\partial x_i}({\bf x}_2) \frac{x_{i,2}^{1-p_i}}{p_i}
+(x_{i,1}^{p_i} - x_{i,2}^{p_i}) \right]  &amp; \text{ (c)} \label{eq:tana_H_x}\end{aligned}\end{align} \]</div>
+<p>and <span class="math notranslate nohighlight">\({\bf x}_2\)</span> and <span class="math notranslate nohighlight">\({\bf x}_1\)</span> are the current and
+previous MPP estimates in x-space, respectively. Prior to the
+availability of two MPP estimates, x-space AMV+ is used.</p>
+</li>
+<li><p>a multipoint approximation in u-space. The u-space TANA-3
+approximates the limit state as:</p>
+<div class="math notranslate nohighlight" id="equation-eq-tana-capg">
+<span class="eqno">(66)<a class="headerlink" href="#equation-eq-tana-capg" title="Permalink to this equation"></a></span>\[G({\bf u}) \cong G({\bf u}_2) + \sum_{i=1}^n
+\frac{\partial G}{\partial u_i}({\bf u}_2) \frac{u_{i,2}^{1-p_i}}{p_i}
+(u_i^{p_i} - u_{i,2}^{p_i}) + \frac{1}{2} \epsilon({\bf u}) \sum_{i=1}^n
+(u_i^{p_i} - u_{i,2}^{p_i})^2\]</div>
+<p>where:</p>
+<div class="math notranslate nohighlight" id="equation-eq-tana-capg-details">
+<span class="eqno">(67)<a class="headerlink" href="#equation-eq-tana-capg-details" title="Permalink to this equation"></a></span>\[ \begin{align}\begin{aligned}p_i &amp; = 1 + \ln \left[ \frac{\frac{\partial G}{\partial u_i}({\bf u}_1)}
+{\frac{\partial G}{\partial u_i}({\bf u}_2)} \right] \left/
+\ln \left[ \frac{u_{i,1}}{u_{i,2}} \right] \right.  &amp; \text{ (a)} \label{eq:tana_pi_u}\\\epsilon({\bf u}) &amp; = \frac{H}{\sum_{i=1}^n (u_i^{p_i} - u_{i,1}^{p_i})^2 +
+\sum_{i=1}^n (u_i^{p_i} - u_{i,2}^{p_i})^2}  &amp; \text{ (b)} \label{eq:tana_eps_u}\\H &amp; = 2 \left[ G({\bf u}_1) - G({\bf u}_2) - \sum_{i=1}^n
+\frac{\partial G}{\partial u_i}({\bf u}_2) \frac{u_{i,2}^{1-p_i}}{p_i}
+(u_{i,1}^{p_i} - u_{i,2}^{p_i}) \right]  &amp; \text{ (c)} \label{eq:tana_H_u}\end{aligned}\end{align} \]</div>
+<p>and <span class="math notranslate nohighlight">\({\bf u}_2\)</span> and <span class="math notranslate nohighlight">\({\bf u}_1\)</span> are the current and
+previous MPP estimates in u-space, respectively. Prior to the
+availability of two MPP estimates, u-space AMV+ is used.</p>
+</li>
+<li><p>the MPP search on the original response functions without the use of
+any approximations. Combining this option with first-order and
+second-order integration approaches (see next section) results in the
+traditional first-order and second-order reliability methods (FORM
+and SORM).</p></li>
+</ol>
+<p>The Hessian matrices in AMV<span class="math notranslate nohighlight">\(^2\)</span> and AMV<span class="math notranslate nohighlight">\(^2\)</span>+ may be
+available analytically, estimated numerically, or approximated through
+quasi-Newton updates. The selection between x-space or u-space for
+performing approximations depends on where the approximation will be
+more accurate, since this will result in more accurate MPP estimates
+(AMV, AMV<span class="math notranslate nohighlight">\(^2\)</span>) or faster convergence (AMV+, AMV<span class="math notranslate nohighlight">\(^2\)</span>+,
+TANA). Since this relative accuracy depends on the forms of the limit
+state <span class="math notranslate nohighlight">\(g(x)\)</span> and the transformation <span class="math notranslate nohighlight">\(T(x)\)</span> and is therefore
+application dependent in general, Dakota supports both options. A
+concern with approximation-based iterative search methods (i.e., AMV+,
+AMV<span class="math notranslate nohighlight">\(^2\)</span>+ and TANA) is the robustness of their convergence to
+the MPP. It is possible for the MPP iterates to oscillate or even
+diverge. However, to date, this occurrence has been relatively rare, and
+Dakota contains checks that monitor for this behavior. Another concern
+with TANA is numerical safeguarding (e.g., the possibility of raising</p>
+<p>negative <span class="math notranslate nohighlight">\(x_i\)</span> or <span class="math notranslate nohighlight">\(u_i\)</span> values to nonintegral <span class="math notranslate nohighlight">\(p_i\)</span>
+exponents in <a class="reference internal" href="#equation-eq-tana-g">(64)</a>, <a class="reference internal" href="#equation-eq-tana-g-details">(65)</a> (b) –
+<a class="reference internal" href="#equation-eq-tana-capg">(66)</a>, and <a class="reference internal" href="#equation-eq-tana-capg-details">(67)</a> (b) and (c).</p>
+<p>Safeguarding involves offseting negative <span class="math notranslate nohighlight">\(x_i\)</span> or <span class="math notranslate nohighlight">\(u_i\)</span> and,
+for potential numerical difficulties with the logarithm ratios in
+(b) in each of <a class="reference internal" href="#equation-eq-tana-g-details">(65)</a> and <a class="reference internal" href="#equation-eq-tana-capg-details">(67)</a>,
+reverting to either the linear
+(<span class="math notranslate nohighlight">\(p_i = 1\)</span>) or reciprocal (<span class="math notranslate nohighlight">\(p_i = -1\)</span>) approximation based
+on which approximation has lower error in
+<span class="math notranslate nohighlight">\(\frac{\partial g}{\partial x_i}({\bf x}_1)\)</span> or
+<span class="math notranslate nohighlight">\(\frac{\partial G}{\partial u_i}({\bf u}_1)\)</span>.</p>
+</section>
+<section id="probability-integrations">
+<span id="theory-uq-reliability-local-mpp-int"></span><h4>Probability integrations<a class="headerlink" href="#probability-integrations" title="Permalink to this headline"></a></h4>
+<p>The second algorithmic variation involves the integration approach for
+computing probabilities at the MPP, which can be selected to be
+first-order
+((a) and (b) in <a class="reference internal" href="#equation-eq-beta-cdf-ccdf">(52)</a>) or
+second-order integration. Second-order integration involves applying a
+curvature correction <span id="id18">[<a class="reference internal" href="../../misc/bibliography.html#id31" title="K. Breitung. Asymptotic approximation for multinormal integrals. J. Eng. Mech., ASCE, 110(3):357–366, 1984.">Bre84</a>, <a class="reference internal" href="../../misc/bibliography.html#id148" title="M. Hohenbichler and R. Rackwitz. Improvement of second-order reliability estimates by importance sampling. J. Eng. Mech., ASCE, 114(12):2195–2199, 1988.">HR88</a>, <a class="reference internal" href="../../misc/bibliography.html#id149" title="H.P. Hong. Simple approximations for improving second-order reliability estimates. J. Eng. Mech., ASCE, 125(5):592–595, 1999.">Hon99</a>]</span>. Breitung
+applies a correction based on asymptotic
+analysis <span id="id19">[<a class="reference internal" href="../../misc/bibliography.html#id31" title="K. Breitung. Asymptotic approximation for multinormal integrals. J. Eng. Mech., ASCE, 110(3):357–366, 1984.">Bre84</a>]</span>:</p>
+<div class="math notranslate nohighlight" id="equation-eq-p-2nd-breit">
+<span class="eqno">(68)<a class="headerlink" href="#equation-eq-p-2nd-breit" title="Permalink to this equation"></a></span>\[p = \Phi(-\beta_p) \prod_{i=1}^{n-1} \frac{1}{\sqrt{1 + \beta_p \kappa_i}}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\kappa_i\)</span> are the principal curvatures of the limit state
+function (the eigenvalues of an orthonormal transformation of
+<span class="math notranslate nohighlight">\(\nabla^2_{\bf u} G\)</span>, taken positive for a convex limit state) and
+<span class="math notranslate nohighlight">\(\beta_p \ge 0\)</span> (a CDF or CCDF probability correction is selected
+to obtain the correct sign for <span class="math notranslate nohighlight">\(\beta_p\)</span>). An alternate correction
+in <span id="id20">[<a class="reference internal" href="../../misc/bibliography.html#id148" title="M. Hohenbichler and R. Rackwitz. Improvement of second-order reliability estimates by importance sampling. J. Eng. Mech., ASCE, 114(12):2195–2199, 1988.">HR88</a>]</span> is consistent in the asymptotic regime
+(<span class="math notranslate nohighlight">\(\beta_p \to \infty\)</span>) but does not collapse to first-order
+integration for <span class="math notranslate nohighlight">\(\beta_p = 0\)</span>:</p>
+<div class="math notranslate nohighlight" id="equation-eq-p-2nd-hr">
+<span class="eqno">(69)<a class="headerlink" href="#equation-eq-p-2nd-hr" title="Permalink to this equation"></a></span>\[p = \Phi(-\beta_p) \prod_{i=1}^{n-1}
+\frac{1}{\sqrt{1 + \psi(-\beta_p) \kappa_i}}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\psi() = \frac{\phi()}{\Phi()}\)</span> and <span class="math notranslate nohighlight">\(\phi()\)</span> is the
+standard normal density function. <span id="id21">[<a class="reference internal" href="../../misc/bibliography.html#id149" title="H.P. Hong. Simple approximations for improving second-order reliability estimates. J. Eng. Mech., ASCE, 125(5):592–595, 1999.">Hon99</a>]</span> applies
+further corrections to <a class="reference internal" href="#equation-eq-p-2nd-hr">(69)</a> based
+on point concentration methods. At this time, all three approaches are
+available within the code, but the Hohenbichler-Rackwitz correction is
+used by default (switching the correction is a compile-time option in
+the source code and has not been exposed in the input specification).</p>
+</section>
+<section id="hessian-approximations">
+<span id="sec-hessian"></span><h4>Hessian approximations<a class="headerlink" href="#hessian-approximations" title="Permalink to this headline"></a></h4>
+<p>To use a second-order Taylor series or a second-order integration when
+second-order information (<span class="math notranslate nohighlight">\(\nabla^2_{\bf x} g\)</span>,
+<span class="math notranslate nohighlight">\(\nabla^2_{\bf u} G\)</span>, and/or <span class="math notranslate nohighlight">\(\kappa\)</span>) is not directly
+available, one can estimate the missing information using finite
+differences or approximate it through use of quasi-Newton
+approximations. These procedures will often be needed to make
+second-order approaches practical for engineering applications.</p>
+<p>In the finite difference case, numerical Hessians are commonly computed
+using either first-order forward differences of gradients using</p>
+<div class="math notranslate nohighlight">
+\[\nabla^2 g ({\bf x}) \cong
+\frac{\nabla g ({\bf x} + h {\bf e}_i) - \nabla g ({\bf x})}{h}\]</div>
+<p>to estimate the <span class="math notranslate nohighlight">\(i^{th}\)</span> Hessian column when gradients are
+analytically available, or second-order differences of function values
+using</p>
+<div class="math notranslate nohighlight">
+\[\nabla^2 g ({\bf x}) \cong \frac{g({\bf x} + h {\bf e}_i + h {\bf e}_j) -
+g({\bf x} + h {\bf e}_i - h {\bf e}_j) -
+g({\bf x} - h {\bf e}_i + h {\bf e}_j) +
+g({\bf x} - h {\bf e}_i - h {\bf e}_j)}{4h^2}\]</div>
+<p>to estimate the <span class="math notranslate nohighlight">\(ij^{th}\)</span> Hessian term when gradients are not
+directly available. This approach has the advantage of locally-accurate
+Hessians for each point of interest (which can lead to quadratic
+convergence rates in discrete Newton methods), but has the disadvantage
+that numerically estimating each of the matrix terms can be expensive.</p>
+<p>Quasi-Newton approximations, on the other hand, do not reevaluate all of
+the second-order information for every point of interest. Rather, they
+accumulate approximate curvature information over time using secant
+updates. Since they utilize the existing gradient evaluations, they do
+not require any additional function evaluations for evaluating the
+Hessian terms. The quasi-Newton approximations of interest include the
+Broyden-Fletcher-Goldfarb-Shanno (BFGS) update</p>
+<div class="math notranslate nohighlight" id="equation-eq-bfgs">
+<span class="eqno">(70)<a class="headerlink" href="#equation-eq-bfgs" title="Permalink to this equation"></a></span>\[{\bf B}_{k+1} = {\bf B}_{k} - \frac{{\bf B}_k {\bf s}_k {\bf s}_k^T {\bf B}_k}
+{{\bf s}_k^T {\bf B}_k {\bf s}_k} +
+\frac{{\bf y}_k {\bf y}_k^T}{{\bf y}_k^T {\bf s}_k}\]</div>
+<p>which yields a sequence of symmetric positive definite Hessian
+approximations, and the Symmetric Rank 1 (SR1) update</p>
+<div class="math notranslate nohighlight">
+\[{\bf B}_{k+1} = {\bf B}_{k} +
+\frac{({\bf y}_k - {\bf B}_k {\bf s}_k)({\bf y}_k - {\bf B}_k {\bf s}_k)^T}
+{({\bf y}_k - {\bf B}_k {\bf s}_k)^T {\bf s}_k} \label{eq:sr1}\]</div>
+<p>which yields a sequence of symmetric, potentially indefinite, Hessian
+approximations. <span class="math notranslate nohighlight">\({\bf B}_k\)</span> is the <span class="math notranslate nohighlight">\(k^{th}\)</span> approximation to
+the Hessian <span class="math notranslate nohighlight">\(\nabla^2 g\)</span>,
+<span class="math notranslate nohighlight">\({\bf s}_k = {\bf x}_{k+1} - {\bf x}_k\)</span> is the step and
+<span class="math notranslate nohighlight">\({\bf y}_k = \nabla g_{k+1} - \nabla g_k\)</span> is the corresponding
+yield in the gradients. The selection of BFGS versus SR1 involves the
+importance of retaining positive definiteness in the Hessian
+approximations; if the procedure does not require it, then the SR1
+update can be more accurate if the true Hessian is not positive
+definite. Initial scalings for <span class="math notranslate nohighlight">\({\bf B}_0\)</span> and numerical
+safeguarding techniques (damped BFGS, update skipping) are described in
+<span id="id22">[<a class="reference internal" href="../../misc/bibliography.html#id78" title="M. S. Eldred and B. J. Bichon. Second-order reliability formulations in DAKOTA/UQ. In Proceedings of the 47th AIAA/ASME/ASCE/AHS/ASC Structures, Structural Dynamics and Materials Conference, number AIAA-2006-1828. Newport, RI, May 1–4 2006.">EB06</a>]</span>.</p>
+</section>
+<section id="optimization-algorithms">
+<h4>Optimization algorithms<a class="headerlink" href="#optimization-algorithms" title="Permalink to this headline"></a></h4>
+<p>The next algorithmic variation involves the optimization algorithm
+selection for solving Eqs. <a class="reference internal" href="#equation-eq-ria-opt">(53)</a>
+and <a class="reference internal" href="#equation-eq-pma-opt">(54)</a>. The Hasofer-Lind Rackwitz-Fissler
+(HL-RF) algorithm <span id="id23">[<a class="reference internal" href="../../misc/bibliography.html#id134" title="A. Haldar and S. Mahadevan. Probability, Reliability, and Statistical Methods in Engineering Design. Wiley, New York, 2000.">HM00</a>]</span> is a classical approach that
+has been broadly applied. It is a Newton-based approach lacking line
+search/trust region globalization, and is generally regarded as
+computationally efficient but occasionally unreliable. Dakota takes the
+approach of employing robust, general-purpose optimization algorithms
+with provable convergence properties. In particular, we employ the
+sequential quadratic programming (SQP) and nonlinear interior-point
+(NIP) optimization algorithms from the NPSOL <span id="id24">[<a class="reference internal" href="../../misc/bibliography.html#id109" title="P. E. Gill, W. Murray, M. A. Saunders, and M. H. Wright. User's guide for NPSOL (Version 4.0): a Fortran package for nonlinear programming. Technical Report TR SOL-86-2, System Optimization Laboratory, Stanford University, Stanford, CA, 1986.">GMSW86</a>]</span>
+and OPT++ <span id="id25">[<a class="reference internal" href="../../misc/bibliography.html#id183" title="J. C. Meza, R. A. Oliva, P. D. Hough, and P. J. Williams. OPT++: an object oriented toolkit for nonlinear optimization. ACM Transactions on Mathematical Software, 2007.">MOHW07</a>]</span> libraries, respectively.</p>
+</section>
+<section id="warm-starting-of-mpp-searches">
+<h4>Warm Starting of MPP Searches<a class="headerlink" href="#warm-starting-of-mpp-searches" title="Permalink to this headline"></a></h4>
+<p>The final algorithmic variation for local reliability methods involves
+the use of warm starting approaches for improving computational
+efficiency. <span id="id26">[<a class="reference internal" href="../../misc/bibliography.html#id81" title="M. S. Eldred, H. Agarwal, V. M. Perez, S. F. Wojtkiewicz, Jr., and J. E. Renaud. Investigation of reliability method formulations in DAKOTA/UQ. Structure &amp; Infrastructure Engineering: Maintenance, Management, Life-Cycle Design &amp; Performance, 3(3):199–213, 2007.">EAP+07</a>]</span> describes the acceleration of MPP
+searches through warm starting with approximate iteration increment,
+with <span class="math notranslate nohighlight">\(z/p/\beta\)</span> level increment, and with design variable
+increment. Warm started data includes the expansion point and associated
+response values and the MPP optimizer initial guess. Projections are
+used when an increment in <span class="math notranslate nohighlight">\(z/p/\beta\)</span> level or design variables
+occurs. Warm starts were consistently effective in
+<span id="id27">[<a class="reference internal" href="../../misc/bibliography.html#id81" title="M. S. Eldred, H. Agarwal, V. M. Perez, S. F. Wojtkiewicz, Jr., and J. E. Renaud. Investigation of reliability method formulations in DAKOTA/UQ. Structure &amp; Infrastructure Engineering: Maintenance, Management, Life-Cycle Design &amp; Performance, 3(3):199–213, 2007.">EAP+07</a>]</span>, with greater effectiveness for smaller
+parameter changes, and are used by default in Dakota.</p>
+</section>
+</section>
+</section>
+<section id="global-reliability-methods">
+<span id="theory-uq-reliability-global"></span><h2>Global Reliability Methods<a class="headerlink" href="#global-reliability-methods" title="Permalink to this headline"></a></h2>
+<p>Local reliability methods, while computationally efficient, have
+well-known failure mechanisms. When confronted with a limit state
+function that is nonsmooth, local gradient-based optimizers may stall
+due to gradient inaccuracy and fail to converge to an MPP. Moreover, if
+the limit state is multimodal (multiple MPPs), then a gradient-based
+local method can, at best, locate only one local MPP solution. Finally,
+a linear (Eqs. (a) and (b) in <a class="reference internal" href="#equation-eq-beta-cdf-ccdf">(52)</a>) or parabolic
+(Eqs. <a class="reference internal" href="#equation-eq-p-2nd-breit">(68)</a> – <a class="reference internal" href="#equation-eq-p-2nd-hr">(69)</a>)
+approximation to the limit state at this MPP may fail to adequately
+capture the contour of a highly nonlinear limit state.</p>
+<p>A reliability analysis method that is both efficient when applied to
+expensive response functions and accurate for a response function of any
+arbitrary shape is needed. This section develops such a method based on
+efficient global optimization <span id="id28">[<a class="reference internal" href="../../misc/bibliography.html#id155" title="D. Jones, M. Schonlau, and W. Welch. Efficient global optimization of expensive black-box functions. Journal of Global Optimization, 13:455–492, 1998.">JSW98</a>]</span> (EGO) to the
+search for multiple points on or near the limit state throughout the
+random variable space. By locating multiple points on the limit state,
+more complex limit states can be accurately modeled, resulting in a more
+accurate assessment of the reliability. It should be emphasized here
+that these multiple points exist on a single limit state. Because of its
+roots in efficient global optimization, this method of reliability
+analysis is called efficient global reliability analysis
+(EGRA) <span id="id29">[<a class="reference internal" href="../../misc/bibliography.html#id24" title="B. J. Bichon, M. S. Eldred, L. P. Swiler, S. Mahadevan, and J. M. McFarland. Multimodal reliability assessment for complex engineering applications using efficient global optimization. In Proceedings of the 48th AIAA/ASME/ASCE/AHS/ASC Structures, Structural Dynamics, and Materials Conference (9th AIAA Non-Deterministic Approaches Conference), number AIAA-2007-1946. Honolulu, HI, April 2007.">BES+07</a>]</span>. The following two subsections
+describe two capabilities that are incorporated into the EGRA algorithm:
+importance sampling and EGO.</p>
+<section id="importance-sampling">
+<span id="theory-uq-reliability-global-ais"></span><h3>Importance Sampling<a class="headerlink" href="#importance-sampling" title="Permalink to this headline"></a></h3>
+<p>An alternative to MPP search methods is to directly perform the
+probability integration numerically by sampling the response function.
+Sampling methods do not rely on a simplifying approximation to the shape
+of the limit state, so they can be more accurate than FORM and SORM, but
+they can also be prohibitively expensive because they generally require
+a large number of response function evaluations. Importance sampling
+methods reduce this expense by focusing the samples in the important
+regions of the uncertain space. They do this by centering the sampling
+density function at the MPP rather than at the mean. This ensures the
+samples will lie the region of interest, thus increasing the efficiency
+of the sampling method. Adaptive importance sampling (AIS) further
+improves the efficiency by adaptively updating the sampling density
+function. Multimodal adaptive importance
+sampling <span id="id30">[<a class="reference internal" href="../../misc/bibliography.html#id54" title="A. Dey and S. Mahadevan. Ductile structural system reliability analysis using adaptive importance sampling. Structural Safety, 20:137–154, 1998.">DM98</a>, <a class="reference internal" href="../../misc/bibliography.html#id286" title="T. Zou, Z. Mourelatos, S. Mahadevan, and P. Meernik. Reliability analysis of automotive body-door subsystem. Rel. Eng. and Sys. Safety, 78:315–324, 2002.">ZMMM02</a>]</span> is a variation of AIS that
+allows for the use of multiple sampling densities making it better
+suited for cases where multiple sections of the limit state are highly
+probable.</p>
+<p>Note that importance sampling methods require that the location of at
+least one MPP be known because it is used to center the initial sampling
+density. However, current gradient-based, local search methods used in
+MPP search may fail to converge or may converge to poor solutions for
+highly nonlinear problems, possibly making these methods inapplicable.
+As the next section describes, EGO is a global optimization method that
+does not depend on the availability of accurate gradient information,
+making convergence more reliable for nonsmooth response functions.
+Moreover, EGO has the ability to locate multiple failure points, which
+would provide multiple starting points and thus a good multimodal
+sampling density for the initial steps of multimodal AIS. The resulting
+Gaussian process model is accurate in the vicinity of the limit state,
+thereby providing an inexpensive surrogate that can be used to provide
+response function samples. As will be seen, using EGO to locate multiple
+points along the limit state, and then using the resulting Gaussian
+process model to provide function evaluations in multimodal AIS for the
+probability integration, results in an accurate and efficient
+reliability analysis tool.</p>
+</section>
+<section id="efficient-global-optimization">
+<span id="theory-uq-reliability-global-ego"></span><h3>Efficient Global Optimization<a class="headerlink" href="#efficient-global-optimization" title="Permalink to this headline"></a></h3>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Chapter <a class="reference internal" href="surrogatebasedglobaloptimization.html#uq-ego"><span class="std std-ref">Effcient Global Optimization</span></a> has been substantially revised to discuss
+EGO/Bayesian optimization theory.</p>
+</div>
+<section id="expected-feasibility-function">
+<span id="theory-uq-reliability-global-ego-eff"></span><h4>Expected Feasibility Function<a class="headerlink" href="#expected-feasibility-function" title="Permalink to this headline"></a></h4>
+<p>The expected improvement function provides an indication of how much the
+true value of the response at a point can be expected to be less than
+the current best solution. It therefore makes little sense to apply this
+to the forward reliability problem where the goal is not to minimize the
+response, but rather to find where it is equal to a specified threshold
+value. The expected feasibility function (EFF) is introduced here to
+provide an indication of how well the true value of the response is
+expected to satisfy the equality constraint
+<span class="math notranslate nohighlight">\(G({\bf u})\!=\!\bar{z}\)</span>. Inspired by the contour estimation work
+in <span id="id31">[<a class="reference internal" href="../../misc/bibliography.html#id219" title="P. Ranjan, Bingham D., and Michailidis G. Sequential experiment design for contour estimation from complex computer codes. Technometrics, 50(4):527–541, 2008.">RDG08</a>]</span>, this expectation can be calculated in a
+similar fashion as <a class="reference internal" href="surrogatebasedglobaloptimization.html#equation-eq-eif-int">(257)</a> by integrating
+over a region in the immediate vicinity of the threshold value
+<span class="math notranslate nohighlight">\(\bar{z}\pm\epsilon\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[EF\bigl( \hat{G}({\bf u}) \bigr) =
+  \int_{z-\epsilon}^{z+\epsilon}
+    \bigl[ \epsilon - | \bar{z}-G | \bigr] \, \hat{G}({\bf u}) \; dG\]</div>
+<p>where <span class="math notranslate nohighlight">\(G\)</span> denotes a realization of the distribution
+<span class="math notranslate nohighlight">\(\hat{G}\)</span>, as before. Allowing <span class="math notranslate nohighlight">\(z^+\)</span> and <span class="math notranslate nohighlight">\(z^-\)</span> to
+denote <span class="math notranslate nohighlight">\(\bar{z}\pm\epsilon\)</span>, respectively, this integral can be
+expressed analytically as:</p>
+<div class="math notranslate nohighlight" id="equation-eq-eff">
+<span class="eqno">(71)<a class="headerlink" href="#equation-eq-eff" title="Permalink to this equation"></a></span>\[ \begin{align}\begin{aligned}EF\bigl( \hat{G}({\bf u}) \bigr) &amp;= \left( \mu_G - \bar{z} \right)
+           \left[ 2 \, \Phi\left( \frac{\bar{z} - \mu_G}{\sigma_G} \right) -
+                       \Phi\left( \frac{  z^-   - \mu_G}{\sigma_G} \right) -
+                       \Phi\left( \frac{  z^+   - \mu_G}{\sigma_G} \right)
+          \right]\\&amp; \ \ \ \ \ \ \ \ -
+  \sigma_G \left[ 2 \, \phi\left( \frac{\bar{z} - \mu_G}{\sigma_G} \right) \, -
+                       \phi\left( \frac{  z^-   - \mu_G}{\sigma_G} \right) \, -
+                       \phi\left( \frac{  z^+   - \mu_G}{\sigma_G} \right)
+          \right]\\&amp; \ \ \ \ \ \ \ \ + \ \ \,
+  \epsilon \left[      \Phi\left( \frac{  z^+   - \mu_G}{\sigma_G} \right) -
+                       \Phi\left( \frac{  z^-   - \mu_G}{\sigma_G} \right)
+          \right]\end{aligned}\end{align} \]</div>
+<p>where <span class="math notranslate nohighlight">\(\epsilon\)</span> is proportional to the standard deviation of the
+GP predictor (<span class="math notranslate nohighlight">\(\epsilon\propto\sigma_G\)</span>). In this case,
+<span class="math notranslate nohighlight">\(z^-\)</span>, <span class="math notranslate nohighlight">\(z^+\)</span>, <span class="math notranslate nohighlight">\(\mu_G\)</span>, <span class="math notranslate nohighlight">\(\sigma_G\)</span>, and
+<span class="math notranslate nohighlight">\(\epsilon\)</span> are all functions of the location <span class="math notranslate nohighlight">\({\bf u}\)</span>,
+while <span class="math notranslate nohighlight">\(\bar{z}\)</span> is a constant. Note that the EFF provides the same
+balance between exploration and exploitation as is captured in the EIF.
+Points where the expected value is close to the threshold
+(<span class="math notranslate nohighlight">\(\mu_G\!\approx\!\bar{z}\)</span>) and points with a large uncertainty in
+the prediction will have large expected feasibility values.</p>
+<dl class="footnote brackets">
+<dt class="label" id="id32"><span class="brackets"><a class="fn-backref" href="#id9">1</a></span></dt>
+<dd><p>If joint distributions are known, then the Rosenblatt transformation
+is preferred.</p>
+</dd>
+<dt class="label" id="id33"><span class="brackets"><a class="fn-backref" href="#id12">2</a></span></dt>
+<dd><p>It is not necessary to explicitly compute the median response since
+the sign of the inner product
+<span class="math notranslate nohighlight">\(\langle {\bf u}^*, \nabla_{\bf u} G \rangle\)</span> can be used to
+determine the orientation of the optimal response with respect to the
+median response.</p>
+</dd>
+<dt class="label" id="id34"><span class="brackets"><a class="fn-backref" href="#id13">3</a></span></dt>
+<dd><p>computed by inverting the second-order probability relationships
+described in <a class="reference internal" href="#theory-uq-reliability-local-mpp-int"><span class="std std-ref">Probability integrations</span></a> at
+the current <span class="math notranslate nohighlight">\({\bf u}^*\)</span> iterate.</p>
+</dd>
+</dl>
+</section>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="sampling.html" class="btn btn-neutral float-left" title="Sampling Methods" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="stochastic.html" class="btn btn-neutral float-right" title="Stochastic Expansion Methods" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <!--
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Sandia National Laboratories.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+  --> 
+
+</footer>
+        </div>
+      </div>
+	  
+	  <div style="background-color: #0f0f0f;color:#fafafa;padding:20px">
+	    <div>
+		  <h2><em>Exceptional service in the national interest</em></h2>
+		</div>
+		<p>© 2022 National Technology and Engineering Solutions of Sandia, LLC. | <a href="https://www.sandia.gov/contact_us/index.html">Questions &amp; Comments</a> | <a href="https://www.sandia.gov/general/privacy-security/index.html">Privacy &amp; Security</a></p>
+		<p><a href="http://energy.gov" rel="noopener noreferrer" target="_blank"><img alt="U.S. Department of Energy" longdesc="https://energy.gov" src="https://www.sandia.gov/_common/images/doe_logo_white.png" style="height:37px; width:140px"></a> <a href="http://nnsa.energy.gov/" rel="noopener noreferrer" target="_blank"> <img alt="National Nuclear Security Administration" longdesc="http://nnsa.gov" src="https://www.sandia.gov/_common/images/nnsa_logo_white.png" style="height:37px; width:116px"></a></p>
+		<p><a href="https://www.sandia.gov">Sandia National Laboratories</a> is a multimission laboratory managed and operated by National Technology and Engineering Solutions of Sandia, LLC., a wholly owned subsidiary of Honeywell International, Inc., for the U.S. Department of Energy’s National Nuclear Security Administration under contract DE-NA-0003525.</p>
+	  </div>	  	  
+	  
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

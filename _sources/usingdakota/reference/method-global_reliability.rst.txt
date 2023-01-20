@@ -1,0 +1,154 @@
+.. _method-global_reliability:
+
+""""""""""""""""""
+global_reliability
+""""""""""""""""""
+
+
+Global reliability methods
+
+
+
+**Topics**
+
+
+uncertainty_quantification, reliability_methods
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-global_reliability-initial_samples
+   method-global_reliability-x_gaussian_process
+   method-global_reliability-u_gaussian_process
+   method-global_reliability-surfpack
+   method-global_reliability-dakota
+   method-global_reliability-experimental
+   method-global_reliability-import_build_points_file
+   method-global_reliability-export_approx_points_file
+   method-global_reliability-use_derivatives
+   method-global_reliability-seed
+   method-global_reliability-rng
+   method-global_reliability-response_levels
+   method-global_reliability-probability_levels
+   method-global_reliability-gen_reliability_levels
+   method-global_reliability-distribution
+   method-global_reliability-max_iterations
+   method-global_reliability-convergence_tolerance
+   method-global_reliability-model_pointer
+
+
+**Specification**
+
+- *Alias:* nond_global_reliability 
+
+- *Arguments:* None
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+-------------------------------+---------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword                | Dakota Keyword Description                  |
+|                         | Group              |                               |                                             |
++=========================+====================+===============================+=============================================+
+| Optional                                     | `initial_samples`__           | Initial number of samples for               |
+|                                              |                               | sampling-based methods                      |
++-------------------------+--------------------+-------------------------------+---------------------------------------------+
+| Required (Choose One)   | Approximation      | `x_gaussian_process`__        | Create GP surrogate in x-space              |
+|                         |                    +-------------------------------+---------------------------------------------+
+|                         |                    | `u_gaussian_process`__        | Create GP surrogate in u-space              |
++-------------------------+--------------------+-------------------------------+---------------------------------------------+
+| Optional (Choose One)   | GP Implementation  | `surfpack`__                  | Use the Surfpack version of Gaussian        |
+|                         |                    |                               | Process surrogates                          |
+|                         |                    +-------------------------------+---------------------------------------------+
+|                         |                    | `dakota`__                    | Select the built in Gaussian Process        |
+|                         |                    |                               | surrogate                                   |
+|                         |                    +-------------------------------+---------------------------------------------+
+|                         |                    | `experimental`__              | Use the experimental Gaussian Process       |
+|                         |                    |                               | surrogate                                   |
++-------------------------+--------------------+-------------------------------+---------------------------------------------+
+| Optional                                     | `import_build_points_file`__  | File containing points you wish to use to   |
+|                                              |                               | build a surrogate                           |
++----------------------------------------------+-------------------------------+---------------------------------------------+
+| Optional                                     | `export_approx_points_file`__ | Output file for surrogate model value       |
+|                                              |                               | evaluations                                 |
++----------------------------------------------+-------------------------------+---------------------------------------------+
+| Optional                                     | `use_derivatives`__           | Use derivative data to construct surrogate  |
+|                                              |                               | models                                      |
++----------------------------------------------+-------------------------------+---------------------------------------------+
+| Optional                                     | `seed`__                      | Seed of the random number generator         |
++----------------------------------------------+-------------------------------+---------------------------------------------+
+| Optional                                     | `rng`__                       | Selection of a random number generator      |
++----------------------------------------------+-------------------------------+---------------------------------------------+
+| Optional                                     | `response_levels`__           | Values at which to estimate desired         |
+|                                              |                               | statistics for each response                |
++----------------------------------------------+-------------------------------+---------------------------------------------+
+| Optional                                     | `probability_levels`__        | Specify probability levels at which to      |
+|                                              |                               | estimate the corresponding response value   |
++----------------------------------------------+-------------------------------+---------------------------------------------+
+| Optional                                     | `gen_reliability_levels`__    | Specify generalized relability levels at    |
+|                                              |                               | which to estimate the corresponding         |
+|                                              |                               | response value                              |
++----------------------------------------------+-------------------------------+---------------------------------------------+
+| Optional                                     | `distribution`__              | Selection of cumulative or complementary    |
+|                                              |                               | cumulative functions                        |
++----------------------------------------------+-------------------------------+---------------------------------------------+
+| Optional                                     | `max_iterations`__            | Number of iterations allowed for optimizers |
+|                                              |                               | and adaptive UQ methods                     |
++----------------------------------------------+-------------------------------+---------------------------------------------+
+| Optional                                     | `convergence_tolerance`__     | Stopping criterion based on objective       |
+|                                              |                               | function or statistics convergence          |
++----------------------------------------------+-------------------------------+---------------------------------------------+
+| Optional                                     | `model_pointer`__             | Identifier for model block to be used by a  |
+|                                              |                               | method                                      |
++----------------------------------------------+-------------------------------+---------------------------------------------+
+
+.. __: method-global_reliability-initial_samples.html
+__ method-global_reliability-x_gaussian_process.html
+__ method-global_reliability-u_gaussian_process.html
+__ method-global_reliability-surfpack.html
+__ method-global_reliability-dakota.html
+__ method-global_reliability-experimental.html
+__ method-global_reliability-import_build_points_file.html
+__ method-global_reliability-export_approx_points_file.html
+__ method-global_reliability-use_derivatives.html
+__ method-global_reliability-seed.html
+__ method-global_reliability-rng.html
+__ method-global_reliability-response_levels.html
+__ method-global_reliability-probability_levels.html
+__ method-global_reliability-gen_reliability_levels.html
+__ method-global_reliability-distribution.html
+__ method-global_reliability-max_iterations.html
+__ method-global_reliability-convergence_tolerance.html
+__ method-global_reliability-model_pointer.html
+
+
+
+**Description**
+
+
+These methods do not support
+forward/inverse mappings involving ``reliability_levels``, since they
+never form a reliability index based on distance in u-space. Rather
+they use a Gaussian process model to form an approximation to the
+limit state (based either in x-space via the ``x_gaussian_process``
+specification or in u-space via the ``u_gaussian_process``
+specification), followed by probability estimation based on multimodal
+adaptive importance sampling (see
+:cite:p:`Bichon2007`) and
+:cite:p:`Bichon2008`). These
+probability estimates may then be transformed into generalized
+reliability levels if desired. At this time, inverse reliability
+analysis (mapping probability or generalized reliability levels into
+response levels) is not implemented.
+
+The Gaussian process model approximation to the limit state is formed
+over the aleatory uncertain variables by default, but may be extended
+to also capture the effect of design, epistemic uncertain, and state
+variables. If this is desired, one must use the appropriate controls
+to specify the active variables in the variables specification
+block.  Refer to :ref:`topic-variable_support<topic-variable_support>` for additional information
+on supported variable types.
+
+

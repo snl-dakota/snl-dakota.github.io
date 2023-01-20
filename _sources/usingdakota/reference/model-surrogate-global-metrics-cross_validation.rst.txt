@@ -1,0 +1,66 @@
+.. _model-surrogate-global-metrics-cross_validation:
+
+""""""""""""""""
+cross_validation
+""""""""""""""""
+
+
+Perform k-fold cross validation
+
+
+
+**Topics**
+
+
+surrogate_models
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   model-surrogate-global-metrics-cross_validation-folds
+   model-surrogate-global-metrics-cross_validation-percent
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+- *Default:* No cross validation
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+--------------------+---------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword     | Dakota Keyword Description                  |
+|                         | Group              |                    |                                             |
++=========================+====================+====================+=============================================+
+| Optional (Choose One)   | Partition Control  | `folds`__          | Number of cross validation folds            |
+|                         |                    +--------------------+---------------------------------------------+
+|                         |                    | `percent`__        | Percent data per cross validation fold      |
++-------------------------+--------------------+--------------------+---------------------------------------------+
+
+.. __: model-surrogate-global-metrics-cross_validation-folds.html
+__ model-surrogate-global-metrics-cross_validation-percent.html
+
+
+
+**Description**
+
+
+General k-fold cross validation may be performed by specifying
+``cross_validation``.  The cross-validation statistics will be calculated
+for all metrics.
+
+Cross validation may further specify:
+
+- ``folds``, the number of folds into which to divide the build   data (between 2 and number of data points) or
+- ``percent``, the fraction of data (between 0 and 0.5)   to use in each fold.
+
+These will be adjusted as needed based on the number of available
+training points.  The default number of folds k = 10, or 0.1
+
+

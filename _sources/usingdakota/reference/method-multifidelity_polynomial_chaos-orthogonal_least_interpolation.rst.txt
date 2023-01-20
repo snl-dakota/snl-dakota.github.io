@@ -1,0 +1,61 @@
+.. _method-multifidelity_polynomial_chaos-orthogonal_least_interpolation:
+
+""""""""""""""""""""""""""""""
+orthogonal_least_interpolation
+""""""""""""""""""""""""""""""
+
+
+Build a polynomial chaos expansion from simulation samples using orthogonal least interpolation.
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-multifidelity_polynomial_chaos-orthogonal_least_interpolation-collocation_points_sequence
+   method-multifidelity_polynomial_chaos-orthogonal_least_interpolation-tensor_grid
+   method-multifidelity_polynomial_chaos-orthogonal_least_interpolation-reuse_points
+   method-multifidelity_polynomial_chaos-orthogonal_least_interpolation-import_build_points_file
+
+
+**Specification**
+
+- *Alias:* least_interpolation oli 
+
+- *Arguments:* None
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+---------------------------------+---------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword                  | Dakota Keyword Description                  |
+|                         | Group              |                                 |                                             |
++=========================+====================+=================================+=============================================+
+| Required                                     | `collocation_points_sequence`__ | Sequence of collocation point counts used   |
+|                                              |                                 | in a multi-stage expansion                  |
++----------------------------------------------+---------------------------------+---------------------------------------------+
+| Optional                                     | `tensor_grid`__                 | Use sub-sampled tensor-product quadrature   |
+|                                              |                                 | points to build a polynomial chaos          |
+|                                              |                                 | expansion.                                  |
++----------------------------------------------+---------------------------------+---------------------------------------------+
+| Optional                                     | `reuse_points`__                | This describes the behavior of reuse of     |
+|                                              |                                 | points in constructing polynomial chaos     |
+|                                              |                                 | expansion models.                           |
++----------------------------------------------+---------------------------------+---------------------------------------------+
+| Optional                                     | `import_build_points_file`__    | File containing points you wish to use to   |
+|                                              |                                 | build a surrogate                           |
++----------------------------------------------+---------------------------------+---------------------------------------------+
+
+.. __: method-multifidelity_polynomial_chaos-orthogonal_least_interpolation-collocation_points_sequence.html
+__ method-multifidelity_polynomial_chaos-orthogonal_least_interpolation-tensor_grid.html
+__ method-multifidelity_polynomial_chaos-orthogonal_least_interpolation-reuse_points.html
+__ method-multifidelity_polynomial_chaos-orthogonal_least_interpolation-import_build_points_file.html
+
+
+
+**Description**
+
+
+Build a polynomial chaos expansion from simulation samples using orthogonal least interpolation. Unlike the other regression methods ``expansion_order`` cannot be set. OLI will produce the lowest degree polynomial that interpolates the data
+
+

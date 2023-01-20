@@ -1,0 +1,90 @@
+.. _method-bayes_calibration-queso-emulator-pce:
+
+"""
+pce
+"""
+
+
+Polynomial Chaos Expansion surrogate model
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-bayes_calibration-queso-emulator-pce-p_refinement
+   method-bayes_calibration-queso-emulator-pce-max_refinement_iterations
+   method-bayes_calibration-queso-emulator-pce-quadrature_order
+   method-bayes_calibration-queso-emulator-pce-sparse_grid_level
+   method-bayes_calibration-queso-emulator-pce-cubature_integrand
+   method-bayes_calibration-queso-emulator-pce-expansion_order
+   method-bayes_calibration-queso-emulator-pce-orthogonal_least_interpolation
+   method-bayes_calibration-queso-emulator-pce-askey
+   method-bayes_calibration-queso-emulator-pce-wiener
+   method-bayes_calibration-queso-emulator-pce-normalized
+   method-bayes_calibration-queso-emulator-pce-export_expansion_file
+   method-bayes_calibration-queso-emulator-pce-diagonal_covariance
+   method-bayes_calibration-queso-emulator-pce-full_covariance
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+-------------------------------+---------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword                | Dakota Keyword Description                  |
+|                         | Group              |                               |                                             |
++=========================+====================+===============================+=============================================+
+| Optional                                     | `p_refinement`__              | Automatic polynomial order refinement       |
++----------------------------------------------+-------------------------------+---------------------------------------------+
+| Optional                                     | `max_refinement_iterations`__ | Maximum number of expansion refinement      |
+|                                              |                               | iterations                                  |
++-------------------------+--------------------+-------------------------------+---------------------------------------------+
+| Optional (Choose One)   | Basis Polynomial   | `askey`__                     | Select the standardized random variables    |
+|                         | Family             |                               | (and associated basis polynomials) from the |
+|                         |                    |                               | Askey family that best match the            |
+|                         |                    |                               | user-specified random variables.            |
+|                         |                    +-------------------------------+---------------------------------------------+
+|                         |                    | `wiener`__                    | Use standard normal random variables (along |
+|                         |                    |                               | with Hermite orthogonal basis polynomials)  |
+|                         |                    |                               | when transforming to a standardized         |
+|                         |                    |                               | probability space.                          |
++-------------------------+--------------------+-------------------------------+---------------------------------------------+
+| Optional                                     | `normalized`__                | The normalized specification requests       |
+|                                              |                               | output of PCE coefficients that correspond  |
+|                                              |                               | to normalized orthogonal basis polynomials  |
++----------------------------------------------+-------------------------------+---------------------------------------------+
+| Optional                                     | `export_expansion_file`__     | Export the coefficients and multi-index of  |
+|                                              |                               | a Polynomial Chaos Expansion (PCE) to a     |
+|                                              |                               | file                                        |
++-------------------------+--------------------+-------------------------------+---------------------------------------------+
+| Optional (Choose One)   | Covariance Type    | `diagonal_covariance`__       | Display only the diagonal terms of the      |
+|                         |                    |                               | covariance matrix                           |
+|                         |                    +-------------------------------+---------------------------------------------+
+|                         |                    | `full_covariance`__           | Display the full covariance matrix          |
++-------------------------+--------------------+-------------------------------+---------------------------------------------+
+
+.. __: method-bayes_calibration-queso-emulator-pce-p_refinement.html
+__ method-bayes_calibration-queso-emulator-pce-max_refinement_iterations.html
+__ method-bayes_calibration-queso-emulator-pce-askey.html
+__ method-bayes_calibration-queso-emulator-pce-wiener.html
+__ method-bayes_calibration-queso-emulator-pce-normalized.html
+__ method-bayes_calibration-queso-emulator-pce-export_expansion_file.html
+__ method-bayes_calibration-queso-emulator-pce-diagonal_covariance.html
+__ method-bayes_calibration-queso-emulator-pce-full_covariance.html
+
+
+
+**Description**
+
+
+Selects a polynomial chaos expansion (PCE) surrogate model to use in
+the Bayesian likelihood calculations. Most specification options are
+carried over for using PCE as a surrogate within the Bayesian framework.
+
+

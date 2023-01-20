@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>correction &mdash; dakota  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/dakota_theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/sandiaheaderlite.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="zeroth_order" href="model-surrogate-global-correction-zeroth_order.html" />
+    <link rel="prev" title="use_derivatives" href="model-surrogate-global-use_derivatives.html" /> 
+  
+  <meta name="sandia.approval_type" content="formal"/>
+  <meta property="sandia.approved" content="SAND2022-15651 O"/>
+  <meta name="description" content="The Dakota project delivers both state-of-the-art research and robust, usable software for optimization and UQ."/>
+  <meta name="keywords" content="Dakota, optimization, UQ, uncertainty quantification, parametric analysis, design exploration, model calibration, risk analysis"/>
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> dakota
+            <img src="../../_static/dakota_Arrow_Name_Tag_horiz_transparent.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../setupdakota.html">Getting Started</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../usingdakota.html">Using Dakota</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../introduction/aboutdakota.html">About Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../introduction/helloworld.html">Dakota Beginner’s Tutorial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples.html">Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../introduction/couplingtosimulations.html">Coupling Dakota to a Simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../inputfile.html">Dakota Input File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../running.html">Running Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../output.html">Dakota Output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../studytypes.html">Study Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../topics.html">Topics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../advanced.html">Advanced Topics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../theory.html">Dakota Theory</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../reference.html">Keyword Reference</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="environment.html">environment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="method.html">method</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="model.html">model</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="model-id_model.html">id_model</a></li>
+<li class="toctree-l4"><a class="reference internal" href="model-single.html">single</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="model-surrogate.html">surrogate</a><ul class="current">
+<li class="toctree-l5"><a class="reference internal" href="model-surrogate-id_surrogates.html">id_surrogates</a></li>
+<li class="toctree-l5 current"><a class="reference internal" href="model-surrogate-global.html">global</a><ul class="current">
+<li class="toctree-l6"><a class="reference internal" href="model-surrogate-global-experimental_gaussian_process.html">experimental_gaussian_process</a></li>
+<li class="toctree-l6"><a class="reference internal" href="model-surrogate-global-gaussian_process.html">gaussian_process</a></li>
+<li class="toctree-l6"><a class="reference internal" href="model-surrogate-global-mars.html">mars</a></li>
+<li class="toctree-l6"><a class="reference internal" href="model-surrogate-global-moving_least_squares.html">moving_least_squares</a></li>
+<li class="toctree-l6"><a class="reference internal" href="model-surrogate-global-function_train.html">function_train</a></li>
+<li class="toctree-l6"><a class="reference internal" href="model-surrogate-global-neural_network.html">neural_network</a></li>
+<li class="toctree-l6"><a class="reference internal" href="model-surrogate-global-radial_basis.html">radial_basis</a></li>
+<li class="toctree-l6"><a class="reference internal" href="model-surrogate-global-polynomial.html">polynomial</a></li>
+<li class="toctree-l6"><a class="reference internal" href="model-surrogate-global-experimental_polynomial.html">experimental_polynomial</a></li>
+<li class="toctree-l6"><a class="reference internal" href="model-surrogate-global-domain_decomposition.html">domain_decomposition</a></li>
+<li class="toctree-l6"><a class="reference internal" href="model-surrogate-global-total_points.html">total_points</a></li>
+<li class="toctree-l6"><a class="reference internal" href="model-surrogate-global-minimum_points.html">minimum_points</a></li>
+<li class="toctree-l6"><a class="reference internal" href="model-surrogate-global-recommended_points.html">recommended_points</a></li>
+<li class="toctree-l6"><a class="reference internal" href="model-surrogate-global-dace_method_pointer.html">dace_method_pointer</a></li>
+<li class="toctree-l6"><a class="reference internal" href="model-surrogate-global-truth_model_pointer.html">truth_model_pointer</a></li>
+<li class="toctree-l6"><a class="reference internal" href="model-surrogate-global-reuse_points.html">reuse_points</a></li>
+<li class="toctree-l6"><a class="reference internal" href="model-surrogate-global-import_build_points_file.html">import_build_points_file</a></li>
+<li class="toctree-l6"><a class="reference internal" href="model-surrogate-global-export_approx_points_file.html">export_approx_points_file</a></li>
+<li class="toctree-l6"><a class="reference internal" href="model-surrogate-global-use_derivatives.html">use_derivatives</a></li>
+<li class="toctree-l6 current"><a class="current reference internal" href="#">correction</a><ul>
+<li class="toctree-l7"><a class="reference internal" href="model-surrogate-global-correction-zeroth_order.html">zeroth_order</a></li>
+<li class="toctree-l7"><a class="reference internal" href="model-surrogate-global-correction-first_order.html">first_order</a></li>
+<li class="toctree-l7"><a class="reference internal" href="model-surrogate-global-correction-second_order.html">second_order</a></li>
+<li class="toctree-l7"><a class="reference internal" href="model-surrogate-global-correction-additive.html">additive</a></li>
+<li class="toctree-l7"><a class="reference internal" href="model-surrogate-global-correction-multiplicative.html">multiplicative</a></li>
+<li class="toctree-l7"><a class="reference internal" href="model-surrogate-global-correction-combined.html">combined</a></li>
+</ul>
+</li>
+<li class="toctree-l6"><a class="reference internal" href="model-surrogate-global-metrics.html">metrics</a></li>
+<li class="toctree-l6"><a class="reference internal" href="model-surrogate-global-import_challenge_points_file.html">import_challenge_points_file</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="model-surrogate-multipoint.html">multipoint</a></li>
+<li class="toctree-l5"><a class="reference internal" href="model-surrogate-local.html">local</a></li>
+<li class="toctree-l5"><a class="reference internal" href="model-surrogate-hierarchical.html">hierarchical</a></li>
+<li class="toctree-l5"><a class="reference internal" href="model-surrogate-non_hierarchical.html">non_hierarchical</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="model-nested.html">nested</a></li>
+<li class="toctree-l4"><a class="reference internal" href="model-active_subspace.html">active_subspace</a></li>
+<li class="toctree-l4"><a class="reference internal" href="model-adapted_basis.html">adapted_basis</a></li>
+<li class="toctree-l4"><a class="reference internal" href="model-random_field.html">random_field</a></li>
+<li class="toctree-l4"><a class="reference internal" href="model-variables_pointer.html">variables_pointer</a></li>
+<li class="toctree-l4"><a class="reference internal" href="model-responses_pointer.html">responses_pointer</a></li>
+<li class="toctree-l4"><a class="reference internal" href="model-hierarchical_tagging.html">hierarchical_tagging</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="variables.html">variables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="interface.html">interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="responses.html">responses</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../usingdakotagui/usingdakotagui.html">Using Dakota GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../externaltools/externaltools.html">Using External Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developingdakota/developingdakota.html">Developing Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../misc/misc.html">Miscellaneous</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">dakota</a>
+      </nav>
+
+	  <!-- SNL Lite header -->
+	  <div class="snlheader-subsite--wrapper-default">
+		<snlheader class="snlheader-subsite" role="snlbanner">
+		  <div class="wrapper">
+			<a href="https://www.sandia.gov/index.html">
+			  <div class="logo-transparent"><p class="logo">Sandia National Laboratories</p></div>
+			</a>
+			<div class="nav-top">
+			  <a class="visuallyhidden" name="mainnav"></a>
+			  <div aria-label="main navigation" class="core-nav-transparent core-nav-transparent--visible" role="navigation">
+				<ul role="navigation" class="secondary-links">
+				  <li id="search-text-link">
+					<a aria-label="Search" href="https://www.sandia.gov/search/">Search Sandia.gov</a>
+				  </li>
+				  <li id="directory-text-link">
+					<a href="https://www.sandia.gov/directory.html" aria-expanded="false" aria-label="Site Directory">All Sandia Websites</a>
+				  </li>
+				</ul>
+			  </div>
+			</div>
+		  </div> 
+		</snlheader>
+	  </div>	  
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../usingdakota.html">Using Dakota</a> &raquo;</li>
+          <li><a href="../reference.html">Keyword Reference</a> &raquo;</li>
+          <li><a href="model.html">model</a> &raquo;</li>
+          <li><a href="model-surrogate.html">surrogate</a> &raquo;</li>
+          <li><a href="model-surrogate-global.html">global</a> &raquo;</li>
+      <li>correction</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/usingdakota/reference/model-surrogate-global-correction.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="correction">
+<span id="model-surrogate-global-correction"></span><h1>correction<a class="headerlink" href="#correction" title="Permalink to this headline"></a></h1>
+<p>Correction approaches for surrogate models</p>
+<div class="toctree-wrapper compound">
+</div>
+<p><strong>Specification</strong></p>
+<ul class="simple">
+<li><p><em>Alias:</em> None</p></li>
+<li><p><em>Arguments:</em> None</p></li>
+<li><p><em>Default:</em> no surrogate correction</p></li>
+</ul>
+<p><strong>Child Keywords:</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 23%" />
+<col style="width: 18%" />
+<col style="width: 18%" />
+<col style="width: 41%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Required/Optional</p></th>
+<th class="head"><p>Description of
+Group</p></th>
+<th class="head"><p>Dakota Keyword</p></th>
+<th class="head"><p>Dakota Keyword Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td rowspan="3"><p>Required (Choose One)</p></td>
+<td rowspan="3"><p>Correction Order</p></td>
+<td><p><a class="reference external" href="model-surrogate-global-correction-zeroth_order.html">zeroth_order</a></p></td>
+<td><p>Specify that truth values must be matched.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="model-surrogate-global-correction-first_order.html">first_order</a></p></td>
+<td><p>Specify that truth values and gradients
+must be matched.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="model-surrogate-global-correction-second_order.html">second_order</a></p></td>
+<td><p>Specify that truth values, gradients and
+Hessians must be matched.</p></td>
+</tr>
+<tr class="row-odd"><td rowspan="3"><p>Required (Choose One)</p></td>
+<td rowspan="3"><p>Correction Type</p></td>
+<td><p><a class="reference external" href="model-surrogate-global-correction-additive.html">additive</a></p></td>
+<td><p>Additive correction factor for local
+surrogate accuracy</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="model-surrogate-global-correction-multiplicative.html">multiplicative</a></p></td>
+<td><p>Multiplicative correction factor for local
+surrogate accuracy.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="model-surrogate-global-correction-combined.html">combined</a></p></td>
+<td><p>Multipoint correction for a hierarchical
+surrogate</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Description</strong></p>
+<p>Some of the surrogate model types support the use of correction
+factors that improve the local accuracy of the surrogate models.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">correction</span></code> specification specifies that the approximation will
+be corrected to match truth data, either matching truth values in the
+case of <code class="docutils literal notranslate"><span class="pre">zeroth_order</span></code> matching, matching truth values and gradients
+in the case of <code class="docutils literal notranslate"><span class="pre">first_order</span></code> matching, or matching truth values,
+gradients, and Hessians in the case of <code class="docutils literal notranslate"><span class="pre">second_order</span></code> matching. For
+<code class="docutils literal notranslate"><span class="pre">additive</span></code> and <code class="docutils literal notranslate"><span class="pre">multiplicative</span></code> corrections, the correction is local
+in that the truth data is matched at a single point, typically the
+center of the approximation region. The <code class="docutils literal notranslate"><span class="pre">additive</span></code> correction adds a
+scalar offset ( <code class="docutils literal notranslate"><span class="pre">zeroth_order</span></code>), a linear function ( <code class="docutils literal notranslate"><span class="pre">,first_order</span></code>),
+or a quadratic function ( <code class="docutils literal notranslate"><span class="pre">second_order</span></code>) to the approximation to
+match the truth data at the point, and the <code class="docutils literal notranslate"><span class="pre">multiplicative</span></code>
+correction multiplies the approximation by a scalar ( <code class="docutils literal notranslate"><span class="pre">zeroth_order</span></code>),
+a linear function ( <code class="docutils literal notranslate"><span class="pre">first_order</span></code>), or a quadratic function (
+<code class="docutils literal notranslate"><span class="pre">second_order</span></code>) to match the truth data at the point. The <code class="docutils literal notranslate"><span class="pre">additive</span></code>
+<code class="docutils literal notranslate"><span class="pre">first_order</span></code> case is due to <span id="id7">[<a class="reference internal" href="../../misc/bibliography.html#id172" title="R. M. Lewis and S. N. Nash. A multigrid approach to the optimization of systems governed by differential equations. In Proceedings of the 8th AIAA/USAF/NASA/ISSMO Symposium on Multidisciplinary Analysis and Optimization, number AIAA-2000-4890. Long Beach, CA, Sep 2000.">LN00</a>]</span>
+and the <code class="docutils literal notranslate"><span class="pre">multiplicative</span></code> <code class="docutils literal notranslate"><span class="pre">first_order</span></code> case is commonly known as
+beta correction <span id="id8">[<a class="reference internal" href="../../misc/bibliography.html#id132" title="R. T. Haftka. Combining global and local approximations. AIAA Journal, 29(9):1523–1525, 1991.">Haf91</a>]</span>. For the <code class="docutils literal notranslate"><span class="pre">combined</span></code>
+correction, the use of both additive and multiplicative corrections
+allows the satisfaction of an additional matching condition, typically
+the truth function values at the previous correction point (e.g., the
+center of the previous trust region). The <code class="docutils literal notranslate"><span class="pre">combined</span></code> correction is
+then a multipoint correction, as opposed to the local <code class="docutils literal notranslate"><span class="pre">additive</span></code> and
+<code class="docutils literal notranslate"><span class="pre">multiplicative</span></code> corrections. Each of these correction capabilities
+is described in detail in <span id="id9">[<a class="reference internal" href="../../misc/bibliography.html#id76" title="M. S. Eldred, A. A. Giunta, and S. S. Collis. Second-order corrections for surrogate-based optimization with model hierarchies. In Proceedings of the 10th AIAA/ISSMO Multidisciplinary Analysis and Optimization Conference. Albany, NY,, Aug. 30–Sept. 1, 2004. AIAA Paper 2004-4457.">EGC04</a>]</span>.</p>
+<p>The
+correction factors force the surrogate models to match the true
+function values and possibly true function derivatives at the center
+point of each trust region.
+Currently, Dakota supports either zeroth-,
+first-, or second-order accurate correction methods, each of which can
+be applied using either an additive, multiplicative, or combined
+correction function. For each of these correction approaches, the
+correction is applied to the surrogate model and the corrected model
+is then interfaced with whatever algorithm is being employed. The
+default behavior is that no correction factor is applied.</p>
+<p>The simplest correction approaches are those that enforce consistency
+in function values between the surrogate and original models at a
+single point in parameter space through use of a simple scalar offset
+or scaling applied to the surrogate model. First-order corrections
+such as the first-order multiplicative correction (also known as beta
+correction <span id="id10">[<a class="reference internal" href="../../misc/bibliography.html#id36" title="K. J. Chang, R. T. Haftka, G. L. Giles, and P.-J. Kao. Sensitivity-based scaling for approximating structural response. J. Aircraft, 30:283–288, 1993.">CHGK93</a>]</span>) and the first-order additive
+correction <span id="id11">[<a class="reference internal" href="../../misc/bibliography.html#id172" title="R. M. Lewis and S. N. Nash. A multigrid approach to the optimization of systems governed by differential equations. In Proceedings of the 8th AIAA/USAF/NASA/ISSMO Symposium on Multidisciplinary Analysis and Optimization, number AIAA-2000-4890. Long Beach, CA, Sep 2000.">LN00</a>]</span> also enforce consistency in the gradients and
+provide a much more substantial correction capability that is
+sufficient for ensuring provable convergence in SBO algorithms.
+SBO convergence rates can be further
+accelerated through the use of second-order corrections which also
+enforce consistency in the Hessians <span id="id12">[<a class="reference internal" href="../../misc/bibliography.html#id76" title="M. S. Eldred, A. A. Giunta, and S. S. Collis. Second-order corrections for surrogate-based optimization with model hierarchies. In Proceedings of the 10th AIAA/ISSMO Multidisciplinary Analysis and Optimization Conference. Albany, NY,, Aug. 30–Sept. 1, 2004. AIAA Paper 2004-4457.">EGC04</a>]</span>, where the
+second-order information may involve analytic, finite-difference, or
+quasi-Newton Hessians.</p>
+<p>Correcting surrogate models with additive corrections involves</p>
+<p>f{equation}
+hat{f_{hi_{alpha}}}({bf x}) = f_{lo}({bf x}) + alpha({bf x})
+f}
+where multifidelity notation has been adopted for clarity. For
+multiplicative approaches, corrections take the form</p>
+<p>f{equation}
+hat{f_{hi_{beta}}}({bf x}) = f_{lo}({bf x}) beta({bf x})
+f}
+where, for local corrections, <span class="math notranslate nohighlight">\(\alpha({\bf x})\)</span>  and <span class="math notranslate nohighlight">\(\beta({\bf x})\)</span>
+are first or second-order Taylor series approximations to the exact
+correction functions:</p>
+<p>f{eqnarray}
+alpha({bf x}) &amp; = &amp; A({bf x_c}) + nabla A({bf x_c})^T
+({bf x} - {bf x_c}) + frac{1}{2} ({bf x} - {bf x_c})^T
+nabla^2 A({bf x_c}) ({bf x} - {bf x_c})  \
+beta({bf x}) &amp; = &amp; B({bf x_c}) + nabla B({bf x_c})^T
+({bf x} - {bf x_c}) + frac{1}{2} ({bf x} - {bf x_c})^T nabla^2
+B({bf x_c}) ({bf x} - {bf x_c})
+f}
+where the exact correction functions are</p>
+<p>f{eqnarray}
+A({bf x}) &amp; = &amp; f_{hi}({bf x}) - f_{lo}({bf x})    \
+B({bf x}) &amp; = &amp; frac{f_{hi}({bf x})}{f_{lo}({bf x})}
+f}
+Refer to <span id="id13">[<a class="reference internal" href="../../misc/bibliography.html#id76" title="M. S. Eldred, A. A. Giunta, and S. S. Collis. Second-order corrections for surrogate-based optimization with model hierarchies. In Proceedings of the 10th AIAA/ISSMO Multidisciplinary Analysis and Optimization Conference. Albany, NY,, Aug. 30–Sept. 1, 2004. AIAA Paper 2004-4457.">EGC04</a>]</span> for additional details on the derivations.</p>
+<p>A combination of additive and multiplicative corrections can provide
+for additional flexibility in minimizing the impact of the correction
+away from the trust region center. In other words, both additive and
+multiplicative corrections can satisfy local consistency, but through
+the combination, global accuracy can be addressed as well. This
+involves a convex combination of the additive and multiplicative
+corrections:</p>
+<div class="math notranslate nohighlight">
+\[\hat{f_{hi_{\gamma}}}({\bf x}) = \gamma \hat{f_{hi_{\alpha}}}({\bf x}) + (1 - \gamma) \hat{f_{hi_{\beta}}}({\bf x})\]</div>
+<p>where <span class="math notranslate nohighlight">\(\gamma\)</span>  is calculated to satisfy an additional matching
+condition, such as matching values at the previous design iterate.</p>
+<p>It should be noted that in both first order correction methods, the
+function <span class="math notranslate nohighlight">\(\hat{f}(x)\)</span>  matches the function value and gradients of
+<span class="math notranslate nohighlight">\(f_{t}(x)\)</span>  at <span class="math notranslate nohighlight">\(x=x_{c}\)</span> . This property is necessary in proving that
+the first order-corrected SBO algorithms are provably convergent to a
+local minimum of <span class="math notranslate nohighlight">\(f_{t}(x)\)</span> . However, the first order correction
+methods are significantly more expensive than the zeroth order
+correction methods, since the first order methods require computing
+both <span class="math notranslate nohighlight">\(\nabla f_{t}(x_{c})\)</span>  and <span class="math notranslate nohighlight">\(\nabla f_{s}(x_{c})\)</span> . When the SBO
+strategy is used with either of the zeroth order correction methods,
+or with no correction method, convergence is not guaranteed to a local
+minimum of <span class="math notranslate nohighlight">\(f_{t}(x)\)</span> . That is, the SBO strategy becomes a heuristic
+optimization algorithm. From a mathematical point of view this is
+undesirable, but as a practical matter, the heuristic variants of SBO
+are often effective in finding local minima.</p>
+<p><em>Usage guidelines</em></p>
+<ul class="simple">
+<li><p>Both the <code class="docutils literal notranslate"><span class="pre">additive</span></code> zeroth_order and  <code class="docutils literal notranslate"><span class="pre">multiplicative</span></code> zeroth_order correction methods are  “free” since they use values of <span class="math notranslate nohighlight">\(f_{t}(x_{c})\)</span>  that are normally  computed by the SBO strategy.</p></li>
+<li><p>The use of either the <code class="docutils literal notranslate"><span class="pre">additive</span></code> first_order method or  the <code class="docutils literal notranslate"><span class="pre">multiplicative</span></code> first_order method does not necessarily  improve the rate of convergence of the SBO algorithm.</p></li>
+<li><p>When using the first order correction methods, the  gradient-related response keywords must be modified to allow either analytic or  numerical gradients to be computed. This provides the gradient data  needed to compute the correction function.</p></li>
+<li><p>For many computationally expensive engineering optimization  problems, gradients often are too expensive to obtain or are  discontinuous (or may not exist at all). In such cases the heuristic  SBO algorithm has been an effective approach at identifying optimal  designs <span id="id14">[<a class="reference internal" href="../../misc/bibliography.html#id117" title="A. A. Giunta. Use of data sampling, surrogate models, and numerical optimization in engineering design. In Proc. 40th AIAA Aerospace Science Meeting and Exhibit, number AIAA-2002-0538. Reno, NV, January 2002.">Giu02</a>]</span>.</p></li>
+</ul>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="model-surrogate-global-use_derivatives.html" class="btn btn-neutral float-left" title="use_derivatives" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="model-surrogate-global-correction-zeroth_order.html" class="btn btn-neutral float-right" title="zeroth_order" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <!--
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Sandia National Laboratories.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+  --> 
+
+</footer>
+        </div>
+      </div>
+	  
+	  <div style="background-color: #0f0f0f;color:#fafafa;padding:20px">
+	    <div>
+		  <h2><em>Exceptional service in the national interest</em></h2>
+		</div>
+		<p>© 2022 National Technology and Engineering Solutions of Sandia, LLC. | <a href="https://www.sandia.gov/contact_us/index.html">Questions &amp; Comments</a> | <a href="https://www.sandia.gov/general/privacy-security/index.html">Privacy &amp; Security</a></p>
+		<p><a href="http://energy.gov" rel="noopener noreferrer" target="_blank"><img alt="U.S. Department of Energy" longdesc="https://energy.gov" src="https://www.sandia.gov/_common/images/doe_logo_white.png" style="height:37px; width:140px"></a> <a href="http://nnsa.energy.gov/" rel="noopener noreferrer" target="_blank"> <img alt="National Nuclear Security Administration" longdesc="http://nnsa.gov" src="https://www.sandia.gov/_common/images/nnsa_logo_white.png" style="height:37px; width:116px"></a></p>
+		<p><a href="https://www.sandia.gov">Sandia National Laboratories</a> is a multimission laboratory managed and operated by National Technology and Engineering Solutions of Sandia, LLC., a wholly owned subsidiary of Honeywell International, Inc., for the U.S. Department of Energy’s National Nuclear Security Administration under contract DE-NA-0003525.</p>
+	  </div>	  	  
+	  
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

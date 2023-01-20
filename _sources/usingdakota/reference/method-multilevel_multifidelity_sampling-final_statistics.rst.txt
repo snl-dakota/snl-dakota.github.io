@@ -1,0 +1,59 @@
+.. _method-multilevel_multifidelity_sampling-final_statistics:
+
+""""""""""""""""
+final_statistics
+""""""""""""""""
+
+
+Indicate the type of final statistics to be returned by a UQ method
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-multilevel_multifidelity_sampling-final_statistics-estimator_performance
+   method-multilevel_multifidelity_sampling-final_statistics-qoi_statistics
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+- *Default:* qoi_statistics
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+---------------------------+---------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword            | Dakota Keyword Description                  |
+|                         | Group              |                           |                                             |
++=========================+====================+===========================+=============================================+
+| Required (Choose One)   | Final statistics   | `estimator_performance`__ | Return estimator performance as the final   |
+|                         | type               |                           | results of a UQ method                      |
+|                         |                    +---------------------------+---------------------------------------------+
+|                         |                    | `qoi_statistics`__        | Return the quantity of interest (QoI)       |
+|                         |                    |                           | statistics as the final results of a UQ     |
+|                         |                    |                           | method                                      |
++-------------------------+--------------------+---------------------------+---------------------------------------------+
+
+.. __: method-multilevel_multifidelity_sampling-final_statistics-estimator_performance.html
+__ method-multilevel_multifidelity_sampling-final_statistics-qoi_statistics.html
+
+
+
+**Description**
+
+
+In nested execution contexts, an inner UQ method may
+return either a final set of QoI statistics (e.g., for optimization of
+moments or level mappings over design parameters within optimization under
+uncertainty) or a set of performance metrics (e.g., for maximization
+of performance over hyper-parameters within model tuning).
+
+*Default Behavior*
+Return a final set of QoI statistics.
+
+

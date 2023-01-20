@@ -1,0 +1,55 @@
+.. _method-optpp_fd_newton-merit_function:
+
+""""""""""""""
+merit_function
+""""""""""""""
+
+
+Balance goals of reducing objective function and satisfying constraints
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-optpp_fd_newton-merit_function-el_bakry
+   method-optpp_fd_newton-merit_function-argaez_tapia
+   method-optpp_fd_newton-merit_function-van_shanno
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+- *Default:* argaez_tapia
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+--------------------+---------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword     | Dakota Keyword Description                  |
+|                         | Group              |                    |                                             |
++=========================+====================+====================+=============================================+
+| Required (Choose One)   | Merit Function     | `el_bakry`__       | El-Bakry merit function                     |
+|                         |                    +--------------------+---------------------------------------------+
+|                         |                    | `argaez_tapia`__   | The merit function by Tapia and Argaez      |
+|                         |                    +--------------------+---------------------------------------------+
+|                         |                    | `van_shanno`__     | The merit function by Vanderbei and Shanno  |
++-------------------------+--------------------+--------------------+---------------------------------------------+
+
+.. __: method-optpp_fd_newton-merit_function-el_bakry.html
+__ method-optpp_fd_newton-merit_function-argaez_tapia.html
+__ method-optpp_fd_newton-merit_function-van_shanno.html
+
+
+
+**Description**
+
+
+A ``merit_function`` is a function in constrained optimization that
+attempts to provide joint progress toward reducing the objective
+function and satisfying the constraints.
+
+

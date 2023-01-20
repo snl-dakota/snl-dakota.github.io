@@ -1,0 +1,65 @@
+.. _method-pareto_set-iterator_scheduling:
+
+"""""""""""""""""""
+iterator_scheduling
+"""""""""""""""""""
+
+
+Specify the scheduling of concurrent iterators when Dakota is run in parallel
+
+
+
+**Topics**
+
+
+concurrency_and_parallelism
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-pareto_set-iterator_scheduling-master
+   method-pareto_set-iterator_scheduling-peer
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+--------------------+---------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword     | Dakota Keyword Description                  |
+|                         | Group              |                    |                                             |
++=========================+====================+====================+=============================================+
+| Required (Choose One)   | Scheduling Mode    | `master`__         | Specify a dedicated master partition for    |
+|                         |                    |                    | parallel iterator scheduling                |
+|                         |                    +--------------------+---------------------------------------------+
+|                         |                    | `peer`__           | Specify a peer partition for parallel       |
+|                         |                    |                    | iterator scheduling                         |
++-------------------------+--------------------+--------------------+---------------------------------------------+
+
+.. __: method-pareto_set-iterator_scheduling-master.html
+__ method-pareto_set-iterator_scheduling-peer.html
+
+
+
+**Description**
+
+
+An important feature for component-based iterators is that execution
+of sub-iterator runs may be performed concurrently. The optional
+``iterator_scheduling`` specification supports user override
+of the automatic parallel configuration for the number of iterator
+servers. That is, if the automatic configuration is
+undesirable for some reason, the user can enforce a desired number of
+partitions at the iterator parallelism level. Currently, ``hybrid``,
+``multi_start``, and ``pareto_set`` component-based iterators support
+concurrency in their sub-iterators. Refer to ParallelLibrary
+and the :ref:`Parallel Computing section <parallel>` for additional information.
+
+

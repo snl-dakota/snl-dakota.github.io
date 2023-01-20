@@ -1,0 +1,80 @@
+.. _method-bayes_calibration-wasabi-emulator-mf_sc-sparse_grid_level_sequence:
+
+""""""""""""""""""""""""""
+sparse_grid_level_sequence
+""""""""""""""""""""""""""
+
+
+Sequence of sparse grid levels used in a multi-stage expansion
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-bayes_calibration-wasabi-emulator-mf_sc-sparse_grid_level_sequence-dimension_preference
+   method-bayes_calibration-wasabi-emulator-mf_sc-sparse_grid_level_sequence-nodal
+   method-bayes_calibration-wasabi-emulator-mf_sc-sparse_grid_level_sequence-hierarchical
+   method-bayes_calibration-wasabi-emulator-mf_sc-sparse_grid_level_sequence-restricted
+   method-bayes_calibration-wasabi-emulator-mf_sc-sparse_grid_level_sequence-unrestricted
+   method-bayes_calibration-wasabi-emulator-mf_sc-sparse_grid_level_sequence-nested
+   method-bayes_calibration-wasabi-emulator-mf_sc-sparse_grid_level_sequence-non_nested
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* INTEGERLIST
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+--------------------------+---------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword           | Dakota Keyword Description                  |
+|                         | Group              |                          |                                             |
++=========================+====================+==========================+=============================================+
+| Optional                                     | `dimension_preference`__ | A set of weights specifying the realtive    |
+|                                              |                          | importance of each uncertain variable       |
+|                                              |                          | (dimension)                                 |
++-------------------------+--------------------+--------------------------+---------------------------------------------+
+| Optional (Choose One)   | Quadrature Rule    | `restricted`__           | Restrict the growth rates for nested and    |
+|                         | Growth             |                          | non-nested rules can be synchronized for    |
+|                         |                    |                          | consistency.                                |
+|                         |                    +--------------------------+---------------------------------------------+
+|                         |                    | `unrestricted`__         | Overide the default restriction of growth   |
+|                         |                    |                          | rates for nested and non-nested rules that  |
+|                         |                    |                          | are by defualt synchronized for             |
+|                         |                    |                          | consistency.                                |
++-------------------------+--------------------+--------------------------+---------------------------------------------+
+| Optional (Choose One)   | Quadrature Rule    | `nested`__               | Enforce use of nested quadrature rules if   |
+|                         | Nesting            |                          | available                                   |
+|                         |                    +--------------------------+---------------------------------------------+
+|                         |                    | `non_nested`__           | Enforce use of non-nested quadrature rules  |
++-------------------------+--------------------+--------------------------+---------------------------------------------+
+
+.. __: method-bayes_calibration-wasabi-emulator-mf_sc-sparse_grid_level_sequence-dimension_preference.html
+__ method-bayes_calibration-wasabi-emulator-mf_sc-sparse_grid_level_sequence-restricted.html
+__ method-bayes_calibration-wasabi-emulator-mf_sc-sparse_grid_level_sequence-unrestricted.html
+__ method-bayes_calibration-wasabi-emulator-mf_sc-sparse_grid_level_sequence-nested.html
+__ method-bayes_calibration-wasabi-emulator-mf_sc-sparse_grid_level_sequence-non_nested.html
+
+
+
+**Description**
+
+
+Each level entry of the ``sparse_grid_level_sequence`` applies to one
+expansion within a multi-stage expansion.  Current multi-stage
+expansions that support sparse grid level sequences include multilevel
+polynomial chaos, multifidelity polynomial chaos, or multifidelity
+stochastic collocation expansions.
+
+If adaptive refinement is active, then this sequence specifies the
+starting point for each level within either an individual or
+integrated refinement approach.
+
+A corresponding scalar specification is documented at, e.g.,
+:ref:`method-polynomial_chaos-sparse_grid_level<method-polynomial_chaos-sparse_grid_level>`
+
+

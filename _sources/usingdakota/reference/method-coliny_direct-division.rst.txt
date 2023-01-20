@@ -1,0 +1,57 @@
+.. _method-coliny_direct-division:
+
+""""""""
+division
+""""""""
+
+
+Determine how rectangles are subdivided
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-coliny_direct-division-major_dimension
+   method-coliny_direct-division-all_dimensions
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+- *Default:* major_dimension
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+---------------------+---------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword      | Dakota Keyword Description                  |
+|                         | Group              |                     |                                             |
++=========================+====================+=====================+=============================================+
+| Required (Choose One)   | Divide Along       | `major_dimension`__ | (default) Longest edge of subregion is      |
+|                         |                    |                     | subdivided                                  |
+|                         |                    +---------------------+---------------------------------------------+
+|                         |                    | `all_dimensions`__  | All dimensions are simultaneously           |
+|                         |                    |                     | subdivided                                  |
++-------------------------+--------------------+---------------------+---------------------------------------------+
+
+.. __: method-coliny_direct-division-major_dimension.html
+__ method-coliny_direct-division-all_dimensions.html
+
+
+
+**Description**
+
+
+The ``division`` specification determines how DIRECT subdivides each
+subregion of the search space.
+
+If ``division`` is set to ``major_dimension``, then the dimension
+representing the longest edge of the subregion is subdivided (this is
+the default). If ``division`` is set to ``all_dimensions``, then all
+dimensions are simultaneously subdivided.
+
+

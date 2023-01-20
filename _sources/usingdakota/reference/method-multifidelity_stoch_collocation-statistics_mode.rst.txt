@@ -1,0 +1,66 @@
+.. _method-multifidelity_stoch_collocation-statistics_mode:
+
+"""""""""""""""
+statistics_mode
+"""""""""""""""
+
+
+type of statistical metric roll-up for multifidelity UQ methods
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-multifidelity_stoch_collocation-statistics_mode-active
+   method-multifidelity_stoch_collocation-statistics_mode-combined
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+- *Default:* DEFAULT_EXPANSION_STATS
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+--------------------+---------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword     | Dakota Keyword Description                  |
+|                         | Group              |                    |                                             |
++=========================+====================+====================+=============================================+
+| Required (Choose One)   | Statistics mode    | `active`__         | use statistics for the active expansion     |
+|                         | for refinement     |                    | within multifidelity refinement             |
+|                         | metric             +--------------------+---------------------------------------------+
+|                         |                    | `combined`__       | use statistics for the combined expansion   |
+|                         |                    |                    | within multifidelity refinement             |
++-------------------------+--------------------+--------------------+---------------------------------------------+
+
+.. __: method-multifidelity_stoch_collocation-statistics_mode-active.html
+__ method-multifidelity_stoch_collocation-statistics_mode-combined.html
+
+
+
+**Description**
+
+
+When performing adaptive refinement in multifidelity UQ
+methods, one can adapt the expansion for a model level/fidelity based
+on its local statistics ( ``active``) or based on the statistics for the
+aggregate expansion ( ``combined``).  The latter case may incur
+additional computational overhead, but ensures that the refinement
+occurs in the aggregate multifidelity context.
+
+*Default Behavior*
+
+Default for multifidelity methods is ``combined`` statistics.
+
+*Expected Output*
+
+*Usage Tips*
+
+*Additional Discussion*
+
+

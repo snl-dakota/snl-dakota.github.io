@@ -1,0 +1,87 @@
+.. _method-adaptive_sampling-batch_selection:
+
+"""""""""""""""
+batch_selection
+"""""""""""""""
+
+
+(Experimental) How to select new points
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-adaptive_sampling-batch_selection-naive
+   method-adaptive_sampling-batch_selection-distance_penalty
+   method-adaptive_sampling-batch_selection-topology
+   method-adaptive_sampling-batch_selection-constant_liar
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+- *Default:* naive
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+----------------------+---------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword       | Dakota Keyword Description                  |
+|                         | Group              |                      |                                             |
++=========================+====================+======================+=============================================+
+| Required (Choose One)   | Batch Selection    | `naive`__            | Take the highest scoring candidates         |
+|                         | Criterion          +----------------------+---------------------------------------------+
+|                         |                    | `distance_penalty`__ | Add a penalty to spread out the points in   |
+|                         |                    |                      | the batch                                   |
+|                         |                    +----------------------+---------------------------------------------+
+|                         |                    | `topology`__         | In this selection strategy, we use          |
+|                         |                    |                      | information about the topology of the space |
+|                         |                    |                      | from the Morse-Smale complex to identify    |
+|                         |                    |                      | next points to select.                      |
+|                         |                    +----------------------+---------------------------------------------+
+|                         |                    | `constant_liar`__    | Use information from the existing surrogate |
+|                         |                    |                      | model to predict what the surrogate upgrade |
+|                         |                    |                      | will be with new points.                    |
++-------------------------+--------------------+----------------------+---------------------------------------------+
+
+.. __: method-adaptive_sampling-batch_selection-naive.html
+__ method-adaptive_sampling-batch_selection-distance_penalty.html
+__ method-adaptive_sampling-batch_selection-topology.html
+__ method-adaptive_sampling-batch_selection-constant_liar.html
+
+
+
+**Description**
+
+
+``adaptive_sampling`` is an experimental capability that is not ready
+for production use at this time.
+
+With batch or multi-point selection, the true model can be evaluated
+in parallel and thus increase throughput before refitting our
+surrogate model. This proposes a new challenge as the problem of
+choosing a single point and choosing multiple points off a surrogate
+are fundamentally different. Selecting the ``n`` best scoring
+candidates is more than likely to generate a set of points clustered
+in one area which will not be conducive to adapting the surrogate.
+
+We have implemented several strategies for batch selection of points.
+These are described in the User's manual and are the subject of
+active research.
+
+The ``batch_selection`` strategies include:
+
+
+1. ``naive``:
+
+2. ``distance_penalty``
+
+3. ``constant_liar``
+
+4. ``topology``
+
+

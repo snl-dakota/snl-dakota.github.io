@@ -1,0 +1,48 @@
+.. _model-hierarchical_tagging:
+
+""""""""""""""""""""
+hierarchical_tagging
+""""""""""""""""""""
+
+
+Enables hierarchical evaluation tagging
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+- *Default:* no hierarchical tagging
+
+
+**Description**
+
+
+The hierarchical tagging option is useful for studies involving
+multiple models with a nested or hierarchical relationship.  For
+example a nested model has a sub-method, which itself likely operates
+on a sub-model, or a hierarchical approximation involves coordination
+of low and high fidelity models.  Specifying ``hierarchical_tagging``
+will yield function evaluation identifiers ("tags") composed of the
+evaluation IDs of the models involved, e.g.,
+outermodel.innermodel.interfaceid = 4.9.2.  This communicates the
+outer contexts to the analysis driver when performing a function
+evaluation.
+
+
+
+**Examples**
+
+
+test/dakota_uq_timeseries_ivp_optinterf.in
+test/dakota_uq_timeseries_sop_optinterf.in
+
+

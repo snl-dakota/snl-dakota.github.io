@@ -1,0 +1,57 @@
+.. _method-coliny_ea-crossover_type:
+
+""""""""""""""
+crossover_type
+""""""""""""""
+
+
+Select a crossover type
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-coliny_ea-crossover_type-two_point
+   method-coliny_ea-crossover_type-blend
+   method-coliny_ea-crossover_type-uniform
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+- *Default:* two_point
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+--------------------+---------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword     | Dakota Keyword Description                  |
+|                         | Group              |                    |                                             |
++=========================+====================+====================+=============================================+
+| Required (Choose One)   | Crossover Type     | `two_point`__      | Combine middle of one parent with end of    |
+|                         |                    |                    | another                                     |
+|                         |                    +--------------------+---------------------------------------------+
+|                         |                    | `blend`__          | Random blend of parents                     |
+|                         |                    +--------------------+---------------------------------------------+
+|                         |                    | `uniform`__        | Randomly combine coordinates from parents   |
++-------------------------+--------------------+--------------------+---------------------------------------------+
+
+.. __: method-coliny_ea-crossover_type-two_point.html
+__ method-coliny_ea-crossover_type-blend.html
+__ method-coliny_ea-crossover_type-uniform.html
+
+
+
+**Description**
+
+
+The ``crossover_type`` controls what approach is employed for combining parent
+genetic information to create offspring. The SCOLIB EA method supports three
+forms of crossover, ``two_point``, ``blend``, and ``uniform``, which generate a
+new individual through combinations of two parent individuals.
+
+

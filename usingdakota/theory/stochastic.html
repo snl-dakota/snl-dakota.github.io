@@ -1,0 +1,1948 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Stochastic Expansion Methods &mdash; dakota  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/dakota_theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/sandiaheaderlite.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Epistemic Methods" href="epistemic.html" />
+    <link rel="prev" title="Reliability Methods" href="reliability.html" /> 
+  
+  <meta name="sandia.approval_type" content="formal"/>
+  <meta property="sandia.approved" content="SAND2022-15651 O"/>
+  <meta name="description" content="The Dakota project delivers both state-of-the-art research and robust, usable software for optimization and UQ."/>
+  <meta name="keywords" content="Dakota, optimization, UQ, uncertainty quantification, parametric analysis, design exploration, model calibration, risk analysis"/>
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> dakota
+            <img src="../../_static/dakota_Arrow_Name_Tag_horiz_transparent.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../setupdakota.html">Getting Started</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../usingdakota.html">Using Dakota</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../introduction/aboutdakota.html">About Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../introduction/helloworld.html">Dakota Beginner’s Tutorial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples.html">Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../introduction/couplingtosimulations.html">Coupling Dakota to a Simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../inputfile.html">Dakota Input File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../running.html">Running Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../output.html">Dakota Output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../studytypes.html">Study Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../topics.html">Topics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../advanced.html">Advanced Topics</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../theory.html">Dakota Theory</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="sampling.html">Sampling Methods</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reliability.html">Reliability Methods</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Stochastic Expansion Methods</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#orthogonal-polynomials">Orthogonal polynomials</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#askey-scheme">Askey scheme</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#numerically-generated-orthogonal-polynomials">Numerically generated orthogonal polynomials</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#interpolation-polynomials">Interpolation polynomials</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#nodal-interpolation">Nodal interpolation</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#global-value-based">Global value-based</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#global-gradient-enhanced">Global gradient-enhanced</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#local-value-based">Local value-based</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#local-gradient-enhanced">Local gradient-enhanced</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#hierarchical-interpolation">Hierarchical interpolation</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#generalized-polynomial-chaos">Generalized Polynomial Chaos</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#expansion-truncation-and-tailoring">Expansion truncation and tailoring</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#stochastic-collocation">Stochastic Collocation</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#value-based-nodal">Value-Based Nodal</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#gradient-enhanced-nodal">Gradient-Enhanced Nodal</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#hierarchical">Hierarchical</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#transformations-to-uncorrelated-standard-variables">Transformations to uncorrelated standard variables</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#spectral-projection">Spectral projection</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#sampling">Sampling</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#tensor-product-quadrature">Tensor product quadrature</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#smolyak-sparse-grids">Smolyak sparse grids</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#cubature">Cubature</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#linear-regression">Linear regression</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#cross-validation">Cross validation</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#iterative-basis-selection">Iterative basis selection</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#basis-expansion">Basis expansion</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#orthogonal-least-interpolation">Orthogonal Least Interpolation</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#analytic-moments">Analytic moments</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#local-sensitivity-analysis-derivatives-with-respect-to-expansion-variables">Local sensitivity analysis: derivatives with respect to expansion variables</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#global-sensitivity-analysis-variance-based-decomposition">Global sensitivity analysis: variance-based decomposition</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#automated-refinement">Automated Refinement</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#uniform-refinement-with-unbiased-grids">Uniform refinement with unbiased grids</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#dimension-adaptive-refinement-with-biased-grids">Dimension-adaptive refinement with biased grids</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#goal-oriented-dimension-adaptive-refinement-with-greedy-adaptation">Goal-oriented dimension-adaptive refinement with greedy adaptation</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#multifidelity-methods">Multifidelity methods</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="epistemic.html">Epistemic Methods</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bayesian.html">Bayesian Methods</a></li>
+<li class="toctree-l3"><a class="reference internal" href="surrogates.html">Surrogate Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="surrogatebasedoptimization.html">Surrogate-Based Local Minimization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="surrogatebasedglobaloptimization.html">Effcient Global Optimization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dimensionreductionstrategies.html">Dimension Reduction Strategies</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ouu.html">Optimization Under Uncertainty (OUU)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../reference.html">Keyword Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../usingdakotagui/usingdakotagui.html">Using Dakota GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../externaltools/externaltools.html">Using External Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developingdakota/developingdakota.html">Developing Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../misc/misc.html">Miscellaneous</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">dakota</a>
+      </nav>
+
+	  <!-- SNL Lite header -->
+	  <div class="snlheader-subsite--wrapper-default">
+		<snlheader class="snlheader-subsite" role="snlbanner">
+		  <div class="wrapper">
+			<a href="https://www.sandia.gov/index.html">
+			  <div class="logo-transparent"><p class="logo">Sandia National Laboratories</p></div>
+			</a>
+			<div class="nav-top">
+			  <a class="visuallyhidden" name="mainnav"></a>
+			  <div aria-label="main navigation" class="core-nav-transparent core-nav-transparent--visible" role="navigation">
+				<ul role="navigation" class="secondary-links">
+				  <li id="search-text-link">
+					<a aria-label="Search" href="https://www.sandia.gov/search/">Search Sandia.gov</a>
+				  </li>
+				  <li id="directory-text-link">
+					<a href="https://www.sandia.gov/directory.html" aria-expanded="false" aria-label="Site Directory">All Sandia Websites</a>
+				  </li>
+				</ul>
+			  </div>
+			</div>
+		  </div> 
+		</snlheader>
+	  </div>	  
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../usingdakota.html">Using Dakota</a> &raquo;</li>
+          <li><a href="../theory.html">Dakota Theory</a> &raquo;</li>
+      <li>Stochastic Expansion Methods</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/usingdakota/theory/stochastic.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="stochastic-expansion-methods">
+<span id="theory-uq-expansion"></span><h1>Stochastic Expansion Methods<a class="headerlink" href="#stochastic-expansion-methods" title="Permalink to this headline"></a></h1>
+<p>This chapter explores two approaches to forming stochastic expansions,
+the polynomial chaos expansion (PCE), which employs bases of
+multivariate orthogonal polynomials, and stochastic collocation (SC),
+which employs bases of multivariate interpolation polynomials. Both
+approaches capture the functional relationship between a set of output
+response metrics and a set of input random variables.</p>
+<section id="orthogonal-polynomials">
+<span id="theory-uq-expansion-orth"></span><h2>Orthogonal polynomials<a class="headerlink" href="#orthogonal-polynomials" title="Permalink to this headline"></a></h2>
+<section id="askey-scheme">
+<span id="theory-uq-expansion-orth-askey"></span><h3>Askey scheme<a class="headerlink" href="#askey-scheme" title="Permalink to this headline"></a></h3>
+<p><a class="reference internal" href="#stochastic-table1"><span class="std std-numref">Table 16</span></a> shows the set of classical orthogonal
+polynomials which provide an optimal basis for different continuous
+probability distribution types. It is derived from the family of
+hypergeometric orthogonal polynomials known as the Askey
+scheme <span id="id1">[<a class="reference internal" href="../../misc/bibliography.html#id15" title="R. Askey and J. Wilson. Some basic hypergeometric polynomials that generalize jacobi polynomials. In Mem. Amer. Math. Soc. 319. Providence, RI, 1985. AMS.">AW85</a>]</span>, for which the Hermite polynomials
+originally employed by Wiener <span id="id2">[<a class="reference internal" href="../../misc/bibliography.html#id272" title="N. Wiener. The homogoeneous chaos. Amer. J. Math., 60:897–936, 1938.">Wie38</a>]</span> are a subset.
+The optimality of these basis selections derives from their
+orthogonality with respect to weighting functions that correspond to the
+probability density functions (PDFs) of the continuous distributions
+when placed in a standard form. The density and weighting functions
+differ by a constant factor due to the requirement that the integral of
+the PDF over the support range is one.</p>
+<table class="colwidths-auto docutils align-center" id="stochastic-table1">
+<caption><span class="caption-number">Table 16 </span><span class="caption-text"><em>Linkage between standard forms of continuous probability distributions and Askey scheme of continuous hyper-geometric polynomials.</em></span><a class="headerlink" href="#stochastic-table1" title="Permalink to this table"></a></caption>
+<thead>
+<tr class="row-odd"><th class="head"><p>Distribution</p></th>
+<th class="head"><p>Density function</p></th>
+<th class="head"><p>Polynomial</p></th>
+<th class="head"><p>Weight function</p></th>
+<th class="head"><p>Support range</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Normal</p></td>
+<td><p><span class="math notranslate nohighlight">\(\frac{1}{\sqrt{2\pi}} e^{\frac{-x^2}{2}}\)</span></p></td>
+<td><p>Hermite <span class="math notranslate nohighlight">\(He_n(x)\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(e^{\frac{-x^2}{2}}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\([-\infty, \infty]\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p>Uniform</p></td>
+<td><p><span class="math notranslate nohighlight">\(\frac{1}{2}\)</span></p></td>
+<td><p>Legendre <span class="math notranslate nohighlight">\(P_n(x)\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(1\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\([-1,1]\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p>Beta</p></td>
+<td><p><span class="math notranslate nohighlight">\(\frac{(1-x)^{\alpha}(1+x)^{\beta}}{2^{\alpha+\beta+1}B(\alpha+1,\beta+1)}\)</span></p></td>
+<td><p>Jacobi <span class="math notranslate nohighlight">\(P^{(\alpha,\beta)}_n(x)\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\((1-x)^{\alpha}(1+x)^{\beta}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\([-1,1]\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p>Exponential</p></td>
+<td><p><span class="math notranslate nohighlight">\(e^{-x}\)</span></p></td>
+<td><p>Laguerre <span class="math notranslate nohighlight">\(L_n(x)\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(e^{-x}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\([0, \infty]\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p>Gamma</p></td>
+<td><p><span class="math notranslate nohighlight">\(\frac{x^{\alpha} e^{-x}}{\Gamma(\alpha+1)}\)</span></p></td>
+<td><p>Generalized Laguerre <span class="math notranslate nohighlight">\(L^{(\alpha)}_n(x)\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(x^{\alpha} e^{-x}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\([0, \infty]\)</span></p></td>
+</tr>
+</tbody>
+</table>
+<p>Note that Legendre is a special case of Jacobi for
+<span class="math notranslate nohighlight">\(\alpha = \beta = 0\)</span>, Laguerre is a special case of generalized
+Laguerre for <span class="math notranslate nohighlight">\(\alpha = 0\)</span>, <span class="math notranslate nohighlight">\(\Gamma(a)\)</span> is the Gamma function
+which extends the factorial function to continuous values, and
+<span class="math notranslate nohighlight">\(B(a,b)\)</span> is the Beta function defined as
+<span class="math notranslate nohighlight">\(B(a,b) = \frac{\Gamma(a)\Gamma(b)}{\Gamma(a+b)}\)</span>. Some care is
+necessary when specifying the <span class="math notranslate nohighlight">\(\alpha\)</span> and <span class="math notranslate nohighlight">\(\beta\)</span>
+parameters for the Jacobi and generalized Laguerre polynomials since the
+orthogonal polynomial conventions <span id="id3">[<a class="reference internal" href="../../misc/bibliography.html#id6" title="M. Abramowitz and I. A. Stegun. Handbook of Mathematical Functions with Formulas, Graphs, and Mathematical Tables. Dover, New York, 1965.">AS65</a>]</span>
+differ from the common statistical PDF conventions. The former
+conventions are used in <a class="reference internal" href="#stochastic-table1"><span class="std std-numref">Table 16</span></a>.</p>
+</section>
+<section id="numerically-generated-orthogonal-polynomials">
+<span id="theory-uq-expansion-orth-beyond-askey"></span><h3>Numerically generated orthogonal polynomials<a class="headerlink" href="#numerically-generated-orthogonal-polynomials" title="Permalink to this headline"></a></h3>
+<p>If all random inputs can be described using independent normal, uniform,
+exponential, beta, and gamma distributions, then Askey polynomials can
+be directly applied. If correlation or other distribution types are
+present, then additional techniques are required. One solution is to
+employ <a class="reference internal" href="#theory-uq-expansion-trans"><span class="std std-ref">nonlinear variable transformations</span></a>
+such that an Askey basis can be
+applied in the transformed space. This can be effective as shown
+in <span id="id4">[<a class="reference internal" href="../../misc/bibliography.html#id82" title="M. S. Eldred, C. G. Webster, and P. Constantine. Evaluation of non-intrusive approaches for wiener-askey generalized polynomial chaos. In Proceedings of the 10th AIAA Non-Deterministic Approaches Conference, number AIAA-2008-1892. Schaumburg, IL, April 7–10 2008.">EWC08</a>]</span>, but convergence rates are typically
+degraded. In addition, correlation coefficients are warped by the
+nonlinear transformation <span id="id5">[<a class="reference internal" href="../../misc/bibliography.html#id53" title="A. Der Kiureghian and P. L. Liu. Structural reliability under incomplete information. J. Eng. Mech., ASCE, 112(EM-1):85–104, 1986.">DKL86</a>]</span>, and simple
+expressions for these transformed correlation values are not always
+readily available. An alternative is to numerically generate the
+orthogonal polynomials (using
+Gauss-Wigert <span id="id6">[<a class="reference internal" href="../../misc/bibliography.html#id238" title="I.C. Simpson. Numerical integration over a semi-infinite interval, using the lognormal distibution. Numerische Mathematik, 31:71–76, 1978.">Sim78</a>]</span>, discretized
+Stieltjes <span id="id7">[<a class="reference internal" href="../../misc/bibliography.html#id99" title="W. Gautschi. Orthogonal Polynomials: Computation and Approximation. Oxford University Press, New York, 2004.">Gau04</a>]</span>,
+Chebyshev <span id="id8">[<a class="reference internal" href="../../misc/bibliography.html#id99" title="W. Gautschi. Orthogonal Polynomials: Computation and Approximation. Oxford University Press, New York, 2004.">Gau04</a>]</span>, or
+Gramm-Schmidt <span id="id9">[<a class="reference internal" href="../../misc/bibliography.html#id274" title="J. A. S. Witteveen and H. Bijl. Modeling arbitrary uncertainties using gram-schmidt polynomial chaos. In Proceedings of the 44th AIAA Aerospace Sciences Meeting and Exhibit, number AIAA-2006-0896. Reno, NV, January 9–12 2006.">WB06</a>]</span> approaches) and then
+compute their Gauss points and weights (using the
+Golub-Welsch <span id="id10">[<a class="reference internal" href="../../misc/bibliography.html#id122" title="G. H.. Golub and J. H. Welsch. Caclulation of gauss quadrature rules. Mathematics of Computation, 23(106):221–230, 1969.">GW69</a>]</span> tridiagonal
+eigensolution). These solutions are optimal for given random variable
+sets having arbitrary probability density functions and eliminate the
+need to induce additional nonlinearity through variable transformations,
+but performing this process for general joint density functions with
+correlation is a topic of ongoing research (refer to
+<a class="reference internal" href="#theory-uq-expansion-trans"><span class="std std-ref">“Transformations to uncorrelated standard variables”</span></a> for additional details).</p>
+</section>
+</section>
+<section id="interpolation-polynomials">
+<span id="theory-uq-expansion-interp"></span><h2>Interpolation polynomials<a class="headerlink" href="#interpolation-polynomials" title="Permalink to this headline"></a></h2>
+<p>Interpolation polynomials may be either local or global and either
+value-based or gradient-enhanced: Lagrange (global value-based), Hermite
+(global gradient-enhanced), piecewise linear spline (local value-based),
+and piecewise cubic spline (local gradient-enhanced). Each of these
+combinations can be used within nodal or hierarchical interpolation
+formulations. The subsections that follow describe the one-dimensional
+interpolation polynomials for these cases and
+Section <a class="reference external" href="#theory:uq:expansion:sc">1.4</a> describes their use for multivariate
+interpolation within the stochastic collocation algorithm.</p>
+<section id="nodal-interpolation">
+<span id="theory-uq-expansion-interp-nodal"></span><h3>Nodal interpolation<a class="headerlink" href="#nodal-interpolation" title="Permalink to this headline"></a></h3>
+<p>For value-based interpolation of a response function <span class="math notranslate nohighlight">\(R\)</span> in one
+dimension at an interpolation level <span class="math notranslate nohighlight">\(l\)</span> containing <span class="math notranslate nohighlight">\(m^l\)</span>
+points, the expression</p>
+<div class="math notranslate nohighlight" id="equation-lagrange-interp-1d">
+<span class="eqno">(72)<a class="headerlink" href="#equation-lagrange-interp-1d" title="Permalink to this equation"></a></span>\[R(\xi) \cong I^l(R) = \sum_{j=1}^{m_l} r(\xi_j)\,L_j(\xi)\]</div>
+<p>reproduces the response values <span class="math notranslate nohighlight">\(r(\xi_j)\)</span> at the interpolation
+points and smoothly interpolates between these values at other points.
+As we refine the interpolation level, we increase the number of
+collocation points in the rule and the number of interpolated response
+values.</p>
+<p>For the case of gradient-enhancement, interpolation of a one-dimensional
+function involves both type 1 and type 2 interpolation polynomials,</p>
+<div class="math notranslate nohighlight" id="equation-hermite-interp-1d">
+<span class="eqno">(73)<a class="headerlink" href="#equation-hermite-interp-1d" title="Permalink to this equation"></a></span>\[R(\xi) \cong I^l(R) = \sum_{j=1}^{m_l} \left[ r(\xi_j) H_j^{(1)}(\xi) + \frac{dr}{d\xi}(\xi_j) H_j^{(2)}(\xi) \right]\]</div>
+<p>where the former interpolate a particular value while producing a zero
+gradient (<span class="math notranslate nohighlight">\(i^{th}\)</span> type 1 interpolant produces a value of 1 for
+the <span class="math notranslate nohighlight">\(i^{th}\)</span> collocation point, zero values for all other points,
+and zero gradients for all points) and the latter interpolate a
+particular gradient while producing a zero value (<span class="math notranslate nohighlight">\(i^{th}\)</span> type 2
+interpolant produces a gradient of 1 for the <span class="math notranslate nohighlight">\(i^{th}\)</span> collocation
+point, zero gradients for all other points, and zero values for all
+points).</p>
+<section id="global-value-based">
+<span id="theory-uq-expansion-interp-lagrange"></span><h4>Global value-based<a class="headerlink" href="#global-value-based" title="Permalink to this headline"></a></h4>
+<p>Lagrange polynomials interpolate a set of points in a single dimension
+using the functional form</p>
+<div class="math notranslate nohighlight" id="equation-lagrange-poly-1d">
+<span class="eqno">(74)<a class="headerlink" href="#equation-lagrange-poly-1d" title="Permalink to this equation"></a></span>\[L_j = \prod_{\stackrel{\scriptstyle k=1}{k \ne j}}^m
+\frac{\xi - \xi_k}{\xi_j - \xi_k}\]</div>
+<p>where it is evident that <span class="math notranslate nohighlight">\(L_j\)</span> is 1 at <span class="math notranslate nohighlight">\(\xi = \xi_j\)</span>, is 0
+for each of the points <span class="math notranslate nohighlight">\(\xi = \xi_k\)</span>, and has order <span class="math notranslate nohighlight">\(m - 1\)</span>.</p>
+<p>To improve numerical efficiency and stability, a barycentric Lagrange
+formulation <span id="id11">[<a class="reference internal" href="../../misc/bibliography.html#id23" title="J.-P. Berrut and L. N. Trefethen. Barycentric lagrange interpolation. SIAM Review, 46(3):501–517, 2004.">BT04</a>, <a class="reference internal" href="../../misc/bibliography.html#id146" title="N. J. Higham. The numerical stability of barycentric lagrange interpolation. IMA Journal of Numerical Analysis, 24(4):547–556, 2004.">Hig04</a>]</span> is used. We define
+the barycentric weights <span class="math notranslate nohighlight">\(w_j\)</span> as</p>
+<div class="math notranslate nohighlight" id="equation-barycentric-weights">
+<span class="eqno">(75)<a class="headerlink" href="#equation-barycentric-weights" title="Permalink to this equation"></a></span>\[w_j = \prod_{\stackrel{\scriptstyle k=1}{k \ne j}}^m
+\frac{1}{\xi_j - \xi_k}\]</div>
+<p>and we precompute them for a given interpolation point set
+<span class="math notranslate nohighlight">\(\xi_j, j \in 1, ..., m\)</span>. Then, defining the quantity
+<span class="math notranslate nohighlight">\(l(\xi)\)</span> as</p>
+<div class="math notranslate nohighlight" id="equation-barycentric-prod">
+<span class="eqno">(76)<a class="headerlink" href="#equation-barycentric-prod" title="Permalink to this equation"></a></span>\[l(\xi) = \prod_{k=1}^m (\xi - \xi_k)\]</div>
+<p>which will be computed for each new interpolated point <span class="math notranslate nohighlight">\(\xi\)</span>, we
+can rewrite <a class="reference internal" href="#equation-lagrange-interp-1d">(72)</a> as</p>
+<div class="math notranslate nohighlight" id="equation-barycentric-lagrange1-1d">
+<span class="eqno">(77)<a class="headerlink" href="#equation-barycentric-lagrange1-1d" title="Permalink to this equation"></a></span>\[R(\xi) = l(\xi) \sum_{j=1}^m \frac{w_j}{x-x_j} r(\xi_j)\]</div>
+<p>where much of the computational work has been moved outside the
+summation. <a class="reference internal" href="#equation-barycentric-lagrange1-1d">(77)</a> is the first form of barycentric interpolation.
+Using an identity from the
+interpolation of unity (<span class="math notranslate nohighlight">\(R(\xi) = 1\)</span> and each <span class="math notranslate nohighlight">\(r(\xi_j) = 1\)</span>
+in <a class="reference internal" href="#equation-barycentric-lagrange1-1d">(77)</a>)
+to eliminate <span class="math notranslate nohighlight">\(l(x)\)</span>, we arrive at the second form of the
+barycentric interpolation formula:</p>
+<div class="math notranslate nohighlight" id="equation-barycentric-lagrange2-1d">
+<span class="eqno">(78)<a class="headerlink" href="#equation-barycentric-lagrange2-1d" title="Permalink to this equation"></a></span>\[R(\xi) =
+\frac{\sum_{j=1}^m \frac{w_j}{x-x_j} r(\xi_j)}{\sum_{j=1}^m \frac{w_j}{x-x_j}}\]</div>
+<p>For both formulations, we reduce the computational effort for evaluating
+the interpolant from <span class="math notranslate nohighlight">\(O(m^2)\)</span> to <span class="math notranslate nohighlight">\(O(m)\)</span> operations per
+interpolated point, with the penalty of requiring additional care to
+avoid division by zero when <span class="math notranslate nohighlight">\(\xi\)</span> matches one of the
+<span class="math notranslate nohighlight">\(\xi_j\)</span>. Relative to the first form, the second form has the
+additional advantage that common factors within the <span class="math notranslate nohighlight">\(w_j\)</span> can be
+canceled (possible for Clenshaw-Curtis and Newton-Cotes point sets, but
+not for general Gauss points), further reducing the computational
+requirements. Barycentric formulations can also be used for
+<a class="reference internal" href="#theory-uq-expansion-interp-hierarch"><span class="std std-ref">hierarchical interpolation</span></a> with
+Lagrange interpolation polynomials, but they are not applicable to local
+spline or gradient-enhanced Hermite interpolants.</p>
+</section>
+<section id="global-gradient-enhanced">
+<span id="theory-uq-expansion-interp-hermite"></span><h4>Global gradient-enhanced<a class="headerlink" href="#global-gradient-enhanced" title="Permalink to this headline"></a></h4>
+<p>Hermite interpolation polynomials (not to be confused with Hermite
+orthogonal polynomials shown in <a class="reference internal" href="#stochastic-table1"><span class="std std-numref">Table 16</span></a>) interpolate
+both values and derivatives. In our case, we are interested in
+interpolating values and first derivatives, i.e, gradients.
+One-dimensional polynomials satisfying the interpolation constraints for
+general point sets are generated using divided differences as described
+in <span id="id12">[<a class="reference internal" href="../../misc/bibliography.html#id33" title="J. Burkardt. Computing the hermite interpolation polynomial. Technical Report, Florida State University, Gainesville, FL, 2009. \url http://people.sc.fsu.edu/ jburkardt/presentations/hermite_interpolant.pdf.">Bur09a</a>]</span>.</p>
+</section>
+<section id="local-value-based">
+<span id="theory-uq-expansion-interp-linear"></span><h4>Local value-based<a class="headerlink" href="#local-value-based" title="Permalink to this headline"></a></h4>
+<p>Linear spline basis polynomials define a “hat function,” which produces
+the value of one at its collocation point and decays linearly to zero at
+its nearest neighbors. In the case where its collocation point
+corresponds to a domain boundary, then the half interval that extends
+beyond the boundary is truncated.</p>
+<p>For the case of non-equidistant closed points (e.g., Clenshaw-Curtis),
+the linear spline polynomials are defined as</p>
+<div class="math notranslate nohighlight" id="equation-eq-local-value-based-1">
+<span class="eqno">(79)<a class="headerlink" href="#equation-eq-local-value-based-1" title="Permalink to this equation"></a></span>\[\begin{split}L_j(\xi) =
+\begin{cases}
+1 - \frac{\xi - \xi_j}{\xi_{j-1} - \xi_j} &amp;
+\text{if $\xi_{j-1} \leq \xi \leq \xi_j$ (left half interval)}\\
+1 - \frac{\xi - \xi_j}{\xi_{j+1} - \xi_j} &amp;
+\text{if $\xi_j &lt; \xi \leq \xi_{j+1}$ (right half interval)}\\
+0 &amp; \text{otherwise}
+\end{cases}\end{split}\]</div>
+<p>For the case of equidistant closed points (i.e., Newton-Cotes), this can
+be simplified to</p>
+<div class="math notranslate nohighlight" id="equation-eq-local-value-based-2">
+<span class="eqno">(80)<a class="headerlink" href="#equation-eq-local-value-based-2" title="Permalink to this equation"></a></span>\[\begin{split}L_j(\xi) =
+\begin{cases}
+1 - \frac{|\xi - \xi_j|}{h} &amp; \text{if $|\xi - \xi_j| \leq h$}\\
+0                           &amp; \text{otherwise}
+\end{cases}\end{split}\]</div>
+<p>for <span class="math notranslate nohighlight">\(h\)</span> defining the half-interval <span class="math notranslate nohighlight">\(\frac{b - a}{m - 1}\)</span> of
+the hat function <span class="math notranslate nohighlight">\(L_j\)</span> over the range <span class="math notranslate nohighlight">\(\xi \in [a, b]\)</span>. For
+the special case of <span class="math notranslate nohighlight">\(m = 1\)</span> point, <span class="math notranslate nohighlight">\(L_1(\xi) = 1\)</span> for
+<span class="math notranslate nohighlight">\(\xi_1 = \frac{b+a}{2}\)</span> in both cases above.</p>
+</section>
+<section id="local-gradient-enhanced">
+<span id="theory-uq-expansion-interp-cubic"></span><h4>Local gradient-enhanced<a class="headerlink" href="#local-gradient-enhanced" title="Permalink to this headline"></a></h4>
+<p>Type 1 cubic spline interpolants are formulated as follows:</p>
+<div class="math notranslate nohighlight" id="equation-eq-local-gradient-enhanced-1">
+<span class="eqno">(81)<a class="headerlink" href="#equation-eq-local-gradient-enhanced-1" title="Permalink to this equation"></a></span>\[\begin{split}H_j^{(1)}(\xi) =
+\begin{cases}
+t^2(3-2t) ~~\text{for}~~ t = \frac{\xi-\xi_{j-1}}{\xi_j-\xi_{j-1}} &amp;
+\text{if $\xi_{j-1} \leq \xi \leq \xi_j$ (left half interval)}\\
+(t-1)^2(1+2t) ~~\text{for}~~ t = \frac{\xi-\xi_j}{\xi_{j+1}-\xi_j} &amp;
+\text{if $\xi_j &lt; \xi \leq \xi_{j+1}$ (right half interval)}\\
+0     &amp; \text{otherwise}
+\end{cases}\end{split}\]</div>
+<p>which produce the desired zero-one-zero property for left-center-right
+values and zero-zero-zero property for left-center-right gradients. Type
+2 cubic spline interpolants are formulated as follows:</p>
+<div class="math notranslate nohighlight" id="equation-eq-local-gradient-enhanced-2">
+<span class="eqno">(82)<a class="headerlink" href="#equation-eq-local-gradient-enhanced-2" title="Permalink to this equation"></a></span>\[\begin{split}H_j^{(2)}(\xi) =
+\begin{cases}
+ht^2(t-1) ~~\text{for}~~ h = \xi_j-\xi_{j-1},~~ t = \frac{\xi-\xi_{j-1}}{h} &amp;
+\text{if $\xi_{j-1} \leq \xi \leq \xi_j$ (left half interval)}\\
+ht(t-1)^2 ~~\text{for}~~ h = \xi_{j+1}-\xi_j,~~ t = \frac{\xi-\xi_j}{h} &amp;
+\text{if $\xi_j &lt; \xi \leq \xi_{j+1}$ (right half interval)}\\
+0     &amp; \text{otherwise}
+\end{cases}\end{split}\]</div>
+<p>which produce the desired zero-zero-zero property for left-center-right
+values and zero-one-zero property for left-center-right gradients. For
+the special case of <span class="math notranslate nohighlight">\(m = 1\)</span> point over the range
+<span class="math notranslate nohighlight">\(\xi \in [a, b]\)</span>, <span class="math notranslate nohighlight">\(H_1^{(1)}(\xi) = 1\)</span> and
+<span class="math notranslate nohighlight">\(H_1^{(2)}(\xi) = \xi\)</span> for <span class="math notranslate nohighlight">\(\xi_1 = \frac{b+a}{2}\)</span>.</p>
+</section>
+</section>
+<section id="hierarchical-interpolation">
+<span id="theory-uq-expansion-interp-hierarch"></span><h3>Hierarchical interpolation<a class="headerlink" href="#hierarchical-interpolation" title="Permalink to this headline"></a></h3>
+<p>In a hierarchical formulation, we reformulate the interpolation in terms
+of differences between interpolation levels:</p>
+<div class="math notranslate nohighlight" id="equation-interp-diff">
+<span class="eqno">(83)<a class="headerlink" href="#equation-interp-diff" title="Permalink to this equation"></a></span>\[\Delta^l(R) = I^l(R) - I^{l-1}(R), ~~l \geq 1\]</div>
+<p>where <span class="math notranslate nohighlight">\(I^l(R)\)</span> is as defined in
+<a class="reference internal" href="#equation-lagrange-interp-1d">(72)</a> - <a class="reference internal" href="#equation-hermite-interp-1d">(73)</a>
+using the same local or global definitions for <span class="math notranslate nohighlight">\(L_j(\xi)\)</span>,
+<span class="math notranslate nohighlight">\(H_j^{(1)}(\xi)\)</span>, and <span class="math notranslate nohighlight">\(H_j^{(2)}(\xi)\)</span>, and
+<span class="math notranslate nohighlight">\(I^{l-1}(R)\)</span> is evaluated as <span class="math notranslate nohighlight">\(I^l(I^{l-1}(R))\)</span>, indicating
+reinterpolation of the lower level interpolant across the higher level
+point set <span id="id13">[<a class="reference internal" href="../../misc/bibliography.html#id8" title="N. Agarwal and N.R. Aluru. A domain adaptive stochastic collocation approach for analysis of MEMS under uncertainties. Journal of Computational Physics, 228:7662–7688, 2009.">AA09</a>, <a class="reference internal" href="../../misc/bibliography.html#id161" title="A. Klimke and B. Wohlmuth. Algorithm 847: spinterp: piecewise multilinear hierarchical sparse grid interpolation in matlab. ACM Transactions on Mathematical Software, 31(4):561–579, 2005.">KW05</a>]</span>.</p>
+<p>Utilizing <a class="reference internal" href="#equation-lagrange-interp-1d">(72)</a> - <a class="reference internal" href="#equation-hermite-interp-1d">(73)</a>,
+we can represent this difference interpolant as</p>
+<div class="math notranslate nohighlight" id="equation-interp-diff-detail">
+<span class="eqno">(84)<a class="headerlink" href="#equation-interp-diff-detail" title="Permalink to this equation"></a></span>\[\begin{split}\Delta^l(R) =
+\begin{cases}
+\sum_{j=1}^{m_l} \left[ r(\xi_j) - I^{l-1}(R)(\xi_j) \right] \,L_j(\xi) &amp;
+\text{value-based}\\
+\sum_{j=1}^{m_l} \left( \left[ r(\xi_j) - I^{l-1}(R)(\xi_j) \right] \,H^{(1)}_j(\xi)
++ \left[ \frac{dr}{d\xi}(\xi_j) - \frac{dI^{l-1}(R)}{d\xi}(\xi_j) \right]
+\,H^{(2)}_j(\xi) \right) &amp; \text{gradient-enhanced}
+\end{cases}\end{split}\]</div>
+<p>where <span class="math notranslate nohighlight">\(I^{l-1}(R)(\xi_j)\)</span> and
+<span class="math notranslate nohighlight">\(\frac{dI^{l-1}(R)}{d\xi}(\xi_j)\)</span> are the value and gradient,
+respectively, of the lower level interpolant evaluated at the higher
+level points. We then define hierarchical surpluses
+<span class="math notranslate nohighlight">\({s, s^{(1)}, s^{(2)}}\)</span> at a point <span class="math notranslate nohighlight">\(\xi_j\)</span> as the bracketed
+terms in <a class="reference internal" href="#equation-interp-diff-detail">(84)</a>. These
+surpluses can be interpreted as local interpolation error estimates
+since they capture the difference between the true values and the values
+predicted by the previous interpolant.</p>
+<p>For the case where we use nested point sets among the interpolation
+levels, the interpolant differences for points contained in both sets
+are zero, allowing us to restrict the summations above to
+<span class="math notranslate nohighlight">\(\sum_{j=1}^{m_{\Delta_l}}\)</span> where we define the set
+<span class="math notranslate nohighlight">\(\Xi_{\Delta_l} =
+\Xi_l \setminus \Xi_{l-1}\)</span> that contains
+<span class="math notranslate nohighlight">\(m_{\Delta_l} = m_l - m_{l-1}\)</span> points. <span class="math notranslate nohighlight">\(\Delta^l(R)\)</span> then
+becomes</p>
+<div class="math notranslate nohighlight" id="equation-hierarch-interp-1">
+<span class="eqno">(85)<a class="headerlink" href="#equation-hierarch-interp-1" title="Permalink to this equation"></a></span>\[\begin{split}\Delta^l(R) =
+\begin{cases}
+\sum_{j=1}^{m_{\Delta_l}} s(\xi_j)\,L_j(\xi)  &amp; \text{value-based}\\
+\sum_{j=1}^{m_{\Delta_l}} \left( s^{(1)}(\xi_j) \,H^{(1)}_j(\xi)
++ s^{(2)}(\xi_j) \,H^{(2)}_j(\xi) \right) &amp; \text{gradient-enhanced}
+\end{cases}\end{split}\]</div>
+<p>The original interpolant <span class="math notranslate nohighlight">\(I^l(R)\)</span> can be represented as a
+summation of these difference interpolants</p>
+<div class="math notranslate nohighlight" id="equation-hierarch-interp-2">
+<span class="eqno">(86)<a class="headerlink" href="#equation-hierarch-interp-2" title="Permalink to this equation"></a></span>\[I^l(R) = \Delta^l(R) + I^{l-1}(R) = \sum_{i=1}^{l} \Delta^l(R)\]</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>We will employ these hierarchical definitions within stochastic
+collocation on sparse grids in the
+<a class="reference internal" href="#theory-uq-expansion-sc-hierarch"><span class="std std-ref">main Hierarchical section</span></a>.</p>
+</div>
+</section>
+</section>
+<section id="generalized-polynomial-chaos">
+<span id="theory-uq-expansion-pce"></span><h2>Generalized Polynomial Chaos<a class="headerlink" href="#generalized-polynomial-chaos" title="Permalink to this headline"></a></h2>
+<p>The set of polynomials from <a class="reference internal" href="#theory-uq-expansion-orth-askey"><span class="std std-ref">Orthogonal polynomials</span></a>
+and <a class="reference internal" href="#theory-uq-expansion-orth-beyond-askey"><span class="std std-ref">Numerically generated orthogonal polynomials</span></a>
+are used as an orthogonal basis to approximate the functional form between the
+stochastic response output and each of its random inputs. The chaos
+expansion for a response <span class="math notranslate nohighlight">\(R\)</span> takes the form</p>
+<div class="math notranslate nohighlight" id="equation-expansion-long">
+<span class="eqno">(87)<a class="headerlink" href="#equation-expansion-long" title="Permalink to this equation"></a></span>\[R = a_0 B_0 + \sum_{i_1=1}^{\infty} a_{i_1} B_1(\xi_{i_1}) +
+\sum_{i_1=1}^{\infty} \sum_{i_2=1}^{i_1} a_{i_1i_2} B_2(\xi_{i_1},\xi_{i_2}) +
+\sum_{i_1=1}^{\infty} \sum_{i_2=1}^{i_1} \sum_{i_3=1}^{i_2} a_{i_1i_2i_3}
+B_3(\xi_{i_1},\xi_{i_2},\xi_{i_3}) + ...\]</div>
+<p>where the random vector dimension is unbounded and each additional set
+of nested summations indicates an additional order of polynomials in the
+expansion. This expression can be simplified by replacing the
+order-based indexing with a term-based indexing</p>
+<div class="math notranslate nohighlight" id="equation-expansion-short">
+<span class="eqno">(88)<a class="headerlink" href="#equation-expansion-short" title="Permalink to this equation"></a></span>\[R = \sum_{j=0}^{\infty} \alpha_j \Psi_j(\boldsymbol{\xi})\]</div>
+<p>where there is a one-to-one correspondence between
+<span class="math notranslate nohighlight">\(a_{i_1i_2...i_n}\)</span> and <span class="math notranslate nohighlight">\(\alpha_j\)</span> and between
+<span class="math notranslate nohighlight">\(B_n(\xi_{i_1},\xi_{i_2},...,\xi_{i_n})\)</span> and
+<span class="math notranslate nohighlight">\(\Psi_j(\boldsymbol{\xi})\)</span>. Each of the
+<span class="math notranslate nohighlight">\(\Psi_j(\boldsymbol{\xi})\)</span> are multivariate polynomials which
+involve products of the one-dimensional polynomials. For example, a
+multivariate Hermite polynomial <span class="math notranslate nohighlight">\(B(\boldsymbol{\xi})\)</span> of order
+<span class="math notranslate nohighlight">\(n\)</span> is defined from</p>
+<div class="math notranslate nohighlight" id="equation-multivar-gen">
+<span class="eqno">(89)<a class="headerlink" href="#equation-multivar-gen" title="Permalink to this equation"></a></span>\[B_n(\xi_{i_1}, ..., \xi_{i_n}) =
+e^{\frac{1}{2}\boldsymbol{\xi}^T\boldsymbol{\xi}} (-1)^n
+\frac{\partial^n}{\partial \xi_{i_1} ... \partial \xi_{i_n}}
+e^{-\frac{1}{2}\boldsymbol{\xi}^T\boldsymbol{\xi}}\]</div>
+<p>which can be shown to be a product of one-dimensional Hermite
+polynomials involving an expansion term multi-index <span class="math notranslate nohighlight">\(t_i^j\)</span>:</p>
+<div class="math notranslate nohighlight" id="equation-multivar-prod">
+<span class="eqno">(90)<a class="headerlink" href="#equation-multivar-prod" title="Permalink to this equation"></a></span>\[B_n(\xi_{i_1}, ..., \xi_{i_n}) =
+\Psi_j(\boldsymbol{\xi}) =
+\prod_{i=1}^{n} \psi_{t_i^j}(\xi_i)\]</div>
+<p>In the case of a mixed basis, the same multi-index definition is
+employed although the one-dimensional polynomials <span class="math notranslate nohighlight">\(\psi_{t_i^j}\)</span>
+are heterogeneous in type.</p>
+<section id="expansion-truncation-and-tailoring">
+<span id="theory-uq-expansion-pce-exp-tnt"></span><h3>Expansion truncation and tailoring<a class="headerlink" href="#expansion-truncation-and-tailoring" title="Permalink to this headline"></a></h3>
+<p>In practice, one truncates the infinite expansion at a finite number of
+random variables and a finite expansion order</p>
+<div class="math notranslate nohighlight" id="equation-pc-exp-trunc">
+<span class="eqno">(91)<a class="headerlink" href="#equation-pc-exp-trunc" title="Permalink to this equation"></a></span>\[R \cong \sum_{j=0}^P \alpha_j \Psi_j(\boldsymbol{\xi})\]</div>
+<p>Traditionally, the polynomial chaos expansion includes a complete basis
+of polynomials up to a fixed total-order specification. That is, for an
+expansion of total order <span class="math notranslate nohighlight">\(p\)</span> involving <span class="math notranslate nohighlight">\(n\)</span> random variables,
+the expansion term multi-index defining the set of <span class="math notranslate nohighlight">\(\Psi_j\)</span> is
+constrained by</p>
+<div class="math notranslate nohighlight" id="equation-to-multi-index">
+<span class="eqno">(92)<a class="headerlink" href="#equation-to-multi-index" title="Permalink to this equation"></a></span>\[\sum_{i=1}^{n} t_i^j \leq p\]</div>
+<p>For example, the multidimensional basis polynomials for a second-order
+expansion over two random dimensions are</p>
+<div class="math notranslate nohighlight" id="equation-exp-trunc-table">
+<span class="eqno">(93)<a class="headerlink" href="#equation-exp-trunc-table" title="Permalink to this equation"></a></span>\[\begin{split}\begin{aligned}
+\Psi_0(\boldsymbol{\xi}) &amp; = &amp; \psi_0(\xi_1) ~ \psi_0(\xi_2) ~~=~~ 1
+\nonumber \\
+\Psi_1(\boldsymbol{\xi}) &amp; = &amp; \psi_1(\xi_1) ~ \psi_0(\xi_2) ~~=~~ \xi_1
+\nonumber \\
+\Psi_2(\boldsymbol{\xi}) &amp; = &amp; \psi_0(\xi_1) ~ \psi_1(\xi_2) ~~=~~ \xi_2
+\nonumber \\
+\Psi_3(\boldsymbol{\xi}) &amp; = &amp; \psi_2(\xi_1) ~ \psi_0(\xi_2) ~~=~~ \xi_1^2 - 1
+\nonumber \\
+\Psi_4(\boldsymbol{\xi}) &amp; = &amp; \psi_1(\xi_1) ~ \psi_1(\xi_2) ~~=~~ \xi_1 \xi_2
+\nonumber \\
+\Psi_5(\boldsymbol{\xi}) &amp; = &amp; \psi_0(\xi_1) ~ \psi_2(\xi_2) ~~=~~ \xi_2^2 - 1
+\nonumber \end{aligned}\end{split}\]</div>
+<p>The total number of terms <span class="math notranslate nohighlight">\(N_t\)</span> in an expansion of total order
+<span class="math notranslate nohighlight">\(p\)</span> involving <span class="math notranslate nohighlight">\(n\)</span> random variables is given by</p>
+<div class="math notranslate nohighlight" id="equation-num-to-terms">
+<span class="eqno">(94)<a class="headerlink" href="#equation-num-to-terms" title="Permalink to this equation"></a></span>\[N_t ~=~ 1 + P ~=~ 1 + \sum_{s=1}^{p} {\frac{1}{s!}} \prod_{r=0}^{s-1} (n+r)
+    ~=~ \frac{(n+p)!}{n!p!}\]</div>
+<p>This traditional approach will be referred to as a “total-order
+expansion.”</p>
+<p>An important alternative approach is to employ a “tensor-product
+expansion,” in which polynomial order bounds are applied on a
+per-dimension basis (no total-order bound is enforced) and all
+combinations of the one-dimensional polynomials are included. That is,
+the expansion term multi-index defining the set of <span class="math notranslate nohighlight">\(\Psi_j\)</span> is
+constrained by</p>
+<div class="math notranslate nohighlight" id="equation-tp-multi-index">
+<span class="eqno">(95)<a class="headerlink" href="#equation-tp-multi-index" title="Permalink to this equation"></a></span>\[t_i^j \leq p_i\]</div>
+<p>where <span class="math notranslate nohighlight">\(p_i\)</span> is the polynomial order bound for the <span class="math notranslate nohighlight">\(i^{th}\)</span>
+dimension. In this case, the example basis for <span class="math notranslate nohighlight">\(p = 2, n = 2\)</span> is</p>
+<div class="math notranslate nohighlight" id="equation-exp-trunc-table-2">
+<span class="eqno">(96)<a class="headerlink" href="#equation-exp-trunc-table-2" title="Permalink to this equation"></a></span>\[\begin{split}\begin{aligned}
+\Psi_0(\boldsymbol{\xi}) &amp; = &amp; \psi_0(\xi_1) ~ \psi_0(\xi_2) ~~=~~ 1
+\nonumber \\
+\Psi_1(\boldsymbol{\xi}) &amp; = &amp; \psi_1(\xi_1) ~ \psi_0(\xi_2) ~~=~~ \xi_1
+\nonumber \\
+\Psi_2(\boldsymbol{\xi}) &amp; = &amp; \psi_2(\xi_1) ~ \psi_0(\xi_2) ~~=~~ \xi_1^2 - 1
+\nonumber \\
+\Psi_3(\boldsymbol{\xi}) &amp; = &amp; \psi_0(\xi_1) ~ \psi_1(\xi_2) ~~=~~ \xi_2
+\nonumber \\
+\Psi_4(\boldsymbol{\xi}) &amp; = &amp; \psi_1(\xi_1) ~ \psi_1(\xi_2) ~~=~~ \xi_1 \xi_2
+\nonumber \\
+\Psi_5(\boldsymbol{\xi}) &amp; = &amp; \psi_2(\xi_1) ~ \psi_1(\xi_2) ~~=~~
+(\xi_1^2 - 1) \xi_2 \nonumber \\
+\Psi_6(\boldsymbol{\xi}) &amp; = &amp; \psi_0(\xi_1) ~ \psi_2(\xi_2) ~~=~~ \xi_2^2 - 1
+\nonumber \\
+\Psi_7(\boldsymbol{\xi}) &amp; = &amp; \psi_1(\xi_1) ~ \psi_2(\xi_2) ~~=~~
+\xi_1 (\xi_2^2 - 1) \nonumber \\
+\Psi_8(\boldsymbol{\xi}) &amp; = &amp; \psi_2(\xi_1) ~ \psi_2(\xi_2) ~~=~~
+(\xi_1^2 - 1) (\xi_2^2 - 1) \nonumber\end{aligned}\end{split}\]</div>
+<p>and the total number of terms <span class="math notranslate nohighlight">\(N_t\)</span> is</p>
+<div class="math notranslate nohighlight" id="equation-num-tp-terms">
+<span class="eqno">(97)<a class="headerlink" href="#equation-num-tp-terms" title="Permalink to this equation"></a></span>\[N_t ~=~ 1 + P ~=~ \prod_{i=1}^{n} (p_i + 1)\]</div>
+<p>It is apparent from <a class="reference internal" href="#equation-num-tp-terms">(97)</a> that
+the tensor-product expansion readily supports anisotropy in polynomial
+order for each dimension, since the polynomial order bounds for each
+dimension can be specified independently. It is also feasible to support
+anisotropy with total-order expansions, using a weighted multi-index
+constraint that is analogous to the one used for defining index sets in
+anisotropic sparse grids (see <a class="reference internal" href="#equation-aniso-smolyak-constr">(118)</a>). Finally,
+additional tailoring of the expansion form is used
+<a class="reference internal" href="#theory-uq-expansion-spectral-sparse"><span class="std std-ref">in the case of sparse grids</span></a> through
+the use of a summation of anisotropic tensor expansions. In all cases,
+the specifics of the expansion are codified in the term multi-index, and
+subsequent machinery for estimating response values and statistics from
+the expansion can be performed in a manner that is agnostic to the
+specific expansion form.</p>
+</section>
+</section>
+<section id="stochastic-collocation">
+<span id="theory-uq-expansion-sc"></span><h2>Stochastic Collocation<a class="headerlink" href="#stochastic-collocation" title="Permalink to this headline"></a></h2>
+<p>The SC expansion is formed as a sum of a set of multidimensional
+interpolation polynomials, one polynomial per interpolated response
+quantity (one response value and potentially multiple response gradient
+components) per unique collocation point.</p>
+<section id="value-based-nodal">
+<span id="theory-uq-expansion-sc-value"></span><h3>Value-Based Nodal<a class="headerlink" href="#value-based-nodal" title="Permalink to this headline"></a></h3>
+<p>For value-based interpolation in multiple dimensions, a tensor-product
+of the one-dimensional polynomials (described in the
+<a class="reference internal" href="#theory-uq-expansion-interp-lagrange"><span class="std std-ref">Global value-based section</span></a> and the
+<a class="reference internal" href="#theory-uq-expansion-interp-linear"><span class="std std-ref">Local value-based section</span></a>) is used:</p>
+<div class="math notranslate nohighlight" id="equation-lagrange-tensor">
+<span class="eqno">(98)<a class="headerlink" href="#equation-lagrange-tensor" title="Permalink to this equation"></a></span>\[R(\boldsymbol{\xi}) \cong \sum_{j_1=1}^{m_{i_1}}\cdots\sum_{j_n=1}^{m_{i_n}}
+r\left(\xi^{i_1}_{j_1},\dots , \xi^{i_n}_{j_n}\right)\,
+\left(L^{i_1}_{j_1}\otimes\cdots\otimes L^{i_n}_{j_n}\right)\]</div>
+<p>where <span class="math notranslate nohighlight">\(\boldsymbol{i} = (m_1, m_2, \cdots, m_n)\)</span> are the number of
+nodes used in the <span class="math notranslate nohighlight">\(n\)</span>-dimensional interpolation and
+<span class="math notranslate nohighlight">\(\xi_{j_k}^{i_k}\)</span> indicates the <span class="math notranslate nohighlight">\(j^{th}\)</span> point out of
+<span class="math notranslate nohighlight">\(i\)</span> possible collocation points in the <span class="math notranslate nohighlight">\(k^{th}\)</span> dimension.
+This can be simplified to</p>
+<div class="math notranslate nohighlight" id="equation-lagrange-interp-nd">
+<span class="eqno">(99)<a class="headerlink" href="#equation-lagrange-interp-nd" title="Permalink to this equation"></a></span>\[R(\boldsymbol{\xi}) \cong \sum_{j=1}^{N_p} r_j \boldsymbol{L}_j(\boldsymbol{\xi})\]</div>
+<p>where <span class="math notranslate nohighlight">\(N_p\)</span> is the number of unique collocation points in the
+multidimensional grid. The multidimensional interpolation polynomials
+are defined as</p>
+<div class="math notranslate nohighlight" id="equation-multivar-l">
+<span class="eqno">(100)<a class="headerlink" href="#equation-multivar-l" title="Permalink to this equation"></a></span>\[\boldsymbol{L}_j(\boldsymbol{\xi}) = \prod_{k=1}^{n} L_{c_k^j}(\xi_k)\]</div>
+<p>where <span class="math notranslate nohighlight">\(c_k^j\)</span> is a collocation multi-index (similar to the
+expansion term multi-index in
+<a class="reference internal" href="#equation-multivar-prod">(90)</a> that maps from the
+<span class="math notranslate nohighlight">\(j^{th}\)</span> unique collocation point to the corresponding
+multidimensional indices within the tensor grid, and we have dropped the
+superscript notation indicating the number of nodes in each dimension
+for simplicity. The tensor-product structure preserves the desired
+interpolation properties where the <span class="math notranslate nohighlight">\(j^{th}\)</span> multivariate
+interpolation polynomial assumes the value of 1 at the <span class="math notranslate nohighlight">\(j^{th}\)</span>
+point and assumes the value of 0 at all other points, thereby
+reproducing the response values at each of the collocation points and
+smoothly interpolating between these values at other unsampled points.
+When the one-dimensional interpolation polynomials are defined using a
+barycentric formulation as described in
+<a class="reference internal" href="#theory-uq-expansion-interp-lagrange"><span class="std std-ref">Global value-based section</span></a> (i.e.,
+<a class="reference internal" href="#equation-barycentric-lagrange2-1d">(78)</a>),
+additional efficiency in evaluating a tensor interpolant is achieved
+using the procedure in <span id="id14">[<a class="reference internal" href="../../misc/bibliography.html#id160" title="W. A. Klimke. Uncertainty Modeling using Fuzzy Arithmetic and Sparse Grids. PhD thesis, Universität Stuttgart, Stuttgart, Germany, 2005.">Kli05</a>]</span>, which amounts to a
+multi-dimensional extension to Horner’s rule for tensor-product
+polynomial evaluation.</p>
+<p>Multivariate interpolation on Smolyak sparse grids involves a weighted
+sum of the tensor products in <a class="reference internal" href="#equation-lagrange-tensor">(98)</a> with varying
+<span class="math notranslate nohighlight">\(\boldsymbol{i}\)</span> levels. For sparse interpolants based on nested
+quadrature rules (e.g., Clenshaw-Curtis, Gauss-Patterson, Genz-Keister),
+the interpolation property is preserved, but sparse interpolants based
+on non-nested rules may exhibit some interpolation error at the
+collocation points.</p>
+</section>
+<section id="gradient-enhanced-nodal">
+<span id="theory-uq-expansion-sc-gradient"></span><h3>Gradient-Enhanced Nodal<a class="headerlink" href="#gradient-enhanced-nodal" title="Permalink to this headline"></a></h3>
+<p>For gradient-enhanced interpolation in multiple dimensions, we extend
+the formulation in <a class="reference internal" href="#equation-lagrange-interp-nd">(99)</a> to use a
+tensor-product of the one-dimensional type 1 and type 2 polynomials
+(described in <a class="reference internal" href="#theory-uq-expansion-interp-hermite"><span class="std std-ref">the Global gradient-enhanced section</span></a>
+or <a class="reference internal" href="#theory-uq-expansion-interp-cubic"><span class="std std-ref">the Local gradient-enhanced section</span></a>):</p>
+<div class="math notranslate nohighlight" id="equation-hermite-interp-nd">
+<span class="eqno">(101)<a class="headerlink" href="#equation-hermite-interp-nd" title="Permalink to this equation"></a></span>\[R(\boldsymbol{\xi}) \cong \sum_{j=1}^{N_p} \left[
+r_j \boldsymbol{H}_j^{(1)}(\boldsymbol{\xi}) +
+\sum_{k=1}^n \frac{dr_j}{d\xi_k} \boldsymbol{H}_{jk}^{(2)}(\boldsymbol{\xi})
+\right]\]</div>
+<p>The multidimensional type 1 basis polynomials are</p>
+<div class="math notranslate nohighlight" id="equation-multivar-h1">
+<span class="eqno">(102)<a class="headerlink" href="#equation-multivar-h1" title="Permalink to this equation"></a></span>\[\boldsymbol{H}_j^{(1)}(\boldsymbol{\xi}) =
+\prod_{k=1}^{n} H^{(1)}_{c^j_k}(\xi_k)\]</div>
+<p>where <span class="math notranslate nohighlight">\(c_k^j\)</span> is the same collocation multi-index described for
+<a class="reference internal" href="#equation-multivar-l">(100)</a> and the superscript notation
+indicating the number of nodes in each dimension has again been omitted.
+The multidimensional type 2 basis polynomials for the <span class="math notranslate nohighlight">\(k^{th}\)</span>
+gradient component are the same as the type 1 polynomials for each
+dimension except <span class="math notranslate nohighlight">\(k\)</span>:</p>
+<div class="math notranslate nohighlight" id="equation-multivar-h2">
+<span class="eqno">(103)<a class="headerlink" href="#equation-multivar-h2" title="Permalink to this equation"></a></span>\[\boldsymbol{H}_{jk}^{(2)}(\boldsymbol{\xi}) = H^{(2)}_{c^j_k}(\xi_k)
+\prod_{\stackrel{\scriptstyle l=1}{l \ne k}}^{n} H^{(1)}_{c^j_l}(\xi_l)\]</div>
+<p>As for the value-based case, multivariate interpolation on Smolyak
+sparse grids involves a weighted sum of the tensor products in
+<a class="reference internal" href="#equation-hermite-interp-nd">(101)</a> with varying <span class="math notranslate nohighlight">\(\boldsymbol{i}\)</span> levels.</p>
+</section>
+<section id="hierarchical">
+<span id="theory-uq-expansion-sc-hierarch"></span><h3>Hierarchical<a class="headerlink" href="#hierarchical" title="Permalink to this headline"></a></h3>
+<p>In the case of multivariate hierarchical interpolation on nested grids,
+we are interested in tensor products of the one-dimensional difference
+interpolants described in
+<a class="reference internal" href="#theory-uq-expansion-interp-hierarch"><span class="std std-ref">Section 1.2.2</span></a>, with</p>
+<div class="math notranslate nohighlight" id="equation-hierarch-interp-nd-l">
+<span class="eqno">(104)<a class="headerlink" href="#equation-hierarch-interp-nd-l" title="Permalink to this equation"></a></span>\[\Delta^l(R) = \sum_{j_1=1}^{m_{\Delta_1}}\cdots\sum_{j_n=1}^{m_{\Delta_n}}
+s\left(\xi^{\Delta_1}_{j_1},\dots , \xi^{\Delta_n}_{j_n}\right)\,
+\left(L^{\Delta_1}_{j_1}\otimes\cdots\otimes L^{\Delta_n}_{j_n}\right)\]</div>
+<p>for value-based, and</p>
+<div class="math notranslate nohighlight" id="equation-hierarch-interp-nd-h">
+<span class="eqno">(105)<a class="headerlink" href="#equation-hierarch-interp-nd-h" title="Permalink to this equation"></a></span>\[\begin{split}\Delta^l(R) =
+\sum_{j_1=1}^{m_{\Delta_1}} \cdots \sum_{j_n=1}^{m_{\Delta_n}} \nonumber \\
+\left[
+s^{(1)} \left( \xi^{\Delta_1}_{j_1}, \dots, \xi^{\Delta_n}_{j_n} \right)
+\left( H^{(1)~\Delta_1}_{~~~~~j_1} \otimes \cdots \otimes H^{(1)~\Delta_n}_{~~~~~j_n}
+\right) + \sum_{k=1}^n s_k^{(2)} \left(\xi^{\Delta_1}_{j_1}, \dots, \xi^{\Delta_n}_{j_n}\right)
+\left(H^{(2)~\Delta_1}_{k~~~~j_1}\otimes\cdots\otimes H^{(2)~\Delta_n}_{k~~~~j_n}\right)
+\right] \nonumber\end{split}\]</div>
+<p>for gradient-enhanced, where <span class="math notranslate nohighlight">\(k\)</span> indicates the gradient component
+being interpolated.</p>
+<p>These difference interpolants are particularly useful within sparse grid
+interpolation, for which the <span class="math notranslate nohighlight">\(\Delta^l\)</span> can be employed directly
+within <a class="reference internal" href="#equation-smolyak1">(113)</a>.</p>
+</section>
+</section>
+<section id="transformations-to-uncorrelated-standard-variables">
+<span id="theory-uq-expansion-trans"></span><h2>Transformations to uncorrelated standard variables<a class="headerlink" href="#transformations-to-uncorrelated-standard-variables" title="Permalink to this headline"></a></h2>
+<p>Polynomial chaos and stochastic collocation are expanded using
+polynomials that are functions of independent random variables
+<span class="math notranslate nohighlight">\(\boldsymbol{\xi}\)</span>, which are often standardized forms of common
+distributions. Thus, a key component of stochastic expansion approaches
+is performing a transformation of variables from the original random
+variables <span class="math notranslate nohighlight">\(\boldsymbol{x}\)</span> to independent (standard) random
+variables <span class="math notranslate nohighlight">\(\boldsymbol{\xi}\)</span> and then applying the stochastic
+expansion in the transformed space. This notion of independent standard
+space is extended over the notion of “u-space” used in reliability
+methods (see <a class="reference internal" href="reliability.html#theory-uq-reliability-local-mpp"><span class="std std-ref">MPP Search Methods</span></a>) in
+that it extends the standardized set beyond standard normals. For
+distributions that are already independent, three different approaches
+are of interest:</p>
+<ol class="arabic simple">
+<li><p><em>Extended basis:</em> For each Askey distribution type, employ the
+corresponding Askey basis (See <a class="reference internal" href="#stochastic-table1"><span class="std std-numref">Table 16</span></a>). For non-Askey
+types, numerically generate an optimal polynomial basis for each
+independent distribution as described in
+<a class="reference internal" href="#theory-uq-expansion-orth-beyond-askey"><span class="std std-ref">Numerically generated orthogonal polynomials</span></a>.
+These numerically-generated basis polynomials are not coerced into any
+standardized form, but rather employ the actual distribution
+parameters of the individual random variables. Thus, not even a
+linear variable transformation is employed for these variables. With
+usage of the optimal basis corresponding to each of the random
+variable types, we avoid inducing additional nonlinearity that can
+slow convergence.</p></li>
+<li><p><em>Askey basis:</em> For non-Askey types, perform a nonlinear variable
+transformation from a given input distribution to the most similar
+Askey basis. For example, lognormal distributions might employ a
+Hermite basis in a transformed standard normal space and loguniform,
+triangular, and histogram distributions might employ a Legendre basis
+in a transformed standard uniform space. All distributions then
+employ the Askey orthogonal polynomials and their associated Gauss
+points/weights.</p></li>
+<li><p><em>Wiener basis:</em> For non-normal distributions, employ a nonlinear
+variable transformation to standard normal distributions. All
+distributions then employ the Hermite orthogonal polynomials and
+their associated Gauss points/weights.</p></li>
+</ol>
+<p>For dependent distributions, we must first perform a nonlinear variable
+transformation to uncorrelated standard normal distributions, due to the
+independence of decorrelated standard normals. This involves the Nataf
+transformation, described in the following paragraph. We then have the
+following choices:</p>
+<ol class="arabic simple">
+<li><p><em>Single transformation:</em> Following the Nataf transformation to
+independent standard normal distributions, employ the Wiener basis in
+the transformed space.</p></li>
+<li><p><em>Double transformation:</em> From independent standard normal space,
+transform back to either the original marginal distributions or the
+desired Askey marginal distributions and employ an extended or Askey
+basis, respectively, in the transformed space. Independence is
+maintained, but the nonlinearity of the Nataf transformation is at
+least partially mitigated.</p></li>
+</ol>
+<p>Dakota does not yet implement the double transformation concept, such
+that each correlated variable will employ a Wiener basis approach.</p>
+<p>The transformation from correlated non-normal distributions to
+uncorrelated standard normal distributions is denoted as
+<span class="math notranslate nohighlight">\(\boldsymbol{\xi} = T({\bf x})\)</span> with the reverse transformation
+denoted as <span class="math notranslate nohighlight">\({\bf x} = T^{-1}(\boldsymbol{\xi})\)</span>. These
+transformations are nonlinear in general, and possible approaches
+include the Rosenblatt <span id="id15">[<a class="reference internal" href="../../misc/bibliography.html#id228" title="M. Rosenblatt. Remarks on a multivariate transformation. Annals of Mathematical Statistics, 23(3):470–472, 1952.">Ros52</a>]</span>,
+Nataf <span id="id16">[<a class="reference internal" href="../../misc/bibliography.html#id53" title="A. Der Kiureghian and P. L. Liu. Structural reliability under incomplete information. J. Eng. Mech., ASCE, 112(EM-1):85–104, 1986.">DKL86</a>]</span>, and Box-Cox <span id="id17">[<a class="reference internal" href="../../misc/bibliography.html#id29" title="G. E. P. Box and D. R. Cox. An analysis of transformations. J. Royal Stat. Soc., Series B, 26:211–252, 1964.">BC64</a>]</span>
+transformations. Dakota employs the Nataf transformation, which is
+suitable for the common case when marginal distributions and a
+correlation matrix are provided, but full joint distributions are not
+known <a class="footnote-reference brackets" href="#id64" id="id18">1</a>. The Nataf transformation occurs in the following two steps.
+To transform between the original correlated x-space variables and
+correlated standard normals (“z-space”), a CDF matching condition is
+applied for each of the marginal distributions:</p>
+<div class="math notranslate nohighlight" id="equation-trans-zx">
+<span class="eqno">(106)<a class="headerlink" href="#equation-trans-zx" title="Permalink to this equation"></a></span>\[\Phi(z_i) = F(x_i)\]</div>
+<p>where <span class="math notranslate nohighlight">\(\Phi()\)</span> is the standard normal cumulative distribution
+function and <span class="math notranslate nohighlight">\(F()\)</span> is the cumulative distribution function of the
+original probability distribution. Then, to transform between correlated
+z-space variables and uncorrelated <span class="math notranslate nohighlight">\(\xi\)</span>-space variables, the
+Cholesky factor <span class="math notranslate nohighlight">\({\bf L}\)</span> of a modified correlation matrix is
+used:</p>
+<div class="math notranslate nohighlight" id="equation-trans-zu">
+<span class="eqno">(107)<a class="headerlink" href="#equation-trans-zu" title="Permalink to this equation"></a></span>\[{\bf z} = {\bf L} \boldsymbol{\xi}\]</div>
+<p>where the original correlation matrix for non-normals in x-space has
+been modified to represent the corresponding “warped” correlation in
+z-space <span id="id19">[<a class="reference internal" href="../../misc/bibliography.html#id53" title="A. Der Kiureghian and P. L. Liu. Structural reliability under incomplete information. J. Eng. Mech., ASCE, 112(EM-1):85–104, 1986.">DKL86</a>]</span>.</p>
+</section>
+<section id="spectral-projection">
+<span id="theory-uq-expansion-spectral"></span><h2>Spectral projection<a class="headerlink" href="#spectral-projection" title="Permalink to this headline"></a></h2>
+<p>The major practical difference between PCE and SC is that, in PCE, one
+must estimate the coefficients for known basis functions, whereas in SC,
+one must form the interpolants for known coefficients. PCE estimates its
+coefficients using either spectral projection or linear regression,
+where the former approach involves numerical integration based on random
+sampling, tensor-product quadrature, Smolyak sparse grids, or cubature
+methods. In SC, the multidimensional interpolants need to be formed over
+structured data sets, such as point sets from quadrature or sparse
+grids; approaches based on random sampling may not be used.</p>
+<p>The spectral projection approach projects the response against each
+basis function using inner products and employs the polynomial
+orthogonality properties to extract each coefficient. Similar to a
+Galerkin projection, the residual error from the approximation is
+rendered orthogonal to the selected basis. From
+<a class="reference internal" href="#equation-pc-exp-trunc">(91)</a>, taking the inner product
+of both sides with respect to <span class="math notranslate nohighlight">\(\Psi_j\)</span> and enforcing orthogonality
+yields:</p>
+<div class="math notranslate nohighlight" id="equation-coeff-extract">
+<span class="eqno">(108)<a class="headerlink" href="#equation-coeff-extract" title="Permalink to this equation"></a></span>\[\alpha_j ~=~ \frac{\langle R, \Psi_j \rangle}{\langle \Psi^2_j \rangle}
+~=~ {1\over {\langle \Psi^2_j \rangle}}
+ \int_{\Omega} R\, \Psi_j\, \varrho(\boldsymbol{\xi}) \,d\boldsymbol{\xi},\]</div>
+<p>where each inner product involves a multidimensional integral over the
+support range of the weighting function. In particular,
+<span class="math notranslate nohighlight">\(\Omega = \Omega_1\otimes\dots\otimes\Omega_n\)</span>, with possibly
+unbounded intervals <span class="math notranslate nohighlight">\(\Omega_j\subset\mathbb{R}\)</span> and the tensor
+product form
+<span class="math notranslate nohighlight">\(\varrho(\boldsymbol{\xi}) = \prod_{i=1}^n \varrho_i(\xi_i)\)</span> of
+the joint probability density (weight) function. The denominator in
+<a class="reference internal" href="#equation-coeff-extract">(108)</a> is the norm squared of
+the multivariate orthogonal polynomial, which can be computed
+analytically using the product of univariate norms squared</p>
+<div class="math notranslate nohighlight" id="equation-norm-squared">
+<span class="eqno">(109)<a class="headerlink" href="#equation-norm-squared" title="Permalink to this equation"></a></span>\[\langle \Psi^2_j \rangle ~=~ \prod_{i=1}^{n} \langle \psi_{t_i^j}^2 \rangle\]</div>
+<p>where the univariate inner products have simple closed form expressions
+for each polynomial in the Askey scheme <span id="id20">[<a class="reference internal" href="../../misc/bibliography.html#id6" title="M. Abramowitz and I. A. Stegun. Handbook of Mathematical Functions with Formulas, Graphs, and Mathematical Tables. Dover, New York, 1965.">AS65</a>]</span>
+and are readily computed as part of the numerically-generated solution
+procedures described in
+<a class="reference internal" href="#theory-uq-expansion-orth-beyond-askey"><span class="std std-ref">Numerically generated orthogonal polynomials</span></a>.
+Thus, the primary computational effort resides in evaluating the numerator, which is
+evaluated numerically using sampling, quadrature, cubature, or sparse
+grid approaches (and this numerical approximation leads to use of the
+term “pseudo-spectral” by some investigators).</p>
+<section id="sampling">
+<span id="theory-uq-expansion-spectral-samp"></span><h3>Sampling<a class="headerlink" href="#sampling" title="Permalink to this headline"></a></h3>
+<p>In the sampling approach, the integral evaluation is equivalent to
+computing the expectation (mean) of the response-basis function product
+(the numerator in <a class="reference internal" href="#equation-coeff-extract">(108)</a>) for
+each term in the expansion when sampling within the density of the
+weighting function. This approach is only valid for PCE and since
+sampling does not provide any particular monomial coverage guarantee, it
+is common to combine this coefficient estimation approach with a
+total-order chaos expansion.</p>
+<p>In computational practice, coefficient estimations based on sampling
+benefit from first estimating the response mean (the first PCE
+coefficient) and then removing the mean from the expectation evaluations
+for all subsequent coefficients. While this has no effect for
+quadrature/sparse grid methods (see following two sections) and little
+effect for fully-resolved sampling, it does have a small but noticeable
+beneficial effect for under-resolved sampling.</p>
+</section>
+<section id="tensor-product-quadrature">
+<span id="theory-uq-expansion-spectral-quad"></span><h3>Tensor product quadrature<a class="headerlink" href="#tensor-product-quadrature" title="Permalink to this headline"></a></h3>
+<p>In quadrature-based approaches, the simplest general technique for
+approximating multidimensional integrals, as in
+<a class="reference internal" href="#equation-coeff-extract">(108)</a>, is to employ a tensor
+product of one-dimensional quadrature rules. Since there is little
+benefit to the use of nested quadrature rules in the tensor-product
+case <a class="footnote-reference brackets" href="#id65" id="id21">2</a>, we choose Gaussian abscissas, i.e. the zeros of polynomials
+that are orthogonal with respect to a density function weighting, e.g.
+Gauss-Hermite, Gauss-Legendre, Gauss-Laguerre, generalized
+Gauss-Laguerre, Gauss-Jacobi, or numerically-generated Gauss rules.</p>
+<p>We first introduce an index <span class="math notranslate nohighlight">\(i\in\mathbb{N}_+\)</span>, <span class="math notranslate nohighlight">\(i\ge1\)</span>.
+Then, for each value of <span class="math notranslate nohighlight">\(i\)</span>, let
+<span class="math notranslate nohighlight">\(\{\xi_1^i, \ldots,\xi_{m_i}^i\}\subset \Omega_i\)</span> be a sequence of
+abscissas for quadrature on <span class="math notranslate nohighlight">\(\Omega_i\)</span>. For
+<span class="math notranslate nohighlight">\(f\in C^0(\Omega_i)\)</span> and <span class="math notranslate nohighlight">\(n=1\)</span> we introduce a sequence of
+one-dimensional quadrature operators</p>
+<div class="math notranslate nohighlight" id="equation-1d-quad">
+<span class="eqno">(110)<a class="headerlink" href="#equation-1d-quad" title="Permalink to this equation"></a></span>\[\mathscr{U}^i(f)(\xi)=\sum_{j=1}^{m_i}f(\xi_j^i)\, w^i_j,
+%\quad\forall u\in C^0(\Gamma^1; W(D)),\]</div>
+<p>with <span class="math notranslate nohighlight">\(m_i\in\mathbb{N}\)</span> given. When utilizing Gaussian quadrature,
+<a class="reference internal" href="#equation-1d-quad">(110)</a> integrates exactly all polynomials of
+degree less than <span class="math notranslate nohighlight">\(2m_i -1\)</span>, for each <span class="math notranslate nohighlight">\(i=1,\ldots, n\)</span>. Given
+an expansion order <span class="math notranslate nohighlight">\(p\)</span>, the highest order coefficient evaluations
+(see <a class="reference internal" href="#equation-coeff-extract">(108)</a>) can be assumed to
+involve integrands of at least polynomial order <span class="math notranslate nohighlight">\(2p\)</span> (<span class="math notranslate nohighlight">\(\Psi\)</span>
+of order <span class="math notranslate nohighlight">\(p\)</span> and <span class="math notranslate nohighlight">\(R\)</span> modeled to order <span class="math notranslate nohighlight">\(p\)</span>) in each
+dimension such that a minimal Gaussian quadrature order of <span class="math notranslate nohighlight">\(p+1\)</span>
+will be required to obtain good accuracy in these coefficients.</p>
+<p>Now, in the multivariate case <span class="math notranslate nohighlight">\(n&gt;1\)</span>, for each
+<span class="math notranslate nohighlight">\(f\in C^0(\Omega)\)</span> and the multi-index
+<span class="math notranslate nohighlight">\(\mathbf{i}=(i_1,\dots,i_n)\in\mathbb{N}_+^n\)</span> we define the full
+tensor product quadrature formulas</p>
+<div class="math notranslate nohighlight" id="equation-multi-tensor">
+<span class="eqno">(111)<a class="headerlink" href="#equation-multi-tensor" title="Permalink to this equation"></a></span>\[\mathcal{Q}_{\mathbf{i}}^n f(\xi)=\left(\mathscr{U}^{i_1}\otimes\cdots\otimes\mathscr{U}^{i_n}\right)(f)(\boldsymbol{\xi})=
+\sum_{j_1=1}^{m_{i_1}}\cdots\sum_{j_n=1}^{m_{i_n}}
+f\left(\xi^{i_1}_{j_1},\dots , \xi^{i_n}_{j_n}\right)\,\left(w^{i_1}_{j_1}\otimes\cdots\otimes w^{i_n}_{j_n}\right).\]</div>
+<p>Clearly, the above product needs <span class="math notranslate nohighlight">\(\prod_{j=1}^n m_{i_j}\)</span> function
+evaluations. Therefore, when the number of input random variables is
+small, full tensor product quadrature is a very effective numerical
+tool. On the other hand, approximations based on tensor product grids
+suffer from the <em>curse of dimensionality</em> since the number of
+collocation points in a tensor grid grows exponentially fast in the
+number of input random variables. For example, if
+<a class="reference internal" href="#equation-multi-tensor">(111)</a> employs the same order for
+all random dimensions, <span class="math notranslate nohighlight">\(m_{i_j} = m\)</span>, then
+<a class="reference internal" href="#equation-multi-tensor">(111)</a> requires <span class="math notranslate nohighlight">\(m^n\)</span> function evaluations.</p>
+<p>In <span id="id22">[<a class="reference internal" href="../../misc/bibliography.html#id83" title="M. S. Eldred and J. Burkardt. Comparison of non-intrusive polynomial chaos and stochastic collocation methods for uncertainty quantification. In Proceedings of the 47th AIAA Aerospace Sciences Meeting and Exhibit, number AIAA-2009-0976. Orlando, FL, January 5–8, 2009.">EB09</a>]</span>, it is demonstrated that close
+synchronization of expansion form with the monomial resolution of a
+particular numerical integration technique can result in significant
+performance improvements. In particular, the traditional approach of
+exploying a total-order PCE
+(Eqs. <a class="reference internal" href="#equation-to-multi-index">(92)</a> – <a class="reference internal" href="#equation-num-to-terms">(94)</a>)
+neglects a significant portion of the monomial coverage for a
+tensor-product quadrature approach, and one should rather employ a
+tensor-product PCE
+(Eqs. <a class="reference internal" href="#equation-tp-multi-index">(95)</a> – <a class="reference internal" href="#equation-num-tp-terms">(97)</a>)
+to provide improved synchronization and more effective usage of the
+Gauss point evaluations. When the quadrature points are standard Gauss
+rules (i.e., no Clenshaw-Curtis, Gauss-Patterson, or Genz-Keister nested
+rules), it has been shown that tensor-product PCE and SC result in
+identical polynomial forms <span id="id23">[<a class="reference internal" href="../../misc/bibliography.html#id41" title="P. G. Constantine, D. F. Gleich, and G. Iaccarino. Spectral methods for parameterized matrix equations. SIAM Journal on Matrix Analysis and Applications, 31(5):2681–2699, 2010.">CGI10</a>]</span>, completely
+eliminating a performance gap that exists between total-order PCE and
+SC <span id="id24">[<a class="reference internal" href="../../misc/bibliography.html#id83" title="M. S. Eldred and J. Burkardt. Comparison of non-intrusive polynomial chaos and stochastic collocation methods for uncertainty quantification. In Proceedings of the 47th AIAA Aerospace Sciences Meeting and Exhibit, number AIAA-2009-0976. Orlando, FL, January 5–8, 2009.">EB09</a>]</span>.</p>
+</section>
+<section id="smolyak-sparse-grids">
+<span id="theory-uq-expansion-spectral-sparse"></span><h3>Smolyak sparse grids<a class="headerlink" href="#smolyak-sparse-grids" title="Permalink to this headline"></a></h3>
+<p>If the number of random variables is moderately large, one should rather
+consider sparse tensor product spaces as first proposed by Smolyak
+<span id="id25">[<a class="reference internal" href="../../misc/bibliography.html#id241" title="S.A. Smolyak. Quadrature and interpolation formulas for tensor products of certain classes of functions. Dokl. Akad. Nauk SSSR, 4:240–243, 1963.">Smo63</a>]</span> and further investigated by
+Refs. <span id="id26">[<a class="reference internal" href="../../misc/bibliography.html#id19" title="V. Barthelmann, E. Novak, and K. Ritter. High dimensional polynomial interpolation on sparse grids. Adv. Comput. Math., 12(4):273–288, 2000. Multivariate polynomial interpolation.">BNR00</a>, <a class="reference internal" href="../../misc/bibliography.html#id93" title="P. Frauenfelder, C. Schwab, and R. A. Todor. Finite elements for elliptic problems with stochastic coefficients. Comput. Methods Appl. Mech. Engrg., 194(2-5):205–228, 2005.">FST05</a>, <a class="reference internal" href="../../misc/bibliography.html#id103" title="T. Gerstner and M. Griebel. Numerical integration using sparse grids. Numer. Algorithms, 18(3-4):209–232, 1998.">GG98</a>, <a class="reference internal" href="../../misc/bibliography.html#id196" title="F. Nobile, R. Tempone, and C. G. Webster. A sparse grid stochastic collocation method for partial differential equations with random input data. Technical Report Technical report TRITA-NA 2007:7, Royal Institute of Technology, Stockholm, Sweden, 2007.">NTW07</a>, <a class="reference internal" href="../../misc/bibliography.html#id197" title="F. Nobile, R. Tempone, and C. G. Webster. An anisotropic sparse grid stochastic collocation method for partial differential equations with random input data. SIAM J. on Num. Anal., 46(5):2411–2442, 2008.">NTW08</a>, <a class="reference internal" href="../../misc/bibliography.html#id282" title="D. Xiu and J.S. Hesthaven. High-order collocation methods for differential equations with random inputs. SIAM J. Sci. Comput., 27(3):1118–1139 (electronic), 2005.">XH05</a>]</span>
+that reduce dramatically the number of collocation points, while
+preserving a high level of accuracy.</p>
+<p>Here we follow the notation and extend the description in
+Ref. <span id="id27">[<a class="reference internal" href="../../misc/bibliography.html#id196" title="F. Nobile, R. Tempone, and C. G. Webster. A sparse grid stochastic collocation method for partial differential equations with random input data. Technical Report Technical report TRITA-NA 2007:7, Royal Institute of Technology, Stockholm, Sweden, 2007.">NTW07</a>]</span> to describe the Smolyak <em>isotropic</em>
+formulas <span class="math notranslate nohighlight">\(\mathscr{A}({\rm w},n)\)</span>, where <span class="math notranslate nohighlight">\({\rm w}\)</span> is a
+level that is independent of dimension <a class="footnote-reference brackets" href="#id66" id="id28">3</a>. The Smolyak formulas are
+just linear combinations of the product formulas in
+<a class="reference internal" href="#equation-multi-tensor">(111)</a> with the following key
+property: only products with a relatively small number of points are
+used. With <span class="math notranslate nohighlight">\(\mathscr{U}^0 = 0\)</span> and for <span class="math notranslate nohighlight">\(i \geq 1\)</span> define</p>
+<div class="math notranslate nohighlight" id="equation-delta">
+<span class="eqno">(112)<a class="headerlink" href="#equation-delta" title="Permalink to this equation"></a></span>\[\Delta^i = \mathscr{U}^i-\mathscr{U}^{i-1}.\]</div>
+<p>and we set <span class="math notranslate nohighlight">\(|\mathbf{i}| = i_1+\cdots + i_n\)</span>. Then the isotropic
+Smolyak quadrature formula is given by</p>
+<div class="math notranslate nohighlight" id="equation-smolyak1">
+<span class="eqno">(113)<a class="headerlink" href="#equation-smolyak1" title="Permalink to this equation"></a></span>\[\mathscr{A}({\rm w},n) = \sum_{|\mathbf{i}| \leq {\rm w}+n}\left(\Delta^{i_1}\otimes\cdots\otimes\Delta^{i_n}\right).\]</div>
+<p>This form is preferred for use in forming hierarchical interpolants as
+described in <a class="reference internal" href="#theory-uq-expansion-interp-hierarch"><span class="std std-ref">Hierarchical interpolation</span></a>
+and the main <a class="reference internal" href="#theory-uq-expansion-sc-hierarch"><span class="std std-ref">Hierarchical section</span></a>.
+For nodal interpolants and polynomial chaos in sparse grids, the following equivalent
+form <span id="id29">[<a class="reference internal" href="../../misc/bibliography.html#id269" title="G. W. Wasilkowski and H. Woźniakowski. Explicit cost bounds of algorithms for multivariate tensor product problems. Journal of Complexity, 11:1-56, 1995.">WWozniakowski95</a>]</span> is often more convenient since it
+collapses repeated index sets</p>
+<div class="math notranslate nohighlight" id="equation-smolyak2">
+<span class="eqno">(114)<a class="headerlink" href="#equation-smolyak2" title="Permalink to this equation"></a></span>\[\mathscr{A}({\rm w},n) = \sum_{{\rm w}+1 \leq |\mathbf{i}| \leq {\rm w}+n}(-1)^{{\rm w}+n-|\mathbf{i}|}
+{n-1 \choose {\rm w}+n-|\mathbf{i}|}\cdot
+\left(\mathscr{U}^{i_1}\otimes\cdots\otimes\mathscr{U}^{i_n}\right).\]</div>
+<p>For each index set <span class="math notranslate nohighlight">\(\mathbf{i}\)</span> of levels, linear or nonlinear
+growth rules are used to define the corresponding one-dimensional
+quadrature orders. The following growth rules are employed for indices
+<span class="math notranslate nohighlight">\(i \geq 1\)</span>, where closed and open refer to the inclusion and exclusion of the
+bounds within an interval, respectively:</p>
+<div class="math notranslate nohighlight" id="equation-growth-cc-nonlin">
+<span class="eqno">(115)<a class="headerlink" href="#equation-growth-cc-nonlin" title="Permalink to this equation"></a></span>\[\begin{split}\begin{aligned}
+{\rm closed~nonlinear:}~~m =
+\left\{ \begin{array}{ll}
+         1       &amp; i=1 \\
+         2^{i-1} + 1 &amp; i &gt; 1
+        \end{array} \right.
+ \end{aligned}\end{split}\]</div>
+<div class="math notranslate nohighlight" id="equation-growth-gauss-nonlin">
+<span class="eqno">(116)<a class="headerlink" href="#equation-growth-gauss-nonlin" title="Permalink to this equation"></a></span>\[{\rm open~nonlinear:}~~m = 2^i - 1\]</div>
+<div class="math notranslate nohighlight" id="equation-growth-gauss-lin">
+<span class="eqno">(117)<a class="headerlink" href="#equation-growth-gauss-lin" title="Permalink to this equation"></a></span>\[{\rm open~linear:}   ~~m = 2 i - 1\]</div>
+<p>Nonlinear growth rules are used for fully nested rules (e.g.,
+Clenshaw-Curtis is closed fully nested and Gauss-Patterson is open fully
+nested), and linear growth rules are best for standard Gauss rules that
+take advantage of, at most, “weak” nesting (e.g., reuse of the center
+point).</p>
+<p>Examples of isotropic sparse grids, constructed from the fully nested
+Clenshaw-Curtis abscissas and the weakly-nested Gaussian abscissas are
+shown in <a class="reference internal" href="#fig-isogrid-n2-q7"><span class="std std-numref">Fig. 64</span></a>, where
+<span class="math notranslate nohighlight">\(\Omega=[-1,1]^2\)</span> and both Clenshaw-Curtis and Gauss-Legendre
+employ nonlinear growth <a class="footnote-reference brackets" href="#id67" id="id30">4</a> from <a class="reference internal" href="#equation-growth-cc-nonlin">(115)</a> and <a class="reference internal" href="#equation-growth-gauss-nonlin">(116)</a>,
+respectively. There, we consider a two-dimensional parameter space and a
+maximum level <span class="math notranslate nohighlight">\({\rm w}=5\)</span> (sparse grid <span class="math notranslate nohighlight">\(\mathscr{A}(5,2)\)</span>).
+To see the reduction in function evaluations with respect to full tensor
+product grids, we also include a plot of the corresponding
+Clenshaw-Curtis isotropic full tensor grid having the same maximum
+number of points in each direction, namely <span class="math notranslate nohighlight">\(2^{\rm w}+1 = 33\)</span>.</p>
+<figure class="align-center" id="fig-isogrid-n2-q7">
+<img alt="Two-dimensional grid comparison with a tensor product grid using Clenshaw-Curtis points (left) and sparse grids :math:`\mathscr{A}(5,2)` utilizing Clenshaw-Curtis (middle) and Gauss-Legendre (right) points with nonlinear growth." src="../../_images/isogrid_N2_q6.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 64 </span><span class="caption-text">Two-dimensional grid comparison with a tensor product grid using
+Clenshaw-Curtis points (left) and sparse grids
+<span class="math notranslate nohighlight">\(\mathscr{A}(5,2)\)</span> utilizing Clenshaw-Curtis (middle) and
+Gauss-Legendre (right) points with nonlinear growth.</span><a class="headerlink" href="#fig-isogrid-n2-q7" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<p>In <span id="id31">[<a class="reference internal" href="../../misc/bibliography.html#id83" title="M. S. Eldred and J. Burkardt. Comparison of non-intrusive polynomial chaos and stochastic collocation methods for uncertainty quantification. In Proceedings of the 47th AIAA Aerospace Sciences Meeting and Exhibit, number AIAA-2009-0976. Orlando, FL, January 5–8, 2009.">EB09</a>]</span>, it is demonstrated that the
+synchronization of total-order PCE with the monomial resolution of a
+sparse grid is imperfect, and that sparse grid SC consistently
+outperforms sparse grid PCE when employing the sparse grid to directly
+evaluate the integrals in <a class="reference internal" href="#equation-coeff-extract">(108)</a>. In our Dakota
+implementation, we depart from the use of sparse integration of
+total-order expansions, and instead employ a linear combination of
+tensor expansions <span id="id32">[<a class="reference internal" href="../../misc/bibliography.html#id42" title="P. G. Constantine, M. S. Eldred, and E. T. Phipps. Sparse pseudospectral approximation method. Computer Methods in Applied Mechanics and Engineering, 229–232:1–12, July 2012.">CEP12</a>]</span>.</p>
+<p>That is, we compute
+separate tensor polynomial chaos expansions for each of the underlying
+tensor quadrature grids (for which there is no synchronization issue)
+and then sum them using the Smolyak combinatorial coefficient (from
+<a class="reference internal" href="#equation-smolyak2">(114)</a> in the isotropic case). This
+improves accuracy, preserves the PCE/SC consistency property described
+in <a class="reference internal" href="#theory-uq-expansion-spectral-quad"><span class="std std-ref">Tensor product quadrature</span></a>, and also simplifies
+PCE for the case of anisotropic sparse grids described next.</p>
+<p>For anisotropic Smolyak sparse grids, a dimension preference vector is
+used to emphasize important stochastic dimensions.</p>
+<p>Given a mechanism for
+defining anisotropy, we can extend the definition of the sparse grid
+from that of <a class="reference internal" href="#equation-smolyak2">(114)</a> to weight the
+contributions of different index set components. First, the sparse grid
+index set constraint becomes</p>
+<div class="math notranslate nohighlight" id="equation-aniso-smolyak-constr">
+<span class="eqno">(118)<a class="headerlink" href="#equation-aniso-smolyak-constr" title="Permalink to this equation"></a></span>\[{\rm w}\underline{\gamma} &lt; \mathbf{i} \cdot \mathbf{\gamma} \leq
+{\rm w}\underline{\gamma}+|\mathbf{\gamma}|\]</div>
+<p>where <span class="math notranslate nohighlight">\(\underline{\gamma}\)</span> is the minimum of the dimension weights
+<span class="math notranslate nohighlight">\(\gamma_k\)</span>, <span class="math notranslate nohighlight">\(k\)</span> = 1 to <span class="math notranslate nohighlight">\(n\)</span>. The dimension weighting
+vector <span class="math notranslate nohighlight">\(\mathbf{\gamma}\)</span> amplifies the contribution of a
+particular dimension index within the constraint, and is therefore
+inversely related to the dimension preference (higher weighting produces
+lower index set levels). For the isotropic case of all
+<span class="math notranslate nohighlight">\(\gamma_k = 1\)</span>, it is evident that you reproduce the isotropic
+index constraint <span class="math notranslate nohighlight">\({\rm w}+1 \leq
+|\mathbf{i}| \leq {\rm w}+n\)</span> (note the change from <span class="math notranslate nohighlight">\(&lt;\)</span> to
+<span class="math notranslate nohighlight">\(\leq\)</span>). Second, the combinatorial coefficient for adding the
+contribution from each of these index sets is modified as described
+in <span id="id33">[<a class="reference internal" href="../../misc/bibliography.html#id32" title="J. Burkardt. The “combining coefficient” for anisotropic sparse grids. Technical Report, Virginia Tech, Blacksburg, VA, 2009. \url http://people.sc.fsu.edu/ jburkardt/presentations/sgmga_coefficient.pdf.">Bur09b</a>]</span>.</p>
+</section>
+<section id="cubature">
+<span id="theory-uq-expansion-cubature"></span><h3>Cubature<a class="headerlink" href="#cubature" title="Permalink to this headline"></a></h3>
+<p>Cubature rules <span id="id34">[<a class="reference internal" href="../../misc/bibliography.html#id244" title="A. Stroud. Approximate Calculation of Multiple Integrals. Prentice Hall, 1971.">Str71</a>, <a class="reference internal" href="../../misc/bibliography.html#id283" title="D. Xiu. Numerical integration formulas of degree two. Applied Numerical Mathematics, 58:1515–1520, 2008.">Xiu08</a>]</span> are specifically
+optimized for multidimensional integration and are distinct from
+tensor-products and sparse grids in that they are not based on
+combinations of one-dimensional Gauss quadrature rules. They have the
+advantage of improved scalability to large numbers of random variables,
+but are restricted in integrand order and require homogeneous random
+variable sets (achieved via transformation). For example, optimal rules
+for integrands of 2, 3, and 5 and either Gaussian or uniform densities
+allow low-order polynomial chaos expansions (<span class="math notranslate nohighlight">\(p=1\)</span> or <span class="math notranslate nohighlight">\(2\)</span>)
+that are useful for global sensitivity analysis including main effects
+and, for <span class="math notranslate nohighlight">\(p=2\)</span>, all two-way interactions.</p>
+</section>
+</section>
+<section id="linear-regression">
+<span id="theory-uq-expansion-regress"></span><h2>Linear regression<a class="headerlink" href="#linear-regression" title="Permalink to this headline"></a></h2>
+<p>Regression-based PCE approaches solve the linear system:</p>
+<div class="math notranslate nohighlight" id="equation-regression">
+<span class="eqno">(119)<a class="headerlink" href="#equation-regression" title="Permalink to this equation"></a></span>\[\boldsymbol{\Psi} \boldsymbol{\alpha} = \boldsymbol{R}\]</div>
+<p>for a set of PCE coefficients <span class="math notranslate nohighlight">\(\boldsymbol{\alpha}\)</span> that best
+reproduce a set of response values <span class="math notranslate nohighlight">\(\boldsymbol{R}\)</span>. The set of
+response values can be defined on an unstructured grid obtained from
+sampling within the density function of <span class="math notranslate nohighlight">\(\boldsymbol{\xi}\)</span> (point
+collocation <span id="id35">[<a class="reference internal" href="../../misc/bibliography.html#id150" title="S. Hosder, R. W. Walters, and M. Balch. Efficient sampling for non-intrusive polynomial chaos applications with multiple uncertain input variables. In Proceedings of the 48th AIAA/ASME/ASCE/AHS/ASC Structures, Structural Dynamics, and Materials Conference, number AIAA-2007-1939. Honolulu, HI, April 23–26, 2007.">HWB07</a>, <a class="reference internal" href="../../misc/bibliography.html#id267" title="R. W. Walters. Towards stochastic fluid mechanics via polynomial chaos. In Proceedings of the 41st AIAA Aerospace Sciences Meeting and Exhibit, number AIAA-2003-0413. Reno, NV, January 6–9, 2003.">Wal03</a>]</span>) or on a
+structured grid defined from uniform random sampling on the
+multi-index <a class="footnote-reference brackets" href="#id68" id="id36">5</a> of a tensor-product quadrature grid (probabilistic
+collocation <span id="id37">[<a class="reference internal" href="../../misc/bibliography.html#id252" title="M.A. Tatang. Direct incorporation of uncertainty in chemical and environmental engineering systems. PhD thesis, MIT, 1995.">Tat95</a>]</span>), where the quadrature is of
+sufficient order to avoid sampling at roots of the basis
+polynomials <a class="footnote-reference brackets" href="#id69" id="id38">6</a>. In either case, each row of the matrix
+<span class="math notranslate nohighlight">\(\boldsymbol{\Psi}\)</span> contains the <span class="math notranslate nohighlight">\(N_t\)</span> multivariate
+polynomial terms <span class="math notranslate nohighlight">\(\Psi_j\)</span> evaluated at a particular
+<span class="math notranslate nohighlight">\(\boldsymbol{\xi}\)</span> sample.</p>
+<p>It is common to combine this
+coefficient estimation approach with a total-order chaos expansion in
+order to keep sampling requirements low. In this case, simulation
+requirements scale as <span class="math notranslate nohighlight">\(\frac{r(n+p)!}{n!p!}\)</span> (<span class="math notranslate nohighlight">\(r\)</span> is a
+collocation ratio with typical values <span class="math notranslate nohighlight">\(0.1 \leq r \leq 2\)</span>).</p>
+<p>Additional regression equations can be obtained through the use of
+derivative information (gradients and Hessians) from each collocation
+point (see the
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-polynomial_chaos-expansion_order-collocation_ratio-use_derivatives.html"><span class="pre">use_derivatives</span></a></code>
+keyword), which can aid in scaling with respect to the number of random variables,
+particularly for adjoint-based derivative approaches.</p>
+<p>Various methods can be employed to solve <a class="reference internal" href="#equation-regression">(119)</a>. The relative accuracy of each
+method is problem dependent. Traditionally, the most frequently used
+method has been least squares regression. However when
+<span class="math notranslate nohighlight">\(\boldsymbol{\Psi}\)</span> is under-determined, minimizing the residual
+with respect to the <span class="math notranslate nohighlight">\(\ell_2\)</span> norm typically produces poor
+solutions. Compressed sensing methods have been successfully used to
+address this limitation <span id="id39">[<a class="reference internal" href="../../misc/bibliography.html#id27" title="Géraud Blatman and Bruno Sudret. Adaptive sparse polynomial chaos expansion based on least angle regression. Journal of Computational Physics, 230(6):2345 - 2367, 2011. URL: http://www.sciencedirect.com/science/article/pii/S0021999110006856, doi:10.1016/j.jcp.2010.12.021.">BS11</a>, <a class="reference internal" href="../../misc/bibliography.html#id56" title="A . Doostan and H. Owhadi. A non-adapted sparse approximation of PDEs with stochastic inputs. Journal of Computational Physics, 230(8):3015 - 3034, 2011. URL: http://www.sciencedirect.com/science/article/pii/S0021999111000106, doi:10.1016/j.jcp.2011.01.002.">DO11</a>]</span>.
+Such methods attempt to only identify the elements of the coefficient
+vector <span class="math notranslate nohighlight">\(\boldsymbol{\alpha}\)</span> with the largest magnitude and
+enforce as many elements as possible to be zero. Such solutions are
+often called sparse solutions. Dakota provides algorithms that solve the
+following formulations:</p>
+<ul>
+<li><p>Basis Pursuit (BP) <span id="id40">[<a class="reference internal" href="../../misc/bibliography.html#id38" title="S. Chen, D. Donoho, and M. Saunders. Atomic decomposition by basis pursuit. SIAM Rev., 43(1):129–159, January 2001. URL: http://dx.doi.org/10.1137/S003614450037906X, doi:10.1137/S003614450037906X.">CDS01</a>]</span></p>
+<div class="math notranslate nohighlight" id="equation-bp">
+<span class="eqno">(120)<a class="headerlink" href="#equation-bp" title="Permalink to this equation"></a></span>\[\boldsymbol{\alpha} = \text{arg min} \; \|\boldsymbol{\alpha}\|_{\ell_1}\quad \text{such that}\quad \boldsymbol{\Psi}\boldsymbol{\alpha} = \boldsymbol{R}\]</div>
+<p>The BP solution is obtained in Dakota, by
+transforming <a class="reference internal" href="#equation-bp">(120)</a> to a linear program which is then
+solved using the primal-dual interior-point
+method <span id="id41">[<a class="reference internal" href="../../misc/bibliography.html#id30" title="S. Boyd and L. Vandenberghe. Convex Optimization. Cambridge University Press, March 2004. ISBN 0521833787. URL: http://www.worldcat.org/isbn/0521833787.">BV04</a>, <a class="reference internal" href="../../misc/bibliography.html#id38" title="S. Chen, D. Donoho, and M. Saunders. Atomic decomposition by basis pursuit. SIAM Rev., 43(1):129–159, January 2001. URL: http://dx.doi.org/10.1137/S003614450037906X, doi:10.1137/S003614450037906X.">CDS01</a>]</span>.</p>
+</li>
+<li><p>Basis Pursuit DeNoising (BPDN) <span id="id42">[<a class="reference internal" href="../../misc/bibliography.html#id38" title="S. Chen, D. Donoho, and M. Saunders. Atomic decomposition by basis pursuit. SIAM Rev., 43(1):129–159, January 2001. URL: http://dx.doi.org/10.1137/S003614450037906X, doi:10.1137/S003614450037906X.">CDS01</a>]</span>.</p>
+<div class="math notranslate nohighlight" id="equation-bpdn">
+<span class="eqno">(121)<a class="headerlink" href="#equation-bpdn" title="Permalink to this equation"></a></span>\[\boldsymbol{\alpha} = \text{arg min}\; \|\boldsymbol{\alpha}\|_{\ell_1}\quad \text{such that}\quad \|\boldsymbol{\Psi}\boldsymbol{\alpha} - \boldsymbol{R}\|_{\ell_2} \le \varepsilon\]</div>
+<p>The BPDN solution is computed in Dakota by
+transforming <a class="reference internal" href="#equation-bpdn">(121)</a> to a quadratic cone problem
+which is solved using the log-barrier Newton
+method <span id="id43">[<a class="reference internal" href="../../misc/bibliography.html#id30" title="S. Boyd and L. Vandenberghe. Convex Optimization. Cambridge University Press, March 2004. ISBN 0521833787. URL: http://www.worldcat.org/isbn/0521833787.">BV04</a>, <a class="reference internal" href="../../misc/bibliography.html#id38" title="S. Chen, D. Donoho, and M. Saunders. Atomic decomposition by basis pursuit. SIAM Rev., 43(1):129–159, January 2001. URL: http://dx.doi.org/10.1137/S003614450037906X, doi:10.1137/S003614450037906X.">CDS01</a>]</span>.</p>
+<p>When the matrix <span class="math notranslate nohighlight">\(\boldsymbol{\Psi}\)</span> is not over-determined the
+BP and BPDN solvers used in Dakota will not return a solution. In
+such situations these methods simply return the least squares
+solution.</p>
+</li>
+<li><p>Orthogonal Matching Pursuit (OMP) <span id="id44">[<a class="reference internal" href="../../misc/bibliography.html#id49" title="G. Davis, S. Mallat, and M. Avellaneda. Adaptive greedy approximations. Constructive Approximation, 13:57-98, 1997. 10.1007/BF02678430. URL: http://dx.doi.org/10.1007/BF02678430.">DMA97</a>]</span>,</p>
+<div class="math notranslate nohighlight" id="equation-omp">
+<span class="eqno">(122)<a class="headerlink" href="#equation-omp" title="Permalink to this equation"></a></span>\[\boldsymbol{\alpha} = \text{arg min}\; \|\boldsymbol{\alpha}\|_{\ell_0}\quad \text{such that}\quad \|\boldsymbol{\Psi}\boldsymbol{\alpha} - \boldsymbol{R}\|_{\ell_2} \le \varepsilon\]</div>
+<p>OMP is a heuristic method which greedily finds an approximation
+to <a class="reference internal" href="#equation-omp">(122)</a>. In contrast to the aforementioned
+techniques for solving BP and BPDN, which minimize an objective
+function, OMP constructs a sparse solution by iteratively building up
+an approximation of the solution vector <span class="math notranslate nohighlight">\(\boldsymbol{\alpha}\)</span>.
+The vector is approximated as a linear combination of a subset of
+active columns of <span class="math notranslate nohighlight">\(\boldsymbol{\Psi}\)</span>. The active set of
+columns is built column by column, in a greedy fashion, such that at
+each iteration the inactive column with the highest correlation
+(inner product) with the current residual is added.</p>
+</li>
+<li><p>Least Angle Regression (LARS) <span id="id45">[<a class="reference internal" href="../../misc/bibliography.html#id67" title="B. Efron, T. Hastie, I. Johnstone, and R. Tibshirani. Least angle regression. Annals of Statistics, 32:407–499, 2004. doi:10.1214/009053604000000067.">EHJT04</a>]</span> and Least
+Absolute Shrinkage and Selection Operator
+(LASSO) <span id="id46">[<a class="reference internal" href="../../misc/bibliography.html#id253" title="Robert Tibshirani. Regression shrinkage and selection via the lasso. Journal of the Royal Statistical Society, Series B, 58:267–288, 1996.">Tib96</a>]</span></p>
+<div class="math notranslate nohighlight" id="equation-lasso">
+<span class="eqno">(123)<a class="headerlink" href="#equation-lasso" title="Permalink to this equation"></a></span>\[ \boldsymbol{\alpha} = \text{arg min}\; \|\boldsymbol{\Psi}\boldsymbol{\alpha} - \boldsymbol{R}\|_{\ell_2}^2 \quad \text{such that}\|\boldsymbol{\alpha}\|_{\ell_1} \le \tau\]</div>
+<p>A greedy solution can be found to <a class="reference internal" href="#equation-lasso">(123)</a> using
+the LARS algorithm. Alternatively, with only a small modification,
+one can provide a rigorous solution to this global optimization
+problem, which we refer to as the LASSO solution. Such an approach is
+identical to the homotopy algorithm of Osborne et
+al <span id="id47">[<a class="reference internal" href="../../misc/bibliography.html#id204" title="M.R. Osborne, B. Presnell, and B.A. Turlach. A new approach to variable selection in least squares problems. IMA Journal of Numerical Analysis, 20(3):389-403, 2000. URL: http://imajna.oxfordjournals.org/content/20/3/389.abstract, doi:10.1093/imanum/20.3.389.">OPT00</a>]</span>. It is interesting to note that
+Efron <span id="id48">[<a class="reference internal" href="../../misc/bibliography.html#id67" title="B. Efron, T. Hastie, I. Johnstone, and R. Tibshirani. Least angle regression. Annals of Statistics, 32:407–499, 2004. doi:10.1214/009053604000000067.">EHJT04</a>]</span> experimentally observed that the
+basic, faster LARS procedure is often identical to the LASSO
+solution.</p>
+<p>The LARS algorithm is similar to OMP. LARS again maintains an active
+set of columns and again builds this set by adding the column with
+the largest correlation with the residual to the current residual.
+However, unlike OMP, LARS solves a penalized least squares problem at
+each step taking a step along an equiangular direction, that is, a
+direction having equal angles with the vectors in the active set.
+LARS and OMP do not allow a column (PCE basis) to leave the active
+set. However if this restriction is removed from LARS (it cannot be
+from OMP) the resulting algorithm can provably
+solve <a class="reference internal" href="#equation-lasso">(123)</a> and generates the LASSO solution.</p>
+</li>
+<li><p>Elastic net <span id="id49">[<a class="reference internal" href="../../misc/bibliography.html#id288" title="Hui Zou and Trevor Hastie. Regularization and variable selection via the elastic net. Journal of the Royal Statistical Society: Series B (Statistical Methodology), 67(2):301–320, 2005. URL: http://dx.doi.org/10.1111/j.1467-9868.2005.00503.x, doi:10.1111/j.1467-9868.2005.00503.x.">ZH05</a>]</span></p>
+<div class="math notranslate nohighlight" id="equation-elastic-net">
+<span class="eqno">(124)<a class="headerlink" href="#equation-elastic-net" title="Permalink to this equation"></a></span>\[ \boldsymbol{\alpha} = \text{arg min}\; \|\boldsymbol{\Psi}\boldsymbol{\alpha} - \boldsymbol{R}\|_{\ell_2}^2 \quad \text{such that}\quad (1-\lambda)\|\boldsymbol{\alpha}\|_{\ell_1} +
+\lambda\|\boldsymbol{\alpha}\|_{\ell_2}^2 \le \tau\]</div>
+<p>The elastic net was developed to overcome some of the limitations of
+the LASSO formulation. Specifically: if the (<span class="math notranslate nohighlight">\(M\times N\)</span>)
+Vandermonde matrix <span class="math notranslate nohighlight">\(\boldsymbol{\Psi}\)</span> is over-determined
+(<span class="math notranslate nohighlight">\(M&gt;N\)</span>), the LASSO selects at most <span class="math notranslate nohighlight">\(N\)</span> variables before
+it saturates, because of the nature of the convex optimization
+problem; if there is a group of variables among which the pairwise
+correlations are very high, then the LASSO tends to select only one
+variable from the group and does not care which one is selected; and
+finally if there are high correlations between predictors, it has
+been empirically observed that the prediction performance of the
+LASSO is dominated by ridge
+regression <span id="id50">[<a class="reference internal" href="../../misc/bibliography.html#id253" title="Robert Tibshirani. Regression shrinkage and selection via the lasso. Journal of the Royal Statistical Society, Series B, 58:267–288, 1996.">Tib96</a>]</span>. Here we note that it
+is hard to estimate the <span class="math notranslate nohighlight">\(\lambda\)</span> penalty in practice and the
+aforementioned issues typically do not arise very often when
+solving <a class="reference internal" href="#equation-regression">(119)</a>. The elastic net
+formulation can be solved with a minor modification of the LARS
+algorithm.</p>
+</li>
+</ul>
+<figure class="align-center" id="fig-compressed-sensing-method-heirarchy">
+<img alt="Bridging provably convergent :math:`\ell_1` minimization algorithms and greedy algorithms such as OMP. (1) Homotopy provably solves :math:`\ell_1` minimization problems :cite:p:`Efron2004`. (2) LARS is obtained from homotopy by removing the sign constraint check. (3) OMP and LARS are similar in structure, the only difference being that OMP solves a least-squares problem at each iteration, whereas LARS solves a linearly penalized least-squares problem. Figure and caption based upon Figure 1 in :cite:p:`Donoho2008`." src="../../_images/compressed-sensing-hierarchy.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 65 </span><span class="caption-text">Bridging provably convergent <span class="math notranslate nohighlight">\(\ell_1\)</span> minimization algorithms
+and greedy algorithms such as OMP. (1) Homotopy provably solves
+<span class="math notranslate nohighlight">\(\ell_1\)</span> minimization problems <span id="id51">[<a class="reference internal" href="../../misc/bibliography.html#id67" title="B. Efron, T. Hastie, I. Johnstone, and R. Tibshirani. Least angle regression. Annals of Statistics, 32:407–499, 2004. doi:10.1214/009053604000000067.">EHJT04</a>]</span>.
+(2) LARS is obtained from homotopy by removing the sign constraint
+check. (3) OMP and LARS are similar in structure, the only difference
+being that OMP solves a least-squares problem at each iteration,
+whereas LARS solves a linearly penalized least-squares problem.
+Figure and caption based upon Figure 1 in <span id="id52">[<a class="reference internal" href="../../misc/bibliography.html#id55" title="D.L. Donoho and Y. Tsaig. Fast solution of $\ell _1$-norm minimization problems when the solution may be sparse. Information Theory, IEEE Transactions on, 54(11):4789 -4812, nov. 2008. doi:10.1109/TIT.2008.929958.">DT08</a>]</span>.</span><a class="headerlink" href="#fig-compressed-sensing-method-heirarchy" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<p>OMP and LARS add a PCE basis one step at a time. If
+<span class="math notranslate nohighlight">\(\boldsymbol{\alpha}\)</span> contains only <span class="math notranslate nohighlight">\(k\)</span> non-zero terms then
+these methods will only take <span class="math notranslate nohighlight">\(k\)</span>-steps. The homotopy version of
+LARS also adds only basis at each step, however it can also remove
+bases, and thus can take more than <span class="math notranslate nohighlight">\(k\)</span> steps. For some problems,
+the LARS and homotopy solutions will coincide. Each step of these
+algorithm provides a possible estimation of the PCE coefficients.
+However, without knowledge of the target function, there is no easy way
+to estimate which coefficient vector is best. With some additional
+computational effort (which will likely be minor to the cost of
+obtaining model simulations), cross validation can be used to choose an
+appropriate coefficient vector.</p>
+<section id="cross-validation">
+<h3>Cross validation<a class="headerlink" href="#cross-validation" title="Permalink to this headline"></a></h3>
+<p>Cross validation can be used to find a coefficient vector
+<span class="math notranslate nohighlight">\(\boldsymbol{\alpha}\)</span> that approximately minimizes
+<span class="math notranslate nohighlight">\(\| \hat{f}(\mathbf{x})-f(\mathbf{x})\|_{L^2(\rho)}\)</span>, where
+<span class="math notranslate nohighlight">\(f\)</span> is the target function and <span class="math notranslate nohighlight">\(\hat{f}\)</span> is the PCE
+approximation using <span class="math notranslate nohighlight">\(\boldsymbol{\alpha}\)</span>. Given training data
+<span class="math notranslate nohighlight">\(\mathbf{X}\)</span> and a set of algorithm parameters
+<span class="math notranslate nohighlight">\(\boldsymbol{\beta}\)</span> (which can be step number in an algorithm
+such as OMP, or PCE maximum degree), <span class="math notranslate nohighlight">\(K\)</span>-folds cross validation
+divides <span class="math notranslate nohighlight">\(\mathbf{X}\)</span> into <span class="math notranslate nohighlight">\(K\)</span> sets (folds)
+<span class="math notranslate nohighlight">\(\mathbf{X}_k\)</span>, <span class="math notranslate nohighlight">\(k=1,\ldots,K\)</span> of equal size. A PCE
+<span class="math notranslate nohighlight">\(\hat{f}^{-k}_{\boldsymbol{\beta}}(\mathbf{X})\)</span>, is built on the
+training data
+<span class="math notranslate nohighlight">\(\mathbf{X}_{\mathrm{tr}}=\mathbf{X} \setminus \mathbf{X}_k\)</span> with
+the <span class="math notranslate nohighlight">\(k\)</span>-th fold removed, using the tuning parameters
+<span class="math notranslate nohighlight">\(\boldsymbol{\beta}\)</span>. The remaining data <span class="math notranslate nohighlight">\(\mathbf{X}_k\)</span> is
+then used to estimate the prediction error. The prediction error is
+typically approximated by
+<span class="math notranslate nohighlight">\(e(\hat{f})=\lVert \hat{f}(\mathbf{x})-f(\mathbf{x})\rVert_{\ell_2}\)</span>,
+<span class="math notranslate nohighlight">\(\mathbf{x}\in\mathbf{X}_{k}\)</span> <span id="id53">[<a class="reference internal" href="../../misc/bibliography.html#id140" title="T. Hastie, R. Tibshirani, and J.H. Friedman. The elements of statistical learning: data mining, inference, and prediction: with 200 full-color illustrations. New York: Springer-Verlag, 2001.">HTF01</a>]</span>. This
+process is then repeated <span class="math notranslate nohighlight">\(K\)</span> times, removing a different fold from
+the training set each time.</p>
+<p>The cross validation error is taken to be the average of the prediction
+errors for the <span class="math notranslate nohighlight">\(K\)</span>-experiments</p>
+<div class="math notranslate nohighlight">
+\[CV(\hat{f}_{\boldsymbol{\beta}}) = \mathrm{E}[e(\hat{f}_{\boldsymbol{\beta}}^{-k})] = \frac{1}{K}\sum_{k=1}^K e(\hat{f}_{\boldsymbol{\beta}}^{-k})\]</div>
+<p>We minimize <span class="math notranslate nohighlight">\(CV(\hat{f}_{\boldsymbol{\beta}})\)</span> as a surrogate for
+minimizing
+<span class="math notranslate nohighlight">\(\| \hat{f}_{\boldsymbol{\beta}}(\mathbf{x})-f(\mathbf{x})\|_{L^2(\rho)}\)</span>
+and choose the tuning parameters</p>
+<div class="math notranslate nohighlight" id="equation-optimal-tuning-parameters">
+<span class="eqno">(125)<a class="headerlink" href="#equation-optimal-tuning-parameters" title="Permalink to this equation"></a></span>\[\boldsymbol{\beta}^\star = \text{arg min}\, CV(\hat{f}_{\boldsymbol{\beta}})\mathrm{Var}[e(\hat{f}_{\boldsymbol{\beta}}^{-k})]\]</div>
+<p>to construct the final “best” PCE approximation of <span class="math notranslate nohighlight">\(f\)</span> that the
+training data can produce.</p>
+</section>
+<section id="iterative-basis-selection">
+<span id="sec-iterative-basis-selection"></span><h3>Iterative basis selection<a class="headerlink" href="#iterative-basis-selection" title="Permalink to this headline"></a></h3>
+<p>When the coefficients of a PCE can be well approximated by a sparse
+vector, <span class="math notranslate nohighlight">\(\ell_1\)</span>-minimization is extremely effective at recovering
+the coefficients of that PCE. It is possible, however, to further
+increase the efficacy of <span class="math notranslate nohighlight">\(\ell_1\)</span>-minimization by leveraging
+realistic models of structural dependencies between the values and
+locations of the PCE coefficients. For
+example <span id="id54">[<a class="reference internal" href="../../misc/bibliography.html#id18" title="R.G. Baraniuk, V. Cevher, M.F. Duarte, and C. Hegde. Model-based compressive sensing. Information Theory, IEEE Transactions on, 56(4):1982-2001, 2010.">BCDH10</a>, <a class="reference internal" href="../../misc/bibliography.html#id59" title="Marco F. Duarte, Michael B. Wakin, and Richard G. Baraniuk. Fast reconstruction of piecewise smooth signals from random projections. In Online Proceedings of the Workshop on Signal Processing with Adaptative Sparse Structured Representations (SPARS). Rennes, France, 2005.">DWB05</a>, <a class="reference internal" href="../../misc/bibliography.html#id166" title="C. La and M.N. Do. Tree-based orthogonal matching pursuit algorithm for signal reconstruction. In Image Processing, 2006 IEEE International Conference on, 1277-1280. 2006.">LD06</a>]</span>
+have successfully increased the performance of
+<span class="math notranslate nohighlight">\(\ell_1\)</span>-minimization when recovering wavelet coefficients that
+exhibit a tree-like structure. In this vein, we propose an algorithm for
+identifying the large coefficients of PC expansions that form a
+semi-connected subtree of the PCE coefficient tree.</p>
+<p>The coefficients of polynomial chaos expansions often form a
+multi-dimensional tree. Given an ancestor basis term
+<span class="math notranslate nohighlight">\(\phi_{\boldsymbol{\lambda}}\)</span> of degree
+<span class="math notranslate nohighlight">\(\left\lVert \boldsymbol{\lambda} \right\rVert_{1}\)</span> we define the
+indices of its children as <span class="math notranslate nohighlight">\(\boldsymbol{\lambda}+\mathbf{e}_k\)</span>,
+<span class="math notranslate nohighlight">\(k=1,\ldots,d\)</span>, where <span class="math notranslate nohighlight">\(\mathbf{e}_k=(0,\ldots,1,\ldots,0)\)</span>
+is the unit vector co-directional with the <span class="math notranslate nohighlight">\(k\)</span>-th dimension.</p>
+<p>An example of a typical PCE tree is depicted in
+<a class="reference internal" href="#fig-pce-tree"><span class="std std-numref">Fig. 66</span></a>. In this figure, as often in practice,
+the magnitude of the ancestors of a PCE coefficient is a reasonable
+indicator of the size of the child coefficient. In practice, some
+branches (connections) between levels of the tree may be missing. We
+refer to trees with missing branches as semi-connected trees.</p>
+<p>In the following we present a method for estimating PCE coefficients
+that leverages the tree structure of PCE coefficients to increase the
+accuracy of coefficient estimates obtained by
+<span class="math notranslate nohighlight">\(\ell_1\)</span>-minimization.</p>
+<figure class="align-center" id="fig-pce-tree">
+<img alt="Tree structure of the coefficients of a two dimensional PCE with a total-degree basis of order 3. For clarity we only depict one connection per node, but in :math:`d` dimensions a node of a given degree :math:`p` will be a child of up to :math:`d` nodes of degree :math:`p-1`. For example, not only is the basis :math:`\boldsymbol{\phi}_{[1,1]}` a child of :math:`\boldsymbol{\phi}_{[1,0]}` (as depicted) but it is also a child of :math:`\boldsymbol{\phi}_{[0,1]}`" src="../../_images/pce-tree.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 66 </span><span class="caption-text">Tree structure of the coefficients of a two dimensional PCE with a
+total-degree basis of order 3. For clarity we only depict one
+connection per node, but in <span class="math notranslate nohighlight">\(d\)</span> dimensions a node of a given
+degree <span class="math notranslate nohighlight">\(p\)</span> will be a child of up to <span class="math notranslate nohighlight">\(d\)</span> nodes of degree
+<span class="math notranslate nohighlight">\(p-1\)</span>. For example, not only is the basis
+<span class="math notranslate nohighlight">\(\boldsymbol{\phi}_{[1,1]}\)</span> a child of
+<span class="math notranslate nohighlight">\(\boldsymbol{\phi}_{[1,0]}\)</span> (as depicted) but it is also a
+child of <span class="math notranslate nohighlight">\(\boldsymbol{\phi}_{[0,1]}\)</span></span><a class="headerlink" href="#fig-pce-tree" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<p>Typically <span class="math notranslate nohighlight">\(\ell_1\)</span>-minimization is applied to an a priori chosen
+and fixed basis set <span class="math notranslate nohighlight">\(\Lambda\)</span>. However the accuracy of
+coefficients obtained by <span class="math notranslate nohighlight">\(\ell_1\)</span>-minimization can be increased by
+adaptively selecting the PCE basis.</p>
+<p>To select a basis for <span class="math notranslate nohighlight">\(\ell_1\)</span>-minimization we employ a four step
+iterative procedure involving restriction, expansion, identification and
+selection. The iterative basis selection procedure is outlined in
+<a class="reference internal" href="#alg-basis-selection"><span class="std std-numref">Fig. 68</span></a>. A graphical
+version of the algorithm is also presented in
+<a class="reference internal" href="#fig-basis-selection-alg"><span class="std std-numref">Fig. 67</span></a>. The latter emphasizes the
+four stages of basis selection, that is restriction, growth,
+identification and selection. These four stages are also highlighted in
+<a class="reference internal" href="#alg-basis-selection"><span class="std std-numref">Fig. 68</span></a> using the
+corresponding colors in <a class="reference internal" href="#fig-basis-selection-alg"><span class="std std-numref">Fig. 67</span></a>.</p>
+<p>To initiate the basis selection algorithm, we first define a basis set
+<span class="math notranslate nohighlight">\(\Lambda^{(0)}\)</span> and use <span class="math notranslate nohighlight">\(\ell_1\)</span>-minimization to identify
+the largest coefficients <span class="math notranslate nohighlight">\(\boldsymbol{\alpha}^{(0)}\)</span>. The choice
+of <span class="math notranslate nohighlight">\(\Lambda^{(0)}\)</span> can sometimes affect the performance of the
+basis selection algorithm. We found a good choice to be
+<span class="math notranslate nohighlight">\(\Lambda^{(0)}=\Lambda_{p,1}\)</span>, where <span class="math notranslate nohighlight">\(p\)</span> is the degree that
+gives <span class="math notranslate nohighlight">\(\lvert\Lambda^d_{p,1}\rvert\)</span> closest to <span class="math notranslate nohighlight">\(10M\)</span>, i.e.
+<span class="math notranslate nohighlight">\(\Lambda^d_{p,1} = \text{arg min}_{\Lambda^d_{p,1}\in\{\Lambda^d_{1,1},\Lambda^d_{2,1},\ldots\}}\lvert{\lvert\Lambda^d_{p,1}\rvert-10M}\rvert\)</span>.
+Given a basis <span class="math notranslate nohighlight">\(\Lambda^{(k)}\)</span> and corresponding coefficients
+<span class="math notranslate nohighlight">\(\boldsymbol{\alpha}^{(k)}\)</span> we reduce the basis to a set
+<span class="math notranslate nohighlight">\(\Lambda^{(k)}_\varepsilon\)</span> containing only the terms with
+non-zero coefficients. This restricted basis is then expanded <span class="math notranslate nohighlight">\(T\)</span>
+times using an algorithm which we will describe in
+<a class="reference internal" href="#sec-basisexp"><span class="std std-ref">Basis expansion</span></a>. <span class="math notranslate nohighlight">\(\ell_1\)</span>-minimization is then
+applied to each of the expanded basis sets <span class="math notranslate nohighlight">\(\Lambda^{(k,t)}\)</span> for
+<span class="math notranslate nohighlight">\(t=1,\dots, T\)</span>. Each time <span class="math notranslate nohighlight">\(\ell_1\)</span>-minimization is used, we
+employ cross validation to choose <span class="math notranslate nohighlight">\(\varepsilon\)</span>. Therefore, at
+every basis set considered during the evolution of the algorithm we have
+a measure of the expected accuracy of the PCE coefficients. At each step
+in the algorithm we choose the basis set that results in the lowest
+cross validation error.</p>
+<figure class="align-center" id="fig-basis-selection-alg">
+<img alt="Graphical depiction of the basis adaptation algorithm." src="../../_images/basis-adaptation-algorithm-summary.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 67 </span><span class="caption-text">Graphical depiction of the basis adaptation algorithm.</span><a class="headerlink" href="#fig-basis-selection-alg" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<figure class="align-center" id="alg-basis-selection">
+<img alt="Iterative basis selection procedure" src="../../_images/basis-adaptation-algorithm.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 68 </span><span class="caption-text">Iterative basis selection procedure</span><a class="headerlink" href="#alg-basis-selection" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<section id="basis-expansion">
+<span id="sec-basisexp"></span><h4>Basis expansion<a class="headerlink" href="#basis-expansion" title="Permalink to this headline"></a></h4>
+<p>Define <span class="math notranslate nohighlight">\(\{\boldsymbol{\lambda}+\mathbf{e}_j:1\le j\le d\}\)</span> the
+forward neighborhood of an index <span class="math notranslate nohighlight">\(\boldsymbol{\lambda}\)</span> and
+similarly let <span class="math notranslate nohighlight">\(\{\boldsymbol{\lambda}-\mathbf{e}_j:1\le j\le d\}\)</span>
+denote the backward neighborhood. To expand a basis set <span class="math notranslate nohighlight">\(\Lambda\)</span>
+we must first find the forward neighbors
+<span class="math notranslate nohighlight">\(\mathcal{F}=\{\boldsymbol{\lambda}+\mathbf{e}_j : \boldsymbol{\lambda}\in\Lambda, 1\le j\le d \}\)</span>
+of all indices <span class="math notranslate nohighlight">\(\boldsymbol{\lambda}\in\Lambda\)</span>. The expanded
+basis is then given by</p>
+<div class="math notranslate nohighlight">
+\[\Lambda^+=\Lambda\cup\mathcal{A},\quad \mathcal{A}=\{\boldsymbol{\lambda}: \boldsymbol{\lambda}\in\mathcal{F}, \boldsymbol{\lambda}-\mathbf{e}_n\in\Lambda\text{ for }1\le n\le d,\, \lambda_k &gt; 1\}\]</div>
+<p>where we have used the following admissibility criteria</p>
+<div class="math notranslate nohighlight" id="equation-admissibility">
+<span class="eqno">(126)<a class="headerlink" href="#equation-admissibility" title="Permalink to this equation"></a></span>\[\boldsymbol{\lambda}-\mathbf{e}_n\in\Lambda\text{ for }1\le n\le d,\, \lambda_k &gt; 1\]</div>
+<p>to target PCE basis indices that are likely to have large PCE
+coefficients. A forward neighbor is admissible only if its backward
+neighbors exist in all dimensions. If the backward neighbors do not
+exist then <span class="math notranslate nohighlight">\(\ell_1\)</span>-minimization has previously identified that
+the coefficients of these backward neighbors are negligible.</p>
+<p>The admissibility criterion is explained graphically in
+<a class="reference internal" href="#fig-index-dmissibiliy-examples"><span class="std std-numref">Fig. 69</span></a>. In the left graphic,
+both children of the current index are admissible, because its backwards
+neighbors exist in every dimension. In the right graphic only the child
+in the vertical dimension is admissible, as not all parents of the
+horizontal child exist.</p>
+<figure class="align-center" id="fig-index-dmissibiliy-examples">
+<a class="reference internal image-reference" href="../../_images/index-expansion.png"><img alt="Identification of the admissible indices of an index (red). The indices of the current basis :math:`\Lambda` are gray and admissible indices are striped. A index is admissible only if its backwards neighbors exists in every dimension." src="../../_images/index-expansion.png" style="width: 600px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 69 </span><span class="caption-text">Identification of the admissible indices of an index (red). The
+indices of the current basis <span class="math notranslate nohighlight">\(\Lambda\)</span> are gray and
+admissible indices are striped. A index is admissible only if its
+backwards neighbors exists in every dimension.</span><a class="headerlink" href="#fig-index-dmissibiliy-examples" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<p>At the <span class="math notranslate nohighlight">\(k\)</span>-th iteration of <a class="reference internal" href="#alg-basis-selection"><span class="std std-numref">Fig. 68</span></a>,
+<span class="math notranslate nohighlight">\(\ell_1\)</span>-minimization is applied to <span class="math notranslate nohighlight">\(\Lambda^{(k-1)}\)</span> and
+used to identify the significant coefficients of the PCE and their
+corresponding basis terms <span class="math notranslate nohighlight">\(\Lambda^{(k,0)}\)</span>. The set of non-zero
+coefficients <span class="math notranslate nohighlight">\(\Lambda^{(k,0)}\)</span> identified by
+<span class="math notranslate nohighlight">\(\ell_1\)</span>-minimization is then expanded.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">EXPAND</span></code> routine
+expands an index set by one polynomial degree, but sometimes it may be
+necessary to expand the basis <span class="math notranslate nohighlight">\(\Lambda^{(k)}\)</span> more than once. <a class="footnote-reference brackets" href="#id70" id="id55">7</a></p>
+<p>To generate these higher degree index sets <code class="docutils literal notranslate"><span class="pre">EXPAND</span></code> is applied
+recursively to <span class="math notranslate nohighlight">\(\Lambda^{(k,0)}\)</span> up to a fixed number of <span class="math notranslate nohighlight">\(T\)</span>
+times. Specifically, the following sets are generated</p>
+<div class="math notranslate nohighlight">
+\[\Lambda^{(k,t)}=\Lambda^{(k,t-1)}\cup\{\boldsymbol{\lambda}:\boldsymbol{\lambda}-\mathbf{e}_n\in\Lambda^{(k,t-1)},1\le n\le d,\, \lambda_n &gt; 1\}.\]</div>
+<p>As the number of expansion steps <span class="math notranslate nohighlight">\(T\)</span> increases the number of terms
+in the expanded basis increases rapidly and degradation in the
+performance of <span class="math notranslate nohighlight">\(\ell_1\)</span>-minimization can result (this is similar
+to what happens when increasing the degree of a total degree basis). To
+avoid degradation of the solution, we use cross validation to choose the
+number of inner expansion steps <span class="math notranslate nohighlight">\(t\in[1,T]\)</span>.</p>
+</section>
+</section>
+<section id="orthogonal-least-interpolation">
+<h3>Orthogonal Least Interpolation<a class="headerlink" href="#orthogonal-least-interpolation" title="Permalink to this headline"></a></h3>
+<p>Orthogonal least interpolation (OLI) <span id="id56">[<a class="reference internal" href="../../misc/bibliography.html#id189" title="A. Narayan and D. Xiu. Stochastic collocation methods on unstructured grids in high dimensions via interpolation. SIAM J. Scientific Computing, 2012.">NX12</a>]</span>
+enables the construction of interpolation polynomials based on
+arbitrarily located grids in arbitrary dimensions. The interpolation
+polynomials can be constructed using using orthogonal polynomials
+corresponding to the probability distribution function of the uncertain
+random variables.</p>
+<p>The algorithm for constructing an OLI is split into three stages: (i)
+basis determination - transform the orthogonal basis into a polynomial
+space that is “amenable” for interpolation; (ii) coefficient
+determination - determine the interpolatory coefficients on the
+transformed basis elements; (iii) connection problem - translate the
+coefficients on the transformed basis to coefficients in the original
+orthogonal basis These three steps can be achieved by a sequence of LU
+and QR factorizations.</p>
+<p>Orthogonal least interpolation is closesly related to the aforementioned
+regression methods, in that OLI can be used to build approximations of
+simulation models when computing structured simulation data, such as
+sparse grids or cubature nodes, is infeasiable. The interpolants
+produced by OLI have two additional important properties. Firstly, the
+orthogonal least interpolant is the lowest-degree polynomial that
+interpolates the data. Secondly, the least orthogonal interpolation
+space is monotonic. This second property means that the least
+interpolant can be extended to new data without the need to completely
+reconstructing the interpolant. The transformed interpolation basis can
+simply be extended to include the new necessary basis functions.</p>
+</section>
+</section>
+<section id="analytic-moments">
+<span id="theory-uq-expansion-moment"></span><h2>Analytic moments<a class="headerlink" href="#analytic-moments" title="Permalink to this headline"></a></h2>
+<p>Mean and covariance of polynomial chaos expansions are available in
+simple closed form:</p>
+<div class="math notranslate nohighlight" id="equation-mean-pce">
+<span class="eqno">(127)<a class="headerlink" href="#equation-mean-pce" title="Permalink to this equation"></a></span>\[\mu_i = \langle R_i \rangle ~~\cong~~ \sum_{k=0}^P \alpha_{ik} \langle
+\Psi_k(\boldsymbol{\xi}) \rangle ~=~ \alpha_{i0}\]</div>
+<div class="math notranslate nohighlight" id="equation-covar-pce-2">
+<span class="eqno">(128)<a class="headerlink" href="#equation-covar-pce-2" title="Permalink to this equation"></a></span>\[\Sigma_{ij} = \langle (R_i - \mu_i)(R_j - \mu_j) \rangle ~~\cong~~
+%\langle (\sum_{j=1}^P \alpha_j \Psi_j(\boldsymbol{\xi}))^2 \rangle ~=~
+\sum_{k=1}^P \sum_{l=1}^P \alpha_{ik} \alpha_{jl}
+\langle \Psi_k(\boldsymbol{\xi}) \Psi_l(\boldsymbol{\xi}) \rangle ~=~
+\sum_{k=1}^P \alpha_{ik}\alpha_{jk} \langle \Psi^2_k \rangle~~~~~~~~\]</div>
+<p>where the norm squared of each multivariate polynomial is computed from
+<a class="reference internal" href="#equation-norm-squared">(109)</a>. These expressions provide exact moments of the expansions,
+which converge under refinement to moments of the true response functions.</p>
+<p>Similar expressions can be derived for stochastic collocation:</p>
+<div class="math notranslate nohighlight" id="equation-mean-sc">
+<span class="eqno">(129)<a class="headerlink" href="#equation-mean-sc" title="Permalink to this equation"></a></span>\[\mu_i = \langle R_i \rangle ~~\cong~~ \sum_{k=1}^{N_p} r_{ik} \langle
+\boldsymbol{L}_k(\boldsymbol{\xi}) \rangle ~=~ \sum_{k=1}^{N_p} r_{ik} w_k\]</div>
+<div class="math notranslate nohighlight" id="equation-covar-sc">
+<span class="eqno">(130)<a class="headerlink" href="#equation-covar-sc" title="Permalink to this equation"></a></span>\[\Sigma_{ij} = \langle R_i R_j \rangle - \mu_i \mu_j
+~~\cong~~ \sum_{k=1}^{N_p} \sum_{l=1}^{N_p} r_{ik} r_{jl} \langle
+\boldsymbol{L}_k(\boldsymbol{\xi}) \boldsymbol{L}_l(\boldsymbol{\xi}) \rangle
+- \mu_i \mu_j ~=~ \sum_{k=1}^{N_p} r_{ik} r_{jk} w_k - \mu_i \mu_j~~~~~~~~~\]</div>
+<p>where we have simplified the expectation of Lagrange polynomials
+constructed at Gauss points and then integrated at these same Gauss
+points. For tensor grids and sparse grids with fully nested rules, these
+expectations leave only the weight corresponding to the point for which
+the interpolation value is one, such that the final equalities in
+<a class="reference internal" href="#equation-mean-sc">(129)</a> – <a class="reference internal" href="#equation-covar-sc">(130)</a> hold precisely. For sparse grids with non-nested rules, however,
+interpolation error exists at the collocation points, such that these
+final equalities hold only approximately. In this case, we have the
+choice of computing the moments based on sparse numerical integration or
+based on the moments of the (imperfect) sparse interpolant, where small
+differences may exist prior to numerical convergence. In Dakota, we
+employ the former approach; i.e., the right-most expressions in
+<a class="reference internal" href="#equation-mean-sc">(129)</a> – <a class="reference internal" href="#equation-covar-sc">(130)</a> are employed for all tensor and sparse cases
+irregardless of nesting. Skewness and kurtosis calculations as well as
+sensitivity derivations in the following sections are also based on this choice.</p>
+<p>The expressions for skewness and (excess) kurtosis from direct numerical integration of
+the response function are as follows:</p>
+<div class="math notranslate nohighlight" id="equation-skewness">
+<span class="eqno">(131)<a class="headerlink" href="#equation-skewness" title="Permalink to this equation"></a></span>\[\gamma_{1_i} = \left\langle \left(\frac{R_i - \mu_i}{\sigma_i}\right)^3 \right\rangle
+~~\cong~~ \frac{1}{\sigma_i^3} \left[ \sum_{k=1}^{N_p} (r_{ik}-\mu_i)^3 w_k \right]\]</div>
+<div class="math notranslate nohighlight" id="equation-kurtosis">
+<span class="eqno">(132)<a class="headerlink" href="#equation-kurtosis" title="Permalink to this equation"></a></span>\[\gamma_{2_i} = \left\langle \left(\frac{R_i - \mu_i}{\sigma_i}\right)^4 \right\rangle - 3
+~~\cong~~ \frac{1}{\sigma_i^4} \left[ \sum_{k=1}^{N_p} (r_{ik}-\mu_i)^4 w_k \right] - 3\]</div>
+</section>
+<section id="local-sensitivity-analysis-derivatives-with-respect-to-expansion-variables">
+<span id="theory-uq-expansion-rvsa"></span><h2>Local sensitivity analysis: derivatives with respect to expansion variables<a class="headerlink" href="#local-sensitivity-analysis-derivatives-with-respect-to-expansion-variables" title="Permalink to this headline"></a></h2>
+<p>Polynomial chaos expansions are easily differentiated with respect to
+the random variables <span id="id57">[<a class="reference internal" href="../../misc/bibliography.html#id220" title="M. T. Reagan, H. N. Najm, P. P. Pebay, O. M. Knio, and R. G. Ghanem. Quantifying uncertainty in chemical systems modeling. Int. J. Chem. Kinet., 37:368–382, 2005.">RNP+05</a>]</span>. First, using <a class="reference internal" href="#equation-pc-exp-trunc">(91)</a>,</p>
+<div class="math notranslate nohighlight" id="equation-dr-dxi-pce">
+<span class="eqno">(133)<a class="headerlink" href="#equation-dr-dxi-pce" title="Permalink to this equation"></a></span>\[\frac{dR}{d\xi_i} = \sum_{j=0}^P \alpha_j
+\frac{d\Psi_j}{d\xi_i}(\boldsymbol{\xi})\]</div>
+<p>and then using <a class="reference internal" href="#equation-multivar-prod">(90)</a>,</p>
+<div class="math notranslate nohighlight" id="equation-deriv-prod-pce">
+<span class="eqno">(134)<a class="headerlink" href="#equation-deriv-prod-pce" title="Permalink to this equation"></a></span>\[\frac{d\Psi_j}{d\xi_i}(\boldsymbol{\xi}) = \frac{d\psi_{t_i^j}}{d\xi_i}(\xi_i)
+\prod_{\stackrel{\scriptstyle k=1}{k \ne i}}^n \psi_{t_k^j}(\xi_k)\]</div>
+<p>where the univariate polynomial derivatives <span class="math notranslate nohighlight">\(\frac{d\psi}{d\xi}\)</span>
+have simple closed form expressions for each polynomial in the Askey
+scheme <span id="id58">[<a class="reference internal" href="../../misc/bibliography.html#id6" title="M. Abramowitz and I. A. Stegun. Handbook of Mathematical Functions with Formulas, Graphs, and Mathematical Tables. Dover, New York, 1965.">AS65</a>]</span>. Finally, using the Jacobian of
+the (extended) Nataf variable transformation,</p>
+<div class="math notranslate nohighlight" id="equation-dr-dx">
+<span class="eqno">(135)<a class="headerlink" href="#equation-dr-dx" title="Permalink to this equation"></a></span>\[\frac{dR}{dx_i} = \frac{dR}{d\boldsymbol{\xi}}
+\frac{d\boldsymbol{\xi}}{dx_i}\]</div>
+<p>which simplifies to <span class="math notranslate nohighlight">\(\frac{dR}{d\xi_i} \frac{d\xi_i}{dx_i}\)</span> in the
+case of uncorrelated <span class="math notranslate nohighlight">\(x_i\)</span>.</p>
+<p>Similar expressions may be derived for stochastic collocation, starting
+from <a class="reference internal" href="#equation-lagrange-interp-nd">(99)</a>:</p>
+<div class="math notranslate nohighlight" id="equation-dr-dxi-sc">
+<span class="eqno">(136)<a class="headerlink" href="#equation-dr-dxi-sc" title="Permalink to this equation"></a></span>\[\frac{dR}{d\xi_i} = \sum_{j=1}^{N_p} r_j
+\frac{d\boldsymbol{L}_j}{d\xi_i}(\boldsymbol{\xi})\]</div>
+<p>where the multidimensional interpolant <span class="math notranslate nohighlight">\(\boldsymbol{L}_j\)</span> is
+formed over either tensor-product quadrature points or a Smolyak sparse
+grid. For the former case, the derivative of the multidimensional
+interpolant <span class="math notranslate nohighlight">\(\boldsymbol{L}_j\)</span> involves differentiation of <a class="reference internal" href="#equation-multivar-l">(100)</a>:</p>
+<div class="math notranslate nohighlight" id="equation-deriv-prod-sc">
+<span class="eqno">(137)<a class="headerlink" href="#equation-deriv-prod-sc" title="Permalink to this equation"></a></span>\[\frac{d\boldsymbol{L}_j}{d\xi_i}(\boldsymbol{\xi}) =
+\frac{dL_{c_i^j}}{d\xi_i}(\xi_i)
+\prod_{\stackrel{\scriptstyle k=1}{k \ne i}}^n L_{c_k^j}(\xi_k)\]</div>
+<p>and for the latter case, the derivative involves a linear combination of
+these product rules, as dictated by the Smolyak recursion shown in
+<a class="reference internal" href="#equation-smolyak2">(114)</a>. Finally, calculation of
+<span class="math notranslate nohighlight">\(\frac{dR}{dx_i}\)</span> involves the same Jacobian application shown in
+<a class="reference internal" href="#equation-dr-dx">(135)</a>.</p>
+</section>
+<section id="global-sensitivity-analysis-variance-based-decomposition">
+<span id="theory-uq-expansion-vbd"></span><h2>Global sensitivity analysis: variance-based decomposition<a class="headerlink" href="#global-sensitivity-analysis-variance-based-decomposition" title="Permalink to this headline"></a></h2>
+<p>In addition to obtaining derivatives of stochastic expansions with
+respect to the random variables, it is possible to obtain variance-based
+sensitivity indices from the stochastic expansions. Variance-based
+sensitivity indices are explained in the <a class="reference internal" href="../studytypes/designofexperiments.html#dace"><span class="std std-ref">Design of Experiments section</span></a>.
+The concepts are summarized here as well. Variance-based decomposition is a global
+sensitivity method that summarizes how the uncertainty in model output
+can be apportioned to uncertainty in individual input variables. VBD
+uses two primary measures, the main effect sensitivity index
+<span class="math notranslate nohighlight">\(S_{i}\)</span> and the total effect index <span class="math notranslate nohighlight">\(T_{i}\)</span>. These indices
+are also called the Sobol’ indices. The main effect sensitivity index
+corresponds to the fraction of the uncertainty in the output, <span class="math notranslate nohighlight">\(Y\)</span>,
+that can be attributed to input <span class="math notranslate nohighlight">\(x_{i}\)</span> alone. The total effects
+index corresponds to the fraction of the uncertainty in the output,
+<span class="math notranslate nohighlight">\(Y\)</span>, that can be attributed to input <span class="math notranslate nohighlight">\(x_{i}\)</span> and its
+interactions with other variables. The main effect sensitivity index
+compares the variance of the conditional expectation
+<span class="math notranslate nohighlight">\(Var_{x_{i}}[E(Y|x_{i})]\)</span> against the total variance
+<span class="math notranslate nohighlight">\(Var(Y)\)</span>. Formulas for the indices are:</p>
+<div class="math notranslate nohighlight" id="equation-sobol">
+<span class="eqno">(138)<a class="headerlink" href="#equation-sobol" title="Permalink to this equation"></a></span>\[S_{i}=\frac{Var_{x_{i}}[E(Y|x_{i})]}{Var(Y)}\]</div>
+<p>and</p>
+<div class="math notranslate nohighlight" id="equation-total-sobol">
+<span class="eqno">(139)<a class="headerlink" href="#equation-total-sobol" title="Permalink to this equation"></a></span>\[T_{i}=\frac{E(Var(Y|x_{-i}))}{Var(Y)}=\frac{Var(Y)-Var(E[Y|x_{-i}])}{Var(Y)}\]</div>
+<p>where <span class="math notranslate nohighlight">\(Y=f({\bf x})\)</span> and <span class="math notranslate nohighlight">\({x_{-i}=(x_{1},...,x_{i-1},x_{i+1},...,x_{m})}\)</span>.</p>
+<p>The calculation of <span class="math notranslate nohighlight">\(S_{i}\)</span> and <span class="math notranslate nohighlight">\(T_{i}\)</span> requires the
+evaluation of m-dimensional integrals which are typically approximated
+by Monte-Carlo sampling. However, in stochastic expansion methods, it is
+possible to obtain the sensitivity indices as analytic functions of the
+coefficients in the stochastic expansion. The derivation of these
+results is presented in  <span id="id59">[<a class="reference internal" href="../../misc/bibliography.html#id250" title="G. Tang, G. Iaccarino, and M. S Eldred. Global sensitivity analysis for stochastic collocation expansion. In Proceedings of the 51st AIAA/ASME/ASCE/AHS/ASC Structures, Structural Dynamics, and Materials Conference (12th AIAA Non-Deterministic Approaches conference). Orlando, FL, April 12-15, 2010. AIAA Paper 2010-XXXX.">TIE10</a>]</span>. The sensitivity
+indices are printed as a default when running either polynomial chaos or
+stochastic collocation in Dakota. Note that in addition to the
+first-order main effects, <span class="math notranslate nohighlight">\(S_{i}\)</span>, we are able to calculate the
+sensitivity indices for higher order interactions such as the two-way
+interaction <span class="math notranslate nohighlight">\(S_{i,j}\)</span>.</p>
+</section>
+<section id="automated-refinement">
+<span id="theory-uq-expansion-refine"></span><h2>Automated Refinement<a class="headerlink" href="#automated-refinement" title="Permalink to this headline"></a></h2>
+<p>Several approaches for refinement of stochastic expansions are currently
+supported, involving uniform or dimension-adaptive approaches to p- or
+h-refinement using structured (isotropic, anisotropic, or generalized)
+or unstructured grids. Specific combinations include:</p>
+<ul class="simple">
+<li><p>uniform refinement with unbiased grids</p>
+<ul>
+<li><p>p-refinement: isotropic global tensor/sparse grids (PCE, SC) and
+regression (PCE only) with global basis polynomials</p></li>
+<li><p>h-refinement: isotropic global tensor/sparse grids with local
+basis polynomials (SC only)</p></li>
+</ul>
+</li>
+<li><p>dimension-adaptive refinement with biased grids</p>
+<ul>
+<li><p>p-refinement: anisotropic global tensor/sparse grids with global
+basis polynomials using global sensitivity analysis (PCE, SC) or
+spectral decay rate estimation (PCE only)</p></li>
+<li><p>h-refinement: anisotropic global tensor/sparse grids with local
+basis polynomials (SC only) using global sensitivity analysis</p></li>
+</ul>
+</li>
+<li><p>goal-oriented dimension-adaptive refinement with greedy adaptation</p>
+<ul>
+<li><p>p-refinement: generalized sparse grids with global basis
+polynomials (PCE, SC)</p></li>
+<li><p>h-refinement: generalized sparse grids with local basis
+polynomials (SC only)</p></li>
+</ul>
+</li>
+</ul>
+<p>Each involves incrementing the global grid using differing grid
+refinement criteria, synchronizing the stochastic expansion specifics
+for the updated grid, and then updating the statistics and computing
+convergence criteria. Future releases will support local h-refinement
+approaches that can replace or augment the global grids currently
+supported. The sub-sections that follow enumerate each of the first
+level bullets above.</p>
+<section id="uniform-refinement-with-unbiased-grids">
+<span id="theory-uq-expansion-refine-uniform"></span><h3>Uniform refinement with unbiased grids<a class="headerlink" href="#uniform-refinement-with-unbiased-grids" title="Permalink to this headline"></a></h3>
+<p>Uniform refinement involves ramping the resolution of a global
+structured or unstructured grid in an unbiased manner and then refining
+an expansion to synchronize with this increased grid resolution. In the
+case of increasing the order of an isotropic tensor-product quadrature
+grid or the level of an isotropic Smolyak sparse grid, a p-refinement
+approach increases the order of the global basis polynomials
+(See <a class="reference internal" href="#theory-uq-expansion-orth"><span class="std std-ref">Orthogonal polynomials</span></a>,
+<a class="reference internal" href="#theory-uq-expansion-interp-lagrange"><span class="std std-ref">Global value-based</span></a>,
+and <a class="reference internal" href="#theory-uq-expansion-interp-hermite"><span class="std std-ref">Global gradient-enhanced</span></a>) in a synchronized manner
+and an h-refinement approach reduces the approximation range of fixed
+order local basis polynomials
+(See <a class="reference internal" href="#theory-uq-expansion-interp-linear"><span class="std std-ref">Local value-based</span></a>
+and <a class="reference internal" href="#theory-uq-expansion-interp-cubic"><span class="std std-ref">Local gradient-enhanced</span></a>). And in the case of
+uniform p-refinement with PCE regression, the collocation oversampling
+ratio (see <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-polynomial_chaos-expansion_order-collocation_ratio.html"><span class="pre">collocation_ratio</span></a></code>)
+is held fixed, such that an increment in isotropic expansion order is matched
+with a corresponding increment
+in the number of structured (probabilistic collocation) or unstructured
+samples (point collocation) employed in the linear least squares solve.</p>
+<p>For uniform refinement, anisotropic dimension preferences are not
+computed, and the only algorithmic requirements are:</p>
+<ul class="simple">
+<li><p>With the usage of nested integration rules with restricted
+exponential growth, Dakota must ensure that a change in level results
+in a sufficient change in the grid; otherwise premature convergence
+could occur within the refinement process. If no change is initially
+detected, Dakota continues incrementing the order/level (without grid
+evaluation) until the number of grid points increases.</p></li>
+<li><p>A convergence criterion is required. For uniform refinement, Dakota
+employs the <span class="math notranslate nohighlight">\(L^2\)</span> norm of the change in the response covariance
+matrix as a general-purpose convergence metric.</p></li>
+</ul>
+</section>
+<section id="dimension-adaptive-refinement-with-biased-grids">
+<h3>Dimension-adaptive refinement with biased grids<a class="headerlink" href="#dimension-adaptive-refinement-with-biased-grids" title="Permalink to this headline"></a></h3>
+<p>Dimension-adaptive refinement involves ramping the order of a
+tensor-product quadrature grid or the level of a Smolyak sparse grid
+anisotropically, that is, using a defined dimension preference. This
+dimension preference may be computed from local sensitivity analysis,
+global sensitivity analysis, a posteriori error estimation, or decay
+rate estimation. In the current release, we focus on global sensitivity
+analysis and decay rate estimation. In the former case, dimension
+preference is defined from total Sobol’ indices
+(see <a class="reference internal" href="#equation-total-sobol">(139)</a>) and is updated on every
+iteration of the adaptive refinement procedure, where higher variance
+attribution for a dimension indicates higher preference for that
+dimension. In the latter case, the spectral decay rates for the
+polynomial chaos coefficients are estimated using the available sets of
+univariate expansion terms (interaction terms are ignored). Given a set
+of scaled univariate coefficients (scaled to correspond to a normalized
+basis), the decay rate can be inferred using a technique analogous to
+Richardson extrapolation. The dimension preference is then defined from
+the inverse of the rate: slowly converging dimensions need greater
+refinement pressure. For both of these cases, the dimension preference
+vector supports anisotropic sparse grids based on a linear index-set
+constraint (see <a class="reference internal" href="#equation-aniso-smolyak-constr">(118)</a>) or
+anisotropic tensor grids (see <a class="reference internal" href="#equation-multi-tensor">(111)</a>)
+with dimension order scaled proportionately to preference; for both
+grids, dimension refinement lower bound constraints are enforced to
+ensure that all previously evaluated points remain in new refined grids.</p>
+<p>Given an anisotropic global grid, the expansion refinement proceeds as
+for the uniform case, in that the p-refinement approach increases the
+order of the global basis polynomials
+(see <a class="reference internal" href="#theory-uq-expansion-orth"><span class="std std-ref">Orthogonal polynomials</span></a>,
+<a class="reference internal" href="#theory-uq-expansion-interp-lagrange"><span class="std std-ref">Global value-based</span></a>,
+and <a class="reference internal" href="#theory-uq-expansion-interp-hermite"><span class="std std-ref">Global gradient-based</span></a>) in a synchronized manner
+and an h-refinement approach reduces the approximation range of fixed
+order local basis polynomials
+(See <a class="reference internal" href="#theory-uq-expansion-interp-linear"><span class="std std-ref">Local value-based</span></a>
+and <a class="reference internal" href="#theory-uq-expansion-interp-cubic"><span class="std std-ref">Local gradient-enhanced</span></a>). Also, the same grid
+change requirements and convergence criteria described for uniform
+refinement (See <a class="reference internal" href="#theory-uq-expansion-refine-uniform"><span class="std std-ref">Uniform refinement with unbiased grids</span></a>) are
+applied in this case.</p>
+</section>
+<section id="goal-oriented-dimension-adaptive-refinement-with-greedy-adaptation">
+<h3>Goal-oriented dimension-adaptive refinement with greedy adaptation<a class="headerlink" href="#goal-oriented-dimension-adaptive-refinement-with-greedy-adaptation" title="Permalink to this headline"></a></h3>
+<p>Relative to the uniform and dimension-adaptive refinement capabilities
+described previously, the generalized sparse grid
+algorithm <span id="id60">[<a class="reference internal" href="../../misc/bibliography.html#id104" title="T. Gerstner and M. Griebel. Dimension-adaptive tensor-product quadrature. Computing, 71(1):65–87, 2003.">GG03</a>]</span> supports greater
+flexibility in the definition of sparse grid index sets and supports
+refinement controls based on general statistical quantities of interest
+(QOI). This algorithm was originally intended for adaptive numerical
+integration on a hypercube, but can be readily extended to the adaptive
+refinement of stochastic expansions using the following customizations:</p>
+<ul class="simple">
+<li><p>In addition to hierarchical interpolants in SC, we employ independent
+polynomial chaos expansions for each active and accepted index set.
+Pushing and popping index sets then involves increments of tensor
+chaos expansions (as described in
+<a class="reference internal" href="#theory-uq-expansion-spectral-sparse"><span class="std std-ref">Smolyak sparse grids</span></a>) along with
+corresponding increments to the Smolyak combinatorial coefficients.</p></li>
+<li><p>Since we support bases for more than uniform distributions on a
+hypercube, we exploit rule nesting when possible (i.e.,
+Gauss-Patterson for uniform or transformed uniform variables, and
+Genz-Keister for normal or transformed normal variables), but we do
+not require it. This implies a loss of some algorithmic
+simplifications in <span id="id61">[<a class="reference internal" href="../../misc/bibliography.html#id104" title="T. Gerstner and M. Griebel. Dimension-adaptive tensor-product quadrature. Computing, 71(1):65–87, 2003.">GG03</a>]</span> that
+occur when grids are strictly hierarchical.</p></li>
+<li><p>In the evaluation of the effect of a trial index set, the goal
+in <span id="id62">[<a class="reference internal" href="../../misc/bibliography.html#id104" title="T. Gerstner and M. Griebel. Dimension-adaptive tensor-product quadrature. Computing, 71(1):65–87, 2003.">GG03</a>]</span> is numerical integration
+and the metric is the size of the increment induced by the trial set
+on the expectation of the function of interest. It is straightforward
+to instead measure the effect of a trial index set on response
+covariance, numerical probability, or other statistical QOI computed
+by post-processing the resulting PCE or SC expansion. By tying the
+refinement process more closely to the statistical QOI, the
+refinement process can become more efficient in achieving the desired
+analysis objectives.</p></li>
+</ul>
+<p>Hierarchical increments in a variety of statistical QoI may be derived,
+starting from increments in response mean and covariance. The former is
+defined from computing the expectation of the difference interpolants in
+<a class="reference internal" href="#equation-hierarch-interp-nd-l">(104)</a> - <a class="reference internal" href="#equation-hierarch-interp-nd-h">(105)</a>,
+and the latter is defined as:</p>
+<div class="math notranslate nohighlight" id="equation-greedy-adaptation-1">
+<span class="eqno">(140)<a class="headerlink" href="#equation-greedy-adaptation-1" title="Permalink to this equation"></a></span>\[\Delta \Sigma_{ij} = \Delta E[R_i R_j] - \mu_{R_i} \Delta E[R_j] -
+\mu_{R_j} \Delta E[R_i] - \Delta E[R_i] \Delta E[R_j]\]</div>
+<p>Increments in standard deviation and reliability indices can
+subsequently be defined, where care is taken to preserve numerical
+precision through the square root operation (e.g., via Boost
+<code class="docutils literal notranslate"><span class="pre">sqrt1pm1()</span></code>).</p>
+<p>Given these customizations, the algorithmic steps can be summarized as:</p>
+<ol class="arabic simple">
+<li><p><em>Initialization:</em> Starting from an initial isotropic or anisotropic
+reference grid (often the <span class="math notranslate nohighlight">\(w=0\)</span> grid corresponding to a single
+collocation point), accept the reference index sets as the old set
+and define active index sets using the admissible forward neighbors
+of all old index sets.</p></li>
+<li><p><em>Trial set evaluation:</em> Evaluate the tensor grid corresponding to
+each trial active index set, form the tensor polynomial chaos
+expansion or tensor interpolant corresponding to it, update the
+Smolyak combinatorial coefficients, and combine the trial expansion
+with the reference expansion. Perform necessary bookkeeping to allow
+efficient restoration of previously evaluated tensor expansions.</p></li>
+<li><p><em>Trial set selection:</em> Select the trial index set that induces the
+largest change in the statistical QOI, normalized by the cost of
+evaluating the trial index set (as indicated by the number of new
+collocation points in the trial grid). In our implementation, the
+statistical QOI is defined using an <span class="math notranslate nohighlight">\(L^2\)</span> norm of change in
+CDF/CCDF probability/reliability/response level mappings, when level
+mappings are present, or <span class="math notranslate nohighlight">\(L^2\)</span> norm of change in response
+covariance, when level mappings are not present.</p></li>
+<li><p><em>Update sets:</em> If the largest change induced by the trial sets
+exceeds a specified convergence tolerance, then promote the selected
+trial set from the active set to the old set and update the active
+sets with new admissible forward neighbors; return to step 2 and
+evaluate all trial sets with respect to the new reference point. If
+the convergence tolerance is satisfied, advance to step 5.</p></li>
+<li><p><em>Finalization:</em> Promote all remaining active sets to the old set,
+update the Smolyak combinatorial coefficients, and perform a final
+combination of tensor expansions to arrive at the final result for
+the statistical QOI.</p></li>
+</ol>
+</section>
+</section>
+<section id="multifidelity-methods">
+<span id="theory-uq-expansion-multifid"></span><h2>Multifidelity methods<a class="headerlink" href="#multifidelity-methods" title="Permalink to this headline"></a></h2>
+<p>In a multifidelity uncertainty quantification approach employing
+stochastic expansions, we seek to utilize a predictive low-fidelity
+model to our advantage in reducing the number of high-fidelity model
+evaluations required to compute high-fidelity statistics to a particular
+precision. When a low-fidelity model captures useful trends of the
+high-fidelity model, then the model discrepancy may have either lower
+complexity, lower variance, or both, requiring less computational effort
+to resolve its functional form than that required for the original
+high-fidelity model <span id="id63">[<a class="reference internal" href="../../misc/bibliography.html#id193" title="L. W. T. Ng and M. S. Eldred. Multifidelity uncertainty quantification using nonintrusive polynomial chaos and stochastic collocation. In Proceedings of the 14th AIAA Non-Deterministic Approaches Conference, number AIAA-2012-1852. Honolulu, HI, April 23-26, 2012.">NE12</a>]</span>.</p>
+<p>To accomplish this goal, an expansion will first be formed for the model
+discrepancy (the difference between response results if additive
+correction or the ratio of results if multiplicative correction). These
+discrepancy functions are the same functions approximated in
+<a class="reference internal" href="../inputfile/model.html#models-surrogate"><span class="std std-ref">surrogate-based minimization</span></a>. The
+exact discrepancy functions are</p>
+<div class="math notranslate nohighlight" id="equation-exact-a">
+<span class="eqno">(141)<a class="headerlink" href="#equation-exact-a" title="Permalink to this equation"></a></span>\[A(\boldsymbol{\xi}) = R_{hi}(\boldsymbol{\xi}) - R_{lo}(\boldsymbol{\xi})\]</div>
+<div class="math notranslate nohighlight" id="equation-exact-b">
+<span class="eqno">(142)<a class="headerlink" href="#equation-exact-b" title="Permalink to this equation"></a></span>\[B(\boldsymbol{\xi}) = \frac{R_{hi}(\boldsymbol{\xi})}{R_{lo}(\boldsymbol{\xi})}\]</div>
+<p>Approximating the high-fidelity response functions using approximations
+of these discrepancy functions then involves</p>
+<div class="math notranslate nohighlight" id="equation-correct-val-add">
+<span class="eqno">(143)<a class="headerlink" href="#equation-correct-val-add" title="Permalink to this equation"></a></span>\[\hat{R}_{hi_A}(\boldsymbol{\xi}) = R_{lo}(\boldsymbol{\xi}) +  \hat{A}(\boldsymbol{\xi})\]</div>
+<div class="math notranslate nohighlight" id="equation-correct-val-mult">
+<span class="eqno">(144)<a class="headerlink" href="#equation-correct-val-mult" title="Permalink to this equation"></a></span>\[\hat{R}_{hi_B}(\boldsymbol{\xi}) = R_{lo}(\boldsymbol{\xi}) \hat{B}(\boldsymbol{\xi})\]</div>
+<p>where <span class="math notranslate nohighlight">\(\hat{A}(\boldsymbol{\xi})\)</span> and
+<span class="math notranslate nohighlight">\(\hat{B}(\boldsymbol{\xi})\)</span> are stochastic expansion
+approximations to the exact correction functions:</p>
+<div class="math notranslate nohighlight" id="equation-stoch-exp-a">
+<span class="eqno">(145)<a class="headerlink" href="#equation-stoch-exp-a" title="Permalink to this equation"></a></span>\[\hat{A}(\boldsymbol{\xi}) =
+\sum_{j=0}^{P_{hi}} \alpha_j \Psi_j(\boldsymbol{\xi}) ~~~\text{or}~~~
+\sum_{j=1}^{N_{hi}} a_j \boldsymbol{L}_j(\boldsymbol{\xi})\]</div>
+<div class="math notranslate nohighlight" id="equation-stoch-exp-b">
+<span class="eqno">(146)<a class="headerlink" href="#equation-stoch-exp-b" title="Permalink to this equation"></a></span>\[\hat{B}(\boldsymbol{\xi}) =
+\sum_{j=0}^{P_{hi}} \beta_j \Psi_j(\boldsymbol{\xi}) ~~~\text{or}~~~
+\sum_{j=1}^{N_{hi}} b_j \boldsymbol{L}_j(\boldsymbol{\xi})\]</div>
+<p>where <span class="math notranslate nohighlight">\(\alpha_j\)</span> and <span class="math notranslate nohighlight">\(\beta_j\)</span> are the spectral coefficients
+for a polynomial chaos expansion (evaluated via
+<a class="reference internal" href="#equation-coeff-extract">(108)</a>, for example) and
+<span class="math notranslate nohighlight">\(a_j\)</span> and <span class="math notranslate nohighlight">\(b_j\)</span> are the interpolation coefficients for
+stochastic collocation (values of the exact discrepancy evaluated at the
+collocation points).</p>
+<p>Second, an expansion will be formed for the low fidelity surrogate
+model, where the intent is for the level of resolution to be higher than
+that required to resolve the discrepancy (<span class="math notranslate nohighlight">\(P_{lo} \gg P_{hi}\)</span> or
+<span class="math notranslate nohighlight">\(N_{lo} \gg N_{hi}\)</span>; either enforced statically through
+order/level selections or automatically through adaptive refinement):</p>
+<div class="math notranslate nohighlight" id="equation-stoch-exp-lf">
+<span class="eqno">(147)<a class="headerlink" href="#equation-stoch-exp-lf" title="Permalink to this equation"></a></span>\[R_{lo}(\boldsymbol{\xi}) \cong
+\sum_{j=0}^{P_{lo}} \gamma_j \Psi_j(\boldsymbol{\xi}) ~~~\text{or}~~~
+\sum_{j=1}^{N_{lo}} r_{lo_j} \boldsymbol{L}_j(\boldsymbol{\xi})\]</div>
+<p>Then the two expansions are combined (added or multiplied) into a new
+expansion that approximates the high fidelity model, from which the
+final set of statistics are generated. For polynomial chaos expansions,
+this combination entails:</p>
+<ul>
+<li><p>in the additive case, the high-fidelity expansion is formed by simply
+overlaying the expansion forms and adding the spectral coefficients
+that correspond to the same basis polynomials.</p></li>
+<li><p>in the multiplicative case, the form of the high-fidelity expansion
+must first be defined to include all polynomial orders indicated by
+the products of each of the basis polynomials in the low fidelity and
+discrepancy expansions (most easily estimated from total-order,
+tensor, or sum of tensor expansions which involve simple order
+additions). Then the coefficients of this product expansion are
+computed as follows (shown generically for <span class="math notranslate nohighlight">\(z = xy\)</span> where
+<span class="math notranslate nohighlight">\(x\)</span>, <span class="math notranslate nohighlight">\(y\)</span>, and <span class="math notranslate nohighlight">\(z\)</span> are each expansions of arbitrary
+form):</p>
+<div class="math notranslate nohighlight" id="equation-stoch-exp-multiplicative-case">
+<span class="eqno">(148)<a class="headerlink" href="#equation-stoch-exp-multiplicative-case" title="Permalink to this equation"></a></span>\[\begin{split}\begin{aligned}
+\sum_{k=0}^{P_z} z_k \Psi_k(\boldsymbol{\xi}) &amp; = &amp; \sum_{i=0}^{P_x} \sum_{j=0}^{P_y}
+x_i y_j \Psi_i(\boldsymbol{\xi}) \Psi_j(\boldsymbol{\xi}) \\
+z_k &amp; = &amp; \frac{\sum_{i=0}^{P_x} \sum_{j=0}^{P_y} x_i y_j
+\langle \Psi_i \Psi_j \Psi_k \rangle}{\langle \Psi^2_k \rangle}\end{aligned}\end{split}\]</div>
+<p>where tensors of one-dimensional basis triple products <span class="math notranslate nohighlight">\(\langle
+\psi_i \psi_j \psi_k \rangle\)</span> are typically sparse and can be
+efficiently precomputed using one dimensional quadrature for fast
+lookup within the multidimensional triple products.</p>
+</li>
+</ul>
+<p>For stochastic collocation, the high-fidelity expansion generated from
+combining the low fidelity and discrepancy expansions retains the
+polynomial form of the low fidelity expansion, for which only the
+coefficients are updated in order to interpolate the sum or product
+values (and potentially their derivatives). Since we will typically need
+to produce values of a less resolved discrepancy expansion on a more
+resolved low fidelity grid to perform this combination, we utilize the
+discrepancy expansion rather than the original discrepancy function
+values for both interpolated and non-interpolated point values (and
+derivatives), in order to ensure consistency.</p>
+<dl class="footnote brackets">
+<dt class="label" id="id64"><span class="brackets"><a class="fn-backref" href="#id18">1</a></span></dt>
+<dd><p>If joint distributions are known, then the Rosenblatt transformation
+is preferred.</p>
+</dd>
+<dt class="label" id="id65"><span class="brackets"><a class="fn-backref" href="#id21">2</a></span></dt>
+<dd><p>Unless a refinement procedure is in use.</p>
+</dd>
+<dt class="label" id="id66"><span class="brackets"><a class="fn-backref" href="#id28">3</a></span></dt>
+<dd><p>Other common formulations use a dimension-dependent level <span class="math notranslate nohighlight">\(q\)</span>
+where <span class="math notranslate nohighlight">\(q \geq n\)</span>. We use <span class="math notranslate nohighlight">\(w = q - n\)</span>, where
+<span class="math notranslate nohighlight">\(w \geq 0\)</span> for all <span class="math notranslate nohighlight">\(n\)</span>.</p>
+</dd>
+<dt class="label" id="id67"><span class="brackets"><a class="fn-backref" href="#id30">4</a></span></dt>
+<dd><p>We prefer linear growth for Gauss-Legendre, but employ nonlinear
+growth here for purposes of comparison.</p>
+</dd>
+<dt class="label" id="id68"><span class="brackets"><a class="fn-backref" href="#id36">5</a></span></dt>
+<dd><p>Due to the discrete nature of index sampling, we enforce unique index
+samples by sorting and resampling as required.</p>
+</dd>
+<dt class="label" id="id69"><span class="brackets"><a class="fn-backref" href="#id38">6</a></span></dt>
+<dd><p>Generally speaking, dimension quadrature order <span class="math notranslate nohighlight">\(m_i\)</span> greater
+than dimension expansion order <span class="math notranslate nohighlight">\(p_i\)</span>.</p>
+</dd>
+<dt class="label" id="id70"><span class="brackets"><a class="fn-backref" href="#id55">7</a></span></dt>
+<dd><p>The choice of <span class="math notranslate nohighlight">\(T&gt;1\)</span> enables the basis selection algorithm to be
+applied to semi-connected tree structures as well as fully connected
+trees. Setting <span class="math notranslate nohighlight">\(T&gt;1\)</span> allows us to prevent premature termination
+of the algorithm if most of the coefficients of the children of the
+current set <span class="math notranslate nohighlight">\(\Lambda^{(k)}\)</span> are small but the coefficients of
+the children’s children are not.</p>
+</dd>
+</dl>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="reliability.html" class="btn btn-neutral float-left" title="Reliability Methods" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="epistemic.html" class="btn btn-neutral float-right" title="Epistemic Methods" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <!--
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Sandia National Laboratories.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+  --> 
+
+</footer>
+        </div>
+      </div>
+	  
+	  <div style="background-color: #0f0f0f;color:#fafafa;padding:20px">
+	    <div>
+		  <h2><em>Exceptional service in the national interest</em></h2>
+		</div>
+		<p>© 2022 National Technology and Engineering Solutions of Sandia, LLC. | <a href="https://www.sandia.gov/contact_us/index.html">Questions &amp; Comments</a> | <a href="https://www.sandia.gov/general/privacy-security/index.html">Privacy &amp; Security</a></p>
+		<p><a href="http://energy.gov" rel="noopener noreferrer" target="_blank"><img alt="U.S. Department of Energy" longdesc="https://energy.gov" src="https://www.sandia.gov/_common/images/doe_logo_white.png" style="height:37px; width:140px"></a> <a href="http://nnsa.energy.gov/" rel="noopener noreferrer" target="_blank"> <img alt="National Nuclear Security Administration" longdesc="http://nnsa.gov" src="https://www.sandia.gov/_common/images/nnsa_logo_white.png" style="height:37px; width:116px"></a></p>
+		<p><a href="https://www.sandia.gov">Sandia National Laboratories</a> is a multimission laboratory managed and operated by National Technology and Engineering Solutions of Sandia, LLC., a wholly owned subsidiary of Honeywell International, Inc., for the U.S. Department of Energy’s National Nuclear Security Administration under contract DE-NA-0003525.</p>
+	  </div>	  	  
+	  
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

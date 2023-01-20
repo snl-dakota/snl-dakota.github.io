@@ -1,0 +1,39 @@
+.. _method-ncsu_direct-solution_target:
+
+"""""""""""""""
+solution_target
+"""""""""""""""
+
+
+Specifies a globally optimal value toward which the optimizer should track
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+
+
+**Specification**
+
+- *Alias:* solution_accuracy 
+
+- *Arguments:* REAL
+
+- *Default:* 0
+
+
+**Description**
+
+
+The solution target specifies a goal toward which the optimizer should
+track.
+
+This is used for test problems, when the true global minimum is known
+(call it ``solution_target`` := fglobal). Then, the optimization
+terminates when 100(f_min-fglobal)/max(1,abs(fglobal) <
+convergence_tolerance. The default for fglobal is -1.0e100 and the
+default for convergence tolerance is described at
+:ref:`method-ncsu_direct-convergence_tolerance<method-ncsu_direct-convergence_tolerance>`.
+
+

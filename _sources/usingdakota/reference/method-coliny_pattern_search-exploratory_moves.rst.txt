@@ -1,0 +1,58 @@
+.. _method-coliny_pattern_search-exploratory_moves:
+
+"""""""""""""""""
+exploratory_moves
+"""""""""""""""""
+
+
+Exploratory moves selection
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-coliny_pattern_search-exploratory_moves-multi_step
+   method-coliny_pattern_search-exploratory_moves-adaptive_pattern
+   method-coliny_pattern_search-exploratory_moves-basic_pattern
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+- *Default:* basic_pattern
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+----------------------+---------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword       | Dakota Keyword Description                  |
+|                         | Group              |                      |                                             |
++=========================+====================+======================+=============================================+
+| Required (Choose One)   | Exploration Mode   | `multi_step`__       | Examine trial step around successful new    |
+|                         |                    |                      | point                                       |
+|                         |                    +----------------------+---------------------------------------------+
+|                         |                    | `adaptive_pattern`__ | Adaptively rescale search directions        |
+|                         |                    +----------------------+---------------------------------------------+
+|                         |                    | `basic_pattern`__    | Use the same search pattern every iteration |
++-------------------------+--------------------+----------------------+---------------------------------------------+
+
+.. __: method-coliny_pattern_search-exploratory_moves-multi_step.html
+__ method-coliny_pattern_search-exploratory_moves-adaptive_pattern.html
+__ method-coliny_pattern_search-exploratory_moves-basic_pattern.html
+
+
+
+**Description**
+
+
+The ``exploratory_moves`` specification controls how the search pattern
+is adapted. (The search pattern can be adapted after an improving
+trial point is found, or after all trial points in a search pattern
+have been found to be unimproving points.)  The following exploratory
+moves selections are supported by SCOLIB:
+
+

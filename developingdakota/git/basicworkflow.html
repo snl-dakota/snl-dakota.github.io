@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Basic Code Development Workflow &mdash; dakota  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/dakota_theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/sandiaheaderlite.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Rebase vs. merge" href="rebasevsmerge.html" />
+    <link rel="prev" title="Getting Dakota Source Code" href="gettingsourcecode.html" /> 
+  
+  <meta name="sandia.approval_type" content="formal"/>
+  <meta property="sandia.approved" content="SAND2022-15651 O"/>
+  <meta name="description" content="The Dakota project delivers both state-of-the-art research and robust, usable software for optimization and UQ."/>
+  <meta name="keywords" content="Dakota, optimization, UQ, uncertainty quantification, parametric analysis, design exploration, model calibration, risk analysis"/>
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> dakota
+            <img src="../../_static/dakota_Arrow_Name_Tag_horiz_transparent.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../setupdakota.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../usingdakota/usingdakota.html">Using Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../usingdakotagui/usingdakotagui.html">Using Dakota GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../externaltools/externaltools.html">Using External Tools</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../developingdakota.html">Developing Dakota</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../devenvironment.html">Setup Your Development Environment</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../gitforversioncontrol.html">Git for Version Control</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="emergency.html">What To Do in an Emergency</a></li>
+<li class="toctree-l3"><a class="reference internal" href="preliminaries.html">Preliminaries: Setting up Git</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gettingsourcecode.html">Getting Dakota Source Code</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Basic Code Development Workflow</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#pushing-changes-to-the-remote-repository">Pushing changes to the remote repository</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#build-test-changes">Build/Test Changes</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#for-more-information">For More Information</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="rebasevsmerge.html">Rebase vs. merge</a></li>
+<li class="toctree-l3"><a class="reference internal" href="submodules.html">Updating Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="helpfulcommands.html">Helpful git commands</a></li>
+<li class="toctree-l3"><a class="reference internal" href="localcommits.html">Revising local commits before pushing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dakotadescription.html">Dakota Git Description</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bestpractices.html">Recommended Best Practices</a></li>
+<li class="toctree-l3"><a class="reference internal" href="repobrowsing.html">Repository Browsing</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../writingcode.html">Writing Dakota Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../testingcode.html">Testing Dakota Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../writingdocs.html">Writing Dakota Documentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tpls.html">Dakota’s Third-Party Libraries</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../misc/misc.html">Miscellaneous</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">dakota</a>
+      </nav>
+
+	  <!-- SNL Lite header -->
+	  <div class="snlheader-subsite--wrapper-default">
+		<snlheader class="snlheader-subsite" role="snlbanner">
+		  <div class="wrapper">
+			<a href="https://www.sandia.gov/index.html">
+			  <div class="logo-transparent"><p class="logo">Sandia National Laboratories</p></div>
+			</a>
+			<div class="nav-top">
+			  <a class="visuallyhidden" name="mainnav"></a>
+			  <div aria-label="main navigation" class="core-nav-transparent core-nav-transparent--visible" role="navigation">
+				<ul role="navigation" class="secondary-links">
+				  <li id="search-text-link">
+					<a aria-label="Search" href="https://www.sandia.gov/search/">Search Sandia.gov</a>
+				  </li>
+				  <li id="directory-text-link">
+					<a href="https://www.sandia.gov/directory.html" aria-expanded="false" aria-label="Site Directory">All Sandia Websites</a>
+				  </li>
+				</ul>
+			  </div>
+			</div>
+		  </div> 
+		</snlheader>
+	  </div>	  
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../developingdakota.html">Developing Dakota</a> &raquo;</li>
+          <li><a href="../gitforversioncontrol.html">Git for Version Control</a> &raquo;</li>
+      <li>Basic Code Development Workflow</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/developingdakota/git/basicworkflow.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="basic-code-development-workflow">
+<span id="git-basicworkflow"></span><h1>Basic Code Development Workflow<a class="headerlink" href="#basic-code-development-workflow" title="Permalink to this headline"></a></h1>
+<p>Most changes to the Dakota source code should be made to the “devel” branch (or another local or remote topic branch).  Conceptually, the project and workflow will resemble that in the figure below, where “production releases” are simply stable states from the “devel” branch vetted and pushed to the “master” branch by a periodic automated process.  User pushes to the “master” branch are disallowed.  After creating a Dakota project as described in the previous section, the “devel” branch and associated submodules for that branch can be obtained via:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>git checkout devel
+git submodule update --init
+</pre></div>
+</div>
+<p>Or selective update of only initialized submodules if needed (see <a class="reference internal" href="gettingsourcecode.html#git-gettingsourcecode"><span class="std std-ref">Getting Dakota Source Code</span></a>):</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>git submodule update
+</pre></div>
+</div>
+<p>See <a class="reference internal" href="submodules.html#git-submodules"><span class="std std-ref">this submodule guidance</span></a> if you are actively developing in both Dakota’s submodules and Dakota proper.</p>
+<p>At this point, you can make code changes, do local commits and push your changes to the Dakota public server.</p>
+<p><strong>Commit log format:</strong> Format your commit messages as discussed here: <a class="reference external" href="https://git-scm.com/book/ch5-2.html#Commit-Guidelines">https://git-scm.com/book/ch5-2.html#Commit-Guidelines</a>, for reasons discussed here: <a class="reference external" href="http://chris.beams.io/posts/git-commit">http://chris.beams.io/posts/git-commit</a>. Key guidance (editors that are Git-aware will automate this for you):</p>
+<ul class="simple">
+<li><p>Short (about 50 char) one line title that indicates which capability, bug, or topic the commit relates to, followed by a blank line. It’s crucial that this include what Dakota feature or area the work affects.</p></li>
+<li><p>Body with details explaining what/why (typically how the work was done is less important), wrapped at about 72 characters</p></li>
+<li><p>Include the DAK-xxxx, DAKSUP-yyyy, DP-zzzz or other issue number somewhere in the message as Jira will auto-link it</p></li>
+</ul>
+<p>Notes:</p>
+<ul class="simple">
+<li><p>For instance a title “Debugging multi-map, code now compiles” leaves one wondering what map, what feature? What does this change? Consider instead something like “Optimizer options: fix memory access violation in multi-map”.</p></li>
+<li><p>The association of your commit with a branch won’t be clear once it’s merged to another branch, so a short hand branch name might be a helpful part of your commit title or body, e.g., Surrogates Module or MLFnTrain.</p></li>
+<li><p>Repeatedly refresh this page for some amusing real-life examples of unhelpful commit messages.</p></li>
+</ul>
+<p><strong>Branching Model</strong> (Dakota implements this primarily by branching topics off of devel instead of develop off of master as shown.)</p>
+<img alt="Example Git branch workflow" src="../../_images/workflow.png" />
+<p><a class="reference external" href="http://nvie.com/posts/a-successful-git-branching-model/">http://nvie.com/posts/a-successful-git-branching-model/</a></p>
+<section id="pushing-changes-to-the-remote-repository">
+<h2>Pushing changes to the remote repository<a class="headerlink" href="#pushing-changes-to-the-remote-repository" title="Permalink to this headline"></a></h2>
+<p><em>Note: The following applies primarily to “source code” changes. The next section provides guidance for making changes to Dakota’s build/test system, which can be impractical to rigorously test prior to making commits.</em></p>
+<p><strong>Pre-push testing:</strong> Before pushing to “devel,” code must compile, and all RHEL7 Linux unit tests should pass and regression tests should PASS or DIFF according to the current gold standards (see dakota_assay.py).  (Other platforms need not be clean.) If this standard is too stringent, consider using a local or remote branch.  Typically you would want to pull from the origin repo (see below) and rebuild before running tests to prevent thrash integrating with others’ changes.  Some helpful shortcuts (second option being fastest, but less complete):</p>
+<ol class="arabic simple">
+<li><p>Run all tests, then verify against expected gold standards using the assay script</p></li>
+</ol>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>cd build/test
+make dakota-diffs-clean
+ctest -j 4 -R dakota_
+<span class="c"># produce dakota_*diffs.out</span>
+make dakota-diffs
+<span class="c"># compare to expected results</span>
+source/local/scripts/dakota_assay.py \
+-s source/local/snl/sqa/artifacts/release_standards/trunk/snlfull-Linux-diffs.out \
+-a dakota_diffs.out
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li><p>Run all tests, omitting those known to DIFF (all CTest tests should PASS):</p></li>
+</ol>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>cd build/test
+ctest  -j 4 -LE Diff
+</pre></div>
+</div>
+<p><strong>“Okay tests are clean, I’m ready!”</strong> When you are ready to push your changes (i.e., one or more local commits) to the remote repository, do the following steps:</p>
+<ul class="simple">
+<li><p>Ensure your local devel branch is current with respect to any changes made to the remote repository since your last update.  Do this even if you updated before testing. (NOTE: a convenient alias can be defined for this command):</p></li>
+</ul>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>git pull --rebase origin devel
+<span class="c">## git pull --rebase origin devel --recurse-submodules=on-demand</span>
+git submodule update --init
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Resolve any conflicts you might have with changes from the previous step.</p></li>
+<li><p>Do the push:</p></li>
+</ul>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>git push
+</pre></div>
+</div>
+<p>NOTE: You can do a trial run before actually doing the push by adding the –dry-run option to the previous command:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>git push --dry-run
+</pre></div>
+</div>
+<p><strong>“There are test failures or DIFFs; what next?”</strong></p>
+<ul class="simple">
+<li><p><strong>Minor DIFFs:</strong> If the change induces DIFFS that the committer can easily review and bless through an RHEL7 build, typically resolve them, update commits as needed, and push to devel.  Even in this case, it may be helpful to create a local branch (git checkout -b bug_name_diffs) to separate that work in case resolution ends up being challenging or long-running.</p></li>
+<li><p><strong>Major DIFFs and/or need help</strong> from build system or team review/resolution: Push the named branch to origin, e.g, git push origin bug_name_diffs.  Then developers can collaborate to resolve DIFFs, and/or an automated build job can be conducted on that branch.  The software engineering infrastructure team can help with assigning developers to review and resolve differences.</p></li>
+<li><p><strong>Once resolved:</strong> Whether local or remote, when done resolving the issues and DIFFs, merge the branch into devel and push to origin.  Delete the remote (and local) branch when no longer needed.</p></li>
+</ul>
+</section>
+<section id="build-test-changes">
+<h2>Build/Test Changes<a class="headerlink" href="#build-test-changes" title="Permalink to this headline"></a></h2>
+<p>The previous section prescribes a straighforward method to vet source code changes prior to pushing. Changes to Dakota’s build/test system (e.g. various CMakeLists.txt files, contents of local/cmake and cmake) are not always as easy to evaluate. They may, for example, require complex setup to “simulate” the Jenkins job environment on platforms that the developer does not have ready access to. For this reason, unlike source code changes, changes to build/test related files are not required to meet any specific standard prior to pushing them, and short term “churn” in the build system as changes are made and refined is expected and allowed. Our intention is that developers feel empowered to make small, rapid, experimental changes to the build/test system to quickly resolve problems as they emerge.</p>
+</section>
+<section id="for-more-information">
+<h2>For More Information<a class="headerlink" href="#for-more-information" title="Permalink to this headline"></a></h2>
+<p>Git-based workflows:</p>
+<p><a class="reference external" href="http://nvie.com/posts/a-successful-git-branching-model/">http://nvie.com/posts/a-successful-git-branching-model/</a></p>
+<p><a class="reference external" href="https://www.atlassian.com/git/tutorials/comparing-workflows/centralized-workflow">https://www.atlassian.com/git/tutorials/comparing-workflows/centralized-workflow</a></p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="gettingsourcecode.html" class="btn btn-neutral float-left" title="Getting Dakota Source Code" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="rebasevsmerge.html" class="btn btn-neutral float-right" title="Rebase vs. merge" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <!--
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Sandia National Laboratories.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+  --> 
+
+</footer>
+        </div>
+      </div>
+	  
+	  <div style="background-color: #0f0f0f;color:#fafafa;padding:20px">
+	    <div>
+		  <h2><em>Exceptional service in the national interest</em></h2>
+		</div>
+		<p>© 2022 National Technology and Engineering Solutions of Sandia, LLC. | <a href="https://www.sandia.gov/contact_us/index.html">Questions &amp; Comments</a> | <a href="https://www.sandia.gov/general/privacy-security/index.html">Privacy &amp; Security</a></p>
+		<p><a href="http://energy.gov" rel="noopener noreferrer" target="_blank"><img alt="U.S. Department of Energy" longdesc="https://energy.gov" src="https://www.sandia.gov/_common/images/doe_logo_white.png" style="height:37px; width:140px"></a> <a href="http://nnsa.energy.gov/" rel="noopener noreferrer" target="_blank"> <img alt="National Nuclear Security Administration" longdesc="http://nnsa.gov" src="https://www.sandia.gov/_common/images/nnsa_logo_white.png" style="height:37px; width:116px"></a></p>
+		<p><a href="https://www.sandia.gov">Sandia National Laboratories</a> is a multimission laboratory managed and operated by National Technology and Engineering Solutions of Sandia, LLC., a wholly owned subsidiary of Honeywell International, Inc., for the U.S. Department of Energy’s National Nuclear Security Administration under contract DE-NA-0003525.</p>
+	  </div>	  	  
+	  
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Coupling Dakota to a Simulation &mdash; dakota  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/dakota_theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/sandiaheaderlite.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Dakota Input File" href="../inputfile.html" />
+    <link rel="prev" title="Additional Examples" href="../examples/additionalexamples.html" /> 
+  
+  <meta name="sandia.approval_type" content="formal"/>
+  <meta property="sandia.approved" content="SAND2022-15651 O"/>
+  <meta name="description" content="The Dakota project delivers both state-of-the-art research and robust, usable software for optimization and UQ."/>
+  <meta name="keywords" content="Dakota, optimization, UQ, uncertainty quantification, parametric analysis, design exploration, model calibration, risk analysis"/>
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> dakota
+            <img src="../../_static/dakota_Arrow_Name_Tag_horiz_transparent.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../setupdakota.html">Getting Started</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../usingdakota.html">Using Dakota</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="aboutdakota.html">About Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="helloworld.html">Dakota Beginner’s Tutorial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples.html">Examples</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Coupling Dakota to a Simulation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#introduction">Introduction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#analysis-drivers">Analysis Drivers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#guidance-for-beginners">Guidance for Beginners</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#command-line-resources">Command-Line Resources</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#gui-resources">GUI Resources</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#deep-dive-into-dakota-s-analysis-driver-process">Deep Dive into Dakota’s Analysis Driver Process</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#compiled-rosenbrock-example">Compiled Rosenbrock Example</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#parameter-file-format">Parameter File Format</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#user-supplied-simulation-codes">User-Supplied Simulation Codes</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#sand-simulation-codes">SAND Simulation Codes</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#video-resources">Video Resources</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../inputfile.html">Dakota Input File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../running.html">Running Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../output.html">Dakota Output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../studytypes.html">Study Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../topics.html">Topics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../advanced.html">Advanced Topics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../theory.html">Dakota Theory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference.html">Keyword Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../usingdakotagui/usingdakotagui.html">Using Dakota GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../externaltools/externaltools.html">Using External Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developingdakota/developingdakota.html">Developing Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../misc/misc.html">Miscellaneous</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">dakota</a>
+      </nav>
+
+	  <!-- SNL Lite header -->
+	  <div class="snlheader-subsite--wrapper-default">
+		<snlheader class="snlheader-subsite" role="snlbanner">
+		  <div class="wrapper">
+			<a href="https://www.sandia.gov/index.html">
+			  <div class="logo-transparent"><p class="logo">Sandia National Laboratories</p></div>
+			</a>
+			<div class="nav-top">
+			  <a class="visuallyhidden" name="mainnav"></a>
+			  <div aria-label="main navigation" class="core-nav-transparent core-nav-transparent--visible" role="navigation">
+				<ul role="navigation" class="secondary-links">
+				  <li id="search-text-link">
+					<a aria-label="Search" href="https://www.sandia.gov/search/">Search Sandia.gov</a>
+				  </li>
+				  <li id="directory-text-link">
+					<a href="https://www.sandia.gov/directory.html" aria-expanded="false" aria-label="Site Directory">All Sandia Websites</a>
+				  </li>
+				</ul>
+			  </div>
+			</div>
+		  </div> 
+		</snlheader>
+	  </div>	  
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../usingdakota.html">Using Dakota</a> &raquo;</li>
+      <li>Coupling Dakota to a Simulation</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/usingdakota/introduction/couplingtosimulations.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="coupling-dakota-to-a-simulation">
+<span id="couplingtosimulations-main"></span><h1>Coupling Dakota to a Simulation<a class="headerlink" href="#coupling-dakota-to-a-simulation" title="Permalink to this headline"></a></h1>
+<section id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline"></a></h2>
+<p>A key Dakota advantage is access to a broad range of iterative capabilities through a single, relatively simple interface
+between Dakota and external, black-box simulation models. By “black-box”, we mean that Dakota has no (or little) awareness of the
+internal details of the simulation model, obviating any need for the Dakota analyst to know anything about the simulation’s source code. Such
+loose coupling is the simplest and most common interfacing approach Dakota users employ. The black-box simulation model could
+be a binary file, a script, or some other type of executable file. The goal of this page is to provide a brief overview of how
+Dakota connects to that simulation model to study it.</p>
+<figure class="align-center" id="coupling-figure01">
+<a class="reference internal image-reference" href="../../_images/CouplingSimulations1.png"><img alt="The loosely-coupled or &quot;black-box&quot; interface between Dakota and a user-supplied simulation code." src="../../_images/CouplingSimulations1.png" style="width: 800px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 28 </span><span class="caption-text">The loosely-coupled or “black-box” interface between Dakota and a user-supplied simulation code.</span><a class="headerlink" href="#coupling-figure01" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<p>This figure depicts a typical loosely-coupled relationship between Dakota and the black-box simulation code. The solid lines denote file
+input/output (I/O) operations inherent to Dakota or the analyst’s simulation code. The dotted lines indicate passing or converting
+information that must be implemented by the analyst, via an <strong>analysis driver</strong> (analysis drivers will be defined below).</p>
+</section>
+<section id="analysis-drivers">
+<h2>Analysis Drivers<a class="headerlink" href="#analysis-drivers" title="Permalink to this headline"></a></h2>
+<p>Dakota and the simulation model communicate by <strong>an exchange of parameters and responses.</strong> This is achieved by reading and writing
+short data files, which contain the parameter and response content.</p>
+<p>Dakota uses <strong>analysis drivers</strong> to handle the actual reading and writing of these short data files. Analysis drivers can be thought of as the “glue” between Dakota and the simulation model.</p>
+<p>An analysis driver could be:</p>
+<ul class="simple">
+<li><p>An executable script that was manually authored by an analyst.</p></li>
+<li><p>An executable file that was automatically generated by another tool (such as a Dakota GUI wizard, or a workflow in Next-Gen Workflow), based on existing knowledge about the black-box simulation model.</p></li>
+</ul>
+<p>As Dakota runs, it does the following:</p>
+<ul class="simple">
+<li><p>Dakota specifies new variable values, based on the configuration of Dakota’s original input file.</p></li>
+<li><p>Dakota writes the new variable values to a parameters file.</p></li>
+<li><p>The analysis driver is called with two arguments – the Dakota parameters file, and the destination results file, where data will eventually be written out.</p></li>
+<li><p>The analysis driver is responsible for preparing input to the simulation model. This step is referred to as <strong>pre-processing.</strong></p></li>
+<li><p>The simulation model is <strong>executed</strong>, using the pre-processed input data.</p></li>
+<li><p>After the simulation model has finished running, the analysis driver is responsible for extracting quantities of interest from the simulation model’s output (usually from console output, or from a log file) and preparing it for Dakota. This step is referred to as <strong>post-processing</strong>.</p></li>
+<li><p>The analysis driver must write the response values (i.e. quantities of interest) from the simulation model to Dakota’s destination result file.</p></li>
+<li><p>Finally, Dakota collects the response values from the results file, and moves on to the next iteration, which starts this sequence over again.</p></li>
+</ul>
+<p>This process is repeated until all of the simulations required by the iterative study are complete.</p>
+<p><em>Note on Terminology:</em> When speaking about coupling Dakota to a simulation model, the terms “parameter”, “variable”, and “input” may be used interchangeably,
+based on the most appropriate word for the context, but they all mean approximately the same thing. Likewise, “response”, “output”, and “QOI”
+(quantity of interest) will also be used interchangeably based on context.</p>
+</section>
+<section id="guidance-for-beginners">
+<h2>Guidance for Beginners<a class="headerlink" href="#guidance-for-beginners" title="Permalink to this headline"></a></h2>
+<p>Writing an analysis driver for the first time can feel daunting. We have collected some resources for helping you get started, organized depending on whether you prefer to
+work on the command-line or in Dakota’s GUI application.</p>
+<section id="command-line-resources">
+<h3>Command-Line Resources<a class="headerlink" href="#command-line-resources" title="Permalink to this headline"></a></h3>
+<blockquote>
+<div><ul class="simple">
+<li><p><a class="reference external" href="http://digitalops.sandia.gov/Mediasite/Play/82fa69553ac64d9b997a59316100d23a1d">Watch in-depth video tutorials for setting up Dakota with external simulation codes.</a></p></li>
+</ul>
+</div></blockquote>
+</section>
+<section id="gui-resources">
+<h3>GUI Resources<a class="headerlink" href="#gui-resources" title="Permalink to this headline"></a></h3>
+<blockquote>
+<div><ul class="simple">
+<li><p><a class="reference internal" href="../../usingdakotagui/bmf/BMF.html#bmf-main"><span class="std std-ref">Basic Model Format (.bmf) files</span></a> allow you to formally define your simulation model’s input parameters and output responses. These files are useful throughout Dakota GUI’s tools for defining analysis drivers.</p></li>
+<li><p>You can use the <a class="reference internal" href="../../usingdakotagui/ngw/NextGenWorkflow.html#ngw-main"><span class="std std-ref">Next-Gen Workflow tool</span></a> in Dakota GUI to create a node-based workflow that will act as a Dakota analysis driver.</p></li>
+<li><p>You can use the <a class="reference internal" href="../../usingdakotagui/wizards/NewScriptDriver.html#wizards-scriptdriver-main"><span class="std std-ref">Script-Based Dakota Driver wizard</span></a> in Dakota GUI to auto-generate a Python script that will act as a Dakota analysis driver.</p></li>
+<li><p>If your external simulation model receives a text-based input file, you can use <a class="reference internal" href="../../usingdakotagui/miscgui/ContextMenuTools.html#gui-context-tools-markup"><span class="std std-ref">the Markup File tool in the GUI</span></a> to markup a text file with pre-processing syntax.</p></li>
+</ul>
+</div></blockquote>
+</section>
+</section>
+<section id="deep-dive-into-dakota-s-analysis-driver-process">
+<h2>Deep Dive into Dakota’s Analysis Driver Process<a class="headerlink" href="#deep-dive-into-dakota-s-analysis-driver-process" title="Permalink to this headline"></a></h2>
+<section id="compiled-rosenbrock-example">
+<span id="user-supplied-sim-code-case1"></span><h3>Compiled Rosenbrock Example<a class="headerlink" href="#compiled-rosenbrock-example" title="Permalink to this headline"></a></h3>
+<p>For this example, the C++ program <code class="docutils literal notranslate"><span class="pre">rosenbrock.cpp</span></code> in <code class="docutils literal notranslate"><span class="pre">dakota_source/test</span></code> is used as the black-box simulation code.
+This file is compiled to create the standalone rosenbrock executable that is referenced as the analysis driver in the
+example input file below. This standalone program performs the same function evaluations as Dakota’s internal Rosenbrock test function.</p>
+<div class="literal-block-wrapper docutils container" id="tutorial-rosenbrock-user">
+<div class="code-block-caption"><span class="caption-number">Listing 13 </span><span class="caption-text">Dakota input file for gradient-based optimization using
+the fork call interface to an external rosenbrock simulator.</span><a class="headerlink" href="#tutorial-rosenbrock-user" title="Permalink to this code"></a></div>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span><span class="c"># Dakota Input File: rosen_syscall.in</span>
+<span class="c"># Usage:</span>
+<span class="c">#   dakota -i rosen_syscall.in -o rosen_syscall.out &gt; rosen_syscall.stdout</span>
+
+<span class="k">environment</span>
+  tabular_data
+    tabular_data_file = &#39;rosen_syscall.dat&#39;
+
+<span class="k">method</span>
+  conmin_frcg
+    convergence_tolerance = 1e-4
+    max_iterations = 100
+
+<span class="k">model</span>
+  single
+
+<span class="k">variables</span>
+  continuous_design = 2
+    initial_point    -1.2      1.0
+    lower_bounds     -2.0     -2.0
+    upper_bounds      2.0      2.0
+    descriptors       &#39;x1&#39;     &quot;x2&quot;
+
+<span class="k">interface</span>
+  analysis_drivers = &#39;rosenbrock&#39;
+    fork
+    parameters_file = &#39;params.in&#39;
+    results_file    = &#39;results.out&#39;
+
+<span class="k">responses</span>
+  objective_functions = 1
+  numerical_gradients
+    method_source dakota
+    interval_type forward
+    fd_step_size = 1.e-5
+  no_hessians
+</pre></div>
+</div>
+</div>
+<p>(The input file shown in <a class="reference internal" href="#tutorial-rosenbrock-user"><span class="std std-numref">Listing 13</span></a> is <code class="docutils literal notranslate"><span class="pre">rosen_syscall.in</span></code>, which is provided in the directory <code class="docutils literal notranslate"><span class="pre">dakota/share/dakota/examples/users.</span></code>)</p>
+<p>The keyword <code class="docutils literal notranslate"><span class="pre">fork</span></code> indicates that Dakota will use fork calls to create separate Unix processes for
+executions of the user-supplied simulation code. The name of the simulation code (and the names for Dakota’s parameters and
+results file) are specified using the <code class="docutils literal notranslate"><span class="pre">analysis_drivers</span></code>, <code class="docutils literal notranslate"><span class="pre">parameters_file</span></code>, and <code class="docutils literal notranslate"><span class="pre">results_file</span></code> keywords, respectively.</p>
+<p>The Dakota command is noted in the comments at the top of this file. Expected copies of the outputs are in the
+<code class="docutils literal notranslate"><span class="pre">dakota/share/dakota/examples/users</span></code> directory, with <code class="docutils literal notranslate"><span class="pre">.sav</span></code> appended to the name.</p>
+<p>This run of Dakota takes longer to complete than other examples of gradient-based optimization for the Rosenbrock function,
+since the fork interface method has additional process creation and file I/O overhead, as compared to the internal communication
+that occurs when the direct interface method is used.</p>
+<section id="parameter-file-format">
+<span id="couplingtosimulations-paramformat"></span><h4>Parameter File Format<a class="headerlink" href="#parameter-file-format" title="Permalink to this headline"></a></h4>
+<p>To gain a better understanding of what exactly Dakota is doing with the fork interface approach, add the keywords <code class="docutils literal notranslate"><span class="pre">file_tag</span></code>
+and <code class="docutils literal notranslate"><span class="pre">file_save</span></code> to the interface specification and re-run Dakota. Check the listing of the local directory and you will see
+many new files with names such as <code class="docutils literal notranslate"><span class="pre">params.in.1</span></code>, <code class="docutils literal notranslate"><span class="pre">params.in.2</span></code>, etc., and <code class="docutils literal notranslate"><span class="pre">results.out.1</span></code>, <code class="docutils literal notranslate"><span class="pre">results.out.2</span></code>, etc.
+There is one <code class="docutils literal notranslate"><span class="pre">params.in.X</span></code> file and one <code class="docutils literal notranslate"><span class="pre">results.out.X</span></code> file for each of the function evaluations performed by Dakota.
+This is the file listing for <code class="docutils literal notranslate"><span class="pre">params.in.1</span></code>:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>                                         2 variables
+-1.200000000000000e+00 x1
+ 1.000000000000000e+00 x2
+                                         1 functions
+                                         1 ASV_1:obj_fn
+                                         2 derivative_variables
+                                         1 DVV_1:x1
+                                         2 DVV_2:x2
+                                         0 analysis_components
+</pre></div>
+</div>
+<p>The basic pattern is that of array lengths and string identifiers followed by listings of the array entries, where the arrays consist
+of the variables, the active set vector (ASV), the derivative values vector (DVV), and the analysis components (AC).</p>
+<p>For the variables array, the first line gives the total number of variables (2) and the “variables” string identifier, and the subsequent
+two lines provide the array listing for the two variable values (-1.2 and 1.0) and descriptor tags (“x1” and “x2” from the
+Dakota input file).</p>
+<p>The next array conveys the ASV, which indicates what simulator outputs are needed. The first line of
+the array gives the total number of response functions (1) and the “functions” string identifier, followed by one ASV code
+and descriptor tag (“ASV 1”) for each function. In this case, the ASV value of 1 indicates that Dakota is requesting that the
+simulation code return the response function value in the file results.out.X. (Possible ASV values: 1 = value of response
+function value, 2 = response function gradient, 4 = response function Hessian, and any sum of these for combinations up to 7
+= response function value, gradient, and Hessian; see 9.7 for more detail.)</p>
+<p>The next array provides the DVV, which defines
+the variable identifiers used in computing derivatives. The first line of the array gives the number of derivative variables (2)
+and the “derivative variables” string identifier, followed by the listing of the two DVV variable identifiers (the first and second
+variables) and descriptor tags (“DVV 1” and “DVV 2”). The final array provides the AC array used to provide additional
+strings for use by the simulator (e.g., to provide the name of a particular mesh file). The first line of the array gives the total
+number of analysis components (0) and the “analysis components” string identifier, followed by the listing of the array, which
+is empty in this case.</p>
+<p>—</p>
+<p>The executable program <code class="docutils literal notranslate"><span class="pre">rosenbrock</span></code> reads in the <code class="docutils literal notranslate"><span class="pre">params.in.X</span></code> file and evaluates the objective function at the given values
+for x1 and x2. Then, rosenbrock writes out the objective function data to the <code class="docutils literal notranslate"><span class="pre">results.out.X</span></code> file. Here is the listing for
+the file <code class="docutils literal notranslate"><span class="pre">results.out.1</span></code>:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>2.420000000000000e+01 f
+</pre></div>
+</div>
+<p>The value shown above is the value of the objective function, and the descriptor ‘f’ is an optional tag returned by the simulation
+code. When the fork call has completed, Dakota reads in the data from the results.in.X file and processes the results.
+Dakota then continues with additional executions of the rosenbrock program until the optimization process is complete.</p>
+</section>
+</section>
+<section id="user-supplied-simulation-codes">
+<span id="user-supplied-sim-code-case2"></span><h3>User-Supplied Simulation Codes<a class="headerlink" href="#user-supplied-simulation-codes" title="Permalink to this headline"></a></h3>
+<p>In many situations the user-supplied simulation code cannot be modified to read and write the <code class="docutils literal notranslate"><span class="pre">params.in.X</span></code> file and the
+<code class="docutils literal notranslate"><span class="pre">results.out.X</span></code> file, as described above. Typically, this occurs when the simulation code is a commercial or proprietary
+software product that has specific input file and output file formats. In such cases, it is common to replace the executable
+program name in the Dakota input file with the name of a Unix shell script containing a sequence of commands that read and
+write the necessary files and run the simulation code.</p>
+<p>For example, the executable program named <code class="docutils literal notranslate"><span class="pre">rosenbrock</span></code> in the Dakota input file provided above could be replaced by a
+Unix Bourne or C-shell script named <code class="docutils literal notranslate"><span class="pre">simulator_script</span></code>, with the script containing a
+sequence of commands to perform the following steps:</p>
+<ul class="simple">
+<li><p>Insert the data from the <code class="docutils literal notranslate"><span class="pre">parameters.in.X</span></code> file into the input file of the simulation code.</p></li>
+<li><p>Execute the simulation code.</p></li>
+<li><p>Post-process the files generated by the simulation code to compute response data, and return the response data to Dakota in the <code class="docutils literal notranslate"><span class="pre">results.out.X</span></code> file.</p></li>
+</ul>
+</section>
+<section id="sand-simulation-codes">
+<span id="user-supplied-sim-code-sand"></span><h3>SAND Simulation Codes<a class="headerlink" href="#sand-simulation-codes" title="Permalink to this headline"></a></h3>
+<p>In some cases it is advantageous to have a close coupling between Dakota and the simulation code. This close coupling is an
+advanced feature of Dakota and is accomplished through either a direct interface or a <em>SAND</em> (Simultaneous ANalysis and Design)
+interface. For the direct interface, the user’s simulation code is modified to behave as a function or subroutine under Dakota.
+This interface can be considered to be “semi-intrusive” in that it requires relatively minor modifications to the simulation code.
+Its major advantage is the elimination of the overhead resulting from file I/O and process creation. It can also be a useful
+tool for parallel processing, by encapsulating all computation in a single executable.</p>
+<p>A SAND interface approach is “fully intrusive” in that it requires further modifications to the simulation code so
+that an optimizer has access to the internal residual vector and Jacobian matrices computed by the simulation code. In a SAND
+approach, both the optimization method and a nonlinear simulation code are converged simultaneously. While this approach
+can greatly reduce the computational expense of optimization, considerable software development effort must be expended to
+achieve this intrusive coupling between SAND optimization methods and the simulation code. SAND may be supported in
+future Dakota releases.</p>
+</section>
+</section>
+<section id="video-resources">
+<h2>Video Resources<a class="headerlink" href="#video-resources" title="Permalink to this headline"></a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 63%" />
+<col style="width: 19%" />
+<col style="width: 18%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Title</p></th>
+<th class="head"><p>Link</p></th>
+<th class="head"><p>Resources</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Interfacing a User’s Simulation to Dakota (Part 1)</p></td>
+<td><p><a class="reference external" href="http://digitalops.sandia.gov/Mediasite/Play/82fa69553ac64d9b997a59316100d23a1d"><img alt="Interfacing a User's Simulation to Dakota (Part 1)" src="../../_images/InterfacingTrainingPart1.png" /></a></p></td>
+<td><p><a class="reference external" href="https://dakota.sandia.gov/sites/default/files/training/DakotaTraining_Interfacing.pdf">Slides</a> /
+<a class="reference external" href="https://dakota.sandia.gov/sites/default/files/training/interfacing-151215.zip">Exercises</a></p></td>
+</tr>
+<tr class="row-odd"><td><p>Interfacing a User’s Simulation to Dakota (Part 2)</p></td>
+<td><p><a class="reference external" href="http://digitalops.sandia.gov/Mediasite/Play/5c5f47304b934159a40347f3ba74ad851d"><img alt="Interfacing a User's Simulation to Dakota (Part 2)" src="../../_images/InterfacingTrainingPart2.png" /></a></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../examples/additionalexamples.html" class="btn btn-neutral float-left" title="Additional Examples" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../inputfile.html" class="btn btn-neutral float-right" title="Dakota Input File" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <!--
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Sandia National Laboratories.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+  --> 
+
+</footer>
+        </div>
+      </div>
+	  
+	  <div style="background-color: #0f0f0f;color:#fafafa;padding:20px">
+	    <div>
+		  <h2><em>Exceptional service in the national interest</em></h2>
+		</div>
+		<p>© 2022 National Technology and Engineering Solutions of Sandia, LLC. | <a href="https://www.sandia.gov/contact_us/index.html">Questions &amp; Comments</a> | <a href="https://www.sandia.gov/general/privacy-security/index.html">Privacy &amp; Security</a></p>
+		<p><a href="http://energy.gov" rel="noopener noreferrer" target="_blank"><img alt="U.S. Department of Energy" longdesc="https://energy.gov" src="https://www.sandia.gov/_common/images/doe_logo_white.png" style="height:37px; width:140px"></a> <a href="http://nnsa.energy.gov/" rel="noopener noreferrer" target="_blank"> <img alt="National Nuclear Security Administration" longdesc="http://nnsa.gov" src="https://www.sandia.gov/_common/images/nnsa_logo_white.png" style="height:37px; width:116px"></a></p>
+		<p><a href="https://www.sandia.gov">Sandia National Laboratories</a> is a multimission laboratory managed and operated by National Technology and Engineering Solutions of Sandia, LLC., a wholly owned subsidiary of Honeywell International, Inc., for the U.S. Department of Energy’s National Nuclear Security Administration under contract DE-NA-0003525.</p>
+	  </div>	  	  
+	  
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

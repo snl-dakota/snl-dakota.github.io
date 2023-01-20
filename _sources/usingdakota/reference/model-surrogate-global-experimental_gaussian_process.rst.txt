@@ -1,0 +1,79 @@
+.. _model-surrogate-global-experimental_gaussian_process:
+
+"""""""""""""""""""""""""""""
+experimental_gaussian_process
+"""""""""""""""""""""""""""""
+
+
+Use the Gaussian process regression surrogate from the surrogates module
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   model-surrogate-global-experimental_gaussian_process-trend
+   model-surrogate-global-experimental_gaussian_process-num_restarts
+   model-surrogate-global-experimental_gaussian_process-nugget
+   model-surrogate-global-experimental_gaussian_process-find_nugget
+   model-surrogate-global-experimental_gaussian_process-options_file
+   model-surrogate-global-experimental_gaussian_process-export_approx_variance_file
+   model-surrogate-global-experimental_gaussian_process-export_model
+   model-surrogate-global-experimental_gaussian_process-import_model
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+---------------------------------+---------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword                  | Dakota Keyword Description                  |
+|                         | Group              |                                 |                                             |
++=========================+====================+=================================+=============================================+
+| Optional                                     | `trend`__                       | This keyword enables the use of             |
+|                                              |                                 | deterministic polynomial trend function     |
++----------------------------------------------+---------------------------------+---------------------------------------------+
+| Optional                                     | `num_restarts`__                | Number of optimization restarts for         |
+|                                              |                                 | L-BFGS-B                                    |
++-------------------------+--------------------+---------------------------------+---------------------------------------------+
+| Optional (Choose One)   | Nugget             | `nugget`__                      | Value for the fixed nugget parameter        |
+|                         |                    +---------------------------------+---------------------------------------------+
+|                         |                    | `find_nugget`__                 | Use regression to estimate the nugget.      |
++-------------------------+--------------------+---------------------------------+---------------------------------------------+
+| Optional                                     | `options_file`__                | Filename for a YAML file that specifies     |
+|                                              |                                 | Gaussian process options                    |
++----------------------------------------------+---------------------------------+---------------------------------------------+
+| Optional                                     | `export_approx_variance_file`__ | Output file for surrogate model variance    |
+|                                              |                                 | evaluations                                 |
++----------------------------------------------+---------------------------------+---------------------------------------------+
+| Optional                                     | `export_model`__                | Exports surrogate model in user-specified   |
+|                                              |                                 | format(s)                                   |
++----------------------------------------------+---------------------------------+---------------------------------------------+
+| Optional                                     | `import_model`__                | Import surrogate model from archive file    |
++----------------------------------------------+---------------------------------+---------------------------------------------+
+
+.. __: model-surrogate-global-experimental_gaussian_process-trend.html
+__ model-surrogate-global-experimental_gaussian_process-num_restarts.html
+__ model-surrogate-global-experimental_gaussian_process-nugget.html
+__ model-surrogate-global-experimental_gaussian_process-find_nugget.html
+__ model-surrogate-global-experimental_gaussian_process-options_file.html
+__ model-surrogate-global-experimental_gaussian_process-export_approx_variance_file.html
+__ model-surrogate-global-experimental_gaussian_process-export_model.html
+__ model-surrogate-global-experimental_gaussian_process-import_model.html
+
+
+
+**Description**
+
+
+This Gaussian process implementation is contained in Dakota's surrogates module
+and is considered experimental. It uses gradient-based optimization with
+restarts to determine hyperparmeters and trend coefficients. Nugget and trend
+estimation are optional.
+
+

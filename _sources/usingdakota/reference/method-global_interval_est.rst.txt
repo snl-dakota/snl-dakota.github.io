@@ -1,0 +1,112 @@
+.. _method-global_interval_est:
+
+"""""""""""""""""""
+global_interval_est
+"""""""""""""""""""
+
+
+Interval analysis using global optimization methods
+
+
+
+**Topics**
+
+
+uncertainty_quantification, epistemic_uncertainty_quantification_methods, interval_estimation
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-global_interval_est-samples
+   method-global_interval_est-seed
+   method-global_interval_est-max_iterations
+   method-global_interval_est-convergence_tolerance
+   method-global_interval_est-max_function_evaluations
+   method-global_interval_est-sbgo
+   method-global_interval_est-ego
+   method-global_interval_est-ea
+   method-global_interval_est-lhs
+   method-global_interval_est-rng
+   method-global_interval_est-model_pointer
+
+
+**Specification**
+
+- *Alias:* nond_global_interval_est 
+
+- *Arguments:* None
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+------------------------------+---------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword               | Dakota Keyword Description                  |
+|                         | Group              |                              |                                             |
++=========================+====================+==============================+=============================================+
+| Optional                                     | `samples`__                  | Number of samples for sampling-based        |
+|                                              |                              | methods                                     |
++----------------------------------------------+------------------------------+---------------------------------------------+
+| Optional                                     | `seed`__                     | Seed of the random number generator         |
++----------------------------------------------+------------------------------+---------------------------------------------+
+| Optional                                     | `max_iterations`__           | Number of iterations allowed for optimizers |
+|                                              |                              | and adaptive UQ methods                     |
++----------------------------------------------+------------------------------+---------------------------------------------+
+| Optional                                     | `convergence_tolerance`__    | Stopping criterion based on objective       |
+|                                              |                              | function or statistics convergence          |
++----------------------------------------------+------------------------------+---------------------------------------------+
+| Optional                                     | `max_function_evaluations`__ | Number of function evaluations allowed for  |
+|                                              |                              | optimizers                                  |
++-------------------------+--------------------+------------------------------+---------------------------------------------+
+| Optional (Choose One)   | Solution Approach  | `sbgo`__                     | Use the surrogate based optimization method |
+|                         |                    +------------------------------+---------------------------------------------+
+|                         |                    | `ego`__                      | Use the Efficient Global Optimization       |
+|                         |                    |                              | method                                      |
+|                         |                    +------------------------------+---------------------------------------------+
+|                         |                    | `ea`__                       | Use an evolutionary algorithm               |
+|                         |                    +------------------------------+---------------------------------------------+
+|                         |                    | `lhs`__                      | Uses Latin Hypercube Sampling (LHS) to      |
+|                         |                    |                              | sample variables                            |
++-------------------------+--------------------+------------------------------+---------------------------------------------+
+| Optional                                     | `rng`__                      | Selection of a random number generator      |
++----------------------------------------------+------------------------------+---------------------------------------------+
+| Optional                                     | `model_pointer`__            | Identifier for model block to be used by a  |
+|                                              |                              | method                                      |
++----------------------------------------------+------------------------------+---------------------------------------------+
+
+.. __: method-global_interval_est-samples.html
+__ method-global_interval_est-seed.html
+__ method-global_interval_est-max_iterations.html
+__ method-global_interval_est-convergence_tolerance.html
+__ method-global_interval_est-max_function_evaluations.html
+__ method-global_interval_est-sbgo.html
+__ method-global_interval_est-ego.html
+__ method-global_interval_est-ea.html
+__ method-global_interval_est-lhs.html
+__ method-global_interval_est-rng.html
+__ method-global_interval_est-model_pointer.html
+
+
+
+**Description**
+
+
+In the global approach to interval estimation, one uses either a global optimization
+method or a sampling method to assess the bounds of the responses.
+
+``global_interval_est``
+allows the user to specify several approaches to calculate
+interval bounds on the output responses.
+
+- ``lhs`` - note: this takes the minimum and maximum of the samples as the bounds
+- ``ego``
+- ``sbo``
+- ``ea``
+
+*Additional Resources*
+
+Refer to :ref:`topic-variable_support<topic-variable_support>` for information on supported
+variable types.
+
+

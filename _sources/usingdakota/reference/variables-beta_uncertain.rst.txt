@@ -1,0 +1,107 @@
+.. _variables-beta_uncertain:
+
+""""""""""""""
+beta_uncertain
+""""""""""""""
+
+
+Aleatory uncertain variable - beta
+
+
+
+
+**Topics**
+
+
+continuous_variables, aleatory_uncertain_variables
+
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   variables-beta_uncertain-alphas
+   variables-beta_uncertain-betas
+   variables-beta_uncertain-lower_bounds
+   variables-beta_uncertain-upper_bounds
+   variables-beta_uncertain-initial_point
+   variables-beta_uncertain-descriptors
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* INTEGER
+
+- *Default:* no beta uncertain variables
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+--------------------+---------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword     | Dakota Keyword Description                  |
+|                         | Group              |                    |                                             |
++=========================+====================+====================+=============================================+
+| Required                                     | `alphas`__         | First parameter of the beta distribution    |
++----------------------------------------------+--------------------+---------------------------------------------+
+| Required                                     | `betas`__          | Second parameter of the beta distribution   |
++----------------------------------------------+--------------------+---------------------------------------------+
+| Required                                     | `lower_bounds`__   | Specify minimum values                      |
++----------------------------------------------+--------------------+---------------------------------------------+
+| Required                                     | `upper_bounds`__   | Specify maximium values                     |
++----------------------------------------------+--------------------+---------------------------------------------+
+| Optional                                     | `initial_point`__  | Initial values for variables                |
++----------------------------------------------+--------------------+---------------------------------------------+
+| Optional                                     | `descriptors`__    | Labels for the variables                    |
++----------------------------------------------+--------------------+---------------------------------------------+
+
+.. __: variables-beta_uncertain-alphas.html
+__ variables-beta_uncertain-betas.html
+__ variables-beta_uncertain-lower_bounds.html
+__ variables-beta_uncertain-upper_bounds.html
+__ variables-beta_uncertain-initial_point.html
+__ variables-beta_uncertain-descriptors.html
+
+
+
+**Description**
+
+
+The number of beta uncertain variables, the alpha and beta parameters, and the distribution upper and lower bounds are required specifications, while the variable descriptors is an optional specification.
+The beta distribution can be helpful when the actual distribution of an uncertain variable is unknown, but the user has a good idea of the bounds, the mean, and the standard deviation of the uncertain variable.
+The density function for the beta distribution is
+
+.. math:: f(x)= \frac{\Gamma(\alpha+\beta)}{\Gamma(\alpha)\Gamma(\beta)}\frac{(x-L)^{\alpha-1}(U-x)^{\beta-1}}{(U-L)^{\alpha+\beta-1}},
+
+where :math:`\Gamma(\alpha)` is the gamma function and
+
+.. math:: `B(\alpha, \beta) = \frac{\Gamma(\alpha)\Gamma(\beta)}{\Gamma(\alpha+\beta)}` 
+
+is the beta function. To calculate the mean and standard deviation from the alpha, beta, upper bound, and lower bound parameters of the beta distribution, the following expressions may be used.
+
+.. math:: \mu = L+\frac{\alpha}{\alpha+\beta}(U-L)
+
+.. math:: \sigma^2 =\frac{\alpha\beta}{(\alpha+\beta)^2(\alpha+\beta+1)}(U-L)^2
+
+Solving these for :math:`\alpha`  and :math:`\beta`  gives:
+
+.. math:: \alpha = (\mu-L)\frac{(\mu-L)(U-\mu)-\sigma^2}{\sigma^2(U-L)}
+
+.. math:: \beta = (U-\mu)\frac{(\mu-L)(U-\mu)-\sigma^2}{\sigma^2(U-L)}
+
+Note that the uniform distribution is a special case of this distribution for parameters :math:`\alpha = \beta = 1` .
+
+
+
+
+**Theory**
+
+
+For some methods, including vector and centered parameter studies, an
+initial point is needed for the uncertain variables. When not given
+explicitly, these variables are initialized to their means.
+
+
+

@@ -1,0 +1,67 @@
+.. _method-bayes_calibration-wasabi-emulator-ml_pce-expansion_order_sequence:
+
+""""""""""""""""""""""""
+expansion_order_sequence
+""""""""""""""""""""""""
+
+
+Sequence of expansion orders used in a multi-stage expansion
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-bayes_calibration-wasabi-emulator-ml_pce-expansion_order_sequence-dimension_preference
+   method-bayes_calibration-wasabi-emulator-ml_pce-expansion_order_sequence-basis_type
+   method-bayes_calibration-wasabi-emulator-ml_pce-expansion_order_sequence-collocation_ratio
+   method-bayes_calibration-wasabi-emulator-ml_pce-expansion_order_sequence-expansion_samples_sequence
+   method-bayes_calibration-wasabi-emulator-ml_pce-expansion_order_sequence-import_build_points_file
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* INTEGERLIST
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+------------------------------+---------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword               | Dakota Keyword Description                  |
+|                         | Group              |                              |                                             |
++=========================+====================+==============================+=============================================+
+| Optional                                     | `dimension_preference`__     | A set of weights specifying the realtive    |
+|                                              |                              | importance of each uncertain variable       |
+|                                              |                              | (dimension)                                 |
++----------------------------------------------+------------------------------+---------------------------------------------+
+| Optional                                     | `basis_type`__               | Specify the type of basis truncation to be  |
+|                                              |                              | used for a Polynomial Chaos Expansion.      |
++----------------------------------------------+------------------------------+---------------------------------------------+
+| Optional                                     | `import_build_points_file`__ | File containing points you wish to use to   |
+|                                              |                              | build a surrogate                           |
++----------------------------------------------+------------------------------+---------------------------------------------+
+
+.. __: method-bayes_calibration-wasabi-emulator-ml_pce-expansion_order_sequence-dimension_preference.html
+__ method-bayes_calibration-wasabi-emulator-ml_pce-expansion_order_sequence-basis_type.html
+__ method-bayes_calibration-wasabi-emulator-ml_pce-expansion_order_sequence-import_build_points_file.html
+
+
+
+**Description**
+
+
+Each level entry of the ``expansion_order_sequence`` applies to one
+expansion within a multi-stage expansion.  Current multi-stage
+expansions that support expansion order sequences include multilevel
+or multifidelity polynomial chaos.
+
+If adaptive refinement is active, then this sequence specifies the
+starting point for each level within either an individual or
+integrated refinement approach.
+
+A corresponding scalar specification is documented at, e.g.,
+:ref:`method-polynomial_chaos-expansion_order<method-polynomial_chaos-expansion_order>`
+
+

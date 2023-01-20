@@ -1,0 +1,87 @@
+.. _interface-analysis_drivers-fork-work_directory:
+
+""""""""""""""
+work_directory
+""""""""""""""
+
+
+Perform each function evaluation in a separate working directory
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   interface-analysis_drivers-fork-work_directory-named
+   interface-analysis_drivers-fork-work_directory-directory_tag
+   interface-analysis_drivers-fork-work_directory-directory_save
+   interface-analysis_drivers-fork-work_directory-link_files
+   interface-analysis_drivers-fork-work_directory-copy_files
+   interface-analysis_drivers-fork-work_directory-replace
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+- *Default:* no work directory
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+--------------------+---------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword     | Dakota Keyword Description                  |
+|                         | Group              |                    |                                             |
++=========================+====================+====================+=============================================+
+| Optional                                     | `named`__          | The base name of the work directory created |
+|                                              |                    | by Dakota                                   |
++----------------------------------------------+--------------------+---------------------------------------------+
+| Optional                                     | `directory_tag`__  | Tag each work directory with the function   |
+|                                              |                    | evaluation number                           |
++----------------------------------------------+--------------------+---------------------------------------------+
+| Optional                                     | `directory_save`__ | Preserve the work directory after function  |
+|                                              |                    | evaluation completion                       |
++----------------------------------------------+--------------------+---------------------------------------------+
+| Optional                                     | `link_files`__     | Paths to be linked into each working        |
+|                                              |                    | directory                                   |
++----------------------------------------------+--------------------+---------------------------------------------+
+| Optional                                     | `copy_files`__     | Files and directories to be copied into     |
+|                                              |                    | each working directory                      |
++----------------------------------------------+--------------------+---------------------------------------------+
+| Optional                                     | `replace`__        | Overwrite existing files within a work      |
+|                                              |                    | directory                                   |
++----------------------------------------------+--------------------+---------------------------------------------+
+
+.. __: interface-analysis_drivers-fork-work_directory-named.html
+__ interface-analysis_drivers-fork-work_directory-directory_tag.html
+__ interface-analysis_drivers-fork-work_directory-directory_save.html
+__ interface-analysis_drivers-fork-work_directory-link_files.html
+__ interface-analysis_drivers-fork-work_directory-copy_files.html
+__ interface-analysis_drivers-fork-work_directory-replace.html
+
+
+
+**Description**
+
+
+When performing concurrent evaluations, it is typically necessary to
+cloister simulation input and output files in separate directories to
+avoid conflicts.  When the ``work_directory`` feature is enabled,
+Dakota will create a directory for each evaluation, with optional
+tagging ( ``directory_tag``) and saving ( ``directory_save`` ), as with
+files, and execute the analysis driver from that working directory.
+
+The directory may be ``named`` with a string, or left anonymous to use
+an automatically-generated directory in the system's temporary file
+space, e.g., /tmp/dakota_work_c93vb71z/. The optional ``link_files``
+and ``copy_files`` keywords specify files or directories which should
+appear in each working directory.
+
+When using work_directory, the :ref:`interface-analysis_drivers<interface-analysis_drivers>` may be
+given by an absolute path, located in (or relative to) the startup
+directory alongside the Dakota input file, in the list of template
+files linked or copied, or on the $PATH (Path% on Windows).
+
+

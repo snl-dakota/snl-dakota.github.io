@@ -1,0 +1,49 @@
+.. _method-bayes_calibration-queso-emulator-mf_pce-expansion_order_sequence-collocation_ratio-cross_validation:
+
+""""""""""""""""
+cross_validation
+""""""""""""""""
+
+
+Use cross validation to choose the 'best' polynomial order of a polynomial chaos expansion.
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-bayes_calibration-queso-emulator-mf_pce-expansion_order_sequence-collocation_ratio-cross_validation-noise_only
+   method-bayes_calibration-queso-emulator-mf_pce-expansion_order_sequence-collocation_ratio-cross_validation-max_cv_order_candidates
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+-----------------------------+---------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword              | Dakota Keyword Description                  |
+|                         | Group              |                             |                                             |
++=========================+====================+=============================+=============================================+
+| Optional                                     | `noise_only`__              | Restrict the cross validation process to    |
+|                                              |                             | estimating only the best noise tolerance.   |
++----------------------------------------------+-----------------------------+---------------------------------------------+
+| Optional                                     | `max_cv_order_candidates`__ | Limit the number of cross-validation        |
+|                                              |                             | candidates for basis order                  |
++----------------------------------------------+-----------------------------+---------------------------------------------+
+
+.. __: method-bayes_calibration-queso-emulator-mf_pce-expansion_order_sequence-collocation_ratio-cross_validation-noise_only.html
+__ method-bayes_calibration-queso-emulator-mf_pce-expansion_order_sequence-collocation_ratio-cross_validation-max_cv_order_candidates.html
+
+
+
+**Description**
+
+
+Use cross validation to choose the 'best' polynomial degree of a polynomial chaos expansion. 10 fold cross validation is used to estimate the cross validation error of a total-order polynomial expansion for orders 1 through to order. The order chosen is the one that produces the lowest cross validation error. If there are not enough points to perform 10 fold cross validation then one-at-a-time cross validation will be performed.
+
+

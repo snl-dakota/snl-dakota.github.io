@@ -1,0 +1,41 @@
+.. _method-fsu_quasi_mc-hammersley:
+
+""""""""""
+hammersley
+""""""""""
+
+
+Use Hammersley sequences
+
+
+
+**Topics**
+
+
+package_fsudace, design_and_analysis_of_computer_experiments
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+
+**Description**
+
+
+The Hammersley sequence is the same as the Halton sequence, except the values
+for the first random variable are equal to 1/N, where N is the number of
+samples. Thus, if one wants to generate a sample set of 100 samples for 3
+random variables, the first random variable has values 1/100, 2/100, 3/100,
+etc. and the second and third variables are generated according to a Halton
+sequence with bases 2 and 3, respectively.
+
+

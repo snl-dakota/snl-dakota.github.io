@@ -1,0 +1,60 @@
+.. _environment-read_restart:
+
+""""""""""""
+read_restart
+""""""""""""
+
+
+Base filename for restart file read
+
+
+
+**Topics**
+
+
+dakota_IO, command_line_options
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   environment-read_restart-stop_restart
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* STRING
+
+- *Default:* no restart read
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+--------------------+---------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword     | Dakota Keyword Description                  |
+|                         | Group              |                    |                                             |
++=========================+====================+====================+=============================================+
+| Optional                                     | `stop_restart`__   | Restart record number at which to stop      |
+|                                              |                    | reading the restart file.                   |
++----------------------------------------------+--------------------+---------------------------------------------+
+
+.. __: environment-read_restart-stop_restart.html
+
+
+
+**Description**
+
+
+Specify a base filename for the restart file Dakota
+should read.  This option is overridden by any command-line
+
+-read_restart option.
+
+*Default Behavior*
+
+No restart file is read.
+
+

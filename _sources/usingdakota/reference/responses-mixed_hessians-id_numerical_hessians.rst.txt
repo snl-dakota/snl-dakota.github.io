@@ -1,0 +1,58 @@
+.. _responses-mixed_hessians-id_numerical_hessians:
+
+"""""""""""""""""""""
+id_numerical_hessians
+"""""""""""""""""""""
+
+
+Identify which numerical-Hessian corresponds to which response
+
+
+
+**Topics**
+
+
+objective_function_pointer
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   responses-mixed_hessians-id_numerical_hessians-fd_step_size
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* INTEGERLIST
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+--------------------+---------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword     | Dakota Keyword Description                  |
+|                         | Group              |                    |                                             |
++=========================+====================+====================+=============================================+
+| Optional                                     | `fd_step_size`__   | Step size used when computing gradients and |
+|                                              |                    | Hessians                                    |
++----------------------------------------------+--------------------+---------------------------------------------+
+
+.. __: responses-mixed_hessians-id_numerical_hessians-fd_step_size.html
+
+
+
+**Description**
+
+
+The ``id_analytic_hessians`` list
+specifies by number the functions which have analytic Hessians, and
+the ``id_numerical_hessians`` and ``id_quasi_hessians`` lists specify by
+number the functions which must use numerical Hessians and
+secant Hessian updates, respectively. Each function identifier,
+from 1 through the total number of functions, must appear once and
+only once within the union of the ``id_analytic_hessians``,
+``id_numerical_hessians``, and ``id_quasi_hessians`` lists.
+
+

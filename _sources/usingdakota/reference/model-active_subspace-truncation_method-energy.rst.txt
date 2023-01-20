@@ -1,0 +1,64 @@
+.. _model-active_subspace-truncation_method-energy:
+
+""""""
+energy
+""""""
+
+
+Truncate the subspace based on eigenvalue energy
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   model-active_subspace-truncation_method-energy-truncation_tolerance
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+--------------------------+---------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword           | Dakota Keyword Description                  |
+|                         | Group              |                          |                                             |
++=========================+====================+==========================+=============================================+
+| Optional                                     | `truncation_tolerance`__ | Specify the maximum percentage (as a        |
+|                                              |                          | decimal) of the eigenvalue energy not       |
+|                                              |                          | captured by the active subspace             |
+|                                              |                          | representation.                             |
++----------------------------------------------+--------------------------+---------------------------------------------+
+
+.. __: model-active_subspace-truncation_method-energy-truncation_tolerance.html
+
+
+
+**Description**
+
+
+Uses a criterion based on the derivative matrix eigenvalue energy.
+
+*Usage Tips*
+
+This subspace truncation method may work best when working with non-normally
+distributed uncertain variables. If this automated diagnostic does not yield
+desirable results, consider using the explicit :ref:`model-active_subspace-dimension<model-active_subspace-dimension>` truncation option or
+one of the other truncation methods.
+
+
+
+**Theory**
+
+
+Using the eigenvalue energy truncation metric, the subspace size is determined using the following equation:
+
+.. math:: n = \inf \left\lbrace d \in \mathbf{Z} \quad\middle|\quad 1 \le d \le N \quad \wedge\quad 1 - \frac{\sum_{i = 1}^{d} \lambda_i}{\sum_{i = 1}^{N} \lambda_i} \,<\, \epsilon \right\rbrace 
+
+where :math:`\epsilon`  is the :ref:`model-active_subspace-truncation_method-energy-truncation_tolerance<model-active_subspace-truncation_method-energy-truncation_tolerance>`, :math:`n`  is the estimated subspace size, :math:`N`  is the size of the full space, and :math:`\lambda_i`  are the eigenvalues of the derivative matrix.
+
+

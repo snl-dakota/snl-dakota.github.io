@@ -1,0 +1,53 @@
+.. _method-soga-convergence_type-average_fitness_tracker:
+
+"""""""""""""""""""""""
+average_fitness_tracker
+"""""""""""""""""""""""
+
+
+Tracks the average fitness of the population
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-soga-convergence_type-average_fitness_tracker-percent_change
+   method-soga-convergence_type-average_fitness_tracker-num_generations
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+---------------------+---------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword      | Dakota Keyword Description                  |
+|                         | Group              |                     |                                             |
++=========================+====================+=====================+=============================================+
+| Optional                                     | `percent_change`__  | Define the convergence criterion for JEGA   |
+|                                              |                     | methods                                     |
++----------------------------------------------+---------------------+---------------------------------------------+
+| Optional                                     | `num_generations`__ | Define the convergence criterion for JEGA   |
+|                                              |                     | methods                                     |
++----------------------------------------------+---------------------+---------------------------------------------+
+
+.. __: method-soga-convergence_type-average_fitness_tracker-percent_change.html
+__ method-soga-convergence_type-average_fitness_tracker-num_generations.html
+
+
+
+**Description**
+
+
+The ``convergence_type`` called ``average_fitness_tracker`` keeps track
+of the average fitness in a population. If this average fitness does
+not change more than ``percent_change`` over some number of
+generations, ``num_generations``, then the solution is reported as
+converged and the algorithm terminates.
+
+

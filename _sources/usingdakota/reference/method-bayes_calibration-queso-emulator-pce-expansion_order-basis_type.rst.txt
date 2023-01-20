@@ -1,0 +1,56 @@
+.. _method-bayes_calibration-queso-emulator-pce-expansion_order-basis_type:
+
+""""""""""
+basis_type
+""""""""""
+
+
+Specify the type of basis truncation to be used for a Polynomial Chaos Expansion.
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-bayes_calibration-queso-emulator-pce-expansion_order-basis_type-tensor_product
+   method-bayes_calibration-queso-emulator-pce-expansion_order-basis_type-total_order
+   method-bayes_calibration-queso-emulator-pce-expansion_order-basis_type-adapted
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+--------------------+---------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword     | Dakota Keyword Description                  |
+|                         | Group              |                    |                                             |
++=========================+====================+====================+=============================================+
+| Required (Choose One)   | PCE Basis Type     | `tensor_product`__ | Use a tensor-product index set to construct |
+|                         |                    |                    | a polynomial chaos expansion.               |
+|                         |                    +--------------------+---------------------------------------------+
+|                         |                    | `total_order`__    | Use a total-order index set to construct a  |
+|                         |                    |                    | polynomial chaos expansion.                 |
+|                         |                    +--------------------+---------------------------------------------+
+|                         |                    | `adapted`__        | Use adaptive basis selection to choose the  |
+|                         |                    |                    | basis terms in a polynomial chaos           |
+|                         |                    |                    | expansion.                                  |
++-------------------------+--------------------+--------------------+---------------------------------------------+
+
+.. __: method-bayes_calibration-queso-emulator-pce-expansion_order-basis_type-tensor_product.html
+__ method-bayes_calibration-queso-emulator-pce-expansion_order-basis_type-total_order.html
+__ method-bayes_calibration-queso-emulator-pce-expansion_order-basis_type-adapted.html
+
+
+
+**Description**
+
+
+Specify the type of basis truncation that determines the terms that are included within a
+Polynomial Chaos Expansion.  Options include tensor-product, total-order, and adapted.
+
+

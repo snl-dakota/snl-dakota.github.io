@@ -1,0 +1,71 @@
+.. _variables-continuous_state:
+
+""""""""""""""""
+continuous_state
+""""""""""""""""
+
+
+State variable - continuous
+
+
+
+**Topics**
+
+
+state_variables, continuous_variables
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   variables-continuous_state-initial_state
+   variables-continuous_state-lower_bounds
+   variables-continuous_state-upper_bounds
+   variables-continuous_state-descriptors
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* INTEGER
+
+- *Default:* No continuous state variables
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+--------------------+---------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword     | Dakota Keyword Description                  |
+|                         | Group              |                    |                                             |
++=========================+====================+====================+=============================================+
+| Optional                                     | `initial_state`__  | Initial values for variables                |
++----------------------------------------------+--------------------+---------------------------------------------+
+| Optional                                     | `lower_bounds`__   | Specify minimum values                      |
++----------------------------------------------+--------------------+---------------------------------------------+
+| Optional                                     | `upper_bounds`__   | Specify maximium values                     |
++----------------------------------------------+--------------------+---------------------------------------------+
+| Optional                                     | `descriptors`__    | Labels for the variables                    |
++----------------------------------------------+--------------------+---------------------------------------------+
+
+.. __: variables-continuous_state-initial_state.html
+__ variables-continuous_state-lower_bounds.html
+__ variables-continuous_state-upper_bounds.html
+__ variables-continuous_state-descriptors.html
+
+
+
+**Description**
+
+
+Continuous state variables are defined by bounds.
+
+Default behavior for most methods is that only the initial_state
+values are used.
+
+See :ref:`variables:state` for details on the behavior of state
+variables.
+
+
+

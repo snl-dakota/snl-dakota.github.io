@@ -1,0 +1,45 @@
+.. _method-moga-mutation_type-offset_normal:
+
+"""""""""""""
+offset_normal
+"""""""""""""
+
+
+Set mutation offset to use a normal distribution
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-moga-mutation_type-offset_normal-mutation_scale
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+--------------------+---------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword     | Dakota Keyword Description                  |
+|                         | Group              |                    |                                             |
++=========================+====================+====================+=============================================+
+| Optional                                     | `mutation_scale`__ | Scales mutation across range of parameter   |
++----------------------------------------------+--------------------+---------------------------------------------+
+
+.. __: method-moga-mutation_type-offset_normal-mutation_scale.html
+
+
+
+**Description**
+
+
+The ``offset_normal`` mutator introduces random variation by adding a Gaussian
+random amount to a variable value. The random amount has a standard deviation
+dependent on the ``mutation_scale``.
+
+

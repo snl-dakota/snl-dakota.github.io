@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Run Dakota Using the Eclipse Run Configuration Framework &mdash; dakota  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/dakota_theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/sandiaheaderlite.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Run Dakota Using Next-Gen Workflow" href="DakotaRunWorkflow.html" />
+    <link rel="prev" title="Working with Simulation Models" href="../simulationmodels.html" /> 
+  
+  <meta name="sandia.approval_type" content="formal"/>
+  <meta property="sandia.approved" content="SAND2022-15651 O"/>
+  <meta name="description" content="The Dakota project delivers both state-of-the-art research and robust, usable software for optimization and UQ."/>
+  <meta name="keywords" content="Dakota, optimization, UQ, uncertainty quantification, parametric analysis, design exploration, model calibration, risk analysis"/>
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> dakota
+            <img src="../../_static/dakota_Arrow_Name_Tag_horiz_transparent.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../setupdakota.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../usingdakota/usingdakota.html">Using Dakota</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../usingdakotagui.html">Using Dakota GUI</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#introduction">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#example-search">Example Search</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#wizards">Wizards</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#editing-dakota-input-files">Editing Dakota Input Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#simulation-models">Simulation Models</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../usingdakotagui.html#running-dakota">Running Dakota</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Run Dakota Using the Eclipse Run Configuration Framework</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#quick-start">Quick Start</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#the-run-configurations-dialog">The Run Configurations Dialog</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dakota-run-configuration-options">Dakota Run Configuration options</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#run-configuration-history">Run Configuration History</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dakota-console-options">Dakota Console Options</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="DakotaRunWorkflow.html">Run Dakota Using Next-Gen Workflow</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#output-from-dakota">Output from Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#gui-tools">GUI Tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#miscellaneous">Miscellaneous</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../externaltools/externaltools.html">Using External Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developingdakota/developingdakota.html">Developing Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../misc/misc.html">Miscellaneous</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">dakota</a>
+      </nav>
+
+	  <!-- SNL Lite header -->
+	  <div class="snlheader-subsite--wrapper-default">
+		<snlheader class="snlheader-subsite" role="snlbanner">
+		  <div class="wrapper">
+			<a href="https://www.sandia.gov/index.html">
+			  <div class="logo-transparent"><p class="logo">Sandia National Laboratories</p></div>
+			</a>
+			<div class="nav-top">
+			  <a class="visuallyhidden" name="mainnav"></a>
+			  <div aria-label="main navigation" class="core-nav-transparent core-nav-transparent--visible" role="navigation">
+				<ul role="navigation" class="secondary-links">
+				  <li id="search-text-link">
+					<a aria-label="Search" href="https://www.sandia.gov/search/">Search Sandia.gov</a>
+				  </li>
+				  <li id="directory-text-link">
+					<a href="https://www.sandia.gov/directory.html" aria-expanded="false" aria-label="Site Directory">All Sandia Websites</a>
+				  </li>
+				</ul>
+			  </div>
+			</div>
+		  </div> 
+		</snlheader>
+	  </div>	  
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../usingdakotagui.html">Using Dakota GUI</a> &raquo;</li>
+      <li>Run Dakota Using the Eclipse Run Configuration Framework</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/usingdakotagui/running/DakotaRunConfiguration.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="run-dakota-using-the-eclipse-run-configuration-framework">
+<span id="gui-run-configurations-eclipse-run-configs"></span><h1>Run Dakota Using the Eclipse Run Configuration Framework<a class="headerlink" href="#run-dakota-using-the-eclipse-run-configuration-framework" title="Permalink to this headline"></a></h1>
+<p>Creating a run configuration to run Dakota is a straightforward process for most cases, and is designed to save you lots of time in the future.</p>
+<section id="quick-start">
+<h2>Quick Start<a class="headerlink" href="#quick-start" title="Permalink to this headline"></a></h2>
+<p id="gui-run-configurations-shortcuts">To immediately run a Dakota input file with reasonable default settings, right-click on your Dakota study, then select Run As &gt; Dakota.</p>
+<img alt="Run using the context menu" src="../../_images/Run_Configurations_9.png" />
+<p>Or, you can right-click on the Dakota study itself in the text editor and choose Run As &gt; Dakota.</p>
+<img alt="Run using the context menu" src="../../_images/Run_Configurations_10.png" />
+<p>In the background, a new run configuration will automatically be created for you with the following defaults:</p>
+<ul class="simple">
+<li><p>The run configuration’s input file will be the one you selected.</p></li>
+<li><p>The run configuration’s run directory will be the parent directory of the input file.</p></li>
+<li><p>All possible Dakota output files will be backed up in a time-stamped directory in your project.</p></li>
+</ul>
+</section>
+<section id="the-run-configurations-dialog">
+<h2>The Run Configurations Dialog<a class="headerlink" href="#the-run-configurations-dialog" title="Permalink to this headline"></a></h2>
+<p>The Run Configurations dialog provides information about past run configurations, and also gives you the controls to make new run configurations.
+To access the Run Configurations dialog, select Run &gt; Run Configurations from the top menu.</p>
+<img alt="Run menu" src="../../_images/Run_Configurations_1.png" />
+<p>…or select the small down arrow next to the Run icon and select Run Configurations.</p>
+<img alt="Other Run menu" src="../../_images/Run_Configurations_2.png" />
+<p>(If these options are not available, turn them on by going to Window &gt; Perspective &gt; Customize Perspective.  Then, select the
+Action Set Availability tab and make sure “Launch” is checked underneath the “Available action sets” column.)</p>
+<img alt="The Run Configurations menu" src="../../_images/Run_Configurations_3.png" />
+<p>Here, you can specify a configuration for running Dakota.  Creating a run configuration only needs to be done once (at minimum) to run a
+Dakota input file.  After creating the run configuration, you can run Dakota again using the same configuration by pushing one button.
+Also, you can make as many run configurations as you want.</p>
+<p>To begin, double-click on the Dakota line in the list on the left.</p>
+<img alt="Dakota run configuration options - Main Tab" src="../../_images/Run_Configurations_4.png" />
+</section>
+<section id="dakota-run-configuration-options">
+<h2>Dakota Run Configuration options<a class="headerlink" href="#dakota-run-configuration-options" title="Permalink to this headline"></a></h2>
+<p><strong>Name</strong> The name of your run configuration.  This can be whatever you want.</p>
+<p><strong>Main Tab</strong></p>
+<ul class="simple">
+<li><p><strong>Run Directory</strong> The directory in which Dakota will run.  This can be anywhere on your filesystem.</p></li>
+<li><p><strong>Input File</strong> The Dakota input file to run.  This field is usually auto-populated for you if you use
+the [Run shortcut in the context menu](#run-shortcuts), but if it’s not, use the file browser button to get the input file you want to run.</p></li>
+<li><p><strong>Program Arguments</strong>  Any additional command-line arguments you would like to pass to Dakota.  If you run “dakota -help” on
+the command line outside of the GUI, Dakota will give you a list of all possible command line arguments.</p></li>
+</ul>
+<p><strong>Import Tab</strong></p>
+<img alt="Dakota run configuration options - Import Tab" src="../../_images/Run_Configurations_5.png" />
+<p>When Dakota is finished running, the GUI can automatically copy any of Dakota’s many output files and store them in a time-stamped directory
+for future reference.  This is a handy feature if you want to preserve information about every run you do with Dakota.  Otherwise, on subsequent
+runs of Dakota, unless you specify a different run directory for Dakota, then Dakota will overwrite its previous output files.</p>
+<ul class="simple">
+<li><p><strong>Parent directory</strong> The name of the directory to back up files to.  The default name is “run_results” but you can choose any name you like.</p></li>
+<li><p><strong>Import checkboxes</strong> Use these checkboxes to specify which of Dakota’s generated files you want to make backup copies of.  For instance, if you don’t
+want the GUI to backup any output files, you can uncheck all of these boxes.</p></li>
+</ul>
+<p>When you are done configuring your Dakota run configuration, click the Apply button to save your changes.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>For all Dakota run configurations, the Dakota GUI will use the <a class="reference internal" href="../miscgui/Preferences.html#gui-preferences-dakota"><span class="std std-ref">globally specified version of Dakota</span></a> as the target process.</p>
+</div>
+<p>When you are ready to run, click Run in the bottom-right corner of this dialog.</p>
+</section>
+<section id="run-configuration-history">
+<h2>Run Configuration History<a class="headerlink" href="#run-configuration-history" title="Permalink to this headline"></a></h2>
+<p>After executing a run configuration, you can easily access it again by clicking the down arrow near the Run icon:</p>
+<img alt="Run history shortcuts" src="../../_images/Run_Configurations_6.png" />
+<p>This menu keeps a history of recent previous run configurations.  Simply select the one you want to run – there is no need to open the Run
+Configurations dialog again unless you want to reconfigure your run configuration.</p>
+</section>
+<section id="dakota-console-options">
+<h2>Dakota Console Options<a class="headerlink" href="#dakota-console-options" title="Permalink to this headline"></a></h2>
+<p>Dakota displays its console output in the Console view:</p>
+<img alt="Example Dakota console" src="../../_images/Run_Configurations_7.png" />
+<p>There are some actions available on the Console view:</p>
+<img alt="Console options" src="../../_images/Run_Configurations_8.png" />
+<p>From left to right:</p>
+<ul class="simple">
+<li><p><strong>Terminate</strong> Attempts to stop Dakota from running further.  This icon will be grayed out if Dakota is not running.</p></li>
+<li><p><strong>Remove Console</strong> Close the console view.  You can always bring the console back from the list of views (Window &gt; Show View &gt; Other… then select General &gt; Console).</p></li>
+<li><p><strong>Clear Console</strong> Rather than closing the whole console, this action simply clears all of the text and leaves the console open.</p></li>
+<li><p><strong>Scroll Lock</strong> Toggle scroll lock on the console.</p></li>
+<li><p><strong>Word Wrap</strong> Toggle word wrap for the console.</p></li>
+<li><p><strong>Pin Console</strong> Pins the console to the front.  If you have multiple consoles open, pinning keeps the current one in focus.</p></li>
+<li><p><strong>Display Selected Console</strong> Allows you to switch between multiple open consoles.</p></li>
+<li><p><strong>New Console View</strong> Opens a new console.</p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../simulationmodels.html" class="btn btn-neutral float-left" title="Working with Simulation Models" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="DakotaRunWorkflow.html" class="btn btn-neutral float-right" title="Run Dakota Using Next-Gen Workflow" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <!--
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Sandia National Laboratories.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+  --> 
+
+</footer>
+        </div>
+      </div>
+	  
+	  <div style="background-color: #0f0f0f;color:#fafafa;padding:20px">
+	    <div>
+		  <h2><em>Exceptional service in the national interest</em></h2>
+		</div>
+		<p>© 2022 National Technology and Engineering Solutions of Sandia, LLC. | <a href="https://www.sandia.gov/contact_us/index.html">Questions &amp; Comments</a> | <a href="https://www.sandia.gov/general/privacy-security/index.html">Privacy &amp; Security</a></p>
+		<p><a href="http://energy.gov" rel="noopener noreferrer" target="_blank"><img alt="U.S. Department of Energy" longdesc="https://energy.gov" src="https://www.sandia.gov/_common/images/doe_logo_white.png" style="height:37px; width:140px"></a> <a href="http://nnsa.energy.gov/" rel="noopener noreferrer" target="_blank"> <img alt="National Nuclear Security Administration" longdesc="http://nnsa.gov" src="https://www.sandia.gov/_common/images/nnsa_logo_white.png" style="height:37px; width:116px"></a></p>
+		<p><a href="https://www.sandia.gov">Sandia National Laboratories</a> is a multimission laboratory managed and operated by National Technology and Engineering Solutions of Sandia, LLC., a wholly owned subsidiary of Honeywell International, Inc., for the U.S. Department of Energy’s National Nuclear Security Administration under contract DE-NA-0003525.</p>
+	  </div>	  	  
+	  
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

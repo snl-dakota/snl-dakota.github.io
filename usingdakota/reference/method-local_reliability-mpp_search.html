@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>mpp_search &mdash; dakota  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/dakota_theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/sandiaheaderlite.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="x_taylor_mean" href="method-local_reliability-mpp_search-x_taylor_mean.html" />
+    <link rel="prev" title="local_reliability" href="method-local_reliability.html" /> 
+  
+  <meta name="sandia.approval_type" content="formal"/>
+  <meta property="sandia.approved" content="SAND2022-15651 O"/>
+  <meta name="description" content="The Dakota project delivers both state-of-the-art research and robust, usable software for optimization and UQ."/>
+  <meta name="keywords" content="Dakota, optimization, UQ, uncertainty quantification, parametric analysis, design exploration, model calibration, risk analysis"/>
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> dakota
+            <img src="../../_static/dakota_Arrow_Name_Tag_horiz_transparent.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../setupdakota.html">Getting Started</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../usingdakota.html">Using Dakota</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../introduction/aboutdakota.html">About Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../introduction/helloworld.html">Dakota Beginner’s Tutorial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples.html">Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../introduction/couplingtosimulations.html">Coupling Dakota to a Simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../inputfile.html">Dakota Input File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../running.html">Running Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../output.html">Dakota Output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../studytypes.html">Study Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../topics.html">Topics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../advanced.html">Advanced Topics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../theory.html">Dakota Theory</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../reference.html">Keyword Reference</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="environment.html">environment</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="method.html">method</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="method-id_method.html">id_method</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-output.html">output</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-final_solutions.html">final_solutions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-hybrid.html">hybrid</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-multi_start.html">multi_start</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-pareto_set.html">pareto_set</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-branch_and_bound.html">branch_and_bound</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-surrogate_based_local.html">surrogate_based_local</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-surrogate_based_global.html">surrogate_based_global</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-dot_frcg.html">dot_frcg</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-dot_mmfd.html">dot_mmfd</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-dot_bfgs.html">dot_bfgs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-dot_slp.html">dot_slp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-dot_sqp.html">dot_sqp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-conmin_frcg.html">conmin_frcg</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-conmin_mfd.html">conmin_mfd</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-dl_solver.html">dl_solver</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-npsol_sqp.html">npsol_sqp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-nlssol_sqp.html">nlssol_sqp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-nlpql_sqp.html">nlpql_sqp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-optpp_cg.html">optpp_cg</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-optpp_q_newton.html">optpp_q_newton</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-optpp_fd_newton.html">optpp_fd_newton</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-optpp_g_newton.html">optpp_g_newton</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-optpp_newton.html">optpp_newton</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-optpp_pds.html">optpp_pds</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-demo_tpl.html">demo_tpl</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-rol.html">rol</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-asynch_pattern_search.html">asynch_pattern_search</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-mesh_adaptive_search.html">mesh_adaptive_search</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-nowpac.html">nowpac</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-snowpac.html">snowpac</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-moga.html">moga</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-soga.html">soga</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-coliny_pattern_search.html">coliny_pattern_search</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-coliny_solis_wets.html">coliny_solis_wets</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-coliny_cobyla.html">coliny_cobyla</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-coliny_direct.html">coliny_direct</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-coliny_ea.html">coliny_ea</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-coliny_beta.html">coliny_beta</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-nl2sol.html">nl2sol</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-nonlinear_cg.html">nonlinear_cg</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-ncsu_direct.html">ncsu_direct</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-genie_opt_darts.html">genie_opt_darts</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-genie_direct.html">genie_direct</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-efficient_global.html">efficient_global</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-surrogate_based_uq.html">surrogate_based_uq</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-function_train.html">function_train</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-multifidelity_function_train.html">multifidelity_function_train</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-multilevel_function_train.html">multilevel_function_train</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-polynomial_chaos.html">polynomial_chaos</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-multifidelity_polynomial_chaos.html">multifidelity_polynomial_chaos</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-multilevel_polynomial_chaos.html">multilevel_polynomial_chaos</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-stoch_collocation.html">stoch_collocation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-multifidelity_stoch_collocation.html">multifidelity_stoch_collocation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-sampling.html">sampling</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-multilevel_sampling.html">multilevel_sampling</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-multifidelity_sampling.html">multifidelity_sampling</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-multilevel_multifidelity_sampling.html">multilevel_multifidelity_sampling</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-approximate_control_variate.html">approximate_control_variate</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-importance_sampling.html">importance_sampling</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-gpais.html">gpais</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-adaptive_sampling.html">adaptive_sampling</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-pof_darts.html">pof_darts</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-rkd_darts.html">rkd_darts</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-global_evidence.html">global_evidence</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-global_interval_est.html">global_interval_est</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-bayes_calibration.html">bayes_calibration</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-dace.html">dace</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-fsu_cvt.html">fsu_cvt</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-psuade_moat.html">psuade_moat</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-local_evidence.html">local_evidence</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-local_interval_est.html">local_interval_est</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="method-local_reliability.html">local_reliability</a><ul class="current">
+<li class="toctree-l5 current"><a class="current reference internal" href="#">mpp_search</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="method-local_reliability-mpp_search-x_taylor_mean.html">x_taylor_mean</a></li>
+<li class="toctree-l6"><a class="reference internal" href="method-local_reliability-mpp_search-u_taylor_mean.html">u_taylor_mean</a></li>
+<li class="toctree-l6"><a class="reference internal" href="method-local_reliability-mpp_search-x_taylor_mpp.html">x_taylor_mpp</a></li>
+<li class="toctree-l6"><a class="reference internal" href="method-local_reliability-mpp_search-u_taylor_mpp.html">u_taylor_mpp</a></li>
+<li class="toctree-l6"><a class="reference internal" href="method-local_reliability-mpp_search-x_two_point.html">x_two_point</a></li>
+<li class="toctree-l6"><a class="reference internal" href="method-local_reliability-mpp_search-u_two_point.html">u_two_point</a></li>
+<li class="toctree-l6"><a class="reference internal" href="method-local_reliability-mpp_search-x_multi_point.html">x_multi_point</a></li>
+<li class="toctree-l6"><a class="reference internal" href="method-local_reliability-mpp_search-u_multi_point.html">u_multi_point</a></li>
+<li class="toctree-l6"><a class="reference internal" href="method-local_reliability-mpp_search-no_approx.html">no_approx</a></li>
+<li class="toctree-l6"><a class="reference internal" href="method-local_reliability-mpp_search-sqp.html">sqp</a></li>
+<li class="toctree-l6"><a class="reference internal" href="method-local_reliability-mpp_search-nip.html">nip</a></li>
+<li class="toctree-l6"><a class="reference internal" href="method-local_reliability-mpp_search-integration.html">integration</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="method-local_reliability-response_levels.html">response_levels</a></li>
+<li class="toctree-l5"><a class="reference internal" href="method-local_reliability-probability_levels.html">probability_levels</a></li>
+<li class="toctree-l5"><a class="reference internal" href="method-local_reliability-reliability_levels.html">reliability_levels</a></li>
+<li class="toctree-l5"><a class="reference internal" href="method-local_reliability-gen_reliability_levels.html">gen_reliability_levels</a></li>
+<li class="toctree-l5"><a class="reference internal" href="method-local_reliability-distribution.html">distribution</a></li>
+<li class="toctree-l5"><a class="reference internal" href="method-local_reliability-max_iterations.html">max_iterations</a></li>
+<li class="toctree-l5"><a class="reference internal" href="method-local_reliability-convergence_tolerance.html">convergence_tolerance</a></li>
+<li class="toctree-l5"><a class="reference internal" href="method-local_reliability-final_moments.html">final_moments</a></li>
+<li class="toctree-l5"><a class="reference internal" href="method-local_reliability-model_pointer.html">model_pointer</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="method-global_reliability.html">global_reliability</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-fsu_quasi_mc.html">fsu_quasi_mc</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-vector_parameter_study.html">vector_parameter_study</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-list_parameter_study.html">list_parameter_study</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-centered_parameter_study.html">centered_parameter_study</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-multidim_parameter_study.html">multidim_parameter_study</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-richardson_extrap.html">richardson_extrap</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="model.html">model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="variables.html">variables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="interface.html">interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="responses.html">responses</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../usingdakotagui/usingdakotagui.html">Using Dakota GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../externaltools/externaltools.html">Using External Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developingdakota/developingdakota.html">Developing Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../misc/misc.html">Miscellaneous</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">dakota</a>
+      </nav>
+
+	  <!-- SNL Lite header -->
+	  <div class="snlheader-subsite--wrapper-default">
+		<snlheader class="snlheader-subsite" role="snlbanner">
+		  <div class="wrapper">
+			<a href="https://www.sandia.gov/index.html">
+			  <div class="logo-transparent"><p class="logo">Sandia National Laboratories</p></div>
+			</a>
+			<div class="nav-top">
+			  <a class="visuallyhidden" name="mainnav"></a>
+			  <div aria-label="main navigation" class="core-nav-transparent core-nav-transparent--visible" role="navigation">
+				<ul role="navigation" class="secondary-links">
+				  <li id="search-text-link">
+					<a aria-label="Search" href="https://www.sandia.gov/search/">Search Sandia.gov</a>
+				  </li>
+				  <li id="directory-text-link">
+					<a href="https://www.sandia.gov/directory.html" aria-expanded="false" aria-label="Site Directory">All Sandia Websites</a>
+				  </li>
+				</ul>
+			  </div>
+			</div>
+		  </div> 
+		</snlheader>
+	  </div>	  
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../usingdakota.html">Using Dakota</a> &raquo;</li>
+          <li><a href="../reference.html">Keyword Reference</a> &raquo;</li>
+          <li><a href="method.html">method</a> &raquo;</li>
+          <li><a href="method-local_reliability.html">local_reliability</a> &raquo;</li>
+      <li>mpp_search</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/usingdakota/reference/method-local_reliability-mpp_search.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="mpp-search">
+<span id="method-local-reliability-mpp-search"></span><h1>mpp_search<a class="headerlink" href="#mpp-search" title="Permalink to this headline"></a></h1>
+<p>Specify which MPP search option to use</p>
+<p><strong>Topics</strong></p>
+<p>uncertainty_quantification, reliability_methods</p>
+<div class="toctree-wrapper compound">
+</div>
+<p><strong>Specification</strong></p>
+<ul class="simple">
+<li><p><em>Alias:</em> None</p></li>
+<li><p><em>Arguments:</em> None</p></li>
+<li><p><em>Default:</em> No MPP search (MV method)</p></li>
+</ul>
+<p><strong>Child Keywords:</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 23%" />
+<col style="width: 18%" />
+<col style="width: 18%" />
+<col style="width: 41%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Required/Optional</p></th>
+<th class="head"><p>Description of
+Group</p></th>
+<th class="head"><p>Dakota Keyword</p></th>
+<th class="head"><p>Dakota Keyword Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td rowspan="9"><p>Required (Choose One)</p></td>
+<td rowspan="9"><p>MPP Approximation</p></td>
+<td><p><a class="reference external" href="method-local_reliability-mpp_search-x_taylor_mean.html">x_taylor_mean</a></p></td>
+<td><p>Form Taylor series approximation in
+“x-space” at variable means</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="method-local_reliability-mpp_search-u_taylor_mean.html">u_taylor_mean</a></p></td>
+<td><p>Form Taylor series approximation in
+“u-space” at variable means</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="method-local_reliability-mpp_search-x_taylor_mpp.html">x_taylor_mpp</a></p></td>
+<td><p>X-space Taylor series approximation with
+iterative updates</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="method-local_reliability-mpp_search-u_taylor_mpp.html">u_taylor_mpp</a></p></td>
+<td><p>U-space Taylor series approximation with
+iterative updates</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="method-local_reliability-mpp_search-x_two_point.html">x_two_point</a></p></td>
+<td><p>Predict MPP using Two-point Adaptive
+Nonlinear Approximation in “x-space”</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="method-local_reliability-mpp_search-u_two_point.html">u_two_point</a></p></td>
+<td><p>Predict MPP using Two-point Adaptive
+Nonlinear Approximation in “u-space”</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="method-local_reliability-mpp_search-x_multi_point.html">x_multi_point</a></p></td>
+<td><p>MPP search for local reliability based on
+QMEA multi-point approximation in u-space</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="method-local_reliability-mpp_search-u_multi_point.html">u_multi_point</a></p></td>
+<td><p>MPP search for local reliability based on
+QMEA multi-point approximation in x-space</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="method-local_reliability-mpp_search-no_approx.html">no_approx</a></p></td>
+<td><p>Perform MPP search on original response
+functions (use no approximation)</p></td>
+</tr>
+<tr class="row-odd"><td rowspan="2"><p>Optional (Choose One)</p></td>
+<td rowspan="2"><p>Optimization
+Solver</p></td>
+<td><p><a class="reference external" href="method-local_reliability-mpp_search-sqp.html">sqp</a></p></td>
+<td><p>Uses a sequential quadratic programming
+method for underlying optimization</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="method-local_reliability-mpp_search-nip.html">nip</a></p></td>
+<td><p>Uses a nonlinear interior point method for
+underlying optimization</p></td>
+</tr>
+<tr class="row-odd"><td colspan="2"><p>Optional</p></td>
+<td><p><a class="reference external" href="method-local_reliability-mpp_search-integration.html">integration</a></p></td>
+<td><p>Integration approach</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Description</strong></p>
+<p>The <code class="docutils literal notranslate"><span class="pre">x_taylor_mean</span></code> MPP search option performs a
+single Taylor series approximation in the space of the original
+uncertain variables (“x-space”) centered at the uncertain variable
+means, searches for the MPP for each response/probability level using
+this approximation, and performs a validation response evaluation at
+each predicted MPP. This option is commonly known as the Advanced
+Mean Value (AMV) method. The <code class="docutils literal notranslate"><span class="pre">u_taylor_mean</span></code> option is identical to
+the <code class="docutils literal notranslate"><span class="pre">x_taylor_mean</span></code> option, except that the approximation is
+performed in u-space. The <code class="docutils literal notranslate"><span class="pre">x_taylor_mpp</span></code> approach starts with an
+x-space Taylor series at the uncertain variable means, but iteratively
+updates the Taylor series approximation at each MPP prediction until
+the MPP converges. This option is commonly known as the AMV+ method.
+The <code class="docutils literal notranslate"><span class="pre">u_taylor_mpp</span></code> option is identical to the <code class="docutils literal notranslate"><span class="pre">x_taylor_mpp</span></code> option,
+except that all approximations are performed in u-space. The order of
+the Taylor-series approximation is determined by the corresponding
+<code class="docutils literal notranslate"><span class="pre">responses</span></code> specification and may be first or second-order. If
+second-order (methods named <span class="math notranslate nohighlight">\(AMV^2\)</span>  and <span class="math notranslate nohighlight">\(AMV^2+\)</span>  in
+<span id="id13">[<a class="reference internal" href="../../misc/bibliography.html#id78" title="M. S. Eldred and B. J. Bichon. Second-order reliability formulations in DAKOTA/UQ. In Proceedings of the 47th AIAA/ASME/ASCE/AHS/ASC Structures, Structural Dynamics and Materials Conference, number AIAA-2006-1828. Newport, RI, May 1–4 2006.">EB06</a>]</span>), the series may employ
+analytic, finite difference, or quasi Hessians (BFGS or SR1).
+The <code class="docutils literal notranslate"><span class="pre">x_two_point</span></code> MPP search option uses an x-space Taylor series
+approximation at the uncertain variable means for the initial MPP
+prediction, then utilizes the Two-point Adaptive Nonlinear
+Approximation (TANA) outlined in <span id="id14">[<a class="reference internal" href="../../misc/bibliography.html#id284" title="S. Xu and R. V. Grandhi. Effective two-point function approximation for design optimization. AIAA J., 36(12):2269–2275, 1998.">XG98</a>]</span>
+for all subsequent MPP predictions. The <code class="docutils literal notranslate"><span class="pre">u_two_point</span></code> approach is
+identical to <code class="docutils literal notranslate"><span class="pre">x_two_point</span></code>, but all the approximations are performed
+in u-space. The <code class="docutils literal notranslate"><span class="pre">x_taylor_mpp</span></code> and <code class="docutils literal notranslate"><span class="pre">u_taylor_mpp</span></code>, <code class="docutils literal notranslate"><span class="pre">x_two_point</span></code>
+and <code class="docutils literal notranslate"><span class="pre">u_two_point</span></code> approaches utilize the <code class="docutils literal notranslate"><span class="pre">max_iterations</span></code> and
+<code class="docutils literal notranslate"><span class="pre">convergence_tolerance</span></code> method independent controls to control the
+convergence of the MPP iterations (the maximum number of MPP
+iterations per level is limited by <code class="docutils literal notranslate"><span class="pre">max_iterations</span></code>, and the MPP
+iterations are considered converged when
+<span class="math notranslate nohighlight">\(\parallel {\bf u}^{(k+1)} - {\bf u}^{(k)} \parallel_2\)</span>  &lt;
+<code class="docutils literal notranslate"><span class="pre">convergence_tolerance</span></code>). And, finally, the <code class="docutils literal notranslate"><span class="pre">.no_approx</span></code> option
+performs the MPP search on the original response functions without
+the use of any approximations. The optimization algorithm used to
+perform these MPP searches can be selected to be either sequential
+quadratic programming (uses the <code class="docutils literal notranslate"><span class="pre">npsol_sqp</span></code> optimizer) or nonlinear
+interior point (uses the <code class="docutils literal notranslate"><span class="pre">optpp_q_newton</span></code> optimizer) algorithms
+using the <code class="docutils literal notranslate"><span class="pre">sqp</span></code> or <code class="docutils literal notranslate"><span class="pre">nip</span></code> keywords.</p>
+<p>In addition to the MPP search specifications, one may select among
+different integration approaches for computing probabilities at the
+MPP by using the <code class="docutils literal notranslate"><span class="pre">integration</span></code> keyword followed by either
+<code class="docutils literal notranslate"><span class="pre">first_order</span></code> or <code class="docutils literal notranslate"><span class="pre">second_order</span></code>. Second-order integration employs the
+formulation of <span id="id15">[<a class="reference internal" href="../../misc/bibliography.html#id148" title="M. Hohenbichler and R. Rackwitz. Improvement of second-order reliability estimates by importance sampling. J. Eng. Mech., ASCE, 114(12):2195–2199, 1988.">HR88</a>]</span>
+(the approach of <span id="id16">[<a class="reference internal" href="../../misc/bibliography.html#id31" title="K. Breitung. Asymptotic approximation for multinormal integrals. J. Eng. Mech., ASCE, 110(3):357–366, 1984.">Bre84</a>]</span> and the correction
+of <span id="id17">[<a class="reference internal" href="../../misc/bibliography.html#id149" title="H.P. Hong. Simple approximations for improving second-order reliability estimates. J. Eng. Mech., ASCE, 125(5):592–595, 1999.">Hon99</a>]</span> are also implemented, but are not active).
+Combining the <code class="docutils literal notranslate"><span class="pre">no_approx</span></code> option of the MPP search with first- and
+second-order integrations results in the traditional first- and
+second-order reliability methods (FORM and SORM). These integration
+approximations may be subsequently refined using importance sampling.
+The <code class="docutils literal notranslate"><span class="pre">refinement</span></code> specification allows the seletion of basic
+importance sampling ( <code class="docutils literal notranslate"><span class="pre">import</span></code>), adaptive importance sampling (
+<code class="docutils literal notranslate"><span class="pre">adapt_import</span></code>), or multimodal adaptive importance sampling (
+<code class="docutils literal notranslate"><span class="pre">mm_adapt_import</span></code>), along with the specification of number of samples
+( <code class="docutils literal notranslate"><span class="pre">samples</span></code>) and random seed ( <code class="docutils literal notranslate"><span class="pre">seed</span></code>). Additional details
+on these methods are available in <span id="id18">[<a class="reference internal" href="../../misc/bibliography.html#id76" title="M. S. Eldred, A. A. Giunta, and S. S. Collis. Second-order corrections for surrogate-based optimization with model hierarchies. In Proceedings of the 10th AIAA/ISSMO Multidisciplinary Analysis and Optimization Conference. Albany, NY,, Aug. 30–Sept. 1, 2004. AIAA Paper 2004-4457.">EGC04</a>]</span>
+and <span id="id19">[<a class="reference internal" href="../../misc/bibliography.html#id78" title="M. S. Eldred and B. J. Bichon. Second-order reliability formulations in DAKOTA/UQ. In Proceedings of the 47th AIAA/ASME/ASCE/AHS/ASC Structures, Structural Dynamics and Materials Conference, number AIAA-2006-1828. Newport, RI, May 1–4 2006.">EB06</a>]</span> and in the main <a class="reference internal" href="../studytypes/uq.html#uq"><span class="std std-ref">Uncertainty Quantification Capabilities section</span></a>.</p>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="method-local_reliability.html" class="btn btn-neutral float-left" title="local_reliability" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="method-local_reliability-mpp_search-x_taylor_mean.html" class="btn btn-neutral float-right" title="x_taylor_mean" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <!--
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Sandia National Laboratories.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+  --> 
+
+</footer>
+        </div>
+      </div>
+	  
+	  <div style="background-color: #0f0f0f;color:#fafafa;padding:20px">
+	    <div>
+		  <h2><em>Exceptional service in the national interest</em></h2>
+		</div>
+		<p>© 2022 National Technology and Engineering Solutions of Sandia, LLC. | <a href="https://www.sandia.gov/contact_us/index.html">Questions &amp; Comments</a> | <a href="https://www.sandia.gov/general/privacy-security/index.html">Privacy &amp; Security</a></p>
+		<p><a href="http://energy.gov" rel="noopener noreferrer" target="_blank"><img alt="U.S. Department of Energy" longdesc="https://energy.gov" src="https://www.sandia.gov/_common/images/doe_logo_white.png" style="height:37px; width:140px"></a> <a href="http://nnsa.energy.gov/" rel="noopener noreferrer" target="_blank"> <img alt="National Nuclear Security Administration" longdesc="http://nnsa.gov" src="https://www.sandia.gov/_common/images/nnsa_logo_white.png" style="height:37px; width:116px"></a></p>
+		<p><a href="https://www.sandia.gov">Sandia National Laboratories</a> is a multimission laboratory managed and operated by National Technology and Engineering Solutions of Sandia, LLC., a wholly owned subsidiary of Honeywell International, Inc., for the U.S. Department of Energy’s National Nuclear Security Administration under contract DE-NA-0003525.</p>
+	  </div>	  	  
+	  
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

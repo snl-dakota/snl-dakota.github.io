@@ -1,0 +1,47 @@
+.. _method-moga-replacement_type-below_limit:
+
+"""""""""""
+below_limit
+"""""""""""
+
+
+Limit number of designs dominating those kept
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-moga-replacement_type-below_limit-shrinkage_fraction
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* REAL
+
+- *Default:* 6
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+------------------------+---------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword         | Dakota Keyword Description                  |
+|                         | Group              |                        |                                             |
++=========================+====================+========================+=============================================+
+| Optional                                     | `shrinkage_fraction`__ | Decrease the population size by a           |
+|                                              |                        | percentage                                  |
++----------------------------------------------+------------------------+---------------------------------------------+
+
+.. __: method-moga-replacement_type-below_limit-shrinkage_fraction.html
+
+
+
+**Description**
+
+
+The ``below_limit`` replacement will only keep designs that are
+dominated by fewer than a limiting number of other designs.
+
+

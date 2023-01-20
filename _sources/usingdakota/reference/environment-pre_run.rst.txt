@@ -1,0 +1,64 @@
+.. _environment-pre_run:
+
+"""""""
+pre_run
+"""""""
+
+
+Invoke Dakota with pre-run mode active
+
+
+
+**Topics**
+
+
+command_line_options
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   environment-pre_run-input
+   environment-pre_run-output
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+- *Default:* pre-run, run, post-run all executed
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+--------------------+---------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword     | Dakota Keyword Description                  |
+|                         | Group              |                    |                                             |
++=========================+====================+====================+=============================================+
+| Optional                                     | `input`__          | Base filename for pre-run mode data input   |
++----------------------------------------------+--------------------+---------------------------------------------+
+| Optional                                     | `output`__         | Base filename for pre-run mode data output  |
++----------------------------------------------+--------------------+---------------------------------------------+
+
+.. __: environment-pre_run-input.html
+__ environment-pre_run-output.html
+
+
+
+**Description**
+
+
+When specified, Dakota execution will include the
+pre-run mode, which sets up methods and often generates parameter sets
+to evaluate.  This mode is currently useful for parameter study, DACE,
+and Monte Carlo sampling methods.
+
+*Default Behavior*
+
+When no run modes are specified, Dakota will perform pre-run, run, and
+post-run phases.
+
+

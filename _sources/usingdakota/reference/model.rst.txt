@@ -1,0 +1,197 @@
+.. _model:
+
+"""""
+model
+"""""
+
+
+Specifies how variables are mapped into a set of responses
+
+
+
+**Topics**
+
+
+block
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   model-id_model
+   model-single
+   model-surrogate
+   model-nested
+   model-active_subspace
+   model-adapted_basis
+   model-random_field
+   model-variables_pointer
+   model-responses_pointer
+   model-hierarchical_tagging
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+--------------------------+---------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword           | Dakota Keyword Description                  |
+|                         | Group              |                          |                                             |
++=========================+====================+==========================+=============================================+
+| Optional                                     | `id_model`__             | Give the model block an identifying name,   |
+|                                              |                          | in case of multiple model blocks            |
++-------------------------+--------------------+--------------------------+---------------------------------------------+
+| Required (Choose One)   | Model Type         | `single`__               | A model with one of each block: variable,   |
+|                         |                    |                          | interface, and response                     |
+|                         |                    +--------------------------+---------------------------------------------+
+|                         |                    | `surrogate`__            | An empirical model that is created from     |
+|                         |                    |                          | data or the results of a submodel           |
+|                         |                    +--------------------------+---------------------------------------------+
+|                         |                    | `nested`__               | A model whose responses are computed        |
+|                         |                    |                          | through the use of a sub-iterator           |
+|                         |                    +--------------------------+---------------------------------------------+
+|                         |                    | `active_subspace`__      | Active (variable) subspace model            |
+|                         |                    +--------------------------+---------------------------------------------+
+|                         |                    | `adapted_basis`__        | Basis adaptation model                      |
+|                         |                    +--------------------------+---------------------------------------------+
+|                         |                    | `random_field`__         | Experimental capability to generate a       |
+|                         |                    |                          | random field representation. from data,     |
+|                         |                    |                          | from simulation runs, or from a covariance  |
+|                         |                    |                          | matrix. The representation may then be      |
+|                         |                    |                          | sampled for use as a random field input to  |
+|                         |                    |                          | another simulation. THIS IS AN EXPERIMENTAL |
+|                         |                    |                          | CAPABILITY.                                 |
++-------------------------+--------------------+--------------------------+---------------------------------------------+
+| Optional                                     | `variables_pointer`__    | Specify which variables block will be       |
+|                                              |                          | included with this model block              |
++----------------------------------------------+--------------------------+---------------------------------------------+
+| Optional                                     | `responses_pointer`__    | Specify which reponses block will be used   |
+|                                              |                          | by this model block                         |
++----------------------------------------------+--------------------------+---------------------------------------------+
+| Optional                                     | `hierarchical_tagging`__ | Enables hierarchical evaluation tagging     |
++----------------------------------------------+--------------------------+---------------------------------------------+
+
+.. __: model-id_model.html
+__ model-single.html
+__ model-surrogate.html
+__ model-nested.html
+__ model-active_subspace.html
+__ model-adapted_basis.html
+__ model-random_field.html
+__ model-variables_pointer.html
+__ model-responses_pointer.html
+__ model-hierarchical_tagging.html
+
+
+
+**Description**
+
+
+A model is comprised of a mapping from variables, through an
+interface, to responses.
+
+*Model Group 1*
+The type of model can be:
+
+
+- ``single`` (default)
+- ``surrogate``
+- ``nested``
+- ``subspace``
+- ``random_field``
+
+The input file must specify one of these types. If the type is not
+specified, Dakota will assume a single model.
+
+*Block Pointers and ID*
+
+Each of these model types supports ``variables_pointer`` and
+``responses_pointer`` strings for identifying the variables and responses
+specifications used in constructing the model by cross-referencing
+with ``id_variables`` and ``id_responses`` strings from particular
+variables and responses keyword specifications.
+
+These pointers are valid for each model type since each model contains
+a set of variables that is mapped into a set of responses -- only the
+specifics of the mapping differ.
+
+Additional pointers are used for each model type for
+constructing the components of the variable to response mapping.  As an
+environment specification identifies a top-level method and a method
+specification identifies a model, a model specification identifies
+variables, responses, and (for some types) interface specifications.
+This top-down flow specifies all of the object interrelationships.
+
+
+
+**Examples**
+
+
+The first example shows a minimal specification for a ``single`` model,
+which is the default model when no models are explicitly specified
+by the user.
+
+
+.. code-block::
+
+    model
+      single
+
+
+The next example displays a surrogate model specification which
+selects a quadratic polynomial from among the global approximation
+methods. It uses a pointer to a design of experiments method for
+generating the data needed for building the global approximation, reuses
+any old data available for the current approximation region, and
+employs the first-order multiplicative approach to correcting the
+approximation each time correction is requested.
+
+
+.. code-block::
+
+    model,
+      id_model = 'M1'
+      variables_pointer = 'V1'
+      responses_pointer = 'R1'
+      surrogate
+        global
+          polynomial quadratic
+          dace_method_pointer = 'DACE'
+          reuse_samples region
+          correction multiplicative first_order
+
+This example demonstrates the use of identifiers and pointers. It
+provides the optional model independent specifications for model
+identifier, variables pointer, and responses pointer
+as well as model dependent specifications for
+global surrogates (see :ref:`model-surrogate-global<model-surrogate-global>`).
+
+Finally, an advanced nested model example would be
+
+.. code-block::
+
+    model
+      id_model = 'M1'
+      variables_pointer = 'V1'
+      responses_pointer = 'R1'
+      nested
+        optional_interface_pointer = 'OI1'
+          optional_interface_responses_pointer = 'OIR1'
+         sub_method_pointer = 'SM1'
+           primary_variable_mapping  = '' '' 'X'   'Y'
+           secondary_variable_mapping = '' '' 'mean' 'mean'
+           primary_response_mapping  = 1. 0. 0. 0. 0. 0. 0. 0. 0.
+           secondary_response_mapping = 0. 0. 0. 1. 3. 0. 0. 0. 0.
+                                        0. 0. 0. 0. 0. 0. 1. 3. 0.
+
+This example illustrates controls for model
+identifier, variables pointer, and responses pointer
+and for specifying details of the nested mapping.
+
+

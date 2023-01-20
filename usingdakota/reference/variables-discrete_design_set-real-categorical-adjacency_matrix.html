@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>adjacency_matrix &mdash; dakota  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/dakota_theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/sandiaheaderlite.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="initial_point" href="variables-discrete_design_set-real-initial_point.html" />
+    <link rel="prev" title="categorical" href="variables-discrete_design_set-real-categorical.html" /> 
+  
+  <meta name="sandia.approval_type" content="formal"/>
+  <meta property="sandia.approved" content="SAND2022-15651 O"/>
+  <meta name="description" content="The Dakota project delivers both state-of-the-art research and robust, usable software for optimization and UQ."/>
+  <meta name="keywords" content="Dakota, optimization, UQ, uncertainty quantification, parametric analysis, design exploration, model calibration, risk analysis"/>
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> dakota
+            <img src="../../_static/dakota_Arrow_Name_Tag_horiz_transparent.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../setupdakota.html">Getting Started</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../usingdakota.html">Using Dakota</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../introduction/aboutdakota.html">About Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../introduction/helloworld.html">Dakota Beginner’s Tutorial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples.html">Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../introduction/couplingtosimulations.html">Coupling Dakota to a Simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../inputfile.html">Dakota Input File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../running.html">Running Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../output.html">Dakota Output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../studytypes.html">Study Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../topics.html">Topics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../advanced.html">Advanced Topics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../theory.html">Dakota Theory</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../reference.html">Keyword Reference</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="environment.html">environment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="method.html">method</a></li>
+<li class="toctree-l3"><a class="reference internal" href="model.html">model</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="variables.html">variables</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="variables-id_variables.html">id_variables</a></li>
+<li class="toctree-l4"><a class="reference internal" href="variables-active.html">active</a></li>
+<li class="toctree-l4"><a class="reference internal" href="variables-mixed.html">mixed</a></li>
+<li class="toctree-l4"><a class="reference internal" href="variables-relaxed.html">relaxed</a></li>
+<li class="toctree-l4"><a class="reference internal" href="variables-continuous_design.html">continuous_design</a></li>
+<li class="toctree-l4"><a class="reference internal" href="variables-discrete_design_range.html">discrete_design_range</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="variables-discrete_design_set.html">discrete_design_set</a><ul class="current">
+<li class="toctree-l5"><a class="reference internal" href="variables-discrete_design_set-integer.html">integer</a></li>
+<li class="toctree-l5"><a class="reference internal" href="variables-discrete_design_set-string.html">string</a></li>
+<li class="toctree-l5 current"><a class="reference internal" href="variables-discrete_design_set-real.html">real</a><ul class="current">
+<li class="toctree-l6"><a class="reference internal" href="variables-discrete_design_set-real-elements_per_variable.html">elements_per_variable</a></li>
+<li class="toctree-l6"><a class="reference internal" href="variables-discrete_design_set-real-elements.html">elements</a></li>
+<li class="toctree-l6 current"><a class="reference internal" href="variables-discrete_design_set-real-categorical.html">categorical</a><ul class="current">
+<li class="toctree-l7 current"><a class="current reference internal" href="#">adjacency_matrix</a><ul class="simple">
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l6"><a class="reference internal" href="variables-discrete_design_set-real-initial_point.html">initial_point</a></li>
+<li class="toctree-l6"><a class="reference internal" href="variables-discrete_design_set-real-descriptors.html">descriptors</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="variables-normal_uncertain.html">normal_uncertain</a></li>
+<li class="toctree-l4"><a class="reference internal" href="variables-lognormal_uncertain.html">lognormal_uncertain</a></li>
+<li class="toctree-l4"><a class="reference internal" href="variables-uniform_uncertain.html">uniform_uncertain</a></li>
+<li class="toctree-l4"><a class="reference internal" href="variables-loguniform_uncertain.html">loguniform_uncertain</a></li>
+<li class="toctree-l4"><a class="reference internal" href="variables-triangular_uncertain.html">triangular_uncertain</a></li>
+<li class="toctree-l4"><a class="reference internal" href="variables-exponential_uncertain.html">exponential_uncertain</a></li>
+<li class="toctree-l4"><a class="reference internal" href="variables-beta_uncertain.html">beta_uncertain</a></li>
+<li class="toctree-l4"><a class="reference internal" href="variables-gamma_uncertain.html">gamma_uncertain</a></li>
+<li class="toctree-l4"><a class="reference internal" href="variables-gumbel_uncertain.html">gumbel_uncertain</a></li>
+<li class="toctree-l4"><a class="reference internal" href="variables-frechet_uncertain.html">frechet_uncertain</a></li>
+<li class="toctree-l4"><a class="reference internal" href="variables-weibull_uncertain.html">weibull_uncertain</a></li>
+<li class="toctree-l4"><a class="reference internal" href="variables-histogram_bin_uncertain.html">histogram_bin_uncertain</a></li>
+<li class="toctree-l4"><a class="reference internal" href="variables-poisson_uncertain.html">poisson_uncertain</a></li>
+<li class="toctree-l4"><a class="reference internal" href="variables-binomial_uncertain.html">binomial_uncertain</a></li>
+<li class="toctree-l4"><a class="reference internal" href="variables-negative_binomial_uncertain.html">negative_binomial_uncertain</a></li>
+<li class="toctree-l4"><a class="reference internal" href="variables-geometric_uncertain.html">geometric_uncertain</a></li>
+<li class="toctree-l4"><a class="reference internal" href="variables-hypergeometric_uncertain.html">hypergeometric_uncertain</a></li>
+<li class="toctree-l4"><a class="reference internal" href="variables-histogram_point_uncertain.html">histogram_point_uncertain</a></li>
+<li class="toctree-l4"><a class="reference internal" href="variables-uncertain_correlation_matrix.html">uncertain_correlation_matrix</a></li>
+<li class="toctree-l4"><a class="reference internal" href="variables-continuous_interval_uncertain.html">continuous_interval_uncertain</a></li>
+<li class="toctree-l4"><a class="reference internal" href="variables-discrete_interval_uncertain.html">discrete_interval_uncertain</a></li>
+<li class="toctree-l4"><a class="reference internal" href="variables-discrete_uncertain_set.html">discrete_uncertain_set</a></li>
+<li class="toctree-l4"><a class="reference internal" href="variables-continuous_state.html">continuous_state</a></li>
+<li class="toctree-l4"><a class="reference internal" href="variables-discrete_state_range.html">discrete_state_range</a></li>
+<li class="toctree-l4"><a class="reference internal" href="variables-discrete_state_set.html">discrete_state_set</a></li>
+<li class="toctree-l4"><a class="reference internal" href="variables-linear_inequality_constraint_matrix.html">linear_inequality_constraint_matrix</a></li>
+<li class="toctree-l4"><a class="reference internal" href="variables-linear_inequality_lower_bounds.html">linear_inequality_lower_bounds</a></li>
+<li class="toctree-l4"><a class="reference internal" href="variables-linear_inequality_upper_bounds.html">linear_inequality_upper_bounds</a></li>
+<li class="toctree-l4"><a class="reference internal" href="variables-linear_inequality_scale_types.html">linear_inequality_scale_types</a></li>
+<li class="toctree-l4"><a class="reference internal" href="variables-linear_inequality_scales.html">linear_inequality_scales</a></li>
+<li class="toctree-l4"><a class="reference internal" href="variables-linear_equality_constraint_matrix.html">linear_equality_constraint_matrix</a></li>
+<li class="toctree-l4"><a class="reference internal" href="variables-linear_equality_targets.html">linear_equality_targets</a></li>
+<li class="toctree-l4"><a class="reference internal" href="variables-linear_equality_scale_types.html">linear_equality_scale_types</a></li>
+<li class="toctree-l4"><a class="reference internal" href="variables-linear_equality_scales.html">linear_equality_scales</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="interface.html">interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="responses.html">responses</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../usingdakotagui/usingdakotagui.html">Using Dakota GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../externaltools/externaltools.html">Using External Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developingdakota/developingdakota.html">Developing Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../misc/misc.html">Miscellaneous</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">dakota</a>
+      </nav>
+
+	  <!-- SNL Lite header -->
+	  <div class="snlheader-subsite--wrapper-default">
+		<snlheader class="snlheader-subsite" role="snlbanner">
+		  <div class="wrapper">
+			<a href="https://www.sandia.gov/index.html">
+			  <div class="logo-transparent"><p class="logo">Sandia National Laboratories</p></div>
+			</a>
+			<div class="nav-top">
+			  <a class="visuallyhidden" name="mainnav"></a>
+			  <div aria-label="main navigation" class="core-nav-transparent core-nav-transparent--visible" role="navigation">
+				<ul role="navigation" class="secondary-links">
+				  <li id="search-text-link">
+					<a aria-label="Search" href="https://www.sandia.gov/search/">Search Sandia.gov</a>
+				  </li>
+				  <li id="directory-text-link">
+					<a href="https://www.sandia.gov/directory.html" aria-expanded="false" aria-label="Site Directory">All Sandia Websites</a>
+				  </li>
+				</ul>
+			  </div>
+			</div>
+		  </div> 
+		</snlheader>
+	  </div>	  
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../usingdakota.html">Using Dakota</a> &raquo;</li>
+          <li><a href="../reference.html">Keyword Reference</a> &raquo;</li>
+          <li><a href="variables.html">variables</a> &raquo;</li>
+          <li><a href="variables-discrete_design_set.html">discrete_design_set</a> &raquo;</li>
+          <li><a href="variables-discrete_design_set-real.html">real</a> &raquo;</li>
+          <li><a href="variables-discrete_design_set-real-categorical.html">categorical</a> &raquo;</li>
+      <li>adjacency_matrix</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/usingdakota/reference/variables-discrete_design_set-real-categorical-adjacency_matrix.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="adjacency-matrix">
+<span id="variables-discrete-design-set-real-categorical-adjacency-matrix"></span><h1>adjacency_matrix<a class="headerlink" href="#adjacency-matrix" title="Permalink to this headline"></a></h1>
+<p>1-0 matrix defining which categorical variable levels are related.</p>
+<div class="toctree-wrapper compound">
+</div>
+<p><strong>Specification</strong></p>
+<ul class="simple">
+<li><p><em>Alias:</em> None</p></li>
+<li><p><em>Arguments:</em> INTEGERLIST</p></li>
+</ul>
+<p><strong>Description</strong></p>
+<p>The <code class="docutils literal notranslate"><span class="pre">adjacency_matrix</span></code> keyword is associated with
+<code class="docutils literal notranslate"><span class="pre">discrete_design_set</span></code> variables that are specified to be categorical. Each
+such variable is associated with one <span class="math notranslate nohighlight">\(k \times k\)</span>  symmetric matrix, where
+<span class="math notranslate nohighlight">\(k\)</span>  is the number of values (or levels) of the variable. Entry <span class="math notranslate nohighlight">\(i,j\)</span>  of
+a matrix should be 1 if level <span class="math notranslate nohighlight">\(i\)</span>  and level <span class="math notranslate nohighlight">\(j\)</span>
+are related by some subjective criteria or if <span class="math notranslate nohighlight">\(i=j\)</span> ; it should be
+0 otherwise. The matrices for all variables of the same type ( <code class="docutils literal notranslate"><span class="pre">string</span></code>,
+<code class="docutils literal notranslate"><span class="pre">real</span></code>, or <code class="docutils literal notranslate"><span class="pre">integer</span></code>) are entered sequentially as a list of integers as
+shown in the examples below.</p>
+<p><em>Default Behavior</em></p>
+<p>The <code class="docutils literal notranslate"><span class="pre">adjacency_matrix</span></code> keyword is only relevant for
+<code class="docutils literal notranslate"><span class="pre">discrete_design_set</span></code> <code class="docutils literal notranslate"><span class="pre">real</span></code> and <code class="docutils literal notranslate"><span class="pre">discrete_design_set</span></code> <code class="docutils literal notranslate"><span class="pre">integer</span></code>
+variables if one or more of them have been specified to be
+<code class="docutils literal notranslate"><span class="pre">categorical</span></code>.  It is always relevant for <code class="docutils literal notranslate"><span class="pre">discrete_design_set</span></code>
+<code class="docutils literal notranslate"><span class="pre">string</span></code> variables.  If the user does not define an adjacency matrix,
+the default is method dependent.  Currently, the only method that
+makes use of the adjacency matrix is <a class="reference internal" href="method-mesh_adaptive_search.html#method-mesh-adaptive-search"><span class="std std-ref">method-mesh_adaptive_search</span></a>,
+which uses a tri-diagonal adjacency matrix by default.</p>
+<p><em>Expected Output</em></p>
+<p>The expected output is method dependent.</p>
+<p><em>Usage Tips</em></p>
+<p>If an adjacency matrix is defined for one type of (categorical)
+<code class="docutils literal notranslate"><span class="pre">discrete_design_set</span></code> variable, if must be defined for all variables of
+that type, even for those not defined to be categorical.  Those for
+the non-categorical set variables will be ignored.</p>
+<p><strong>Examples</strong></p>
+<p>The following example shows a variables specification where some real
+and some integer <code class="docutils literal notranslate"><span class="pre">discrete_design_set</span></code> variables are categorical.</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span><span class="k">variables</span>
+  continuous_design = 3
+    initial_point  -1.0    1.5   2.0
+    lower_bounds  -10.0  -10.0 -10.0
+    upper_bounds   10.0   10.0  10.0
+    descriptors    &#39;x1&#39;   &#39;x2&#39;  &#39;x3&#39;
+  discrete_design_range = 2
+    initial_point  2     2
+    lower_bounds   1     1
+    upper_bounds   4     9
+    descriptors   &#39;y1&#39;  &#39;y2&#39;
+  discrete_design_set
+    real = 2
+      elements_per_variable = 4 5
+      elements  =  1.2 2.3 3.4 4.5 1.2 3.3 4.4 5.5 7.7
+      descriptors  &#39;y3&#39;            &#39;y4&#39;
+      categorical  &#39;no&#39;            &#39;yes&#39;
+      adjacency_matrix 1 1 0 0  # Begin entry of 4x4 matrix for y3
+                       1 1 1 0
+                       0 1 1 1
+                       0 0 1 1
+                       1 0 1 0 1 # Begin entry of 5x5 matrix for y4
+                       0 1 0 1 0
+                       1 0 1 0 1
+                       0 1 0 1 0
+                       1 0 1 0 1
+    integer = 2
+      elements_per_variable = 2 3
+      elements  =  4  7  8  9  12
+      descriptors  &#39;z1&#39;  &#39;z2&#39;
+      categorical  &#39;yes&#39; &#39;yes&#39;
+</pre></div>
+</div>
+<p>Note that for the real case, the user wants to define an adjacency
+matrix for the categorical variable, so adjacency matrices for both
+variables must be specified.  The matrix for the first one will be
+ignored.  Note that no adjacency matrix is specified for either
+integer categorical variable.  The default will be used in both cases.
+Currently the only method taking advantage of adjacency matrices is
+<code class="docutils literal notranslate"><span class="pre">mesh_adaptive_search</span></code>, which uses a tri-diagonal adjacency matrix by
+default.  Thus, the matrices used would be</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>z1: 1 1
+    1 1
+z2: 1 1 0
+    1 1 1
+    0 1 1
+</pre></div>
+</div>
+<p>The following example shows a variables specification for string
+variables.  Note that string variables are always considered to be
+categorical.  If an adjacency matrix is not specified, a
+method-dependent default matrix will be used.</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span><span class="k">variables</span>,
+  continuous_design = 2
+    initial_point  0.5  0.5
+    lower_bounds   0.   0.
+    upper_bounds   1.   1.
+    descriptors =  &#39;x&#39;  &#39;y&#39;
+  discrete_design_set string = 1
+    elements = &#39;aniso1&#39; &#39;aniso2&#39; &#39;iso1&#39; &#39;iso2&#39; &#39;iso3&#39;
+    descriptors = &#39;ancomp&#39;
+    adjacency_matrix 1 1 0 0 0
+                     1 1 0 0 0
+                     0 0 1 1 1
+                     0 0 1 1 1
+                     0 0 1 1 1
+</pre></div>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="variables-discrete_design_set-real-categorical.html" class="btn btn-neutral float-left" title="categorical" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="variables-discrete_design_set-real-initial_point.html" class="btn btn-neutral float-right" title="initial_point" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <!--
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Sandia National Laboratories.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+  --> 
+
+</footer>
+        </div>
+      </div>
+	  
+	  <div style="background-color: #0f0f0f;color:#fafafa;padding:20px">
+	    <div>
+		  <h2><em>Exceptional service in the national interest</em></h2>
+		</div>
+		<p>© 2022 National Technology and Engineering Solutions of Sandia, LLC. | <a href="https://www.sandia.gov/contact_us/index.html">Questions &amp; Comments</a> | <a href="https://www.sandia.gov/general/privacy-security/index.html">Privacy &amp; Security</a></p>
+		<p><a href="http://energy.gov" rel="noopener noreferrer" target="_blank"><img alt="U.S. Department of Energy" longdesc="https://energy.gov" src="https://www.sandia.gov/_common/images/doe_logo_white.png" style="height:37px; width:140px"></a> <a href="http://nnsa.energy.gov/" rel="noopener noreferrer" target="_blank"> <img alt="National Nuclear Security Administration" longdesc="http://nnsa.gov" src="https://www.sandia.gov/_common/images/nnsa_logo_white.png" style="height:37px; width:116px"></a></p>
+		<p><a href="https://www.sandia.gov">Sandia National Laboratories</a> is a multimission laboratory managed and operated by National Technology and Engineering Solutions of Sandia, LLC., a wholly owned subsidiary of Honeywell International, Inc., for the U.S. Department of Energy’s National Nuclear Security Administration under contract DE-NA-0003525.</p>
+	  </div>	  	  
+	  
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

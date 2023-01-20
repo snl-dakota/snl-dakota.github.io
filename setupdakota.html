@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Getting Started &mdash; dakota  documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/dakota_theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/sandiaheaderlite.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Using Dakota" href="usingdakota/usingdakota.html" />
+    <link rel="prev" title="dakota" href="index.html" /> 
+  
+  <meta name="sandia.approval_type" content="formal"/>
+  <meta property="sandia.approved" content="SAND2022-15651 O"/>
+  <meta name="description" content="The Dakota project delivers both state-of-the-art research and robust, usable software for optimization and UQ."/>
+  <meta name="keywords" content="Dakota, optimization, UQ, uncertainty quantification, parametric analysis, design exploration, model calibration, risk analysis"/>
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> dakota
+            <img src="_static/dakota_Arrow_Name_Tag_horiz_transparent.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Getting Started</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#download-dakota">Download Dakota</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#command-line-gui">Command Line + GUI</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#command-line-only">Command Line Only</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#gui-only">GUI Only</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#installation">Installation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#installing-for-linux-or-mac">Installing for Linux or Mac</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#installing-for-windows">Installing for Windows</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#build-from-source-code-advanced">Build from Source Code (Advanced)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#setting-your-environment">Setting Your Environment</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#setting-your-environment-for-linux-or-mac">Setting Your Environment for Linux or Mac</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#setting-your-environment-for-windows">Setting Your Environment for Windows</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#test-installation">Test Installation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="usingdakota/usingdakota.html">Using Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usingdakotagui/usingdakotagui.html">Using Dakota GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="externaltools/externaltools.html">Using External Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="developingdakota/developingdakota.html">Developing Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="misc/misc.html">Miscellaneous</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">dakota</a>
+      </nav>
+
+	  <!-- SNL Lite header -->
+	  <div class="snlheader-subsite--wrapper-default">
+		<snlheader class="snlheader-subsite" role="snlbanner">
+		  <div class="wrapper">
+			<a href="https://www.sandia.gov/index.html">
+			  <div class="logo-transparent"><p class="logo">Sandia National Laboratories</p></div>
+			</a>
+			<div class="nav-top">
+			  <a class="visuallyhidden" name="mainnav"></a>
+			  <div aria-label="main navigation" class="core-nav-transparent core-nav-transparent--visible" role="navigation">
+				<ul role="navigation" class="secondary-links">
+				  <li id="search-text-link">
+					<a aria-label="Search" href="https://www.sandia.gov/search/">Search Sandia.gov</a>
+				  </li>
+				  <li id="directory-text-link">
+					<a href="https://www.sandia.gov/directory.html" aria-expanded="false" aria-label="Site Directory">All Sandia Websites</a>
+				  </li>
+				</ul>
+			  </div>
+			</div>
+		  </div> 
+		</snlheader>
+	  </div>	  
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Getting Started</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/setupdakota.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="getting-started">
+<span id="setupdakota-main"></span><h1>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline"></a></h1>
+<section id="download-dakota">
+<span id="setupdakota-download"></span><h2>Download Dakota<a class="headerlink" href="#download-dakota" title="Permalink to this headline"></a></h2>
+<section id="command-line-gui">
+<h3>Command Line + GUI<a class="headerlink" href="#command-line-gui" title="Permalink to this headline"></a></h3>
+<ul class="simple">
+<li><p><strong>6.17.0</strong> <a class="reference external" href="https://dakota.sandia.gov/sites/default/files/distributions/public/dakota-6.17.0-release-public-darwin.Darwin.x86_64-gui_cli.tar.gz">Mac OSX</a> | <a class="reference external" href="https://dakota.sandia.gov/sites/default/files/distributions/public/dakota-6.17.0-release-public-windows.Windows.x64-gui_cli.zip">Windows</a> | <a class="reference external" href="https://dakota.sandia.gov/sites/default/files/distributions/public/dakota-6.17.0-release-public-rhel7.Linux.x86_64-gui_cli.tar.gz">Linux (RHEL7)</a> | <a class="reference external" href="https://dakota.sandia.gov/sites/default/files/distributions/public/dakota-6.17.0-release-public-rhel8.Linux.x86_64-gui_cli.tar.gz">Linux (RHEL8)</a></p></li>
+<li><p><strong>6.16.0</strong> <a class="reference external" href="https://dakota.sandia.gov/sites/default/files/distributions/public/dakota-6.16.0-public-darwin.Darwin.x86_64-gui_cli.tar.gz">Mac OSX</a> | <a class="reference external" href="https://dakota.sandia.gov/sites/default/files/distributions/public/dakota-6.16.0-public-windows.Windows.x64-gui_cli.zip">Windows</a> | <a class="reference external" href="https://dakota.sandia.gov/sites/default/files/distributions/public/dakota-6.16.0-public-rhel7.Linux.x86_64-gui_cli.tar.gz">Linux (RHEL7)</a></p></li>
+<li><p><strong>6.15.1</strong> <a class="reference external" href="https://dakota.sandia.gov/sites/default/files/distributions/public/dakota-6.15.1-release-public-Darwin.x86_64-gui_cli.tar.gz">Mac OSX</a> | <a class="reference external" href="https://dakota.sandia.gov/sites/default/files/distributions/public/dakota-6.15.1-release-public-windows.Windows.x64-gui_cli.zip">Windows</a> | <a class="reference external" href="https://dakota.sandia.gov/sites/default/files/distributions/public/dakota-6.15.1-release-public-rhel7.x86_64-gui_cli.tar.gz">Linux (RHEL7)</a></p></li>
+</ul>
+</section>
+<section id="command-line-only">
+<h3>Command Line Only<a class="headerlink" href="#command-line-only" title="Permalink to this headline"></a></h3>
+<ul class="simple">
+<li><p><strong>6.17.0</strong> <a class="reference external" href="https://dakota.sandia.gov/sites/default/files/distributions/public/dakota-6.17.0-release-public-darwin.Darwin.x86_64-cli.tar.gz">Mac OSX</a> | <a class="reference external" href="https://dakota.sandia.gov/sites/default/files/distributions/public/dakota-6.17.0-release-public-windows.Windows.x64-cli.zip">Windows</a> | <a class="reference external" href="https://dakota.sandia.gov/sites/default/files/distributions/public/dakota-6.17.0-release-public-rhel7.Linux.x86_64-cli.tar.gz">Linux (RHEL7)</a> | <a class="reference external" href="https://dakota.sandia.gov/sites/default/files/distributions/public/dakota-6.17.0-release-public-rhel8.Linux.x86_64-cli.tar.gz">Linux (RHEL8)</a> | <a class="reference external" href="https://dakota.sandia.gov/sites/default/files/distributions/public/dakota-6.17.0-release-public-src-cli.tar.gz">Source</a></p></li>
+<li><p><strong>6.16.0</strong> <a class="reference external" href="https://dakota.sandia.gov/sites/default/files/distributions/public/dakota-6.16.0-public-darwin.Darwin.x86_64-cli.tar.gz">Mac OSX</a> | <a class="reference external" href="https://dakota.sandia.gov/sites/default/files/distributions/public/dakota-6.16.0-public-windows.Windows.x64-cli.zip">Windows</a> | <a class="reference external" href="https://dakota.sandia.gov/sites/default/files/distributions/public/dakota-6.16.0-public-rhel7.Linux.x86_64-cli.tar.gz">Linux (RHEL7)</a> | <a class="reference external" href="https://dakota.sandia.gov/sites/default/files/distributions/public/dakota-6.16.0-public-src-cli.tar.gz">Source</a></p></li>
+<li><p><strong>6.15.1</strong> <a class="reference external" href="https://dakota.sandia.gov/sites/default/files/distributions/public/dakota-6.15.1-release-public-Darwin.x86_64-gui_cli.tar.gz">Mac OSX</a> | <a class="reference external" href="https://dakota.sandia.gov/sites/default/files/distributions/public/dakota-6.15.1-release-public-Windows.x64-gui_cli.zip">Windows</a> | <a class="reference external" href="https://dakota.sandia.gov/sites/default/files/distributions/public/dakota-6.15.1-release-public-rhel7.x86_64-gui_cli.tar.gz">Linux (RHEL7)</a> | <a class="reference external" href="https://dakota.sandia.gov/sites/default/files/distributions/public/dakota-6.15.1-release-public-src-cli.tar.gz">Source</a></p></li>
+</ul>
+</section>
+<section id="gui-only">
+<h3>GUI Only<a class="headerlink" href="#gui-only" title="Permalink to this headline"></a></h3>
+<ul class="simple">
+<li><p><strong>6.17.0</strong> <a class="reference external" href="https://dakota.sandia.gov/sites/default/files/distributions/public/dakota-6.17.0-release-public-Darwin.x86_64-gui.tar.gz">Mac OSX</a> | <a class="reference external" href="https://dakota.sandia.gov/sites/default/files/distributions/public/dakota-6.17.0-release-public-Windows.x64-gui.zip">Windows</a> | <a class="reference external" href="https://dakota.sandia.gov/sites/default/files/distributions/public/dakota-6.17.0-release-public-Linux.x86_64-gui.tar.gz">Linux</a> | <a class="reference external" href="https://dakota.sandia.gov/sites/default/files/distributions/public/dakota-6.17.0-release-public-src-gui.zip">Source</a></p></li>
+<li><p><strong>6.16.0</strong> <a class="reference external" href="https://dakota.sandia.gov/sites/default/files/distributions/public/dakota-6.16.0-release-public-Darwin.x86_64-gui.tar.gz">Mac OSX</a> | <a class="reference external" href="https://dakota.sandia.gov/sites/default/files/distributions/public/dakota-6.16.0-release-public-Windows.x64-gui.zip">Windows</a> | <a class="reference external" href="https://dakota.sandia.gov/sites/default/files/distributions/public/dakota-6.16.0-release-public-Linux.x86_64-gui.tar.gz">Linux</a> | <a class="reference external" href="https://dakota.sandia.gov/sites/default/files/distributions/public/dakota-6.16.0-release-public-src-gui.zip">Source</a></p></li>
+<li><p><strong>6.15.1</strong> <a class="reference external" href="https://dakota.sandia.gov/sites/default/files/distributions/public/dakota-6.15.1-release-public-Darwin.x86_64-gui_cli.tar.gz">Mac OSX</a> | <a class="reference external" href="https://dakota.sandia.gov/sites/default/files/distributions/public/dakota-6.15.1-release-public-Windows.x64-gui_cli.zip">Windows</a> | <a class="reference external" href="https://dakota.sandia.gov/sites/default/files/distributions/public/dakota-6.15.1-release-public-rhel7.x86_64-gui_cli.tar.gz">Linux</a> | <a class="reference external" href="https://dakota.sandia.gov/sites/default/files/distributions/public/dakota-6.15.1-release-public-src-gui.tar.gz">Source</a></p></li>
+</ul>
+<p><a class="reference internal" href="misc/releasenotes.html#releasenotes-main"><span class="std std-ref">Release Notes</span></a></p>
+</section>
+</section>
+<section id="installation">
+<span id="setupdakota-installation"></span><h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline"></a></h2>
+<section id="installing-for-linux-or-mac">
+<h3>Installing for Linux or Mac<a class="headerlink" href="#installing-for-linux-or-mac" title="Permalink to this headline"></a></h3>
+<p>Extract archive file into suitable install location, e.g. $HOME.  If you have root access, you may extract archive file in a shared directory, e.g. /usr/local.</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>$ cd /path/to/Dakota/install/directory
+$ tar xzvf /path/to/Dakota-release.platform.tar.gz
+</pre></div>
+</div>
+<p>Rename the extracted Dakota binary executable directory:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>$ ls
+dakota-release.platform
+$ mv dakota-release.platform Dakota
+</pre></div>
+</div>
+<p>Set up your platform environment to access the Dakota executable, libraries, and tests.</p>
+</section>
+<section id="installing-for-windows">
+<h3>Installing for Windows<a class="headerlink" href="#installing-for-windows" title="Permalink to this headline"></a></h3>
+<p>Extract archive file into suitable install location, e.g. C:Dakota using the Windows extract utility.</p>
+<ul class="simple">
+<li><p>In Windows Explorer window, highight Dakota.&lt;release&gt;.&lt;platform&gt;.zip file.</p></li>
+<li><p>Right click and select “Extract All”</p></li>
+<li><p>Select a destination, e.g. C:Dakota, and click the Extract button. In the instructions below, %dest_dir% refers to this destination directory.</p></li>
+</ul>
+<p>Rename the extracted Dakota executable directory folder:</p>
+<ul class="simple">
+<li><p>Right click the dakota-&lt;release&gt;.&lt;platform&gt; file, and select ‘Rename’.</p></li>
+<li><p>Rename file to ‘Dakota’. In the instructions below, %install_dir% refers to the path to this new directory, %dest_dir%Dakota.</p></li>
+</ul>
+<p>Set up your platform environment to access the Dakota executable, libraries, and tests.</p>
+</section>
+<section id="build-from-source-code-advanced">
+<h3>Build from Source Code (Advanced)<a class="headerlink" href="#build-from-source-code-advanced" title="Permalink to this headline"></a></h3>
+<p>For custom installations, download and build Dakota from source code.</p>
+</section>
+</section>
+<section id="setting-your-environment">
+<span id="setupdakota-environment"></span><h2>Setting Your Environment<a class="headerlink" href="#setting-your-environment" title="Permalink to this headline"></a></h2>
+<section id="setting-your-environment-for-linux-or-mac">
+<h3>Setting Your Environment for Linux or Mac<a class="headerlink" href="#setting-your-environment-for-linux-or-mac" title="Permalink to this headline"></a></h3>
+<p><strong>Check your PATH Setting</strong></p>
+<p><em>In the instructions below, $INSTALL_DIR refers to the path to the new install directory, /path/to/dakota/install/directory/Dakota.</em></p>
+<p>Make sure Dakota executables (and optionally test files and current directory) are available on the PATH by typing ‘which dakota’ at command line prompt. If your PATH variable is set correctly, the path to the dakota binary should be displayed.</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>$ which dakota
+/path/to/dakota/install/directory/bin/dakota
+</pre></div>
+</div>
+<p>If your PATH variable is NOT set correctly, you will get a message like  the following:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>$ which dakota
+/usr/bin/which: no dakota in (/usr/local/bin:/usr/local/sbin)
+</pre></div>
+</div>
+<p>The following setup will make the dakota command and other helper programs available at the terminal. If you prefer you may refer to the dakota executable using its fully-qualified path. Note, however, that some examples will require modification to work properly if dakota and related helper programs are not on your PATH.</p>
+<p>To persist the PATH to Dakota across terminals/sessions, make the following changes to the appropriate shell login script. If you prefer to just test in your current terminal, execute the commands directly in a terminal.</p>
+<p><strong>Make Changes in Bash Shell</strong></p>
+<ol class="arabic simple">
+<li><p>Edit your Bash startup file in your favorite text editor. For Linux, this is ~/.bashrc. OS X terminal runs a login shell, and so the start up file may be ~/.bashrc, ~/.bash_profile, ~/.bash_login, or ~/.profile. See the manpage for Bash for more information about the differences between login and non-login shells.</p></li>
+<li><p>Modify and export PATH and PYTHONPATH.  Type the following lines, replacing <cite>$INSTALL_DIR</cite> with the absolute path to your installation directory, e.g. $HOME. You need not add the gui path if you are not using the Dakota GUI, or PYTHONPATH if you do not plan to use the dakota.interfacing Python module.</p></li>
+</ol>
+<ul class="simple">
+<li><p>On Linux:</p></li>
+</ul>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>export PATH=$INSTALL_DIR/bin:$INSTALL_DIR/share/dakota/test:$INSTALL_DIR/gui:$PATH
+export PYTHONPATH=$PYTHONPATH:$INSTALL_DIR/share/dakota/Python
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>On OS X:</p></li>
+</ul>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>export PATH=$INSTALL_DIR/bin:$INSTALL_DIR/share/dakota/test:$INSTALL_DIR/gui/Contents/MacOS:$PATH
+export PYTHONPATH=$PYTHONPATH:$INSTALL_DIR/share/dakota/Python
+</pre></div>
+</div>
+<ol class="arabic simple" start="3">
+<li><p>Save and close file.</p></li>
+<li><p>Update changes in your shell window.</p></li>
+</ol>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>$ source ~/.bashrc # Or other startup file on OS X
+</pre></div>
+</div>
+<p><strong>Make Changes in C Shell</strong></p>
+<ol class="arabic simple">
+<li><p>Edit the startup file ~/.cshrc in your favorite text editor.</p></li>
+<li><p>Modify and export PATH and PYTHONPATH.  Type the following lines, replacing <cite>$INSTALL_DIR</cite> with the absolute path to your installation directory, e.g. $HOME. You need not add the gui path if you are not using the Dakota GUI, or PYTHONPATH if you do not plan to use the dakota.interfacing Python module.</p></li>
+</ol>
+<ul class="simple">
+<li><p>On Linux:</p></li>
+</ul>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>set path=($INSTALL_DIR/bin $INSTALL_DIR/share/dakota/test $INSTALL_DIR/gui $path)
+setenv PYTHONPATH &quot;${PYTHONPATH}:${INSTALL_DIR}/share/dakota/Python&quot;
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>On OS X:</p></li>
+</ul>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>set path=($INSTALL_DIR/bin $INSTALL_DIR/share/dakota/test $INSTALL_DIR/gui/Contents/MacOS $path)
+setenv PYTHONPATH &quot;${PYTHONPATH}:${INSTALL_DIR}/share/dakota/Python&quot;
+</pre></div>
+</div>
+<ol class="arabic simple" start="3">
+<li><p>Save and close file.</p></li>
+<li><p>Update changes in your shell window.</p></li>
+</ol>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>$ source ~/.cshrc
+</pre></div>
+</div>
+</section>
+<section id="setting-your-environment-for-windows">
+<h3>Setting Your Environment for Windows<a class="headerlink" href="#setting-your-environment-for-windows" title="Permalink to this headline"></a></h3>
+<p>You will likely want to set the path to the Dakota executable. The following setup will make the dakota.exe command and other helper programs available at the command prompt. If you prefer you may refer to the dakota.exe executable using its fullly-qualified path. Note, however, that some examples will require modification to work properly if dakota.exe and related helper programs are not on your path.</p>
+<ol class="arabic simple">
+<li><p>Click the Start button and type ‘cmd’ in the ‘Search program and files’ text box to open cmd.exe.</p></li>
+<li><p>At the command prompt, type the following command, replacing %install_dir% with the path to your Dakota installation:</p></li>
+</ol>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>set path=%path%;%install_dir%\bin;%install_dir%\test;%install_dir%\lib
+</pre></div>
+</div>
+<ol class="arabic simple" start="3">
+<li><p>Optionally, to install the dakota Python package, also perform:</p></li>
+</ol>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>set PYTHONPATH=%PYTHONPATH%;%install_dir%\share\dakota\Python
+</pre></div>
+</div>
+<ol class="arabic simple" start="4">
+<li><p>These changes are active as long as the current terminal window is open. To make them persistent, edit the system environment variables in the Windows system settings. This operation differs slightly from version to version of Windows. Consult the documentation for the one you use.</p></li>
+</ol>
+</section>
+</section>
+<section id="test-installation">
+<h2>Test Installation<a class="headerlink" href="#test-installation" title="Permalink to this headline"></a></h2>
+<p>Make sure Dakota runs. You should see Dakota version information when you type:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>dakota -v
+</pre></div>
+</div>
+<p><strong>Now what?</strong></p>
+<p><a class="reference internal" href="usingdakota/introduction/helloworld.html#helloworld-main"><span class="std std-ref">Learn how to run a simple example in Dakota.</span></a></p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="dakota" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="usingdakota/usingdakota.html" class="btn btn-neutral float-right" title="Using Dakota" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <!--
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Sandia National Laboratories.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+  --> 
+
+</footer>
+        </div>
+      </div>
+	  
+	  <div style="background-color: #0f0f0f;color:#fafafa;padding:20px">
+	    <div>
+		  <h2><em>Exceptional service in the national interest</em></h2>
+		</div>
+		<p>© 2022 National Technology and Engineering Solutions of Sandia, LLC. | <a href="https://www.sandia.gov/contact_us/index.html">Questions &amp; Comments</a> | <a href="https://www.sandia.gov/general/privacy-security/index.html">Privacy &amp; Security</a></p>
+		<p><a href="http://energy.gov" rel="noopener noreferrer" target="_blank"><img alt="U.S. Department of Energy" longdesc="https://energy.gov" src="https://www.sandia.gov/_common/images/doe_logo_white.png" style="height:37px; width:140px"></a> <a href="http://nnsa.energy.gov/" rel="noopener noreferrer" target="_blank"> <img alt="National Nuclear Security Administration" longdesc="http://nnsa.gov" src="https://www.sandia.gov/_common/images/nnsa_logo_white.png" style="height:37px; width:116px"></a></p>
+		<p><a href="https://www.sandia.gov">Sandia National Laboratories</a> is a multimission laboratory managed and operated by National Technology and Engineering Solutions of Sandia, LLC., a wholly owned subsidiary of Honeywell International, Inc., for the U.S. Department of Energy’s National Nuclear Security Administration under contract DE-NA-0003525.</p>
+	  </div>	  	  
+	  
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

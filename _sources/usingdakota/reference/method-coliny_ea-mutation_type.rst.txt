@@ -1,0 +1,72 @@
+.. _method-coliny_ea-mutation_type:
+
+"""""""""""""
+mutation_type
+"""""""""""""
+
+
+Select a mutation type
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-coliny_ea-mutation_type-replace_uniform
+   method-coliny_ea-mutation_type-offset_normal
+   method-coliny_ea-mutation_type-offset_cauchy
+   method-coliny_ea-mutation_type-offset_uniform
+   method-coliny_ea-mutation_type-non_adaptive
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+- *Default:* offset_normal
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+---------------------+---------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword      | Dakota Keyword Description                  |
+|                         | Group              |                     |                                             |
++=========================+====================+=====================+=============================================+
+| Required (Choose One)   | Mutation Type      | `replace_uniform`__ | Replace coordinate with randomly generated  |
+|                         |                    |                     | value                                       |
+|                         |                    +---------------------+---------------------------------------------+
+|                         |                    | `offset_normal`__   | Set mutation offset to use a normal         |
+|                         |                    |                     | distribution                                |
+|                         |                    +---------------------+---------------------------------------------+
+|                         |                    | `offset_cauchy`__   | Use a Cauchy distribution for the mutation  |
+|                         |                    |                     | offset                                      |
+|                         |                    +---------------------+---------------------------------------------+
+|                         |                    | `offset_uniform`__  | Set mutation offset to use a uniform        |
+|                         |                    |                     | distribution                                |
++-------------------------+--------------------+---------------------+---------------------------------------------+
+| Optional                                     | `non_adaptive`__    | Disable self-adaptive mutation              |
++----------------------------------------------+---------------------+---------------------------------------------+
+
+.. __: method-coliny_ea-mutation_type-replace_uniform.html
+__ method-coliny_ea-mutation_type-offset_normal.html
+__ method-coliny_ea-mutation_type-offset_cauchy.html
+__ method-coliny_ea-mutation_type-offset_uniform.html
+__ method-coliny_ea-mutation_type-non_adaptive.html
+
+
+
+**Description**
+
+
+The ``mutation_type`` controls what approach is employed in randomly modifying
+continuous design variables within the EA population. Each of the mutation
+methods generates coordinate-wise changes to individuals, usually by adding a
+random variable to a given coordinate value (an ``offset_*`` mutation), but also by
+replacing a given coordinate value with a random variable (a ``replace_*``
+mutation).
+
+Discrete design variables are always mutated using the ``offset_uniform`` method.
+
+

@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Version 6.11 (2019/11/15) &mdash; dakota  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/dakota_theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/sandiaheaderlite.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Version 6.10 (2019/05/15)" href="610.html" />
+    <link rel="prev" title="Version 6.12 (2020/06/15)" href="612.html" /> 
+  
+  <meta name="sandia.approval_type" content="formal"/>
+  <meta property="sandia.approved" content="SAND2022-15651 O"/>
+  <meta name="description" content="The Dakota project delivers both state-of-the-art research and robust, usable software for optimization and UQ."/>
+  <meta name="keywords" content="Dakota, optimization, UQ, uncertainty quantification, parametric analysis, design exploration, model calibration, risk analysis"/>
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> dakota
+            <img src="../../_static/dakota_Arrow_Name_Tag_horiz_transparent.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../setupdakota.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../usingdakota/usingdakota.html">Using Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../usingdakotagui/usingdakotagui.html">Using Dakota GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../externaltools/externaltools.html">Using External Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developingdakota/developingdakota.html">Developing Dakota</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../misc.html">Miscellaneous</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../help.html">Help Resources</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../faq.html">Frequently Asked Questions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../aboutteam.html">About the Team</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../contributors.html">Contributors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../license.html">License</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../citing.html">Citing Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../publications.html">Publications</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../releasenotes.html">Release Notes</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="../releasenotes.html#dakota">Dakota</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="next.html">Version 6.17.0+ (stable / pre-release)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="617.html">Version 6.17 (2022/11/15)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="616.html">Version 6.16 (2022/05/16)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="615.html">Version 6.15 (2021/11/15)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="614.html">Version 6.14 (2021/05/17)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="613.html">Version 6.13 (2020/11/15)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="612.html">Version 6.12 (2020/06/15)</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Version 6.11 (2019/11/15)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="610.html">Version 6.10 (2019/05/15)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="69.html">Version 6.9 (2018/11/15)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="68.html">Version 6.8 (2018/05/15)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="67.html">Version 6.7 (2017/11/15)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="66.html">Version 6.6 (2017/05/15)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="65.html">Version 6.5 (2016/11/15)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="64.html">Version 6.4 (2016/05/16)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="63.html">Version 6.3 (2015/11/16)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="62.html">Version 6.2 (2015/05/15)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="61.html">Version 6.1 (2014/11/15)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="60.html">Version 6.0 (2014/05/15)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="54.html">Version 5.4 (2013/11/15)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="531.html">Version 5.3.1 (2013/05/15)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="53.html">Version 5.3 (2013/01/31)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="52.html">Version 5.2 (2011/11/30)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="51.html">Version 5.1 (2010/12/21)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="50.html">Version 5.0 (2009/12/21)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="42.html">Version 4.2 (2008/11/05)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="41.html">Version 4.1 (2007/09/21)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="40.html">Version 4.0 (2006/05/12)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="33.html">Version 3.3 (2004/12/23)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="32.html">Version 3.2 (2004/07/21)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="312.html">Version 3.1.2 (2003/07/09)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="311.html">Version 3.1.1 (2003/05/21)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="31.html">Version 3.1 (2003/04/04)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="30.html">Version 3.0 (2002/03/30)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="30beta.html">Version 3.0 beta (2001/11/29)</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../releasenotes.html#dakota-gui">Dakota GUI</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../bibliography.html">Bibliography</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../classictoc.html">I’m Lost!</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">dakota</a>
+      </nav>
+
+	  <!-- SNL Lite header -->
+	  <div class="snlheader-subsite--wrapper-default">
+		<snlheader class="snlheader-subsite" role="snlbanner">
+		  <div class="wrapper">
+			<a href="https://www.sandia.gov/index.html">
+			  <div class="logo-transparent"><p class="logo">Sandia National Laboratories</p></div>
+			</a>
+			<div class="nav-top">
+			  <a class="visuallyhidden" name="mainnav"></a>
+			  <div aria-label="main navigation" class="core-nav-transparent core-nav-transparent--visible" role="navigation">
+				<ul role="navigation" class="secondary-links">
+				  <li id="search-text-link">
+					<a aria-label="Search" href="https://www.sandia.gov/search/">Search Sandia.gov</a>
+				  </li>
+				  <li id="directory-text-link">
+					<a href="https://www.sandia.gov/directory.html" aria-expanded="false" aria-label="Site Directory">All Sandia Websites</a>
+				  </li>
+				</ul>
+			  </div>
+			</div>
+		  </div> 
+		</snlheader>
+	  </div>	  
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../misc.html">Miscellaneous</a> &raquo;</li>
+          <li><a href="../releasenotes.html">Release Notes</a> &raquo;</li>
+      <li>Version 6.11 (2019/11/15)</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/misc/releasenotes/611.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="version-6-11-2019-11-15">
+<span id="releasenotes-611"></span><h1>Version 6.11 (2019/11/15)<a class="headerlink" href="#version-6-11-2019-11-15" title="Permalink to this headline"></a></h1>
+<p><strong>Highlight: Functional Tensor Train for low rank approximation</strong></p>
+<p>The C3 library (POC: Prof. A. Gorodetsky, University of Michigan) provides a new capability for low rank approximation by functional tensor train decomposition.  C3 has been integrated in Dakota, alongside other stochastic expansion methods for UQ based on projection, regression, or interpolation, enabling an array of approaches for exploiting special structure (e.g., sparsity, low rank, low intrinsic dimension) in an input-output map.</p>
+<p><em>Enabling / Accessing:</em> This capability is new and evolving and is not part of the default Dakota build.  To activate, enable HAVE_C3 in your CMake configuration.</p>
+<p><em>Documentation:</em> Current keywords are documented in the latest Reference Manual, under method function_train_uq and model surrogate global function_train. This duality reflects a new design for supporting both Iterator-based and Model-based specification of stochastic surrogate models (see “Stochastic expansions as global DataFit surrogates” below).</p>
+<p><strong>Improvements by Category</strong></p>
+<p><em>Interfaces</em></p>
+<ul class="simple">
+<li><p><em>Batched evaluations:</em> When batch mode is enabled by including the ‘batch’ interface keyword, Dakota writes multiple evaluations to a single parameters file, runs a single analysis driver for the entire batch, and expects results for the batch to be returned in a single file. The analysis driver exercises complete control over details such as the sequence in which evaluations are performed, where they are performed, and so on.</p></li>
+<li><p><em>Preprocess Dakota input:</em> Dakota now supports a -preproc option that will pre-process the specified input file template into a Dakota-ready input file. Requires pyprepro.py utility on PATH or specification via -preproc /path/to/preproc_tool.py. Thanks to Ken Hu and George Orient for the feature request.</p></li>
+</ul>
+<p><em>Surrogate Models</em></p>
+<ul class="simple">
+<li><p><em>Data import validation:</em> (model &gt; surrogate &gt; global only.) Variable labels in header-annotated tabular data files are validated against expected imported variable descriptors and warnings/errors generated where possible. Imported columns are permuted to match expected variable order if possible. Each row of a tabular data file must have the correct number of columns for variables and responses. Applies to import_build_points_file and challenge_points_file.</p></li>
+<li><p><em>Quadratic multipoint exponential approximation (QMEA):</em> the QMEA approximation (POC: Prof. R. Canfield, Virginia Tech) has undergone refinement for managing heterogeneous training data sets, as might be expected from a sequence of trust region accept / reject decisions that incur evaluations with / without gradients, respectively.  Outlook: this surrogate extends beyond the current TANA-3 two-point capability to many-point cases, where the most recent sequence of iterates is used to construct higher-order approximations. Both optimization and reliability analysis cases are targeted.</p></li>
+</ul>
+<p><em>Optimization Methods</em></p>
+<ul class="simple">
+<li><p>NOMAD method now supports asynchronous model evaluations for increased concurrency</p></li>
+<li><p>JEGA (SOGA, MOGA) methods will now work properly with flat file initialization and asynchronous evaluations instead of hanging indefinitely. Thanks to Benoit Paillard for the bug report!</p></li>
+<li><p>The Demo_TPL showing steps to add a new Optimization Third-Party Library (TPL) to Dakota along with working examples is now available in $DAKOTA_SRC/packages/external/demo_tpl and is conditionally enabled by setting -D HAVE_DEMO_TPL:BOOL=ON when building Dakota from source.  See either the README.md file within that directory or the Development Practices and Guidance section of the Developer’s Manual for additional details.</p></li>
+</ul>
+<p><em>UQ Methods</em></p>
+<ul class="simple">
+<li><p>As noted in the highlights above, low rank approximation by functional tensor train (FTT) is now available in Dakota.</p></li>
+<li><p>The latest individual and integrated adaptive refinement strategies for multilevel polynomial chaos and multilevel stochastic collocation are now supported as emulators underneath Bayesian calibration.</p></li>
+</ul>
+<p><em>MultivariateDistribution Architecture</em></p>
+<ul class="simple">
+<li><p>The main goal in this refactor was to modernize our random variable distribution capabilities so that we can move beyond a description of univariate marginal distributions + correlations to include other types of multivariate distributions, especially joint PDFs for data-driven workflows.</p>
+<ul>
+<li><p>new Pecos::MultivariateDistribution base class provides univariate and multivariate stat routines, while Pecos::MarginalsCorrDistribution derived class covers the existing case of a std::vector&lt;Pecos::RandomVariable&gt; plus a correlation matrix</p></li>
+<li><p>Outlook: new data-driven workflows are under development or planned, including MultivariateNormalDistribution (stubbed out), JointKDEDistribution (planned), et al.</p></li>
+</ul>
+</li>
+<li><p>New RandomVariable derived classes were added to span all types of {continuous, discrete {int,string,real}} and {design, aleatory, epistemic, state} variables, with an emphasis on templates to eliminate previous type enumeration for discrete sets and ranges.</p>
+<ul>
+<li><p>This allows a more modular design for some UQ APIs (e.g. LHSDriver), where only a vector of all specified variables, a correlation matrix, and BitArray definition of active subsets need to be supplied.</p></li>
+<li><p>Allows retirement of Pecos::{Aleatory,Epistemic}DistParams as well as a number of Dakota::Iterator containers for discrete set values, as all random variable data is now consolidated in one place.</p>
+<ul>
+<li><p>Outlook: Discrete Askey PCE is now much closer to reality, with various discrete mappings more fully developed.</p></li>
+</ul>
+</li>
+<li><p>With Pecos::MultivariateDistribution covering statistical utilities, Pecos::{Probability,Nataf}Transformation now focuses only on the specifics of forward/inverse variable transformations.  The separation of these two concerns is much cleaner than before.</p></li>
+</ul>
+</li>
+</ul>
+<p><em>ProbabilityTransformModel</em></p>
+<ul class="simple">
+<li><p>As enabled by the MultivariateDistribution abstraction, this release completes and fully deploys a derived RecastModel for encapsulating the Pecos probability transformation (e.g., Nataf).  This allows promotion of a probability transformation into a full-featured Model recursion.</p>
+<ul>
+<li><p>Consolidates previous Dakota::NonD code into a reusable module</p></li>
+<li><p>Consolidates the ProbabilityTransformation instance so that it no longer needs to be passed around among NonD helpers.</p></li>
+</ul>
+</li>
+<li><p>All Dakota::Models now contain one Pecos::MultivariateDistribution instance which describes a single probability space (original or transformed), where one starts from the original space at the bottom and then encounters transformations as one goes up the Model recursion. In this way, previous explicit management of x-space versus u-space could largely go away as a given level of the hierarchy has only one probability space (e.g., ProbabilityTransformModel consumes the x-space data from the levels below and presents only u-space data to the levels above).</p></li>
+</ul>
+<p><em>Stochastic expansions as global DataFit surrogates</em></p>
+<ul class="simple">
+<li><p>With probability transformations as part of the Model hierarchy, stochastic expansions can now be fully defined as global data fits without an associated NonD Iterator.  NonDC3FunctionTrain and C3Approximation are the first demonstrator of this new capability (either NonD Iterator or DataFit Surrogate), with PCE and SC to follow.</p>
+<ul>
+<li><p>Outlook: This will simplify / unify use of stochastic surrogates in other contexts, e.g., Bayesian inference, and enable new Dakota workflows for surrogate modeling.</p></li>
+</ul>
+</li>
+</ul>
+<p><em>Output</em></p>
+<ul class="simple">
+<li><p>HDF5</p>
+<ul>
+<li><p>The types of variables (e.g. “continuous_design”) were added as a dimension scale to evaluation output.</p></li>
+<li><p>Results from the ‘multi_start’ and ‘pareto_set’ methods are now written.</p></li>
+<li><p>Add name of the top method as a root attribute</p></li>
+<li><p>Distribution parameters (e.g. mean and standard deviation of normal_uncertaint variables; lower and upper bounds of continuous_design variables) are now written out as model metadata.</p></li>
+</ul>
+</li>
+</ul>
+<p><strong>Miscellaneous Enhancements and Bugfixes</strong></p>
+<ul class="simple">
+<li><p>Enh/Bug: Cantlever beam training example stress equation now properly depends on beam length. Thanks to Anjali Sandip for reporting the issue and the correct derivation.</p></li>
+<li><p>Bug fix: Header change to resolve Acro/Colin compilation issue with boost::signals2::last_value. Thanks to Sebastian Uharek for reporting bug and fix.</p></li>
+<li><p>Bug fix: Revise JEGA EDDY_ASSERT macro for proper compilation on some platforms.</p></li>
+<li><p>Bug fix: Test script dakota_test.perl will now report SKIP for tests disabled based on Dakota configuraiton options (such as missing TPLs). Thanks to Justin Thomas for reporting.</p></li>
+<li><p>Bug fix: Presence of old, corrupted HDF5 files no longer causes Dakota to abort.</p></li>
+<li><p>Bug fix: HDF5 model_selection behavior was fixed so that it is no longer necessary to specify ‘all’ to avoid a crash.</p></li>
+<li><p>Bug fix: Specification of response gradients but no continuous variables no longer causes an HDF5-related crash.</p></li>
+<li><p>Bug fix: pyprepro treats templates from stdin properly.</p></li>
+<li><p>Bug fix: fixed issue from previous release with using the multifidelity_stoch_collocation method with gradient-enhanced interpolants.</p></li>
+<li><p>Bug fix: fixed issue with output of uninitialized main effects for the case of Sobol’ index-based adaptive p-refinement of polynomial chaos expansions, when variance-based decomposition is not specified.</p></li>
+<li><p>Enh: Clang compiler compatibility misc. fixes to forward declare streaming operators and not use funny pointer to ostringstream data. Also misc. utilib-related fixes. Thanks to multiple users for reporting.</p></li>
+<li><p>Enh: Use std::chrono for system-generated random seeds instead of Utilib; user-specified seed behavior is unchanged.</p></li>
+<li><p>Enh: mpitile utility accepts a new argument, –tile-size, that allows mpitiling applications on a subset of a tile.</p></li>
+<li><p>Enh: mpitile stops parsing command line options after seeing –, allowing users to pass options to their applications that match mpitile options.</p></li>
+</ul>
+<p><strong>Deprecated and Changed</strong></p>
+<ul class="simple">
+<li><p>Deprecated X Graphics keywords removed from example files.</p></li>
+<li><p>Migrated the Continuous Integration infrastructure for MacOS to a new Jenkins build / test server, High Sierra (10.13).</p></li>
+<li><p>Tabular data imports for surrogates must have correct number of cols per row.</p></li>
+<li><p>Website training materials do not reflect corrected stress equation for cantilever beam.</p></li>
+<li><p>MacOS Sierra (10.12) deprecated in the Jenkins Continuous Integration build/testing scripts.</p></li>
+<li><p>Migrated to a new CDashboard server for posting build / test results.</p></li>
+<li><p>Enabled MacOS Mojave (10.14) as a build/test alternative for the Mac platform.</p></li>
+</ul>
+<p><strong>Compatibility</strong></p>
+<ul class="simple">
+<li><p>HDF5 v1.10.4 or higher is required to compile Dakota with the HDF5-based method results output enabled. HDFView may be helpful in viewing the output database, and Python h5py is necessary to run tests and examples.</p></li>
+<li><p>No mandatory changes to required compilers or third-party libraries. Dakota has been smoke tested on newer gcc-7.x and gcc-8.x compilers, but not fully tested.</p></li>
+</ul>
+<p><strong>Other Notes and Known Issues</strong></p>
+<ul class="simple">
+<li><p>HDF5 output is known to be incompatible with some types of studies involving hierarchical surrogate models and interfaces specifying analysis_components.</p></li>
+</ul>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="612.html" class="btn btn-neutral float-left" title="Version 6.12 (2020/06/15)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="610.html" class="btn btn-neutral float-right" title="Version 6.10 (2019/05/15)" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <!--
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Sandia National Laboratories.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+  --> 
+
+</footer>
+        </div>
+      </div>
+	  
+	  <div style="background-color: #0f0f0f;color:#fafafa;padding:20px">
+	    <div>
+		  <h2><em>Exceptional service in the national interest</em></h2>
+		</div>
+		<p>© 2022 National Technology and Engineering Solutions of Sandia, LLC. | <a href="https://www.sandia.gov/contact_us/index.html">Questions &amp; Comments</a> | <a href="https://www.sandia.gov/general/privacy-security/index.html">Privacy &amp; Security</a></p>
+		<p><a href="http://energy.gov" rel="noopener noreferrer" target="_blank"><img alt="U.S. Department of Energy" longdesc="https://energy.gov" src="https://www.sandia.gov/_common/images/doe_logo_white.png" style="height:37px; width:140px"></a> <a href="http://nnsa.energy.gov/" rel="noopener noreferrer" target="_blank"> <img alt="National Nuclear Security Administration" longdesc="http://nnsa.gov" src="https://www.sandia.gov/_common/images/nnsa_logo_white.png" style="height:37px; width:116px"></a></p>
+		<p><a href="https://www.sandia.gov">Sandia National Laboratories</a> is a multimission laboratory managed and operated by National Technology and Engineering Solutions of Sandia, LLC., a wholly owned subsidiary of Honeywell International, Inc., for the U.S. Department of Energy’s National Nuclear Security Administration under contract DE-NA-0003525.</p>
+	  </div>	  	  
+	  
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

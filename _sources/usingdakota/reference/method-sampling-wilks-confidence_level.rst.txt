@@ -1,0 +1,50 @@
+.. _method-sampling-wilks-confidence_level:
+
+""""""""""""""""
+confidence_level
+""""""""""""""""
+
+
+The confidence level to be used when determining sample sizes
+for random sampling using Wilks order statistics.
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* REAL
+
+
+**Description**
+
+
+*Default Behavior*
+
+A value of 0.95 (95%) is the default for both confidence level as well
+as probability level resulting in 59 samples for first-order one-sided
+statistics.
+
+
+
+**Examples**
+
+
+
+.. code-block::
+
+    method
+      sampling
+        sample_type random
+        wilks
+          confidence_level 0.99
+
+
+
+

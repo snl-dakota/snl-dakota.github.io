@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Using Next-Gen Workflow as a Dakota Analysis Driver &mdash; dakota  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/dakota_theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/sandiaheaderlite.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Tutorial: Create an NGW Analysis Driver for Dakota" href="NextGenWorkflowTutorial.html" />
+    <link rel="prev" title="Next-Gen Workflow Basics" href="NextGenWorkflowBasics.html" /> 
+  
+  <meta name="sandia.approval_type" content="formal"/>
+  <meta property="sandia.approved" content="SAND2022-15651 O"/>
+  <meta name="description" content="The Dakota project delivers both state-of-the-art research and robust, usable software for optimization and UQ."/>
+  <meta name="keywords" content="Dakota, optimization, UQ, uncertainty quantification, parametric analysis, design exploration, model calibration, risk analysis"/>
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> dakota
+            <img src="../../_static/dakota_Arrow_Name_Tag_horiz_transparent.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../setupdakota.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../usingdakota/usingdakota.html">Using Dakota</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../usingdakotagui.html">Using Dakota GUI</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#introduction">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#example-search">Example Search</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#wizards">Wizards</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#editing-dakota-input-files">Editing Dakota Input Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#simulation-models">Simulation Models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#running-dakota">Running Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#output-from-dakota">Output from Dakota</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../usingdakotagui.html#gui-tools">GUI Tools</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../bmf/BMF.html">Basic Model Format (BMF)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../chartreuse/Chartreuse.html">Chartreuse</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="NextGenWorkflow.html">Next-Gen Workflow</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="NextGenWorkflowBasics.html">Next-Gen Workflow Basics</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Using Next-Gen Workflow as a Dakota Analysis Driver</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#dakota-sandwiched-between-two-workflows">Dakota Sandwiched Between Two Workflows</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#using-dprepro-to-connect-dakota-and-next-gen-workflow">Using DPREPRO to Connect Dakota and Next-Gen Workflow</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#using-the-saw-driver-magic-string-legacy-option">Using the “SAW_DRIVER” Magic String (Legacy Option)</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#the-dirty-secret-we-re-still-executing-a-script">The dirty secret: We’re still executing a script</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#using-multiple-analysis-drivers">Using Multiple Analysis Drivers</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="NextGenWorkflowTutorial.html">Tutorial: Create an NGW Analysis Driver for Dakota</a></li>
+<li class="toctree-l4"><a class="reference internal" href="NodeGlossary.html">Next-Gen Workflow Node Glossary</a></li>
+<li class="toctree-l4"><a class="reference internal" href="NextGenWorkflow.html#highlighted-node-topics">Highlighted Node Topics</a></li>
+<li class="toctree-l4"><a class="reference internal" href="NextGenWorkflow.html#further-reading">Further Reading</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../qoi/QOI.html">QOI</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#miscellaneous">Miscellaneous</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../externaltools/externaltools.html">Using External Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developingdakota/developingdakota.html">Developing Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../misc/misc.html">Miscellaneous</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">dakota</a>
+      </nav>
+
+	  <!-- SNL Lite header -->
+	  <div class="snlheader-subsite--wrapper-default">
+		<snlheader class="snlheader-subsite" role="snlbanner">
+		  <div class="wrapper">
+			<a href="https://www.sandia.gov/index.html">
+			  <div class="logo-transparent"><p class="logo">Sandia National Laboratories</p></div>
+			</a>
+			<div class="nav-top">
+			  <a class="visuallyhidden" name="mainnav"></a>
+			  <div aria-label="main navigation" class="core-nav-transparent core-nav-transparent--visible" role="navigation">
+				<ul role="navigation" class="secondary-links">
+				  <li id="search-text-link">
+					<a aria-label="Search" href="https://www.sandia.gov/search/">Search Sandia.gov</a>
+				  </li>
+				  <li id="directory-text-link">
+					<a href="https://www.sandia.gov/directory.html" aria-expanded="false" aria-label="Site Directory">All Sandia Websites</a>
+				  </li>
+				</ul>
+			  </div>
+			</div>
+		  </div> 
+		</snlheader>
+	  </div>	  
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../usingdakotagui.html">Using Dakota GUI</a> &raquo;</li>
+          <li><a href="NextGenWorkflow.html">Next-Gen Workflow</a> &raquo;</li>
+      <li>Using Next-Gen Workflow as a Dakota Analysis Driver</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/usingdakotagui/ngw/NextGenWorkflowAnalysisDrivers.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="using-next-gen-workflow-as-a-dakota-analysis-driver">
+<span id="ngw-analysisdrivers"></span><h1>Using Next-Gen Workflow as a Dakota Analysis Driver<a class="headerlink" href="#using-next-gen-workflow-as-a-dakota-analysis-driver" title="Permalink to this headline"></a></h1>
+<p>As far as Dakota GUI is concerned, NGW’s primary purpose is to act as a visual editor for <a class="reference internal" href="../../usingdakota/introduction/couplingtosimulations.html#couplingtosimulations-main"><span class="std std-ref">analysis drivers</span></a>.
+Since invoking an analysis driver for Dakota usually consists of a handful of steps (e.g. preparing input to the simulation model, executing it,
+and returning the relevant values back to Dakota), the node-based workflow approach of NGW aligns nicely with this paradigm. In fact, NGW all but eliminates
+the need to write a custom script as Dakota’s analysis driver, if you wish to avoid low-level scripting. This is because many of the most common operations needed
+for simulation model execution are already handled by nodes provided with NGW. NGW supports less common operations too, thanks to its “escape hatch” of providing scripting nodes:
+when in doubt, NGW can always return you to the flexibility of executing a difficult section of logic using a Python script, bash script, or something similar.</p>
+<p>This page goes over some of the details for how Dakota interoperates with NGW - specifically, how NGW is invoked through the <a class="reference internal" href="../../usingdakota/reference/interface-analysis_drivers.html#interface-analysis-drivers"><span class="std std-ref">analysis_drivers</span></a>
+keyword, as well as why Dakota itself must be invoked with a second outer workflow. Finally, we go over the use case for <a class="reference internal" href="#ngw-analysisdrivers-multiple"><span class="std std-ref">multiple analysis drivers</span></a>.</p>
+<p>If you are just looking for quick help with setting up a Next-Gen Workflow analysis driver for the first time,
+refer to <a class="reference internal" href="NextGenWorkflowTutorial.html#gui-nestedworkflowtutorial-main"><span class="std std-ref">this tutorial that walks you through setting up a simple Cantilever beam simulation model in Next-Gen Workflow</span></a>.</p>
+<section id="dakota-sandwiched-between-two-workflows">
+<span id="ngw-analysisdrivers-sandwich"></span><h2>Dakota Sandwiched Between Two Workflows<a class="headerlink" href="#dakota-sandwiched-between-two-workflows" title="Permalink to this headline"></a></h2>
+<p>The current “recipe” for effectively using Dakota, Next-Gen Workflow, and DPREPRO goes like this:</p>
+<ol class="arabic">
+<li><p>Begin by creating a Next-Gen workflow that invokes your simulation model, whatever it is. The workflow should begin with input parameters and end with at least one output response.
+This workflow forms the <strong>analysis driver</strong> for Dakota.</p></li>
+<li><p>Generate a <strong>Dakota study</strong> from this workflow using <a class="reference internal" href="../wizards/NewDakotaStudy.html#wizards-newdakotastudy"><span class="std std-ref">the New Dakota Study Wizard</span></a>, providing your previously-created workflow as the analysis driver.
+Depending on how you have <a class="reference internal" href="../miscgui/Preferences.html#gui-preferences-dakota-workflow"><span class="std std-ref">configured your GUI’s settings</span></a>, the <code class="docutils literal notranslate"><span class="pre">analysis_drivers</span></code> keyword of the interface block will be either:</p>
+<ul class="simple">
+<li><p>the DPREPRO pre-processing value <code class="docutils literal notranslate"><span class="pre">&quot;{DRIVER}&quot;</span></code>, or…</p></li>
+<li><p>a text string beginning with “SAW_DRIVER=”, which is a legacy option.</p></li>
+</ul>
+<p>The main thing to note at this point is that neither of these <code class="docutils literal notranslate"><span class="pre">analysis_drivers</span></code> values are executable in and of themselves. That’s why we need the third step…</p>
+</li>
+<li><p>Create a second, outer workflow that is responsible for executing Dakota. This outer workflow is the one that should actually be run by the user, and it is responsible for creating the final linkages between
+Dakota and Next-Gen Workflow, using DPREPRO to replace the <code class="docutils literal notranslate"><span class="pre">&quot;{DRIVER}&quot;</span></code> string (or manually replace the “SAW_DRIVER=” string, for legacy situations). This outer workflow can be automatically generated using
+<a class="reference internal" href="../wizards/NewDakotaWrapperWorkflow.html#wizards-newwrapperworkflow-main"><span class="std std-ref">the New Dakota Wrapper Wizard</span></a>.</p></li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>One of the benefits of this “sandwich” approach is that the outer workflow can be used to further collect output once Dakota has finished running, if the user wishes to add additional nodes after
+the Dakota node in the workflow.</p>
+</div>
+</section>
+<section id="using-dprepro-to-connect-dakota-and-next-gen-workflow">
+<span id="ngw-analysisdrivers-dprepro"></span><h2>Using DPREPRO to Connect Dakota and Next-Gen Workflow<a class="headerlink" href="#using-dprepro-to-connect-dakota-and-next-gen-workflow" title="Permalink to this headline"></a></h2>
+<p>By default, a Dakota study with an NGW analysis driver (where the study was generated by the New Dakota Study Wizard) will have an interface block that looks something like this:</p>
+<img alt="Interface block with &quot;{DRIVER}&quot; interface" src="../../_images/Run_Using_Workflow_11.png" />
+<p>Before executing Dakota, the <code class="docutils literal notranslate"><span class="pre">&quot;{DRIVER}&quot;</span></code> string must be replaced using a pre-processing engine (our somewhat nepotistic choice is <a class="reference internal" href="../../externaltools/dpreproandpyprepro.html#interfaces-dprepro-and-pyprepro"><span class="std std-ref">DPREPRO</span></a>).
+Now, note that the “dakota” node provided in a Next-Gen workflow has the ability to automatically substitute pre-processing variables using data provided to its input ports.
+You can see this in action with this example outer workflow:</p>
+<img alt="Example wrapper workflow" src="../../_images/WrapperWorkflowWizard_4.png" />
+<p>In this example, we have added a new input port to the “dakota” node simply called “DRIVER.” This port is not standard for “dakota” nodes pulled off the NGW <a class="reference internal" href="NextGenWorkflowBasics.html#ngw-basics-palette"><span class="std std-ref">Palette</span></a>, but
+as stated previously, any new input ports will be associated with pre-processing variables that have the same name, and data passed into those ports will become the values
+that we substitute in. Because we have a “DRIVER” input port, the data coming into that port will replace the <code class="docutils literal notranslate"><span class="pre">&quot;{DRIVER}&quot;</span></code> pre-processing variable inside the Dakota
+input file.</p>
+<p>Therefore, it is the “dakotaWorkflowDriver” node (the bottom-left node in the workflow above) that ultimately provides the analysis driver to Dakota.</p>
+</section>
+<section id="using-the-saw-driver-magic-string-legacy-option">
+<span id="ngw-analysisdrivers-sawdriverstring"></span><h2>Using the “SAW_DRIVER” Magic String (Legacy Option)<a class="headerlink" href="#using-the-saw-driver-magic-string-legacy-option" title="Permalink to this headline"></a></h2>
+<p>Older versions of Dakota GUI and Next-Gen Workflow relied on a special “SAW_DRIVER” string to make the connection that is now handled through DPREPRO. “SAW_DRIVER” is now considered a
+deprecated mechanism for connecting Dakota to Next-Gen Workflow, and we recommend replacing it with the DPREPRO syntax shown in this section. However, NGW still recognizes the special “SAW_DRIVER”
+string as a fallback option, if the modern DPREPRO mechanism does not suit your needs. “SAW_DRIVER” can become the default by <a class="reference internal" href="../miscgui/Preferences.html#gui-preferences-dakota-workflow"><span class="std std-ref">configuring the GUI appropriately</span></a>.</p>
+<p>An example interface block generated by the New Dakota Study Wizard would look like this:</p>
+<img alt="Interface block with &quot;SAW_DRIVER&quot; interface" src="../../_images/Run_Using_SAW_Driver.png" />
+<p>While this string does not execute anything by itself, it is recognized by Next-Gen Workflow, and Next-Gen Workflow can provide the actual executable analysis driver at runtime if it recognizes
+this “SAW_DRIVER” string. The catch is that Dakota must be executed in an NGW context for the “SAW_DRIVER” string to be recognized. Hence the need for a second, outer workflow.</p>
+<p>The New Dakota Study wizard provides an <code class="docutils literal notranslate"><span class="pre">analysis_drivers</span></code> value string of <code class="docutils literal notranslate"><span class="pre">&quot;SAW_DRIVER=&lt;your</span> <span class="pre">driver</span> <span class="pre">name&gt;&quot;</span></code> by default. The text that follows the <code class="docutils literal notranslate"><span class="pre">=</span></code> sign is assumed to be a relative filepath
+to the workflow that will act as Dakota’s analysis driver. So, in the screenshot, “WorkflowDriver.iwf” is in the same directory as the Dakota input file. If it were one directory level up, for example, then the analysis
+driver value would be <code class="docutils literal notranslate"><span class="pre">&quot;SAW_DRIVER=../WorkflowDriver.iwf&quot;</span></code>.</p>
+<p>If the name of the analysis driver is not known at runtime, then you may still take advantage of the “SAW_DRIVER” approach. Simply shorten the analysis driver value string to <code class="docutils literal notranslate"><span class="pre">&quot;SAW_DRIVER&quot;</span></code>, with no = sign or
+a value following the = sign. The actual name of the workflow may instead be provided by the calling “dakota” node in the outer workflow.</p>
+<p>Note this section displayed within the properties of the “dakota” node:</p>
+<img alt="Interface block with &quot;SAW_DRIVER&quot; interface" src="../../_images/Run_Using_SAW_Driver_2.png" />
+<p>You may provide the path to the workflow file here, or provide yet another pre-processing variable (this time using NGW’s <code class="docutils literal notranslate"><span class="pre">${}</span></code> syntax) if the name of the analysis workflow is not known.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In this example, there is no need to include a “dakotaWorkflowDriver” node in your outer workflow. The information provided via the “SAW_DRIVER” string gives enough information to associate Dakota
+to the analysis driver in question.</p>
+</div>
+</section>
+<section id="the-dirty-secret-we-re-still-executing-a-script">
+<h2>The dirty secret: We’re still executing a script<a class="headerlink" href="#the-dirty-secret-we-re-still-executing-a-script" title="Permalink to this headline"></a></h2>
+<p>At this point, you may be wondering what it is exactly that is being substituted into the interface block of our Dakota study at the end of the day. If we’re using DPREPRO, then it is inserting
+a text value at runtime, originally provided by the “dakotaWorkflowDriver” node in our outer workflow. Similarly, if we’re using “SAW_DRIVER,” then NGW is inserting a text value that has something
+to do with the relative path to the NGW workflow / analysis driver.</p>
+<p>Behind the scenes, <strong>NGW is creating a script on the fly</strong> (a shell script if on Mac or Linux, and a bat script if on Windows). Or, to be more specific, the “dakotaWorkflowDriver” node is
+responsible for spawning the correct driver script based on the provided information about your chosen analysis driver workflow. (If the “SAW_DRIVER” string is used, then it’s the “dakota” node
+that’s responsible for determining the location of the analysis driver workflow and spawning the appropriate driver script.)</p>
+<p>There are a couple reasons that this script is hidden from the user:</p>
+<ul class="simple">
+<li><p>Invoking the NGW engine on the command line involves the use of incredibly ugly command-line parameters that are best hidden from the user. Inserting the entire command to invoke
+NGW would make the Dakota input file very difficult to read.</p></li>
+<li><p>Hiding the script encourages new users to concentrate on the logic of their workflows, not on the nuances of shell script syntax or the uniquely diabolical terrors of Windows bat script syntax.</p></li>
+<li><p>The contents of the script are highly sensitive to paths, and thus not portable.</p></li>
+<li><p>The script has little use beyond the lifespan of the workflow.</p></li>
+</ul>
+<p>If you wish, you may inspect the actual analysis driver script and see what it is doing by going into the workflow’s working directory and looking for a file called <code class="docutils literal notranslate"><span class="pre">dakotaDriver.sh</span></code> (or <code class="docutils literal notranslate"><span class="pre">dakotaDriver.bat</span></code>
+on Windows). This file will be in a “dakota” folder if the “dakota” node is configured to run in a private working directory; otherwise, it will appear at the root of your workflow’s working directory.
+Despite the fact that we go to great lengths to hide this script from the user, it can be argued that it’s good to know about its existence if things go wrong as you go about setting up your Dakota studies
+with NGW drivers.</p>
+</section>
+<section id="using-multiple-analysis-drivers">
+<span id="ngw-analysisdrivers-multiple"></span><h2>Using Multiple Analysis Drivers<a class="headerlink" href="#using-multiple-analysis-drivers" title="Permalink to this headline"></a></h2>
+<p>Dakota GUI provides support for hooking up multiple, workflow-based analysis drivers to Dakota studies that have multiple interface blocks.  This is done by combining the features of DPREPRO and NGW.</p>
+<p>For example, suppose we have two interface blocks in a given Dakota input file (as seen in multi-level multi-fidelity studies).  In these types of Dakota studies,
+we interface to a low-fidelity model (LF) and a high-fidelity model (HF).  Instead of providing explicit paths to a low-fidelity driver and a high-fidelity driver following each
+“analysis_drivers” keyword, let’s add two pieces of DPREPRO markup - <code class="docutils literal notranslate"><span class="pre">&quot;{DRIVER_LF}&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">&quot;{DRIVER_HF}&quot;</span></code> (note the quotes).  The text within the DPREPRO brackets is arbitrary,
+but the markup text must be consistent going forward.</p>
+<img alt="Markup your Dakota input file with DPREPRO markup" src="../../_images/Run_Using_Workflow_10.png" />
+<p>Now, this Dakota study will not run by itself anymore, since the text now needs to be pre-processed.  Let’s switch over to Next-Gen Workflow to create a workflow that will run Dakota for us.</p>
+<p>There are two things that need to happen on this workflow.  The first is that we need to provide one dakotaWorkflowDriver node per analysis driver.  Each dakotaWorkflowDriver
+node should point to the appropriate IWF file that will function as the analysis driver.</p>
+<p>The second thing to do is to connect each dakotaWorkflowDriver node to a “dakota” workflow node using new input ports that match the text of the DPREPRO markup.
+For example, we should add an input port called “DRIVER_LF” to correspond to our {DRIVER_LF} markup.  Then, the dakotaWorkflowDriver node that knows about the low-fidelity
+analysis driver should be connected to this input port.  The same should be done with a “DRIVER_HF” input port and the dakotaWorkflowDriver node that knows about the high-fidelity analysis driver.</p>
+<img alt="Create input ports with matching labels" src="../../_images/Run_Using_Workflow_9.png" />
+<p>Once this is done, running the workflow will cause Dakota to execute the nested workflow analysis drivers as defined.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="NextGenWorkflowBasics.html" class="btn btn-neutral float-left" title="Next-Gen Workflow Basics" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="NextGenWorkflowTutorial.html" class="btn btn-neutral float-right" title="Tutorial: Create an NGW Analysis Driver for Dakota" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <!--
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Sandia National Laboratories.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+  --> 
+
+</footer>
+        </div>
+      </div>
+	  
+	  <div style="background-color: #0f0f0f;color:#fafafa;padding:20px">
+	    <div>
+		  <h2><em>Exceptional service in the national interest</em></h2>
+		</div>
+		<p>© 2022 National Technology and Engineering Solutions of Sandia, LLC. | <a href="https://www.sandia.gov/contact_us/index.html">Questions &amp; Comments</a> | <a href="https://www.sandia.gov/general/privacy-security/index.html">Privacy &amp; Security</a></p>
+		<p><a href="http://energy.gov" rel="noopener noreferrer" target="_blank"><img alt="U.S. Department of Energy" longdesc="https://energy.gov" src="https://www.sandia.gov/_common/images/doe_logo_white.png" style="height:37px; width:140px"></a> <a href="http://nnsa.energy.gov/" rel="noopener noreferrer" target="_blank"> <img alt="National Nuclear Security Administration" longdesc="http://nnsa.gov" src="https://www.sandia.gov/_common/images/nnsa_logo_white.png" style="height:37px; width:116px"></a></p>
+		<p><a href="https://www.sandia.gov">Sandia National Laboratories</a> is a multimission laboratory managed and operated by National Technology and Engineering Solutions of Sandia, LLC., a wholly owned subsidiary of Honeywell International, Inc., for the U.S. Department of Energy’s National Nuclear Security Administration under contract DE-NA-0003525.</p>
+	  </div>	  	  
+	  
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

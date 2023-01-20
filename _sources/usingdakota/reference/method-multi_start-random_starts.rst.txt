@@ -1,0 +1,52 @@
+.. _method-multi_start-random_starts:
+
+"""""""""""""
+random_starts
+"""""""""""""
+
+
+Number of random starting points
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-multi_start-random_starts-seed
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* INTEGER
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+--------------------+---------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword     | Dakota Keyword Description                  |
+|                         | Group              |                    |                                             |
++=========================+====================+====================+=============================================+
+| Optional                                     | `seed`__           | Seed of the random number generator         |
++----------------------------------------------+--------------------+---------------------------------------------+
+
+.. __: method-multi_start-random_starts-seed.html
+
+
+
+**Description**
+
+
+The ``multi_start`` meta-iterator must specify a sub-iterator using
+either a ``method_pointer`` or a ``method_name`` plus optional
+``model_pointer``.  This iterator is responsible for completing a series
+of iterative analyses from a set of different starting points.  These
+starting points can be specified as follows: (1) using
+``random_starts``, for which the specified number of starting points are
+selected randomly within the variable bounds, (2) using
+``starting_points``, in which the starting values are provided in a list,
+or (3) using both ``random_starts`` and ``starting_points``, for which
+the combined set of points will be used.
+
+

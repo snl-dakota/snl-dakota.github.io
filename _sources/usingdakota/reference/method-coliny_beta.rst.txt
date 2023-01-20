@@ -1,0 +1,97 @@
+.. _method-coliny_beta:
+
+"""""""""""
+coliny_beta
+"""""""""""
+
+
+(Experimental) Coliny beta solver
+
+
+
+**Topics**
+
+
+package_scolib, package_coliny
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-coliny_beta-beta_solver_name
+   method-coliny_beta-solution_target
+   method-coliny_beta-seed
+   method-coliny_beta-show_misc_options
+   method-coliny_beta-misc_options
+   method-coliny_beta-max_iterations
+   method-coliny_beta-convergence_tolerance
+   method-coliny_beta-max_function_evaluations
+   method-coliny_beta-scaling
+   method-coliny_beta-model_pointer
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+------------------------------+---------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword               | Dakota Keyword Description                  |
+|                         | Group              |                              |                                             |
++=========================+====================+==============================+=============================================+
+| Required                                     | `beta_solver_name`__         | Use an in-development SCOLIB solver         |
++----------------------------------------------+------------------------------+---------------------------------------------+
+| Optional                                     | `solution_target`__          | Stopping criteria based on objective        |
+|                                              |                              | function value                              |
++----------------------------------------------+------------------------------+---------------------------------------------+
+| Optional                                     | `seed`__                     | Seed of the random number generator         |
++----------------------------------------------+------------------------------+---------------------------------------------+
+| Optional                                     | `show_misc_options`__        | Show algorithm parameters not exposed in    |
+|                                              |                              | Dakota input                                |
++----------------------------------------------+------------------------------+---------------------------------------------+
+| Optional                                     | `misc_options`__             | Set method options not available through    |
+|                                              |                              | Dakota spec                                 |
++----------------------------------------------+------------------------------+---------------------------------------------+
+| Optional                                     | `max_iterations`__           | Number of iterations allowed for optimizers |
+|                                              |                              | and adaptive UQ methods                     |
++----------------------------------------------+------------------------------+---------------------------------------------+
+| Optional                                     | `convergence_tolerance`__    | Stopping criterion based on objective       |
+|                                              |                              | function or statistics convergence          |
++----------------------------------------------+------------------------------+---------------------------------------------+
+| Optional                                     | `max_function_evaluations`__ | Number of function evaluations allowed for  |
+|                                              |                              | optimizers                                  |
++----------------------------------------------+------------------------------+---------------------------------------------+
+| Optional                                     | `scaling`__                  | Turn on scaling for variables, responses,   |
+|                                              |                              | and constraints                             |
++----------------------------------------------+------------------------------+---------------------------------------------+
+| Optional                                     | `model_pointer`__            | Identifier for model block to be used by a  |
+|                                              |                              | method                                      |
++----------------------------------------------+------------------------------+---------------------------------------------+
+
+.. __: method-coliny_beta-beta_solver_name.html
+__ method-coliny_beta-solution_target.html
+__ method-coliny_beta-seed.html
+__ method-coliny_beta-show_misc_options.html
+__ method-coliny_beta-misc_options.html
+__ method-coliny_beta-max_iterations.html
+__ method-coliny_beta-convergence_tolerance.html
+__ method-coliny_beta-max_function_evaluations.html
+__ method-coliny_beta-scaling.html
+__ method-coliny_beta-model_pointer.html
+
+
+
+**Description**
+
+
+This method keyword allows testing of experimental (beta) Coliny
+(Scolib) optimization solvers during software development.  It is
+intended primarily for developer use.  Additional information on
+Coliny solvers is available at :ref:`topic-package_scolib<topic-package_scolib>`.
+
+

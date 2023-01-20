@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HDF5 in Dakota GUI &mdash; dakota  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/dakota_theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/sandiaheaderlite.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Basic Model Format (BMF)" href="../bmf/BMF.html" />
+    <link rel="prev" title="Run Dakota Using Next-Gen Workflow" href="../running/DakotaRunWorkflow.html" /> 
+  
+  <meta name="sandia.approval_type" content="formal"/>
+  <meta property="sandia.approved" content="SAND2022-15651 O"/>
+  <meta name="description" content="The Dakota project delivers both state-of-the-art research and robust, usable software for optimization and UQ."/>
+  <meta name="keywords" content="Dakota, optimization, UQ, uncertainty quantification, parametric analysis, design exploration, model calibration, risk analysis"/>
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> dakota
+            <img src="../../_static/dakota_Arrow_Name_Tag_horiz_transparent.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../setupdakota.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../usingdakota/usingdakota.html">Using Dakota</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../usingdakotagui.html">Using Dakota GUI</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#introduction">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#example-search">Example Search</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#wizards">Wizards</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#editing-dakota-input-files">Editing Dakota Input Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#simulation-models">Simulation Models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#running-dakota">Running Dakota</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../usingdakotagui.html#output-from-dakota">Output from Dakota</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">HDF5 in Dakota GUI</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#introduction">Introduction</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#recommended-reading-about-hdf5">Recommended Reading about HDF5</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#generating-an-hdf5-output-file-from-dakota">Generating an HDF5 Output File from Dakota</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#browsing-hdf5-files-in-dakota-gui">Browsing HDF5 Files in Dakota GUI</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#using-hdf5-files-for-graphical-plotting">Using HDF5 Files for Graphical Plotting</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#using-hdf5-files-in-next-gen-workflow">Using HDF5 Files in Next-Gen Workflow</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#gui-tools">GUI Tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#miscellaneous">Miscellaneous</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../externaltools/externaltools.html">Using External Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developingdakota/developingdakota.html">Developing Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../misc/misc.html">Miscellaneous</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">dakota</a>
+      </nav>
+
+	  <!-- SNL Lite header -->
+	  <div class="snlheader-subsite--wrapper-default">
+		<snlheader class="snlheader-subsite" role="snlbanner">
+		  <div class="wrapper">
+			<a href="https://www.sandia.gov/index.html">
+			  <div class="logo-transparent"><p class="logo">Sandia National Laboratories</p></div>
+			</a>
+			<div class="nav-top">
+			  <a class="visuallyhidden" name="mainnav"></a>
+			  <div aria-label="main navigation" class="core-nav-transparent core-nav-transparent--visible" role="navigation">
+				<ul role="navigation" class="secondary-links">
+				  <li id="search-text-link">
+					<a aria-label="Search" href="https://www.sandia.gov/search/">Search Sandia.gov</a>
+				  </li>
+				  <li id="directory-text-link">
+					<a href="https://www.sandia.gov/directory.html" aria-expanded="false" aria-label="Site Directory">All Sandia Websites</a>
+				  </li>
+				</ul>
+			  </div>
+			</div>
+		  </div> 
+		</snlheader>
+	  </div>	  
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../usingdakotagui.html">Using Dakota GUI</a> &raquo;</li>
+      <li>HDF5 in Dakota GUI</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/usingdakotagui/output/HDF.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="hdf5-in-dakota-gui">
+<span id="gui-hdf-main"></span><h1>HDF5 in Dakota GUI<a class="headerlink" href="#hdf5-in-dakota-gui" title="Permalink to this headline"></a></h1>
+<section id="introduction">
+<span id="gui-hdf-introduction"></span><h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline"></a></h2>
+<p>In 2018, with the release of <a class="reference internal" href="../../misc/releasenotes/69.html#releasenotes-69"><span class="std std-ref">version 6.9.0</span></a>, Dakota began providing HDF5 database files as a supported output format for its data.  Historically, all of
+Dakota’s output data was written to plain text formats - tabular data files, console output stream, etc.  This meant that parsing Dakota’s output data was a manual,
+sometimes difficult process.  On the other hand, HDF5 is a standard for scientific programming data storage, and there are many tools readily available for reading
+data out of an HDF5 file.</p>
+</section>
+<section id="recommended-reading-about-hdf5">
+<h2>Recommended Reading about HDF5<a class="headerlink" href="#recommended-reading-about-hdf5" title="Permalink to this headline"></a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.hdfgroup.org/wp-content/uploads/2017/12/HDF512-17.pdf">Visit the HDF Group website for further information on the HDF5 format.</a></p></li>
+<li><p><a class="reference internal" href="../../usingdakota/output/hdf.html#hdf5-output"><span class="std std-ref">Learn about the way Dakota organizes its output data into HDF5 format.</span></a></p></li>
+<li><p><a class="reference external" href="https://support.hdfgroup.org/products/java/hdfview/">Learn about HDFView, the HDF Group’s tool for graphically browsing HDF5 files.</a></p></li>
+<li><p><a class="reference external" href="https://www.h5py.org/">Learn about h5py, the Pythonic interface to HDF5 format.</a></p></li>
+</ul>
+</section>
+<section id="generating-an-hdf5-output-file-from-dakota">
+<h2>Generating an HDF5 Output File from Dakota<a class="headerlink" href="#generating-an-hdf5-output-file-from-dakota" title="Permalink to this headline"></a></h2>
+<p>Configuring Dakota to generate HDF5 output is easy.  In the <a class="reference internal" href="../../usingdakota/reference/environment.html#environment"><span class="std std-ref">environment</span></a> block of your study, add
+the keywords <a class="reference internal" href="../../usingdakota/reference/environment-results_output.html#environment-results-output"><span class="std std-ref">results_output</span></a> and <a class="reference internal" href="../../usingdakota/reference/environment-results_output-hdf5.html#environment-results-output-hdf5"><span class="std std-ref">hdf5</span></a>.</p>
+<img alt="Example environment block" src="../../_images/HDF_Generation_1.png" />
+<p>Dakota GUI also provides a <a class="reference internal" href="../inputfiles/DakotaTextEditor.html#gui-inputfiles-blockrecipes"><span class="std std-ref">block recipe</span></a> to do this for you:</p>
+<img alt="Environment with HDF5 output" src="../../_images/HDF_Generation_2.png" />
+<p>Now, the next time you run Dakota, an h5 file that contains your Dakota data in HDF5 format will be added to your project directory.</p>
+</section>
+<section id="browsing-hdf5-files-in-dakota-gui">
+<h2>Browsing HDF5 Files in Dakota GUI<a class="headerlink" href="#browsing-hdf5-files-in-dakota-gui" title="Permalink to this headline"></a></h2>
+<p>All HDF5 files (not just those generated by Dakota) are browseable in the Dakota GUI, thanks to the
+incorporation of the <a class="reference external" href="https://support.hdfgroup.org/products/java/hdfview/">HDF Group’s HDFView</a> tool.</p>
+<p>Clicking on the small arrow next to our h5 file will expand it to the first level of data contained within.</p>
+<img alt="A collapsed h5 file" src="../../_images/HDF_Browsing_1.png" />
+<p>The data contained in HDF5 files are primarily composed of <strong>groups</strong> and <strong>datasets</strong> which roughly correspond to the idea of folders and files in an operating system:</p>
+<img alt="An expanded h5 file" src="../../_images/HDF_Browsing_2.png" />
+<p>This is what an average Dakota HDF5 file looks like after expanding a few of the folders.  Groups are designated by folder icons, whereas datasets are designated by page icons.</p>
+<p>To view the data in an individual dataset, simply double-click it to display the table of data in your editor area.</p>
+<img alt="Data from a centered parameter study" src="../../_images/HDF_Browsing_3.png" />
+<p>Attributes about a group or dataset can be viewed using the Settings Editor view (Window &gt; Show View &gt; Settings).</p>
+<img alt="continuous_variables attributes" src="../../_images/HDF_Browsing_4.png" />
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The Dakota GUI provides an <strong>HDF File Viewing</strong> perspective that docks the Settings Editor view in the center of your perspective.  To activate
+this perspective, go to “Window &gt; Perspective &gt; Open Perspective &gt; Other” and then select “HDF File Viewing.”</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Dakota GUI only supports viewing HDF5 files in read-only mode.  You cannot use the Dakota GUI to write to an h5 file after it has been created.</p>
+</div>
+</section>
+<section id="using-hdf5-files-for-graphical-plotting">
+<h2>Using HDF5 Files for Graphical Plotting<a class="headerlink" href="#using-hdf5-files-for-graphical-plotting" title="Permalink to this headline"></a></h2>
+<p>HDF5 files are recognized by <a class="reference internal" href="../chartreuse/Chartreuse.html#chartreuse-main"><span class="std std-ref">Chartreuse</span></a> (Dakota GUI’s plotting library) as a source of plottable data.</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="../chartreuse/PlotTraceCreator.html#chartreuse-getting-data-from-hdf5"><span class="std std-ref">Learn about how to extract plotting data from plain HDF5 files.</span></a></p></li>
+<li><p><a class="reference internal" href="../chartreuse/PlotTraceCreator.html#chartreuse-getting-data-from-dakota-hdf5"><span class="std std-ref">Learn about how to extract plotting data from Dakota-generated HDF5 files.</span></a></p></li>
+</ul>
+</section>
+<section id="using-hdf5-files-in-next-gen-workflow">
+<h2>Using HDF5 Files in Next-Gen Workflow<a class="headerlink" href="#using-hdf5-files-in-next-gen-workflow" title="Permalink to this headline"></a></h2>
+<p>HDF5 files can also be used when building workflows in <a class="reference internal" href="../ngw/NextGenWorkflow.html#ngw-main"><span class="std std-ref">Next-Gen Workflow.</span></a></p>
+<ul class="simple">
+<li><p><a class="reference internal" href="../chartreuse/ChartreuseWorkflow.html#chartreuse-ngw-hdf-tutorial"><span class="std std-ref">Learn about the simple HDF5 plotting nodes that Next-Gen Workflow provides.</span></a></p></li>
+<li><p><a class="reference internal" href="../chartreuse/ChartreuseWorkflow.html#chartreuse-ngw-composite-plotters"><span class="std std-ref">Learn about the advanced “megaplotters” that combine knowledge of Dakota, HDF5, and Chartreuse to produce extremely complex plots.</span></a></p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../running/DakotaRunWorkflow.html" class="btn btn-neutral float-left" title="Run Dakota Using Next-Gen Workflow" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../bmf/BMF.html" class="btn btn-neutral float-right" title="Basic Model Format (BMF)" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <!--
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Sandia National Laboratories.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+  --> 
+
+</footer>
+        </div>
+      </div>
+	  
+	  <div style="background-color: #0f0f0f;color:#fafafa;padding:20px">
+	    <div>
+		  <h2><em>Exceptional service in the national interest</em></h2>
+		</div>
+		<p>© 2022 National Technology and Engineering Solutions of Sandia, LLC. | <a href="https://www.sandia.gov/contact_us/index.html">Questions &amp; Comments</a> | <a href="https://www.sandia.gov/general/privacy-security/index.html">Privacy &amp; Security</a></p>
+		<p><a href="http://energy.gov" rel="noopener noreferrer" target="_blank"><img alt="U.S. Department of Energy" longdesc="https://energy.gov" src="https://www.sandia.gov/_common/images/doe_logo_white.png" style="height:37px; width:140px"></a> <a href="http://nnsa.energy.gov/" rel="noopener noreferrer" target="_blank"> <img alt="National Nuclear Security Administration" longdesc="http://nnsa.gov" src="https://www.sandia.gov/_common/images/nnsa_logo_white.png" style="height:37px; width:116px"></a></p>
+		<p><a href="https://www.sandia.gov">Sandia National Laboratories</a> is a multimission laboratory managed and operated by National Technology and Engineering Solutions of Sandia, LLC., a wholly owned subsidiary of Honeywell International, Inc., for the U.S. Department of Energy’s National Nuclear Security Administration under contract DE-NA-0003525.</p>
+	  </div>	  	  
+	  
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

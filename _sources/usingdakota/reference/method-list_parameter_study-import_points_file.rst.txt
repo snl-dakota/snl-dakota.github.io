@@ -1,0 +1,87 @@
+.. _method-list_parameter_study-import_points_file:
+
+""""""""""""""""""
+import_points_file
+""""""""""""""""""
+
+
+File containing list of variable values to evaluate in a list parameter study
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-list_parameter_study-import_points_file-custom_annotated
+   method-list_parameter_study-import_points_file-annotated
+   method-list_parameter_study-import_points_file-freeform
+   method-list_parameter_study-import_points_file-active_only
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* STRING
+
+- *Default:* no point import from a file
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+----------------------+---------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword       | Dakota Keyword Description                  |
+|                         | Group              |                      |                                             |
++=========================+====================+======================+=============================================+
+| Optional (Choose One)   | Tabular Format     | `custom_annotated`__ | Selects custom-annotated tabular file       |
+|                         |                    |                      | format                                      |
+|                         |                    +----------------------+---------------------------------------------+
+|                         |                    | `annotated`__        | Selects annotated tabular file format       |
+|                         |                    +----------------------+---------------------------------------------+
+|                         |                    | `freeform`__         | Selects freeform file format                |
++-------------------------+--------------------+----------------------+---------------------------------------------+
+| Optional                                     | `active_only`__      | Import only active variables from tabular   |
+|                                              |                      | data file                                   |
++----------------------------------------------+----------------------+---------------------------------------------+
+
+.. __: method-list_parameter_study-import_points_file-custom_annotated.html
+__ method-list_parameter_study-import_points_file-annotated.html
+__ method-list_parameter_study-import_points_file-freeform.html
+__ method-list_parameter_study-import_points_file-active_only.html
+
+
+
+**Description**
+
+
+The ``import_points_file`` specifies a file containing a list of variable
+values at which to compute a model response.
+
+*Default Behavior*
+
+By default, methods do not import points from a file.
+
+*Usage Tips*
+
+Dakota parses input files without regard to whitespace, but the
+import_points_file must be in one of three formats:
+
+- ``annotated`` (default)
+- ``custom_annotated``
+- ``freeform``
+
+
+
+**Examples**
+
+
+
+.. code-block::
+
+    method
+      list_parameter_study
+        import_points_file = 'dakota_pstudy.3.dat'
+
+
+
+

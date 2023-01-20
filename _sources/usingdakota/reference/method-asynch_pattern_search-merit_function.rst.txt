@@ -1,0 +1,71 @@
+.. _method-asynch_pattern_search-merit_function:
+
+""""""""""""""
+merit_function
+""""""""""""""
+
+
+Balance goals of reducing objective function and satisfying constraints
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-asynch_pattern_search-merit_function-merit_max
+   method-asynch_pattern_search-merit_function-merit_max_smooth
+   method-asynch_pattern_search-merit_function-merit1
+   method-asynch_pattern_search-merit_function-merit1_smooth
+   method-asynch_pattern_search-merit_function-merit2
+   method-asynch_pattern_search-merit_function-merit2_smooth
+   method-asynch_pattern_search-merit_function-merit2_squared
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+- *Default:* merit2_squared
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+----------------------+---------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword       | Dakota Keyword Description                  |
+|                         | Group              |                      |                                             |
++=========================+====================+======================+=============================================+
+| Required (Choose One)   | Merit Function     | `merit_max`__        | Nonsmoothed merit function                  |
+|                         |                    +----------------------+---------------------------------------------+
+|                         |                    | `merit_max_smooth`__ | Smoothed merit function                     |
+|                         |                    +----------------------+---------------------------------------------+
+|                         |                    | `merit1`__           | Nonsmoothed merit function                  |
+|                         |                    +----------------------+---------------------------------------------+
+|                         |                    | `merit1_smooth`__    | Smoothed merit function                     |
+|                         |                    +----------------------+---------------------------------------------+
+|                         |                    | `merit2`__           | Nonsmoothed merit function                  |
+|                         |                    +----------------------+---------------------------------------------+
+|                         |                    | `merit2_smooth`__    | Smoothed merit function                     |
+|                         |                    +----------------------+---------------------------------------------+
+|                         |                    | `merit2_squared`__   | Nonsmoothed merit function                  |
++-------------------------+--------------------+----------------------+---------------------------------------------+
+
+.. __: method-asynch_pattern_search-merit_function-merit_max.html
+__ method-asynch_pattern_search-merit_function-merit_max_smooth.html
+__ method-asynch_pattern_search-merit_function-merit1.html
+__ method-asynch_pattern_search-merit_function-merit1_smooth.html
+__ method-asynch_pattern_search-merit_function-merit2.html
+__ method-asynch_pattern_search-merit_function-merit2_smooth.html
+__ method-asynch_pattern_search-merit_function-merit2_squared.html
+
+
+
+**Description**
+
+
+A ``merit_function`` is a function in constrained optimization that
+attempts to provide joint progress toward reducing the objective
+function and satisfying the constraints.
+
+

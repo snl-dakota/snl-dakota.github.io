@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Basic Model Format (BMF) &mdash; dakota  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/dakota_theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/sandiaheaderlite.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Chartreuse" href="../chartreuse/Chartreuse.html" />
+    <link rel="prev" title="HDF5 in Dakota GUI" href="../output/HDF.html" /> 
+  
+  <meta name="sandia.approval_type" content="formal"/>
+  <meta property="sandia.approved" content="SAND2022-15651 O"/>
+  <meta name="description" content="The Dakota project delivers both state-of-the-art research and robust, usable software for optimization and UQ."/>
+  <meta name="keywords" content="Dakota, optimization, UQ, uncertainty quantification, parametric analysis, design exploration, model calibration, risk analysis"/>
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> dakota
+            <img src="../../_static/dakota_Arrow_Name_Tag_horiz_transparent.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../setupdakota.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../usingdakota/usingdakota.html">Using Dakota</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../usingdakotagui.html">Using Dakota GUI</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#introduction">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#example-search">Example Search</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#wizards">Wizards</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#editing-dakota-input-files">Editing Dakota Input Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#simulation-models">Simulation Models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#running-dakota">Running Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#output-from-dakota">Output from Dakota</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../usingdakotagui.html#gui-tools">GUI Tools</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Basic Model Format (BMF)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#new-bmf-file">New BMF File</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#add-new-variable">Add New Variable</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#variable-editor-controls">Variable Editor Controls</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#variable-property-controls">Variable Property Controls</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#response-editor-controls">Response Editor Controls</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#next-steps">Next Steps</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../chartreuse/Chartreuse.html">Chartreuse</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../ngw/NextGenWorkflow.html">Next-Gen Workflow</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../qoi/QOI.html">QOI</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#miscellaneous">Miscellaneous</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../externaltools/externaltools.html">Using External Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developingdakota/developingdakota.html">Developing Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../misc/misc.html">Miscellaneous</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">dakota</a>
+      </nav>
+
+	  <!-- SNL Lite header -->
+	  <div class="snlheader-subsite--wrapper-default">
+		<snlheader class="snlheader-subsite" role="snlbanner">
+		  <div class="wrapper">
+			<a href="https://www.sandia.gov/index.html">
+			  <div class="logo-transparent"><p class="logo">Sandia National Laboratories</p></div>
+			</a>
+			<div class="nav-top">
+			  <a class="visuallyhidden" name="mainnav"></a>
+			  <div aria-label="main navigation" class="core-nav-transparent core-nav-transparent--visible" role="navigation">
+				<ul role="navigation" class="secondary-links">
+				  <li id="search-text-link">
+					<a aria-label="Search" href="https://www.sandia.gov/search/">Search Sandia.gov</a>
+				  </li>
+				  <li id="directory-text-link">
+					<a href="https://www.sandia.gov/directory.html" aria-expanded="false" aria-label="Site Directory">All Sandia Websites</a>
+				  </li>
+				</ul>
+			  </div>
+			</div>
+		  </div> 
+		</snlheader>
+	  </div>	  
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../usingdakotagui.html">Using Dakota GUI</a> &raquo;</li>
+      <li>Basic Model Format (BMF)</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/usingdakotagui/bmf/BMF.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="basic-model-format-bmf">
+<span id="bmf-main"></span><h1>Basic Model Format (BMF)<a class="headerlink" href="#basic-model-format-bmf" title="Permalink to this headline"></a></h1>
+<p>Basic Model Format files (that is, files with a BMF extension) allow an analyst to define input parameters and output responses for black-box simulation models.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Before beginning, an analyst is assumed to have some <em>a priori</em> knowledge about the black-box simulation model of interest, specifically with regards to what
+sorts of input parameters it receives, and what output results to look at.
+As an example, the classic cantilever beam model has:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>Seven input parameters:</strong> length, width, thickness, density, Young’s modulus, horizontal load, and vertical load</p></li>
+<li><p><strong>Three output responses:</strong> mass, stress, and displacement</p></li>
+</ul>
+</div></blockquote>
+</div>
+<section id="new-bmf-file">
+<h2>New BMF File<a class="headerlink" href="#new-bmf-file" title="Permalink to this headline"></a></h2>
+<p>To begin editing a new BMF file, from the Project Explorer view, right-click a Dakota project and select “New &gt; Other &gt; Basic Model Format (BMF) &gt; BMF File”.  After
+choosing a name and location for your new model file, the BMF editor should open.</p>
+<img alt="Defining a new simulation model" src="../../_images/NewDakotaStudy_SimModel_1.png" />
+<p>First of all, note that there are two tabs along the top – “Variables” and “Respsonses.”  You can switch between these two tabs to specify variables (i.e. input parameters) and responses for your model.</p>
+</section>
+<section id="add-new-variable">
+<h2>Add New Variable<a class="headerlink" href="#add-new-variable" title="Permalink to this headline"></a></h2>
+<p>Click on the “Add Variable” button (the button with a blue “(x)=” symbol) to add your first variable!</p>
+<img alt="The first variable" src="../../_images/NewDakotaStudy_SimModel_2.png" />
+<p>A couple of things happen at this point:</p>
+<ul class="simple">
+<li><p>A variable called “New variable” is added underneath the “Variables” folder in the tree view on the left side of the editor.</p></li>
+<li><p>New buttons become active – “New Group”, “Cut”, “Copy”, and “Delete.”  More on these in a minute.</p></li>
+<li><p>The variable properties section (the right side of the editor) become active.  You can now specify more specific features of your variable.  More on these properties in a minute.</p></li>
+</ul>
+<p>In order to rename your variable from “New Variable” to something more descriptive, use the blue focus area on the tree view to type in a new variable name.  Let’s start with
+“length” since that’s one of our cantilever beam’s input parameters.  (If you lose focus, simply double-click the “New variable” text in the tree view to get editing focus back).</p>
+<img alt="&quot;length&quot;" src="../../_images/NewDakotaStudy_SimModel_3.png" />
+</section>
+<section id="variable-editor-controls">
+<h2>Variable Editor Controls<a class="headerlink" href="#variable-editor-controls" title="Permalink to this headline"></a></h2>
+<p>Let’s go over the button group near the bottom of the editor.</p>
+<img alt="The variable editor controls" src="../../_images/NewDakotaStudy_SimModel_4.png" />
+<p>From left to right:</p>
+<ul class="simple">
+<li><p><strong>New Variable</strong> Inserts a new variable to the currently selected group.</p></li>
+<li><p><strong>New Group</strong> Inserts a new group as a child of the selected group.  You can go arbitrarily deep with variable groups.</p></li>
+<li><p><strong>Cut</strong> Cut the selected variable or group.</p></li>
+<li><p><strong>Copy</strong> Copy the selected variable or group.</p></li>
+<li><p><strong>Paste</strong> Paste a previously cut or copied variable or group into the currently selected location.</p></li>
+<li><p><strong>Delete</strong> Delete the currently selected variable or group.</p></li>
+<li><p><strong>Move Up</strong> Move the selected variable or group up amongst its siblings.</p></li>
+<li><p><strong>Move Down</strong> Move the selected variable or group down amongst its siblings.</p></li>
+</ul>
+</section>
+<section id="variable-property-controls">
+<h2>Variable Property Controls<a class="headerlink" href="#variable-property-controls" title="Permalink to this headline"></a></h2>
+<p>There are a number of properties internal to variables that you can edit.</p>
+<img alt="The variable property controls" src="../../_images/NewDakotaStudy_SimModel_5.png" />
+<ul class="simple">
+<li><p><strong>Description</strong> A longer textual description of the variable.</p></li>
+<li><p><strong>Type</strong> A type describing the variable (right now, “Integer,” “Float,” and “String” are the options)</p></li>
+<li><p><strong>Unit</strong> Search for a unit of measurement to describe your variable. (For this example, there is no need to specify units.  The cantilever beam model we’re using doesn’t observe units.)</p></li>
+<li><p><strong>Nominal Value</strong> Define a nominal value for your variable.</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you define a nominal value for your variable now, it will be automatically be imported into Dakota as either <a class="reference internal" href="../../usingdakota/reference/variables-continuous_design-initial_point.html#variables-continuous-design-initial-point"><span class="std std-ref">initial_point</span></a>
+or <a class="reference internal" href="../../usingdakota/reference/variables-continuous_state-initial_state.html#variables-continuous-state-initial-state"><span class="std std-ref">initial_state</span></a>.</p>
+</div>
+</section>
+<section id="response-editor-controls">
+<h2>Response Editor Controls<a class="headerlink" href="#response-editor-controls" title="Permalink to this headline"></a></h2>
+<p>The responses tab of the editor is a mirror of the variables tab:</p>
+<img alt="The responses editor" src="../../_images/NewDakotaStudy_SimModel_6.png" />
+</section>
+<section id="next-steps">
+<h2>Next Steps<a class="headerlink" href="#next-steps" title="Permalink to this headline"></a></h2>
+<p>A BMF file is a good starting point for many different operations in Dakota GUI, because the BMF format is recognized
+by many different tools that require you to provide a definition of input parameters and output responses:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="../wizards/NewDakotaStudy.html#wizards-newdakotastudy"><span class="std std-ref">“Dakota Study” Wizard</span></a></p></li>
+<li><p><a class="reference internal" href="../miscgui/ContextMenuTools.html#gui-context-tools-markup"><span class="std std-ref">“Markup File” Tool</span></a></p></li>
+<li><p><a class="reference internal" href="../miscgui/ContextMenuTools.html#gui-context-tools-recognize-driver"><span class="std std-ref">“Recognize as Analysis Driver” Tool</span></a></p></li>
+<li><p><a class="reference internal" href="../wizards/NewScriptDriver.html#wizards-scriptdriver-main"><span class="std std-ref">“Script-Based Dakota Driver” Wizard</span></a></p></li>
+<li><p><a class="reference internal" href="../wizards/NewWorkflowDriver.html#wizards-newworkflowdriver-main"><span class="std std-ref">“Workflow-Based Dakota Driver” Wizard</span></a></p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../output/HDF.html" class="btn btn-neutral float-left" title="HDF5 in Dakota GUI" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../chartreuse/Chartreuse.html" class="btn btn-neutral float-right" title="Chartreuse" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <!--
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Sandia National Laboratories.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+  --> 
+
+</footer>
+        </div>
+      </div>
+	  
+	  <div style="background-color: #0f0f0f;color:#fafafa;padding:20px">
+	    <div>
+		  <h2><em>Exceptional service in the national interest</em></h2>
+		</div>
+		<p>© 2022 National Technology and Engineering Solutions of Sandia, LLC. | <a href="https://www.sandia.gov/contact_us/index.html">Questions &amp; Comments</a> | <a href="https://www.sandia.gov/general/privacy-security/index.html">Privacy &amp; Security</a></p>
+		<p><a href="http://energy.gov" rel="noopener noreferrer" target="_blank"><img alt="U.S. Department of Energy" longdesc="https://energy.gov" src="https://www.sandia.gov/_common/images/doe_logo_white.png" style="height:37px; width:140px"></a> <a href="http://nnsa.energy.gov/" rel="noopener noreferrer" target="_blank"> <img alt="National Nuclear Security Administration" longdesc="http://nnsa.gov" src="https://www.sandia.gov/_common/images/nnsa_logo_white.png" style="height:37px; width:116px"></a></p>
+		<p><a href="https://www.sandia.gov">Sandia National Laboratories</a> is a multimission laboratory managed and operated by National Technology and Engineering Solutions of Sandia, LLC., a wholly owned subsidiary of Honeywell International, Inc., for the U.S. Department of Energy’s National Nuclear Security Administration under contract DE-NA-0003525.</p>
+	  </div>	  	  
+	  
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

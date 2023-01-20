@@ -1,0 +1,40 @@
+.. _model-nested-sub_method_pointer-iterator_scheduling-master:
+
+""""""
+master
+""""""
+
+
+Specify a dedicated master partition for parallel iterator scheduling
+
+
+
+**Topics**
+
+
+concurrency_and_parallelism
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+
+**Description**
+
+
+This option overrides the Dakota parallel automatic configuration, forcing
+the use of a dedicated master partition. In a dedicated master partition,
+one processor (the "master") dynamically schedules work on the iterator
+servers. This reduces the number of processors available to create servers
+by 1.
+
+

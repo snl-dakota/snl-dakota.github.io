@@ -1,0 +1,56 @@
+.. _method-multilevel_sampling-export_sample_sequence-custom_annotated:
+
+""""""""""""""""
+custom_annotated
+""""""""""""""""
+
+
+Export sample sequences enabling file format customization
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-multilevel_sampling-export_sample_sequence-custom_annotated-header
+   method-multilevel_sampling-export_sample_sequence-custom_annotated-eval_id
+   method-multilevel_sampling-export_sample_sequence-custom_annotated-interface_id
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+--------------------+---------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword     | Dakota Keyword Description                  |
+|                         | Group              |                    |                                             |
++=========================+====================+====================+=============================================+
+| Optional                                     | `header`__         | Enable header row in custom-annotated       |
+|                                              |                    | tabular file                                |
++----------------------------------------------+--------------------+---------------------------------------------+
+| Optional                                     | `eval_id`__        | Enable evaluation ID column in              |
+|                                              |                    | custom-annotated tabular file               |
++----------------------------------------------+--------------------+---------------------------------------------+
+| Optional                                     | `interface_id`__   | Enable interface ID column in               |
+|                                              |                    | custom-annotated tabular file               |
++----------------------------------------------+--------------------+---------------------------------------------+
+
+.. __: method-multilevel_sampling-export_sample_sequence-custom_annotated-header.html
+__ method-multilevel_sampling-export_sample_sequence-custom_annotated-eval_id.html
+__ method-multilevel_sampling-export_sample_sequence-custom_annotated-interface_id.html
+
+
+
+**Description**
+
+
+Sample sequences are written on file with a user-defined format. If the keyword ``header`` is
+present the heading is used, if the keyword ``eval_id`` is present the sample number (per level)
+is included and if ``interface_id`` is provided then the interface identification is reported.
+
+

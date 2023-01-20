@@ -1,0 +1,86 @@
+.. _method-hybrid-embedded:
+
+""""""""
+embedded
+""""""""
+
+
+A subordinate local method provides periodic refinements to a top-level global method
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-hybrid-embedded-global_method_name
+   method-hybrid-embedded-global_method_pointer
+   method-hybrid-embedded-local_method_name
+   method-hybrid-embedded-local_method_pointer
+   method-hybrid-embedded-local_search_probability
+   method-hybrid-embedded-iterator_servers
+   method-hybrid-embedded-iterator_scheduling
+   method-hybrid-embedded-processors_per_iterator
+
+
+**Specification**
+
+- *Alias:* coupled 
+
+- *Arguments:* None
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+------------------------------+---------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword               | Dakota Keyword Description                  |
+|                         | Group              |                              |                                             |
++=========================+====================+==============================+=============================================+
+| Required (Choose One)   | Global Sub-method  | `global_method_name`__       | Specify the global method by Dakota name    |
+|                         | Selection          +------------------------------+---------------------------------------------+
+|                         |                    | `global_method_pointer`__    | Pointer to global method                    |
++-------------------------+--------------------+------------------------------+---------------------------------------------+
+| Required (Choose One)   | Local Sub-method   | `local_method_name`__        | Specify the local method by Dakota name     |
+|                         | Selection          +------------------------------+---------------------------------------------+
+|                         |                    | `local_method_pointer`__     | Pointer to local method                     |
++-------------------------+--------------------+------------------------------+---------------------------------------------+
+| Optional                                     | `local_search_probability`__ | Probability of executing local searches     |
++----------------------------------------------+------------------------------+---------------------------------------------+
+| Optional                                     | `iterator_servers`__         | Specify the number of iterator servers when |
+|                                              |                              | Dakota is run in parallel                   |
++----------------------------------------------+------------------------------+---------------------------------------------+
+| Optional                                     | `iterator_scheduling`__      | Specify the scheduling of concurrent        |
+|                                              |                              | iterators when Dakota is run in parallel    |
++----------------------------------------------+------------------------------+---------------------------------------------+
+| Optional                                     | `processors_per_iterator`__  | Specify the number of processors per        |
+|                                              |                              | iterator server when Dakota is run in       |
+|                                              |                              | parallel                                    |
++----------------------------------------------+------------------------------+---------------------------------------------+
+
+.. __: method-hybrid-embedded-global_method_name.html
+__ method-hybrid-embedded-global_method_pointer.html
+__ method-hybrid-embedded-local_method_name.html
+__ method-hybrid-embedded-local_method_pointer.html
+__ method-hybrid-embedded-local_search_probability.html
+__ method-hybrid-embedded-iterator_servers.html
+__ method-hybrid-embedded-iterator_scheduling.html
+__ method-hybrid-embedded-processors_per_iterator.html
+
+
+
+**Description**
+
+
+In the ``embedded`` approach, a tightly-coupled hybrid is employed in
+which a subordinate local method provides periodic refinements to a
+top-level global method.
+
+Global and local method strings supplied with the
+``global_method_pointer`` and ``local_method_pointer`` specifications
+identify the two methods to be used. Alternatively, Dakota method names
+(e.g. ' :ref:`method-soga<method-soga>`') can be supplied using the ``global_method_name`` and
+``local_method_name`` keywords, which each have optional model pointer
+specifications. The ``local_search_probability`` setting is an optional
+specification for supplying the probability (between 0.0 and 1.0) of employing
+local search to improve estimates within the global search.
+
+

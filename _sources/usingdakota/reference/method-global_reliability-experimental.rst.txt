@@ -1,0 +1,52 @@
+.. _method-global_reliability-experimental:
+
+""""""""""""
+experimental
+""""""""""""
+
+
+Use the experimental Gaussian Process surrogate
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-global_reliability-experimental-export_model
+   method-global_reliability-experimental-options_file
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+--------------------+---------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword     | Dakota Keyword Description                  |
+|                         | Group              |                    |                                             |
++=========================+====================+====================+=============================================+
+| Optional                                     | `export_model`__   | Exports surrogate model in user-specified   |
+|                                              |                    | format(s)                                   |
++----------------------------------------------+--------------------+---------------------------------------------+
+| Optional                                     | `options_file`__   | Filename for a YAML file that specifies     |
+|                                              |                    | Gaussian process options                    |
++----------------------------------------------+--------------------+---------------------------------------------+
+
+.. __: method-global_reliability-experimental-export_model.html
+__ method-global_reliability-experimental-options_file.html
+
+
+
+**Description**
+
+
+The experimental GP surrogate is an emerging capability intended to
+supersede the ``dakota`` and ``surfpack`` GP implementations by unifying
+the best features of both. It also includes additional features such
+as the ability to export the model and then use it from Python.
+
+

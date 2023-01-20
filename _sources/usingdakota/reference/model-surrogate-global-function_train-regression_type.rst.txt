@@ -1,0 +1,56 @@
+.. _model-surrogate-global-function_train-regression_type:
+
+"""""""""""""""
+regression_type
+"""""""""""""""
+
+
+Type of solver for forming function train approximations by regression
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   model-surrogate-global-function_train-regression_type-ls
+   model-surrogate-global-function_train-regression_type-rls2
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+--------------------+---------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword     | Dakota Keyword Description                  |
+|                         | Group              |                    |                                             |
++=========================+====================+====================+=============================================+
+| Required (Choose One)   | Regression Type    | `ls`__             | Use least squares solver for forming        |
+|                         |                    |                    | function train approximations by regression |
+|                         |                    +--------------------+---------------------------------------------+
+|                         |                    | `rls2`__           | Use regularized regression solver for       |
+|                         |                    |                    | forming function train approximations       |
++-------------------------+--------------------+--------------------+---------------------------------------------+
+
+.. __: model-surrogate-global-function_train-regression_type-ls.html
+__ model-surrogate-global-function_train-regression_type-rls2.html
+
+
+
+**Description**
+
+
+Function train approximations are formed based on regression for the set of
+coefficients described at :ref:`model-surrogate-global-function_train<model-surrogate-global-function_train>`.  Solver
+options include least squares and regularized regression, where the latter
+penalizes high-order terms to mitigate overfitting.
+
+*Default Behavior*
+
+The default regression solver is least squares.
+
+

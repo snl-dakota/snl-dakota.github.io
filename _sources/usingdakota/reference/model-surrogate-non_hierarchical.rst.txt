@@ -1,0 +1,50 @@
+.. _model-surrogate-non_hierarchical:
+
+""""""""""""""""
+non_hierarchical
+""""""""""""""""
+
+
+Non-hierarchical surrogates employ an unordered set of lower-fidelity
+models to approximate a truth reference model at reduced cost.
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   model-surrogate-non_hierarchical-truth_model_pointer
+   model-surrogate-non_hierarchical-unordered_model_fidelities
+
+
+**Specification**
+
+- *Alias:* model_ensemble 
+
+- *Arguments:* None
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+--------------------------------+---------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword                 | Dakota Keyword Description                  |
+|                         | Group              |                                |                                             |
++=========================+====================+================================+=============================================+
+| Required                                     | `truth_model_pointer`__        | Pointer to specify a "truth" model, from    |
+|                                              |                                | which to construct a surrogate              |
++----------------------------------------------+--------------------------------+---------------------------------------------+
+| Optional                                     | `unordered_model_fidelities`__ | Specification of an unordered ensemble of   |
+|                                              |                                | low-fidelity approximations                 |
++----------------------------------------------+--------------------------------+---------------------------------------------+
+
+.. __: model-surrogate-non_hierarchical-truth_model_pointer.html
+__ model-surrogate-non_hierarchical-unordered_model_fidelities.html
+
+
+
+**Description**
+
+
+
+
+

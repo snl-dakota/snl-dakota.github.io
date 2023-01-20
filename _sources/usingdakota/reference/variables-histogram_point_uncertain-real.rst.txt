@@ -1,0 +1,83 @@
+.. _variables-histogram_point_uncertain-real:
+
+""""
+real
+""""
+
+
+Real valued point histogram variable
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   variables-histogram_point_uncertain-real-pairs_per_variable
+   variables-histogram_point_uncertain-real-abscissas
+   variables-histogram_point_uncertain-real-counts
+   variables-histogram_point_uncertain-real-initial_point
+   variables-histogram_point_uncertain-real-descriptors
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* INTEGER
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+------------------------+---------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword         | Dakota Keyword Description                  |
+|                         | Group              |                        |                                             |
++=========================+====================+========================+=============================================+
+| Optional                                     | `pairs_per_variable`__ | Number of pairs defining each histogram     |
+|                                              |                        | point real variable                         |
++----------------------------------------------+------------------------+---------------------------------------------+
+| Required                                     | `abscissas`__          | Real abscissas for a point histogram        |
++----------------------------------------------+------------------------+---------------------------------------------+
+| Required                                     | `counts`__             | Counts for real-valued point histogram      |
++----------------------------------------------+------------------------+---------------------------------------------+
+| Optional                                     | `initial_point`__      | Initial values for variables                |
++----------------------------------------------+------------------------+---------------------------------------------+
+| Optional                                     | `descriptors`__        | Labels for the variables                    |
++----------------------------------------------+------------------------+---------------------------------------------+
+
+.. __: variables-histogram_point_uncertain-real-pairs_per_variable.html
+__ variables-histogram_point_uncertain-real-abscissas.html
+__ variables-histogram_point_uncertain-real-counts.html
+__ variables-histogram_point_uncertain-real-initial_point.html
+__ variables-histogram_point_uncertain-real-descriptors.html
+
+
+
+**Description**
+
+
+This probability mass function is real-valued; the abscissa values
+must all be integers.  The ``n`` abscissa values are paired with ``n``
+``counts`` which indicate the relative frequency (mass) of each real
+relative to the other specified reals.
+
+
+
+**Examples**
+
+
+
+.. code-block::
+
+    histogram_point_uncertain
+      real = 2
+      pairs_per_variable = 2               3
+      abscissas          = 3.1415 4.5389   100 200.112345 300
+      counts             = 1      1        1   2          1
+
+
+There are two variables, the first one has two possible real values
+which are equally probable.  The second one has three possible real
+value options, and 200.112345 is twice as probable as either 100 or
+300.
+
+
