@@ -1,0 +1,19 @@
+# Make sure any relative links, including to markdown pages, get properly
+# converted
+plugins:
+  - jekyll-relative-links
+relative_links:
+  enabled: true
+  collections: true
+include:
+  - index.md
+# These subdirectories are needed by Sphinx docs and will be ignored by
+# Jekyll unless included:
+  - _images
+  - _sources
+  - _static
+# Site metadata:
+title: Dakota Documentation
+description: >- # this means to ignore newlines until next key
+  Documentation for Sandia National Laboratories' Dakota Optimization
+  and UQ Software
