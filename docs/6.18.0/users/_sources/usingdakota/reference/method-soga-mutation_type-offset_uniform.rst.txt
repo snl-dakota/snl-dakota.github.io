@@ -1,0 +1,45 @@
+.. _method-soga-mutation_type-offset_uniform:
+
+""""""""""""""
+offset_uniform
+""""""""""""""
+
+
+Set mutation offset to use a uniform distribution
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-soga-mutation_type-offset_uniform-mutation_scale
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+--------------------+---------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword     | Dakota Keyword Description                  |
+|                         | Group              |                    |                                             |
++=========================+====================+====================+=============================================+
+| Optional                                     | `mutation_scale`__ | Scales mutation across range of parameter   |
++----------------------------------------------+--------------------+---------------------------------------------+
+
+.. __: method-soga-mutation_type-offset_uniform-mutation_scale.html
+
+
+
+**Description**
+
+
+The ``offset_uniform`` mutator introduces random variation by adding a uniform
+random amount to a variable value. The random amount depends on the
+``mutation_scale``.
+
+

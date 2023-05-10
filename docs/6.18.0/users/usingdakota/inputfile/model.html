@@ -1,0 +1,1476 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Models &mdash; dakota  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/dakota_theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/sandiaheaderlite.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Variables" href="variables.html" />
+    <link rel="prev" title="Input File Formatting" href="formatting.html" /> 
+  
+  <meta name="sandia.approval_type" content="formal"/>
+  <meta property="sandia.approved" content="SAND2022-15651 O"/>
+  <meta name="description" content="The Dakota project delivers both state-of-the-art research and robust, usable software for optimization and UQ."/>
+  <meta name="keywords" content="Dakota, optimization, UQ, uncertainty quantification, parametric analysis, design exploration, model calibration, risk analysis"/>
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> dakota
+            <img src="../../_static/dakota_Arrow_Name_Tag_horiz_transparent.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../setupdakota.html">Getting Started</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../usingdakota.html">Using Dakota</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../introduction/aboutdakota.html">About Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../introduction/helloworld.html">Dakota Beginner’s Tutorial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples.html">Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../introduction/couplingtosimulations.html">Coupling Dakota to a Simulation</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../inputfile.html">Dakota Input File</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="formatting.html">Input File Formatting</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Models</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#single-models">Single Models</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#recast-models">Recast Models</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#surrogate-models">Surrogate Models</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#overview-of-surrogate-types">Overview of Surrogate Types</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#correction-approaches">Correction Approaches</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#data-fit-surrogate-models">Data Fit Surrogate Models</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#procedures-for-surface-fitting">Procedures for Surface Fitting</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#taylor-series">Taylor Series</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#two-point-adaptive-nonlinearity-approximation">Two Point Adaptive Nonlinearity Approximation</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#linear-quadratic-and-cubic-polynomial-models">Linear, Quadratic, and Cubic Polynomial Models</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#kriging-gaussian-process-spatial-interpolation-models">Kriging/Gaussian-Process Spatial Interpolation Models</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#artificial-neural-network-ann-models">Artificial Neural Network (ANN) Models</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#multivariate-adaptive-regression-spline-mars-models">Multivariate Adaptive Regression Spline (MARS) Models</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#radial-basis-functions">Radial Basis Functions</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#moving-least-squares">Moving Least Squares</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#piecewise-decomposition-option-for-global-surrogate-models">Piecewise Decomposition Option for Global Surrogate Models</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#surrogate-diagnostic-metrics">Surrogate Diagnostic Metrics</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#multifidelity-surrogate-models">Multifidelity Surrogate Models</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#reduced-order-models">Reduced Order Models</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#surrogate-model-selection">Surrogate Model Selection</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#python-interface-to-the-surrogates-module">Python Interface to the Surrogates Module</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#nested-models">Nested Models</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#random-field-models">Random Field Models</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#active-subspace-models">Active Subspace Models</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#video-resources">Video Resources</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="variables.html">Variables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="interfaces.html">Interfaces</a></li>
+<li class="toctree-l3"><a class="reference internal" href="responses.html">Responses</a></li>
+<li class="toctree-l3"><a class="reference internal" href="inputstodakota.html">Inputs to Dakota</a></li>
+<li class="toctree-l3"><a class="reference internal" href="inputspec.html">Dakota Input Spec</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../inputfile.html#video-resources">Video Resources</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../running.html">Running Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../output.html">Dakota Output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../studytypes.html">Study Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../topics.html">Topics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../advanced.html">Advanced Topics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../theory.html">Dakota Theory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference.html">Keyword Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../usingdakotagui/usingdakotagui.html">Using Dakota GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../externaltools/externaltools.html">Using External Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../compiling/compiling.html">Compiling Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developingdakota/developingdakota.html">Developing Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../misc/misc.html">Miscellaneous</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">dakota</a>
+      </nav>
+
+	  <!-- SNL Lite header -->
+	  <div class="snlheader-subsite--wrapper-default">
+		<snlheader class="snlheader-subsite" role="snlbanner">
+		  <div class="wrapper">
+			<a href="https://www.sandia.gov/index.html">
+			  <div class="logo-transparent"><p class="logo">Sandia National Laboratories</p></div>
+			</a>
+			<div class="nav-top">
+			  <a class="visuallyhidden" name="mainnav"></a>
+			  <div aria-label="main navigation" class="core-nav-transparent core-nav-transparent--visible" role="navigation">
+				<ul role="navigation" class="secondary-links">
+				  <li id="search-text-link">
+					<a aria-label="Search" href="https://www.sandia.gov/search/">Search Sandia.gov</a>
+				  </li>
+				  <li id="directory-text-link">
+					<a href="https://www.sandia.gov/directory.html" aria-expanded="false" aria-label="Site Directory">All Sandia Websites</a>
+				  </li>
+				</ul>
+			  </div>
+			</div>
+		  </div> 
+		</snlheader>
+	  </div>	  
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../usingdakota.html">Using Dakota</a> &raquo;</li>
+          <li><a href="../inputfile.html">Dakota Input File</a> &raquo;</li>
+      <li>Models</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/usingdakota/inputfile/model.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="models">
+<span id="models-main"></span><h1>Models<a class="headerlink" href="#models" title="Permalink to this headline"></a></h1>
+<section id="overview">
+<span id="models-overview"></span><h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline"></a></h2>
+<p><a class="reference internal" href="../studytypes.html#studytypes-main"><span class="std std-ref">Study Types</span></a> describes the major categories of Dakota
+methods.  A method evaluates or iterates on a model in order to map a
+set of variables into a set of responses. A model may involve a simple
+mapping with a single interface, or it may involve recursions using
+sub-methods and sub-models.  These recursions permit “nesting,”
+“layering,” and “recasting” of software component building blocks to
+accomplish more sophisticated studies, such as surrogate-based
+optimization or optimization under uncertainty. In a nested
+relationship, a sub-method
+is executed using its sub-model for every evaluation of the nested
+model. In a layered relationship, on the other hand, sub-methods and
+sub-models are used only for periodic updates and verifications. And in
+a recast relationship, the input variable and output response
+definitions in a sub-model are reformulated in order to support new
+problem definitions. In each of these cases, the sub-model is of
+arbitrary type, such that model recursions can be chained together in as
+long of a sequence as needed (e.g., layered containing nested containing
+layered containing single as described in <a class="reference internal" href="../advanced/advancedmodelrecursions.html#adv-models-ouu-sb"><span class="std std-ref">Surrogate-Based OUU (SBOUU)</span></a>).</p>
+<p><a class="reference internal" href="#model-hier"><span class="std std-numref">Fig. 29</span></a> displays the <code class="docutils literal notranslate"><span class="pre">Model</span></code> class hierarchy from the
+Dakota Developers Manual <span id="id1">[<a class="reference internal" href="../../misc/bibliography.html#id2" title="B. M. Adams, W. J. Bohnhoff, R. A. Canfield, K. R. Dalbey, M. S. Ebeida, J. P. Eddy, M. S. Eldred, G. Geraci, R. W. Hooper, P. D. Hough, K. T. Hu, J. D. Jakeman, K. Carson, M. Khalil, K. A. Maupin, J. A. Monschke, E. E. Prudencio, E. M. Ridgway, A. A. Rushdi, D. T. Seidl, J. A. Stephens, L. P. Swiler, A. Tran, D. M. Vigil, G. J. von Winckel, T. M. Wildey, J. G. Winokur, and (with Menhorn, F. and Zeng, X.). Dakota, A Multilevel Parallel Object-Oriented Framework for Design Optimization, Parameter Estimation, Uncertainty Quantification, and Sensitivity Analysis: Version 6.18 Developers Manual. Sandia National Laboratories, Albuquerque, NM, May 2023. Available online from \url http://snl-dakota.github.io.">ABC+23</a>]</span>, with derived classes for
+single models, nested models, recast models, and two types of
+surrogate models: data fit and hierarchical/multifidelity. A third
+type of derived surrogate model supporting reduced-order models (ROM)
+is planned for future releases.</p>
+<figure class="align-center" id="model-hier">
+<img alt="../../_images/classDakota_1_1Model.png" src="../../_images/classDakota_1_1Model.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 29 </span><span class="caption-text">The Dakota <code class="docutils literal notranslate"><span class="pre">Model</span></code> class hierarchy.</span><a class="headerlink" href="#model-hier" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<p>The following sections describe <a class="reference internal" href="#models-single"><span class="std std-ref">Single Models</span></a>
+(a.k.a. Simulation Models), <a class="reference internal" href="#models-recast"><span class="std std-ref">Recast Models</span></a>,
+<a class="reference internal" href="#models-surrogate"><span class="std std-ref">Surrogate Models</span></a> (of various types), <a class="reference internal" href="#models-nested"><span class="std std-ref">Nested Models</span></a>,
+<a class="reference internal" href="#models-randomfield"><span class="std std-ref">Random Field Models</span></a>, and <a class="reference internal" href="#models-subspace"><span class="std std-ref">Active Subspace Models</span></a>, in turn,
+followed by related educational screencasts on models.  Finally,
+<a class="reference internal" href="../advanced/advancedmodelrecursions.html#adv-models"><span class="std std-ref">Advanced Model Recursions</span></a> presents advanced examples demonstrating model
+recursions.</p>
+</section>
+<section id="single-models">
+<span id="models-single"></span><h2>Single Models<a class="headerlink" href="#single-models" title="Permalink to this headline"></a></h2>
+<p>The single (or simulation) model is the simplest model type. It uses a
+single <a class="reference internal" href="interfaces.html#interfaces-main"><span class="std std-ref">interface</span></a> to map <a class="reference internal" href="../reference/variables.html#variables"><span class="std std-ref">variables</span></a> to <a class="reference internal" href="../reference/responses.html#responses"><span class="std std-ref">responses</span></a>. There is no recursion in
+this case. See the <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/model-single.html"><span class="pre">single</span></a></code> keyword for details on
+specifying single models.</p>
+</section>
+<section id="recast-models">
+<span id="models-recast"></span><h2>Recast Models<a class="headerlink" href="#recast-models" title="Permalink to this headline"></a></h2>
+<p>Recast models do not appear in Dakota’s user input
+specification. Rather, they are used internally to transform the
+inputs and outputs of a sub-model in order to reformulate the problem
+posed to a method. Examples include <a class="reference internal" href="../studytypes/optimization.html#opt-additional-scaling"><span class="std std-ref">variable and response
+scaling</span></a>, transformations of uncertain
+variables and associated response derivatives to standardized random
+variables (see <a class="reference internal" href="../studytypes/uq.html#uq-reliability"><span class="std std-ref">Reliability Methods</span></a> and <a class="reference internal" href="../studytypes/uq.html#uq-expansion"><span class="std std-ref">Stochastic Expansion Methods</span></a>),
+<a class="reference internal" href="../studytypes/optimization.html#opt-additional-multiobjective"><span class="std std-ref">multiobjective optimization</span></a>,
+<a class="reference internal" href="../advanced/advancedmethods.html#adv-meth-sbm-sblm"><span class="std std-ref">merit functions</span></a>, and expected
+improvement/feasibility (see <a class="reference internal" href="../studytypes/optimization.html#opt-methods-gradientfree-global"><span class="std std-ref">Derivative-Free Global Methods</span></a>
+and <a class="reference internal" href="../studytypes/uq.html#uq-reliability-global"><span class="std std-ref">Global Reliability Methods</span></a>). Refer to the Dakota Developers
+Manual <span id="id2">[<a class="reference internal" href="../../misc/bibliography.html#id2" title="B. M. Adams, W. J. Bohnhoff, R. A. Canfield, K. R. Dalbey, M. S. Ebeida, J. P. Eddy, M. S. Eldred, G. Geraci, R. W. Hooper, P. D. Hough, K. T. Hu, J. D. Jakeman, K. Carson, M. Khalil, K. A. Maupin, J. A. Monschke, E. E. Prudencio, E. M. Ridgway, A. A. Rushdi, D. T. Seidl, J. A. Stephens, L. P. Swiler, A. Tran, D. M. Vigil, G. J. von Winckel, T. M. Wildey, J. G. Winokur, and (with Menhorn, F. and Zeng, X.). Dakota, A Multilevel Parallel Object-Oriented Framework for Design Optimization, Parameter Estimation, Uncertainty Quantification, and Sensitivity Analysis: Version 6.18 Developers Manual. Sandia National Laboratories, Albuquerque, NM, May 2023. Available online from \url http://snl-dakota.github.io.">ABC+23</a>]</span> for additional details on recasting.</p>
+</section>
+<section id="surrogate-models">
+<span id="models-surrogate"></span><h2>Surrogate Models<a class="headerlink" href="#surrogate-models" title="Permalink to this headline"></a></h2>
+<p>Surrogate models are inexpensive approximate models intended to
+capture the salient features of an expensive high-fidelity model. They
+can be used to explore the variations in response quantities over
+regions of the parameter space, or they can serve as inexpensive
+stand-ins for optimization or uncertainty quantification studies (see,
+for example, <a class="reference internal" href="../advanced/advancedmethods.html#adv-meth-sbm"><span class="std std-ref">Surrogate-Based Minimization</span></a>). Dakota surrogate models are of one
+of three types: data fit, multifidelity, and reduced-order model. An
+overview and discussion of surrogate correction is provided here, with
+details following.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>There are <a class="reference internal" href="#surrmodels-videos"><span class="std std-ref">video resources on Dakota surrogate models</span></a>.</p>
+</div>
+<section id="overview-of-surrogate-types">
+<h3>Overview of Surrogate Types<a class="headerlink" href="#overview-of-surrogate-types" title="Permalink to this headline"></a></h3>
+<p>Data fitting methods involve construction of an approximation or
+surrogate model using data (response values, gradients, and Hessians)
+generated from the original truth model. Data fit methods can be further
+categorized into local, multipoint, and global approximation techniques,
+based on the number of points used in generating the data fit.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Known Issue: When using discrete variables, significant differences
+in data fit surrogate behavior have been observed across computing
+platforms in some cases. The cause has not been pinpointed. In
+addition, guidance on appropriate construction and use of
+surrogates is incomplete. In the meantime, users should be aware of
+the risk of inaccurate results when using surrogates with discrete
+variables.</p>
+</div>
+<p>Local methods involve response data from a single point in parameter
+space.  Available local techniques currently include:</p>
+<p><strong>Taylor Series Expansion</strong>: This is a local first-order or second-order
+expansion centered at a single point in the parameter space.</p>
+<p>Multipoint approximations involve response data from two or more points
+in parameter space, often involving the current and previous iterates of
+a minimization algorithm. Available techniques currently include:</p>
+<p><strong>TANA-3</strong>: This multipoint approximation uses a two-point exponential
+approximation <span id="id3">[<a class="reference internal" href="../../misc/bibliography.html#id86" title="G. M. Fadel, M. F. Riley, and J.-F. M. Barthelemy. Two point exponential approximation method for structural optimization. Structural Optimization, 2(2):117–124, 1990.">FRB90</a>, <a class="reference internal" href="../../misc/bibliography.html#id286" title="S. Xu and R. V. Grandhi. Effective two-point function approximation for design optimization. AIAA J., 36(12):2269–2275, 1998.">XG98</a>]</span> built with response value
+and gradient information from the current and previous iterates.</p>
+<p>Global methods, often referred to as <em>response surface methods</em>, involve
+many points spread over the parameter ranges of interest. These surface
+fitting methods work in conjunction with the sampling methods and design
+of experiments methods described in <a class="reference internal" href="../studytypes/uq.html#uq-sampling"><span class="std std-ref">Sampling Methods</span></a> and
+<a class="reference internal" href="../studytypes/designofexperiments.html#dace-background"><span class="std std-ref">Design of Computer Experiments</span></a>.</p>
+<p><strong>Polynomial Regression</strong>: First-order (linear), second-order
+(quadratic), and third-order (cubic) polynomial response surfaces
+computed using linear least squares regression methods. Note: there is
+currently no use of forward- or backward-stepping regression methods to
+eliminate unnecessary terms from the polynomial model.</p>
+<p>An experimental least squares regression polynomial model was added in
+Dakota 6.12. The user may specify the basis functions in the polynomial
+through a total degree scheme.</p>
+<p><strong>Gaussian Process (GP) or Kriging Interpolation</strong> Dakota contains two
+supported implementations of Gaussian process, also known as Kriging
+<span id="id4">[<a class="reference internal" href="../../misc/bibliography.html#id115" title="A. A. Giunta and L. T. Watson. A comparison of approximation modeling techniques: polynomial versus interpolating models. In Proc. 7th AIAA/USAF/NASA/ISSMO Symposium on Multidisciplinary Analysis and Optimization, number AIAA-98-4758, 392–404. St. Louis, MO, 1998.">GW98</a>]</span>, spatial interpolation. One of these resides
+in the Surfpack sub-package of Dakota, the other resides in Dakota
+itself. Both versions use the Gaussian correlation function with
+parameters that are selected by Maximum Likelihood Estimation (MLE).
+This correlation function results in a response surface that is
+<span class="math notranslate nohighlight">\(C^\infty\)</span>-continuous.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Prior to Dakota 5.2, the Surfpack GP was referred to as the
+“Kriging” model and the Dakota version was labeled as the “Gaussian
+Process.” These terms are now used interchangeably. As of Dakota
+5.2,the Surfpack GP is used by default. For now the user still has
+the option to select the Dakota GP, but the Dakota GP is deprecated
+and will be removed in a future release. A third experimental
+Gaussian process model was added in Dakota 6.12.</p>
+</div>
+<ul class="simple">
+<li><p><strong>Surfpack GP</strong>: Ill-conditioning due to a poorly spaced sample
+design is handled by discarding points that contribute the least
+unique information to the correlation matrix. Therefore, the points
+that are discarded are the ones that are easiest to predict. The
+resulting surface will exactly interpolate the data values at the
+retained points but is not guaranteed to interpolate the discarded
+points.</p></li>
+<li><p><strong>Dakota GP</strong>: Ill-conditioning is handled by adding a jitter term or
+“nugget” to diagonal elements of the correlation matrix. When this
+happens, the Dakota GP may not exactly interpolate the data values.</p></li>
+<li><p><strong>Experimental GP</strong>: This GP also contains a nugget parameter that
+may be fixed by the user or determined through MLE. When the nugget
+is greater than zero the mean of the GP is not forced to interpolate
+the response values.</p></li>
+</ul>
+<p><strong>Artificial Neural Networks</strong>: An implementation of the stochastic
+layered perceptron neural network developed by Prof. D. C. Zimmerman of
+the University of Houston <span id="id5">[<a class="reference internal" href="../../misc/bibliography.html#id287" title="D. C. Zimmerman. Genetic algorithms for navigating expensive and complex design spaces. September 1996. Final Report for Sandia National Laboratories contract AO-7736 CA 02.">Zim96</a>]</span>. This neural network
+method is intended to have a lower training (fitting) cost than typical
+back-propagation neural networks.</p>
+<p><strong>Multivariate Adaptive Regression Splines (MARS)</strong>: Software developed
+by Prof. J. H. Friedman of Stanford
+University <span id="id6">[<a class="reference internal" href="../../misc/bibliography.html#id94" title="J. H. Friedman. Multivariate adaptive regression splines. Annals of Statistics, 19(1):1–141, March 1991.">Fri91</a>]</span>. The MARS method creates a
+<span class="math notranslate nohighlight">\(C^2\)</span>-continuous patchwork of splines in the parameter space.</p>
+<p><strong>Radial Basis Functions (RBF)</strong>: Radial basis functions are functions
+whose value typically depends on the distance from a center point,
+called the centroid. The surrogate model approximation is constructed as
+the weighted sum of individual radial basis functions.</p>
+<p><strong>Moving Least Squares (MLS)</strong>: Moving Least Squares can be considered a
+more specialized version of linear regression models. MLS is a weighted
+least squares approach where the weighting is “moved” or recalculated
+for every new point where a prediction is
+desired. <span id="id7">[<a class="reference internal" href="../../misc/bibliography.html#id193" title="A. Nealen. A short-as-possible introduction to the least squares, weighted least squares, and moving least squares methods for scattered data approximation and interpolation. Technical Report, Discrete Geometric Modeling Group, Technishe Universitaet, Berlin, Germany, 2004.">Nea04</a>]</span></p>
+<p><strong>Piecewise Decomposition Option for Global Surrogates</strong>: Typically, the
+previous regression techniques use all available sample points to
+approximate the underlying function anywhere in the domain. An
+alternative option is to use piecewise decomposition to locally
+approximate the function at some point using a few sample points from
+its neighborhood. This option currently supports Polynomial Regression,
+Gaussian Process (GP) Interpolation, and Radial Basis Functions (RBF)
+Regression. It requires a decomposition cell type (currently set to be
+Voronoi cells), an optional number of support layers of neighbors, and
+optional discontinuity detection parameters (jump/gradient).</p>
+<p>In addition to data fit surrogates, Dakota supports multifidelity and
+reduced-order model approximations:</p>
+<p><strong>Multifidelity Surrogates</strong>: Multifidelity modeling involves the use of
+a low-fidelity physics-based model as a surrogate for the original
+high-fidelity model. The low-fidelity model typically involves a coarser
+mesh, looser convergence tolerances, reduced element order, or omitted
+physics. It is a separate model in its own right and does not require
+data from the high-fidelity model for construction. Rather, the primary
+need for high-fidelity evaluations is for defining correction functions
+that are applied to the low-fidelity results.</p>
+<p><strong>Reduced Order Models</strong>: A reduced-order model (ROM) is mathematically
+derived from a high-fidelity model using the technique of Galerkin
+projection. By computing a set of basis functions (e.g., eigenmodes,
+left singular vectors) that capture the principal dynamics of a system,
+the original high-order system can be projected to a much smaller
+system, of the size of the number of retained basis functions.</p>
+</section>
+<section id="correction-approaches">
+<h3>Correction Approaches<a class="headerlink" href="#correction-approaches" title="Permalink to this headline"></a></h3>
+<p>Each of the surrogate model types supports the use of correction factors
+that improve the local accuracy of the surrogate models. The correction
+factors force the surrogate models to match the true function values and
+possibly true function derivatives at the center point of each trust
+region. Currently, Dakota supports either zeroth-, first-, or
+second-order accurate correction methods, each of which can be applied
+using either an additive, multiplicative, or combined correction
+function. For each of these correction approaches, the correction is
+applied to the surrogate model and the corrected model is then
+interfaced with whatever algorithm is being employed. The default
+behavior is that no correction factor is applied.</p>
+<p>The simplest correction approaches are those that enforce consistency in
+function values between the surrogate and original models at a single
+point in parameter space through use of a simple scalar offset or
+scaling applied to the surrogate model. First-order corrections such as
+the first-order multiplicative correction (also known as beta
+correction <span id="id8">[<a class="reference internal" href="../../misc/bibliography.html#id36" title="K. J. Chang, R. T. Haftka, G. L. Giles, and P.-J. Kao. Sensitivity-based scaling for approximating structural response. J. Aircraft, 30:283–288, 1993.">CHGK93</a>]</span>) and the first-order additive
+correction <span id="id9">[<a class="reference internal" href="../../misc/bibliography.html#id174" title="R. M. Lewis and S. N. Nash. A multigrid approach to the optimization of systems governed by differential equations. In Proceedings of the 8th AIAA/USAF/NASA/ISSMO Symposium on Multidisciplinary Analysis and Optimization, number AIAA-2000-4890. Long Beach, CA, Sep 2000.">LN00</a>]</span> also enforce consistency in the
+gradients and provide a much more substantial correction capability that
+is sufficient for ensuring provable convergence in <a class="reference internal" href="../advanced/advancedmethods.html#adv-meth-sbm-sblm"><span class="std std-ref">SBO
+algorithms</span></a>. SBO convergence
+rates can be further accelerated through the use of second-order
+corrections which also enforce consistency in the
+Hessians <span id="id10">[<a class="reference internal" href="../../misc/bibliography.html#id76" title="M. S. Eldred, A. A. Giunta, and S. S. Collis. Second-order corrections for surrogate-based optimization with model hierarchies. In Proceedings of the 10th AIAA/ISSMO Multidisciplinary Analysis and Optimization Conference. Albany, NY,, Aug. 30–Sept. 1, 2004. AIAA Paper 2004-4457.">EGC04</a>]</span>, where the second-order information
+may involve analytic, finite-difference, or quasi-Newton Hessians.</p>
+<p>Correcting surrogate models with additive corrections involves</p>
+<div class="math notranslate nohighlight">
+\[\hat{f_{hi_{\alpha}}}({\bf x}) = f_{lo}({\bf x}) + \alpha({\bf x})
+\label{eq:correct_val_add}\]</div>
+<p>where multifidelity notation has been adopted for clarity. For
+multiplicative approaches, corrections take the form</p>
+<div class="math notranslate nohighlight">
+\[\hat{f_{hi_{\beta}}}({\bf x}) = f_{lo}({\bf x}) \beta({\bf x})
+\label{eq:correct_val_mult}\]</div>
+<p>where, for local corrections, <span class="math notranslate nohighlight">\(\alpha({\bf x})\)</span> and
+<span class="math notranslate nohighlight">\(\beta({\bf x})\)</span> are first or second-order Taylor series
+approximations to the exact correction functions:</p>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}\alpha({\bf x}) &amp; = A({\bf x_c}) + \nabla A({\bf x_c})^T
+({\bf x} - {\bf x_c}) + \frac{1}{2} ({\bf x} - {\bf x_c})^T
+\nabla^2 A({\bf x_c}) ({\bf x} - {\bf x_c}) \label{eq:taylor_a}\\\beta({\bf x})  &amp; = B({\bf x_c}) + \nabla B({\bf x_c})^T
+({\bf x} - {\bf x_c}) + \frac{1}{2} ({\bf x} - {\bf x_c})^T \nabla^2
+B({\bf x_c}) ({\bf x} - {\bf x_c}) \label{eq:taylor_b}\end{aligned}\end{align} \]</div>
+<p>where the exact correction functions are</p>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}A({\bf x}) &amp; = f_{hi}({\bf x}) - f_{lo}({\bf x})       \label{eq:exact_A}\\B({\bf x}) &amp; = \frac{f_{hi}({\bf x})}{f_{lo}({\bf x})} \label{eq:exact_B}\end{aligned}\end{align} \]</div>
+<p>Refer to <span id="id11">[<a class="reference internal" href="../../misc/bibliography.html#id76" title="M. S. Eldred, A. A. Giunta, and S. S. Collis. Second-order corrections for surrogate-based optimization with model hierarchies. In Proceedings of the 10th AIAA/ISSMO Multidisciplinary Analysis and Optimization Conference. Albany, NY,, Aug. 30–Sept. 1, 2004. AIAA Paper 2004-4457.">EGC04</a>]</span> for additional details on the
+derivations.</p>
+<p>A combination of additive and multiplicative corrections can provide for
+additional flexibility in minimizing the impact of the correction away
+from the trust region center. In other words, both additive and
+multiplicative corrections can satisfy local consistency, but through
+the combination, global accuracy can be addressed as well. This involves
+a convex combination of the additive and multiplicative corrections:</p>
+<div class="math notranslate nohighlight">
+\[\hat{f_{hi_{\gamma}}}({\bf x}) = \gamma \hat{f_{hi_{\alpha}}}({\bf x}) +
+(1 - \gamma) \hat{f_{hi_{\beta}}}({\bf x}) \label{eq:combined_form}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\gamma\)</span> is calculated to satisfy an additional matching
+condition, such as matching values at the previous design iterate.</p>
+</section>
+<section id="data-fit-surrogate-models">
+<span id="models-surrogate-datafit"></span><h3>Data Fit Surrogate Models<a class="headerlink" href="#data-fit-surrogate-models" title="Permalink to this headline"></a></h3>
+<p>A surrogate of the <em>data fit</em> type is a non-physics-based approximation
+typically involving interpolation or regression of a set of data
+generated from the original model. Data fit surrogates can be further
+characterized by the number of data points used in the fit, where a
+local approximation (e.g., first or second-order Taylor series) uses
+data from a single point, a multipoint approximation (e.g., two-point
+exponential approximations (TPEA) or two-point adaptive nonlinearity
+approximations (TANA)) uses a small number of data points often drawn
+from the previous iterates of a particular algorithm, and a global
+approximation (e.g., polynomial response surfaces,
+kriging/gaussian_process, neural networks, radial basis functions,
+splines) uses a set of data points distributed over the domain of
+interest, often generated using a design of computer experiments.</p>
+<p>Dakota contains several types of surface fitting methods that can be
+used with optimization and uncertainty quantification methods and
+strategies such as surrogate-based optimization and optimization under
+uncertainty. These are: polynomial models (linear, quadratic, and
+cubic), first-order Taylor series expansion, kriging spatial
+interpolation, artificial neural networks, multivariate adaptive
+regression splines, radial basis functions, and moving least squares.
+With the exception of Taylor series methods, all of the above methods
+listed in the previous sentence are accessed in Dakota through the
+Surfpack library. All of these surface fitting methods can be applied to
+problems having an arbitrary number of design parameters. However,
+surface fitting methods usually are practical only for problems where
+there are a small number of parameters (e.g., a maximum of somewhere in
+the range of 30-50 design parameters). The mathematical models created
+by surface fitting methods have a variety of names in the engineering
+community. These include surrogate models, meta-models, approximation
+models, and response surfaces. For this manual, the terms surface fit
+model and surrogate model are used.</p>
+<p>The data fitting methods in Dakota include software developed by Sandia
+researchers and by various researchers in the academic community.</p>
+<section id="procedures-for-surface-fitting">
+<span id="models-surf-procedures"></span><h4>Procedures for Surface Fitting<a class="headerlink" href="#procedures-for-surface-fitting" title="Permalink to this headline"></a></h4>
+<p>The surface fitting process consists of three steps: (1) selection of a
+set of design points, (2) evaluation of the true response quantities
+(e.g., from a user-supplied simulation code) at these design points, and
+(3) using the response data to solve for the unknown coefficients (e.g.,
+polynomial coefficients, neural network weights, kriging correlation
+factors) in the surface fit model. In cases where there is more than one
+response quantity (e.g., an objective function plus one or more
+constraints), then a separate surface is built for each response
+quantity. Currently, most surface fit models are built using only
+0<span class="math notranslate nohighlight">\(^{\mathrm{th}}\)</span>-order information (function values only),
+although extensions to using higher-order information (gradients and
+Hessians) are possible, and the Kriging model does allow construction
+for gradient data. Each surface fitting method employs a different
+numerical method for computing its internal coefficients. For example,
+the polynomial surface uses a least-squares approach that employs a
+singular value decomposition to compute the polynomial coefficients,
+whereas the kriging surface uses Maximum Likelihood Estimation to
+compute its correlation coefficients. More information on the numerical
+methods used in the surface fitting codes is provided in the Dakota
+Developers Manual <span id="id12">[<a class="reference internal" href="../../misc/bibliography.html#id2" title="B. M. Adams, W. J. Bohnhoff, R. A. Canfield, K. R. Dalbey, M. S. Ebeida, J. P. Eddy, M. S. Eldred, G. Geraci, R. W. Hooper, P. D. Hough, K. T. Hu, J. D. Jakeman, K. Carson, M. Khalil, K. A. Maupin, J. A. Monschke, E. E. Prudencio, E. M. Ridgway, A. A. Rushdi, D. T. Seidl, J. A. Stephens, L. P. Swiler, A. Tran, D. M. Vigil, G. J. von Winckel, T. M. Wildey, J. G. Winokur, and (with Menhorn, F. and Zeng, X.). Dakota, A Multilevel Parallel Object-Oriented Framework for Design Optimization, Parameter Estimation, Uncertainty Quantification, and Sensitivity Analysis: Version 6.18 Developers Manual. Sandia National Laboratories, Albuquerque, NM, May 2023. Available online from \url http://snl-dakota.github.io.">ABC+23</a>]</span>.</p>
+<p>The set of design points that is used to construct a surface fit model
+is generated using either the DDACE software
+package <span id="id13">[<a class="reference internal" href="../../misc/bibliography.html#id257" title="C. H. Tong and J. C. Meza. DDACE: a distributed object-oriented software with multiple samplings for the design and analysis of computer experiments. Draft as yet unpublished, see also \url http://www.sandia.gov/csit/research/computation/ddace.php.">TM</a>]</span> or the LHS software
+package <span id="id14">[<a class="reference internal" href="../../misc/bibliography.html#id154" title="R. L. Iman and M. J Shortencarier. A Fortran 77 program and user's guide for the generation of latin hypercube samples for use with computer models. Technical Report NUREG/CR-3624, SAND83-2365, Sandia National Laboratories, Albuquerque, NM, 1984.">IS84</a>]</span>. These packages provide a variety of
+sampling methods including Monte Carlo (random) sampling, Latin
+hypercube sampling, orthogonal array sampling, central composite design
+sampling, and Box-Behnken sampling. See <a class="reference internal" href="../studytypes/designofexperiments.html#dace"><span class="std std-ref">Design of Experiments</span></a> for more
+information on these software packages.  Optionally, the quality of a
+surrogate model can be assessed with <a class="reference internal" href="#models-surf-diagnostics"><span class="std std-ref">surrogate metrics or
+diagnostics</span></a>.</p>
+</section>
+<section id="taylor-series">
+<span id="models-surf-taylor"></span><h4>Taylor Series<a class="headerlink" href="#taylor-series" title="Permalink to this headline"></a></h4>
+<p>The Taylor series model is purely a local approximation method. That is,
+it provides local trends in the vicinity of a single point in parameter
+space. The first-order Taylor series expansion is:</p>
+<div class="math notranslate nohighlight">
+\[\hat{f}({\bf x}) \approx f({\bf x}_0) + \nabla_{\bf x} f({\bf x}_0)^T
+({\bf x} - {\bf x}_0) \label{eq:taylor1}\]</div>
+<p>and the second-order expansion is:</p>
+<div class="math notranslate nohighlight">
+\[\hat{f}({\bf x}) \approx f({\bf x}_0) + \nabla_{\bf x} f({\bf x}_0)^T
+({\bf x} - {\bf x}_0) + \frac{1}{2} ({\bf x} - {\bf x}_0)^T
+\nabla^2_{\bf x} f({\bf x}_0) ({\bf x} - {\bf x}_0) \label{eq:taylor2}\]</div>
+<p>where <span class="math notranslate nohighlight">\({\bf x}_0\)</span> is the expansion point in <span class="math notranslate nohighlight">\(n\)</span>-dimensional
+parameter space and <span class="math notranslate nohighlight">\(f({\bf x}_0),\)</span>
+<span class="math notranslate nohighlight">\(\nabla_{\bf x} f({\bf x}_0),\)</span> and
+<span class="math notranslate nohighlight">\(\nabla^2_{\bf x} f({\bf x}_0)\)</span> are the computed response value,
+gradient, and Hessian at the expansion point, respectively. As dictated
+by the responses specification used in building the local surrogate, the
+gradient may be analytic or numerical and the Hessian may be analytic,
+numerical, or based on quasi-Newton secant updates.</p>
+<p>In general, the Taylor series model is accurate only in the region of
+parameter space that is close to <span class="math notranslate nohighlight">\({\bf x}_0\)</span> . While the accuracy
+is limited, the first-order Taylor series model reproduces the correct
+value and gradient at the point <span class="math notranslate nohighlight">\(\mathbf{x}_{0}\)</span>, and the
+second-order Taylor series model reproduces the correct value, gradient,
+and Hessian. This consistency is useful in provably-convergent
+surrogate-based optimization. The other surface fitting methods do not
+use gradient information directly in their models, and these methods
+rely on an external correction procedure in order to satisfy the
+consistency requirements of provably-convergent SBO.</p>
+</section>
+<section id="two-point-adaptive-nonlinearity-approximation">
+<span id="models-surf-tana"></span><h4>Two Point Adaptive Nonlinearity Approximation<a class="headerlink" href="#two-point-adaptive-nonlinearity-approximation" title="Permalink to this headline"></a></h4>
+<p>The TANA-3 method <span id="id15">[<a class="reference internal" href="../../misc/bibliography.html#id286" title="S. Xu and R. V. Grandhi. Effective two-point function approximation for design optimization. AIAA J., 36(12):2269–2275, 1998.">XG98</a>]</span> is a multipoint approximation
+method based on the two point exponential
+approximation <span id="id16">[<a class="reference internal" href="../../misc/bibliography.html#id86" title="G. M. Fadel, M. F. Riley, and J.-F. M. Barthelemy. Two point exponential approximation method for structural optimization. Structural Optimization, 2(2):117–124, 1990.">FRB90</a>]</span>. This approach involves a Taylor
+series approximation in intermediate variables where the powers used for
+the intermediate variables are selected to match information at the
+current and previous expansion points. The form of the TANA model is:</p>
+<div class="math notranslate nohighlight">
+\[\hat{f}({\bf x}) \approx f({\bf x}_2) + \sum_{i=1}^n
+\frac{\partial f}{\partial x_i}({\bf x}_2) \frac{x_{i,2}^{1-p_i}}{p_i}
+(x_i^{p_i} - x_{i,2}^{p_i}) + \frac{1}{2} \epsilon({\bf x}) \sum_{i=1}^n
+(x_i^{p_i} - x_{i,2}^{p_i})^2 \label{eq:tana_f}\]</div>
+<p>where <span class="math notranslate nohighlight">\(n\)</span> is the number of variables and:</p>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}p_i &amp; = 1 + \ln \left[ \frac{\frac{\partial f}{\partial x_i}({\bf x}_1)}
+{\frac{\partial f}{\partial x_i}({\bf x}_2)} \right] \left/
+\ln \left[ \frac{x_{i,1}}{x_{i,2}} \right] \right. \label{eq:tana_pi}\\\epsilon({\bf x}) &amp; = \frac{H}{\sum_{i=1}^n (x_i^{p_i} - x_{i,1}^{p_i})^2 +
+\sum_{i=1}^n (x_i^{p_i} - x_{i,2}^{p_i})^2} \label{eq:tana_eps}\\H &amp; = 2 \left[ f({\bf x}_1) - f({\bf x}_2) - \sum_{i=1}^n
+\frac{\partial f}{\partial x_i}({\bf x}_2) \frac{x_{i,2}^{1-p_i}}{p_i}
+(x_{i,1}^{p_i} - x_{i,2}^{p_i}) \right] \label{eq:tana_H}\end{aligned}\end{align} \]</div>
+<p>and <span class="math notranslate nohighlight">\({\bf x}_2\)</span> and <span class="math notranslate nohighlight">\({\bf x}_1\)</span> are the current and previous
+expansion points. Prior to the availability of two expansion points, a
+first-order Taylor series is used.</p>
+</section>
+<section id="linear-quadratic-and-cubic-polynomial-models">
+<span id="models-surf-polynomial"></span><h4>Linear, Quadratic, and Cubic Polynomial Models<a class="headerlink" href="#linear-quadratic-and-cubic-polynomial-models" title="Permalink to this headline"></a></h4>
+<p>Linear, quadratic, and cubic polynomial models are available in Dakota.
+The form of the linear polynomial model is</p>
+<div class="math notranslate nohighlight">
+\[\hat{f}(\mathbf{x}) \approx c_{0}+\sum_{i=1}^{n}c_{i}x_{i}
+  \label{models:surf:equation01}\]</div>
+<p>the form of the quadratic polynomial model is:</p>
+<div class="math notranslate nohighlight">
+\[\hat{f}(\mathbf{x}) \approx c_{0}+\sum_{i=1}^{n}c_{i}x_{i}
+  +\sum_{i=1}^{n}\sum_{j \ge i}^{n}c_{ij}x_{i}x_{j}
+  \label{models:surf:equation02}\]</div>
+<p>and the form of the cubic polynomial model is:</p>
+<div class="math notranslate nohighlight">
+\[\hat{f}(\mathbf{x}) \approx c_{0}+\sum_{i=1}^{n}c_{i}x_{i}
+  +\sum_{i=1}^{n}\sum_{j \ge i}^{n}c_{ij}x_{i}x_{j}
+  +\sum_{i=1}^{n}\sum_{j \ge i}^{n}\sum_{k \ge j}^{n}
+  c_{ijk}x_{i}x_{j}x_{k}
+  \label{models:surf:equation03}\]</div>
+<p>In all of the polynomial models, <span class="math notranslate nohighlight">\(\hat{f}(\mathbf{x})\)</span> is the
+response of the polynomial model; the <span class="math notranslate nohighlight">\(x_{i},x_{j},x_{k}\)</span> terms
+are the components of the <span class="math notranslate nohighlight">\(n\)</span>-dimensional design parameter values;
+the <span class="math notranslate nohighlight">\(c_{0}\)</span> , <span class="math notranslate nohighlight">\(c_{i}\)</span> , <span class="math notranslate nohighlight">\(c_{ij}\)</span> , <span class="math notranslate nohighlight">\(c_{ijk}\)</span>
+terms are the polynomial coefficients, and <span class="math notranslate nohighlight">\(n\)</span> is the number of
+design parameters. The number of coefficients, <span class="math notranslate nohighlight">\(n_{c}\)</span>, depends on
+the order of polynomial model and the number of design parameters. For
+the linear polynomial:</p>
+<div class="math notranslate nohighlight">
+\[n_{c_{linear}}=n+1
+  \label{models:surf:equation04}\]</div>
+<p>for the quadratic polynomial:</p>
+<div class="math notranslate nohighlight">
+\[n_{c_{quad}}=\frac{(n+1)(n+2)}{2}
+  \label{models:surf:equation05}\]</div>
+<p>and for the cubic polynomial:</p>
+<div class="math notranslate nohighlight">
+\[n_{c_{cubic}}=\frac{(n^{3}+6 n^{2}+11 n+6)}{6}
+  \label{models:surf:equation06}\]</div>
+<p>There must be at least <span class="math notranslate nohighlight">\(n_{c}\)</span> data samples in order to form a
+fully determined linear system and solve for the polynomial
+coefficients. For discrete design variables, a further requirement for a
+well-posed problem is for the number of distinct values that each
+discrete variable can take must be greater than the order of polynomial
+model (by at least one level). For the special case involving anisotropy
+in which the degree can be specified differently per dimension, the
+number of values for each discrete variable needs to be greater than the
+corresponding order along the respective dimension. In Dakota, a
+least-squares approach involving a singular value decomposition
+numerical method is applied to solve the linear system.</p>
+<p>The utility of the polynomial models stems from two sources: (1) over a
+small portion of the parameter space, a low-order polynomial model is
+often an accurate approximation to the true data trends, and (2) the
+least-squares procedure provides a surface fit that smooths out noise in
+the data. For this reason, the surrogate-based optimization approach
+often is successful when using polynomial models, particularly quadratic
+models. However, a polynomial surface fit may not be the best choice for
+modeling data trends over the entire parameter space, unless it is known
+a priori that the true data trends are close to linear, quadratic, or
+cubic. See <span id="id17">[<a class="reference internal" href="../../misc/bibliography.html#id190" title="R. H. Myers and D. C. Montgomery. Response Surface Methodology: Process and Product Optimization Using Designed Experiments. John Wiley &amp; Sons, Inc., New York, 1995.">MM95</a>]</span> for more information on polynomial
+models.</p>
+<p>This surrogate model supports the <a class="reference internal" href="#models-surf-piecewise-decomp"><span class="std std-ref">domain decomposition
+option</span></a>.</p>
+<p>An experimental polynomial model was added in Dakota 6.12 that is
+specified with
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/model-surrogate-global-experimental_polynomial.html"><span class="pre">experimental_polynomial</span></a></code>.  The user
+specifies the order of the polynomial through the required keyword
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/model-surrogate-global-experimental_polynomial-basis_order.html"><span class="pre">basis_order</span></a></code>
+according to a total degree rule.</p>
+</section>
+<section id="kriging-gaussian-process-spatial-interpolation-models">
+<span id="models-surf-kriging"></span><h4>Kriging/Gaussian-Process Spatial Interpolation Models<a class="headerlink" href="#kriging-gaussian-process-spatial-interpolation-models" title="Permalink to this headline"></a></h4>
+<p>Dakota has three implementations of spatial interpolation models, two
+supported and one experimental. Of the supported versions, one is
+located in Dakota itself and the other in the Surfpack subpackage of
+Dakota which can be compiled in a standalone mode. These models are
+specified via <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/model-surrogate-global-gaussian_process.html"><span class="pre">gaussian_process</span></a></code>
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/model-surrogate-global-gaussian_process-dakota.html"><span class="pre">dakota</span></a></code> and
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/model-surrogate-global-gaussian_process.html"><span class="pre">gaussian_process</span></a></code>
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/model-surrogate-global-gaussian_process-surfpack.html"><span class="pre">surfpack</span></a></code>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In Dakota releases prior to 5.2, the <code class="docutils literal notranslate"><span class="pre">dakota</span></code> version was
+referred to as the <code class="docutils literal notranslate"><span class="pre">gaussian_process</span></code> model while the
+<code class="docutils literal notranslate"><span class="pre">surfpack</span></code> version was referred to as the <code class="docutils literal notranslate"><span class="pre">kriging</span></code> model. As
+of Dakota 5.2, specifying only
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/model-surrogate-global-gaussian_process.html"><span class="pre">gaussian_process</span></a></code> without
+qualification will default to the <code class="docutils literal notranslate"><span class="pre">surfpack</span></code> version in all
+contexts except Bayesian calibration. For now, both versions are
+supported but the <code class="docutils literal notranslate"><span class="pre">dakota</span></code> version is deprecated and likely to be
+removed in a future release. The two Gaussian process models are
+very similar; the differences between them are explained in more
+detail below.</p>
+</div>
+<p>The Kriging, also known as Gaussian process (GP), method uses techniques
+developed in the geostatistics and spatial statistics communities
+(<span id="id18">[<a class="reference internal" href="../../misc/bibliography.html#id45" title="N. Cressie. Statistics of Spatial Data. John Wiley and Sons, New York, 1991.">Cre91</a>]</span>, <span id="id19">[<a class="reference internal" href="../../misc/bibliography.html#id165" title="J. R. Koehler and A. B. Owen. Computer experiments. In S. Ghosh and C. R. Rao, editors, Handbook of Statistics, volume 13. Elsevier Science, New York, 1996.">KO96</a>]</span>) to produce
+smooth surface fit models of the response values from a set of data
+points. The number of times the fitted surface is differentiable will
+depend on the correlation function that is used. Currently, the Gaussian
+correlation function is the only option for either version included in
+Dakota; this makes the GP model <span class="math notranslate nohighlight">\(C^{\infty}\)</span>-continuous. The form
+of the GP model is</p>
+<div class="math notranslate nohighlight">
+\[\hat{f}(\underline{x}) \approx \underline{g}(\underline{x})^T\underline{\beta} +
+  \underline{r}(\underline{x})^{T}\underline{\underline{R}}^{-1}(\underline{f}-\underline{\underline{G}}\ \underline{\beta})
+  \label{models:surf:equation08}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\underline{x}\)</span> is the current point in
+<span class="math notranslate nohighlight">\(n\)</span>-dimensional parameter space;
+<span class="math notranslate nohighlight">\(\underline{g}(\underline{x})\)</span> is the vector of trend basis
+functions evaluated at <span class="math notranslate nohighlight">\(\underline{x}\)</span>; <span class="math notranslate nohighlight">\(\underline{\beta}\)</span>
+is a vector containing the generalized least squares estimates of the
+trend basis function coefficients; <span class="math notranslate nohighlight">\(\underline{r}(\underline{x})\)</span>
+is the correlation vector of terms between <span class="math notranslate nohighlight">\(\underline{x}\)</span> and the
+data points; <span class="math notranslate nohighlight">\(\underline{\underline{R}}\)</span> is the correlation matrix
+for all of the data points; <span class="math notranslate nohighlight">\(\underline{f}\)</span> is the vector of
+response values; and <span class="math notranslate nohighlight">\(\underline{\underline{G}}\)</span> is the matrix
+containing the trend basis functions evaluated at all data points. The
+terms in the correlation vector and matrix are computed using a Gaussian
+correlation function and are dependent on an <span class="math notranslate nohighlight">\(n\)</span>-dimensional
+vector of correlation parameters,
+<span class="math notranslate nohighlight">\(\underline{\theta} = \{\theta_{1},\ldots,\theta_{n}\}^T\)</span>. By
+default, Dakota determines the value of <span class="math notranslate nohighlight">\(\underline{\theta}\)</span> using
+a Maximum Likelihood Estimation (MLE) procedure. However, the user can
+also opt to manually set them in the Surfpack Gaussian process model
+by specifying a vector of correlation lengths,
+<span class="math notranslate nohighlight">\(\underline{l}=\{l_{1},\ldots,l_{n}\}^T\)</span> where
+<span class="math notranslate nohighlight">\(\theta_i=1/(2 l_i^2)\)</span>. This definition of correlation lengths
+makes their effect on the GP model’s behavior directly analogous to the
+role played by the standard deviation in a normal (a.k.a. Gaussian)
+distribution. In the Surfpack Gaussian process model, we used this
+analogy to define a small feasible region in which to search for
+correlation lengths. This region should (almost) always contain some
+correlation matrices that are well conditioned and some that are
+optimal, or at least near optimal. More details on Kriging/GP models may
+be found in <span id="id20">[<a class="reference internal" href="../../misc/bibliography.html#id115" title="A. A. Giunta and L. T. Watson. A comparison of approximation modeling techniques: polynomial versus interpolating models. In Proc. 7th AIAA/USAF/NASA/ISSMO Symposium on Multidisciplinary Analysis and Optimization, number AIAA-98-4758, 392–404. St. Louis, MO, 1998.">GW98</a>]</span>.</p>
+<p>Since a GP has a hyper-parametric error model, it can be used to model
+surfaces with slope discontinuities along with multiple local minima and
+maxima. GP interpolation is useful for both SBO and OUU, as well as for
+studying the global response value trends in the parameter space. This
+surface fitting method needs a minimum number of design points equal to
+the sum of the number of basis functions and the number of dimensions,
+<span class="math notranslate nohighlight">\(n\)</span>, but it is recommended to use at least double this amount.</p>
+<p>The GP model is guaranteed to pass through all of the response data
+values that are used to construct the model. Generally, this is a
+desirable feature. However, if there is considerable numerical noise in
+the response data, then a surface fitting method that provides some data
+smoothing (e.g., quadratic polynomial, MARS) may be a better choice for
+SBO and OUU applications. Another feature of the GP model is that the
+predicted response values, <span class="math notranslate nohighlight">\(\hat{f}(\underline{x})\)</span>, decay to the
+trend function, <span class="math notranslate nohighlight">\(\underline{g}(\underline{x})^T\underline{\beta}\)</span>,
+when <span class="math notranslate nohighlight">\(\underline{x}\)</span> is far from any of the data points from which
+the GP model was constructed (i.e., when the model is used for
+extrapolation).</p>
+<p>As mentioned above, there are two primary Gaussian process models in
+Dakota, the <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/model-surrogate-global-gaussian_process-surfpack.html"><span class="pre">surfpack</span></a></code>
+version and the
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/model-surrogate-global-gaussian_process-dakota.html"><span class="pre">dakota</span></a></code> version. More
+details on the Dakota GP model can be found in <span id="id21">[<a class="reference internal" href="../../misc/bibliography.html#id182" title="J. M. McFarland. Uncertainty Analysis for Computer Simulations through Validation and Calibration. PhD thesis, Vanderbilt University, Nashville, Tennesssee, 2008. available for download at http://etd.library.vanderbilt.edu/ETD-db/available/etd-03282008-125137/.">McF08</a>]</span>. The
+differences between these models are as follows:</p>
+<ul>
+<li><p>Trend Function: The GP models incorporate a parametric trend
+function whose purpose is to capture large-scale variations. In
+both models, the trend function can be a constant, linear,or
+reduced quadratic (main effects only, no interaction terms)
+polynomial. This is specified by the keyword <code class="docutils literal notranslate"><span class="pre">trend</span></code> followed by
+one of <code class="docutils literal notranslate"><span class="pre">constant</span></code>, <code class="docutils literal notranslate"><span class="pre">linear</span></code>, or <code class="docutils literal notranslate"><span class="pre">reduced_quadratic</span></code> (in
+Dakota 5.0 and earlier, the reduced quadratic (second-order with no
+mixed terms) option for the <code class="docutils literal notranslate"><span class="pre">dakota</span></code> version was selected using
+the keyword, <code class="docutils literal notranslate"><span class="pre">quadratic</span></code>).  The Surfpack GP model has the
+additional option of a full (including all interaction terms)
+quadratic polynomial that is specified with <code class="docutils literal notranslate"><span class="pre">trend</span> <span class="pre">quadratic</span></code>.</p></li>
+<li><p>Correlation Parameter Determination: Both of the primary GP models
+use a Maximum Likelihood Estimation (MLE) approach to find the
+optimal values of the hyper-parameters governing the mean and
+correlation functions. By default both models use the global
+optimization method called DIRECT, although they search regions
+with different extents. For the Dakota GP model, DIRECT is the only
+option. The Surfpack GP model has several options for
+hyperparameter optimization. These are specified by the
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/model-surrogate-global-gaussian_process-surfpack-optimization_method.html"><span class="pre">optimization_method</span></a></code>
+keyword followed by one of these strings:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">'global'</span></code> which uses the default DIRECT optimizer,</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">'local'</span></code> which uses the CONMIN gradient-based optimizer,</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">'sampling'</span></code> which generates several random guesses and picks
+the candidate with greatest likelihood, and</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">'none'</span></code></p></li>
+</ul>
+<p>The <code class="docutils literal notranslate"><span class="pre">'none'</span></code> option and the initial iterate of the <code class="docutils literal notranslate"><span class="pre">'local'</span></code>
+optimization default to the center, in log(correlation length)
+scale, of the small feasible region. However, these can also be
+user specified with the
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/model-surrogate-global-gaussian_process-surfpack-correlation_lengths.html"><span class="pre">correlation_lengths</span></a></code>
+keyword followed by a list of <span class="math notranslate nohighlight">\(n\)</span> real numbers. The total
+number of evaluations of the Surfpack GP model’s likelihood
+function can be controlled using the
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/model-surrogate-global-gaussian_process-surfpack-max_trials.html"><span class="pre">max_trials</span></a></code>
+keyword followed by a positive integer. The <code class="docutils literal notranslate"><span class="pre">'global'</span></code>
+optimization method tends to be the most robust, if slow to
+converge.</p>
+</li>
+<li><p>Ill-conditioning. One of the major problems in determining the
+governing values for a Gaussian process or Kriging model is the
+fact that the correlation matrix can easily become ill-conditioned
+when there are too many input points close together. Since the
+predictions from the Gaussian process model involve inverting the
+correlation matrix, ill-conditioning can lead to poor predictive
+capability and should be avoided. The Surfpack GP
+model defines a small feasible search region for correlation
+lengths, which should (almost) always contain some well conditioned
+correlation matrices. In Dakota 5.1 and earlier, the Surfpack <code class="docutils literal notranslate"><span class="pre">kriging</span></code>
+model
+avoided ill-conditioning by explicitly excluding poorly conditioned
+<span class="math notranslate nohighlight">\(\underline{\underline{R}}\)</span> from consideration on the basis
+of their having a large (estimate of) condition number; this
+constraint acted to decrease the size of admissible correlation
+lengths. Note that a sufficiently bad sample design could require
+correlation lengths to be so short that any interpolatory
+Kriging/GP model would become inept at extrapolation and
+interpolation.</p>
+<p>The Dakota GP model has two features to overcome
+ill-conditioning. The first is that the algorithm will add a small
+amount of noise to the diagonal elements of the matrix (this is
+often referred to as a “nugget”) and sometimes this is enough to
+improve the conditioning. The second is that the user can specify
+to build the GP based only on a subset of points. The algorithm
+chooses an “optimal” subset of points (with respect to predictive
+capability on the remaining unchosen points) using a greedy
+heuristic. This option is specified with the keyword
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/model-surrogate-global-gaussian_process-dakota-point_selection.html"><span class="pre">point_selection</span></a></code>
+in the input file.</p>
+<p>As of Dakota 5.2, the Surfpack GP model has a
+similar capability. Points are <strong>not</strong> discarded prior to the
+construction of the model. Instead, within the maximum likelihood
+optimization loop, when the correlation matrix violates the
+explicit (estimate of) condition number constraint, a pivoted Cholesky
+factorization of the correlation matrix is performed. A bisection search is then
+used to efficiently find the last point for which the reordered
+correlation matrix is not too ill-conditioned. Subsequent reordered
+points are excluded from the GP/Kriging model for the current set
+of correlation lengths, i.e. they are not used to construct this GP
+model or compute its likelihood. When necessary, the Surfpack GP
+model will automatically decrease the
+order of the polynomial trend function. Once the maximum likelihood
+optimization has been completed, the subset of points that is
+retained will be the one associated with the most likely set of
+correlation lengths. Note that a matrix being ill-conditioned means
+that its rows or columns contain a significant amount of duplicate
+information. Since the points that were discarded were the ones
+that contained the least unique information, they should be the
+ones that are the easiest to predict and provide maximum
+improvement of the condition number. However, the
+Surfpack GP model is not guaranteed to exactly
+interpolate the discarded points. Warning: when two very nearby
+points are on opposite sides of a discontinuity, it is possible for
+one of them to be discarded by this approach.</p>
+<p>Note that a pivoted Cholesky factorization can be significantly
+slower than the highly optimized implementation of non-pivoted
+Cholesky factorization in typical LAPACK distributions. A
+consequence of this is that the Surfpack GP model
+can take significantly more time to build than the
+Dakota GP version. However, tests indicate that
+the Surfpack version will often be more
+accurate and/or require fewer evaluations of the true function than
+the Dakota analog. For this reason, the Surfpack
+version is the default option as of Dakota 5.2.</p>
+</li>
+<li><p>Gradient Enhanced Kriging (GEK). As of Dakota 5.2, the
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/model-surrogate-global-use_derivatives.html"><span class="pre">use_derivatives</span></a></code> keyword will cause the
+Surfpack GP model to be built from a combination
+of function value and gradient information. The Dakota GP
+model does not have this capability.
+Incorporating gradient information will only be beneficial if
+accurate and inexpensive derivative information is available, and
+the derivatives are not infinite or nearly so. Here “inexpensive”
+means that the cost of evaluating a function value plus gradient is
+comparable to the cost of evaluating only the function value, for
+example gradients computed by analytical, automatic
+differentiation, or continuous adjoint techniques. It is not cost
+effective to use derivatives computed by finite differences. In
+tests, GEK models built from finite difference derivatives were
+also significantly less accurate than those built from analytical
+derivatives. Note that GEK’s correlation matrix tends to have a
+significantly worse condition number than Kriging for the same
+sample design.</p>
+<p>This issue was addressed by using a pivoted Cholesky factorization
+of Kriging’s correlation matrix (which is a small sub-matrix within
+GEK’s correlation matrix) to rank points by how much unique
+information they contain. This reordering is then applied to whole
+points (the function value at a point immediately followed by
+gradient information at the same point) in GEK’s correlation
+matrix. A standard non-pivoted Cholesky is then applied to the
+reordered GEK correlation matrix and a bisection search is used to
+find the last equation that meets the constraint on the (estimate
+of) condition number. The cost of performing pivoted Cholesky on
+Kriging’s correlation matrix is usually negligible compared to the
+cost of the non-pivoted Cholesky factorization of GEK’s correlation
+matrix. In tests, it also resulted in more accurate GEK models than
+when pivoted Cholesky or whole-point-block pivoted Cholesky was
+performed on GEK’s correlation matrix.</p>
+</li>
+</ul>
+<p>This surrogate model supports the <a class="reference internal" href="#models-surf-piecewise-decomp"><span class="std std-ref">domain decomposition option</span></a>.</p>
+<p>The experimental Gaussian process model differs from the supported
+implementations in a few ways. First, at this time only local,
+gradient-based optimization methods for MLE are supported. The user may
+provide the
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/model-surrogate-global-experimental_gaussian_process-num_restarts.html"><span class="pre">num_restarts</span></a></code>
+keyword to specify how many optimization runs from random initial
+iterates are performed. The appropriate number of starts to ensure
+that the global minimum is found is problem-dependent.  When this
+keyword is omitted, the optimizer is run twenty times.</p>
+<p>Second, build data for the surrogate is scaled to have zero mean and
+unit variance, and fixed bounds are imposed on the kernel
+hyperparameters. The type of scaling and bound specification will be
+made user-configrable in a future release.</p>
+<p>Third, like the other GP implementations in Dakota the user may employ
+a polynomial trend function by supplying the
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/model-surrogate-global-experimental_gaussian_process-trend.html"><span class="pre">trend</span></a></code>
+keyword. Supported trend functions include <code class="docutils literal notranslate"><span class="pre">constant</span></code>, <code class="docutils literal notranslate"><span class="pre">linear</span></code>,
+<code class="docutils literal notranslate"><span class="pre">reduced_quadratic</span></code> and <code class="docutils literal notranslate"><span class="pre">quadratic</span></code> polynomials, the last of these
+being a full rather than reduced quadratic. Polynomial coefficients
+are determined alongside the kernel hyperparmeters through MLE.</p>
+<p>Lastly, the use may specify a fixed non-negative value for the
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/model-surrogate-global-experimental_gaussian_process-nugget.html"><span class="pre">nugget</span></a></code>
+parameter or may estimate it as part of the MLE procedure through the
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/model-surrogate-global-experimental_gaussian_process-find_nugget.html"><span class="pre">find_nugget</span></a></code>
+keyword.</p>
+</section>
+<section id="artificial-neural-network-ann-models">
+<span id="models-surf-ann"></span><h4>Artificial Neural Network (ANN) Models<a class="headerlink" href="#artificial-neural-network-ann-models" title="Permalink to this headline"></a></h4>
+<p>The ANN surface fitting method in Dakota employs a stochastic layered
+perceptron (SLP) artificial neural network based on the direct training
+approach of Zimmerman <span id="id22">[<a class="reference internal" href="../../misc/bibliography.html#id287" title="D. C. Zimmerman. Genetic algorithms for navigating expensive and complex design spaces. September 1996. Final Report for Sandia National Laboratories contract AO-7736 CA 02.">Zim96</a>]</span>. The SLP ANN method is
+designed to have a lower training cost than traditional ANNs. This is a
+useful feature for SBO and OUU where new ANNs are constructed many times
+during the optimization process (i.e., one ANN for each response
+function, and new ANNs for each optimization iteration). The form of the
+SLP ANN model is</p>
+<div class="math notranslate nohighlight">
+\[\hat{f}(\mathbf{x}) \approx
+  \tanh(\tanh((\mathbf{x A}_{0}+\theta_{0})\mathbf{A}_{1}+\theta_{1}))
+  \label{models:surf:equation09}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> is the current point in <span class="math notranslate nohighlight">\(n\)</span>-dimensional
+parameter space, and the terms
+<span class="math notranslate nohighlight">\(\mathbf{A}_{0},\theta_{0},\mathbf{A}_{1},\theta_{1}\)</span> are the
+matrices and vectors that correspond to the neuron weights and offset
+values in the ANN model. These terms are computed during the ANN
+training process, and are analogous to the polynomial coefficients in a
+quadratic surface fit. A singular value decomposition method is used in
+the numerical methods that are employed to solve for the weights and
+offsets.</p>
+<p>The SLP ANN is a non parametric surface fitting method. Thus, along with
+kriging and MARS, it can be used to model data trends that have slope
+discontinuities as well as multiple maxima and minima. However, unlike
+kriging, the ANN surface is not guaranteed to exactly match the response
+values of the data points from which it was constructed. This ANN can be
+used with SBO and OUU strategies. As with kriging, this ANN can be
+constructed from fewer than <span class="math notranslate nohighlight">\(n_{c_{quad}}\)</span> data points, however,
+it is a good rule of thumb to use at least <span class="math notranslate nohighlight">\(n_{c_{quad}}\)</span> data
+points when possible.</p>
+</section>
+<section id="multivariate-adaptive-regression-spline-mars-models">
+<span id="models-surf-mars"></span><h4>Multivariate Adaptive Regression Spline (MARS) Models<a class="headerlink" href="#multivariate-adaptive-regression-spline-mars-models" title="Permalink to this headline"></a></h4>
+<p>This surface fitting method uses multivariate adaptive regression
+splines from the MARS3.6 package <span id="id23">[<a class="reference internal" href="../../misc/bibliography.html#id94" title="J. H. Friedman. Multivariate adaptive regression splines. Annals of Statistics, 19(1):1–141, March 1991.">Fri91</a>]</span> developed at
+Stanford University.</p>
+<p>The form of the MARS model is based on the following expression:</p>
+<div class="math notranslate nohighlight">
+\[\hat{f}(\mathbf{x})=\sum_{m=1}^{M}a_{m}B_{m}(\mathbf{x})
+  \label{models:surf:equation10}\]</div>
+<p>where the <span class="math notranslate nohighlight">\(a_{m}\)</span> are the coefficients of the truncated power
+basis functions <span class="math notranslate nohighlight">\(B_{m}\)</span>, and <span class="math notranslate nohighlight">\(M\)</span> is the number of basis
+functions. The MARS software partitions the parameter space into
+subregions, and then applies forward and backward regression methods to
+create a local surface model in each subregion. The result is that each
+subregion contains its own basis functions and coefficients, and the
+subregions are joined together to produce a smooth,
+<span class="math notranslate nohighlight">\(C^{2}\)</span>-continuous surface model.</p>
+<p>MARS is a nonparametric surface fitting method and can represent complex
+multimodal data trends. The regression component of MARS generates a
+surface model that is not guaranteed to pass through all of the response
+data values. Thus, like the quadratic polynomial model, it provides some
+smoothing of the data. The MARS reference material does not indicate the
+minimum number of data points that are needed to create a MARS surface
+model. However, in practice it has been found that at least
+<span class="math notranslate nohighlight">\(n_{c_{quad}}\)</span>, and sometimes as many as 2 to 4 times
+<span class="math notranslate nohighlight">\(n_{c_{quad}}\)</span>, data points are needed to keep the MARS software
+from terminating. Provided that sufficient data samples can be obtained,
+MARS surface models can be useful in SBO and OUU applications, as well
+as in the prediction of global trends throughout the parameter space.</p>
+</section>
+<section id="radial-basis-functions">
+<span id="models-surf-rbf"></span><h4>Radial Basis Functions<a class="headerlink" href="#radial-basis-functions" title="Permalink to this headline"></a></h4>
+<p>Radial basis functions are functions whose value typically depends on
+the distance from a center point, called the centroid, <span class="math notranslate nohighlight">\({\bf c}\)</span>.
+The surrogate model approximation is then built up as the sum of K
+weighted radial basis functions:</p>
+<div class="math notranslate nohighlight">
+\[\hat{f}({\bf x})=\sum_{k=1}^{K}w_{k}\phi({\parallel {\bf x} - {\bf c_{k}} \parallel})
+  \label{models:surf:equation11}\]</div>
+<p>where the <span class="math notranslate nohighlight">\(\phi\)</span> are the individual radial basis functions. These
+functions can be of any form, but often a Gaussian bell-shaped function
+or splines are used. Our implementation uses a Gaussian radial basis
+function. The weights are determined via a linear least squares solution
+approach. See <span id="id24">[<a class="reference internal" href="../../misc/bibliography.html#id205" title="M. J. L. Orr. Introduction to radial basis function networks. Technical Report, University of Edinburgh, Edinburgh, Scotland, 1996.">Orr96</a>]</span> for more details. This surrogate
+model supports the <a class="reference internal" href="#models-surf-piecewise-decomp"><span class="std std-ref">domain decomposition option</span></a>.</p>
+</section>
+<section id="moving-least-squares">
+<span id="models-surf-mls"></span><h4>Moving Least Squares<a class="headerlink" href="#moving-least-squares" title="Permalink to this headline"></a></h4>
+<p>Moving Least Squares can be considered a more specialized version of
+linear regression models. In linear regression, one usually attempts to
+minimize the sum of the squared residuals, where the residual is defined
+as the difference between the surrogate model and the true model at a
+fixed number of points. In weighted least squares, the residual terms
+are weighted so the determination of the optimal coefficients governing
+the polynomial regression function, denoted by <span class="math notranslate nohighlight">\(\hat{f}({\bf x})\)</span>,
+are obtained by minimizing the weighted sum of squares at N data points:</p>
+<div class="math notranslate nohighlight">
+\[\sum_{n=1}^{N}w_{n}({\parallel \hat{f}({\bf x_{n}})-f({\bf x_{n}})\parallel})
+  \label{models:surf:equation12}\]</div>
+<p>Moving least squares is a further generalization of weighted least
+squares where the weighting is “moved” or recalculated for every new
+point where a prediction is desired. <span id="id25">[<a class="reference internal" href="../../misc/bibliography.html#id193" title="A. Nealen. A short-as-possible introduction to the least squares, weighted least squares, and moving least squares methods for scattered data approximation and interpolation. Technical Report, Discrete Geometric Modeling Group, Technishe Universitaet, Berlin, Germany, 2004.">Nea04</a>]</span> The
+implementation of moving least squares is still under development. We
+have found that it works well in trust region methods where the
+surrogate model is constructed in a constrained region over a few
+points. It does not appear to be working as well globally, at least at
+this point in time.</p>
+</section>
+<section id="piecewise-decomposition-option-for-global-surrogate-models">
+<span id="models-surf-piecewise-decomp"></span><h4>Piecewise Decomposition Option for Global Surrogate Models<a class="headerlink" href="#piecewise-decomposition-option-for-global-surrogate-models" title="Permalink to this headline"></a></h4>
+<p>Regression techniques typically use all available sample points to
+approximate the underlying function anywhere in the domain. An
+alternative option is to use piecewise dcomposition to locally
+approximate the function at some point using a few sample points from
+its neighborhood. The
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/model-surrogate-global-domain_decomposition.html"><span class="pre">domain_decomposition</span></a></code> option currently
+supports Polynomial Regression,
+Gaussian Process (GP) Interpolation, and Radial Basis Functions (RBF)
+Regression. This option requires a decomposition cell type. A valid cell
+type is one where any point in the domain is assigned to some cell(s),
+and each cell identifies its neighbor cells. Currently, only Voronoi
+cells are supported. Each cell constructs its own piece of the global
+surrogate, using the function information at its seed and a few layers</p>
+<p>of its neighbors, parametrized by
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/model-surrogate-global-domain_decomposition-support_layers.html"><span class="pre">support_layers</span></a></code>. It
+also supports optional
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/model-surrogate-global-domain_decomposition-discontinuity_detection.html"><span class="pre">discontinuity_detection</span></a></code>,
+specified by either a
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/model-surrogate-global-domain_decomposition-discontinuity_detection-jump_threshold.html"><span class="pre">jump_threshold</span></a></code>
+valued or a
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/model-surrogate-global-domain_decomposition-discontinuity_detection-gradient_threshold.html"><span class="pre">gradient_threshold</span></a></code>.</p>
+<p>The surrogate construction uses all available data, including
+derivatives, not only function evaluations. Include the keyword
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/model-surrogate-global-use_derivatives.html"><span class="pre">use_derivatives</span></a></code> to indicate the
+availability of derivative information. When specified, the user can
+then enable response derivatives, e.g., with
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/responses-numerical_gradients.html"><span class="pre">numerical_gradients</span></a></code> or
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/responses-analytic_hessians.html"><span class="pre">analytic_hessians</span></a></code>. More details on using gradients
+and Hessians, when available from the simulation can be found in
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/responses.html"><span class="pre">responses</span></a></code>.</p>
+<p>The features of the current (Voronoi) piecewise decomposition choice are
+further explained below:</p>
+<ul class="simple">
+<li><p>In the Voronoi piecewise decomposition option, we decompose the
+high-dimensional parameter space using the implicit Voronoi
+tessellation around the known function evaluations as seeds. Using
+this approach, any point in the domain is assigned to a Voronoi cell
+using a simple nearest neighbor search, and the neighbor cells are
+then identified using Spoke Darts without constructing an explicit
+mesh.</p></li>
+<li><p>The one-to-one mapping between the number of function evaluations and
+the number of Voronoi cells, regardless of the number of dimensions,
+eliminates the curse of dimensionality associated with standard
+domain decompositions. This Voronoi decomposition enables low-order
+piecewise polynomial approximation of the underlying function (and
+the associated error estimate) in the neighborhood of each function
+evaluation, independently. Moreover, the tessellation is naturally
+updated with the addition of new function evaluations.</p></li>
+</ul>
+<p>Extending the piecewise decomposition option to other global surrogate
+models is under development.</p>
+</section>
+<section id="surrogate-diagnostic-metrics">
+<span id="models-surf-diagnostics"></span><h4>Surrogate Diagnostic Metrics<a class="headerlink" href="#surrogate-diagnostic-metrics" title="Permalink to this headline"></a></h4>
+<p>The surrogate models provided by Dakota’s Surfpack package (polynomial,
+Kriging, ANN, MARS, RBF, and MLS) as well as the experimental surrogates
+include the ability to compute diagnostic metrics on the basis of (1)
+simple prediction error with respect to the training data, (2)
+prediction error estimated by cross-validation (iteratively omitting
+subsets of the training data), and (3) prediction error with respect to
+user-supplied hold-out or challenge data. All diagnostics are based on
+differences between <span class="math notranslate nohighlight">\(o(x_i)\)</span> the observed value, and
+<span class="math notranslate nohighlight">\(p(x_i)\)</span>, the surrogate model prediction for training (or omitted
+or challenge) data point <span class="math notranslate nohighlight">\(x_i\)</span>. In the simple error metric case,
+the points <span class="math notranslate nohighlight">\(x_i\)</span> are those used to train the model, for cross
+validation they are points selectively omitted from the build, and for
+challenge data, they are supplementary points provided by the user. The
+basic metrics are specified via the
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/model-surrogate-global-metrics.html"><span class="pre">metrics</span></a></code> keyword, followed by one or
+more of the strings shown in <a class="reference internal" href="#table-model-diagnostics"><span class="std std-numref">Table 1</span></a>.</p>
+<table class="docutils align-center" id="table-model-diagnostics">
+<caption><span class="caption-number">Table 1 </span><span class="caption-text">Global surrogate diagnostic metrics</span><a class="headerlink" href="#table-model-diagnostics" title="Permalink to this table"></a></caption>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Metric String</p></th>
+<th class="head"><p>Formula</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">'sum_squared'</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(\sum_{i=1}^{n}{ \left( o(x_i) - p(x_i) \right) ^2}\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">'mean_squared'</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(\frac{1}{n}\sum_{i=1}^{n}{ \left( o(x_i) - p(x_i) \right) ^2}\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">'root_mean_squared'</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(\sqrt{\frac{1}{n}\sum_{i=1}^{n}{ \left( o(x_i) - p(x_i) \right) ^2}}\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">'sum_abs'</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(\sum_{i=1}^{n}{ \left| o(x_i) - p(x_i) \right| }\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">'mean_abs'</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(\frac{1}{n}\sum_{i=1}^{n}{ \left| o(x_i) - p(x_i) \right| }\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">'max_abs'</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(\max_i \left| o(x_i) - p(x_i) \right|\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">'rsquared'</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(R^2 = \frac{\sum_{i=1}^{n}{\left(p_i -
+\bar{o}\right)^2}}{ \sum_{i=1}^{n}{\left(o_i -
+\bar{o}\right)^2}}\)</span></p></td>
+</tr>
+</tbody>
+</table>
+<p>Therein, <span class="math notranslate nohighlight">\(n\)</span> is the number of data points used to create the model,
+and <span class="math notranslate nohighlight">\(\bar{o}\)</span> is the mean of the true response values.
+<span class="math notranslate nohighlight">\(R^2\)</span>, developed for and most useful with polynomial regression,
+quantifies the amount of variability in the data that is captured by the
+model. The value of <span class="math notranslate nohighlight">\(R^2\)</span> falls on in the interval <span class="math notranslate nohighlight">\([0,1]\)</span>.
+Values close to <span class="math notranslate nohighlight">\(1\)</span> indicate that the model matches the data
+closely. The remainder of the metrics measure error, so smaller values
+indicate better fit.</p>
+<p><strong>Cross-validation:</strong> With the exception of <span class="math notranslate nohighlight">\(R^2\)</span>, the above
+metrics can be computed via a cross-validation process. The class of
+<span class="math notranslate nohighlight">\(k\)</span>-fold cross-validation metrics is used to predict how well a
+model might generalize to unseen data. The training data is randomly
+divided into <span class="math notranslate nohighlight">\(k\)</span> partitions. Then <span class="math notranslate nohighlight">\(k\)</span> models are computed,
+each excluding the corresponding <span class="math notranslate nohighlight">\(k^{th}\)</span> partition of the data.
+Each model is evaluated at the points that were excluded in its
+generation and any metrics specified above are computed with respect to
+the held out data. A special case, when <span class="math notranslate nohighlight">\(k\)</span> is equal to the number
+of data points, is known as leave-one-out cross-validation or prediction
+error sum of squares (PRESS). To specify <span class="math notranslate nohighlight">\(k\)</span>-fold cross-validation
+or PRESS, follow the list of metrics with
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/model-surrogate-global-metrics-cross_validation.html"><span class="pre">cross_validation</span></a></code> and/or
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/model-surrogate-global-metrics-press.html"><span class="pre">press</span></a></code>, respectively.</p>
+<p><strong>Challenge data:</strong> A user may optionally specify
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/model-surrogate-global-import-challenge_points_file.html"><span class="pre">challenge_points_file</span></a></code>, a data
+file in freeform or annotated format that contains additional trial
+point/response data, one point per row.  When specified, any of the
+above metrics specified will be computed with respect to the challenge
+data.</p>
+<p>Caution is advised when applying and interpreting these metrics. In
+general, lower errors are better, but for interpolatory models like
+Kriging models, will almost always be zero. Root-mean-squared and the
+absolute metrics are on the same scale as the predictions and data.
+<span class="math notranslate nohighlight">\(R^2\)</span> is meaningful for polynomial models, but less so for other
+model types. When possible, general 5-fold or 10-fold cross validation
+will provide more reliable estimates of the true model prediction error.
+Goodness-of-fit metrics provide a valuable tool for analyzing and
+comparing models but must not be applied blindly.</p>
+</section>
+</section>
+<section id="multifidelity-surrogate-models">
+<span id="models-surrogate-multifid"></span><h3>Multifidelity Surrogate Models<a class="headerlink" href="#multifidelity-surrogate-models" title="Permalink to this headline"></a></h3>
+<p>A second type of surrogate is the <em>model hierarchy</em> type (also called
+multifidelity, variable fidelity, variable complexity, etc.). In this
+case, a model that is still physics-based but is of lower fidelity
+(e.g., coarser discretization, reduced element order, looser convergence
+tolerances, omitted physics) is used as the surrogate in place of the
+high-fidelity model. For example, an inviscid, incompressible Euler CFD
+model on a coarse discretization could be used as a low-fidelity
+surrogate for a high-fidelity Navier-Stokes model on a fine
+discretization.</p>
+</section>
+<section id="reduced-order-models">
+<span id="models-surrogate-rom"></span><h3>Reduced Order Models<a class="headerlink" href="#reduced-order-models" title="Permalink to this headline"></a></h3>
+<p>A third type of surrogate model involves <em>reduced-order modeling</em>
+techniques such as proper orthogonal decomposition (POD) in
+computational fluid dynamics (also known as principal components
+analysis or Karhunen-Loeve in other fields) or spectral decomposition
+(also known as modal analysis) in structural dynamics. These surrogate
+models are generated directly from a high-fidelity model through the use
+of a reduced basis (e.g., eigenmodes for modal analysis or left singular
+vectors for POD) and projection of the original high-dimensional system
+down to a small number of generalized coordinates. These surrogates are
+still physics-based (and may therefore have better predictive qualities
+than data fits), but do not require multiple system models of varying
+fidelity (as required for model hierarchy surrogates).</p>
+</section>
+<section id="surrogate-model-selection">
+<h3>Surrogate Model Selection<a class="headerlink" href="#surrogate-model-selection" title="Permalink to this headline"></a></h3>
+<p>This section offers some guidance on choosing from among the available
+surrogate model types.</p>
+<ul class="simple">
+<li><p>For Surrogate Based Local Optimization
+(<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-surrogate_based_local.html"><span class="pre">surrogate_based_local</span></a></code>) with a trust region, a
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/model-surrogate-local-taylor_series.html"><span class="pre">taylor_series</span></a></code> or
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/model-surrogate-multipoint-tana.html"><span class="pre">tana</span></a></code> approximation will probably
+work best. If you wish or need to use a global surrogate (not
+recommended) then consider
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/model-surrogate-global-gaussian_process.html"><span class="pre">gaussian_process</span></a></code> or possibly
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/model-surrogate-global-moving_least_squares.html"><span class="pre">moving_least_squares</span></a></code>.</p></li>
+<li><p>For iterative surrogate-based global methods, including Efficient
+Global Optimization (EGO, <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-efficient_global.html"><span class="pre">efficient_global</span></a></code>),
+Efficient Global Reliability Analysis (EGRA,
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-global_reliability.html"><span class="pre">global_reliability</span></a></code>), EGO-based global interval
+estimation (EGIE, <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-global_interval_est.html"><span class="pre">global_interval_est</span></a></code> with option
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-global_interval_est-ego.html"><span class="pre">ego</span></a></code>), and EGO based
+Dempster-Shafer Theory of Evidence (<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-global_evidence.html"><span class="pre">global_evidence</span></a></code>
+with option <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-global_evidence-ego.html"><span class="pre">ego</span></a></code>),
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/model-surrogate-global-gaussian_process.html"><span class="pre">gaussian_process</span></a></code>
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/model-surrogate-global-gaussian_process-surfpack.html"><span class="pre">surfpack</span></a></code> is the
+recommended and default approximation.  The Surfpack GP is likely to
+find a similar or more optimal value and/or use fewer true function
+evaluations than the alternative Dakota GP. However the Surfpack
+implementation will likely take more time to build at each iteration
+than the Dakota version. The
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/model-surrogate-global-use_derivatives.html"><span class="pre">use_derivatives</span></a></code> keyword is not
+recommended for use with EGO-based methods.</p></li>
+<li><p>When using a global surrogate to extrapolate, either the
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/model-surrogate-global-gaussian_process.html"><span class="pre">gaussian_process</span></a></code> with a polynomial
+trend function, or a quadratic or cubic
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/model-surrogate-global-polynomial.html"><span class="pre">polynomial</span></a></code> is recommended.</p></li>
+<li><p>When attempting to interpolate more than roughly 1000 training
+points, the build time of Gaussian process models may become
+prohibitive. A radial basis function network
+(<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/model-surrogate-global-radial_basis.html"><span class="pre">radial_basis</span></a></code>) may provide a
+reasonable alternative, as might a stochastic collocation
+interpolant (<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-stoch_collocation.html"><span class="pre">stoch_collocation</span></a></code>), if performing UQ.</p></li>
+<li><p>In other situations demanding a global surrogate,
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/model-surrogate-global-gaussian_process.html"><span class="pre">gaussian_process</span></a></code>
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/model-surrogate-global-gaussian_process-surfpack.html"><span class="pre">surfpack</span></a></code> is generally
+recommended. Training the model with
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/model-surrogate-global-use_derivatives.html"><span class="pre">use_derivatives</span></a></code> is only beneficial
+if accurate and an inexpensive derivatives are available. Finite
+difference derivatives are disqualified on both counts. However,
+derivatives generated by analytical, automatic differentiation, or
+continuous adjoint techniques can be helpful. Currently, only
+first-order derivatives (gradients) will be used. Hessians will not
+be used even if they are available.</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>MARS: While the MARS approximation in Dakota has performed well in
+some applications, numerous runtime problems have been observed, so
+it should be used with caution.</p>
+</div>
+</section>
+<section id="python-interface-to-the-surrogates-module">
+<span id="models-surrogate-python"></span><h3>Python Interface to the Surrogates Module<a class="headerlink" href="#python-interface-to-the-surrogates-module" title="Permalink to this headline"></a></h3>
+<p>Dakota 6.13 and newer use Pybind11 <span id="id26">[<a class="reference internal" href="../../misc/bibliography.html#id313" title="Wenzel Jakob, Jason Rhinelander, and Dean Moldovan. Pybind11 — seamless operability between c++11 and python. 2016. https://github.com/pybind/pybind11.">JRM16</a>]</span> to
+provide a Python interface to the surrogates module
+<code class="docutils literal notranslate"><span class="pre">dakota.surrogates</span></code>, which currently contains polynomial and
+Gaussian process regression surrogates. In this section we describe
+how to enable the interface and provide a simple demonstration.</p>
+<p>After installing Dakota, <code class="docutils literal notranslate"><span class="pre">dakota.surrogates</span></code> may be used by setting
+the environment variable <code class="docutils literal notranslate"><span class="pre">PYTHONPATH</span></code> to include
+<code class="file docutils literal notranslate"><span class="pre">$DAK_INSTALL/share/dakota/Python</span></code>. Note that doing
+so will also enable <code class="docutils literal notranslate"><span class="pre">dakota.interfacing</span></code> as described in
+<a class="reference internal" href="interfaces/dakotainterfacing.html#interfaces-dakota-interfacing"><span class="std std-ref">Parameters and Results Using the Python dakota.interfacing module</span></a>.</p>
+<p>The Python code snippet below shows how a Gaussian process surrogate can
+be built from existing Numpy arrays and an optional dictionary of
+configuration options, evaluated at a set of points, and serialized to
+disk for later use. The <code class="docutils literal notranslate"><span class="pre">print_options</span></code> method writes the surrogate’s
+current configuration options to the console, which can useful for
+determining default settings.</p>
+<p>:: code-block:: python</p>
+<blockquote>
+<div><p>import dakota.surrogates as daksurr</p>
+<p>nugget_opts = {“estimate nugget” : True}
+config_opts = {“scaler name” : “none”, “Nugget” : nugget_opts}</p>
+<p>gp = daksurr.GaussianProcess(build_samples, build_response, config_opts)</p>
+<p>gp.print_options()</p>
+<p>gp_eval_surr = gp.value(eval_samples)</p>
+<p>daksurr.save(gp, “gp.bin”, True)</p>
+</div></blockquote>
+<p>The examples located in
+<code class="file docutils literal notranslate"><span class="pre">$DAK_INSTALL/share/dakota/examples/official/surrogates/library</span></code>
+cover surrogate build/save/load workflows and
+other Python-accessible methods such as gradient and hessian evaluation.</p>
+<p>As a word of caution, the configuration options for a surrogate loaded
+from disk will be empty because the current implementation does not
+serialize them, although the save command will generate a YAML file
+<code class="file docutils literal notranslate"><span class="pre">&lt;ClassName&gt;.yaml</span></code> of configuration options used by the surrogate for
+reference.</p>
+</section>
+</section>
+<section id="nested-models">
+<span id="models-nested"></span><h2>Nested Models<a class="headerlink" href="#nested-models" title="Permalink to this headline"></a></h2>
+<p>Nested models employ sub-method and a sub-model to perform a complete
+iterative study as part of every evaluation of the model. This
+sub-iteration accepts variables from the outer level, performs the
+sub-level analysis, and computes a set of sub-level responses which
+are passed back up to the outer level. As described in the nested
+model’s <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/model-nested-sub_method_pointer.html"><span class="pre">sub_method_pointer</span></a></code> documentation,
+mappings are employed for both the variable inputs to the sub-model
+and the response outputs from the sub-model.</p>
+<p>In the variable mapping case, primary and secondary variable mapping
+specifications are used to map from the top-level variables into the
+sub-model variables. These mappings support three possibilities in any
+combination: (1) insertion of an active top-level variable value into an
+identified sub-model distribution parameter for an identified active
+sub-model variable, (2) insertion of an active top-level variable value
+into an identified active sub-model variable value, and (3) addition of
+an active top-level variable value as an inactive sub-model variable,
+augmenting the active sub-model variables.</p>
+<p>In the response mapping case, primary and secondary response mapping
+specifications are used to map from the sub-model responses back to the
+top-level responses. These specifications provide real-valued
+multipliers that are applied to the sub-method response results to
+define the outer level response set. These nested data results may be
+combined with non-nested data through use of the “optional interface”
+component within nested models.</p>
+<p>The nested model is used within a wide variety of multi-method,
+multi-model solution approaches. For example, optimization within
+optimization (for hierarchical multidisciplinary optimization),
+uncertainty quantification within uncertainty quantification (for mixed
+aleatory-epistemic UQ), uncertainty quantification within optimization
+(for optimization under uncertainty), and optimization within
+uncertainty quantification (for uncertainty of optima) are all
+supported, with and without surrogate model indirection.
+Examples of nested model usage appear in <a class="reference internal" href="../advanced/advancedmodelrecursions.html#adv-models"><span class="std std-ref">Advanced Model Recursions</span></a>, most
+notably mixed epistemic-aleatory UQ in <a class="reference internal" href="../advanced/advancedmodelrecursions.html#adv-models-mixed-uq"><span class="std std-ref">Mixed Aleatory-Epistemic UQ</span></a>
+optimization under uncertainty (OUU) in <a class="reference internal" href="../advanced/advancedmodelrecursions.html#adv-models-ouu"><span class="std std-ref">Optimization Under Uncertainty (OUU)</span></a>, and
+surrogate-based UQ in <a class="reference internal" href="../advanced/advancedmodelrecursions.html#adv-models-sbuq"><span class="std std-ref">Surrogate-Based Uncertainty Quantification</span></a>.</p>
+</section>
+<section id="random-field-models">
+<span id="models-randomfield"></span><h2>Random Field Models<a class="headerlink" href="#random-field-models" title="Permalink to this headline"></a></h2>
+<p>As of Dakota 6.4, there is a preliminary/experimental capability to
+generate random fields. The random field model aims to be a fairly general
+capability, where one can generate a random field representation in one
+of three ways: from data, from simulation runs (e.g. running an ensemble
+of simulations where each one produces a field response), or from a
+covariance matrix defined over a mesh. Then, a random field model (such
+as a Karhunen-Loeve expansion) will be built based on the data. A final
+step is to draw realizations from the random field model to propagate to
+another simulation model. For example, the random field may represent a
+pressure or temperature boundary condition for a simulation.</p>
+<p>The random field model is specified with a model type of
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/model-random_field.html"><span class="pre">random_field</span></a></code>. The first section of the random field
+specification tells Dakota what data to use to build the random
+field. This is specified with
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/model-random_field-build_source.html"><span class="pre">build_source</span></a></code>. The source of data to build
+the random field may be a file with data (where the N rows of data
+correspond to N samples of the random field and the M columns
+correspond to field values), a simulation that generates field data,
+or a specified mesh plus covariance matrix governing how the field
+varies over the mesh. In the case of using a simulation to generate
+field data, the simulation is defined through
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/model-random_field-build_source-dace_method_pointer.html"><span class="pre">dace_method_pointer</span></a></code>. In the
+case of using a mesh and a covariance, the form of the covariance is
+defined with
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/model-random_field-build_source-analytic_covariance.html"><span class="pre">analytic_covariance</span></a></code>.</p>
+<p>The next section of the random field model specifies the form of the
+expansion, <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/model-random_field-expansion_form.html"><span class="pre">expansion_form</span></a></code>. This can be
+either a Karhunen-Loeve expansion or a Principal components
+analysis. These are very similar: both involve the eigenvalues of the
+covariance matrix of the field data.  The only difference is in the
+treatment of the estimation of the coefficients of the eigenvector
+basis functions. In the PCA case, we have developed an approach which
+makes the coefficients explicit functions of the uncertain variables
+used to generate the random field.  The specification of the random
+field can also include the number of bases to retain or a truncation
+tolerance, which defines the percent variance that the expansion
+should capture.</p>
+<p>The final section of the random field model admits a pointer to a
+model through which the random field will be propagated,
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/model-random_field-propagation_model_pointer.html"><span class="pre">propagation_model_pointer</span></a></code>, meaning the
+model to be driven with the random field input.</p>
+</section>
+<section id="active-subspace-models">
+<span id="models-subspace"></span><h2>Active Subspace Models<a class="headerlink" href="#active-subspace-models" title="Permalink to this headline"></a></h2>
+<p>The active subspace technique <span id="id27">[<a class="reference internal" href="../../misc/bibliography.html#id291" title="P. G. Constantine. Active subspaces: Emerging ideas for dimension reduction in parameter studies. Volume 2. SIAM, 2015.">Con15</a>]</span>
+seeks directions in the input space for which the response function(s)
+show little variation. After a rotation to align with these directions,
+significant dimension reduction may be possible.</p>
+<p>The Dakota model type <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/model-active_subspace.html"><span class="pre">active_subspace</span></a></code> manages the input
+subspace identification and transforms the original simulation model
+into the new coordinates. This experimental capability was introduced
+in Dakota 6.4.</p>
+<p>In Dakota 6.4, the active subspace model can be used in conjunction with
+the following uncertainty quantification methods:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-polynomial_chaos.html"><span class="pre">polynomial_chaos</span></a></code></p></li>
+<li><p><code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-sampling.html"><span class="pre">sampling</span></a></code></p></li>
+<li><p><code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-local_reliability.html"><span class="pre">local_reliability</span></a></code></p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>An error message similar to:</p>
+<p><code class="docutils literal notranslate"><span class="pre">Error:</span> <span class="pre">Resizing</span> <span class="pre">is</span> <span class="pre">not</span> <span class="pre">yet</span> <span class="pre">supported</span> <span class="pre">in</span> <span class="pre">method</span> <span class="pre">&lt;method</span> <span class="pre">name&gt;.</span></code></p>
+<p>will be emitted and Dakota will exit if the active subspace model
+is used with a non-compatible UQ method.</p>
+</div>
+<p>The active subspace implementation in Dakota 6.4 first transforms
+uncertain variables to standard normal distributions using a Nataf
+transformm before forming the subspace. This is a nonlinear
+transformation for non-normally distributed uncertain variables and may
+potentially decrease sparse structure in a fullspace model. Future
+Dakota releases will not use this transformation and should perform
+better in the general case.</p>
+<p>The only required keyword when using a subspace model is the
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/model-active_subspace-truth_model_pointer.html"><span class="pre">truth_model_pointer</span></a></code> which points to the
+(via <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/model-id_model.html"><span class="pre">id_model</span></a></code>) of the underlying model on which to
+build the subspace. A subspace model requires either analytical
+(preferred) or numerical gradients of the response functions. The
+active subspace model first samples the gradient of the fullspace
+model. The number of gradient samples can be specified with
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/model-active_subspace-initial_samples.html"><span class="pre">initial_samples</span></a></code>. The gradient samples
+are compiled into the columns of a matrix. A singular value
+decomposition is performed of the derivative matrix and the resulting
+singular values and vectors are used to determine the basis vectors
+and size of the active subspace.</p>
+<p>Constantine <span id="id28">[<a class="reference internal" href="../../misc/bibliography.html#id291" title="P. G. Constantine. Active subspaces: Emerging ideas for dimension reduction in parameter studies. Volume 2. SIAM, 2015.">Con15</a>]</span> recommends
+choosing the initial samples such that:</p>
+<div class="math notranslate nohighlight">
+\[\mathtt{initial\_samples} = \alpha k \log(m),\]</div>
+<p>where <span class="math notranslate nohighlight">\(\alpha\)</span> is an oversampling factor between 2 and 10,
+<span class="math notranslate nohighlight">\(k\)</span> is the number of singular values to approximate, and <span class="math notranslate nohighlight">\(m\)</span>
+is the number of fullspace variables. To ensure accurate results,
+<span class="math notranslate nohighlight">\(k\)</span> should be greater than the estimated subspace size determined
+by one of the truncation methods described below.</p>
+<p>Dakota has several metrics to estimate the size of an active subspace
+chosen via <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/model-active_subspace-truncation_method.html"><span class="pre">truncation_method</span></a></code>. If the
+desired subspace size is known it can be explicitly selected using the
+input parameter <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/model-active_subspace-dimension.html"><span class="pre">dimension</span></a></code>. The
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/model-active_subspace-truncation_method-constantine.html"><span class="pre">constantine</span></a></code> (default)
+and <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/model-active_subspace-truncation_method-bing_li.html"><span class="pre">bing_li</span></a></code>
+truncation methods both use bootstrap sampling of the compiled
+derivative matrix to estimate an active subspace size. The number of
+bootstrap samples used with these methods can be specified with the
+keyword <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/model-active_subspace-bootstrap_samples.html"><span class="pre">bootstrap_samples</span></a></code>, but
+typically the default value works well. The
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/model-active_subspace-truncation_method-energy.html"><span class="pre">energy</span></a></code> method
+computes the number of bases so that the subspace representation
+accounts for all but a maximum percentage (specified as a decimal) of
+the total eigenvalue energy.</p>
+<p>For more information on active subspaces please consult
+<a class="reference internal" href="../advanced/activesubspace.html#chap-actsub"><span class="std std-ref">Active Subspace Models</span></a> or references
+<span id="id29">[<a class="reference internal" href="../../misc/bibliography.html#id291" title="P. G. Constantine. Active subspaces: Emerging ideas for dimension reduction in parameter studies. Volume 2. SIAM, 2015.">Con15</a>, <a class="reference internal" href="../../misc/bibliography.html#id292" title="P. G. Constantine, E. Dow, and Q. Wang. Active subspace methods in theory and practice: applications to kriging surfaces. SIAM Journal on Scientific Computing, 36(4):A1500–A1524, 2014.">CDW14</a>, <a class="reference internal" href="../../misc/bibliography.html#id293" title="P. G. Constantine and D. F. Gleich. Computing active subspaces. arXiv, math.NA:1408.0545, 2014. URL: http://arxiv.org/abs/1408.0545.">CG14</a>]</span>.</p>
+</section>
+<section id="video-resources">
+<span id="surrmodels-videos"></span><h2>Video Resources<a class="headerlink" href="#video-resources" title="Permalink to this headline"></a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 40%" />
+<col style="width: 31%" />
+<col style="width: 29%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Title</p></th>
+<th class="head"><p>Link</p></th>
+<th class="head"><p>Resources</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Surrogate Models</p></td>
+<td><p><a class="reference external" href="https://digitalops.sandia.gov/Mediasite/Play/b249f5f9347d4d9580be23dca66d9c1d1d"><img alt="Surrogate Models" src="../../_images/SurrogatesTrainingTeaser.png" /></a></p></td>
+<td><p><a class="reference external" href="https://dakota.sandia.gov/sites/default/files/training/DakotaTraining_SurrogateModels.pdf">Slides</a> /
+<a class="reference external" href="https://dakota.sandia.gov/sites/default/files/training/surrogate-220216.zip">Exercises</a></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="formatting.html" class="btn btn-neutral float-left" title="Input File Formatting" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="variables.html" class="btn btn-neutral float-right" title="Variables" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <!--
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Sandia National Laboratories.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+  --> 
+
+</footer>
+        </div>
+      </div>
+	  
+	  <div style="background-color: #0f0f0f;color:#fafafa;padding:20px">
+	    <div>
+		  <h2><em>Exceptional service in the national interest</em></h2>
+		</div>
+		<p>© 2022 National Technology and Engineering Solutions of Sandia, LLC. | <a href="https://www.sandia.gov/contact_us/index.html">Questions &amp; Comments</a> | <a href="https://www.sandia.gov/general/privacy-security/index.html">Privacy &amp; Security</a></p>
+		<p><a href="http://energy.gov" rel="noopener noreferrer" target="_blank"><img alt="U.S. Department of Energy" longdesc="https://energy.gov" src="https://www.sandia.gov/_common/images/doe_logo_white.png" style="height:37px; width:140px"></a> <a href="http://nnsa.energy.gov/" rel="noopener noreferrer" target="_blank"> <img alt="National Nuclear Security Administration" longdesc="http://nnsa.gov" src="https://www.sandia.gov/_common/images/nnsa_logo_white.png" style="height:37px; width:116px"></a></p>
+		<p><a href="https://www.sandia.gov">Sandia National Laboratories</a> is a multimission laboratory managed and operated by National Technology and Engineering Solutions of Sandia, LLC., a wholly owned subsidiary of Honeywell International, Inc., for the U.S. Department of Energy’s National Nuclear Security Administration under contract DE-NA-0003525.</p>
+	  </div>	  	  
+	  
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

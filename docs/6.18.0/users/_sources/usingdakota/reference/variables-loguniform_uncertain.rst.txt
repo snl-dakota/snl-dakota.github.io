@@ -1,0 +1,86 @@
+.. _variables-loguniform_uncertain:
+
+""""""""""""""""""""
+loguniform_uncertain
+""""""""""""""""""""
+
+
+Aleatory uncertain variable - loguniform
+
+
+
+
+**Topics**
+
+
+continuous_variables, aleatory_uncertain_variables
+
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   variables-loguniform_uncertain-lower_bounds
+   variables-loguniform_uncertain-upper_bounds
+   variables-loguniform_uncertain-initial_point
+   variables-loguniform_uncertain-descriptors
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* INTEGER
+
+- *Default:* no loguniform uncertain variables
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+--------------------+---------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword     | Dakota Keyword Description                  |
+|                         | Group              |                    |                                             |
++=========================+====================+====================+=============================================+
+| Required                                     | `lower_bounds`__   | Specify minimum values                      |
++----------------------------------------------+--------------------+---------------------------------------------+
+| Required                                     | `upper_bounds`__   | Specify maximium values                     |
++----------------------------------------------+--------------------+---------------------------------------------+
+| Optional                                     | `initial_point`__  | Initial values for variables                |
++----------------------------------------------+--------------------+---------------------------------------------+
+| Optional                                     | `descriptors`__    | Labels for the variables                    |
++----------------------------------------------+--------------------+---------------------------------------------+
+
+.. __: variables-loguniform_uncertain-lower_bounds.html
+__ variables-loguniform_uncertain-upper_bounds.html
+__ variables-loguniform_uncertain-initial_point.html
+__ variables-loguniform_uncertain-descriptors.html
+
+
+
+**Description**
+
+
+
+If the logarithm of an uncertain variable :math:`X` has a uniform
+distribution, that is :math:`\log X \sim \mathcal{U}(L, U),` then
+:math:`X` is distributed with a loguniform distribution. The
+distribution lower bound is :math:`L` and upper bound is
+:math:`U` The loguniform distribution has the density function:
+
+.. math:: f(x) = \frac{1}{ x \left( \ln U - \ln L) \right) }
+
+..
+   TODO: Is above discussion of bounds correct?
+
+
+
+
+**Theory**
+
+
+For some methods, including vector and centered parameter studies, an
+initial point is needed for the uncertain variables. When not given
+explicitly, these variables are initialized to their means.
+
+

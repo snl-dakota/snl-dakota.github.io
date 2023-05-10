@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>calibration_terms &mdash; dakota  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/dakota_theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/sandiaheaderlite.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="scalar_calibration_terms" href="responses-calibration_terms-scalar_calibration_terms.html" />
+    <link rel="prev" title="read_field_coordinates" href="responses-objective_functions-field_objectives-read_field_coordinates.html" /> 
+  
+  <meta name="sandia.approval_type" content="formal"/>
+  <meta property="sandia.approved" content="SAND2022-15651 O"/>
+  <meta name="description" content="The Dakota project delivers both state-of-the-art research and robust, usable software for optimization and UQ."/>
+  <meta name="keywords" content="Dakota, optimization, UQ, uncertainty quantification, parametric analysis, design exploration, model calibration, risk analysis"/>
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> dakota
+            <img src="../../_static/dakota_Arrow_Name_Tag_horiz_transparent.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../setupdakota.html">Getting Started</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../usingdakota.html">Using Dakota</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../introduction/aboutdakota.html">About Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../introduction/helloworld.html">Dakota Beginner’s Tutorial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples.html">Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../introduction/couplingtosimulations.html">Coupling Dakota to a Simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../inputfile.html">Dakota Input File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../running.html">Running Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../output.html">Dakota Output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../studytypes.html">Study Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../topics.html">Topics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../advanced.html">Advanced Topics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../theory.html">Dakota Theory</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../reference.html">Keyword Reference</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="environment.html">environment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="method.html">method</a></li>
+<li class="toctree-l3"><a class="reference internal" href="model.html">model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="variables.html">variables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="interface.html">interface</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="responses.html">responses</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="responses-id_responses.html">id_responses</a></li>
+<li class="toctree-l4"><a class="reference internal" href="responses-descriptors.html">descriptors</a></li>
+<li class="toctree-l4"><a class="reference internal" href="responses-objective_functions.html">objective_functions</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">calibration_terms</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="responses-calibration_terms-scalar_calibration_terms.html">scalar_calibration_terms</a></li>
+<li class="toctree-l5"><a class="reference internal" href="responses-calibration_terms-field_calibration_terms.html">field_calibration_terms</a></li>
+<li class="toctree-l5"><a class="reference internal" href="responses-calibration_terms-primary_scales.html">primary_scales</a></li>
+<li class="toctree-l5"><a class="reference internal" href="responses-calibration_terms-weights.html">weights</a></li>
+<li class="toctree-l5"><a class="reference internal" href="responses-calibration_terms-calibration_data.html">calibration_data</a></li>
+<li class="toctree-l5"><a class="reference internal" href="responses-calibration_terms-calibration_data_file.html">calibration_data_file</a></li>
+<li class="toctree-l5"><a class="reference internal" href="responses-calibration_terms-simulation_variance.html">simulation_variance</a></li>
+<li class="toctree-l5"><a class="reference internal" href="responses-calibration_terms-nonlinear_inequality_constraints.html">nonlinear_inequality_constraints</a></li>
+<li class="toctree-l5"><a class="reference internal" href="responses-calibration_terms-nonlinear_equality_constraints.html">nonlinear_equality_constraints</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="responses-response_functions.html">response_functions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="responses-no_gradients.html">no_gradients</a></li>
+<li class="toctree-l4"><a class="reference internal" href="responses-analytic_gradients.html">analytic_gradients</a></li>
+<li class="toctree-l4"><a class="reference internal" href="responses-mixed_gradients.html">mixed_gradients</a></li>
+<li class="toctree-l4"><a class="reference internal" href="responses-numerical_gradients.html">numerical_gradients</a></li>
+<li class="toctree-l4"><a class="reference internal" href="responses-no_hessians.html">no_hessians</a></li>
+<li class="toctree-l4"><a class="reference internal" href="responses-numerical_hessians.html">numerical_hessians</a></li>
+<li class="toctree-l4"><a class="reference internal" href="responses-quasi_hessians.html">quasi_hessians</a></li>
+<li class="toctree-l4"><a class="reference internal" href="responses-analytic_hessians.html">analytic_hessians</a></li>
+<li class="toctree-l4"><a class="reference internal" href="responses-mixed_hessians.html">mixed_hessians</a></li>
+<li class="toctree-l4"><a class="reference internal" href="responses-metadata.html">metadata</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../usingdakotagui/usingdakotagui.html">Using Dakota GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../externaltools/externaltools.html">Using External Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../compiling/compiling.html">Compiling Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developingdakota/developingdakota.html">Developing Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../misc/misc.html">Miscellaneous</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">dakota</a>
+      </nav>
+
+	  <!-- SNL Lite header -->
+	  <div class="snlheader-subsite--wrapper-default">
+		<snlheader class="snlheader-subsite" role="snlbanner">
+		  <div class="wrapper">
+			<a href="https://www.sandia.gov/index.html">
+			  <div class="logo-transparent"><p class="logo">Sandia National Laboratories</p></div>
+			</a>
+			<div class="nav-top">
+			  <a class="visuallyhidden" name="mainnav"></a>
+			  <div aria-label="main navigation" class="core-nav-transparent core-nav-transparent--visible" role="navigation">
+				<ul role="navigation" class="secondary-links">
+				  <li id="search-text-link">
+					<a aria-label="Search" href="https://www.sandia.gov/search/">Search Sandia.gov</a>
+				  </li>
+				  <li id="directory-text-link">
+					<a href="https://www.sandia.gov/directory.html" aria-expanded="false" aria-label="Site Directory">All Sandia Websites</a>
+				  </li>
+				</ul>
+			  </div>
+			</div>
+		  </div> 
+		</snlheader>
+	  </div>	  
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../usingdakota.html">Using Dakota</a> &raquo;</li>
+          <li><a href="../reference.html">Keyword Reference</a> &raquo;</li>
+          <li><a href="responses.html">responses</a> &raquo;</li>
+      <li>calibration_terms</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/usingdakota/reference/responses-calibration_terms.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="calibration-terms">
+<span id="responses-calibration-terms"></span><h1>calibration_terms<a class="headerlink" href="#calibration-terms" title="Permalink to this headline"></a></h1>
+<p>Response type suitable for calibration or least squares</p>
+<div class="toctree-wrapper compound">
+</div>
+<p><strong>Specification</strong></p>
+<ul class="simple">
+<li><p><em>Alias:</em> least_squares_terms num_least_squares_terms</p></li>
+<li><p><em>Arguments:</em> INTEGER</p></li>
+</ul>
+<p><strong>Child Keywords:</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 16%" />
+<col style="width: 30%" />
+<col style="width: 35%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Required/Optional</p></th>
+<th class="head"><p>Description of
+Group</p></th>
+<th class="head"><p>Dakota Keyword</p></th>
+<th class="head"><p>Dakota Keyword Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td colspan="2"><p>Optional</p></td>
+<td><p><a class="reference external" href="responses-calibration_terms-scalar_calibration_terms.html">scalar_calibration_terms</a></p></td>
+<td><p>Number of scalar calibration terms</p></td>
+</tr>
+<tr class="row-odd"><td colspan="2"><p>Optional</p></td>
+<td><p><a class="reference external" href="responses-calibration_terms-field_calibration_terms.html">field_calibration_terms</a></p></td>
+<td><p>Number of field calibration terms</p></td>
+</tr>
+<tr class="row-even"><td colspan="2"><p>Optional</p></td>
+<td><p><a class="reference external" href="responses-calibration_terms-primary_scales.html">primary_scales</a></p></td>
+<td><p>Characteristic values to scale each
+calibration term</p></td>
+</tr>
+<tr class="row-odd"><td colspan="2"><p>Optional</p></td>
+<td><p><a class="reference external" href="responses-calibration_terms-weights.html">weights</a></p></td>
+<td><p>Specify weights for each objective function</p></td>
+</tr>
+<tr class="row-even"><td rowspan="2"><p>Optional (Choose One)</p></td>
+<td rowspan="2"><p>Calibration Data</p></td>
+<td><p><a class="reference external" href="responses-calibration_terms-calibration_data.html">calibration_data</a></p></td>
+<td><p>Supply field or mixed field/scalar
+calibration data</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="responses-calibration_terms-calibration_data_file.html">calibration_data_file</a></p></td>
+<td><p>Supply scalar calibration data only</p></td>
+</tr>
+<tr class="row-even"><td colspan="2"><p>Optional</p></td>
+<td><p><a class="reference external" href="responses-calibration_terms-simulation_variance.html">simulation_variance</a></p></td>
+<td><p>Variance applied to simulation responses</p></td>
+</tr>
+<tr class="row-odd"><td colspan="2"><p>Optional</p></td>
+<td><p><a class="reference external" href="responses-calibration_terms-nonlinear_inequality_constraints.html">nonlinear_inequality_constraints</a></p></td>
+<td><p>Group to specify nonlinear inequality
+constraints</p></td>
+</tr>
+<tr class="row-even"><td colspan="2"><p>Optional</p></td>
+<td><p><a class="reference external" href="responses-calibration_terms-nonlinear_equality_constraints.html">nonlinear_equality_constraints</a></p></td>
+<td><p>Group to specify nonlinear equality
+constraints</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Description</strong></p>
+<p>Responses for a calibration study are specified using
+<code class="docutils literal notranslate"><span class="pre">calibration_terms</span></code> and optional keywords for weighting/scaling, data,
+and constraints.  In general when calibrating, Dakota automatically
+tunes parameters <span class="math notranslate nohighlight">\(\theta\)</span>  to minimize discrepancies or residuals
+between the model and the data:</p>
+<div class="math notranslate nohighlight">
+\[R_{i} = y^{Model}_i(\theta) - y^{Data}_{i}.\]</div>
+<p>Note that the problem specification affects what must be returned to
+Dakota in the <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/interface-analysis_drivers-fork-results_file.html"><span class="pre">results_file</span></a></code> :</p>
+<ul class="simple">
+<li><p>If calibration data <em>is not specified</em>, then each of the   calibration terms returned to Dakota through the <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/interface.html"><span class="pre">interface</span></a></code> is a   residual <span class="math notranslate nohighlight">\(R_{i}\)</span>  to be driven toward zero.</p></li>
+<li><p>If calibration data <em>is specified</em>, then each of the   calibration terms returned to Dakota must be a response :math:`  y^{Model}_i(theta)` , which Dakota will difference with the data   in the specified data file.</p></li>
+</ul>
+<p><em>Constraints</em></p>
+<p>(See general problem formulation at
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/responses-objective_functions.html"><span class="pre">objective_functions</span></a></code>.) The keywords
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/responses-calibration_terms-nonlinear_inequality_constraints.html"><span class="pre">nonlinear_inequality_constraints</span></a></code> and
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/responses-calibration_terms-nonlinear_equality_constraints.html"><span class="pre">nonlinear_equality_constraints</span></a></code> specify the
+number of nonlinear inequality constraints em g, and nonlinear
+equality constraints em h, respectively.  When interfacing to
+external applications, the responses must be returned to Dakota in
+this order in the <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/interface-analysis_drivers-fork-results_file.html"><span class="pre">results_file</span></a></code> :
+0. calibration terms nonlinear inequality
+constraints nonlinear equality constraints</p>
+<p>An optimization problem’s linear constraints are provided to the
+solver at startup only and do not need to be included in the data
+returned on every function evaluation. Linear constraints are
+therefore specified in the <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/variables.html"><span class="pre">variables</span></a></code> block through the
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/variables-linear_inequality_constraint_matrix.html"><span class="pre">linear_inequality_constraint_matrix</span></a></code> <span class="math notranslate nohighlight">\(A_i\)</span>  and
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/variables-linear_equality_constraint_matrix.html"><span class="pre">linear_equality_constraint_matrix</span></a></code> <span class="math notranslate nohighlight">\(A_e\)</span> .</p>
+<p>Lower and upper bounds on the design variables em x are also
+specified in the <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/variables.html"><span class="pre">variables</span></a></code> block.</p>
+<p><em>Problem Transformations</em></p>
+<p>Weighting or scaling calibration terms is often appropriate to account
+for measurement error or to condition the problem for easier solution.
+Weighting or scaling transformations are applied in the following
+order:</p>
+<p>1. When present, observation error variance <span class="math notranslate nohighlight">\(\sigma_i\)</span>  or full covariance <span class="math notranslate nohighlight">\(\Sigma\)</span> , optionally specified through <code class="docutils literal notranslate"><span class="pre">experiment_variance_type</span></code>, is applied to residuals first:
+.. math::   R^{(1)}_i = frac{R_{i}}{sigma_{i}} = frac{y^{Model}_i(theta) - y^{Data}_{i}}{sigma_{i}}  textrm{, or}
+.. math::  R^{(1)} = Sigma^{-1/2} R = Sigma^{-1/2} left(y^{Model}(theta) - y^{Data}right),
+resulting in the typical variance-weighted least squares formulation
+.. math::  textrm{min}_theta ; R(theta)^T Sigma^{-1} R(theta)
+2. Any active scaling transformations are applied next, e.g., for characteristic value scaling:
+.. math::  R^{(2)}_i = frac{R^{(1)}_i}{s_i}
+3. Finally the optional weights are applied in a way that preserves backward compatibility:
+.. math::  R^{(3)}_i = sqrt{w_i}{R^{(2)}_i}
+so the ultimate least squares formulation, e.g., in a scaled and weighted case would be
+.. math::  f = sum_{i=1}^{n} w_i left( frac{y^{Model}_i - y^{Data}_i}{s_i} right)^2
+<em>Note that specifying observation error variance and weights are mutually
+exclusive in a calibration problem.</em></p>
+<p><strong>Theory</strong></p>
+<p>Dakota calibration terms are typically used to solve problems of
+parameter estimation, system identification, and model
+calibration/inversion. Local least squares calibration problems are
+most efficiently solved using special-purpose least squares solvers
+such as Gauss-Newton or Levenberg-Marquardt; however, they may also be
+solved using any general-purpose optimization algorithm in Dakota.
+While Dakota can solve these problems with either least squares or
+optimization algorithms, the response data sets to be returned from
+the simulator are different when using
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/responses-objective_functions.html"><span class="pre">objective_functions</span></a></code> versus <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/responses-calibration_terms.html"><span class="pre">calibration_terms</span></a></code>.</p>
+<p>Least squares calibration involves a set of residual
+functions, whereas optimization involves a single objective function
+(sum of the squares of the residuals), i.e.,
+.. math:: f = sum_{i=1}^{n}
+R_i^2 = sum_{i=1}^{n} left(y^{Model}_i(theta) - y^{Data}_{i} right)^2
+where <em>f</em> is the objective function and the set of <span class="math notranslate nohighlight">\(R_i\)</span>
+are the residual functions, most commonly defined as the difference between a model response and data. Therefore, function values and derivative
+data in the least squares case involve the values and derivatives of
+the residual functions, whereas the optimization case involves values
+and derivatives of the sum of squares objective function. This means that
+in the least squares calibration case, the user must return each of
+<code class="docutils literal notranslate"><span class="pre">n</span></code> residuals
+separately as a separate calibration term. Switching
+between the two approaches sometimes requires different simulation
+interfaces capable of returning the different granularity of response
+data required, although Dakota supports automatic recasting of
+residuals into a sum of squares for presentation to an optimization
+method. Typically, the user must compute the difference between the
+model results and the observations when computing the residuals.
+However, the user has the option of specifying the observational data
+(e.g. from physical experiments or other sources) in a file.</p>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="responses-objective_functions-field_objectives-read_field_coordinates.html" class="btn btn-neutral float-left" title="read_field_coordinates" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="responses-calibration_terms-scalar_calibration_terms.html" class="btn btn-neutral float-right" title="scalar_calibration_terms" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <!--
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Sandia National Laboratories.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+  --> 
+
+</footer>
+        </div>
+      </div>
+	  
+	  <div style="background-color: #0f0f0f;color:#fafafa;padding:20px">
+	    <div>
+		  <h2><em>Exceptional service in the national interest</em></h2>
+		</div>
+		<p>© 2022 National Technology and Engineering Solutions of Sandia, LLC. | <a href="https://www.sandia.gov/contact_us/index.html">Questions &amp; Comments</a> | <a href="https://www.sandia.gov/general/privacy-security/index.html">Privacy &amp; Security</a></p>
+		<p><a href="http://energy.gov" rel="noopener noreferrer" target="_blank"><img alt="U.S. Department of Energy" longdesc="https://energy.gov" src="https://www.sandia.gov/_common/images/doe_logo_white.png" style="height:37px; width:140px"></a> <a href="http://nnsa.energy.gov/" rel="noopener noreferrer" target="_blank"> <img alt="National Nuclear Security Administration" longdesc="http://nnsa.gov" src="https://www.sandia.gov/_common/images/nnsa_logo_white.png" style="height:37px; width:116px"></a></p>
+		<p><a href="https://www.sandia.gov">Sandia National Laboratories</a> is a multimission laboratory managed and operated by National Technology and Engineering Solutions of Sandia, LLC., a wholly owned subsidiary of Honeywell International, Inc., for the U.S. Department of Energy’s National Nuclear Security Administration under contract DE-NA-0003525.</p>
+	  </div>	  	  
+	  
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

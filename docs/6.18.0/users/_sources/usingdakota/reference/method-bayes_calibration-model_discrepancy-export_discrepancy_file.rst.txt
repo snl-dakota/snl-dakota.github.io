@@ -1,0 +1,71 @@
+.. _method-bayes_calibration-model_discrepancy-export_discrepancy_file:
+
+"""""""""""""""""""""""
+export_discrepancy_file
+"""""""""""""""""""""""
+
+
+Output file for prediction discrepancy calculations
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-bayes_calibration-model_discrepancy-export_discrepancy_file-custom_annotated
+   method-bayes_calibration-model_discrepancy-export_discrepancy_file-annotated
+   method-bayes_calibration-model_discrepancy-export_discrepancy_file-freeform
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* STRING
+
+- *Default:* discrepancy export to default filename
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+----------------------+---------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword       | Dakota Keyword Description                  |
+|                         | Group              |                      |                                             |
++=========================+====================+======================+=============================================+
+| Optional (Choose One)   | Tabular Format     | `custom_annotated`__ | Selects custom-annotated tabular file       |
+|                         |                    |                      | format                                      |
+|                         |                    +----------------------+---------------------------------------------+
+|                         |                    | `annotated`__        | Selects annotated tabular file format       |
+|                         |                    +----------------------+---------------------------------------------+
+|                         |                    | `freeform`__         | Selects freeform file format                |
++-------------------------+--------------------+----------------------+---------------------------------------------+
+
+.. __: method-bayes_calibration-model_discrepancy-export_discrepancy_file-custom_annotated.html
+__ method-bayes_calibration-model_discrepancy-export_discrepancy_file-annotated.html
+__ method-bayes_calibration-model_discrepancy-export_discrepancy_file-freeform.html
+
+
+
+**Description**
+
+
+Enables the user to specify the name and format of the file to which
+prediction discrepancy information is output. The file
+will contain the values of the discrepancy model :math:`\delta_i`  calculated
+at those points specified with
+``num_predictions``, ``prediction_configs``, or ``import_prediction_configs``
+
+*Default Behavior*
+
+If ``export_discrepancy_file`` is not specified, information will be
+automatically output to ``dakota_discrepancy_tabular``.dat.
+
+*Usage Tips*
+
+Dakota exports tabular data in one of three formats:
+
+- ``annotated`` (default)
+- ``custom_annotated``
+- ``freeform``
+
+

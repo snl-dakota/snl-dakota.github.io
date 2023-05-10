@@ -8,9 +8,9 @@ This site hosts the Dakota documentation, whereas this is the primary
 
 ## Dakota Manuals
 
-* Dakota Version 6.18.0 *(coming May 2023)*
-  - User Guide
-  - C++ Developer Guide
+* Dakota Version 6.18.0 
+  - [User Guide](./docs/6.18.0/users/)
+  - [C++ Developer Guide](./docs/6.18.0/developers/)
 
 * Dakota Version 6.17.0
   - [User Guide](./docs/6.17.0/users/)

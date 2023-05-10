@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dakota Visual Editor &mdash; dakota  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/dakota_theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/sandiaheaderlite.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Dakota Text Editor" href="DakotaTextEditor.html" />
+    <link rel="prev" title="New Dakota Wrapper Workflow" href="../wizards/NewDakotaWrapperWorkflow.html" /> 
+  
+  <meta name="sandia.approval_type" content="formal"/>
+  <meta property="sandia.approved" content="SAND2022-15651 O"/>
+  <meta name="description" content="The Dakota project delivers both state-of-the-art research and robust, usable software for optimization and UQ."/>
+  <meta name="keywords" content="Dakota, optimization, UQ, uncertainty quantification, parametric analysis, design exploration, model calibration, risk analysis"/>
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> dakota
+            <img src="../../_static/dakota_Arrow_Name_Tag_horiz_transparent.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../setupdakota.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../usingdakota/usingdakota.html">Using Dakota</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../usingdakotagui.html">Using Dakota GUI</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#introduction">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#example-search">Example Search</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#wizards">Wizards</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../usingdakotagui.html#editing-dakota-input-files">Editing Dakota Input Files</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Dakota Visual Editor</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#introduction">Introduction</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#the-top-level">The Top Level</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#environment-blocks">Environment Blocks</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#method-blocks">Method Blocks</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#model-blocks">Model Blocks</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#variable-blocks">Variable Blocks</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#variable-properties-dialog">Variable Properties Dialog</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#view-variable-table-by-category">View Variable Table by Category</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#interface-blocks">Interface Blocks</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#response-blocks">Response Blocks</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#response-properties-dialog">Response Properties Dialog</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#view-response-table-by-category">View Response Table by Category</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#using-pre-processor-markup">Using Pre-processor Markup</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="DakotaTextEditor.html">Dakota Text Editor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="DakotaTreeView.html">Editing Dakota Input Files in the Project Explorer tree</a></li>
+<li class="toctree-l3"><a class="reference internal" href="MlmfEditor.html">Multi-Level / Multi-Fidelity Study Editor</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#running-dakota">Running Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#running-dakota-remotely">Running Dakota Remotely</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#output-from-dakota">Output from Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#gui-tools">GUI Tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#miscellaneous">Miscellaneous</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../externaltools/externaltools.html">Using External Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../compiling/compiling.html">Compiling Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developingdakota/developingdakota.html">Developing Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../misc/misc.html">Miscellaneous</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">dakota</a>
+      </nav>
+
+	  <!-- SNL Lite header -->
+	  <div class="snlheader-subsite--wrapper-default">
+		<snlheader class="snlheader-subsite" role="snlbanner">
+		  <div class="wrapper">
+			<a href="https://www.sandia.gov/index.html">
+			  <div class="logo-transparent"><p class="logo">Sandia National Laboratories</p></div>
+			</a>
+			<div class="nav-top">
+			  <a class="visuallyhidden" name="mainnav"></a>
+			  <div aria-label="main navigation" class="core-nav-transparent core-nav-transparent--visible" role="navigation">
+				<ul role="navigation" class="secondary-links">
+				  <li id="search-text-link">
+					<a aria-label="Search" href="https://www.sandia.gov/search/">Search Sandia.gov</a>
+				  </li>
+				  <li id="directory-text-link">
+					<a href="https://www.sandia.gov/directory.html" aria-expanded="false" aria-label="Site Directory">All Sandia Websites</a>
+				  </li>
+				</ul>
+			  </div>
+			</div>
+		  </div> 
+		</snlheader>
+	  </div>	  
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../usingdakotagui.html">Using Dakota GUI</a> &raquo;</li>
+      <li>Dakota Visual Editor</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/usingdakotagui/inputfiles/DakotaVisualEditor.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="dakota-visual-editor">
+<span id="gui-visual-editor-main"></span><h1>Dakota Visual Editor<a class="headerlink" href="#dakota-visual-editor" title="Permalink to this headline"></a></h1>
+<section id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline"></a></h2>
+<p>The Dakota Visual Editor is a powerful alternative to editing Dakota input files in a text editor.  Gone are the days of manually tinkering with long number arrays,
+or hoping that variables and responses are active and indexed correctly.</p>
+<p>If the Dakota Visual Editor is not configured as your default editor of Dakota input files, right-click a Dakota input file and choose “Open With &gt; Dakota Visual Editor”.  Otherwise, simply double-click the file.</p>
+<img alt="Dakota Visual Editor" src="../../_images/DakotaVisualEditor.png" />
+</section>
+<section id="the-top-level">
+<h2>The Top Level<a class="headerlink" href="#the-top-level" title="Permalink to this headline"></a></h2>
+<p>When first opened, the Dakota Visual Editor shows you the top level of a Dakota input file:</p>
+<img alt="The top level" src="../../_images/DakotaVisualEditor_2.png" />
+<p>The hiearchical relationship of Dakota blocks is made explicit through indentation.  Clicking on any Dakota block will take you to the editor for that block.</p>
+<p>After diving into a specific Dakota block, the action bar along the top of the editor will update:</p>
+<img alt="Button enablement" src="../../_images/DakotaVisualEditor_3.png" />
+<p>The left and right arrow buttons will allow you to traverse to the previous or next Dakota block in the input file, respectively.  The up arrow will allow you to return to the top of the Dakota input file.</p>
+<p>Also note the green play button in the action bar.  This will allow you to run the Dakota study right away, using an
+auto-generated <a class="reference internal" href="../running/DakotaRunConfiguration.html#gui-run-configurations-eclipse-run-configs"><span class="std std-ref">run configuration</span></a> with default settings.</p>
+<p>Finally, note that there are “?” buttons throughout the editors for specific Dakota blocks (typically to the far-right of an individual editor control).
+The “?” button will take you to the appropriate <a class="reference internal" href="../../usingdakota/reference.html#keyword-reference-area"><span class="std std-ref">keyword reference page in this manual</span></a>.</p>
+<p>When you are done making changes to the Dakota input file, simply save the file as you would with any other text editor.</p>
+</section>
+<section id="environment-blocks">
+<h2>Environment Blocks<a class="headerlink" href="#environment-blocks" title="Permalink to this headline"></a></h2>
+<p>Here is an example of a Dakota environment block in the Dakota Visual Editor.</p>
+<img alt="The environment block" src="../../_images/DakotaVisualEditor_4.png" />
+</section>
+<section id="method-blocks">
+<h2>Method Blocks<a class="headerlink" href="#method-blocks" title="Permalink to this headline"></a></h2>
+<p>Dakota has a multitude of method types, so we can’t cover all of them here.  But we will take a look at one method editor
+that clearly demonstrates the benefits of using the Dakota Visual Editor: centered parameter studies.</p>
+<p>Classically, a method block specifying <a class="reference internal" href="../../usingdakota/reference/method-centered_parameter_study.html#method-centered-parameter-study"><span class="std std-ref">centered_parameter_study</span></a> would be written as follows in a Dakota input file:</p>
+<img alt="The old way of doing things in a method block" src="../../_images/DakotaVisualEditor_9.png" />
+<p>The <a class="reference internal" href="../../usingdakota/reference/method-centered_parameter_study-step_vector.html#method-centered-parameter-study-step-vector"><span class="std std-ref">step_vector</span></a> keyword is followed by a series of values, where each value relates to the variable that is
+in that same index in the variables block.  Likewise for the <a class="reference internal" href="../../usingdakota/reference/method-centered_parameter_study-steps_per_variable.html#method-centered-parameter-study-steps-per-variable"><span class="std std-ref">steps_per_variable</span></a> keyword.</p>
+<p>For seven variables (as shown here), it is somewhat trivial (though not completely error-proof) to glance up and down between the method block and
+the variables block to determine which number goes with which variable.  But as the number of variables increases, this manual verification process
+becomes more and more error-prone.</p>
+<p>Worse still, if there is a specification of <a class="reference internal" href="../../usingdakota/reference/variables-active.html#variables-active"><span class="std std-ref">active variables</span></a> for this Dakota study (that is, some variables are inactive),
+the index in the method block corresponds to the index from the list of active variables, NOT the full list of all variables from the variables block.
+In short, visually determining which method keyword value corresponds to what variable becomes much harder for active variable sets.</p>
+<p>All of this is handled for us if we use the centered parameter study editor provided by the Dakota Visual Editor:</p>
+<img alt="A centered parameter study block" src="../../_images/DakotaVisualEditor_8.png" />
+<p>There is now no longer a need to keep track of values by index.  The step vector values and steps-per-variable values are visually associated with
+the proper variable, simply by being on the same row of the table.  Also, each variable’s initial value is provided as well, to give additional context
+that can inform analysts what to choose for the step vector and steps-per-variable columns.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Not all Dakota methods are supported with custom editors.  However, the Dakota team is working to add more and more custom method editor support
+with each release.  As of version <a class="reference internal" href="../../misc/releasenotes-gui/616.html#releasenotes-gui-616"><span class="std std-ref">6.16.0</span></a> of Dakota GUI, the following methods are supported with custom method editors:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="../../usingdakota/reference/method-centered_parameter_study.html#method-centered-parameter-study"><span class="std std-ref">centered_parameter_study</span></a></p></li>
+<li><p><a class="reference internal" href="../../usingdakota/reference/method-coliny_ea.html#method-coliny-ea"><span class="std std-ref">coliny_ea</span></a></p></li>
+<li><p><a class="reference internal" href="../../usingdakota/reference/method-hybrid.html#method-hybrid"><span class="std std-ref">hybrid</span></a></p></li>
+<li><p><a class="reference internal" href="../../usingdakota/reference/method-list_parameter_study.html#method-list-parameter-study"><span class="std std-ref">list_parameter_study</span></a></p></li>
+<li><p><a class="reference internal" href="../../usingdakota/reference/method-multidim_parameter_study.html#method-multidim-parameter-study"><span class="std std-ref">multidim_parameter_study</span></a></p></li>
+<li><p><a class="reference internal" href="../../usingdakota/reference/method-multilevel_sampling.html#method-multilevel-sampling"><span class="std std-ref">multilevel_sampling</span></a></p></li>
+<li><p><a class="reference internal" href="../../usingdakota/reference/method-optpp_cg.html#method-optpp-cg"><span class="std std-ref">optpp_cg</span></a></p></li>
+<li><p><a class="reference internal" href="../../usingdakota/reference/method-optpp_q_newton.html#method-optpp-q-newton"><span class="std std-ref">optpp_q_newton</span></a></p></li>
+<li><p><a class="reference internal" href="../../usingdakota/reference/method-optpp_fd_newton.html#method-optpp-fd-newton"><span class="std std-ref">optpp_fd_newton</span></a></p></li>
+<li><p><a class="reference internal" href="../../usingdakota/reference/method-optpp_g_newton.html#method-optpp-g-newton"><span class="std std-ref">optpp_g_newton</span></a></p></li>
+<li><p><a class="reference internal" href="../../usingdakota/reference/method-optpp_newton.html#method-optpp-newton"><span class="std std-ref">optpp_newton</span></a></p></li>
+<li><p><a class="reference internal" href="../../usingdakota/reference/method-optpp_pds.html#method-optpp-pds"><span class="std std-ref">optpp_pds</span></a></p></li>
+<li><p><a class="reference internal" href="../../usingdakota/reference/method-sampling.html#method-sampling"><span class="std std-ref">sampling</span></a></p></li>
+<li><p><a class="reference internal" href="../../usingdakota/reference/method-soga.html#method-soga"><span class="std std-ref">soga</span></a></p></li>
+<li><p><a class="reference internal" href="../../usingdakota/reference/method-vector_parameter_study.html#method-vector-parameter-study"><span class="std std-ref">vector_parameter_study</span></a></p></li>
+</ul>
+</div>
+</section>
+<section id="model-blocks">
+<h2>Model Blocks<a class="headerlink" href="#model-blocks" title="Permalink to this headline"></a></h2>
+<p>Here is an example of a model block in the Dakota Visual Editor.</p>
+<img alt="The model block" src="../../_images/DakotaVisualEditor_11.png" />
+</section>
+<section id="variable-blocks">
+<h2>Variable Blocks<a class="headerlink" href="#variable-blocks" title="Permalink to this headline"></a></h2>
+<p>The editor for a variables block is slightly more involved and warrants some additional explanation.</p>
+<img alt="The variables block" src="../../_images/DakotaVisualEditor_5.png" />
+<ul class="simple">
+<li><p><strong>Variables ID</strong> This field controls the ID of your variables block.</p></li>
+<li><p><strong>Table Button Bar</strong> There’s a horizontal row across the top of the variable table that allows you to manipulate table data.</p>
+<ul>
+<li><p><strong>Add New Variable</strong> Adds a new variable to your variable block.</p></li>
+<li><p><strong>Edit Variable</strong> Edits the properties of the currently selected variable.</p></li>
+<li><p><strong>Remove Variable</strong> Removes the currently selected variable from the block.</p></li>
+<li><p><strong>Variable Ordering within Category</strong> Dakota variables are ordered first by <a class="reference internal" href="../../usingdakota/reference/variables.html#variables-ordering-of-variables"><span class="std std-ref">variable category</span></a> (sometimes referred to as “spec order”),
+and then by user-customized ordering within that category.  This button allows you to configure the latter.</p></li>
+<li><p><strong>Auto-Visualize Variable</strong> For variable types that have an uncertainty/probability functions associated with them,
+this button allows you to visualize the curve (according to the properties set for this variable) in the <a class="reference internal" href="../chartreuse/ChartreuseSandbox.html#chartreuse-sandbox-main"><span class="std std-ref">Chartreuse Sandbox View</span></a>.</p></li>
+<li><p><strong>Open Dakota Manual for Variable Category</strong> For the currently selected variable’s category, open the appropriate page in this manual.</p></li>
+<li><p><strong>Active variables dropdown</strong> Allows you to manually specify the active variable set of this Dakota variables block.
+Refer to the <a class="reference internal" href="../../usingdakota/reference/variables-active.html#variables-active"><span class="std std-ref">section on active variables</span></a> for more information.</p></li>
+<li><p><strong>Variable Domain</strong> Located below the table, this dropdown allows you to manually specify a <a class="reference internal" href="../../usingdakota/reference/variables-mixed.html#variables-mixed"><span class="std std-ref">mixed</span></a> or <a class="reference internal" href="../../usingdakota/reference/variables-relaxed.html#variables-relaxed"><span class="std std-ref">mixed</span></a> domain for this variables block.</p></li>
+</ul>
+</li>
+</ul>
+<p>Within the table, the columns are as follows (from left to right):</p>
+<ul class="simple">
+<li><p><strong>(Active)</strong> If the variable is active according to the overall specification of this Dakota input file, a lit-up lightbulb icon will be displayed;
+otherwise, the lightbulb icon will appear dimmed.  It is not possible to directly change the active/inactive state of a variable.
+Refer to the <a class="reference internal" href="../../usingdakota/reference/variables-active.html#variables-active"><span class="std std-ref">section on active variables</span></a> for more information.</p></li>
+<li><p><strong>#</strong> The Dakota spec order for this variable.  Dakota variables are ordered first by <a class="reference internal" href="../../usingdakota/reference/variables.html#variables-ordering-of-variables"><span class="std std-ref">variable category</span></a> and then by user-customized ordering within that category.</p></li>
+<li><p><strong>Variable</strong> The name (or “descriptor”) of the variable.</p></li>
+<li><p><strong>Category</strong> The category that this variable belongs to.  Changing the category will automatically cause a reordering of Dakota variables based on the new category position of this variable.</p></li>
+</ul>
+<section id="variable-properties-dialog">
+<h3>Variable Properties Dialog<a class="headerlink" href="#variable-properties-dialog" title="Permalink to this headline"></a></h3>
+<p>Once a variable has been assigned to a category (such as <a class="reference internal" href="../../usingdakota/reference/variables-continuous_design.html#variables-continuous-design"><span class="std std-ref">continuous_design</span></a>), you can access that variable category’s properties.  Click on the variable
+in the table, then click on the Edit Variable button (the second button from the left).</p>
+<img alt="Variable property editor dialog" src="../../_images/NewDakotaStudy_Wizard_8.png" />
+<p>A new dialog will pop up that allows you to edit each possible property for that variable category.  Help buttons are provided for each property so that you can read up on what each one does.</p>
+</section>
+<section id="view-variable-table-by-category">
+<h3>View Variable Table by Category<a class="headerlink" href="#view-variable-table-by-category" title="Permalink to this headline"></a></h3>
+<p>Along the top action bar of the Dakota Visual Editor, you may also notice a “View category” dropdown.  This allows you to dive into viewing the properties of a single variable category:</p>
+<img alt="Editing a specific variable category" src="../../_images/DakotaVisualEditor_6.png" />
+<p>Note that we are still in the same variables block, but the view has changed.  In this screenshot, we’re only viewing continuous design variables.
+The other continuous state variables in this example have been hidden from view.  In addition, the properties of those continuous design variables have been
+exposed as table columns.  From this view, if you want to edit the properties of an individual variable, you no longer have to push the “Edit” button along the
+top of the table - you can simply directly edit the property using the table.</p>
+</section>
+</section>
+<section id="interface-blocks">
+<h2>Interface Blocks<a class="headerlink" href="#interface-blocks" title="Permalink to this headline"></a></h2>
+<p>The editor for an interface block affords you a lot of additional functionality beyond editing hierarchically stacked keywords.</p>
+<img alt="A direct driver example" src="../../_images/DakotaVisualEditor_10.png" />
+<p>Now let’s look at a more complex example:</p>
+<img alt="A fork driver example" src="../../_images/DakotaVisualEditor_12.png" />
+</section>
+<section id="response-blocks">
+<h2>Response Blocks<a class="headerlink" href="#response-blocks" title="Permalink to this headline"></a></h2>
+<img alt="The responses block" src="../../_images/DakotaVisualEditor_7.png" />
+<ul class="simple">
+<li><p><strong>Responses ID</strong> This field controls the ID of your responses block.</p></li>
+<li><p><strong>Response Type</strong> Choose the type of response for this responses block.</p></li>
+<li><p><strong>Gradient</strong> Choose the type of gradient for this responses block.</p></li>
+<li><p><strong>Hessians</strong> Choose the type of hessian for this responses block.</p></li>
+<li><p><strong>Table Button Bar</strong> There’s a horizontal row across the top of the response table that allows you to manipulate table data.</p>
+<ul>
+<li><p><strong>Add New Response</strong> Adds a new response to this responses block.</p></li>
+<li><p><strong>Edit Response</strong> Edits the properties of the currently selected response.</p></li>
+<li><p><strong>Remove Response</strong> Removes the currently selected response from the block.</p></li>
+<li><p><strong>Response Ordering within Category</strong> Dakota responses are ordered first by <em>response category</em> (either “scalar” or “field” within the specified type
+of response), and then by user-customized ordering within that category.  This button allows you to configure the latter.</p></li>
+<li><p><strong>Response Metadata</strong> Refer to the <a class="reference internal" href="../../usingdakota/reference/responses-metadata.html#responses-metadata"><span class="std std-ref">metadata keyword page</span></a> for more information on responses metadata.</p></li>
+</ul>
+</li>
+</ul>
+<p>Within the table, the columns are as follows (from left to right):</p>
+<ul class="simple">
+<li><p><strong>#</strong> The Dakota spec order for this response.  Dakota variables are ordered first by <em>response category</em> and then by user-customized ordering within that category.</p></li>
+<li><p><strong>Response Name</strong> The name (or “descriptor”) of the response.</p></li>
+<li><p><strong>Category</strong> The category that this response belongs to.  Changing the category will automatically cause a reordering of Dakota responses based on the new category position of this response.</p></li>
+</ul>
+<section id="response-properties-dialog">
+<h3>Response Properties Dialog<a class="headerlink" href="#response-properties-dialog" title="Permalink to this headline"></a></h3>
+<p>Some (but not all) responses have properties, similar to variables.  Whether a response has properties is indicated by the enablement of the “Edit Response”
+button after clicking on a response.  To access a response’s properties, click on the response in the table, then click on the Edit Response button
+(the second button from the left).</p>
+<img alt="Response property editor dialog" src="../../_images/DakotaVisualEditor_13.png" />
+<p>A new dialog will pop up that allows you to edit each possible property for that response category.  Help buttons are provided for each property so that you can read up on what each one does.</p>
+</section>
+<section id="view-response-table-by-category">
+<h3>View Response Table by Category<a class="headerlink" href="#view-response-table-by-category" title="Permalink to this headline"></a></h3>
+<p>Along the top action bar of the Dakota Visual Editor, you may also notice a “View category” dropdown.  This allows you to dive into viewing the properties of a single response category:</p>
+<img alt="Editing a specific response category" src="../../_images/DakotaVisualEditor_14.png" />
+<p>Note that we are still in the same response block, but the view has changed.  In this screenshot, we’re only viewing field responses.  The other
+scalar responses in this example have been hidden from view.  In addition, the properties of those field responses have been exposed as table columns.
+From this view, if you want to edit the properties of an individual response, you no longer have to push the “Edit” button along the top of the table -
+you can simply directly edit the property using the table.</p>
+</section>
+</section>
+<section id="using-pre-processor-markup">
+<h2>Using Pre-processor Markup<a class="headerlink" href="#using-pre-processor-markup" title="Permalink to this headline"></a></h2>
+<p>To replace a value in a Dakota study with pre-processing markup (i.e. curly brace syntax), use the
+hotkey combination <strong>Ctrl+Shift+P</strong> (P for “parameterize”).  The value’s text will turn orange and bold, and
+curly braces will automatically be added around the existing text for you.  You can now put whatever you like between the curly
+braces to indicate the name of your pre-processing variable:</p>
+<img alt="Pre-processing example" src="../../_images/DakotaVisualEditor_15.png" />
+<p>To return the field to its normal text entry mode, simply use <strong>Ctrl+Shift+P</strong> again to deactivate the pre-processor syntax.</p>
+<p>The Dakota Visual Editor supports pre-processing markup in a few select areas:</p>
+<ul class="simple">
+<li><p>Single-line text entry fields</p></li>
+<li><p>Property editor dialogs</p></li>
+<li><p>Table cells for method, variables, and responses blocks</p></li>
+</ul>
+<p>Finally, be aware that a Dakota study marked up with pre-processor syntax will not run by itself in the absence of more information.  You must call
+Dakota with information about how to pre-process the file (for example, Dakota’s command-line <strong>-preproc</strong> flag).</p>
+<p><a class="reference internal" href="../../externaltools/dpreproandpyprepro.html#interfaces-dprepro-and-pyprepro"><span class="std std-ref">Learn more about Dakota’s pre-processing tools here.</span></a></p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../wizards/NewDakotaWrapperWorkflow.html" class="btn btn-neutral float-left" title="New Dakota Wrapper Workflow" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="DakotaTextEditor.html" class="btn btn-neutral float-right" title="Dakota Text Editor" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <!--
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Sandia National Laboratories.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+  --> 
+
+</footer>
+        </div>
+      </div>
+	  
+	  <div style="background-color: #0f0f0f;color:#fafafa;padding:20px">
+	    <div>
+		  <h2><em>Exceptional service in the national interest</em></h2>
+		</div>
+		<p>© 2022 National Technology and Engineering Solutions of Sandia, LLC. | <a href="https://www.sandia.gov/contact_us/index.html">Questions &amp; Comments</a> | <a href="https://www.sandia.gov/general/privacy-security/index.html">Privacy &amp; Security</a></p>
+		<p><a href="http://energy.gov" rel="noopener noreferrer" target="_blank"><img alt="U.S. Department of Energy" longdesc="https://energy.gov" src="https://www.sandia.gov/_common/images/doe_logo_white.png" style="height:37px; width:140px"></a> <a href="http://nnsa.energy.gov/" rel="noopener noreferrer" target="_blank"> <img alt="National Nuclear Security Administration" longdesc="http://nnsa.gov" src="https://www.sandia.gov/_common/images/nnsa_logo_white.png" style="height:37px; width:116px"></a></p>
+		<p><a href="https://www.sandia.gov">Sandia National Laboratories</a> is a multimission laboratory managed and operated by National Technology and Engineering Solutions of Sandia, LLC., a wholly owned subsidiary of Honeywell International, Inc., for the U.S. Department of Energy’s National Nuclear Security Administration under contract DE-NA-0003525.</p>
+	  </div>	  	  
+	  
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

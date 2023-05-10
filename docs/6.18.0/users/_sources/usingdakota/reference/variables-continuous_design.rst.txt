@@ -1,0 +1,75 @@
+.. _variables-continuous_design:
+
+"""""""""""""""""
+continuous_design
+"""""""""""""""""
+
+
+Design variable - continuous
+
+
+
+**Topics**
+
+
+continuous_variables, design_variables
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   variables-continuous_design-initial_point
+   variables-continuous_design-lower_bounds
+   variables-continuous_design-upper_bounds
+   variables-continuous_design-scale_types
+   variables-continuous_design-scales
+   variables-continuous_design-descriptors
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* INTEGER
+
+- *Default:* no continuous design variables
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+--------------------+---------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword     | Dakota Keyword Description                  |
+|                         | Group              |                    |                                             |
++=========================+====================+====================+=============================================+
+| Optional                                     | `initial_point`__  | Initial values for variables                |
++----------------------------------------------+--------------------+---------------------------------------------+
+| Optional                                     | `lower_bounds`__   | Specify minimum values                      |
++----------------------------------------------+--------------------+---------------------------------------------+
+| Optional                                     | `upper_bounds`__   | Specify maximium values                     |
++----------------------------------------------+--------------------+---------------------------------------------+
+| Optional                                     | `scale_types`__    | How to scale each continuous design         |
+|                                              |                    | variable                                    |
++----------------------------------------------+--------------------+---------------------------------------------+
+| Optional                                     | `scales`__         | Characteristic values to scale continuous   |
+|                                              |                    | design variables                            |
++----------------------------------------------+--------------------+---------------------------------------------+
+| Optional                                     | `descriptors`__    | Labels for the variables                    |
++----------------------------------------------+--------------------+---------------------------------------------+
+
+.. __: variables-continuous_design-initial_point.html
+__ variables-continuous_design-lower_bounds.html
+__ variables-continuous_design-upper_bounds.html
+__ variables-continuous_design-scale_types.html
+__ variables-continuous_design-scales.html
+__ variables-continuous_design-descriptors.html
+
+
+
+**Description**
+
+
+Continuous variables are defined by a real interval and are changed
+during the search for the optimal design.
+
+

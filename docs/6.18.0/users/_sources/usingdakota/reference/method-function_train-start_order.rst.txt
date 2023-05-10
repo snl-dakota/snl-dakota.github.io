@@ -1,0 +1,51 @@
+.. _method-function_train-start_order:
+
+"""""""""""
+start_order
+"""""""""""
+
+
+(Initial) polynomial order of each univariate function within the functional tensor train.
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-function_train-start_order-dimension_preference
+
+
+**Specification**
+
+- *Alias:* order 
+
+- *Arguments:* INTEGER
+
+- *Default:* 2
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+--------------------------+---------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword           | Dakota Keyword Description                  |
+|                         | Group              |                          |                                             |
++=========================+====================+==========================+=============================================+
+| Optional                                     | `dimension_preference`__ | A set of weights specifying the realtive    |
+|                                              |                          | importance of each uncertain variable       |
+|                                              |                          | (dimension)                                 |
++----------------------------------------------+--------------------------+---------------------------------------------+
+
+.. __: method-function_train-start_order-dimension_preference.html
+
+
+
+**Description**
+
+
+This specifies the initial polynomial order of each univariate function that makes up the functional tensor train decomposition.  In the case of ``adapt_order``, polynomial order starts from this value and is then advanced; its maximum value is limited by ``max_order`` and increments are controlled by ``kick_order``.
+
+*Default Behavior*
+
+Default is 2.
+
+

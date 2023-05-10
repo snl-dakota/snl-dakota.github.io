@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Preprocessing with dprepro and pyprepro &mdash; dakota  documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/dakota_theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/sandiaheaderlite.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="The Dakota Restart Utility" href="restartutility.html" />
+    <link rel="prev" title="Using External Tools" href="externaltools.html" /> 
+  
+  <meta name="sandia.approval_type" content="formal"/>
+  <meta property="sandia.approved" content="SAND2022-15651 O"/>
+  <meta name="description" content="The Dakota project delivers both state-of-the-art research and robust, usable software for optimization and UQ."/>
+  <meta name="keywords" content="Dakota, optimization, UQ, uncertainty quantification, parametric analysis, design exploration, model calibration, risk analysis"/>
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> dakota
+            <img src="../_static/dakota_Arrow_Name_Tag_horiz_transparent.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../setupdakota.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usingdakota/usingdakota.html">Using Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usingdakotagui/usingdakotagui.html">Using Dakota GUI</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="externaltools.html">Using External Tools</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Preprocessing with dprepro and pyprepro</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#changes-and-updates-to-dprepro">Changes and Updates to dprepro</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#usage">Usage</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#template-expressions">Template Expressions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#inline-expressions">Inline Expressions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#python-single-line-code">Python Single Line Code</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#code-blocks">Code Blocks</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#changing-delimiters">Changing Delimiters</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#escaping-delimiters">Escaping Delimiters</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#whitespace-control">Whitespace Control</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#immutable-variables">Immutable Variables</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="restartutility.html">The Dakota Restart Utility</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../compiling/compiling.html">Compiling Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developingdakota/developingdakota.html">Developing Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../misc/misc.html">Miscellaneous</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">dakota</a>
+      </nav>
+
+	  <!-- SNL Lite header -->
+	  <div class="snlheader-subsite--wrapper-default">
+		<snlheader class="snlheader-subsite" role="snlbanner">
+		  <div class="wrapper">
+			<a href="https://www.sandia.gov/index.html">
+			  <div class="logo-transparent"><p class="logo">Sandia National Laboratories</p></div>
+			</a>
+			<div class="nav-top">
+			  <a class="visuallyhidden" name="mainnav"></a>
+			  <div aria-label="main navigation" class="core-nav-transparent core-nav-transparent--visible" role="navigation">
+				<ul role="navigation" class="secondary-links">
+				  <li id="search-text-link">
+					<a aria-label="Search" href="https://www.sandia.gov/search/">Search Sandia.gov</a>
+				  </li>
+				  <li id="directory-text-link">
+					<a href="https://www.sandia.gov/directory.html" aria-expanded="false" aria-label="Site Directory">All Sandia Websites</a>
+				  </li>
+				</ul>
+			  </div>
+			</div>
+		  </div> 
+		</snlheader>
+	  </div>	  
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="externaltools.html">Using External Tools</a> &raquo;</li>
+      <li>Preprocessing with dprepro and pyprepro</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/externaltools/dpreproandpyprepro.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="preprocessing-with-dprepro-and-pyprepro">
+<span id="interfaces-dprepro-and-pyprepro"></span><h1>Preprocessing with dprepro and pyprepro<a class="headerlink" href="#preprocessing-with-dprepro-and-pyprepro" title="Permalink to this headline"></a></h1>
+<p>Dakota is packaged with two template processing tools that are intended
+for use in the preprocessing phase of analysis drivers.</p>
+<p>The first tool, <code class="docutils literal notranslate"><span class="pre">pyprepro</span></code>, features simple parameter substitution,
+setting of immutable (fixed) variable names, and provides full access
+within templates to all of the Python programming language. As such,
+templates can contain loops, conditionals, lists, dictionaries, and
+other Python language features.</p>
+<p>The second tool, <code class="docutils literal notranslate"><span class="pre">dprepro</span></code>, uses the same template engine as
+<code class="docutils literal notranslate"><span class="pre">pyprepro</span></code>, and in addition understands Dakota’s parameter file
+formats. In particular, when using <code class="docutils literal notranslate"><span class="pre">dprepro</span></code> in an analysis driver,
+Dakota variables become available for use within templates. <code class="docutils literal notranslate"><span class="pre">dprepro</span></code>
+is also integrated with the <code class="docutils literal notranslate"><span class="pre">dakota.interfacing</span></code> module to provide
+direct access to <code class="docutils literal notranslate"><span class="pre">Parameters</span></code> and <code class="docutils literal notranslate"><span class="pre">Results</span></code> objects within templates
+(see Section <a class="reference external" href="#interfaces:params-and-results">1.9.3.8</a>) and to
+provide template processing capability within Python scripts that import
+<code class="docutils literal notranslate"><span class="pre">dakota.interfacing</span></code>.</p>
+<section id="changes-and-updates-to-dprepro">
+<span id="interfaces-dprepro-changes"></span><h2>Changes and Updates to dprepro<a class="headerlink" href="#changes-and-updates-to-dprepro" title="Permalink to this headline"></a></h2>
+<p>The version of <code class="docutils literal notranslate"><span class="pre">dprepro</span></code> described in this section is a replacement
+for an earlier version that shipped with Dakota releases prior to 6.8.
+Although the new version offers a wide array of new features, it largely
+maintains backward compatibility with the old. Users should be aware of
+two important differences between the two versions.</p>
+<ul class="simple">
+<li><p>The earlier version of <code class="docutils literal notranslate"><span class="pre">dprepro</span></code> was written in Perl, but the new
+one is written in Python. It is compatible with Python 2 (2.6 and
+greater) and 3. Some users, especially on Windows, may need to modify
+existing analysis drivers to invoke <code class="docutils literal notranslate"><span class="pre">dprepro</span></code> using Python instead
+of Perl.</p></li>
+<li><p>Recent versions of Perl <code class="docutils literal notranslate"><span class="pre">dprepro</span></code> supported per-field output
+formatting in addition to the global numerical format that could be
+specified on the command line. This was accomplished by adding a
+comma- separated format string to individual substitution expressions
+in templates (e.g. <code class="docutils literal notranslate"><span class="pre">{x1,%5.3f}</span></code>). Per-field formatting remains a
+feature of the new <code class="docutils literal notranslate"><span class="pre">dprepro</span></code>, but the syntax has changed.
+Python-style string formatting is used, as explained in
+Section <a class="reference external" href="#interfaces:per-field-output-formatting">1.9.5.5</a>.
+Existing templates that make use of per-field formatting will need to
+be updated.</p></li>
+</ul>
+<p>Although the old <code class="docutils literal notranslate"><span class="pre">dprepro</span></code> has been deprecated as of the 6.8 release
+of Dakota, it is still available in Dakota’s <code class="docutils literal notranslate"><span class="pre">bin/</span></code> folder under the
+name <code class="docutils literal notranslate"><span class="pre">dprepro.perl</span></code>.</p>
+</section>
+<section id="usage">
+<span id="interfaces-dprepro-usage"></span><h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline"></a></h2>
+<p>Running <code class="docutils literal notranslate"><span class="pre">dprepro</span></code> with the <code class="docutils literal notranslate"><span class="pre">--help</span></code> option at the command prompt
+causes its options and arguments to be listed. These are shown in
+<a class="reference internal" href="#advint-dprepro-usage"><span class="std std-numref">Listing 68</span></a>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">dprepro</span></code> accepts three positional command line arguments. They are:</p>
+<ol class="arabic simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">include</span></code>: The name of a Dakota parameters file (<em>required</em>),</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">infile</span></code>: The name of a template file (or a dash if the template is
+provided on <code class="docutils literal notranslate"><span class="pre">stdin</span></code>) (<em>required</em>), and</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">outfile</span></code>: The name of the output file, which is the result of
+processing the template. This argument is optional, and output is
+written to <code class="docutils literal notranslate"><span class="pre">stdout</span></code> if it is missing.</p></li>
+</ol>
+<p>The remaining options are used to</p>
+<ul class="simple">
+<li><p>Set custom delimiters for Python code lines (<code class="docutils literal notranslate"><span class="pre">--code</span></code>) and blocks
+(<code class="docutils literal notranslate"><span class="pre">--code-block</span></code>) and for inline statements that print
+(<code class="docutils literal notranslate"><span class="pre">--inline</span></code>). The last of these is equivalent to Perl
+<code class="docutils literal notranslate"><span class="pre">dprepro</span></code>’s <code class="docutils literal notranslate"><span class="pre">--left-delimiter</span></code> and <code class="docutils literal notranslate"><span class="pre">--right-delimiter</span></code>
+switches, which also have been preserved to maintain backward
+compatibility. They default to <code class="docutils literal notranslate"><span class="pre">&quot;{</span> <span class="pre">}&quot;</span></code>.</p></li>
+<li><p>Insert additional parameters for substitution, either from a JSON
+file (<code class="docutils literal notranslate"><span class="pre">--json-include</span></code>) or directly on the command line
+(<code class="docutils literal notranslate"><span class="pre">--var</span></code>). Variables that are defined using these options are
+<em>immutable</em> (Section <a class="reference external" href="#interfaces:immutable-variables">1.9.3.7</a>).</p></li>
+<li><p>Silence warnings (<code class="docutils literal notranslate"><span class="pre">--no-warn</span></code>)</p></li>
+<li><p>Set the default numerical output format (<code class="docutils literal notranslate"><span class="pre">--output-format</span></code>).</p></li>
+</ul>
+<div class="literal-block-wrapper docutils container" id="advint-dprepro-usage">
+<div class="code-block-caption"><span class="caption-number">Listing 68 </span><span class="caption-text"><code class="docutils literal notranslate"><span class="pre">dprepro</span></code> usage</span><a class="headerlink" href="#advint-dprepro-usage" title="Permalink to this code"></a></div>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>usage: dprepro [-h] [--simple-parser] [--no-warn] [--output-format FMT]
+               [--code CHAR] [--code-block &quot;OPEN CLOSE&quot;]
+               [--inline &quot;OPEN CLOSE&quot;] [--var &quot;var=value&quot;] [-I FILE]
+               [--json-include FILE] [--python-include FILE]
+               [--dakota-include FILE] [-v]
+               include infile [outfile]
+
+dprepro -- Python-based input deck pre-processor and template engine.
+
+version: 20230404.0
+
+positional arguments:
+  include               Include (parameter) file. Treated as --include in
+                        precedence.
+  infile                Specify the input file. Or set as `-` to read stdin
+  outfile               Specify the output file. Otherwise, will print to
+                        stdout
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --simple-parser       Always use the simple parser in dprepro rather than
+                        dakota.interfacing.
+  --no-warn             Silence warning messages.
+  --output-format FMT   [&#39;%0.10g&#39;] Specify the default float format. Note that
+                        this can be easily overridden inline as follows:
+                        `{&#39;%3.8e&#39; % param}`. Specify in either C-notation or
+                        str.format() notation.
+  -v, --version         Print the version and exit
+
+Delimiter Settings:
+  
+  Specify global setting for code lines, code blocks, and inline variables.
+  Can also reset on a per-file at the top of the file as follows:
+  
+      Specify delineators as the the first non-whitespace line. Start with a 
+      comment &#39;//&#39;, &#39;#&#39;,&#39;%&#39;, &#39;$&#39; or &#39;&#39; (nothing), then a command, then &#39;=&#39; or 
+      space, followed by the new setting. See examples.
+  
+      Commands are:
+          [D/PY]PREPRO_CODE specifies --code
+          [D/PY]PREPRO_CODE_BLOCK specifies --code-block
+          [D/PY]PREPRO_INLINE specified --inline
+  
+      Example: (Can intermix command types and comments)
+  
+          # PYPREPRO_CODE &gt;
+          $ DPREPRO_CODE_BLOCK=[[ ]]
+          PREPRO_INLINE = ={ }=      # specify the = so it doesn&#39;t get confused
+  
+  
+          Rest of template
+  
+      Note that the command lines will be removed
+  
+  Will also accept `--(left/right)-delimiter` as an alias to the 
+  respective parts of `--inline` to maintain compatibility.
+
+  --code CHAR           [&quot;%&quot;] Specify the starting text to delineate a single
+                        code line.
+  --code-block &quot;OPEN CLOSE&quot;
+                        [&quot;{% %}&quot;] Specify the open and close of a code block.
+                        NOTE: the inner-most character must *not* be any of
+                        &quot;{}[]()&quot;.
+  --inline &quot;OPEN CLOSE&quot;
+                        [&quot;{ }&quot;] Specify the open and close of inline
+                        code/variables to print.
+
+Include File Settings:
+  
+  Specify include files. All variables from from an include will be set as 
+  Immutable (but can be made Mutable in the template). Can specify flags multiple times. 
+  Precendence follows the order of the flags *here* regardless of specified order on
+  the command line.
+
+  --var &quot;var=value&quot;     Specify variables to predefine. They will be defined
+                        as immutable. Use quotes to properly delineate.
+  -I FILE, --include FILE
+                        Specify an include file to parse first. Just parses
+                        for variables. Should be formatted with the same &#39;--
+                        inline&#39;,&#39;--code&#39;, and/or &#39;--code-block&#39; as the
+                        &#39;infile&#39; template or with per-file specified values.
+  --json-include FILE   Specify JSON formatted files to load variables.
+  --python-include FILE
+                        Specify a Python formatted file to read and use the
+                        resulting environment. NOTE: the file is read a
+                        regular Python where indentation matters and blocks
+                        should *not* have an `end` statement (unlike in code
+                        blocks).
+  --dakota-include FILE
+                        Specify Dakota formatted files to load variables
+                        directly. All &quot;:&quot; in variables names are converted to
+                        &quot;_&quot;.
+
+Sources:
+--------
+Built from BottlePy&#39;s SimpleTemplateEngine[1] with changes to better match
+the behavior of APREPRO[2] and DPREPRO[3] and more tuned to simulation 
+input files
+
+[1]: https://bottlepy.org/docs/dev/stpl.html
+[2]: https://github.com/gsjaardema/seacas
+[3]: https://dakota.sandia.gov/
+</pre></div>
+</div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">pyprepro</span></code> script accepts largely the same command line options.
+The primary differences are that <code class="docutils literal notranslate"><span class="pre">pyprepro</span></code> does not require or accept
+Dakota-format parameters files, and it has just two positional command
+line arguments, the <code class="docutils literal notranslate"><span class="pre">infile</span></code> and <code class="docutils literal notranslate"><span class="pre">outfile</span></code>, both defined as above.
+In addition, <code class="docutils literal notranslate"><span class="pre">pyprepro</span></code> accepts one or more <code class="docutils literal notranslate"><span class="pre">--include</span></code> files. These
+may be used to set parameters and execute arbitrary Python scripting
+before template processing occurs (See
+Section <a class="reference external" href="#interfaces:immutable-variables">1.9.3.7</a>).</p>
+</section>
+<section id="template-expressions">
+<span id="interfaces-template-expressions"></span><h2>Template Expressions<a class="headerlink" href="#template-expressions" title="Permalink to this headline"></a></h2>
+<p>This section describes the expressions that are permitted in templates.
+All examples, except where otherwise noted, use the default delimiters
+<code class="docutils literal notranslate"><span class="pre">&quot;{  }&quot;</span></code> for inline printed expressions, <code class="docutils literal notranslate"><span class="pre">%</span></code> for single-line Python
+statements, and <code class="docutils literal notranslate"><span class="pre">&quot;{% %}&quot;</span></code> for Python code blocks.</p>
+<p>Expressions can be of three different forms (with defaults)</p>
+<ul class="simple">
+<li><p>Inline single-line expressions (rendered): <code class="docutils literal notranslate"><span class="pre">{expression}</span></code></p></li>
+<li><p>Python code single-line (silent): <code class="docutils literal notranslate"><span class="pre">% expression</span></code></p></li>
+<li><p>Python code multi-line blocks (silent):
+<code class="docutils literal notranslate"><span class="pre">{% expression (that can span many lines) %}</span></code></p></li>
+</ul>
+<p>Expressions can contain just about any valid Python code. The only
+important difference is that indentation is ignored and blocks must end
+with <code class="docutils literal notranslate"><span class="pre">end</span></code>. See the examples below.</p>
+<section id="inline-expressions">
+<span id="interfaces-inline-expressions"></span><h3>Inline Expressions<a class="headerlink" href="#inline-expressions" title="Permalink to this headline"></a></h3>
+<p>Inline expressions are delineated with <code class="docutils literal notranslate"><span class="pre">{expression}</span></code> and <em>always
+display</em>.</p>
+<p>Consider:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>param1 = {param1 = 10}
+param2 = {param1 + 3}
+param3 = {param3 = param1**2}
+</pre></div>
+</div>
+<p>Returns:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>param1 = 10
+param2 = 13
+param3 = 100
+</pre></div>
+</div>
+<p>In this example, the first and third line both display a value <em>and</em> set
+the parameter.</p>
+</section>
+<section id="python-single-line-code">
+<span id="interfaces-python-single-line-code"></span><h3>Python Single Line Code<a class="headerlink" href="#python-single-line-code" title="Permalink to this headline"></a></h3>
+<p>A <code class="docutils literal notranslate"><span class="pre">%</span></code> at the start of a line is used to begin a single-line code
+expression. These are non-printing. Consider the following example.</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>% param1 = pi/4
+The new value is {sin(param1)}
+</pre></div>
+</div>
+<p>It returns:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>The new value is 0.7071067812
+</pre></div>
+</div>
+<p>Furthermore, single lines can be used for Python logic and loops. This
+example demonstrates looping over an array, which is explained in
+further detail below. As stated previously, unlike ordinary Python,
+indentation is not required and is ignored. Blocks of Python code are
+concluded with <code class="docutils literal notranslate"><span class="pre">end</span></code>.</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>% angles = [0,pi/4,pi/2,3*pi/4,pi]
+% for angle in angles:
+cos({angle}) = { cos(angle)}
+% end
+</pre></div>
+</div>
+<p>Returns:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>cos(0) = 1
+cos(0.7853981634) = 0.7071067812
+cos(1.570796327) = 6.123233996e-17
+cos(2.35619449) = -0.7071067812
+cos(3.141592654) = -1
+</pre></div>
+</div>
+</section>
+<section id="code-blocks">
+<span id="interfaces-code-blocks"></span><h3>Code Blocks<a class="headerlink" href="#code-blocks" title="Permalink to this headline"></a></h3>
+<p>Finally, multi-line code blocks may be specified without prepending each
+Python statement with <code class="docutils literal notranslate"><span class="pre">%</span></code>. Instead, the entire block is enclosed in
+<code class="docutils literal notranslate"><span class="pre">{%</span> <span class="pre">%}</span></code>. (Indentation is ignored within code blocks.)</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>{%
+<span class="c"># Can have comments too!</span>
+txt = &#39;&#39;
+for ii in range(10):
+    txt += &#39; {}&#39;.format(ii)
+end
+%}
+txt: {txt}
+</pre></div>
+</div>
+<p>returns:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>txt:  0 1 2 3 4 5 6 7 8 9
+</pre></div>
+</div>
+</section>
+<section id="changing-delimiters">
+<span id="interfaces-changing-delimiters"></span><h3>Changing Delimiters<a class="headerlink" href="#changing-delimiters" title="Permalink to this headline"></a></h3>
+<p>As noted in the <code class="docutils literal notranslate"><span class="pre">--help</span></code> for <code class="docutils literal notranslate"><span class="pre">dprepro</span></code> and <code class="docutils literal notranslate"><span class="pre">pyprepro</span></code>, the
+delimiters for single-line Python statements, code blocks, and inline
+printed expressions can be changed. This is useful when the defaults are
+reserved characters in the output format.</p>
+<p>For code blocks (default <code class="docutils literal notranslate"><span class="pre">{% %}</span></code>), the innermost characters cannot be
+any of “<code class="docutils literal notranslate"><span class="pre">{}[]()</span></code>”.</p>
+<p>Furthermore every template can individually reset the command delimiter by
+specifying them at the top of the file. From the help:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>Specify delineators as the the first non-whitespace line. Start with a
+comment &#39;//&#39;, &#39;#&#39;,&#39;%&#39;, &#39;$&#39; or &#39;&#39; (nothing), then a command, then &#39;=&#39; or
+space, followed by the new setting. See examples.
+
+Commands are:
+
+      Commands                Flags
+  ---------------------------------------
+  | PYPREPRO_CODE        |              |
+  | DPREPRO_CODE         |  --code      |
+  | PREPRO_CODE          |              |
+  | ---------------------|--------------|
+  | PYPREPRO_CODE_BLOCK  |              |
+  | DPREPRO_CODE_BLOCK   | --code-block |
+  | PREPRO_CODE_BLOCK    |              |
+  | ---------------------|--------------|
+  | PYPREPRO_INLINE      |              |
+  | DPREPRO_INLINE       | --inline     |
+  | PREPRO_INLINE        |              |
+  ---------------------------------------
+</pre></div>
+</div>
+</section>
+<section id="escaping-delimiters">
+<span id="interfaces-escaping-delimiters"></span><h3>Escaping Delimiters<a class="headerlink" href="#escaping-delimiters" title="Permalink to this headline"></a></h3>
+<p>All delimiters can be escaped with a leading <code class="docutils literal notranslate"><span class="pre">\</span></code>. A double <code class="docutils literal notranslate"><span class="pre">\\</span></code>
+followed by the delimiter will return <code class="docutils literal notranslate"><span class="pre">\</span></code>. For example:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>{A=5}
+\{A=5\}
+\\{A=5\\}
+</pre></div>
+</div>
+<p>Returns:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>5
+{A=5}
+\{A=5\}
+</pre></div>
+</div>
+<p>Note that escaping the trailing delimiter (e.g. <code class="docutils literal notranslate"><span class="pre">\}</span></code>) is optional.</p>
+</section>
+<section id="whitespace-control">
+<span id="interfaces-whitespace-control"></span><h3>Whitespace Control<a class="headerlink" href="#whitespace-control" title="Permalink to this headline"></a></h3>
+<p>Expressions span the entire line, which can possibly introduce undesired
+white space. Ending a line with <code class="docutils literal notranslate"><span class="pre">\\</span></code> will prevent the additional
+space. Consider the following:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>BLOCK \\
+{%
+if True:
+    block = 10
+else:
+    block = 20
+end
+%}
+{block}
+</pre></div>
+</div>
+<p>Which renders as:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>BLOCK 10
+</pre></div>
+</div>
+<p>Without the trailing <code class="docutils literal notranslate"><span class="pre">\\</span></code>, the result would instead be:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>BLOCK
+10
+</pre></div>
+</div>
+<p>This can also be abused to allow spacing. Consider the following:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>I want this to \\
+%
+render as \\
+%
+one line
+</pre></div>
+</div>
+<p>Since the <code class="docutils literal notranslate"><span class="pre">%</span></code> symbolize a code block (empty in this case), it will
+render</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>I want this to render as one line
+</pre></div>
+</div>
+</section>
+<section id="immutable-variables">
+<span id="interfaces-immutable-variables"></span><h3>Immutable Variables<a class="headerlink" href="#immutable-variables" title="Permalink to this headline"></a></h3>
+<p>Variables can be fixed such that they cannot be redefined (without
+explicitly allowing it).</p>
+<p>In this example, the attempted reassignment of <code class="docutils literal notranslate"><span class="pre">param</span></code> to 20 is
+ignored,</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>% param = Immutable(10)
+% param = 20
+{param}
+</pre></div>
+</div>
+<p>and the output is</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>10
+</pre></div>
+</div>
+<p>because <code class="docutils literal notranslate"><span class="pre">param</span></code> is <code class="docutils literal notranslate"><span class="pre">Immutable</span></code>. To explicitly make a variable
+mutable again, call it with <code class="docutils literal notranslate"><span class="pre">Mutable()</span></code>:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>set             : \{ param = Immutable(10) \} : { param = Immutable(10) }
+try to reset    : \{ param = 20 \}            : { param = 20 }
+make mutable    : \{ param = Mutable(21) \}   : { param = Mutable(21) }
+reset           : \{ param = 20 \}            : { param = 20 }
+</pre></div>
+</div>
+<p>Returns:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>set             : { param = Immutable(10) } : 10
+try to reset    : { param = 20 }            : 10
+make mutable    : { param = Mutable(21) }   : 21
+reset           : { param = 20 }            : 20
+</pre></div>
+</div>
+<p>Note that any variable set on the command line by any of these three
+means:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">--var</span></code> argument</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--include</span></code> file</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--json-include</span></code> file</p></li>
+</ul>
+<p>is immutable. This listing is in order of precedence; variables set by a
+<code class="docutils literal notranslate"><span class="pre">--var</span></code> argument cannot be modified by <code class="docutils literal notranslate"><span class="pre">--include</span></code> or
+<code class="docutils literal notranslate"><span class="pre">--json-include</span></code> files. This feature is useful for overriding defaults
+set in templates.</p>
+<p>Suppose the template file <code class="docutils literal notranslate"><span class="pre">MyTemplate.inp</span></code> contains:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>param1 = {param1 = 10}
+param2 = {param2 = pi}
+</pre></div>
+</div>
+<p>Executing <code class="docutils literal notranslate"><span class="pre">pyprepro</span> <span class="pre">MyTemplate.in</span></code> yields:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>param1 = 10
+param2 = 3.141592654
+</pre></div>
+</div>
+<p>However, for <code class="docutils literal notranslate"><span class="pre">pyprepro --var &quot;param1=30&quot; MyTemplate.in</span></code>:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>param1 = 30
+param2 = 3.141592654
+</pre></div>
+</div>
+<p>Or, if an optional <code class="docutils literal notranslate"><span class="pre">--include</span></code> file that is named <code class="docutils literal notranslate"><span class="pre">MyInclude.inp</span></code>
+and contains the following is added:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>{param1 = 32}
+</pre></div>
+</div>
+<p>Then running <code class="docutils literal notranslate"><span class="pre">pyprepro --include MyInclude.inp MyTemplate.inp</span></code>
+outputs:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>param1 = 32
+param2 = 3.141592654
+</pre></div>
+</div>
+<p>Note that variable definitions set using <code class="docutils literal notranslate"><span class="pre">--var</span></code> override definitions
+in <code class="docutils literal notranslate"><span class="pre">--include</span></code> files.</p>
+<p>There is one caveat to variable immutability. While the variable name is
+reserved, the value can still be changed if it is a mutable Python
+object (“mutable” has different meanings for Python objects than is used
+in <code class="docutils literal notranslate"><span class="pre">pyprepro</span></code> and <code class="docutils literal notranslate"><span class="pre">dprepro</span></code> templates). For example:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>% param = Immutable( [1,2,3])
+% param.append(4)   # This will work because it is modifying the object
+% param = [&#39;a&#39;,&#39;b&#39;,&#39;c&#39;]   # This won&#39;t because it is redefining
+{param}
+</pre></div>
+</div>
+<p>Will output:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>[1, 2, 3, 4]
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="externaltools.html" class="btn btn-neutral float-left" title="Using External Tools" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="restartutility.html" class="btn btn-neutral float-right" title="The Dakota Restart Utility" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <!--
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Sandia National Laboratories.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+  --> 
+
+</footer>
+        </div>
+      </div>
+	  
+	  <div style="background-color: #0f0f0f;color:#fafafa;padding:20px">
+	    <div>
+		  <h2><em>Exceptional service in the national interest</em></h2>
+		</div>
+		<p>© 2022 National Technology and Engineering Solutions of Sandia, LLC. | <a href="https://www.sandia.gov/contact_us/index.html">Questions &amp; Comments</a> | <a href="https://www.sandia.gov/general/privacy-security/index.html">Privacy &amp; Security</a></p>
+		<p><a href="http://energy.gov" rel="noopener noreferrer" target="_blank"><img alt="U.S. Department of Energy" longdesc="https://energy.gov" src="https://www.sandia.gov/_common/images/doe_logo_white.png" style="height:37px; width:140px"></a> <a href="http://nnsa.energy.gov/" rel="noopener noreferrer" target="_blank"> <img alt="National Nuclear Security Administration" longdesc="http://nnsa.gov" src="https://www.sandia.gov/_common/images/nnsa_logo_white.png" style="height:37px; width:116px"></a></p>
+		<p><a href="https://www.sandia.gov">Sandia National Laboratories</a> is a multimission laboratory managed and operated by National Technology and Engineering Solutions of Sandia, LLC., a wholly owned subsidiary of Honeywell International, Inc., for the U.S. Department of Energy’s National Nuclear Security Administration under contract DE-NA-0003525.</p>
+	  </div>	  	  
+	  
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

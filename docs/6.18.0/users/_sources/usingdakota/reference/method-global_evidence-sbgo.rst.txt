@@ -1,0 +1,70 @@
+.. _method-global_evidence-sbgo:
+
+""""
+sbgo
+""""
+
+
+Use the surrogate based optimization method
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-global_evidence-sbgo-gaussian_process
+   method-global_evidence-sbgo-use_derivatives
+   method-global_evidence-sbgo-import_build_points_file
+   method-global_evidence-sbgo-export_approx_points_file
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+-------------------------------+---------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword                | Dakota Keyword Description                  |
+|                         | Group              |                               |                                             |
++=========================+====================+===============================+=============================================+
+| Optional                                     | `gaussian_process`__          | Gaussian Process surrogate model            |
++----------------------------------------------+-------------------------------+---------------------------------------------+
+| Optional                                     | `use_derivatives`__           | Use derivative data to construct surrogate  |
+|                                              |                               | models                                      |
++----------------------------------------------+-------------------------------+---------------------------------------------+
+| Optional                                     | `import_build_points_file`__  | File containing points you wish to use to   |
+|                                              |                               | build a surrogate                           |
++----------------------------------------------+-------------------------------+---------------------------------------------+
+| Optional                                     | `export_approx_points_file`__ | Output file for surrogate model value       |
+|                                              |                               | evaluations                                 |
++----------------------------------------------+-------------------------------+---------------------------------------------+
+
+.. __: method-global_evidence-sbgo-gaussian_process.html
+__ method-global_evidence-sbgo-use_derivatives.html
+__ method-global_evidence-sbgo-import_build_points_file.html
+__ method-global_evidence-sbgo-export_approx_points_file.html
+
+
+
+**Description**
+
+
+A surrogate-based optimization method will be used.  The surrogate
+employed in ``sbo`` is a Gaussian process surrogate.
+
+The main difference between ``ego`` and the
+``sbo`` approach is the objective function being optimized.
+``ego`` relies on an expected improvement function, while in
+``sbo``, the optimization proceeds using an evolutionary
+algorithm ( :dakkw:`method-coliny_ea`) on the Gaussian process surrogate:
+it is a standard surrogate-based optimization. Also note that the
+``sbo`` option can support optimization over discrete variables (the
+discrete variables are relaxed) while ``ego`` cannot.
+
+This is not the same as :dakkw:`method-surrogate_based_global`.
+
+

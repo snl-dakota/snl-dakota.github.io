@@ -1,0 +1,71 @@
+.. _method-multifidelity_polynomial_chaos-gen_reliability_levels:
+
+""""""""""""""""""""""
+gen_reliability_levels
+""""""""""""""""""""""
+
+
+Specify generalized relability levels at which to estimate the corresponding response value
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-multifidelity_polynomial_chaos-gen_reliability_levels-num_gen_reliability_levels
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* REALLIST
+
+- *Default:* No CDF/CCDF response levels to compute
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+--------------------------------+---------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword                 | Dakota Keyword Description                  |
+|                         | Group              |                                |                                             |
++=========================+====================+================================+=============================================+
+| Optional                                     | `num_gen_reliability_levels`__ | Specify which ``gen_reliability_levels``    |
+|                                              |                                | correspond to which response                |
++----------------------------------------------+--------------------------------+---------------------------------------------+
+
+.. __: method-multifidelity_polynomial_chaos-gen_reliability_levels-num_gen_reliability_levels.html
+
+
+
+**Description**
+
+
+Response levels are calculated for
+specified generalized reliabilities by
+indexing into a sorted samples array (the response levels computed are
+not interpolated and will correspond to one of the sampled values).
+
+
+
+**Theory**
+
+
+Sets of response-probability pairs computed with the forward/inverse
+mappings define either a cumulative distribution function (CDF) or a
+complementary cumulative distribution function (CCDF) for each
+response function.
+
+In the case of evidence-based epistemic methods,
+this is generalized to define either cumulative belief and
+plausibility functions (CBF and CPF) or complementary cumulative
+belief and plausibility functions (CCBF and CCPF) for each response
+function.
+
+An inverse mapping involves computing the belief and plausibility
+response level for either a specified probability level or a specified
+generalized reliability level (two results for each level mapping in
+the evidence-based epistemic case, instead of the one result for each
+level mapping in the aleatory case).
+
+

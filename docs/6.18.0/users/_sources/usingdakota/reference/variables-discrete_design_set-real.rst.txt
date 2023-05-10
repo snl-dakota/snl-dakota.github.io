@@ -1,0 +1,95 @@
+.. _variables-discrete_design_set-real:
+
+""""
+real
+""""
+
+
+Real-valued discrete design variables
+
+
+
+
+**Topics**
+
+
+discrete_variables, design_variables
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   variables-discrete_design_set-real-elements_per_variable
+   variables-discrete_design_set-real-elements
+   variables-discrete_design_set-real-categorical
+   variables-discrete_design_set-real-initial_point
+   variables-discrete_design_set-real-descriptors
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* INTEGER
+
+- *Default:* no discrete design set real variables
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+---------------------------+---------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword            | Dakota Keyword Description                  |
+|                         | Group              |                           |                                             |
++=========================+====================+===========================+=============================================+
+| Optional                                     | `elements_per_variable`__ | Number of admissible elements for each set  |
+|                                              |                           | variable                                    |
++----------------------------------------------+---------------------------+---------------------------------------------+
+| Required                                     | `elements`__              | The permissible values for each discrete    |
+|                                              |                           | variable                                    |
++----------------------------------------------+---------------------------+---------------------------------------------+
+| Optional                                     | `categorical`__           | Whether the set-valued variables are        |
+|                                              |                           | categorical or relaxable                    |
++----------------------------------------------+---------------------------+---------------------------------------------+
+| Optional                                     | `initial_point`__         | Initial values for variables                |
++----------------------------------------------+---------------------------+---------------------------------------------+
+| Optional                                     | `descriptors`__           | Labels for the variables                    |
++----------------------------------------------+---------------------------+---------------------------------------------+
+
+.. __: variables-discrete_design_set-real-elements_per_variable.html
+__ variables-discrete_design_set-real-elements.html
+__ variables-discrete_design_set-real-categorical.html
+__ variables-discrete_design_set-real-initial_point.html
+__ variables-discrete_design_set-real-descriptors.html
+
+
+
+**Description**
+
+
+A design variable whose values come from a specified set of admissible
+reals.  See :ref:`variables:usage` for tips on specifying discrete set
+variables.
+
+
+
+
+**Examples**
+
+
+Two continuous, restricted variables whose values will be selected
+from the following sets during the search for an optimal design. :math:`y1
+\in \{0.25,1.25, 2.25, 3.25, 4.25\}` , :math:`y2 \in \{0,5\}` 
+
+
+.. code-block::
+
+    discrete_design_set
+      real 2
+        descriptors           'y1'                       'y2'
+        elements_per_variable 5                          2
+        elemetns              0.25 1.25 2.25 3.25 4.25   0 5
+
+
+
+

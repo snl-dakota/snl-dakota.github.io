@@ -1,0 +1,37 @@
+.. _method-coliny_ea-mutation_type-non_adaptive:
+
+""""""""""""
+non_adaptive
+""""""""""""
+
+
+Disable self-adaptive mutation
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+- *Default:* Adaptive mutation
+
+
+**Description**
+
+
+The SCOLIB EA method uses self-adaptive mutation, which modifies the mutation
+scale dynamically. This mechanism is borrowed from EAs like evolution
+strategies. The ``non_adaptive`` flag can be used to deactivate the
+self-adaptation, which may facilitate a more global search.
+
+Note that ``non_adaptive`` is not recognized by Dakota as a valid keyword
+unless ``mutation_type`` has been specified.
+
+

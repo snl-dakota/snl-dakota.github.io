@@ -1,0 +1,99 @@
+.. _method-bayes_calibration-wasabi-emulator-mf_pce:
+
+""""""
+mf_pce
+""""""
+
+
+Multifidelity Polynomial Chaos Expansion as an emulator model.
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-bayes_calibration-wasabi-emulator-mf_pce-p_refinement
+   method-bayes_calibration-wasabi-emulator-mf_pce-max_refinement_iterations
+   method-bayes_calibration-wasabi-emulator-mf_pce-allocation_control
+   method-bayes_calibration-wasabi-emulator-mf_pce-discrepancy_emulation
+   method-bayes_calibration-wasabi-emulator-mf_pce-quadrature_order_sequence
+   method-bayes_calibration-wasabi-emulator-mf_pce-sparse_grid_level_sequence
+   method-bayes_calibration-wasabi-emulator-mf_pce-expansion_order_sequence
+   method-bayes_calibration-wasabi-emulator-mf_pce-orthogonal_least_interpolation
+   method-bayes_calibration-wasabi-emulator-mf_pce-askey
+   method-bayes_calibration-wasabi-emulator-mf_pce-wiener
+   method-bayes_calibration-wasabi-emulator-mf_pce-normalized
+   method-bayes_calibration-wasabi-emulator-mf_pce-export_expansion_file
+   method-bayes_calibration-wasabi-emulator-mf_pce-diagonal_covariance
+   method-bayes_calibration-wasabi-emulator-mf_pce-full_covariance
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+-------------------------------+---------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword                | Dakota Keyword Description                  |
+|                         | Group              |                               |                                             |
++=========================+====================+===============================+=============================================+
+| Optional                                     | `p_refinement`__              | Automatic polynomial order refinement       |
++----------------------------------------------+-------------------------------+---------------------------------------------+
+| Optional                                     | `max_refinement_iterations`__ | Maximum number of expansion refinement      |
+|                                              |                               | iterations                                  |
++----------------------------------------------+-------------------------------+---------------------------------------------+
+| Optional                                     | `allocation_control`__        | Sample allocation approach for              |
+|                                              |                               | multifidelity expansions                    |
++----------------------------------------------+-------------------------------+---------------------------------------------+
+| Optional                                     | `discrepancy_emulation`__     | Formulation for emulation of model          |
+|                                              |                               | discrepancies.                              |
++-------------------------+--------------------+-------------------------------+---------------------------------------------+
+| Optional (Choose One)   | Basis Polynomial   | `askey`__                     | Select the standardized random variables    |
+|                         | Family             |                               | (and associated basis polynomials) from the |
+|                         |                    |                               | Askey family that best match the            |
+|                         |                    |                               | user-specified random variables.            |
+|                         |                    +-------------------------------+---------------------------------------------+
+|                         |                    | `wiener`__                    | Use standard normal random variables (along |
+|                         |                    |                               | with Hermite orthogonal basis polynomials)  |
+|                         |                    |                               | when transforming to a standardized         |
+|                         |                    |                               | probability space.                          |
++-------------------------+--------------------+-------------------------------+---------------------------------------------+
+| Optional                                     | `normalized`__                | The normalized specification requests       |
+|                                              |                               | output of PCE coefficients that correspond  |
+|                                              |                               | to normalized orthogonal basis polynomials  |
++----------------------------------------------+-------------------------------+---------------------------------------------+
+| Optional                                     | `export_expansion_file`__     | Export the coefficients and multi-index of  |
+|                                              |                               | a Polynomial Chaos Expansion (PCE) to a     |
+|                                              |                               | file                                        |
++-------------------------+--------------------+-------------------------------+---------------------------------------------+
+| Optional (Choose One)   | Covariance Type    | `diagonal_covariance`__       | Display only the diagonal terms of the      |
+|                         |                    |                               | covariance matrix                           |
+|                         |                    +-------------------------------+---------------------------------------------+
+|                         |                    | `full_covariance`__           | Display the full covariance matrix          |
++-------------------------+--------------------+-------------------------------+---------------------------------------------+
+
+.. __: method-bayes_calibration-wasabi-emulator-mf_pce-p_refinement.html
+__ method-bayes_calibration-wasabi-emulator-mf_pce-max_refinement_iterations.html
+__ method-bayes_calibration-wasabi-emulator-mf_pce-allocation_control.html
+__ method-bayes_calibration-wasabi-emulator-mf_pce-discrepancy_emulation.html
+__ method-bayes_calibration-wasabi-emulator-mf_pce-askey.html
+__ method-bayes_calibration-wasabi-emulator-mf_pce-wiener.html
+__ method-bayes_calibration-wasabi-emulator-mf_pce-normalized.html
+__ method-bayes_calibration-wasabi-emulator-mf_pce-export_expansion_file.html
+__ method-bayes_calibration-wasabi-emulator-mf_pce-diagonal_covariance.html
+__ method-bayes_calibration-wasabi-emulator-mf_pce-full_covariance.html
+
+
+
+**Description**
+
+
+Selects a multifidelity polynomial chaos expansion (MF PCE) surrogate model
+to use in the Bayesian likelihood calculations.  Most specification options are
+carried over for using MF PCE as a surrogate within the Bayesian framework.
+
+

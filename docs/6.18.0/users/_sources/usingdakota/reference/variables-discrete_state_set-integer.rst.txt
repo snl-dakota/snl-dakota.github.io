@@ -1,0 +1,76 @@
+.. _variables-discrete_state_set-integer:
+
+"""""""
+integer
+"""""""
+
+
+Discrete state variables, each defined by a set of permissible integers
+
+
+
+**Topics**
+
+
+discrete_variables, state_variables
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   variables-discrete_state_set-integer-elements_per_variable
+   variables-discrete_state_set-integer-elements
+   variables-discrete_state_set-integer-categorical
+   variables-discrete_state_set-integer-initial_state
+   variables-discrete_state_set-integer-descriptors
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* INTEGER
+
+- *Default:* no discrete state set integer variables
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+---------------------------+---------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword            | Dakota Keyword Description                  |
+|                         | Group              |                           |                                             |
++=========================+====================+===========================+=============================================+
+| Optional                                     | `elements_per_variable`__ | Number of admissible elements for each set  |
+|                                              |                           | variable                                    |
++----------------------------------------------+---------------------------+---------------------------------------------+
+| Required                                     | `elements`__              | The permissible values for each discrete    |
+|                                              |                           | variable                                    |
++----------------------------------------------+---------------------------+---------------------------------------------+
+| Optional                                     | `categorical`__           | Whether the set-valued variables are        |
+|                                              |                           | categorical or relaxable                    |
++----------------------------------------------+---------------------------+---------------------------------------------+
+| Optional                                     | `initial_state`__         | Initial values for variables                |
++----------------------------------------------+---------------------------+---------------------------------------------+
+| Optional                                     | `descriptors`__           | Labels for the variables                    |
++----------------------------------------------+---------------------------+---------------------------------------------+
+
+.. __: variables-discrete_state_set-integer-elements_per_variable.html
+__ variables-discrete_state_set-integer-elements.html
+__ variables-discrete_state_set-integer-categorical.html
+__ variables-discrete_state_set-integer-initial_state.html
+__ variables-discrete_state_set-integer-descriptors.html
+
+
+
+**Description**
+
+
+Discrete state variables defined by a set of permissible integers.
+
+See :ref:`variables:usage` for tips on specifying discrete set
+variables and :ref:`variables:state` for details on the behavior
+of state variables.
+
+
+

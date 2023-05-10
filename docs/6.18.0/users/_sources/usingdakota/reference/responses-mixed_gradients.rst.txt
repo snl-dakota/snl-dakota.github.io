@@ -1,0 +1,102 @@
+.. _responses-mixed_gradients:
+
+"""""""""""""""
+mixed_gradients
+"""""""""""""""
+
+
+Gradients are needed and will be obtained from a mix of numerical and
+analytic sources
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   responses-mixed_gradients-id_numerical_gradients
+   responses-mixed_gradients-id_analytic_gradients
+   responses-mixed_gradients-method_source
+   responses-mixed_gradients-dakota
+   responses-mixed_gradients-vendor
+   responses-mixed_gradients-interval_type
+   responses-mixed_gradients-forward
+   responses-mixed_gradients-central
+   responses-mixed_gradients-fd_step_size
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+----------------------------+---------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword             | Dakota Keyword Description                  |
+|                         | Group              |                            |                                             |
++=========================+====================+============================+=============================================+
+| Required                                     | `id_numerical_gradients`__ | Identify which numerical gradient           |
+|                                              |                            | corresponds to which response               |
++----------------------------------------------+----------------------------+---------------------------------------------+
+| Required                                     | `id_analytic_gradients`__  | Identify which analytical gradient          |
+|                                              |                            | corresponds to which response               |
++----------------------------------------------+----------------------------+---------------------------------------------+
+| Optional                                     | `method_source`__          | Specify which finite difference routine is  |
+|                                              |                            | used                                        |
++-------------------------+--------------------+----------------------------+---------------------------------------------+
+| Optional (Choose One)   | Gradient Source    | `dakota`__                 | (Default) Use internal Dakota finite        |
+|                         |                    |                            | differences algorithm                       |
+|                         |                    +----------------------------+---------------------------------------------+
+|                         |                    | `vendor`__                 | Use non-Dakota fd algorithm                 |
++-------------------------+--------------------+----------------------------+---------------------------------------------+
+| Optional                                     | `interval_type`__          | Specify how to compute gradients and        |
+|                                              |                            | hessians                                    |
++-------------------------+--------------------+----------------------------+---------------------------------------------+
+| Optional (Choose One)   | Finite Difference  | `forward`__                | (Default) Use forward differences           |
+|                         | Type               +----------------------------+---------------------------------------------+
+|                         |                    | `central`__                | Use central differences                     |
++-------------------------+--------------------+----------------------------+---------------------------------------------+
+| Optional                                     | `fd_step_size`__           | Step size used when computing gradients and |
+|                                              |                            | Hessians                                    |
++----------------------------------------------+----------------------------+---------------------------------------------+
+
+.. __: responses-mixed_gradients-id_numerical_gradients.html
+__ responses-mixed_gradients-id_analytic_gradients.html
+__ responses-mixed_gradients-method_source.html
+__ responses-mixed_gradients-dakota.html
+__ responses-mixed_gradients-vendor.html
+__ responses-mixed_gradients-interval_type.html
+__ responses-mixed_gradients-forward.html
+__ responses-mixed_gradients-central.html
+__ responses-mixed_gradients-fd_step_size.html
+
+
+
+**Description**
+
+
+The ``mixed_gradients`` specification means that some gradient
+information is available directly from the simulation (analytic)
+whereas the rest will have to be finite differenced (numerical). This
+specification allows the user to make use of as much analytic gradient
+information as is available and then finite difference for the
+rest.
+
+The ``method_source``, ``interval_type``,
+and ``fd_gradient_step_size`` specifications
+pertain to those functions listed
+by the ``id_numerical_gradients`` list.
+
+
+
+**Examples**
+
+
+For example, the objective function may be a simple analytic
+function of the design variables (e.g., weight) whereas the
+constraints are nonlinear implicit functions of complex analyses
+(e.g., maximum stress).
+
+

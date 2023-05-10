@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Understanding Iterator Flow &mdash; dakota  documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/dakota_theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/sandiaheaderlite.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Performing Function Evaluations" href="performingfunctionevaluations.html" />
+    <link rel="prev" title="Interfacing with Dakota as a Library" href="interfacinglibrary.html" /> 
+  
+  <meta name="sandia.approval_type" content="formal"/>
+  <meta property="sandia.approved" content="SAND2022-15651 O"/>
+  <meta name="description" content="The Dakota project delivers both state-of-the-art research and robust, usable software for optimization and UQ."/>
+  <meta name="keywords" content="Dakota, optimization, UQ, uncertainty quantification, parametric analysis, design exploration, model calibration, risk analysis"/>
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../index.html" class="icon icon-home"> dakota
+            <img src="../../../_static/dakota_Arrow_Name_Tag_horiz_transparent.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../setupdakota.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usingdakota/usingdakota.html">Using Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usingdakotagui/usingdakotagui.html">Using Dakota GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../externaltools/externaltools.html">Using External Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../compiling/compiling.html">Compiling Dakota</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../developingdakota.html">Developing Dakota</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../devenvironment.html">Setup Your Development Environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../gitforversioncontrol.html">Git for Version Control</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../writingcode.html">Writing Dakota Code</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../overview.html">Overview of Dakota</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../services.html">Services</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../developmentpractices.html">Development Practices and Guidance</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="codingstyle.html">Coding Style Guidelines and Conventions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="modifyingdakotainput.html">Instructions for Modifying Dakota’s Input Specification</a></li>
+<li class="toctree-l4"><a class="reference internal" href="interfacinglibrary.html">Interfacing with Dakota as a Library</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Understanding Iterator Flow</a></li>
+<li class="toctree-l4"><a class="reference internal" href="performingfunctionevaluations.html">Performing Function Evaluations</a></li>
+<li class="toctree-l4"><a class="reference internal" href="workingwithvariablecontainers.html">Working with Variable Containers and Views</a></li>
+<li class="toctree-l4"><a class="reference internal" href="demotpl.html">Demo TPL</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../testingcode.html">Testing Dakota Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../documenting.html">Documenting Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../writingdocs.html">Dakota Documentation Mechanics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../tpls.html">Dakota’s Third-Party Libraries</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../misc/misc.html">Miscellaneous</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">dakota</a>
+      </nav>
+
+	  <!-- SNL Lite header -->
+	  <div class="snlheader-subsite--wrapper-default">
+		<snlheader class="snlheader-subsite" role="snlbanner">
+		  <div class="wrapper">
+			<a href="https://www.sandia.gov/index.html">
+			  <div class="logo-transparent"><p class="logo">Sandia National Laboratories</p></div>
+			</a>
+			<div class="nav-top">
+			  <a class="visuallyhidden" name="mainnav"></a>
+			  <div aria-label="main navigation" class="core-nav-transparent core-nav-transparent--visible" role="navigation">
+				<ul role="navigation" class="secondary-links">
+				  <li id="search-text-link">
+					<a aria-label="Search" href="https://www.sandia.gov/search/">Search Sandia.gov</a>
+				  </li>
+				  <li id="directory-text-link">
+					<a href="https://www.sandia.gov/directory.html" aria-expanded="false" aria-label="Site Directory">All Sandia Websites</a>
+				  </li>
+				</ul>
+			  </div>
+			</div>
+		  </div> 
+		</snlheader>
+	  </div>	  
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../../developingdakota.html">Developing Dakota</a> &raquo;</li>
+          <li><a href="../../writingcode.html">Writing Dakota Code</a> &raquo;</li>
+          <li><a href="../developmentpractices.html">Development Practices and Guidance</a> &raquo;</li>
+      <li>Understanding Iterator Flow</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../_sources/developingdakota/writingcode/developmentpractices/iteratorflow.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="understanding-iterator-flow">
+<span id="developer-understanding-iterator-flow"></span><h1>Understanding Iterator Flow<a class="headerlink" href="#understanding-iterator-flow" title="Permalink to this headline"></a></h1>
+<p>This page explains the various phases comprising Iterator::run_iterator(). Prior to <a class="reference external" href="https://dakota.sandia.gov//sites/default/files/docs/6.16.0/html-dev/classDakota_1_1Iterator.html">Iterator</a> construction,
+when command-line options are parsed, Boolean run mode flags corresponding to PRERUN, RUN, and POSTRUN are set in
+<a class="reference external" href="https://dakota.sandia.gov//sites/default/files/docs/6.16.0/html-dev/classDakota_1_1ParallelLibrary.html">ParallelLibrary</a>.
+If the user didn’t specify any specific run modes, the default is for all three to be true (all phases will execute).</p>
+<p><a class="reference external" href="https://dakota.sandia.gov//sites/default/files/docs/6.16.0/html-dev/classDakota_1_1Iterator.html">Iterator</a> is constructed.</p>
+<p>When called, <code class="docutils literal notranslate"><span class="pre">run_iterator()</span></code> sequences:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">initialize_run()</span></code>: unconditionally called, virtual. Performs common initialization such as allocating workspaces, setting communicators and evaluation counts. When re-implementing this virtual,
+a derived class must call its nearest parent’s initialize_run(), typically <em>before</em> performing its own implementation steps.</p></li>
+<li><p><em>Not implemented</em>: pre-run input</p></li>
+<li><p>IF PRERUN, invoke <code class="docutils literal notranslate"><span class="pre">pre_run()</span></code>: virtual function; default no-op. Purpose: derived classes should implement pre_run() if they are able to generate all parameter sets (variables) at once,
+separate from <code class="docutils literal notranslate"><span class="pre">run()</span></code>. Derived implementations should call their nearest parent’s pre_run(), typically <em>before</em> performing their own steps.</p></li>
+<li><p>IF PRERUN, invoke <code class="docutils literal notranslate"><span class="pre">pre_output()</span></code>: non-virtual function; if user requested, output variables to file.</p></li>
+<li><p><em>Not implemented</em>: run input</p></li>
+<li><p>IF RUN, invoke virtual function run(). Purpose: at a minimum, evaluate parameter sets through computing responses; for iterators without pre/post capability, their entire implementation is in``run()`` and
+this is a reasonable default for new Iterators.</p></li>
+<li><p><em>Not implemented</em>: run output</p></li>
+<li><p>IF POSTRUN, invoke <code class="docutils literal notranslate"><span class="pre">post_input()</span></code>: virtual function, default only print helpful message on mode. Purpose: derived iterators supporting post-run input from file must implement to read file and populate
+variables/responses (and possibly best points) appropriately. Implementations must check if the user requested file input.</p></li>
+<li><p>IF POSTRUN, invoke <code class="docutils literal notranslate"><span class="pre">post_run()</span></code>: virtual function. Purpose: generate statistics / final results. Any analysis that can be done solely on tabular data read by <code class="docutils literal notranslate"><span class="pre">post_input()</span></code> can be done here. Derived
+re-implementations should call their nearest parent’s <code class="docutils literal notranslate"><span class="pre">post-run()</span></code>, typically after performing their specific post-run activities.</p></li>
+<li><p><em>Not implemented</em>: post-run output</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">finalize_run()</span></code>: unconditionally called, virtual. Purpose: free workspaces. Default base class behavior is no-op, however, derived implementations should call their nearest parent’s finalize_run
+after performing their specialized portions.</p></li>
+</ul>
+</div></blockquote>
+<p><a class="reference external" href="https://dakota.sandia.gov//sites/default/files/docs/6.16.0/html-dev/classDakota_1_1Iterator.html">Iterator</a> is destructed.</p>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="interfacinglibrary.html" class="btn btn-neutral float-left" title="Interfacing with Dakota as a Library" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="performingfunctionevaluations.html" class="btn btn-neutral float-right" title="Performing Function Evaluations" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <!--
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Sandia National Laboratories.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+  --> 
+
+</footer>
+        </div>
+      </div>
+	  
+	  <div style="background-color: #0f0f0f;color:#fafafa;padding:20px">
+	    <div>
+		  <h2><em>Exceptional service in the national interest</em></h2>
+		</div>
+		<p>© 2022 National Technology and Engineering Solutions of Sandia, LLC. | <a href="https://www.sandia.gov/contact_us/index.html">Questions &amp; Comments</a> | <a href="https://www.sandia.gov/general/privacy-security/index.html">Privacy &amp; Security</a></p>
+		<p><a href="http://energy.gov" rel="noopener noreferrer" target="_blank"><img alt="U.S. Department of Energy" longdesc="https://energy.gov" src="https://www.sandia.gov/_common/images/doe_logo_white.png" style="height:37px; width:140px"></a> <a href="http://nnsa.energy.gov/" rel="noopener noreferrer" target="_blank"> <img alt="National Nuclear Security Administration" longdesc="http://nnsa.gov" src="https://www.sandia.gov/_common/images/nnsa_logo_white.png" style="height:37px; width:116px"></a></p>
+		<p><a href="https://www.sandia.gov">Sandia National Laboratories</a> is a multimission laboratory managed and operated by National Technology and Engineering Solutions of Sandia, LLC., a wholly owned subsidiary of Honeywell International, Inc., for the U.S. Department of Energy’s National Nuclear Security Administration under contract DE-NA-0003525.</p>
+	  </div>	  	  
+	  
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,91 @@
+.. _method-surrogate_based_local-approx_subproblem:
+
+"""""""""""""""""
+approx_subproblem
+"""""""""""""""""
+
+
+Identify functions to be included in surrogate merit function
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-surrogate_based_local-approx_subproblem-original_primary
+   method-surrogate_based_local-approx_subproblem-single_objective
+   method-surrogate_based_local-approx_subproblem-augmented_lagrangian_objective
+   method-surrogate_based_local-approx_subproblem-lagrangian_objective
+   method-surrogate_based_local-approx_subproblem-original_constraints
+   method-surrogate_based_local-approx_subproblem-linearized_constraints
+   method-surrogate_based_local-approx_subproblem-no_constraints
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+- *Default:* original_primary original_constraints
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+------------------------------------+---------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword                     | Dakota Keyword Description                  |
+|                         | Group              |                                    |                                             |
++=========================+====================+====================================+=============================================+
+| Required (Choose One)   | Objective          | `original_primary`__               | Construct approximations of all primary     |
+|                         | Formulation        |                                    | functions                                   |
+|                         |                    +------------------------------------+---------------------------------------------+
+|                         |                    | `single_objective`__               | Construct approximation a single objective  |
+|                         |                    |                                    | functions only                              |
+|                         |                    +------------------------------------+---------------------------------------------+
+|                         |                    | `augmented_lagrangian_objective`__ | Augmented Lagrangian approximate subproblem |
+|                         |                    |                                    | formulation                                 |
+|                         |                    +------------------------------------+---------------------------------------------+
+|                         |                    | `lagrangian_objective`__           | Lagrangian approximate subproblem           |
+|                         |                    |                                    | formulation                                 |
++-------------------------+--------------------+------------------------------------+---------------------------------------------+
+| Required (Choose One)   | Constraint         | `original_constraints`__           | Use the constraints directly                |
+|                         | Formulation        +------------------------------------+---------------------------------------------+
+|                         |                    | `linearized_constraints`__         | Use linearized approximations to the        |
+|                         |                    |                                    | constraints                                 |
+|                         |                    +------------------------------------+---------------------------------------------+
+|                         |                    | `no_constraints`__                 | Don't use constraints                       |
++-------------------------+--------------------+------------------------------------+---------------------------------------------+
+
+.. __: method-surrogate_based_local-approx_subproblem-original_primary.html
+__ method-surrogate_based_local-approx_subproblem-single_objective.html
+__ method-surrogate_based_local-approx_subproblem-augmented_lagrangian_objective.html
+__ method-surrogate_based_local-approx_subproblem-lagrangian_objective.html
+__ method-surrogate_based_local-approx_subproblem-original_constraints.html
+__ method-surrogate_based_local-approx_subproblem-linearized_constraints.html
+__ method-surrogate_based_local-approx_subproblem-no_constraints.html
+
+
+
+**Description**
+
+
+First, the "primary" functions (that is, the objective functions or
+calibration terms) in the approximate subproblem can be selected to be
+surrogates of the original primary functions ( ``original_primary``), a
+single objective function ( ``single_objective``) formed from the
+primary function surrogates, or either an augmented Lagrangian merit
+function ( ``augmented_lagrangian_objective``) or a Lagrangian merit
+function ( ``lagrangian_objective``) formed from the primary and
+secondary function surrogates. The former option may imply the use of
+a nonlinear least squares method, a multiobjective optimization
+method, or a single objective optimization method to solve the
+approximate subproblem, depending on the definition of the primary
+functions. The latter three options all imply the use of a single
+objective optimization method regardless of primary function
+definition. Second, the surrogate constraints in the approximate
+subproblem can be selected to be surrogates of the original
+constraints ( ``original_constraints``) or linearized approximations to
+the surrogate constraints ( ``linearized_constraints``), or constraints
+can be omitted from the subproblem ( ``no_constraints``).
+
+

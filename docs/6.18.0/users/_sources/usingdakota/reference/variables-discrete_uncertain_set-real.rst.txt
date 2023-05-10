@@ -1,0 +1,140 @@
+.. _variables-discrete_uncertain_set-real:
+
+""""
+real
+""""
+
+
+Discrete, epistemic uncertain variable - real numbers within a set
+
+
+
+**Topics**
+
+
+discrete_variables, epistemic_uncertain_variables
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   variables-discrete_uncertain_set-real-elements_per_variable
+   variables-discrete_uncertain_set-real-elements
+   variables-discrete_uncertain_set-real-set_probabilities
+   variables-discrete_uncertain_set-real-categorical
+   variables-discrete_uncertain_set-real-initial_point
+   variables-discrete_uncertain_set-real-descriptors
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* INTEGER
+
+- *Default:* no discrete uncertain set real variables
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+---------------------------+---------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword            | Dakota Keyword Description                  |
+|                         | Group              |                           |                                             |
++=========================+====================+===========================+=============================================+
+| Optional                                     | `elements_per_variable`__ | Number of admissible elements for each set  |
+|                                              |                           | variable                                    |
++----------------------------------------------+---------------------------+---------------------------------------------+
+| Required                                     | `elements`__              | The permissible values for each discrete    |
+|                                              |                           | variable                                    |
++----------------------------------------------+---------------------------+---------------------------------------------+
+| Optional                                     | `set_probabilities`__     | This keyword defines the probabilities for  |
+|                                              |                           | the various elements of discrete sets.      |
++----------------------------------------------+---------------------------+---------------------------------------------+
+| Optional                                     | `categorical`__           | Whether the set-valued variables are        |
+|                                              |                           | categorical or relaxable                    |
++----------------------------------------------+---------------------------+---------------------------------------------+
+| Optional                                     | `initial_point`__         | Initial values for variables                |
++----------------------------------------------+---------------------------+---------------------------------------------+
+| Optional                                     | `descriptors`__           | Labels for the variables                    |
++----------------------------------------------+---------------------------+---------------------------------------------+
+
+.. __: variables-discrete_uncertain_set-real-elements_per_variable.html
+__ variables-discrete_uncertain_set-real-elements.html
+__ variables-discrete_uncertain_set-real-set_probabilities.html
+__ variables-discrete_uncertain_set-real-categorical.html
+__ variables-discrete_uncertain_set-real-initial_point.html
+__ variables-discrete_uncertain_set-real-descriptors.html
+
+
+
+**Description**
+
+
+Discrete set variables may be used to specify categorical choices which are
+epistemic. For example, if we have three possible forms for a physics
+model (model 1, 2, or 3) and there is epistemic uncertainty about
+which one is correct, a discrete uncertain set
+may be used to represent this type of uncertainty.
+
+This variable is defined by a set of reals, in
+which the discrete variable may take any value defined within the real
+set (for example, a parameter may have two allowable real values,
+3.285 or 4.79).
+
+Other epistemic types include:
+
+- :dakkw:`variables-continuous_interval_uncertain`
+- :dakkw:`variables-discrete_interval_uncertain`
+- discrete_uncertain_set :dakkw:`variables-discrete_uncertain_set-integer`
+- discrete_uncertain_set :dakkw:`variables-discrete_uncertain_set-string`
+
+
+
+**Examples**
+
+
+Let d1 be 2.1 or 1.3 and d2 be 0.4, 5 or 2.6.
+The following specification is for an interval analysis:
+
+.. code-block::
+
+    discrete_uncertain_set
+     integer
+     num_set_values  2           3
+     set_values      2.1  1.3    0.4  5  2.6
+     descriptors     'dr1'       'dr2'
+
+
+
+
+
+**Theory**
+
+
+The ``discrete_uncertain_set-integer``
+variable is NOT a discrete random variable.
+It can be contrasted to a the histogram-defined random variables:
+:dakkw:`variables-histogram_bin_uncertain` and :dakkw:`variables-histogram_point_uncertain`.
+It is used in epistemic uncertainty analysis, where one is trying to model
+uncertainty due to lack of knowledge.
+
+The discrete uncertain set integer variable is used in both interval analysis
+and in Dempster-Shafer theory of evidence.
+
+
+- interval analysis
+
+-the values are integers, equally weighted
+-the true value of the random variable is one of the integers in this set
+-output is the minimum and maximum function value conditionalon the specified inputs
+
+
+- Dempster-Shafer theory of evidence
+
+-the values are integers, but they can be assigned different weights
+-outputs are called "belief" and "plausibility."Belief represents the smallest possible probability that is consistent with the evidence,
+while plausibility represents the largest possible probability that is consistent with the evidence.
+Evidence is the values together with their weights.
+
+

@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Variable Support &mdash; dakota  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/dakota_theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/sandiaheaderlite.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Advanced Topics" href="../advanced.html" />
+    <link rel="prev" title="Uncertainty Quantification" href="uncertainty_quantification.html" /> 
+  
+  <meta name="sandia.approval_type" content="formal"/>
+  <meta property="sandia.approved" content="SAND2022-15651 O"/>
+  <meta name="description" content="The Dakota project delivers both state-of-the-art research and robust, usable software for optimization and UQ."/>
+  <meta name="keywords" content="Dakota, optimization, UQ, uncertainty quantification, parametric analysis, design exploration, model calibration, risk analysis"/>
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> dakota
+            <img src="../../_static/dakota_Arrow_Name_Tag_horiz_transparent.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../setupdakota.html">Getting Started</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../usingdakota.html">Using Dakota</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../introduction/aboutdakota.html">About Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../introduction/helloworld.html">Dakota Beginner’s Tutorial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples.html">Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../introduction/couplingtosimulations.html">Coupling Dakota to a Simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../inputfile.html">Dakota Input File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../running.html">Running Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../output.html">Dakota Output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../studytypes.html">Study Types</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../topics.html">Topics</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="aleatory_uncertainty_quantification_methods.html">Aleatory Uncertainty Quantification Methods</a></li>
+<li class="toctree-l3"><a class="reference internal" href="design_and_analysis_of_computer_experiments.html">Design and Analysis of Computer Experiments (DACE)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="epistemic_uncertainty_quantification_methods.html">Epistemic Uncertainty Quantification Methods</a></li>
+<li class="toctree-l3"><a class="reference internal" href="evidence_theory.html">Evidence Theory</a></li>
+<li class="toctree-l3"><a class="reference internal" href="interval_estimation.html">Interval Estimation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="linear_constraints.html">Linear Constraints</a></li>
+<li class="toctree-l3"><a class="reference internal" href="method_independent_controls.html">Method-Independent Controls</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nonlinear_constraints.html">Nonlinear Constraints</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nonlinear_least_squares.html">Nonlinear Least Squares</a></li>
+<li class="toctree-l3"><a class="reference internal" href="optimization_and_calibration.html">Optimization and Calibration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="package_coliny.html">Package: COLINY</a></li>
+<li class="toctree-l3"><a class="reference internal" href="package_conmin.html">Package: CONMIN</a></li>
+<li class="toctree-l3"><a class="reference internal" href="package_ddace.html">Package: DDACE</a></li>
+<li class="toctree-l3"><a class="reference internal" href="package_dot.html">Package: DOT</a></li>
+<li class="toctree-l3"><a class="reference internal" href="package_fsudace.html">Package: FSUDace</a></li>
+<li class="toctree-l3"><a class="reference internal" href="package_hopspack.html">Package: HOPSPACK</a></li>
+<li class="toctree-l3"><a class="reference internal" href="package_jega.html">Package: JEGA</a></li>
+<li class="toctree-l3"><a class="reference internal" href="package_nlpql.html">Package: NLPQL</a></li>
+<li class="toctree-l3"><a class="reference internal" href="package_npsol.html">Package: NPSOL</a></li>
+<li class="toctree-l3"><a class="reference internal" href="package_optpp.html">Package: OPT++</a></li>
+<li class="toctree-l3"><a class="reference internal" href="package_psuade.html">Package: PSUADE</a></li>
+<li class="toctree-l3"><a class="reference internal" href="package_queso.html">Package: QUESO</a></li>
+<li class="toctree-l3"><a class="reference internal" href="package_scolib.html">Package: SCOLIB</a></li>
+<li class="toctree-l3"><a class="reference internal" href="parameter_studies.html">Parameter Studies</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pointers.html">Pointers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reliability_methods.html">Reliability Methods</a></li>
+<li class="toctree-l3"><a class="reference internal" href="response_types.html">Response Types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sampling.html">Sampling</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sequential_quadratic_programming.html">Sequential Quadratic Programming (SQP)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="stochastic_expansion_methods.html">Stochastic Expansion Methods</a></li>
+<li class="toctree-l3"><a class="reference internal" href="uncertainty_quantification.html">Uncertainty Quantification</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Variable Support</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../advanced.html">Advanced Topics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../theory.html">Dakota Theory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference.html">Keyword Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../usingdakotagui/usingdakotagui.html">Using Dakota GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../externaltools/externaltools.html">Using External Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../compiling/compiling.html">Compiling Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developingdakota/developingdakota.html">Developing Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../misc/misc.html">Miscellaneous</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">dakota</a>
+      </nav>
+
+	  <!-- SNL Lite header -->
+	  <div class="snlheader-subsite--wrapper-default">
+		<snlheader class="snlheader-subsite" role="snlbanner">
+		  <div class="wrapper">
+			<a href="https://www.sandia.gov/index.html">
+			  <div class="logo-transparent"><p class="logo">Sandia National Laboratories</p></div>
+			</a>
+			<div class="nav-top">
+			  <a class="visuallyhidden" name="mainnav"></a>
+			  <div aria-label="main navigation" class="core-nav-transparent core-nav-transparent--visible" role="navigation">
+				<ul role="navigation" class="secondary-links">
+				  <li id="search-text-link">
+					<a aria-label="Search" href="https://www.sandia.gov/search/">Search Sandia.gov</a>
+				  </li>
+				  <li id="directory-text-link">
+					<a href="https://www.sandia.gov/directory.html" aria-expanded="false" aria-label="Site Directory">All Sandia Websites</a>
+				  </li>
+				</ul>
+			  </div>
+			</div>
+		  </div> 
+		</snlheader>
+	  </div>	  
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../usingdakota.html">Using Dakota</a> &raquo;</li>
+          <li><a href="../topics.html">Topics</a> &raquo;</li>
+      <li>Variable Support</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/usingdakota/topics/variable_support.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="variable-support">
+<span id="topic-variable-support"></span><h1>Variable Support<a class="headerlink" href="#variable-support" title="Permalink to this headline"></a></h1>
+<p>Different nondeterministic methods have differing support for
+uncertain variable distributions. Tables “5.37”,
+“5.38”, and “5.39” summarize the uncertain variables
+that are available for use by the different methods, where a “-”
+indicates that the distribution is not supported by the method, a “U”
+means the uncertain input variables of this type must be uncorrelated,
+a “C” denotes that correlations are supported involving uncertain
+input variables of this type, and an “A” means the appropriate
+variables must be specified as active in the variables
+specification block.  For example, if one wants to support
+sampling or a stochastic expansion method over both
+continuous uncertain and continuous state variables, the
+specification <code class="docutils literal notranslate"><span class="pre">active</span></code> <code class="docutils literal notranslate"><span class="pre">all</span></code> must be listed in the variables
+specification block.
+Additional notes include:</p>
+<ul class="simple">
+<li><p>we have four variants for stochastic expansions (SE), listed as  Wiener, Askey, Extended, and Piecewise which draw from different  sets of basis polynomials.  The term stochastic expansion indicates  polynomial chaos and stochastic collocation collectively, although  the Piecewise option is only currently supported for stochastic  collocation.  Refer to <a class="reference internal" href="../reference/method-polynomial_chaos.html#method-polynomial-chaos"><span class="std std-ref">method-polynomial_chaos</span></a> and  <a class="reference internal" href="../reference/method-stoch_collocation.html#method-stoch-collocation"><span class="std std-ref">method-stoch_collocation</span></a> for additional information on these three  options.</p></li>
+<li><p>methods supporting the epistemic interval distributions have differing  approaches: <code class="docutils literal notranslate"><span class="pre">sampling</span></code> and the <code class="docutils literal notranslate"><span class="pre">lhs</span></code> option of  <code class="docutils literal notranslate"><span class="pre">global_interval_est</span></code> model the interval basic probability  assignments (BPAs) as continuous histogram bin distributions for  purposes of generating samples; <code class="docutils literal notranslate"><span class="pre">local_interval_est</span></code> and the  <code class="docutils literal notranslate"><span class="pre">ego</span></code> option of <code class="docutils literal notranslate"><span class="pre">global_interval_est</span></code> ignore the BPA details  and models these variables as simple bounded regions defined by the  cell extremes; and <code class="docutils literal notranslate"><span class="pre">local_evidence</span></code> and <code class="docutils literal notranslate"><span class="pre">global_evidence</span></code>  model the interval specifications as true BPAs.</p></li>
+</ul>
+<p>anchor T5d37
+&lt;table&gt;
+&lt;caption align = “top”&gt;
+htmlonly
+Table 5.37
+endhtmlonly
+Summary of Distribution Types supported by Nondeterministic Methods, Part I (Continuous Aleatory Types)
+&lt;/caption&gt;
+&lt;tr&gt;
+&lt;td&gt;*Distribution Type*
+&lt;td&gt;*Sampling*
+&lt;td&gt;*Local Reliability*
+&lt;td&gt;*Global Reliability*
+&lt;td&gt;*Wiener SE*
+&lt;td&gt;*Askey SE*
+&lt;td&gt;*Extended SE*
+&lt;td&gt;*Piecewise SE*
+&lt;td&gt;*Local Interval*
+&lt;td&gt;*Global Interval*
+&lt;td&gt;*Local Evidence*
+&lt;td&gt;*Global Evidence*
+&lt;tr&gt;
+&lt;td&gt;Normal
+&lt;td&gt;C
+&lt;td&gt;C
+&lt;td&gt;C
+&lt;td&gt;C
+&lt;td&gt;C
+&lt;td&gt;C
+&lt;td&gt;-
+&lt;td&gt;-
+&lt;td&gt;-
+&lt;td&gt;-
+&lt;td&gt;-
+&lt;tr&gt;
+&lt;td&gt;Bounded Normal
+&lt;td&gt;C
+&lt;td&gt;U
+&lt;td&gt;U
+&lt;td&gt;U
+&lt;td&gt;U
+&lt;td&gt;U
+&lt;td&gt;U
+&lt;td&gt;-
+&lt;td&gt;-
+&lt;td&gt;-
+&lt;td&gt;-
+&lt;tr&gt;
+&lt;td&gt;Lognormal
+&lt;td&gt;C
+&lt;td&gt;C
+&lt;td&gt;C
+&lt;td&gt;C
+&lt;td&gt;C
+&lt;td&gt;U
+&lt;td&gt;-
+&lt;td&gt;-
+&lt;td&gt;-
+&lt;td&gt;-
+&lt;td&gt;-
+&lt;tr&gt;
+&lt;td&gt;Bounded Lognormal
+&lt;td&gt;C
+&lt;td&gt;U
+&lt;td&gt;U
+&lt;td&gt;U
+&lt;td&gt;U
+&lt;td&gt;U
+&lt;td&gt;U
+&lt;td&gt;-
+&lt;td&gt;-
+&lt;td&gt;-
+&lt;td&gt;-
+&lt;tr&gt;
+&lt;td&gt;Uniform
+&lt;td&gt;C
+&lt;td&gt;C
+&lt;td&gt;C
+&lt;td&gt;C
+&lt;td&gt;U
+&lt;td&gt;U
+&lt;td&gt;U
+&lt;td&gt;-
+&lt;td&gt;-
+&lt;td&gt;-
+&lt;td&gt;-
+&lt;tr&gt;
+&lt;td&gt;Loguniform
+&lt;td&gt;C
+&lt;td&gt;U
+&lt;td&gt;U
+&lt;td&gt;U
+&lt;td&gt;U
+&lt;td&gt;U
+&lt;td&gt;U
+&lt;td&gt;-
+&lt;td&gt;-
+&lt;td&gt;-
+&lt;td&gt;-
+&lt;tr&gt;
+&lt;td&gt;Triangular
+&lt;td&gt;C
+&lt;td&gt;U
+&lt;td&gt;U
+&lt;td&gt;U
+&lt;td&gt;U
+&lt;td&gt;U
+&lt;td&gt;U
+&lt;td&gt;-
+&lt;td&gt;-
+&lt;td&gt;-
+&lt;td&gt;-
+&lt;tr&gt;
+&lt;td&gt;Exponential
+&lt;td&gt;C
+&lt;td&gt;C
+&lt;td&gt;C
+&lt;td&gt;C
+&lt;td&gt;U
+&lt;td&gt;U
+&lt;td&gt;-
+&lt;td&gt;-
+&lt;td&gt;-
+&lt;td&gt;-
+&lt;td&gt;-
+&lt;tr&gt;
+&lt;td&gt;Beta
+&lt;td&gt;C
+&lt;td&gt;U
+&lt;td&gt;U
+&lt;td&gt;U
+&lt;td&gt;U
+&lt;td&gt;U
+&lt;td&gt;U
+&lt;td&gt;-
+&lt;td&gt;-
+&lt;td&gt;-
+&lt;td&gt;-
+&lt;tr&gt;
+&lt;td&gt;Gamma
+&lt;td&gt;C
+&lt;td&gt;C
+&lt;td&gt;C
+&lt;td&gt;C
+&lt;td&gt;U
+&lt;td&gt;U
+&lt;td&gt;-
+&lt;td&gt;-
+&lt;td&gt;-
+&lt;td&gt;-
+&lt;td&gt;-
+&lt;tr&gt;
+&lt;td&gt;Gumbel
+&lt;td&gt;C
+&lt;td&gt;C
+&lt;td&gt;C
+&lt;td&gt;C
+&lt;td&gt;C
+&lt;td&gt;U
+&lt;td&gt;-
+&lt;td&gt;-
+&lt;td&gt;-
+&lt;td&gt;-
+&lt;td&gt;-
+&lt;tr&gt;
+&lt;td&gt;Frechet
+&lt;td&gt;C
+&lt;td&gt;C
+&lt;td&gt;C
+&lt;td&gt;C
+&lt;td&gt;C
+&lt;td&gt;U
+&lt;td&gt;-
+&lt;td&gt;-
+&lt;td&gt;-
+&lt;td&gt;-
+&lt;td&gt;-
+&lt;tr&gt;
+&lt;td&gt;Weibull
+&lt;td&gt;C
+&lt;td&gt;C
+&lt;td&gt;C
+&lt;td&gt;C
+&lt;td&gt;C
+&lt;td&gt;U
+&lt;td&gt;-
+&lt;td&gt;-
+&lt;td&gt;-
+&lt;td&gt;-
+&lt;td&gt;-
+&lt;tr&gt;
+&lt;td&gt;Continuous Histogram Bin
+&lt;td&gt;C
+&lt;td&gt;U
+&lt;td&gt;U
+&lt;td&gt;U
+&lt;td&gt;U
+&lt;td&gt;U
+&lt;td&gt;U
+&lt;td&gt;-
+&lt;td&gt;-
+&lt;td&gt;-
+&lt;td&gt;-
+&lt;/table&gt;</p>
+<p>anchor T5d38
+&lt;table&gt;
+&lt;caption align = “top”&gt;
+htmlonly
+Table 5.38
+endhtmlonly
+Summary of Distribution Types supported by Nondeterministic Methods, Part II (Discrete Aleatory Types)
+&lt;/caption&gt;
+&lt;tr&gt;
+&lt;td&gt;*Distribution Type*
+&lt;td&gt;*Sampling*
+&lt;td&gt;*Local Reliability*
+&lt;td&gt;*Global Reliability*
+&lt;td&gt;*Wiener SE*
+&lt;td&gt;*Askey SE*
+&lt;td&gt;*Extended SE*
+&lt;td&gt;*Piecewise SE*
+&lt;td&gt;*Local Interval*
+&lt;td&gt;*Global Interval*
+&lt;td&gt;*Local Evidence*
+&lt;td&gt;*Global Evidence*
+&lt;tr&gt;
+&lt;td&gt;Poisson
+&lt;td&gt;C
+&lt;td&gt;-
+&lt;td&gt;-
+&lt;td&gt;-
+&lt;td&gt;-
+&lt;td&gt;-
+&lt;td&gt;-
+&lt;td&gt;-
+&lt;td&gt;-
+&lt;td&gt;-
+&lt;td&gt;-
+&lt;tr&gt;
+&lt;td&gt;Binomial
+&lt;td&gt;C
+&lt;td&gt;-
+&lt;td&gt;-
+&lt;td&gt;-
+&lt;td&gt;-
+&lt;td&gt;-
+&lt;td&gt;-
+&lt;td&gt;-
+&lt;td&gt;-
+&lt;td&gt;-
+&lt;td&gt;-
+&lt;tr&gt;
+&lt;td&gt;Negative Binomial
+&lt;td&gt;C
+&lt;td&gt;-
+&lt;td&gt;-
+&lt;td&gt;-
+&lt;td&gt;-
+&lt;td&gt;-
+&lt;td&gt;-
+&lt;td&gt;-
+&lt;td&gt;-
+&lt;td&gt;-
+&lt;td&gt;-
+&lt;tr&gt;
+&lt;td&gt;Geometric
+&lt;td&gt;C
+&lt;td&gt;-
+&lt;td&gt;-
+&lt;td&gt;-
+&lt;td&gt;-
+&lt;td&gt;-
+&lt;td&gt;-
+&lt;td&gt;-
+&lt;td&gt;-
+&lt;td&gt;-
+&lt;td&gt;-
+&lt;tr&gt;
+&lt;td&gt;Hypergeometric
+&lt;td&gt;C
+&lt;td&gt;-
+&lt;td&gt;-
+&lt;td&gt;-
+&lt;td&gt;-
+&lt;td&gt;-
+&lt;td&gt;-
+&lt;td&gt;-
+&lt;td&gt;-
+&lt;td&gt;-
+&lt;td&gt;-
+&lt;tr&gt;
+&lt;td&gt;Discrete Histogram Point
+&lt;td&gt;C
+&lt;td&gt;-
+&lt;td&gt;-
+&lt;td&gt;-
+&lt;td&gt;-
+&lt;td&gt;-
+&lt;td&gt;-
+&lt;td&gt;-
+&lt;td&gt;-
+&lt;td&gt;-
+&lt;td&gt;-
+&lt;/table&gt;</p>
+<p>anchor T5d39
+&lt;table&gt;
+&lt;caption align = “top”&gt;
+htmlonly
+Table 5.39
+endhtmlonly
+Summary of Distribution Types supported by Nondeterministic Methods, Part III (Epistemic, Design, and State Types)
+&lt;/caption&gt;
+&lt;tr&gt;
+&lt;td&gt;*Distribution Type*
+&lt;td&gt;*Sampling*
+&lt;td&gt;*Local Reliability*
+&lt;td&gt;*Global Reliability*
+&lt;td&gt;*Wiener SE*
+&lt;td&gt;*Askey SE*
+&lt;td&gt;*Extended SE*
+&lt;td&gt;*Piecewise SE*
+&lt;td&gt;*Local Interval*
+&lt;td&gt;*Global Interval*
+&lt;td&gt;*Local Evidence*
+&lt;td&gt;*Global Evidence*
+&lt;tr&gt;
+&lt;td&gt;Interval
+&lt;td&gt;U
+&lt;td&gt;-
+&lt;td&gt;U,A
+&lt;td&gt;U,A
+&lt;td&gt;U,A
+&lt;td&gt;U,A
+&lt;td&gt;U,A
+&lt;td&gt;U
+&lt;td&gt;U
+&lt;td&gt;U
+&lt;td&gt;U
+&lt;tr&gt;
+&lt;td&gt;Continuous Design
+&lt;td&gt;U,A
+&lt;td&gt;-
+&lt;td&gt;U,A
+&lt;td&gt;U,A
+&lt;td&gt;U,A
+&lt;td&gt;U,A
+&lt;td&gt;U,A
+&lt;td&gt;-
+&lt;td&gt;-
+&lt;td&gt;-
+&lt;td&gt;-
+&lt;tr&gt;
+&lt;td&gt;Discrete Design Range, Int Set, Real Set
+&lt;td&gt;U,A
+&lt;td&gt;-
+&lt;td&gt;-
+&lt;td&gt;-
+&lt;td&gt;-
+&lt;td&gt;-
+&lt;td&gt;-
+&lt;td&gt;-
+&lt;td&gt;-
+&lt;td&gt;-
+&lt;td&gt;-
+&lt;tr&gt;
+&lt;td&gt;Continuous State
+&lt;td&gt;U,A
+&lt;td&gt;-
+&lt;td&gt;U,A
+&lt;td&gt;U,A
+&lt;td&gt;U,A
+&lt;td&gt;U,A
+&lt;td&gt;U,A
+&lt;td&gt;-
+&lt;td&gt;-
+&lt;td&gt;-
+&lt;td&gt;-
+&lt;tr&gt;
+&lt;td&gt;Discrete State Range, Int Set, Real Set
+&lt;td&gt;U,A
+&lt;td&gt;-
+&lt;td&gt;-
+&lt;td&gt;-
+&lt;td&gt;-
+&lt;td&gt;-
+&lt;td&gt;-
+&lt;td&gt;-
+&lt;td&gt;-
+&lt;td&gt;-
+&lt;td&gt;-
+&lt;/table&gt;</p>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="uncertainty_quantification.html" class="btn btn-neutral float-left" title="Uncertainty Quantification" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../advanced.html" class="btn btn-neutral float-right" title="Advanced Topics" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <!--
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Sandia National Laboratories.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+  --> 
+
+</footer>
+        </div>
+      </div>
+	  
+	  <div style="background-color: #0f0f0f;color:#fafafa;padding:20px">
+	    <div>
+		  <h2><em>Exceptional service in the national interest</em></h2>
+		</div>
+		<p>© 2022 National Technology and Engineering Solutions of Sandia, LLC. | <a href="https://www.sandia.gov/contact_us/index.html">Questions &amp; Comments</a> | <a href="https://www.sandia.gov/general/privacy-security/index.html">Privacy &amp; Security</a></p>
+		<p><a href="http://energy.gov" rel="noopener noreferrer" target="_blank"><img alt="U.S. Department of Energy" longdesc="https://energy.gov" src="https://www.sandia.gov/_common/images/doe_logo_white.png" style="height:37px; width:140px"></a> <a href="http://nnsa.energy.gov/" rel="noopener noreferrer" target="_blank"> <img alt="National Nuclear Security Administration" longdesc="http://nnsa.gov" src="https://www.sandia.gov/_common/images/nnsa_logo_white.png" style="height:37px; width:116px"></a></p>
+		<p><a href="https://www.sandia.gov">Sandia National Laboratories</a> is a multimission laboratory managed and operated by National Technology and Engineering Solutions of Sandia, LLC., a wholly owned subsidiary of Honeywell International, Inc., for the U.S. Department of Energy’s National Nuclear Security Administration under contract DE-NA-0003525.</p>
+	  </div>	  	  
+	  
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

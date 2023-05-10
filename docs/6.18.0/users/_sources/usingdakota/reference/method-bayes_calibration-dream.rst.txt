@@ -1,0 +1,112 @@
+.. _method-bayes_calibration-dream:
+
+"""""
+dream
+"""""
+
+
+DREAM (DiffeRential Evolution Adaptive Metropolis)
+
+
+
+**Topics**
+
+
+bayesian_calibration
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-bayes_calibration-dream-chain_samples
+   method-bayes_calibration-dream-seed
+   method-bayes_calibration-dream-chains
+   method-bayes_calibration-dream-num_cr
+   method-bayes_calibration-dream-crossover_chain_pairs
+   method-bayes_calibration-dream-gr_threshold
+   method-bayes_calibration-dream-jump_step
+   method-bayes_calibration-dream-emulator
+   method-bayes_calibration-dream-standardized_space
+   method-bayes_calibration-dream-export_chain_points_file
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+------------------------------+---------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword               | Dakota Keyword Description                  |
+|                         | Group              |                              |                                             |
++=========================+====================+==============================+=============================================+
+| Required                                     | `chain_samples`__            | Number of Markov Chain Monte Carlo          |
+|                                              |                              | posterior samples                           |
++----------------------------------------------+------------------------------+---------------------------------------------+
+| Optional                                     | `seed`__                     | Seed of the random number generator         |
++----------------------------------------------+------------------------------+---------------------------------------------+
+| Optional                                     | `chains`__                   | Number of chains in DREAM                   |
++----------------------------------------------+------------------------------+---------------------------------------------+
+| Optional                                     | `num_cr`__                   | Number of candidate points for each         |
+|                                              |                              | crossover.                                  |
++----------------------------------------------+------------------------------+---------------------------------------------+
+| Optional                                     | `crossover_chain_pairs`__    | Number of chains used in crossover.         |
++----------------------------------------------+------------------------------+---------------------------------------------+
+| Optional                                     | `gr_threshold`__             | Convergence tolerance for the Gelman-Rubin  |
+|                                              |                              | statistic                                   |
++----------------------------------------------+------------------------------+---------------------------------------------+
+| Optional                                     | `jump_step`__                | Number of generations a long jump step is   |
+|                                              |                              | taken                                       |
++----------------------------------------------+------------------------------+---------------------------------------------+
+| Optional                                     | `emulator`__                 | Use an emulator or surrogate model to       |
+|                                              |                              | evaluate the likelihood function            |
++----------------------------------------------+------------------------------+---------------------------------------------+
+| Optional                                     | `standardized_space`__       | Perform Bayesian inference in standardized  |
+|                                              |                              | probability space                           |
++----------------------------------------------+------------------------------+---------------------------------------------+
+| Optional                                     | `export_chain_points_file`__ | Export the MCMC chain to the specified      |
+|                                              |                              | filename                                    |
++----------------------------------------------+------------------------------+---------------------------------------------+
+
+.. __: method-bayes_calibration-dream-chain_samples.html
+__ method-bayes_calibration-dream-seed.html
+__ method-bayes_calibration-dream-chains.html
+__ method-bayes_calibration-dream-num_cr.html
+__ method-bayes_calibration-dream-crossover_chain_pairs.html
+__ method-bayes_calibration-dream-gr_threshold.html
+__ method-bayes_calibration-dream-jump_step.html
+__ method-bayes_calibration-dream-emulator.html
+__ method-bayes_calibration-dream-standardized_space.html
+__ method-bayes_calibration-dream-export_chain_points_file.html
+
+
+
+**Description**
+
+
+The DiffeRential Evolution Adaptive Metropolis algorithm is described
+in :cite:p:`Vrugt`.  For the DREAM method, one can define the number of
+chains used with ``chains`` (minimum 3). The total number of
+generations per chain in DREAM is the number of samples ( ``samples``)
+divided by the number of chains ( ``chains``).  The number of chains
+randomly selected to be used in the crossover each time a crossover
+occurs is ``crossover_chain_pairs``.  There is an extra adaptation
+during burn-in, in which DREAM estimates a distribution of crossover
+probabilities that favors large jumps over smaller ones in each of the
+chains.  Normalization is required to ensure that all of the input
+dimensions contribute equally. In this process, a discrete number of
+candidate points for each crossover value is generated. This parameter
+is ``num_cr``.  The ``gr_threshold`` is the convergence tolerance for
+the Gelman-Rubin statistic which will govern the convergence of the
+multiple chain process. The integer ``jump_step`` forces a long jump
+every ``jump_step`` generations.  For more details about these
+parameters, see :cite:p:`Vrugt`.
+
+*Attention:* While the ``emulator`` specification for DREAM
+includes the keyword posterior_adaptive, it is not yet operational.
+
+

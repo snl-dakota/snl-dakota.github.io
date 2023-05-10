@@ -1,0 +1,56 @@
+.. _method-bayes_calibration-queso-emulator-mf_pce-expansion_order_sequence-expansion_samples_sequence:
+
+""""""""""""""""""""""""""
+expansion_samples_sequence
+""""""""""""""""""""""""""
+
+
+Sequence of expansion samples used in a multi-stage polynomial chaos expansion
+
+Each level entry of the ``expansion_samples_sequence`` applies to one
+expansion within a multi-stage expansion.  Current multi-stage
+expansions that support expansion samples sequences include multilevel
+and multifidelity polynomial chaos.
+
+If adaptive refinement is active, then this sequence specifies the
+starting point for each level within either an individual or
+integrated refinement approach.
+
+A corresponding scalar specification is documented at, e.g.,
+:dakkw:`method-polynomial_chaos-expansion_order-expansion_samples`
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-bayes_calibration-queso-emulator-mf_pce-expansion_order_sequence-expansion_samples_sequence-reuse_points
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* INTEGERLIST
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+--------------------+---------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword     | Dakota Keyword Description                  |
+|                         | Group              |                    |                                             |
++=========================+====================+====================+=============================================+
+| Optional                                     | `reuse_points`__   | This describes the behavior of reuse of     |
+|                                              |                    | points in constructing polynomial chaos     |
+|                                              |                    | expansion models.                           |
++----------------------------------------------+--------------------+---------------------------------------------+
+
+.. __: method-bayes_calibration-queso-emulator-mf_pce-expansion_order_sequence-expansion_samples_sequence-reuse_points.html
+
+
+
+**Description**
+
+
+
+

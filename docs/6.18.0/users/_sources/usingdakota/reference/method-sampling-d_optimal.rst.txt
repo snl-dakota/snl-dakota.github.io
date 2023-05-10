@@ -1,0 +1,85 @@
+.. _method-sampling-d_optimal:
+
+"""""""""
+d_optimal
+"""""""""
+
+
+Generate a D-optimal sampling design
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-sampling-d_optimal-candidate_designs
+   method-sampling-d_optimal-leja_oversample_ratio
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+- *Default:* off
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+---------------------------+---------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword            | Dakota Keyword Description                  |
+|                         | Group              |                           |                                             |
++=========================+====================+===========================+=============================================+
+| Optional (Choose One)   | Design Strategy    | `candidate_designs`__     | Number of candidate sampling designs from   |
+|                         |                    |                           | which to select the most D-optimal          |
+|                         |                    +---------------------------+---------------------------------------------+
+|                         |                    | `leja_oversample_ratio`__ | Oversampling ratio for generating candidate |
+|                         |                    |                           | point set                                   |
++-------------------------+--------------------+---------------------------+---------------------------------------------+
+
+.. __: method-sampling-d_optimal-candidate_designs.html
+__ method-sampling-d_optimal-leja_oversample_ratio.html
+
+
+
+**Description**
+
+
+This option will generate a sampling design that is approximately
+determinant-optimal (D-optimal) by downselecting from a set of
+candidate sample points.
+
+*Default Behavior*
+
+If not specified, a standard sampling design (MC or LHS) will be
+generated.  When ``d_optimal`` is specified, 100 candidate designs will
+be generated and the most D-optimal will be selected.
+
+*Usage Tips*
+
+D-optimal designs are only supported for
+:ref:`variables:uncertain:auv`.  The default candidate-based
+D-optimal strategy works for all submethods except incremental LHS (
+``lhs`` with ``refinement_samples``).  The Leja sampling option only works
+for continuous variables, and when used with LHS designs, the
+candidates point set will be Latin, but the final design will not be.
+
+
+
+
+**Examples**
+
+
+
+.. code-block::
+
+    method
+      sampling
+        sample_type random
+        samples = 20
+        d_optimal
+
+
+
+

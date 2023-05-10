@@ -1,0 +1,158 @@
+.. _method-surrogate_based_local:
+
+"""""""""""""""""""""
+surrogate_based_local
+"""""""""""""""""""""
+
+
+Local Surrogate Based Optimization
+
+
+
+**Topics**
+
+
+surrogate_based_optimization_methods
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-surrogate_based_local-method_pointer
+   method-surrogate_based_local-method_name
+   method-surrogate_based_local-model_pointer
+   method-surrogate_based_local-soft_convergence_limit
+   method-surrogate_based_local-truth_surrogate_bypass
+   method-surrogate_based_local-approx_subproblem
+   method-surrogate_based_local-merit_function
+   method-surrogate_based_local-acceptance_logic
+   method-surrogate_based_local-constraint_relax
+   method-surrogate_based_local-trust_region
+   method-surrogate_based_local-max_iterations
+   method-surrogate_based_local-convergence_tolerance
+   method-surrogate_based_local-constraint_tolerance
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+----------------------------+---------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword             | Dakota Keyword Description                  |
+|                         | Group              |                            |                                             |
++=========================+====================+============================+=============================================+
+| Required (Choose One)   | Subproblem         | `method_pointer`__         | Pointer to sub-method to apply to a         |
+|                         | Optimizer          |                            | surrogate or branch-and-bound sub-problem   |
+|                         | Selection          +----------------------------+---------------------------------------------+
+|                         |                    | `method_name`__            | Specify sub-method by name                  |
++-------------------------+--------------------+----------------------------+---------------------------------------------+
+| Required                                     | `model_pointer`__          | Identifier for model block to be used by a  |
+|                                              |                            | method                                      |
++----------------------------------------------+----------------------------+---------------------------------------------+
+| Optional                                     | `soft_convergence_limit`__ | Limit number of iterations w/ little        |
+|                                              |                            | improvement                                 |
++----------------------------------------------+----------------------------+---------------------------------------------+
+| Optional                                     | `truth_surrogate_bypass`__ | Bypass lower level surrogates when          |
+|                                              |                            | performing truth verifications on a top     |
+|                                              |                            | level surrogate                             |
++----------------------------------------------+----------------------------+---------------------------------------------+
+| Optional                                     | `approx_subproblem`__      | Identify functions to be included in        |
+|                                              |                            | surrogate merit function                    |
++----------------------------------------------+----------------------------+---------------------------------------------+
+| Optional                                     | `merit_function`__         | Select type of penalty or merit function    |
++----------------------------------------------+----------------------------+---------------------------------------------+
+| Optional                                     | `acceptance_logic`__       | Set criteria for trusted surrogate          |
++----------------------------------------------+----------------------------+---------------------------------------------+
+| Optional                                     | `constraint_relax`__       | Enable constraint relaxation                |
++----------------------------------------------+----------------------------+---------------------------------------------+
+| Optional                                     | `trust_region`__           | Specification group for trust region model  |
+|                                              |                            | management                                  |
++----------------------------------------------+----------------------------+---------------------------------------------+
+| Optional                                     | `max_iterations`__         | Number of iterations allowed for optimizers |
+|                                              |                            | and adaptive UQ methods                     |
++----------------------------------------------+----------------------------+---------------------------------------------+
+| Optional                                     | `convergence_tolerance`__  | Stopping criterion based on objective       |
+|                                              |                            | function or statistics convergence          |
++----------------------------------------------+----------------------------+---------------------------------------------+
+| Optional                                     | `constraint_tolerance`__   | Maximum allowable constraint violation      |
+|                                              |                            | still considered feasible                   |
++----------------------------------------------+----------------------------+---------------------------------------------+
+
+.. __: method-surrogate_based_local-method_pointer.html
+__ method-surrogate_based_local-method_name.html
+__ method-surrogate_based_local-model_pointer.html
+__ method-surrogate_based_local-soft_convergence_limit.html
+__ method-surrogate_based_local-truth_surrogate_bypass.html
+__ method-surrogate_based_local-approx_subproblem.html
+__ method-surrogate_based_local-merit_function.html
+__ method-surrogate_based_local-acceptance_logic.html
+__ method-surrogate_based_local-constraint_relax.html
+__ method-surrogate_based_local-trust_region.html
+__ method-surrogate_based_local-max_iterations.html
+__ method-surrogate_based_local-convergence_tolerance.html
+__ method-surrogate_based_local-constraint_tolerance.html
+
+
+
+**Description**
+
+
+In surrogate-based optimization (SBO) and surrogate-based nonlinear
+least squares (SBNLS), minimization occurs using a set of one or more
+approximations, defined from a surrogate model, that are built and
+periodically updated using data from a "truth" model. The surrogate
+model can be a global data fit (e.g., regression or interpolation of
+data generated from a design of computer experiments), a multipoint
+approximation, a local Taylor Series expansion, or a model hierarchy
+approximation (e.g., a low-fidelity simulation model), whereas the
+truth model involves a high-fidelity simulation model. The goals of
+surrogate-based methods are to reduce the total number of truth model
+simulations and, in the case of global data fit surrogates, to smooth
+noisy data with an easily navigated analytic function.
+
+In the surrogate-based local method, a trust region approach is used
+to manage the minimization process to maintain acceptable accuracy
+between the surrogate model and the truth model (by limiting the range
+over which the surrogate model is trusted). The process involves a
+sequence of minimizations performed on the surrogate model and bounded
+by the trust region. At the end of each approximate minimization, the
+candidate optimum point is validated using the truth model. If
+sufficient decrease has been obtained in the truth model, the trust
+region is re-centered around the candidate optimum point and the trust
+region will either shrink, expand, or remain the same size depending
+on the accuracy with which the surrogate model predicted the truth
+model decrease. If sufficient decrease has not been attained, the
+trust region center is not updated and the entire trust region shrinks
+by a user-specified factor. The cycle then repeats with the
+construction of a new surrogate model, a minimization, and another
+test for sufficient decrease in the truth model. This cycle continues
+until convergence is attained.
+
+*Expected HDF5 Output*
+
+If Dakota was built with HDF5 support and run with the
+:dakkw:`environment-results_output-hdf5` keyword, this method
+writes the following results to HDF5:
+
+
+- :ref:`hdf5_results-best_params`
+- :ref:`hdf5_results-best_obj_fncs` (when :dakkw:`responses-objective_functions`) are specified)
+- :ref:`hdf5_results-best_constraints`
+- :ref:`hdf5_results-calibration` (when :dakkw:`responses-calibration_terms` are specified)
+
+
+
+**Theory**
+
+
+For surrogate_based_local problems with nonlinear constraints, a
+number of algorithm formulations exist as described in :cite:p:`Eld06b`
+and as summarized in :ref:`adv_meth:sbm:sblm`.
+
+

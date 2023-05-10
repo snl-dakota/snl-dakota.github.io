@@ -1,0 +1,46 @@
+.. _method-hybrid-embedded-local_method_name:
+
+"""""""""""""""""
+local_method_name
+"""""""""""""""""
+
+
+Specify the local method by Dakota name
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-hybrid-embedded-local_method_name-local_model_pointer
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* STRING
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+-------------------------+---------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword          | Dakota Keyword Description                  |
+|                         | Group              |                         |                                             |
++=========================+====================+=========================+=============================================+
+| Optional                                     | `local_model_pointer`__ | Pointer to model used by local method       |
++----------------------------------------------+-------------------------+---------------------------------------------+
+
+.. __: method-hybrid-embedded-local_method_name-local_model_pointer.html
+
+
+
+**Description**
+
+
+``local_method_name`` is used to specify the local method in a
+``hybrid`` ``embedded`` optimization by Dakota name (e.g. '
+:dakkw:`method-conmin_mfd`'). The name of the method is provided as a
+string. The method is executed with default options.
+
+

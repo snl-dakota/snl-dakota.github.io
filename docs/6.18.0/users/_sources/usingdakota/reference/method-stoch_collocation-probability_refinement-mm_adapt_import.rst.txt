@@ -1,0 +1,36 @@
+.. _method-stoch_collocation-probability_refinement-mm_adapt_import:
+
+"""""""""""""""
+mm_adapt_import
+"""""""""""""""
+
+
+Importance sampling option for probability refinement
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+
+**Description**
+
+
+``mm_adapt_import`` starts with all of the samples located in the failure region
+to build a multimodal sampling density. First, it uses a small number of samples around
+each of the initial samples in the failure region. Note that these samples
+are allocated to the different points based on their relative probabilities of occurrence:
+more probable points get more samples. This early part of the approach is done
+to search for "representative" points. Once these are located, the multimodal sampling
+density is set and then ``mm_adapt_import`` proceeds similarly to ``adapt_import`` (sample
+until convergence).
+
+

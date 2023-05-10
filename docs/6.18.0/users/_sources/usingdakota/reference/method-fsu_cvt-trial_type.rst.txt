@@ -1,0 +1,60 @@
+.. _method-fsu_cvt-trial_type:
+
+""""""""""
+trial_type
+""""""""""
+
+
+Specify how the trial samples are generated
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-fsu_cvt-trial_type-grid
+   method-fsu_cvt-trial_type-halton
+   method-fsu_cvt-trial_type-random
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+- *Default:* random
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+--------------------+---------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword     | Dakota Keyword Description                  |
+|                         | Group              |                    |                                             |
++=========================+====================+====================+=============================================+
+| Required (Choose One)   | Trial Type         | `grid`__           | Samples on a regular grid                   |
+|                         |                    +--------------------+---------------------------------------------+
+|                         |                    | `halton`__         | Generate samples from a Halton sequence     |
+|                         |                    +--------------------+---------------------------------------------+
+|                         |                    | `random`__         | Uses purely random Monte Carlo sampling to  |
+|                         |                    |                    | sample variables                            |
++-------------------------+--------------------+--------------------+---------------------------------------------+
+
+.. __: method-fsu_cvt-trial_type-grid.html
+__ method-fsu_cvt-trial_type-halton.html
+__ method-fsu_cvt-trial_type-random.html
+
+
+
+**Description**
+
+
+The user has the option to specify the method by which the
+trials are created to adjust the centroids. The ``trial_type``
+can be one of three types:
+
+- ``random``, where points are generated randomly
+- ``halton``, where points are generated according to the Halton sequence
+- ``grid``, where points are placed on a regular grid over the hyperspace.
+
+

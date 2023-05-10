@@ -1,0 +1,180 @@
+.. _method-coliny_direct:
+
+"""""""""""""
+coliny_direct
+"""""""""""""
+
+
+DIviding RECTangles method
+
+
+
+**Topics**
+
+
+package_scolib, package_coliny, global_optimization_methods
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-coliny_direct-division
+   method-coliny_direct-global_balance_parameter
+   method-coliny_direct-local_balance_parameter
+   method-coliny_direct-max_boxsize_limit
+   method-coliny_direct-min_boxsize_limit
+   method-coliny_direct-constraint_penalty
+   method-coliny_direct-solution_target
+   method-coliny_direct-seed
+   method-coliny_direct-show_misc_options
+   method-coliny_direct-misc_options
+   method-coliny_direct-max_iterations
+   method-coliny_direct-convergence_tolerance
+   method-coliny_direct-max_function_evaluations
+   method-coliny_direct-scaling
+   method-coliny_direct-model_pointer
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+------------------------------+---------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword               | Dakota Keyword Description                  |
+|                         | Group              |                              |                                             |
++=========================+====================+==============================+=============================================+
+| Optional                                     | `division`__                 | Determine how rectangles are subdivided     |
++----------------------------------------------+------------------------------+---------------------------------------------+
+| Optional                                     | `global_balance_parameter`__ | Tolerance for whether a subregion is worth  |
+|                                              |                              | dividing                                    |
++----------------------------------------------+------------------------------+---------------------------------------------+
+| Optional                                     | `local_balance_parameter`__  | Tolerance for whether a subregion is worth  |
+|                                              |                              | dividing                                    |
++----------------------------------------------+------------------------------+---------------------------------------------+
+| Optional                                     | `max_boxsize_limit`__        | Stopping Criterion based on longest edge of |
+|                                              |                              | hyperrectangle                              |
++----------------------------------------------+------------------------------+---------------------------------------------+
+| Optional                                     | `min_boxsize_limit`__        | Stopping Criterion based on shortest edge   |
+|                                              |                              | of hyperrectangle                           |
++----------------------------------------------+------------------------------+---------------------------------------------+
+| Optional                                     | `constraint_penalty`__       | Multiplier for the penalty function         |
++----------------------------------------------+------------------------------+---------------------------------------------+
+| Optional                                     | `solution_target`__          | Stopping criteria based on objective        |
+|                                              |                              | function value                              |
++----------------------------------------------+------------------------------+---------------------------------------------+
+| Optional                                     | `seed`__                     | Seed of the random number generator         |
++----------------------------------------------+------------------------------+---------------------------------------------+
+| Optional                                     | `show_misc_options`__        | Show algorithm parameters not exposed in    |
+|                                              |                              | Dakota input                                |
++----------------------------------------------+------------------------------+---------------------------------------------+
+| Optional                                     | `misc_options`__             | Set method options not available through    |
+|                                              |                              | Dakota spec                                 |
++----------------------------------------------+------------------------------+---------------------------------------------+
+| Optional                                     | `max_iterations`__           | Number of iterations allowed for optimizers |
+|                                              |                              | and adaptive UQ methods                     |
++----------------------------------------------+------------------------------+---------------------------------------------+
+| Optional                                     | `convergence_tolerance`__    | Stopping criterion based on objective       |
+|                                              |                              | function or statistics convergence          |
++----------------------------------------------+------------------------------+---------------------------------------------+
+| Optional                                     | `max_function_evaluations`__ | Number of function evaluations allowed for  |
+|                                              |                              | optimizers                                  |
++----------------------------------------------+------------------------------+---------------------------------------------+
+| Optional                                     | `scaling`__                  | Turn on scaling for variables, responses,   |
+|                                              |                              | and constraints                             |
++----------------------------------------------+------------------------------+---------------------------------------------+
+| Optional                                     | `model_pointer`__            | Identifier for model block to be used by a  |
+|                                              |                              | method                                      |
++----------------------------------------------+------------------------------+---------------------------------------------+
+
+.. __: method-coliny_direct-division.html
+__ method-coliny_direct-global_balance_parameter.html
+__ method-coliny_direct-local_balance_parameter.html
+__ method-coliny_direct-max_boxsize_limit.html
+__ method-coliny_direct-min_boxsize_limit.html
+__ method-coliny_direct-constraint_penalty.html
+__ method-coliny_direct-solution_target.html
+__ method-coliny_direct-seed.html
+__ method-coliny_direct-show_misc_options.html
+__ method-coliny_direct-misc_options.html
+__ method-coliny_direct-max_iterations.html
+__ method-coliny_direct-convergence_tolerance.html
+__ method-coliny_direct-max_function_evaluations.html
+__ method-coliny_direct-scaling.html
+__ method-coliny_direct-model_pointer.html
+
+
+
+**Description**
+
+
+The DIviding RECTangles (DIRECT) optimization algorithm is a
+derivative free global optimization method that balances local search
+in promising regions of the design space with global search in
+unexplored regions. As shown in Figure 5.1, DIRECT adaptively
+subdivides the space of feasible design points so as to guarantee that
+iterates are generated in the neighborhood of a global minimum in
+finitely many iterations.
+
+\image html direct1.jpg "Figure 5.1 Design space partitioning with
+DIRECT" \image latex direct1.eps "Design space partitioning with
+DIRECT" width=10cm
+
+In practice, DIRECT has proven an effective heuristic for engineering
+design applications, for which it is able to quickly identify
+candidate solutions that can be further refined with fast local
+optimizers.
+
+*See the page :ref:`topic-package_scolib` for important information
+regarding all SCOLIB methods*
+
+The DIRECT algorithm supports concurrency up to twice the number of
+variables being optimized.
+
+DIRECT uses the ``solution_target``, ``constraint_penalty`` and
+``show_misc_options`` specifications that are described in
+:ref:`topic-package_scolib`. Note, however, that DIRECT uses a fixed penalty
+value for constraint violations (i.e. it is not dynamically adapted as
+is done in ``coliny_pattern_search``).
+
+*Search Parameters*
+
+The ``global_balance_parameter`` controls how much global search is
+performed by only allowing a subregion to be subdivided if the size of
+the subregion divided by the size of the largest subregion is at least
+``global_balance_parameter``.  Intuitively, this forces large
+subregions to be subdivided before the smallest subregions are
+refined. The ``local_balance_parameter`` provides a tolerance for
+estimating whether the smallest subregion can provide a sufficient
+decrease to be worth subdividing; the default value is a small value
+that is suitable for most applications.
+
+*Stopping Critieria*
+
+DIRECT can be terminated with:
+ \li :dakkw:`method-coliny_direct-max_function_evaluations`
+ \li :dakkw:`method-coliny_direct-max_iterations`
+ \li :dakkw:`method-coliny_direct-convergence_tolerance`
+ \li :dakkw:`method-coliny_direct-solution_target`
+ \li :dakkw:`method-coliny_direct-max_boxsize_limit`
+ \li :dakkw:`method-coliny_direct-min_boxsize_limit` - most effective in practice
+
+
+*Expected HDF5 Output*
+
+If Dakota was built with HDF5 support and run with the
+:dakkw:`environment-results_output-hdf5` keyword, this method
+writes the following results to HDF5:
+
+
+- :ref:`hdf5_results-best_params`
+- :ref:`hdf5_results-best_obj_fncs` (when :dakkw:`responses-objective_functions`) are specified)
+- :ref:`hdf5_results-best_constraints`
+- :ref:`hdf5_results-calibration` (when :dakkw:`responses-calibration_terms` are specified)
+
+

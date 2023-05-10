@@ -1,0 +1,125 @@
+.. _method-ncsu_direct:
+
+"""""""""""
+ncsu_direct
+"""""""""""
+
+
+DIviding RECTangles method
+
+
+
+**Topics**
+
+
+global_optimization_methods
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-ncsu_direct-solution_target
+   method-ncsu_direct-min_boxsize_limit
+   method-ncsu_direct-volume_boxsize_limit
+   method-ncsu_direct-convergence_tolerance
+   method-ncsu_direct-max_iterations
+   method-ncsu_direct-max_function_evaluations
+   method-ncsu_direct-scaling
+   method-ncsu_direct-model_pointer
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+------------------------------+---------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword               | Dakota Keyword Description                  |
+|                         | Group              |                              |                                             |
++=========================+====================+==============================+=============================================+
+| Optional                                     | `solution_target`__          | Specifies a globally optimal value toward   |
+|                                              |                              | which the optimizer should track            |
++----------------------------------------------+------------------------------+---------------------------------------------+
+| Optional                                     | `min_boxsize_limit`__        | Stopping Criterion based on shortest edge   |
+|                                              |                              | of hyperrectangle                           |
++----------------------------------------------+------------------------------+---------------------------------------------+
+| Optional                                     | `volume_boxsize_limit`__     | Stopping criterion based on volume of       |
+|                                              |                              | search space                                |
++----------------------------------------------+------------------------------+---------------------------------------------+
+| Optional                                     | `convergence_tolerance`__    | Stopping criterion based on objective       |
+|                                              |                              | function or statistics convergence          |
++----------------------------------------------+------------------------------+---------------------------------------------+
+| Optional                                     | `max_iterations`__           | Number of iterations allowed for optimizers |
+|                                              |                              | and adaptive UQ methods                     |
++----------------------------------------------+------------------------------+---------------------------------------------+
+| Optional                                     | `max_function_evaluations`__ | Number of function evaluations allowed for  |
+|                                              |                              | optimizers                                  |
++----------------------------------------------+------------------------------+---------------------------------------------+
+| Optional                                     | `scaling`__                  | Turn on scaling for variables, responses,   |
+|                                              |                              | and constraints                             |
++----------------------------------------------+------------------------------+---------------------------------------------+
+| Optional                                     | `model_pointer`__            | Identifier for model block to be used by a  |
+|                                              |                              | method                                      |
++----------------------------------------------+------------------------------+---------------------------------------------+
+
+.. __: method-ncsu_direct-solution_target.html
+__ method-ncsu_direct-min_boxsize_limit.html
+__ method-ncsu_direct-volume_boxsize_limit.html
+__ method-ncsu_direct-convergence_tolerance.html
+__ method-ncsu_direct-max_iterations.html
+__ method-ncsu_direct-max_function_evaluations.html
+__ method-ncsu_direct-scaling.html
+__ method-ncsu_direct-model_pointer.html
+
+
+
+**Description**
+
+
+North Carolina State University (NCSU) has an implementation of the
+DIRECT algorithm (DIviding RECTangles algorithm that is outlined in
+the SCOLIB method section above). This version is documented in
+:cite:p:`Gab01` We have found that the NCSU DIRECT
+implementation works better and is more robust for some problems than
+``coliny_direct``. Currently, we maintain both versions of DIRECT in
+Dakota; in the future, we may deprecate one.
+
+The NCSU DIRECT method is selected with ``ncsu_direct``. We have tried
+to maintain consistency between the keywords in SCOLIB and NCSU
+implementation of DIRECT, but the algorithms have different
+parameters, so the keywords sometimes have slightly different meaning.
+
+*Stopping Criteria*
+
+The algorithm stops based on:
+
+
+- :dakkw:`method-ncsu_direct-max_iterations` - number of iterations
+- :dakkw:`method-ncsu_direct-max_function_evaluations` - number of function evaluations
+- :dakkw:`method-ncsu_direct-solution_target` and :dakkw:`method-ncsu_direct-convergence_tolerance`
+- :dakkw:`method-ncsu_direct-min_boxsize_limit`
+- :dakkw:`method-ncsu_direct-volume_boxsize_limit`
+
+This method will always strictly respect the number of iterations, but
+may slightly exceed the number of function evaluations, as it will
+always explore all sub-rectangles at the current level.
+
+
+*Expected HDF5 Output*
+
+If Dakota was built with HDF5 support and run with the
+:dakkw:`environment-results_output-hdf5` keyword, this method
+writes the following results to HDF5:
+
+
+- :ref:`hdf5_results-best_params`
+- :ref:`hdf5_results-best_obj_fncs` (when :dakkw:`responses-objective_functions`) are specified)
+- :ref:`hdf5_results-best_constraints`
+- :ref:`hdf5_results-calibration` (when :dakkw:`responses-calibration_terms` are specified)
+
+

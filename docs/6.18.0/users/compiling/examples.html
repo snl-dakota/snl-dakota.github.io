@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>End-to-end Compilation Examples &mdash; dakota  documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/dakota_theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/sandiaheaderlite.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Developing Dakota" href="../developingdakota/developingdakota.html" />
+    <link rel="prev" title="Running Dakota Tests" href="test.html" /> 
+  
+  <meta name="sandia.approval_type" content="formal"/>
+  <meta property="sandia.approved" content="SAND2022-15651 O"/>
+  <meta name="description" content="The Dakota project delivers both state-of-the-art research and robust, usable software for optimization and UQ."/>
+  <meta name="keywords" content="Dakota, optimization, UQ, uncertainty quantification, parametric analysis, design exploration, model calibration, risk analysis"/>
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> dakota
+            <img src="../_static/dakota_Arrow_Name_Tag_horiz_transparent.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../setupdakota.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usingdakota/usingdakota.html">Using Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usingdakotagui/usingdakotagui.html">Using Dakota GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../externaltools/externaltools.html">Using External Tools</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="compiling.html">Compiling Dakota</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="devenv.html">Setup Development Environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="getsource.html">Obtain Source Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configure.html">Configure with CMake</a></li>
+<li class="toctree-l2"><a class="reference internal" href="build.html">Build and Install Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test.html">Running Dakota Tests</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">End-to-end Compilation Examples</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#rhel7">RHEL7</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#macos">MacOS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#windows-10">Windows 10</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../developingdakota/developingdakota.html">Developing Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../misc/misc.html">Miscellaneous</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">dakota</a>
+      </nav>
+
+	  <!-- SNL Lite header -->
+	  <div class="snlheader-subsite--wrapper-default">
+		<snlheader class="snlheader-subsite" role="snlbanner">
+		  <div class="wrapper">
+			<a href="https://www.sandia.gov/index.html">
+			  <div class="logo-transparent"><p class="logo">Sandia National Laboratories</p></div>
+			</a>
+			<div class="nav-top">
+			  <a class="visuallyhidden" name="mainnav"></a>
+			  <div aria-label="main navigation" class="core-nav-transparent core-nav-transparent--visible" role="navigation">
+				<ul role="navigation" class="secondary-links">
+				  <li id="search-text-link">
+					<a aria-label="Search" href="https://www.sandia.gov/search/">Search Sandia.gov</a>
+				  </li>
+				  <li id="directory-text-link">
+					<a href="https://www.sandia.gov/directory.html" aria-expanded="false" aria-label="Site Directory">All Sandia Websites</a>
+				  </li>
+				</ul>
+			  </div>
+			</div>
+		  </div> 
+		</snlheader>
+	  </div>	  
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="compiling.html">Compiling Dakota</a> &raquo;</li>
+      <li>End-to-end Compilation Examples</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/compiling/examples.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="end-to-end-compilation-examples">
+<span id="examples"></span><h1>End-to-end Compilation Examples<a class="headerlink" href="#end-to-end-compilation-examples" title="Permalink to this headline"></a></h1>
+<section id="rhel7">
+<h2>RHEL7<a class="headerlink" href="#rhel7" title="Permalink to this headline"></a></h2>
+<p>The following are instructions for building Dakota on a Redhat 7 platform
+in a Bash shell.</p>
+<ol class="arabic">
+<li><p>Install the recommended version of CMake, and ensure it is in your $PATH.</p></li>
+<li><p>Extract Dakota source archive file. In the example below, Dakota will
+be extracted into the user’s home directory, /home/username.</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>cd $HOME
+tar xzvf /path/to/dakota-&lt;release&gt;.src.tar.gz
+</pre></div>
+</div>
+</li>
+</ol>
+<p>You will see a new directory,
+/home/username/dakota-&lt;release&gt;.&lt;platform&gt;. In the instructions below,
+$DAK_SRC refers to this directory.</p>
+<blockquote>
+<div><div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>export DAK_SRC=$HOME/dakota-&lt;release&gt;.&lt;platform&gt;
+</pre></div>
+</div>
+</div></blockquote>
+<ol class="arabic" start="3">
+<li><p>Create separate build directory, e.g. $HOME/dakota-build. In the
+instructions below, $DAK_BUILD refers to the directory that you create
+for CMake to configure and build Dakota.</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>mkdir -p /path/to/Dakota/build/directory
+export DAK_BUILD=/path/to/Dakota/build/directory
+</pre></div>
+</div>
+</li>
+<li><p>Make a copy of the template BuildDakotaTemplate.cmake to customize a
+CMake Dakota build for your platform. Keep the file in the
+$DAK_SRC/cmake directory to use for subsequent Dakota CMake builds.</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>cp $DAK_SRC/cmake/examples/BuildDakotaTemplate.cmake $DAK_SRC/cmake/BuildDakotaCustom.cmake
+</pre></div>
+</div>
+</li>
+<li><p>Update $DAK_SRC/cmake/BuildDakotaCustom.cmake file to reflect your
+platform configuration. Instructions are provided in that file.</p></li>
+</ol>
+<p>As an example, consider the need to specify a custom location for the
+Boost 1.69 library, eg in <code class="docutils literal notranslate"><span class="pre">/extra/boost_1_69_0</span></code>.  The appropriate lines
+to uncomment and modify in the BuildDakotaCustom.cmake file are these:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>set(BOOST_ROOT
+    &quot;/extra/boost_1_69_0&quot;
+    CACHE PATH &quot;Use non-standard Boost install&quot; FORCE)
+set( Boost_NO_SYSTEM_PATHS TRUE
+     CACHE BOOL &quot;Supress search paths other than BOOST_ROOT&quot; FORCE)
+</pre></div>
+</div>
+<p>Consider also specifying a custom location for the Dakota installation
+artifacts, eg:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>set( CMAKE_INSTALL_PREFIX
+     &quot;~/temp/dakota-installation&quot;
+     CACHE PATH &quot;Path to Dakota installation&quot; )
+</pre></div>
+</div>
+<ol class="arabic" start="6">
+<li><p>Configure and build Dakota.</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>cd $DAK_BUILD
+cmake -C $DAK_SRC/cmake/BuildDakotaCustom.cmake $DAK_SRC
+make [-j#]
+make install
+</pre></div>
+</div>
+</li>
+<li><p>Set paths and library paths. In the instructions below, $DAK_INSTALL
+refers to the Dakota installation path you specified for the variable
+CMAKE_INSTALL_PREFIX in your BuildCustom.cmake file.</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>export PATH=$DAK_INSTALL/bin:$DAK_INSTALL/test:$PATH
+export LD_LIBRARY_PATH=$DAK_INSTALL/lib:$DAK_INSTALL/bin:$LD_LIBRARY_PATH
+</pre></div>
+</div>
+</li>
+<li><p>Test that Dakota is working, eg</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>which dakota
+dakota -v
+</pre></div>
+</div>
+</li>
+</ol>
+<p>These should return the path to the dakota executable and a couple of
+lines of text indicating the version of dakota built, respectively.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The following tips apply to all types of builds:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">[-j#]</span></code>: Dakota supports concurrent build processes</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">install</span></code> requires write privileges in <code class="docutils literal notranslate"><span class="pre">CMAKE_INSTALL_PREFIX</span></code>.</p></li>
+<li><p>Executing cmake without any options will result in an attempt to
+build with as many vendor algorithms and packages as are
+available in the distribution.  See options in
+<a class="reference internal" href="configure.html#configure-dakota-features"><span class="std std-ref">Dakota Features</span></a> to turn off features.</p></li>
+<li><p>Once make has successfully completed, the generated Dakota
+executables (dakota and dakota_restart_util) will reside in
+<code class="file docutils literal notranslate"><span class="pre">$DAK_BUILD/src</span></code>.  If <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">install</span></code> is invoked, copies
+of the executables will be placed in <code class="docutils literal notranslate"><span class="pre">CMAKE_INSTALL_PREFIX/bin</span></code>
+and copies of the libraries (<code class="docutils literal notranslate"><span class="pre">libdakota.a</span></code>, etc.) are placed in
+<code class="docutils literal notranslate"><span class="pre">CMAKE_INSTALL_PREFIX/lib</span></code>. You may set
+<code class="docutils literal notranslate"><span class="pre">CMAKE_INSTALL_PREFIX</span></code> in <code class="docutils literal notranslate"><span class="pre">BuildDakotaCustom.cmake</span></code>.</p></li>
+</ul>
+</div>
+</section>
+<section id="macos">
+<h2>MacOS<a class="headerlink" href="#macos" title="Permalink to this headline"></a></h2>
+<p>A terse example of how to build at the command line using the
+<a class="reference internal" href="devenv.html#devenv-mac-clang-homebrew"><span class="std std-ref">mixed system Clang plus Homebrew gfortran example</span></a></p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>cmake -D CMAKE_C_COMPILER=clang -D CMAKE_CXX_COMPILER=clang++ -D CMAKE_Fortran_COMPILER=gfortran \
+-D BOOST_ROOT:PATH=/usr/local -D DAKOTA_HAVE_MPI:BOOL=TRUE \
+-D HAVE_QUESO:BOOL=TRUE -D DAKOTA_HAVE_GSL:BOOL=TRUE
+-D DAKOTA_HAVE_HDF5:BOOL=TRUE ../source
+
+make -j 4
+</pre></div>
+</div>
+</section>
+<section id="windows-10">
+<h2>Windows 10<a class="headerlink" href="#windows-10" title="Permalink to this headline"></a></h2>
+<p>A terse example of how to build using the <a class="reference internal" href="devenv.html#devenv-windows"><span class="std std-ref">Windows</span></a>
+example environment. Representative paths to installed libraries are
+shown in the configuration commands below.</p>
+<p>In a command prompt (alternately can of course make CMake settings via
+the GUI or a cache initialization file):</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>cmake.exe -G &quot;Visual Studio 16 2019&quot; -A x64 ^
+-D BLAS_LIBS=C:/local/64bit/lapack/3.10.1/static/lib/BLAS.lib -D LAPACK_LIBS=C:/local/64bit/lapack/3.10.1/static/lib/LAPACK.lib ^
+-D Boost_INCLUDE_DIR=C:/local/64bit/boost_1_71_0 -D Boost_LIBRARY_DIR=C:/local/64bit/boost_1_71_0/lib64-msvc-14.2 ^
+-D BUILD_SHARED_LIBS=FALSE ^
+-DDAKOTA_HAVE_HDF5:BOOL=TRUE -DHDF5_USE_STATIC_LIBRARIES:BOOL=TRUE -DHDF5_ROOT=&quot;C:/local/64bit/hdf5.static.nozlib/1.10.8&quot; ^
+-D DAKOTA_PYTHON_DIRECT_INTERFACE:BOOL=TRUE -D DAKOTA_PYTHON_DIRECT_INTERFACE_NUMPY:BOOL=FALSE -D DAKOTA_PYTHON_SURROGATES:BOOL=FALSE ^
+../source
+</pre></div>
+</div>
+<p>Then:</p>
+<ol class="arabic simple">
+<li><p>Open the Visual Studio solution file <code class="file docutils literal notranslate"><span class="pre">Dakota.sln</span></code> in Visual Studio</p></li>
+<li><p>Choose a build configuration, e.g., <code class="docutils literal notranslate"><span class="pre">Release</span></code> or <code class="docutils literal notranslate"><span class="pre">Debug</span></code>, using Configuration Manager</p></li>
+<li><p>Build the <code class="docutils literal notranslate"><span class="pre">ALL_BUILD</span></code> and optionally <code class="docutils literal notranslate"><span class="pre">INSTALL</span></code> or <code class="docutils literal notranslate"><span class="pre">PACKAGE</span></code> targets</p></li>
+</ol>
+<p>Alternately the build can be driven with <code class="docutils literal notranslate"><span class="pre">nmake</span></code>, <code class="docutils literal notranslate"><span class="pre">devenv</span></code>, or
+<code class="docutils literal notranslate"><span class="pre">cmake</span> <span class="pre">--build</span></code> with appropriate arguments.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="test.html" class="btn btn-neutral float-left" title="Running Dakota Tests" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../developingdakota/developingdakota.html" class="btn btn-neutral float-right" title="Developing Dakota" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <!--
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Sandia National Laboratories.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+  --> 
+
+</footer>
+        </div>
+      </div>
+	  
+	  <div style="background-color: #0f0f0f;color:#fafafa;padding:20px">
+	    <div>
+		  <h2><em>Exceptional service in the national interest</em></h2>
+		</div>
+		<p>© 2022 National Technology and Engineering Solutions of Sandia, LLC. | <a href="https://www.sandia.gov/contact_us/index.html">Questions &amp; Comments</a> | <a href="https://www.sandia.gov/general/privacy-security/index.html">Privacy &amp; Security</a></p>
+		<p><a href="http://energy.gov" rel="noopener noreferrer" target="_blank"><img alt="U.S. Department of Energy" longdesc="https://energy.gov" src="https://www.sandia.gov/_common/images/doe_logo_white.png" style="height:37px; width:140px"></a> <a href="http://nnsa.energy.gov/" rel="noopener noreferrer" target="_blank"> <img alt="National Nuclear Security Administration" longdesc="http://nnsa.gov" src="https://www.sandia.gov/_common/images/nnsa_logo_white.png" style="height:37px; width:116px"></a></p>
+		<p><a href="https://www.sandia.gov">Sandia National Laboratories</a> is a multimission laboratory managed and operated by National Technology and Engineering Solutions of Sandia, LLC., a wholly owned subsidiary of Honeywell International, Inc., for the U.S. Department of Energy’s National Nuclear Security Administration under contract DE-NA-0003525.</p>
+	  </div>	  	  
+	  
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

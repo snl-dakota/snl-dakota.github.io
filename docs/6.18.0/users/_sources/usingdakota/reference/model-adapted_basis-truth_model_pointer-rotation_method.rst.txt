@@ -1,0 +1,78 @@
+.. _model-adapted_basis-truth_model_pointer-rotation_method:
+
+"""""""""""""""
+rotation_method
+"""""""""""""""
+
+
+Method used to build the rotation matrix
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   model-adapted_basis-truth_model_pointer-rotation_method-unranked
+   model-adapted_basis-truth_model_pointer-rotation_method-ranked
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+- *Default:* norm
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+--------------------+---------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword     | Dakota Keyword Description                  |
+|                         | Group              |                    |                                             |
++=========================+====================+====================+=============================================+
+| Required (Choose One)   | Rotation Method    | `unranked`__       | Use the unranked method to obtain the       |
+|                         |                    |                    | rotation matrix                             |
+|                         |                    +--------------------+---------------------------------------------+
+|                         |                    | `ranked`__         | Use the ranked method to obtain the         |
+|                         |                    |                    | rotation matrix                             |
++-------------------------+--------------------+--------------------+---------------------------------------------+
+
+.. __: model-adapted_basis-truth_model_pointer-rotation_method-unranked.html
+__ model-adapted_basis-truth_model_pointer-rotation_method-ranked.html
+
+
+
+**Description**
+
+
+The rotation matrix for the Adapted Basis method is built starting from a matrix which includes the linear PCE coefficients. The entries of the first row are the linear PCE coefficients. For all the other rows, each row has only one nonzero entry. Depending on the way used to construct all the rows, from the second to last one, there are two implemented methods, :dakkw:`model-adapted_basis-truth_model_pointer-rotation_method-unranked` and :dakkw:`model-adapted_basis-truth_model_pointer-rotation_method-ranked`. A followed Gram_schmidt process is applied on the resulting matrix to make it an isometry.
+
+*Default Behavior*
+
+The default is to use the
+:dakkw:`model-adapted_basis-truth_model_pointer-rotation_method-ranked`.
+
+*Usage Tips*
+
+
+
+**Examples**
+
+
+The following method block
+
+
+.. code-block::
+
+    model
+      id_model = 'SUBSPACE'
+      adapted_basis
+        truth_model_pointer = 'FULLSPACE'
+        sparse_grid_level = 1
+        rotation_method = unranked
+
+
+changes the default method to the :dakkw:`model-adapted_basis-truth_model_pointer-rotation_method-unranked` method.
+
+

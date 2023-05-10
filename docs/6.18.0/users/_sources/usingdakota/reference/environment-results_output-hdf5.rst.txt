@@ -1,0 +1,82 @@
+.. _environment-results_output-hdf5:
+
+""""
+hdf5
+""""
+
+
+Write results to file in HDF5 format
+
+
+
+**Topics**
+
+
+dakota_output
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   environment-results_output-hdf5-model_selection
+   environment-results_output-hdf5-interface_selection
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+- *Default:* no HDF5 output
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+-------------------------+---------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword          | Dakota Keyword Description                  |
+|                         | Group              |                         |                                             |
++=========================+====================+=========================+=============================================+
+| Optional                                     | `model_selection`__     | Select the models that write evaluation     |
+|                                              |                         | data to HDF5                                |
++----------------------------------------------+-------------------------+---------------------------------------------+
+| Optional                                     | `interface_selection`__ | Select the models that write evaluation     |
+|                                              |                         | data to HDF5                                |
++----------------------------------------------+-------------------------+---------------------------------------------+
+
+.. __: environment-results_output-hdf5-model_selection.html
+__ environment-results_output-hdf5-interface_selection.html
+
+
+
+**Description**
+
+
+When this keyword is present, Dakota will right (some) final
+method results to disk in HDF5 format instead of just to the console.
+This is an experimental feature, and the contents and organization of
+the output file is subject to change. The current organization and a
+brief explanation of HDF5 is provided in the :ref:`hdf5_output<hdf5_output>` section
+of this manual.
+
+With ``hdf5`` selected, the default name of the output file is
+``dakota_results``.h5. This can be changed using the ``h5.results_output_file``
+keyword.
+
+
+
+**Examples**
+
+
+
+.. code-block::
+
+    environment
+      results_output
+          hdf5
+          results_output_file 'my_results'  # The .h5 extension will be added
+
+
+
+

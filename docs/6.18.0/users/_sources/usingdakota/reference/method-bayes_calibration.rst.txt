@@ -1,0 +1,191 @@
+.. _method-bayes_calibration:
+
+"""""""""""""""""
+bayes_calibration
+"""""""""""""""""
+
+
+Bayesian calibration
+
+
+
+**Topics**
+
+
+bayesian_calibration, package_queso
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-bayes_calibration-queso
+   method-bayes_calibration-gpmsa
+   method-bayes_calibration-wasabi
+   method-bayes_calibration-dream
+   method-bayes_calibration-muq
+   method-bayes_calibration-experimental_design
+   method-bayes_calibration-calibrate_error_multipliers
+   method-bayes_calibration-burn_in_samples
+   method-bayes_calibration-posterior_stats
+   method-bayes_calibration-chain_diagnostics
+   method-bayes_calibration-model_evidence
+   method-bayes_calibration-model_discrepancy
+   method-bayes_calibration-sub_sampling_period
+   method-bayes_calibration-probability_levels
+   method-bayes_calibration-convergence_tolerance
+   method-bayes_calibration-max_iterations
+   method-bayes_calibration-model_pointer
+   method-bayes_calibration-scaling
+
+
+**Specification**
+
+- *Alias:* nond_bayes_calibration 
+
+- *Arguments:* None
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+---------------------------------+---------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword                  | Dakota Keyword Description                  |
+|                         | Group              |                                 |                                             |
++=========================+====================+=================================+=============================================+
+| Required (Choose One)   | Bayesian           | `queso`__                       | Markov Chain Monte Carlo algorithms from    |
+|                         | Calibration Method |                                 | the QUESO package                           |
+|                         |                    +---------------------------------+---------------------------------------------+
+|                         |                    | `gpmsa`__                       | (Experimental) Gaussian Process Models for  |
+|                         |                    |                                 | Simulation Analysis (GPMSA) Bayesian        |
+|                         |                    |                                 | calibration                                 |
+|                         |                    +---------------------------------+---------------------------------------------+
+|                         |                    | `wasabi`__                      | (Experimental Method) Non-MCMC Bayesian     |
+|                         |                    |                                 | inference using interval analysis           |
+|                         |                    +---------------------------------+---------------------------------------------+
+|                         |                    | `dream`__                       | DREAM (DiffeRential Evolution Adaptive      |
+|                         |                    |                                 | Metropolis)                                 |
+|                         |                    +---------------------------------+---------------------------------------------+
+|                         |                    | `muq`__                         | Markov Chain Monte Carlo algorithms from    |
+|                         |                    |                                 | the MUQ package                             |
++-------------------------+--------------------+---------------------------------+---------------------------------------------+
+| Optional                                     | `experimental_design`__         | (Experimental) Adaptively select            |
+|                                              |                                 | experimental designs for iterative Bayesian |
+|                                              |                                 | updating                                    |
++----------------------------------------------+---------------------------------+---------------------------------------------+
+| Optional                                     | `calibrate_error_multipliers`__ | Calibrate hyper-parameter multipliers on    |
+|                                              |                                 | the observation error covariance            |
++----------------------------------------------+---------------------------------+---------------------------------------------+
+| Optional                                     | `burn_in_samples`__             | Manually specify the burn in period for the |
+|                                              |                                 | MCMC chain.                                 |
++----------------------------------------------+---------------------------------+---------------------------------------------+
+| Optional                                     | `posterior_stats`__             | Compute information-theoretic metrics on    |
+|                                              |                                 | posterior parameter distribution            |
++----------------------------------------------+---------------------------------+---------------------------------------------+
+| Optional                                     | `chain_diagnostics`__           | Compute diagnostic metrics for Markov chain |
++----------------------------------------------+---------------------------------+---------------------------------------------+
+| Optional                                     | `model_evidence`__              | Calculate model evidence (marginal          |
+|                                              |                                 | likelihood of model) when using Bayesian    |
+|                                              |                                 | methods                                     |
++----------------------------------------------+---------------------------------+---------------------------------------------+
+| Optional                                     | `model_discrepancy`__           | (Experimental) Post-calibration calculation |
+|                                              |                                 | of model discrepancy correction             |
++----------------------------------------------+---------------------------------+---------------------------------------------+
+| Optional                                     | `sub_sampling_period`__         | Specify a sub-sampling of the MCMC chain    |
++----------------------------------------------+---------------------------------+---------------------------------------------+
+| Optional                                     | `probability_levels`__          | Specify probability levels at which to      |
+|                                              |                                 | compute credible and prediction intervals   |
++----------------------------------------------+---------------------------------+---------------------------------------------+
+| Optional                                     | `convergence_tolerance`__       | Stopping criterion based on objective       |
+|                                              |                                 | function or statistics convergence          |
++----------------------------------------------+---------------------------------+---------------------------------------------+
+| Optional                                     | `max_iterations`__              | Number of iterations allowed for optimizers |
+|                                              |                                 | and adaptive UQ methods                     |
++----------------------------------------------+---------------------------------+---------------------------------------------+
+| Optional                                     | `model_pointer`__               | Identifier for model block to be used by a  |
+|                                              |                                 | method                                      |
++----------------------------------------------+---------------------------------+---------------------------------------------+
+| Optional                                     | `scaling`__                     | Turn on scaling for variables, responses,   |
+|                                              |                                 | and constraints                             |
++----------------------------------------------+---------------------------------+---------------------------------------------+
+
+.. __: method-bayes_calibration-queso.html
+__ method-bayes_calibration-gpmsa.html
+__ method-bayes_calibration-wasabi.html
+__ method-bayes_calibration-dream.html
+__ method-bayes_calibration-muq.html
+__ method-bayes_calibration-experimental_design.html
+__ method-bayes_calibration-calibrate_error_multipliers.html
+__ method-bayes_calibration-burn_in_samples.html
+__ method-bayes_calibration-posterior_stats.html
+__ method-bayes_calibration-chain_diagnostics.html
+__ method-bayes_calibration-model_evidence.html
+__ method-bayes_calibration-model_discrepancy.html
+__ method-bayes_calibration-sub_sampling_period.html
+__ method-bayes_calibration-probability_levels.html
+__ method-bayes_calibration-convergence_tolerance.html
+__ method-bayes_calibration-max_iterations.html
+__ method-bayes_calibration-model_pointer.html
+__ method-bayes_calibration-scaling.html
+
+
+
+**Description**
+
+
+Bayesian calibration methods take prior information on parameter
+values (in the form of prior distributions) and observational data
+(e.g. from experiments) and infer posterior distributions on the
+parameter values. When the computational simulation is then executed
+with samples from the posterior parameter distributions, the results
+that are produced are consistent with ("agree with") the experimental
+data. Calibrating parameters from a computational simulation model
+requires a likelihood function that specifies the likelihood of
+observing a particular observation given the model and its associated
+parameterization; Dakota assumes a Gaussian likelihood function. The
+algorithms that produce the posterior distributions on model
+parameters are most commonly Monte Carlo Markov Chain (MCMC) sampling
+algorithms. MCMC methods require many samples, often tens of
+thousands, so in the case of model calibration, often emulators of the
+computational simulation are used. For more details on the algorithms
+underlying the methods, see the Dakota User's manual.
+
+Dakota has four classes of Bayesian calibration methods: QUESO/DRAM,
+GPMSA, DREAM, and WASABI.
+
+
+
+
+1. The QUESO methods use components from the QUESO library (Quantification of Uncertainty for Estimation, Simulation, and Optimization) developed at The University of Texas at Austin.  Dakota uses its DRAM (Delayed Rejected Adaptive Metropolis) algorithm, and variants, for the MCMC sampling.
+
+
+2. GPMSA (Gaussian Process Models for Simulation Analysis) is an approach developed at Los Alamos National Laboratory and Dakota currently uses the QUESO implementation.  It constructs Gaussian process models to emulate the expensive computational simulation as well as model discrepancy. GPMSA also has extensive features for calibration, such as the capability to include a model discrepancy term and the capability to model functional data such as time series data.  This is an experimental capability and not all features are available in Dakota yet.
+
+
+3. DREAM (DiffeRential Evolution Adaptive Metropolis) is a method that runs multiple different chains simultaneously for global exploration, and automatically tunes the proposal covariance during the process by a self-adaptive randomized subspace sampling. :cite:p:`Vrugt`.
+
+
+4. WASABI: Non-MCMC Bayesian inference via interval analysis
+
+
+
+*Usage Tips*
+
+The Bayesian capabilities are under active development.  At this
+stage, the QUESO methods in Dakota are the most advanced and robust,
+followed by DREAM, followed by GPMSA and WASABI which are not yet
+ready for production use.
+
+The prior distribution is characterized by the properties of the
+uncertain variables. Correlated priors are only supported for
+unbounded normal, untruncated lognormal, uniform, exponential, gumbel,
+frechet, and weibull distributions and require specification of
+``standardized_space``, for example, for QUESO
+:dakkw:`method-bayes_calibration-queso-standardized_space`
+
+Note that as of Dakota 6.2, the field responses and associated field
+data may be used with QUESO and DREAM.  That is, the user can specify
+field simulation data and field experiment data, and Dakota will
+interpolate and provide the proper residuals to the Bayesian
+calibration.
+
+

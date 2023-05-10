@@ -1,0 +1,102 @@
+.. _method-bayes_calibration-wasabi:
+
+""""""
+wasabi
+""""""
+
+
+(Experimental Method) Non-MCMC Bayesian inference using interval analysis
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-bayes_calibration-wasabi-pushforward_samples
+   method-bayes_calibration-wasabi-seed
+   method-bayes_calibration-wasabi-emulator
+   method-bayes_calibration-wasabi-standardized_space
+   method-bayes_calibration-wasabi-data_distribution
+   method-bayes_calibration-wasabi-posterior_samples_import_filename
+   method-bayes_calibration-wasabi-generate_posterior_samples
+   method-bayes_calibration-wasabi-evaluate_posterior_density
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+---------------------------------------+---------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword                        | Dakota Keyword Description                  |
+|                         | Group              |                                       |                                             |
++=========================+====================+=======================================+=============================================+
+| Required                                     | `pushforward_samples`__               | (Experimental Capability) Number of samples |
+|                                              |                                       | of the prior to push forward through the    |
+|                                              |                                       | model                                       |
++----------------------------------------------+---------------------------------------+---------------------------------------------+
+| Optional                                     | `seed`__                              | Seed of the random number generator         |
++----------------------------------------------+---------------------------------------+---------------------------------------------+
+| Optional                                     | `emulator`__                          | Use an emulator or surrogate model to       |
+|                                              |                                       | evaluate the likelihood function            |
++----------------------------------------------+---------------------------------------+---------------------------------------------+
+| Optional                                     | `standardized_space`__                | Perform Bayesian inference in standardized  |
+|                                              |                                       | probability space                           |
++----------------------------------------------+---------------------------------------+---------------------------------------------+
+| Required                                     | `data_distribution`__                 | (Experimental Capability) Specify the       |
+|                                              |                                       | distribution of the experimental data       |
++----------------------------------------------+---------------------------------------+---------------------------------------------+
+| Optional                                     | `posterior_samples_import_filename`__ | (Experimental Capability) Filename for      |
+|                                              |                                       | samples at which the user would like the    |
+|                                              |                                       | posterior density calculated                |
++----------------------------------------------+---------------------------------------+---------------------------------------------+
+| Optional                                     | `generate_posterior_samples`__        | (Experimental Capability) Generate random   |
+|                                              |                                       | samples from the posterior density          |
++----------------------------------------------+---------------------------------------+---------------------------------------------+
+| Optional                                     | `evaluate_posterior_density`__        | (Experimental Capability) Evaluate the      |
+|                                              |                                       | posterior density and output to the         |
+|                                              |                                       | specified file                              |
++----------------------------------------------+---------------------------------------+---------------------------------------------+
+
+.. __: method-bayes_calibration-wasabi-pushforward_samples.html
+__ method-bayes_calibration-wasabi-seed.html
+__ method-bayes_calibration-wasabi-emulator.html
+__ method-bayes_calibration-wasabi-standardized_space.html
+__ method-bayes_calibration-wasabi-data_distribution.html
+__ method-bayes_calibration-wasabi-posterior_samples_import_filename.html
+__ method-bayes_calibration-wasabi-generate_posterior_samples.html
+__ method-bayes_calibration-wasabi-evaluate_posterior_density.html
+
+
+
+**Description**
+
+
+Offers an alternative to Markov Chain Monte Carlo-based Bayesian
+inference.  This is a nascent capability, not yet ready for production
+use.
+
+*Usage Guidelines:* The WASABI method requires an emulator model.
+
+*Attention:* While the ``emulator`` specification for WASABI
+includes the keyword posterior_adaptive, it is not yet operational.
+
+
+
+**Examples**
+
+
+
+.. code-block::
+
+    method
+      bayes_calibration
+        wasabi
+
+
+
+

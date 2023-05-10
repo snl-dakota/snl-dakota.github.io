@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Active Subspace Models &mdash; dakota  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/dakota_theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/sandiaheaderlite.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Basis Adaptation Models" href="basisadaptation.html" />
+    <link rel="prev" title="Simulation Failure Capturing" href="simulationfailurecapturing.html" /> 
+  
+  <meta name="sandia.approval_type" content="formal"/>
+  <meta property="sandia.approved" content="SAND2022-15651 O"/>
+  <meta name="description" content="The Dakota project delivers both state-of-the-art research and robust, usable software for optimization and UQ."/>
+  <meta name="keywords" content="Dakota, optimization, UQ, uncertainty quantification, parametric analysis, design exploration, model calibration, risk analysis"/>
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> dakota
+            <img src="../../_static/dakota_Arrow_Name_Tag_horiz_transparent.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../setupdakota.html">Getting Started</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../usingdakota.html">Using Dakota</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../introduction/aboutdakota.html">About Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../introduction/helloworld.html">Dakota Beginner’s Tutorial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples.html">Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../introduction/couplingtosimulations.html">Coupling Dakota to a Simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../inputfile.html">Dakota Input File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../running.html">Running Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../output.html">Dakota Output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../studytypes.html">Study Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../topics.html">Topics</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../advanced.html">Advanced Topics</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="advancedmethods.html">Advanced Methods</a></li>
+<li class="toctree-l3"><a class="reference internal" href="advancedmodelrecursions.html">Advanced Model Recursions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="advancedsimulationcodeinterfaces.html">Advanced Simulation Code Interfaces</a></li>
+<li class="toctree-l3"><a class="reference internal" href="parallelcomputing.html">Parallel Computing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="simulationfailurecapturing.html">Simulation Failure Capturing</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Active Subspace Models</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#truncation-methods">Truncation Methods</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#constantine-metric">Constantine metric</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#bing-li-metric">Bing Li metric</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#energy-metric">Energy metric</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="basisadaptation.html">Basis Adaptation Models</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../theory.html">Dakota Theory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference.html">Keyword Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../usingdakotagui/usingdakotagui.html">Using Dakota GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../externaltools/externaltools.html">Using External Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../compiling/compiling.html">Compiling Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developingdakota/developingdakota.html">Developing Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../misc/misc.html">Miscellaneous</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">dakota</a>
+      </nav>
+
+	  <!-- SNL Lite header -->
+	  <div class="snlheader-subsite--wrapper-default">
+		<snlheader class="snlheader-subsite" role="snlbanner">
+		  <div class="wrapper">
+			<a href="https://www.sandia.gov/index.html">
+			  <div class="logo-transparent"><p class="logo">Sandia National Laboratories</p></div>
+			</a>
+			<div class="nav-top">
+			  <a class="visuallyhidden" name="mainnav"></a>
+			  <div aria-label="main navigation" class="core-nav-transparent core-nav-transparent--visible" role="navigation">
+				<ul role="navigation" class="secondary-links">
+				  <li id="search-text-link">
+					<a aria-label="Search" href="https://www.sandia.gov/search/">Search Sandia.gov</a>
+				  </li>
+				  <li id="directory-text-link">
+					<a href="https://www.sandia.gov/directory.html" aria-expanded="false" aria-label="Site Directory">All Sandia Websites</a>
+				  </li>
+				</ul>
+			  </div>
+			</div>
+		  </div> 
+		</snlheader>
+	  </div>	  
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../usingdakota.html">Using Dakota</a> &raquo;</li>
+          <li><a href="../advanced.html">Advanced Topics</a> &raquo;</li>
+      <li>Active Subspace Models</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/usingdakota/advanced/activesubspace.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="active-subspace-models">
+<span id="chap-actsub"></span><h1>Active Subspace Models<a class="headerlink" href="#active-subspace-models" title="Permalink to this headline"></a></h1>
+<p>The idea behind active subspaces is to find directions in the input
+variable space in which the quantity of interest is nearly constant.
+After rotation of the input variables, this method can allow significant
+dimension reduction. Below is a brief summary of the process.</p>
+<ol class="arabic">
+<li><p>Compute the gradient of the quantity of interest,
+<span class="math notranslate nohighlight">\(q = f(\mathbf{x})\)</span>, at several locations sampled from the full
+input space,</p>
+<div class="math notranslate nohighlight">
+\[\nabla_{\mathbf{x}} f_i = \nabla f(\mathbf{x}_i).\]</div>
+</li>
+<li><p>Compute the eigendecomposition of the matrix
+<span class="math notranslate nohighlight">\(\hat{\mathbf{C}}\)</span>,</p>
+<div class="math notranslate nohighlight">
+\[\hat{\mathbf{C}} = \frac{1}{M}\sum_{i=1}^{M}\nabla_{\mathbf{x}} f_i\nabla_{\mathbf{x}} f_i^T = \hat{\mathbf{W}}\hat{\mathbf{\Lambda}}\hat{\mathbf{W}}^T,\]</div>
+<p>where <span class="math notranslate nohighlight">\(\hat{\mathbf{W}}\)</span> has eigenvectors as columns,
+<span class="math notranslate nohighlight">\(\hat{\mathbf{\Lambda}} = \text{diag}(\hat{\lambda}_1,\:\ldots\:,\hat{\lambda}_N)\)</span>
+contains eigenvalues, and <span class="math notranslate nohighlight">\(N\)</span> is the total number of
+parameters.</p>
+</li>
+<li><p>Using a truncation method or specifying a dimension to estimate the
+active subspace size, split the eigenvectors into active and inactive
+directions,</p>
+<div class="math notranslate nohighlight">
+\[\hat{\mathbf{W}} = \left[\hat{\mathbf{W}}_1\quad\hat{\mathbf{W}}_2\right].\]</div>
+<p>These eigenvectors are used to rotate the input variables.</p>
+</li>
+<li><p>Next the input variables, <span class="math notranslate nohighlight">\(\mathbf{x}\)</span>, are expanded in terms
+of active and inactive variables,</p>
+<div class="math notranslate nohighlight">
+\[\mathbf{x} = \hat{\mathbf{W}}_1\mathbf{y} + \hat{\mathbf{W}}_2\mathbf{z}.\]</div>
+</li>
+<li><p>A surrogate is then built as a function of the active variables,</p>
+<div class="math notranslate nohighlight">
+\[g(\mathbf{y}) \approx f(\mathbf{x})\]</div>
+</li>
+</ol>
+<p>As a concrete example, consider the
+function: <span id="id1">[<a class="reference internal" href="../../misc/bibliography.html#id291" title="P. G. Constantine. Active subspaces: Emerging ideas for dimension reduction in parameter studies. Volume 2. SIAM, 2015.">Con15</a>]</span></p>
+<div class="math notranslate nohighlight">
+\[f(x) = \exp\left(0.7x_1 + 0.3x_2\right).\]</div>
+<p>Figure <a class="reference external" href="#fig:activesubspace">[fig:activesubspace]</a>(a) is a contour
+plot of <span class="math notranslate nohighlight">\(f(x)\)</span>. The black arrows indicate the eigenvectors of the
+matrix <span class="math notranslate nohighlight">\(\hat{\mathbf{C}}\)</span>. Figure
+<a class="reference external" href="#fig:activesubspace">[fig:activesubspace]</a>(b) is the same function
+but rotated so that the axes are aligned with the eigenvectors. We
+arbitrarily give these rotated axes the labels <span class="math notranslate nohighlight">\(y_1\)</span> and
+<span class="math notranslate nohighlight">\(y_2\)</span>. From
+fig. <a class="reference external" href="#fig:activesubspace">[fig:activesubspace]</a>(b) it is clear
+that all of the variation is along <span class="math notranslate nohighlight">\(y_1\)</span> and the dimension of the
+rotated input space can be reduced to 1.</p>
+<p>TODO: Missing images, figure, caption here</p>
+<div class="subfigmatrix docutils container">
+<p>2</p>
+</div>
+<p>For additional information, see
+references <span id="id2">[<a class="reference internal" href="../../misc/bibliography.html#id291" title="P. G. Constantine. Active subspaces: Emerging ideas for dimension reduction in parameter studies. Volume 2. SIAM, 2015.">Con15</a>, <a class="reference internal" href="../../misc/bibliography.html#id292" title="P. G. Constantine, E. Dow, and Q. Wang. Active subspace methods in theory and practice: applications to kriging surfaces. SIAM Journal on Scientific Computing, 36(4):A1500–A1524, 2014.">CDW14</a>, <a class="reference internal" href="../../misc/bibliography.html#id293" title="P. G. Constantine and D. F. Gleich. Computing active subspaces. arXiv, math.NA:1408.0545, 2014. URL: http://arxiv.org/abs/1408.0545.">CG14</a>]</span>.</p>
+<section id="truncation-methods">
+<span id="sec-trunc"></span><h2>Truncation Methods<a class="headerlink" href="#truncation-methods" title="Permalink to this headline"></a></h2>
+<p>Once the eigenvectors of <span class="math notranslate nohighlight">\(\hat{\mathbf{C}}\)</span> are obtained we must
+decide how many directions to keep. If the exact subspace size is known
+<em>a priori</em> it can be specified. Otherwise there are three automatic
+active subspace detection and truncation methods implemented:</p>
+<ul class="simple">
+<li><p>Constantine metric (default),</p></li>
+<li><p>Bing Li metric,</p></li>
+<li><p>and Energy metric.</p></li>
+</ul>
+<section id="constantine-metric">
+<span id="subsec-constantine"></span><h3>Constantine metric<a class="headerlink" href="#constantine-metric" title="Permalink to this headline"></a></h3>
+<p>The Constantine metric uses a criterion based on the variability of the
+subspace estimate. Eigenvectors are computed for bootstrap samples of
+the gradient matrix. The subspace size associated with the minimum
+distance between bootstrap eigenvectors and the nominal eigenvectors is
+the estimated active subspace size.</p>
+<p>Below is a brief outline of the Constantine method of active subspace
+identification. The first two steps are common to all active subspace
+truncation methods.</p>
+<ol class="arabic">
+<li><p>Compute the gradient of the quantity of interest,
+<span class="math notranslate nohighlight">\(q = f(\mathbf{x})\)</span>, at several locations sampled from the
+input space,</p>
+<div class="math notranslate nohighlight">
+\[\nabla_{\mathbf{x}} f_i = \nabla f(\mathbf{x}_i).\]</div>
+</li>
+<li><p>Compute the eigendecomposition of the matrix
+<span class="math notranslate nohighlight">\(\hat{\mathbf{C}}\)</span>,</p>
+<div class="math notranslate nohighlight">
+\[\hat{\mathbf{C}} = \frac{1}{M}\sum_{i=1}^{M}\nabla_{\mathbf{x}} f_i\nabla_{\mathbf{x}} f_i^T = \hat{\mathbf{W}}\hat{\mathbf{\Lambda}}\hat{\mathbf{W}}^T,\]</div>
+<p>where <span class="math notranslate nohighlight">\(\hat{\mathbf{W}}\)</span> has eigenvectors as columns,
+<span class="math notranslate nohighlight">\(\hat{\mathbf{\Lambda}} = \text{diag}(\hat{\lambda}_1,\:\ldots\:,\hat{\lambda}_N)\)</span>
+contains eigenvalues, and <span class="math notranslate nohighlight">\(N\)</span> is the total number of
+parameters.</p>
+</li>
+<li><p>Use bootstrap sampling of the gradients found in step 1 to compute
+replicate eigendecompositions,</p>
+<div class="math notranslate nohighlight">
+\[\hat{\mathbf{C}}_j^* = \hat{\mathbf{W}}_j^*\hat{\mathbf{\Lambda}}_j^*\left(\hat{\mathbf{W}}_j^*\right)^T.\]</div>
+</li>
+<li><p>Compute the average distance between nominal and bootstrap subspaces,</p>
+<div class="math notranslate nohighlight">
+\[e^*_n = \frac{1}{M_{boot}}\sum_j^{M_{boot}} \text{dist}(\text{ran}(\hat{\mathbf{W}}_n), \text{ran}(\hat{\mathbf{W}}_{j,n}^*)) = \frac{1}{M_{boot}}\sum_j^{M_{boot}} \left\| \hat{\mathbf{W}}_n\hat{\mathbf{W}}_n^T - \hat{\mathbf{W}}_{j,n}^*\left(\hat{\mathbf{W}}_{j,n}^*\right)^T\right\|,\]</div>
+<p>where <span class="math notranslate nohighlight">\(M_{boot}\)</span> is the number of bootstrap samples,
+<span class="math notranslate nohighlight">\(\hat{\mathbf{W}}_n\)</span> and <span class="math notranslate nohighlight">\(\hat{\mathbf{W}}_{j,n}^*\)</span> both
+contain only the first <span class="math notranslate nohighlight">\(n\)</span> eigenvectors, and <span class="math notranslate nohighlight">\(n &lt; N\)</span>.</p>
+</li>
+<li><p>The estimated subspace rank, <span class="math notranslate nohighlight">\(r\)</span>, is then,</p>
+<div class="math notranslate nohighlight">
+\[r = \operatorname*{arg\,min}_n \, e^*_n.\]</div>
+</li>
+</ol>
+<p>For additional information, see
+Ref. <span id="id3">[<a class="reference internal" href="../../misc/bibliography.html#id291" title="P. G. Constantine. Active subspaces: Emerging ideas for dimension reduction in parameter studies. Volume 2. SIAM, 2015.">Con15</a>]</span>.</p>
+</section>
+<section id="bing-li-metric">
+<span id="subsec-bingli"></span><h3>Bing Li metric<a class="headerlink" href="#bing-li-metric" title="Permalink to this headline"></a></h3>
+<p>The Bing Li metric uses a trade-off criterion to determine where to
+truncate the active subspace. The criterion is a function of the
+eigenvalues and eigenvectors of the active subspace gradient matrix.
+This function compares the decrease in eigenvalue amplitude with the
+increase in eigenvector variability under bootstrap sampling of the
+gradient matrix. The active subspace size is taken to be the index of
+the first minimum of this quantity.</p>
+<p>Below is a brief outline of the Bing Li method of active subspace
+identification. The first two steps are common to all active subspace
+truncation methods.</p>
+<ol class="arabic">
+<li><p>Compute the gradient of the quantity of interest,
+<span class="math notranslate nohighlight">\(q = f(\mathbf{x})\)</span>, at several locations sampled from the
+input space,</p>
+<div class="math notranslate nohighlight">
+\[\nabla_{\mathbf{x}} f_i = \nabla f(\mathbf{x}_i).\]</div>
+</li>
+<li><p>Compute the eigendecomposition of the matrix
+<span class="math notranslate nohighlight">\(\hat{\mathbf{C}}\)</span>,</p>
+<div class="math notranslate nohighlight">
+\[\hat{\mathbf{C}} = \frac{1}{M}\sum_{i=1}^{M}\nabla_{\mathbf{x}} f_i\nabla_{\mathbf{x}} f_i^T = \hat{\mathbf{W}}\hat{\mathbf{\Lambda}}\hat{\mathbf{W}}^T,\]</div>
+<p>where <span class="math notranslate nohighlight">\(\hat{\mathbf{W}}\)</span> has eigenvectors as columns,
+<span class="math notranslate nohighlight">\(\hat{\mathbf{\Lambda}} = \text{diag}(\hat{\lambda}_1,\:\ldots\:,\hat{\lambda}_N)\)</span>
+contains eigenvalues, and <span class="math notranslate nohighlight">\(N\)</span> is the total number of
+parameters.</p>
+</li>
+<li><p>Normalize the eigenvalues,</p>
+<div class="math notranslate nohighlight">
+\[\lambda_i = \frac{\hat{\lambda}_i}{\sum_j^N \hat{\lambda}_j}.\]</div>
+</li>
+<li><p>Use bootstrap sampling of the gradients found in step 1 to compute
+replicate eigendecompositions,</p>
+<div class="math notranslate nohighlight">
+\[\hat{\mathbf{C}}_j^* = \hat{\mathbf{W}}_j^*\hat{\mathbf{\Lambda}}_j^*\left(\hat{\mathbf{W}}_j^*\right)^T.\]</div>
+</li>
+<li><p>Compute variability of eigenvectors,</p>
+<div class="math notranslate nohighlight">
+\[f_i^0 = \frac{1}{M_{boot}}\sum_j^{M_{boot}}\left\lbrace 1 - \left\vert\text{det}\left(\hat{\mathbf{W}}_i^T\hat{\mathbf{W}}_{j,i}^*\right)\right\vert\right\rbrace ,\]</div>
+<p>where <span class="math notranslate nohighlight">\(\hat{\mathbf{W}}_i\)</span> and <span class="math notranslate nohighlight">\(\hat{\mathbf{W}}_{j,i}^*\)</span>
+both contain only the first <span class="math notranslate nohighlight">\(i\)</span> eigenvectors and
+<span class="math notranslate nohighlight">\(M_{boot}\)</span> is the number of bootstrap samples. The value of the
+variability at the first index, <span class="math notranslate nohighlight">\(f_1^0\)</span>, is defined as zero.</p>
+</li>
+<li><p>Normalize the eigenvector variability,</p>
+<div class="math notranslate nohighlight">
+\[f_i = \frac{f_i^0}{\sum_j^N f_j^0}.\]</div>
+</li>
+<li><p>The criterion, <span class="math notranslate nohighlight">\(g_i\)</span>, is defined as,</p>
+<div class="math notranslate nohighlight">
+\[g_i = \lambda_i + f_i.\]</div>
+</li>
+<li><p>The index of first minimum of <span class="math notranslate nohighlight">\(g_i\)</span> is then the estimated
+active subspace rank.</p></li>
+</ol>
+<p>For additional information, see Ref. <span id="id4">[<a class="reference internal" href="../../misc/bibliography.html#id294" title="W. Luo and B. Li. Combining eigenvalues and variation of eigenvectors for order determination. TODO, 2015.">LL15</a>]</span>.</p>
+</section>
+<section id="energy-metric">
+<span id="subsec-energy"></span><h3>Energy metric<a class="headerlink" href="#energy-metric" title="Permalink to this headline"></a></h3>
+<p>The energy metric truncation method uses a criterion based on the
+derivative matrix eigenvalue energy. The user can specify the maximum
+percentage (as a decimal) of the eigenvalue energy that is not captured
+by the active subspace represenation.</p>
+<p>Using the eigenvalue energy truncation metric, the subspace size is
+determined using the following equation:</p>
+<div class="math notranslate nohighlight">
+\[n = \inf \left\lbrace d \in \mathbb{Z} \quad\middle|\quad 1 \le d \le N \quad \wedge\quad 1 - \frac{\sum_{i = 1}^{d} \lambda_i}{\sum_{i = 1}^{N} \lambda_i} \,&lt;\, \epsilon \right\rbrace\]</div>
+<p>where <span class="math notranslate nohighlight">\(\epsilon\)</span> is the <code class="docutils literal notranslate"><span class="pre">truncation_tolerance</span></code>, <span class="math notranslate nohighlight">\(n\)</span> is the
+estimated subspace size, <span class="math notranslate nohighlight">\(N\)</span> is the size of the full space, and
+<span class="math notranslate nohighlight">\(\lambda_i\)</span> are the eigenvalues of the derivative matrix.</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="simulationfailurecapturing.html" class="btn btn-neutral float-left" title="Simulation Failure Capturing" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="basisadaptation.html" class="btn btn-neutral float-right" title="Basis Adaptation Models" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <!--
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Sandia National Laboratories.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+  --> 
+
+</footer>
+        </div>
+      </div>
+	  
+	  <div style="background-color: #0f0f0f;color:#fafafa;padding:20px">
+	    <div>
+		  <h2><em>Exceptional service in the national interest</em></h2>
+		</div>
+		<p>© 2022 National Technology and Engineering Solutions of Sandia, LLC. | <a href="https://www.sandia.gov/contact_us/index.html">Questions &amp; Comments</a> | <a href="https://www.sandia.gov/general/privacy-security/index.html">Privacy &amp; Security</a></p>
+		<p><a href="http://energy.gov" rel="noopener noreferrer" target="_blank"><img alt="U.S. Department of Energy" longdesc="https://energy.gov" src="https://www.sandia.gov/_common/images/doe_logo_white.png" style="height:37px; width:140px"></a> <a href="http://nnsa.energy.gov/" rel="noopener noreferrer" target="_blank"> <img alt="National Nuclear Security Administration" longdesc="http://nnsa.gov" src="https://www.sandia.gov/_common/images/nnsa_logo_white.png" style="height:37px; width:116px"></a></p>
+		<p><a href="https://www.sandia.gov">Sandia National Laboratories</a> is a multimission laboratory managed and operated by National Technology and Engineering Solutions of Sandia, LLC., a wholly owned subsidiary of Honeywell International, Inc., for the U.S. Department of Energy’s National Nuclear Security Administration under contract DE-NA-0003525.</p>
+	  </div>	  	  
+	  
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

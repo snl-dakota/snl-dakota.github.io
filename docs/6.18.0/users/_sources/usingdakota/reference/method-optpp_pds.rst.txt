@@ -1,0 +1,82 @@
+.. _method-optpp_pds:
+
+"""""""""
+optpp_pds
+"""""""""
+
+
+Simplex-based derivative free optimization method
+
+
+
+**Topics**
+
+
+package_optpp
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-optpp_pds-search_scheme_size
+   method-optpp_pds-max_iterations
+   method-optpp_pds-convergence_tolerance
+   method-optpp_pds-max_function_evaluations
+   method-optpp_pds-scaling
+   method-optpp_pds-model_pointer
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+------------------------------+---------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword               | Dakota Keyword Description                  |
+|                         | Group              |                              |                                             |
++=========================+====================+==============================+=============================================+
+| Optional                                     | `search_scheme_size`__       | Number of points to be used in the direct   |
+|                                              |                              | search template                             |
++----------------------------------------------+------------------------------+---------------------------------------------+
+| Optional                                     | `max_iterations`__           | Number of iterations allowed for optimizers |
+|                                              |                              | and adaptive UQ methods                     |
++----------------------------------------------+------------------------------+---------------------------------------------+
+| Optional                                     | `convergence_tolerance`__    | Stopping criterion based on objective       |
+|                                              |                              | function or statistics convergence          |
++----------------------------------------------+------------------------------+---------------------------------------------+
+| Optional                                     | `max_function_evaluations`__ | Number of function evaluations allowed for  |
+|                                              |                              | optimizers                                  |
++----------------------------------------------+------------------------------+---------------------------------------------+
+| Optional                                     | `scaling`__                  | Turn on scaling for variables, responses,   |
+|                                              |                              | and constraints                             |
++----------------------------------------------+------------------------------+---------------------------------------------+
+| Optional                                     | `model_pointer`__            | Identifier for model block to be used by a  |
+|                                              |                              | method                                      |
++----------------------------------------------+------------------------------+---------------------------------------------+
+
+.. __: method-optpp_pds-search_scheme_size.html
+__ method-optpp_pds-max_iterations.html
+__ method-optpp_pds-convergence_tolerance.html
+__ method-optpp_pds-max_function_evaluations.html
+__ method-optpp_pds-scaling.html
+__ method-optpp_pds-model_pointer.html
+
+
+
+**Description**
+
+
+The direct search algorithm, PDS (parallel direct search method),
+supports bound constraints.
+
+The PDS method can directly exploit asynchronous evaluations; however,
+this capability has not yet been implemented in Dakota.
+
+See :ref:`topic-package_optpp` for info related to all ``optpp`` methods.
+
+

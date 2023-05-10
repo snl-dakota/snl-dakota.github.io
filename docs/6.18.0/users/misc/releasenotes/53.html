@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Version 5.3 (2013/01/31) &mdash; dakota  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/dakota_theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/sandiaheaderlite.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Version 5.2 (2011/11/30)" href="52.html" />
+    <link rel="prev" title="Version 5.3.1 (2013/05/15)" href="531.html" /> 
+  
+  <meta name="sandia.approval_type" content="formal"/>
+  <meta property="sandia.approved" content="SAND2022-15651 O"/>
+  <meta name="description" content="The Dakota project delivers both state-of-the-art research and robust, usable software for optimization and UQ."/>
+  <meta name="keywords" content="Dakota, optimization, UQ, uncertainty quantification, parametric analysis, design exploration, model calibration, risk analysis"/>
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> dakota
+            <img src="../../_static/dakota_Arrow_Name_Tag_horiz_transparent.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../setupdakota.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../usingdakota/usingdakota.html">Using Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../usingdakotagui/usingdakotagui.html">Using Dakota GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../externaltools/externaltools.html">Using External Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../compiling/compiling.html">Compiling Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developingdakota/developingdakota.html">Developing Dakota</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../misc.html">Miscellaneous</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../help.html">Help Resources</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../aboutteam.html">About the Team</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../contributors.html">Contributors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../license.html">License</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../citing.html">Citing Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../publications.html">Publications</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../releasenotes.html">Release Notes</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="../releasenotes.html#dakota">Dakota</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="618.html">Version 6.18 (2023/05/15)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="617.html">Version 6.17 (2022/11/15)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="616.html">Version 6.16 (2022/05/16)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="615.html">Version 6.15 (2021/11/15)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="614.html">Version 6.14 (2021/05/17)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="613.html">Version 6.13 (2020/11/15)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="612.html">Version 6.12 (2020/06/15)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="611.html">Version 6.11 (2019/11/15)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="610.html">Version 6.10 (2019/05/15)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="69.html">Version 6.9 (2018/11/15)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="68.html">Version 6.8 (2018/05/15)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="67.html">Version 6.7 (2017/11/15)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="66.html">Version 6.6 (2017/05/15)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="65.html">Version 6.5 (2016/11/15)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="64.html">Version 6.4 (2016/05/16)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="63.html">Version 6.3 (2015/11/16)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="62.html">Version 6.2 (2015/05/15)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="61.html">Version 6.1 (2014/11/15)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="60.html">Version 6.0 (2014/05/15)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="54.html">Version 5.4 (2013/11/15)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="531.html">Version 5.3.1 (2013/05/15)</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Version 5.3 (2013/01/31)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="52.html">Version 5.2 (2011/11/30)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="51.html">Version 5.1 (2010/12/21)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="50.html">Version 5.0 (2009/12/21)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="42.html">Version 4.2 (2008/11/05)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="41.html">Version 4.1 (2007/09/21)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="40.html">Version 4.0 (2006/05/12)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="33.html">Version 3.3 (2004/12/23)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="32.html">Version 3.2 (2004/07/21)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="312.html">Version 3.1.2 (2003/07/09)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="311.html">Version 3.1.1 (2003/05/21)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="31.html">Version 3.1 (2003/04/04)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="30.html">Version 3.0 (2002/03/30)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="30beta.html">Version 3.0 beta (2001/11/29)</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../releasenotes.html#dakota-gui">Dakota GUI</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../bibliography.html">Bibliography</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../classictoc.html">I’m Lost!</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">dakota</a>
+      </nav>
+
+	  <!-- SNL Lite header -->
+	  <div class="snlheader-subsite--wrapper-default">
+		<snlheader class="snlheader-subsite" role="snlbanner">
+		  <div class="wrapper">
+			<a href="https://www.sandia.gov/index.html">
+			  <div class="logo-transparent"><p class="logo">Sandia National Laboratories</p></div>
+			</a>
+			<div class="nav-top">
+			  <a class="visuallyhidden" name="mainnav"></a>
+			  <div aria-label="main navigation" class="core-nav-transparent core-nav-transparent--visible" role="navigation">
+				<ul role="navigation" class="secondary-links">
+				  <li id="search-text-link">
+					<a aria-label="Search" href="https://www.sandia.gov/search/">Search Sandia.gov</a>
+				  </li>
+				  <li id="directory-text-link">
+					<a href="https://www.sandia.gov/directory.html" aria-expanded="false" aria-label="Site Directory">All Sandia Websites</a>
+				  </li>
+				</ul>
+			  </div>
+			</div>
+		  </div> 
+		</snlheader>
+	  </div>	  
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../misc.html">Miscellaneous</a> &raquo;</li>
+          <li><a href="../releasenotes.html">Release Notes</a> &raquo;</li>
+      <li>Version 5.3 (2013/01/31)</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/misc/releasenotes/53.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="version-5-3-2013-01-31">
+<span id="releasenotes-53"></span><h1>Version 5.3 (2013/01/31)<a class="headerlink" href="#version-5-3-2013-01-31" title="Permalink to this headline"></a></h1>
+<p><strong>Uncertainty Quantification (UQ)</strong></p>
+<ul class="simple">
+<li><p>Addition of sparsity detection methods for UQ. Compressive sensing (CS) algorithms (basis pursuit, basis pursuit denoising, orthogonal matching pursuit, least angle regression, and LASSO) have been added for under-determined solutions of the coefficients of polynomial chaos expansions. Given limited response data, CS algorithms often provide more accurate estimates of the dominant expansion terms than traditional L2 regression methods. Includes support for gradient (adjoint) enhancement, fault tolerance, cross-validation of algorithm parameters, and either structured (sampled tensor product) or unstructured (Latin hypercube) grids.</p></li>
+<li><p>Extension of sparse grid interpolation capabilities for UQ using hierarchical interpolants. Through use of hierarchical surpluses to define error estimates in statistical quantities of interest moments and moment-based metrics), greater precision can be obtained for smaller grid refinements, enabling more sophisticated adaptive collocation strategies. Includes support for gradient (adjoint) enhancement, combined expansions (nonprobabilistic design or epistemic variables included in expansions), variance-based decomposition (for sensitivity analysis), and design sensitivity analysis (for optimization under uncertainty and mixed aleatory-epistemic UQ).</p></li>
+<li><p>Addition of a new method for importance sampling: Gaussian Process Adaptive Importance Sampling (GPAIS). This capability allows the user to estimate a tail probability (e.g. the probability that a response exceeds a particular value) with a relatively small number of samples. GPAIS does involve a Gaussian process, but the GP is used in the construction of the importance density, not as a surrogate for the true function.</p></li>
+<li><p>Modification of the Bayesian calibration approach using the QUESO method to allow for the calibration of the sigma terms defining the error. Also extended the Bayesian calibration capability to allow the user to specify a proposal covariance matrix with a different diagonal element for each variable, so that step size can be adjusted in each variable direction. Cleanup of the output files related to posterior sample generation.</p></li>
+<li><p>Addition of an adaptive sampling class. This class generates an initial set of LHS samples, then adds samples according to a criterion specified by the user. The available criteria are: predicted variance (as calculated by a Gaussian process model: pick points which have maximal predicted variance to reduce overall variance); distance (pick points which have maximal distance to the existing points); and persistence. The adaptive sampling may also be done in a batch mode; there are a variety of choices which govern how the batches are created.</p></li>
+<li><p>Expanded the capability of the epistemic UQ methods (interval analysis and evidence theory) to handle new discrete epistemic variable types (discrete interval, discrete set integer, and discrete set real) using either evolutionary or surrogate-based evolutionary algorithm approaches. This will allow a user to identify interval bounds on an output given discrete inputs (including multiple model forms) or a combination of discrete and continuous input variables.</p></li>
+<li><p>Reformulation of second-order inverse local reliability (second-order performance measure approach (PMA)) to apply its equality constraint based on the generalized reliability index.</p></li>
+<li><p>Basic capabilities for system reliability in series and parallel systems for use when component failures are uncorrelated. Includes support for design sensitivity analysis for use in RBDO.</p></li>
+</ul>
+<p><strong>Optimization and Nonlinear least squares (NLS):</strong></p>
+<ul class="simple">
+<li><p>Expanded the capabilities of the surrogate-based global method to handle discrete ranges and sets.</p></li>
+<li><p>Added fault tolerance within surrogate builds for use within surrogate-based minimization methods.</p></li>
+<li><p>Generalized support for objective minimization or maximization, now integrated into the response specification.</p></li>
+<li><p>Unification of scaling and other transforms in Minimizer, with full support for recast from least squares to any optimizer (especially useful for solving multimodal or nonsmooth calibration problems with global optimization methods), including for single least squares term and data transformations.</p></li>
+<li><p>Examples demonstrating data transform combined with surrogate for various least squares problems.</p></li>
+<li><p>Exposed “max_designs” niching operator for moga.</p></li>
+</ul>
+<p><strong>Methods (general)</strong></p>
+<ul class="simple">
+<li><p>For iterators that rely on Gaussian process surrogates, we now allow the GP surrogates to be built on points read from a file instead of requiring them to be built from LHS sample points. This opens up many methods to run with points generated off-line or from another analysis. User can still augment with points from a DACE Iterator.</p></li>
+<li><p>Initial implementation of new adaptive surrogate building approach, with option for topology-guided construction (Dan Maljovec, Utah)</p></li>
+<li><p>Surfpack Kriging model support for mixed global/local optimization and additional correlation functions (powered exponential, matern)</p></li>
+<li><p>Surfpack Kriging model can automatically select the best points for build based on highest information content.</p></li>
+<li><p>Restore Surfpack model save/load capability via Boost serialization</p></li>
+<li><p>Added new options for scaling of finite difference step lengths:</p>
+<ul>
+<li><p>“absolute” designates no scaling</p></li>
+<li><p>“bounds” scales according the range of the parameters</p></li>
+<li><p>“relative” is the default and scales according to magnitude of the parameters</p></li>
+</ul>
+</li>
+</ul>
+<p><strong>Framework</strong></p>
+<ul class="simple">
+<li><p>Input/Output</p>
+<ul>
+<li><p>Initial version of Dakota results database, supporting Minimizers and Sampling methods</p></li>
+<li><p>Capture all Dakota output in output/error files, including echoing input file, with more consistent behavior.</p></li>
+</ul>
+</li>
+<li><p>Variables</p>
+<ul>
+<li><p>Flexibility to override default variable views, allowing iteration over a variety of variable subsets. This also addresses previous view discrepancies when combining DACE for surrogate construction with optimization, calibration, or UQ. Associated generalization of parameter study, evolutionary algorithm, and sampling methods.</p></li>
+<li><p>New discrete epistemic variable types: integer range, integer sets, and real sets.</p></li>
+<li><p>Memory footprint optimizations through the use of shared variables data.</p></li>
+</ul>
+</li>
+<li><p>Interfaces</p>
+<ul>
+<li><p>Include wrapper scripts with Dakota that help find the shared libraries</p></li>
+<li><p>New Scilab direct interface (contributed by Yann Collette and Yann Chapalain)</p></li>
+<li><p>Allow approximations to append/pop sets of build data using arbitrary sequences, with option to clear.</p></li>
+<li><p>Allow import of surrogate data in contexts involving variable and response transformations. Data can now be imported in the original space and used to inform the surrogate in the transformed space, with support for arbitrary levels of Model recursion. A primary use case for this is polynomial chaos via regression (including compressive sensing).</p></li>
+<li><p>Refactor of direct interfaces for flexibility and use by clients; now separate interface classes for Matlab, Scilab, and Python</p></li>
+</ul>
+</li>
+<li><p>Responses</p>
+<ul>
+<li><p>Extend Response input streams to support fault tolerance (import of inf/nan)</p></li>
+</ul>
+</li>
+<li><p>Build System / TPLs</p>
+<ul>
+<li><p>Removal of autotools-based build system, replaced by CMake</p></li>
+<li><p>Retirement of nightly cron build/test/package system, replaced by CONTINUOUS Jenkins integration server jobs</p></li>
+<li><p>For Linux and MacOSX, the default SHARED vs STATIC build variant is now SHARED (in previous releases it was STATIC). STATIC is still supported but must be explicitly requested in the CMake build options.</p></li>
+<li><p>No longer distribute Boost with Dakota; builders must provide</p></li>
+<li><p>Update version of Teuchos shipping with Dakota to 11.0.3 and make build system more tolerant of refactored Teuchos libraries.</p></li>
+</ul>
+</li>
+</ul>
+<p><strong>Miscellaneous Enhancements</strong></p>
+<ul class="simple">
+<li><p>Methods</p>
+<ul>
+<li><p>ENH: add control over response covariance computations for large-scale output vectors</p></li>
+<li><p>ENH: for PCE regression on structured grids, migrate from filtering a low-order tensor product grid to sampling the multi-index of a higher-order grid. This preserves matrix conditioning by avoiding sampling at the roots of the polynomial basis.</p></li>
+<li><p>ENH: Use COLIN cache instead of Dakota DB lookup for final results</p></li>
+<li><p>ENH: Print distribution mappings to file when high verbosity specified (to be superceded by results DB)</p></li>
+<li><p>ENH: “initial_delta” and “threshold_delta” are no longer required parameters for coliny_pattern_search, coliny_solis_wets, and coliny_cobyla; they’re now optional</p></li>
+<li><p>ENH: initialization of optimization solver parameters has been consolidated into appropriate constructors</p></li>
+</ul>
+</li>
+<li><p>Examples/tests</p>
+<ul>
+<li><p>ENH: cantilever example used in training classes</p></li>
+</ul>
+</li>
+<li><p>Jaguar</p>
+<ul>
+<li><p>ENH: Better integration of help information</p></li>
+</ul>
+</li>
+</ul>
+<p><strong>Miscellaneous Bug Fixes</strong></p>
+<ul class="simple">
+<li><p>BUG: Fix indexing error in serial plugin example</p></li>
+<li><p>BUG: Fix finite difference logic for inferred vs. distribution bounds</p></li>
+</ul>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="531.html" class="btn btn-neutral float-left" title="Version 5.3.1 (2013/05/15)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="52.html" class="btn btn-neutral float-right" title="Version 5.2 (2011/11/30)" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <!--
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Sandia National Laboratories.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+  --> 
+
+</footer>
+        </div>
+      </div>
+	  
+	  <div style="background-color: #0f0f0f;color:#fafafa;padding:20px">
+	    <div>
+		  <h2><em>Exceptional service in the national interest</em></h2>
+		</div>
+		<p>© 2022 National Technology and Engineering Solutions of Sandia, LLC. | <a href="https://www.sandia.gov/contact_us/index.html">Questions &amp; Comments</a> | <a href="https://www.sandia.gov/general/privacy-security/index.html">Privacy &amp; Security</a></p>
+		<p><a href="http://energy.gov" rel="noopener noreferrer" target="_blank"><img alt="U.S. Department of Energy" longdesc="https://energy.gov" src="https://www.sandia.gov/_common/images/doe_logo_white.png" style="height:37px; width:140px"></a> <a href="http://nnsa.energy.gov/" rel="noopener noreferrer" target="_blank"> <img alt="National Nuclear Security Administration" longdesc="http://nnsa.gov" src="https://www.sandia.gov/_common/images/nnsa_logo_white.png" style="height:37px; width:116px"></a></p>
+		<p><a href="https://www.sandia.gov">Sandia National Laboratories</a> is a multimission laboratory managed and operated by National Technology and Engineering Solutions of Sandia, LLC., a wholly owned subsidiary of Honeywell International, Inc., for the U.S. Department of Energy’s National Nuclear Security Administration under contract DE-NA-0003525.</p>
+	  </div>	  	  
+	  
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

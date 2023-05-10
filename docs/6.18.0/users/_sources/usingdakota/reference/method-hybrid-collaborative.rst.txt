@@ -1,0 +1,70 @@
+.. _method-hybrid-collaborative:
+
+"""""""""""""
+collaborative
+"""""""""""""
+
+
+Multiple methods run concurrently and share information
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-hybrid-collaborative-method_name_list
+   method-hybrid-collaborative-method_pointer_list
+   method-hybrid-collaborative-iterator_servers
+   method-hybrid-collaborative-iterator_scheduling
+   method-hybrid-collaborative-processors_per_iterator
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+-----------------------------+---------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword              | Dakota Keyword Description                  |
+|                         | Group              |                             |                                             |
++=========================+====================+=============================+=============================================+
+| Required (Choose One)   | Sub-method         | `method_name_list`__        | List of Dakota methods to sequentially or   |
+|                         | Selection          |                             | collaboratively run                         |
+|                         |                    +-----------------------------+---------------------------------------------+
+|                         |                    | `method_pointer_list`__     | Pointers to methods to execute sequantially |
+|                         |                    |                             | or collaboratively                          |
++-------------------------+--------------------+-----------------------------+---------------------------------------------+
+| Optional                                     | `iterator_servers`__        | Specify the number of iterator servers when |
+|                                              |                             | Dakota is run in parallel                   |
++----------------------------------------------+-----------------------------+---------------------------------------------+
+| Optional                                     | `iterator_scheduling`__     | Specify the scheduling of concurrent        |
+|                                              |                             | iterators when Dakota is run in parallel    |
++----------------------------------------------+-----------------------------+---------------------------------------------+
+| Optional                                     | `processors_per_iterator`__ | Specify the number of processors per        |
+|                                              |                             | iterator server when Dakota is run in       |
+|                                              |                             | parallel                                    |
++----------------------------------------------+-----------------------------+---------------------------------------------+
+
+.. __: method-hybrid-collaborative-method_name_list.html
+__ method-hybrid-collaborative-method_pointer_list.html
+__ method-hybrid-collaborative-iterator_servers.html
+__ method-hybrid-collaborative-iterator_scheduling.html
+__ method-hybrid-collaborative-processors_per_iterator.html
+
+
+
+**Description**
+
+
+In the collaborative approach, multiple methods work together and
+share solutions while executing concurrently. A list of method strings
+specifies the pool of iterators to be used. Any number of iterators
+may be specified. The method collaboration logic follows that of
+either the Agent-Based Optimization or HOPSPACK codes and is currently
+under development and not available at this time.
+
+

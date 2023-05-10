@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dakota Job Submission Examples &mdash; dakota  documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/dakota_theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/sandiaheaderlite.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="HDF5 in Dakota GUI" href="../../output/HDF.html" />
+    <link rel="prev" title="Create your own Codes, Machines, and Execution Templates" href="JobSubmissionClassicCreation.html" /> 
+  
+  <meta name="sandia.approval_type" content="formal"/>
+  <meta property="sandia.approved" content="SAND2022-15651 O"/>
+  <meta name="description" content="The Dakota project delivers both state-of-the-art research and robust, usable software for optimization and UQ."/>
+  <meta name="keywords" content="Dakota, optimization, UQ, uncertainty quantification, parametric analysis, design exploration, model calibration, risk analysis"/>
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../index.html" class="icon icon-home"> dakota
+            <img src="../../../_static/dakota_Arrow_Name_Tag_horiz_transparent.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../setupdakota.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usingdakota/usingdakota.html">Using Dakota</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../usingdakotagui.html">Using Dakota GUI</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../usingdakotagui.html#introduction">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../usingdakotagui.html#example-search">Example Search</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../usingdakotagui.html#wizards">Wizards</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../usingdakotagui.html#editing-dakota-input-files">Editing Dakota Input Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../usingdakotagui.html#running-dakota">Running Dakota</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../usingdakotagui.html#running-dakota-remotely">Running Dakota Remotely</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../JobSubmissionOverview.html">Job Submission Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../JobSubmissionDosAndDonts.html">Job Submission Do’s and Don’ts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../JobSubmissionWorkflow.html">Job Submission (Using Next-Gen Workflow)</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="JobSubmissionClassicMain.html">Job Submission (Classic Job Management Tools)</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="JobSubmissionClassicUsage.html">Using the Job Submission Tools</a></li>
+<li class="toctree-l4"><a class="reference internal" href="JobSubmissionClassicModification.html">Modifying an Execution Template</a></li>
+<li class="toctree-l4"><a class="reference internal" href="JobSubmissionClassicCreation.html">Create your own Codes, Machines, and Execution Templates</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Dakota Job Submission Examples</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#prerequisites-for-non-sandia-users">Prerequisites for Non-Sandia Users</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#example-1-job-submission-to-a-non-queued-machine-with-a-basic-dakota-study">Example 1: Job Submission to a Non-Queued Machine with a Basic Dakota Study</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#initial-setup">Initial Setup</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#resources-tab">Resources Tab</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#machine-tab">Machine Tab</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#execution-instructions-tab">Execution Instructions Tab</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#code-parameters-tab">Code Parameters Tab</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#example-2-job-submission-to-a-queued-machine">Example 2: Job Submission to a Queued Machine</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#id1">Initial Setup</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#id2">Resources Tab</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#id3">Execution Instructions Tab</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#code-parameters">Code Parameters</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../usingdakotagui.html#output-from-dakota">Output from Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../usingdakotagui.html#gui-tools">GUI Tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../usingdakotagui.html#miscellaneous">Miscellaneous</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../externaltools/externaltools.html">Using External Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../compiling/compiling.html">Compiling Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../developingdakota/developingdakota.html">Developing Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../misc/misc.html">Miscellaneous</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">dakota</a>
+      </nav>
+
+	  <!-- SNL Lite header -->
+	  <div class="snlheader-subsite--wrapper-default">
+		<snlheader class="snlheader-subsite" role="snlbanner">
+		  <div class="wrapper">
+			<a href="https://www.sandia.gov/index.html">
+			  <div class="logo-transparent"><p class="logo">Sandia National Laboratories</p></div>
+			</a>
+			<div class="nav-top">
+			  <a class="visuallyhidden" name="mainnav"></a>
+			  <div aria-label="main navigation" class="core-nav-transparent core-nav-transparent--visible" role="navigation">
+				<ul role="navigation" class="secondary-links">
+				  <li id="search-text-link">
+					<a aria-label="Search" href="https://www.sandia.gov/search/">Search Sandia.gov</a>
+				  </li>
+				  <li id="directory-text-link">
+					<a href="https://www.sandia.gov/directory.html" aria-expanded="false" aria-label="Site Directory">All Sandia Websites</a>
+				  </li>
+				</ul>
+			  </div>
+			</div>
+		  </div> 
+		</snlheader>
+	  </div>	  
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../../usingdakotagui.html">Using Dakota GUI</a> &raquo;</li>
+          <li><a href="JobSubmissionClassicMain.html">Job Submission (Classic Job Management Tools)</a> &raquo;</li>
+      <li>Dakota Job Submission Examples</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../_sources/usingdakotagui/runningremote/JobSubmissionClassic/JobSubmissionClassicExamples.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="dakota-job-submission-examples">
+<span id="gui-job-submission-classic-examples"></span><h1>Dakota Job Submission Examples<a class="headerlink" href="#dakota-job-submission-examples" title="Permalink to this headline"></a></h1>
+<p>The following page gives some specific scripting examples for performing Dakota remote job submission using the classic Job Submission dialog.</p>
+<section id="prerequisites-for-non-sandia-users">
+<h2>Prerequisites for Non-Sandia Users<a class="headerlink" href="#prerequisites-for-non-sandia-users" title="Permalink to this headline"></a></h2>
+<p>If you use Dakota GUI’s job submission feature outside of Sandia, you will not be provided with any default machine definitions or execution templates, and will need to write your own.
+However, one machine code, “DAKOTA,” is already provided for you - it can be viewed under “Window &gt; Preferences &gt; Job Submission &gt; Codes.”</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="JobSubmissionClassicCreation.html#gui-job-submission-classic-creation-machine"><span class="std std-ref">You will need at least one machine definition.</span></a></p></li>
+<li><p><a class="reference internal" href="JobSubmissionClassicCreation.html#gui-job-submission-classic-exectemplate"><span class="std std-ref">You should create at least one execution template, especially if you anticipate submitting multiple, similar jobs.</span></a></p></li>
+</ul>
+</section>
+<section id="example-1-job-submission-to-a-non-queued-machine-with-a-basic-dakota-study">
+<h2>Example 1: Job Submission to a Non-Queued Machine with a Basic Dakota Study<a class="headerlink" href="#example-1-job-submission-to-a-non-queued-machine-with-a-basic-dakota-study" title="Permalink to this headline"></a></h2>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Read about the <a class="reference internal" href="../JobSubmissionOverview.html#gui-job-submission-overview-definition-nonqueued"><span class="std std-ref">definition of a non-queued machine</span></a> before proceeding.</p>
+</div>
+<section id="initial-setup">
+<h3>Initial Setup<a class="headerlink" href="#initial-setup" title="Permalink to this headline"></a></h3>
+<p>First, in the Project Explorer, right-click the Dakota study you would like to submit to a remote machine. Choose “Run As &gt; Run Configurations.”
+Then, in the Run Configurations dialog, double-click “Job Submission” in the configuration type list on the left side of the dialog.</p>
+<p>If all goes well, your job submission run configuration should default select the “DAKOTA” code, the first machine you defined, and the first execution template you defined, if you defined an execution template.</p>
+</section>
+<section id="resources-tab">
+<h3>Resources Tab<a class="headerlink" href="#resources-tab" title="Permalink to this headline"></a></h3>
+<ul class="simple">
+<li><p>In the “Input File” field, verify that your Dakota .in file has been selected.</p></li>
+<li><p>In the larger “Input Files” field, check the checkboxes for any associated project files that you would like to have sent to the remote machine selected in the “Machine” dropdown.</p></li>
+<li><p>In the “Output Files” field, create filename patterns for anything that you want the GUI to retrieve from the remote machine after the job has completed. This field accepts wildcards for filename patterns.</p></li>
+</ul>
+</section>
+<section id="machine-tab">
+<h3>Machine Tab<a class="headerlink" href="#machine-tab" title="Permalink to this headline"></a></h3>
+<ul class="simple">
+<li><p>In the “Job Run Directory” field, set the path on the remote machine that you would like the job to run in. Note that the path must be absolute: it should start with something like <code class="docutils literal notranslate"><span class="pre">/home/${username}/</span></code>, where “username”
+is the username on the remote machine that you would like the job to run under.</p></li>
+<li><p>Check the “Clear job run directory” field if you would like the job to clean up any files in the remote run directory before starting.</p></li>
+<li><p>Ignore the “Queue” properties, since we are targeting a non-queued machine in this example.</p></li>
+</ul>
+</section>
+<section id="execution-instructions-tab">
+<h3>Execution Instructions Tab<a class="headerlink" href="#execution-instructions-tab" title="Permalink to this headline"></a></h3>
+<p>Let’s skip the “Code Parameters” tab for now and go to “Execution Instructions.”</p>
+<p><strong>Job Commands:</strong></p>
+<p>Copy-paste the following script into the “Job Commands” field:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span><span class="c">#!/bin/sh</span>
+
+cd ${remote.dir} || exit 9
+if [ -f /etc/bashrc ]; then
+    source /etc/bashrc
+fi
+
+module load dakota
+dakota -input ${input.deck.base.name}.in 1&gt;${input.deck.base.name}.out 2&gt;&amp;1
+</pre></div>
+</div>
+<p>Note the presence of <code class="docutils literal notranslate"><span class="pre">${variable}</span></code> syntax. These are variables which we must define as part of the job submission configuration. Some variables are provided for you by the job submission framework,
+but others are Dakota-specific and must be manually defined. Assuming that you have not modified the previous script, you will need to define the following variables:</p>
+<ul class="simple">
+<li><p>preprocessor</p></li>
+<li><p>DAKOTA_APPLIC_CONCURRENCY</p></li>
+<li><p>clean_subdirectory</p></li>
+<li><p>work_subdirectory</p></li>
+</ul>
+<p>To add a custom variable:</p>
+<ul class="simple">
+<li><p>Click on the “Variables…” button to the bottom-right of the “Job Commands” field (take care to click the correct “Variables…” button, as there are multiple.</p></li>
+<li><p>In the “Select Variable” pop-up that follows, click “Add.”</p></li>
+<li><p>In the “Variable Definition” pop-up, fill out each field:</p>
+<ul>
+<li><p><em>Name:</em> The name of your variable; in other words, what goes between <code class="docutils literal notranslate"><span class="pre">${</span></code> and <code class="docutils literal notranslate"><span class="pre">}</span></code>.</p></li>
+<li><p><em>Label:</em> A human-readable label for your variable, which will be displayed on the Code Parameters tab of this job submission configuration.</p></li>
+<li><p><em>Description:</em> A written description of the variable, if you wish to provide one.</p></li>
+<li><p><em>Required:</em> Whether the job submission configuration should require that this variable be filled out.</p></li>
+<li><p><em>Persisted:</em> Whether the variable value is persisted.</p></li>
+<li><p><em>Type:</em> The type represented by the variable.</p></li>
+<li><p><em>Default Value:</em> A default value for the variable.</p></li>
+</ul>
+</li>
+</ul>
+<p>Now, fill out custom variable definitions for “preprocessor,” “DAKOTA_APPLIC_CONCURRENCY,” “clean_subdirectory,” and “work_subdirectory.”</p>
+</section>
+<section id="code-parameters-tab">
+<h3>Code Parameters Tab<a class="headerlink" href="#code-parameters-tab" title="Permalink to this headline"></a></h3>
+<p>Once you have defined your custom variables on the “Execution Instructions” tab, return to the third tab - “Code Parameters.” You will note that now, there are generated fields in which you can enter values
+for each custom variable you defined. If you did not provide a default value for any of these variables, you may provide values on this tab (this is admittedly more readable than using variable default values).</p>
+</section>
+</section>
+<section id="example-2-job-submission-to-a-queued-machine">
+<h2>Example 2: Job Submission to a Queued Machine<a class="headerlink" href="#example-2-job-submission-to-a-queued-machine" title="Permalink to this headline"></a></h2>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Read about the <a class="reference internal" href="../JobSubmissionOverview.html#gui-job-submission-overview-definition-queued"><span class="std std-ref">definition of a queued machine</span></a> before proceeding.</p>
+</div>
+<section id="id1">
+<h3>Initial Setup<a class="headerlink" href="#id1" title="Permalink to this headline"></a></h3>
+<p>First, in the Project Explorer, right-click the Dakota study you would like to submit to a remote machine. Choose “Run As &gt; Run Configurations.”
+Then, in the Run Configurations dialog, double-click “Job Submission” in the configuration type list on the left side of the dialog.</p>
+<p>If all goes well, your job submission run configuration should default select the “DAKOTA” code, the first machine you defined, and the first execution template you defined, if you defined an execution template.</p>
+</section>
+<section id="id2">
+<h3>Resources Tab<a class="headerlink" href="#id2" title="Permalink to this headline"></a></h3>
+<p>TODO</p>
+</section>
+<section id="id3">
+<h3>Execution Instructions Tab<a class="headerlink" href="#id3" title="Permalink to this headline"></a></h3>
+<p>TODO</p>
+<p><strong>Job commands:</strong></p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>cd ${remote.dir} || exit 9
+
+if [ -f /etc/bashrc ]; then
+    source /etc/bashrc
+fi
+
+chmod 744 *.sh
+dos2unix *.sh
+
+echo submitting to the ${queue} queue
+sbatch -N ${num.nodes} --partition=${queue} ${qos} --time=${job.hours}:${job.minutes}:${job.seconds} -A ${account} ${script.name} ${capture.job.id}
+</pre></div>
+</div>
+<p><strong>Script contents:</strong></p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span><span class="c">#!/bin/sh</span>
+
+cd ${remote.dir} || exit 9
+
+if [ -f /etc/bashrc ]; then
+    source /etc/bashrc
+fi
+
+export RELATIVE_LOCATION=..
+export PREPROCESSOR=${preprocessor}
+export APREPRO=&quot;module load seacas &amp;&amp; aprepro&quot;
+export DAKOTA_PPN=${ppn}
+export DAKOTA_APPLIC_CONCURRENCY=${evaluation_concurrency}
+export DAKOTA_APPLIC_PROCS=$((${num.processors}/DAKOTA_APPLIC_CONCURRENCY))
+
+echo &quot;Checking that constraint between number of processors, number of concurrent runs, and number of processors per run is respected...&quot;
+remainder=$((${num.processors}%DAKOTA_APPLIC_CONCURRENCY))
+if [ $remainder -gt 0 ];
+then
+    echo &quot;${num.processors} must be a multiple of $DAKOTA_APPLIC_CONCURRENCY&quot;
+    echo &quot;Exiting...&quot;
+    exit
+fi
+
+echo &quot;INFO: DAKOTA will manage ${DAKOTA_APPLIC_CONCURRENCY} concurrent application jobs, each running on ${DAKOTA_APPLIC_PROCS} cores, with ${DAKOTA_PPN} processes per node&quot;
+
+if [ ${clean_subdirectory} -eq 0 ]; then
+    num_dirs=`find . -name ${work_subdirectory}.* -type d | wc -l`
+    if [ $num_dirs -gt 0 ]; then
+      rm -r ${work_subdirectory}.*
+    fi
+fi
+
+module load dakota
+dakota -input ${input.deck.base.name}.in 1&gt;${input.deck.base.name}.out 2&gt;&amp;1
+</pre></div>
+</div>
+<p>TODO</p>
+</section>
+<section id="code-parameters">
+<h3>Code Parameters<a class="headerlink" href="#code-parameters" title="Permalink to this headline"></a></h3>
+<p>TODO</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="JobSubmissionClassicCreation.html" class="btn btn-neutral float-left" title="Create your own Codes, Machines, and Execution Templates" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../../output/HDF.html" class="btn btn-neutral float-right" title="HDF5 in Dakota GUI" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <!--
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Sandia National Laboratories.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+  --> 
+
+</footer>
+        </div>
+      </div>
+	  
+	  <div style="background-color: #0f0f0f;color:#fafafa;padding:20px">
+	    <div>
+		  <h2><em>Exceptional service in the national interest</em></h2>
+		</div>
+		<p>© 2022 National Technology and Engineering Solutions of Sandia, LLC. | <a href="https://www.sandia.gov/contact_us/index.html">Questions &amp; Comments</a> | <a href="https://www.sandia.gov/general/privacy-security/index.html">Privacy &amp; Security</a></p>
+		<p><a href="http://energy.gov" rel="noopener noreferrer" target="_blank"><img alt="U.S. Department of Energy" longdesc="https://energy.gov" src="https://www.sandia.gov/_common/images/doe_logo_white.png" style="height:37px; width:140px"></a> <a href="http://nnsa.energy.gov/" rel="noopener noreferrer" target="_blank"> <img alt="National Nuclear Security Administration" longdesc="http://nnsa.gov" src="https://www.sandia.gov/_common/images/nnsa_logo_white.png" style="height:37px; width:116px"></a></p>
+		<p><a href="https://www.sandia.gov">Sandia National Laboratories</a> is a multimission laboratory managed and operated by National Technology and Engineering Solutions of Sandia, LLC., a wholly owned subsidiary of Honeywell International, Inc., for the U.S. Department of Energy’s National Nuclear Security Administration under contract DE-NA-0003525.</p>
+	  </div>	  	  
+	  
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

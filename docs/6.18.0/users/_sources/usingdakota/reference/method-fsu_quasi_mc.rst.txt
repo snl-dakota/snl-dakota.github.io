@@ -1,0 +1,157 @@
+.. _method-fsu_quasi_mc:
+
+""""""""""""
+fsu_quasi_mc
+""""""""""""
+
+
+Design of Computer Experiments - Quasi-Monte Carlo sampling
+
+
+
+**Topics**
+
+
+package_fsudace, design_and_analysis_of_computer_experiments
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-fsu_quasi_mc-halton
+   method-fsu_quasi_mc-hammersley
+   method-fsu_quasi_mc-latinize
+   method-fsu_quasi_mc-quality_metrics
+   method-fsu_quasi_mc-variance_based_decomp
+   method-fsu_quasi_mc-samples
+   method-fsu_quasi_mc-fixed_sequence
+   method-fsu_quasi_mc-sequence_start
+   method-fsu_quasi_mc-sequence_leap
+   method-fsu_quasi_mc-prime_base
+   method-fsu_quasi_mc-max_iterations
+   method-fsu_quasi_mc-model_pointer
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+---------------------------+---------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword            | Dakota Keyword Description                  |
+|                         | Group              |                           |                                             |
++=========================+====================+===========================+=============================================+
+| Required (Choose One)   | Sequence Type      | `halton`__                | Generate samples from a Halton sequence     |
+|                         |                    +---------------------------+---------------------------------------------+
+|                         |                    | `hammersley`__            | Use Hammersley sequences                    |
++-------------------------+--------------------+---------------------------+---------------------------------------------+
+| Optional                                     | `latinize`__              | Adjust samples to improve the discrepancy   |
+|                                              |                           | of the marginal distributions               |
++----------------------------------------------+---------------------------+---------------------------------------------+
+| Optional                                     | `quality_metrics`__       | Calculate metrics to assess the quality of  |
+|                                              |                           | quasi-Monte Carlo samples                   |
++----------------------------------------------+---------------------------+---------------------------------------------+
+| Optional                                     | `variance_based_decomp`__ | Activates global sensitivity analysis based |
+|                                              |                           | on decomposition of response variance into  |
+|                                              |                           | contributions from variables                |
++----------------------------------------------+---------------------------+---------------------------------------------+
+| Optional                                     | `samples`__               | Number of samples for sampling-based        |
+|                                              |                           | methods                                     |
++----------------------------------------------+---------------------------+---------------------------------------------+
+| Optional                                     | `fixed_sequence`__        | Reuse the same sequence and samples for     |
+|                                              |                           | multiple sampling sets                      |
++----------------------------------------------+---------------------------+---------------------------------------------+
+| Optional                                     | `sequence_start`__        | Choose where to start sampling the sequence |
++----------------------------------------------+---------------------------+---------------------------------------------+
+| Optional                                     | `sequence_leap`__         | Specify how often the sequence is sampled   |
++----------------------------------------------+---------------------------+---------------------------------------------+
+| Optional                                     | `prime_base`__            | The prime numbers used to generate the      |
+|                                              |                           | sequence                                    |
++----------------------------------------------+---------------------------+---------------------------------------------+
+| Optional                                     | `max_iterations`__        | Number of iterations allowed for optimizers |
+|                                              |                           | and adaptive UQ methods                     |
++----------------------------------------------+---------------------------+---------------------------------------------+
+| Optional                                     | `model_pointer`__         | Identifier for model block to be used by a  |
+|                                              |                           | method                                      |
++----------------------------------------------+---------------------------+---------------------------------------------+
+
+.. __: method-fsu_quasi_mc-halton.html
+__ method-fsu_quasi_mc-hammersley.html
+__ method-fsu_quasi_mc-latinize.html
+__ method-fsu_quasi_mc-quality_metrics.html
+__ method-fsu_quasi_mc-variance_based_decomp.html
+__ method-fsu_quasi_mc-samples.html
+__ method-fsu_quasi_mc-fixed_sequence.html
+__ method-fsu_quasi_mc-sequence_start.html
+__ method-fsu_quasi_mc-sequence_leap.html
+__ method-fsu_quasi_mc-prime_base.html
+__ method-fsu_quasi_mc-max_iterations.html
+__ method-fsu_quasi_mc-model_pointer.html
+
+
+
+**Description**
+
+
+Quasi-Monte Carlo methods
+produce low discrepancy sequences, especially if one is interested
+in the uniformity of projections of the point sets onto
+lower dimensional faces of the hypercube (usually 1-D: how well do
+the marginal distributions approximate a uniform?)
+
+This method generates sets of uniform random variables on the
+interval [0,1]. If the user specifies lower and upper bounds for a
+variable, the [0,1] samples are mapped to the [lower, upper] interval.
+
+The user must first choose the sequence type:
+
+- ``halton`` or
+- ``hammersley``
+
+Then three keywords are used to define the sequence and how it is sampled:
+
+- ``prime_base``
+- ``sequence_start``
+- ``sequence_leap``
+
+Each of these has defaults, so specification is optional.
+
+
+
+**Theory**
+
+
+The quasi-Monte Carlo sequences of Halton and Hammersley are deterministic
+sequences determined by a set of prime bases.
+Generally, we recommend that the user leave the default
+setting for the bases, which are the lowest primes.
+Thus, if one wants to generate a sample set for 3 random variables,
+the default bases used are 2, 3, and 5 in the Halton sequence.
+To give an example of how these sequences look, the Halton sequence
+in base 2 starts with points 0.5, 0.25, 0.75, 0.125, 0.625, etc.
+The first few points in a Halton base 3 sequence are
+0.33333, 0.66667, 0.11111, 0.44444, 0.77777, etc. Notice that the Halton
+sequence tends to alternate back and forth, generating a point closer to zero
+then a point closer to one. An individual sequence is based on a radix
+inverse function defined on a prime base. The prime base determines
+how quickly the [0,1] interval is filled in. Generally, the lowest
+primes are recommended.
+
+The Hammersley sequence is the same as the Halton sequence, except the values
+for the first random variable are equal to 1/N, where N is the number of
+samples. Thus, if one wants to generate a sample set of 100 samples for 3
+random variables, the first random variable has values 1/100, 2/100, 3/100,
+etc. and the second and third variables are generated according to a Halton
+sequence with bases 2 and 3, respectively.
+
+For more information about
+these sequences, see :cite:p:`Halton1960`,
+:cite:p:`Halton1964`, and
+:cite:p:`Kocis1997`.
+
+

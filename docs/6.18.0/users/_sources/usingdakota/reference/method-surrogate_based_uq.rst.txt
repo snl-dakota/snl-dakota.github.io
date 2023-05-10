@@ -1,0 +1,138 @@
+.. _method-surrogate_based_uq:
+
+""""""""""""""""""
+surrogate_based_uq
+""""""""""""""""""
+
+
+Generic UQ method for constructing and interrogating a surrogate model.
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-surrogate_based_uq-samples_on_emulator
+   method-surrogate_based_uq-sample_type
+   method-surrogate_based_uq-rng
+   method-surrogate_based_uq-probability_refinement
+   method-surrogate_based_uq-final_moments
+   method-surrogate_based_uq-response_levels
+   method-surrogate_based_uq-probability_levels
+   method-surrogate_based_uq-reliability_levels
+   method-surrogate_based_uq-gen_reliability_levels
+   method-surrogate_based_uq-distribution
+   method-surrogate_based_uq-variance_based_decomp
+   method-surrogate_based_uq-diagonal_covariance
+   method-surrogate_based_uq-full_covariance
+   method-surrogate_based_uq-import_approx_points_file
+   method-surrogate_based_uq-export_approx_points_file
+   method-surrogate_based_uq-seed
+   method-surrogate_based_uq-fixed_seed
+   method-surrogate_based_uq-model_pointer
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+-------------------------------+---------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword                | Dakota Keyword Description                  |
+|                         | Group              |                               |                                             |
++=========================+====================+===============================+=============================================+
+| Optional                                     | `samples_on_emulator`__       | Number of samples at which to evaluate an   |
+|                                              |                               | emulator (surrogate)                        |
++----------------------------------------------+-------------------------------+---------------------------------------------+
+| Optional                                     | `sample_type`__               | Selection of sampling strategy              |
++----------------------------------------------+-------------------------------+---------------------------------------------+
+| Optional                                     | `rng`__                       | Selection of a random number generator      |
++----------------------------------------------+-------------------------------+---------------------------------------------+
+| Optional                                     | `probability_refinement`__    | Allow refinement of probability and         |
+|                                              |                               | generalized reliability results using       |
+|                                              |                               | importance sampling                         |
++----------------------------------------------+-------------------------------+---------------------------------------------+
+| Optional                                     | `final_moments`__             | Output moments of the specified type and    |
+|                                              |                               | include them within the set of final        |
+|                                              |                               | statistics.                                 |
++----------------------------------------------+-------------------------------+---------------------------------------------+
+| Optional                                     | `response_levels`__           | Values at which to estimate desired         |
+|                                              |                               | statistics for each response                |
++----------------------------------------------+-------------------------------+---------------------------------------------+
+| Optional                                     | `probability_levels`__        | Specify probability levels at which to      |
+|                                              |                               | estimate the corresponding response value   |
++----------------------------------------------+-------------------------------+---------------------------------------------+
+| Optional                                     | `reliability_levels`__        | Specify reliability levels at which the     |
+|                                              |                               | response values will be estimated           |
++----------------------------------------------+-------------------------------+---------------------------------------------+
+| Optional                                     | `gen_reliability_levels`__    | Specify generalized relability levels at    |
+|                                              |                               | which to estimate the corresponding         |
+|                                              |                               | response value                              |
++----------------------------------------------+-------------------------------+---------------------------------------------+
+| Optional                                     | `distribution`__              | Selection of cumulative or complementary    |
+|                                              |                               | cumulative functions                        |
++----------------------------------------------+-------------------------------+---------------------------------------------+
+| Optional                                     | `variance_based_decomp`__     | Activates global sensitivity analysis based |
+|                                              |                               | on decomposition of response variance into  |
+|                                              |                               | main, interaction, and total effects        |
++-------------------------+--------------------+-------------------------------+---------------------------------------------+
+| Optional (Choose One)   | Covariance Type    | `diagonal_covariance`__       | Display only the diagonal terms of the      |
+|                         |                    |                               | covariance matrix                           |
+|                         |                    +-------------------------------+---------------------------------------------+
+|                         |                    | `full_covariance`__           | Display the full covariance matrix          |
++-------------------------+--------------------+-------------------------------+---------------------------------------------+
+| Optional                                     | `import_approx_points_file`__ | Filename for points at which to evaluate    |
+|                                              |                               | the PCE/SC surrogate                        |
++----------------------------------------------+-------------------------------+---------------------------------------------+
+| Optional                                     | `export_approx_points_file`__ | Output file for surrogate model value       |
+|                                              |                               | evaluations                                 |
++----------------------------------------------+-------------------------------+---------------------------------------------+
+| Optional                                     | `seed`__                      | Seed of the random number generator         |
++----------------------------------------------+-------------------------------+---------------------------------------------+
+| Optional                                     | `fixed_seed`__                | Reuses the same seed value for multiple     |
+|                                              |                               | random sampling sets                        |
++----------------------------------------------+-------------------------------+---------------------------------------------+
+| Optional                                     | `model_pointer`__             | Identifier for model block to be used by a  |
+|                                              |                               | method                                      |
++----------------------------------------------+-------------------------------+---------------------------------------------+
+
+.. __: method-surrogate_based_uq-samples_on_emulator.html
+__ method-surrogate_based_uq-sample_type.html
+__ method-surrogate_based_uq-rng.html
+__ method-surrogate_based_uq-probability_refinement.html
+__ method-surrogate_based_uq-final_moments.html
+__ method-surrogate_based_uq-response_levels.html
+__ method-surrogate_based_uq-probability_levels.html
+__ method-surrogate_based_uq-reliability_levels.html
+__ method-surrogate_based_uq-gen_reliability_levels.html
+__ method-surrogate_based_uq-distribution.html
+__ method-surrogate_based_uq-variance_based_decomp.html
+__ method-surrogate_based_uq-diagonal_covariance.html
+__ method-surrogate_based_uq-full_covariance.html
+__ method-surrogate_based_uq-import_approx_points_file.html
+__ method-surrogate_based_uq-export_approx_points_file.html
+__ method-surrogate_based_uq-seed.html
+__ method-surrogate_based_uq-fixed_seed.html
+__ method-surrogate_based_uq-model_pointer.html
+
+
+
+**Description**
+
+
+As surrogate models by stochastic expansion migrate into the model specification,
+this method provides a general-purpose UQ method to interrogate the surrogate for
+generating statistics.
+
+This method must identify the surrogate of interest through its ``model_pointer``,
+distinguishing it from fully-integrated method specifications such as
+:dakkw:`method-polynomial_chaos`, :dakkw:`method-stoch_collocation`, and
+:dakkw:`method-function_train` that couple directly with a simulation model
+(and form the PCE, SC, FT surrogate approximations implicitly prior to using
+them for generating statistics).
+
+

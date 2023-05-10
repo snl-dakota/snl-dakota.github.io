@@ -1,0 +1,78 @@
+.. _method-function_train-sample_type:
+
+"""""""""""
+sample_type
+"""""""""""
+
+
+Selection of sampling strategy
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-function_train-sample_type-lhs
+   method-function_train-sample_type-random
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+- *Default:* random
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+--------------------+---------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword     | Dakota Keyword Description                  |
+|                         | Group              |                    |                                             |
++=========================+====================+====================+=============================================+
+| Required (Choose One)   | Sample Type        | `lhs`__            | Uses Latin Hypercube Sampling (LHS) to      |
+|                         |                    |                    | sample variables                            |
+|                         |                    +--------------------+---------------------------------------------+
+|                         |                    | `random`__         | Uses purely random Monte Carlo sampling to  |
+|                         |                    |                    | sample variables                            |
++-------------------------+--------------------+--------------------+---------------------------------------------+
+
+.. __: method-function_train-sample_type-lhs.html
+__ method-function_train-sample_type-random.html
+
+
+
+**Description**
+
+
+The ``sample_type`` keyword allows the user to select between two types
+of sampling: Monte Carlo (pure random) and Latin hypercube
+(stratified) sampling.
+
+The incremental keywords are deprecated; instead use ``samples``
+together with ``refinement_samples``.
+
+*Default Behavior*
+
+If the ``sample_type`` keyword is present, it must be accompanied by
+``lhs`` or ``random``.  In most contexts, ``lhs`` is the default (exception:
+multilevel_sampling uses Monte Carlo by default).
+
+
+
+**Examples**
+
+
+
+.. code-block::
+
+    method
+      sampling
+        sample_type lhs
+        samples = 20
+        seed = 83921
+
+
+
+

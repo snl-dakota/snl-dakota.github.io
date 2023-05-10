@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chartreuse &mdash; dakota  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/dakota_theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/sandiaheaderlite.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Plot Trace Creator" href="PlotTraceCreator.html" />
+    <link rel="prev" title="HDF5 in Dakota GUI" href="../output/HDF.html" /> 
+  
+  <meta name="sandia.approval_type" content="formal"/>
+  <meta property="sandia.approved" content="SAND2022-15651 O"/>
+  <meta name="description" content="The Dakota project delivers both state-of-the-art research and robust, usable software for optimization and UQ."/>
+  <meta name="keywords" content="Dakota, optimization, UQ, uncertainty quantification, parametric analysis, design exploration, model calibration, risk analysis"/>
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> dakota
+            <img src="../../_static/dakota_Arrow_Name_Tag_horiz_transparent.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../setupdakota.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../usingdakota/usingdakota.html">Using Dakota</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../usingdakotagui.html">Using Dakota GUI</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#introduction">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#example-search">Example Search</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#wizards">Wizards</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#editing-dakota-input-files">Editing Dakota Input Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#running-dakota">Running Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#running-dakota-remotely">Running Dakota Remotely</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#output-from-dakota">Output from Dakota</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../usingdakotagui.html#gui-tools">GUI Tools</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Chartreuse</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="PlotTraceCreator.html">Plot Trace Creator</a></li>
+<li class="toctree-l4"><a class="reference internal" href="EditingPlotFiles.html">Editing Plot Files</a></li>
+<li class="toctree-l4"><a class="reference internal" href="PlotManager.html">Plot Manager:  Managing Multiple Traces and Canvases</a></li>
+<li class="toctree-l4"><a class="reference internal" href="PlotTemplates.html">Plot Templates</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ChartreuseSandbox.html">Chartreuse Sandbox View</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ChartreuseWorkflow.html">Chartreuse in Next-Gen Workflow</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ColorScales.html">Using Color Scales in Plot Traces</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../ngw/NextGenWorkflow.html">Next-Gen Workflow</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../qoi/QOI.html">QOI</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#miscellaneous">Miscellaneous</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../externaltools/externaltools.html">Using External Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../compiling/compiling.html">Compiling Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developingdakota/developingdakota.html">Developing Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../misc/misc.html">Miscellaneous</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">dakota</a>
+      </nav>
+
+	  <!-- SNL Lite header -->
+	  <div class="snlheader-subsite--wrapper-default">
+		<snlheader class="snlheader-subsite" role="snlbanner">
+		  <div class="wrapper">
+			<a href="https://www.sandia.gov/index.html">
+			  <div class="logo-transparent"><p class="logo">Sandia National Laboratories</p></div>
+			</a>
+			<div class="nav-top">
+			  <a class="visuallyhidden" name="mainnav"></a>
+			  <div aria-label="main navigation" class="core-nav-transparent core-nav-transparent--visible" role="navigation">
+				<ul role="navigation" class="secondary-links">
+				  <li id="search-text-link">
+					<a aria-label="Search" href="https://www.sandia.gov/search/">Search Sandia.gov</a>
+				  </li>
+				  <li id="directory-text-link">
+					<a href="https://www.sandia.gov/directory.html" aria-expanded="false" aria-label="Site Directory">All Sandia Websites</a>
+				  </li>
+				</ul>
+			  </div>
+			</div>
+		  </div> 
+		</snlheader>
+	  </div>	  
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../usingdakotagui.html">Using Dakota GUI</a> &raquo;</li>
+      <li>Chartreuse</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/usingdakotagui/chartreuse/Chartreuse.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="chartreuse">
+<span id="chartreuse-main"></span><h1>Chartreuse<a class="headerlink" href="#chartreuse" title="Permalink to this headline"></a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="PlotTraceCreator.html">Plot Trace Creator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="EditingPlotFiles.html">Editing Plot Files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="PlotManager.html">Plot Manager:  Managing Multiple Traces and Canvases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="PlotTemplates.html">Plot Templates</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ChartreuseSandbox.html">Chartreuse Sandbox View</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ChartreuseWorkflow.html">Chartreuse in Next-Gen Workflow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ColorScales.html">Using Color Scales in Plot Traces</a></li>
+</ul>
+</div>
+<p><strong>Introduction</strong></p>
+<p>Chartreuse is a plotting library provided with the Dakota GUI that allows you to explore the data in Dakota output files by creating graphical plots.  A number of different 2D and 3D plot types are supported.</p>
+<p><em>Note:</em>  Currently, the Dakota GUI fully supports Chartreuse plotting on Windows and Mac.  For Linux, only RHEL7 and newer are supported (other comparably new Fedora-based distributions would be supported as well).  In addition, Chartreuse plotting is limited to 2D on Linux.</p>
+<p id="chartreuse-plot-terminology"><strong>Plotting Terminology</strong></p>
+<p>Before you begin plotting, there are three major terms used in Chartreuse that you should learn.  Understanding these will give you a lot of flexibility in the types of plots you can create.</p>
+<ul class="simple">
+<li><p><strong>Plot Trace</strong> A plot trace is the most basic grouping of information that can be visualized in the Dakota GUI.  A trace represents a single Dakota variable (either parameter or response) visually rendered in some way.  A trace could be a series of points plotted on a Cartesian plane (i.e. a scatter plot).  A trace can also be represented in other ways that we don’t naturally think of as “tracing” (such as a histogram)</p></li>
+<li><p><strong>Plot Canvas</strong> A plot canvas can be thought of a single set of axes.  A canvas can be either 2D or 3D.  A plot canvas can display one or more plot traces by grouping them onto the same axes.</p></li>
+<li><p><strong>Plot Window</strong> A plot window is the top-level container for Chartreuse plot data.  A plot window can contain one or more plot canvases.  Only one plot window can be rendered at a time, but you can have multiple plot windows open at once by making use of editor tabs.  Plot windows are saved as .plot files in the Project Explorer view.</p></li>
+</ul>
+<p>Here is an illustration of these plotting terms:</p>
+<img alt="An example plot" src="../../_images/Plotting_TheBasics_1.png" />
+<p>In this image, we see <strong>two canvases</strong> - the one on the left and the one on the right.  Each of these canvases has <strong>one trace</strong> on it - the left canvas has a red trace and the right canvas has a green trace.  All of this is rendered onto <strong>one plot window</strong>.  The plot window is named “Cantilever Example Plot.”</p>
+<p id="chartreuse-plot-dataset-terminology"><strong>Plot Dataset Terminology</strong></p>
+<p>In Chartreuse, plot datasets can either be interpreted as one-dimensional or two-dimensional.</p>
+<ul class="simple">
+<li><p><strong>One-dimensional dataset</strong> A plot dataset is said to be one-dimensional if it only contains column-style data.  That is, it must only have data labels along the top of the dataset, and the column below that label represents a one-dimensional data series for that label.  For example, a Dakota tabular data file can be described in Chartreuse terminology as a one-dimensional dataset.</p></li>
+<li><p><strong>Two-dimensional dataset</strong> A plot dataset is said to be two-dimensional if it contains grid-style data.  That is, data labels exist along two axes, and a data point in the grid is described by the intersection of two data labels.  For example, a Dakota correlation matrix can be described in Chartreuse terminology as a two-dimensional dataset.</p></li>
+</ul>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../output/HDF.html" class="btn btn-neutral float-left" title="HDF5 in Dakota GUI" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="PlotTraceCreator.html" class="btn btn-neutral float-right" title="Plot Trace Creator" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <!--
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Sandia National Laboratories.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+  --> 
+
+</footer>
+        </div>
+      </div>
+	  
+	  <div style="background-color: #0f0f0f;color:#fafafa;padding:20px">
+	    <div>
+		  <h2><em>Exceptional service in the national interest</em></h2>
+		</div>
+		<p>© 2022 National Technology and Engineering Solutions of Sandia, LLC. | <a href="https://www.sandia.gov/contact_us/index.html">Questions &amp; Comments</a> | <a href="https://www.sandia.gov/general/privacy-security/index.html">Privacy &amp; Security</a></p>
+		<p><a href="http://energy.gov" rel="noopener noreferrer" target="_blank"><img alt="U.S. Department of Energy" longdesc="https://energy.gov" src="https://www.sandia.gov/_common/images/doe_logo_white.png" style="height:37px; width:140px"></a> <a href="http://nnsa.energy.gov/" rel="noopener noreferrer" target="_blank"> <img alt="National Nuclear Security Administration" longdesc="http://nnsa.gov" src="https://www.sandia.gov/_common/images/nnsa_logo_white.png" style="height:37px; width:116px"></a></p>
+		<p><a href="https://www.sandia.gov">Sandia National Laboratories</a> is a multimission laboratory managed and operated by National Technology and Engineering Solutions of Sandia, LLC., a wholly owned subsidiary of Honeywell International, Inc., for the U.S. Department of Energy’s National Nuclear Security Administration under contract DE-NA-0003525.</p>
+	  </div>	  	  
+	  
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

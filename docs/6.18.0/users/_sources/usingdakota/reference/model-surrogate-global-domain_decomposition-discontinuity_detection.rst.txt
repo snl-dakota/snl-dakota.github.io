@@ -1,0 +1,55 @@
+.. _model-surrogate-global-domain_decomposition-discontinuity_detection:
+
+"""""""""""""""""""""""
+discontinuity_detection
+"""""""""""""""""""""""
+
+
+Optional Discontinuity Detection Capability for the Piecewise Decomposition Option of Global Surrogates
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   model-surrogate-global-domain_decomposition-discontinuity_detection-jump_threshold
+   model-surrogate-global-domain_decomposition-discontinuity_detection-gradient_threshold
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+------------------------+---------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword         | Dakota Keyword Description                  |
+|                         | Group              |                        |                                             |
++=========================+====================+========================+=============================================+
+| Required (Choose One)   | Threshold Mode     | `jump_threshold`__     | Gradient Threshold Parameter of the         |
+|                         |                    |                        | Optional Discontinuity Detection Capability |
+|                         |                    |                        | for the Piecewise Decomposition Option of   |
+|                         |                    |                        | Global Surrogates                           |
+|                         |                    +------------------------+---------------------------------------------+
+|                         |                    | `gradient_threshold`__ | Gradient Threshold Parameter of the         |
+|                         |                    |                        | Optional Discontinuity Detection Capability |
+|                         |                    |                        | for the Piecewise Decomposition Option of   |
+|                         |                    |                        | Global Surrogates                           |
++-------------------------+--------------------+------------------------+---------------------------------------------+
+
+.. __: model-surrogate-global-domain_decomposition-discontinuity_detection-jump_threshold.html
+__ model-surrogate-global-domain_decomposition-discontinuity_detection-gradient_threshold.html
+
+
+
+**Description**
+
+
+The piecewise decomposition option for global surrogates is used to locally approximate a function at some point using a few sample points from its neighborhood.
+
+The domain decomposition algorithm supports an optional discontinuity detection capability where seeds across a user-input discontinuity threshold are not considered neighbors when building the approximate connectivity Delaunay graph. Alternatively, the domain is split into patches that trap discontinuities between them. This capability is specified by either jump or gradient threshold values in the input spec.
+
+

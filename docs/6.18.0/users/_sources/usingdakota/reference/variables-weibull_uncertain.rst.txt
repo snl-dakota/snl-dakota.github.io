@@ -1,0 +1,75 @@
+.. _variables-weibull_uncertain:
+
+"""""""""""""""""
+weibull_uncertain
+"""""""""""""""""
+
+
+Aleatory uncertain variable - Weibull
+
+
+
+**Topics**
+
+
+continuous_variables, aleatory_uncertain_variables
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   variables-weibull_uncertain-alphas
+   variables-weibull_uncertain-betas
+   variables-weibull_uncertain-initial_point
+   variables-weibull_uncertain-descriptors
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* INTEGER
+
+- *Default:* no weibull uncertain variables
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+--------------------+---------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword     | Dakota Keyword Description                  |
+|                         | Group              |                    |                                             |
++=========================+====================+====================+=============================================+
+| Required                                     | `alphas`__         | First parameter of the Weibull distribution |
++----------------------------------------------+--------------------+---------------------------------------------+
+| Required                                     | `betas`__          | Second parameter of the Weibull             |
+|                                              |                    | distribution                                |
++----------------------------------------------+--------------------+---------------------------------------------+
+| Optional                                     | `initial_point`__  | Initial values for variables                |
++----------------------------------------------+--------------------+---------------------------------------------+
+| Optional                                     | `descriptors`__    | Labels for the variables                    |
++----------------------------------------------+--------------------+---------------------------------------------+
+
+.. __: variables-weibull_uncertain-alphas.html
+__ variables-weibull_uncertain-betas.html
+__ variables-weibull_uncertain-initial_point.html
+__ variables-weibull_uncertain-descriptors.html
+
+
+
+**Description**
+
+
+The Weibull distribution is also referred to as the Type III Smallest Extreme Value distribution.
+The Weibull distribution is commonly used in reliability studies to predict the lifetime of a device.  It is also used to model capacity variables such as material strength.
+
+The density function for the Weibull distribution is given by:
+
+.. math::  f(x) = \frac{\alpha}{\beta}
+         \left(\frac{x}{\beta}\right)^{\alpha-1}
+    \exp \left( -\left(\frac{x}{\beta}\right)^{\alpha} \right),
+
+where :math:`\mu = \beta \Gamma\left( 1+\frac{1}{\alpha} \right),`  and
+:math:`\sigma = \mu \sqrt{\frac{\Gamma(1+\frac{2}{\alpha})}{\Gamma^2(1+\frac{1}{\alpha})} - 1}` 
+
+

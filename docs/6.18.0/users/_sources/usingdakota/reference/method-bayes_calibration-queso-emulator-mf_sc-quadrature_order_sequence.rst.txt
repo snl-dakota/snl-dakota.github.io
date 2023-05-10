@@ -1,0 +1,65 @@
+.. _method-bayes_calibration-queso-emulator-mf_sc-quadrature_order_sequence:
+
+"""""""""""""""""""""""""
+quadrature_order_sequence
+"""""""""""""""""""""""""
+
+
+Sequence of quadrature orders used in a multi-stage expansion
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-bayes_calibration-queso-emulator-mf_sc-quadrature_order_sequence-dimension_preference
+   method-bayes_calibration-queso-emulator-mf_sc-quadrature_order_sequence-nested
+   method-bayes_calibration-queso-emulator-mf_sc-quadrature_order_sequence-non_nested
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* INTEGERLIST
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+--------------------------+---------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword           | Dakota Keyword Description                  |
+|                         | Group              |                          |                                             |
++=========================+====================+==========================+=============================================+
+| Optional                                     | `dimension_preference`__ | A set of weights specifying the realtive    |
+|                                              |                          | importance of each uncertain variable       |
+|                                              |                          | (dimension)                                 |
++-------------------------+--------------------+--------------------------+---------------------------------------------+
+| Optional (Choose One)   | Quadrature Rule    | `nested`__               | Enforce use of nested quadrature rules if   |
+|                         | Nesting            |                          | available                                   |
+|                         |                    +--------------------------+---------------------------------------------+
+|                         |                    | `non_nested`__           | Enforce use of non-nested quadrature rules  |
++-------------------------+--------------------+--------------------------+---------------------------------------------+
+
+.. __: method-bayes_calibration-queso-emulator-mf_sc-quadrature_order_sequence-dimension_preference.html
+__ method-bayes_calibration-queso-emulator-mf_sc-quadrature_order_sequence-nested.html
+__ method-bayes_calibration-queso-emulator-mf_sc-quadrature_order_sequence-non_nested.html
+
+
+
+**Description**
+
+
+Each level entry of the ``quadrature_order_sequence`` applies to one
+expansion within a multi-stage expansion.  Current multi-stage
+expansions that support quadrature order sequences include multilevel
+polynomial chaos, multifidelity polynomial chaos, or multifidelity
+stochastic collocation expansions.
+
+If adaptive refinement is active, then this sequence specifies the
+starting point for each level within either an individual or
+integrated refinement approach.
+
+A corresponding scalar specification is documented at, e.g.,
+:dakkw:`method-polynomial_chaos-quadrature_order`
+
+

@@ -1,0 +1,53 @@
+.. _method-bayes_calibration-queso-emulator-pce-expansion_order-collocation_points-least_squares:
+
+"""""""""""""
+least_squares
+"""""""""""""
+
+
+Compute the coefficients of a polynomial expansion using least squares
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-bayes_calibration-queso-emulator-pce-expansion_order-collocation_points-least_squares-svd
+   method-bayes_calibration-queso-emulator-pce-expansion_order-collocation_points-least_squares-equality_constrained
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+- *Default:* svd
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+--------------------------+---------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword           | Dakota Keyword Description                  |
+|                         | Group              |                          |                                             |
++=========================+====================+==========================+=============================================+
+| Optional (Choose One)   | LSQ Regression     | `svd`__                  | Calculate the coefficients of a polynomial  |
+|                         | Approach           |                          | chaos expansion using the singular value    |
+|                         |                    |                          | decomposition.                              |
+|                         |                    +--------------------------+---------------------------------------------+
+|                         |                    | `equality_constrained`__ | Calculate the coefficients of a polynomial  |
+|                         |                    |                          | chaos expansion using equality constrained  |
+|                         |                    |                          | least squares.                              |
++-------------------------+--------------------+--------------------------+---------------------------------------------+
+
+.. __: method-bayes_calibration-queso-emulator-pce-expansion_order-collocation_points-least_squares-svd.html
+__ method-bayes_calibration-queso-emulator-pce-expansion_order-collocation_points-least_squares-equality_constrained.html
+
+
+
+**Description**
+
+
+Compute the coefficients of a polynomial expansion using least squares. Specifically SVD-based least-squares will be used for solving over-determined systems. For the situation when the number of function values is smaller than the number of terms in a PCE, but the total number of samples including gradient values is greater than the number of terms, the resulting over-determined system will be solved using equality constrained least squares
+
+

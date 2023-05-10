@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Surrogate-Based Local Minimization &mdash; dakota  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/dakota_theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/sandiaheaderlite.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Effcient Global Optimization" href="surrogatebasedglobaloptimization.html" />
+    <link rel="prev" title="Surrogate Models" href="surrogates.html" /> 
+  
+  <meta name="sandia.approval_type" content="formal"/>
+  <meta property="sandia.approved" content="SAND2022-15651 O"/>
+  <meta name="description" content="The Dakota project delivers both state-of-the-art research and robust, usable software for optimization and UQ."/>
+  <meta name="keywords" content="Dakota, optimization, UQ, uncertainty quantification, parametric analysis, design exploration, model calibration, risk analysis"/>
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> dakota
+            <img src="../../_static/dakota_Arrow_Name_Tag_horiz_transparent.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../setupdakota.html">Getting Started</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../usingdakota.html">Using Dakota</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../introduction/aboutdakota.html">About Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../introduction/helloworld.html">Dakota Beginner’s Tutorial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples.html">Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../introduction/couplingtosimulations.html">Coupling Dakota to a Simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../inputfile.html">Dakota Input File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../running.html">Running Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../output.html">Dakota Output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../studytypes.html">Study Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../topics.html">Topics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../advanced.html">Advanced Topics</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../theory.html">Dakota Theory</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="sampling.html">Sampling Methods</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reliability.html">Reliability Methods</a></li>
+<li class="toctree-l3"><a class="reference internal" href="stochastic.html">Stochastic Expansion Methods</a></li>
+<li class="toctree-l3"><a class="reference internal" href="epistemic.html">Epistemic Methods</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bayesian.html">Bayesian Methods</a></li>
+<li class="toctree-l3"><a class="reference internal" href="surrogates.html">Surrogate Models</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Surrogate-Based Local Minimization</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#iterate-acceptance-logic">Iterate acceptance logic</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#merit-functions">Merit functions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#convergence-assessment">Convergence assessment</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#constraint-relaxation">Constraint relaxation</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="surrogatebasedglobaloptimization.html">Effcient Global Optimization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dimensionreductionstrategies.html">Dimension Reduction Strategies</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ouu.html">Optimization Under Uncertainty (OUU)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../reference.html">Keyword Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../usingdakotagui/usingdakotagui.html">Using Dakota GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../externaltools/externaltools.html">Using External Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../compiling/compiling.html">Compiling Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developingdakota/developingdakota.html">Developing Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../misc/misc.html">Miscellaneous</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">dakota</a>
+      </nav>
+
+	  <!-- SNL Lite header -->
+	  <div class="snlheader-subsite--wrapper-default">
+		<snlheader class="snlheader-subsite" role="snlbanner">
+		  <div class="wrapper">
+			<a href="https://www.sandia.gov/index.html">
+			  <div class="logo-transparent"><p class="logo">Sandia National Laboratories</p></div>
+			</a>
+			<div class="nav-top">
+			  <a class="visuallyhidden" name="mainnav"></a>
+			  <div aria-label="main navigation" class="core-nav-transparent core-nav-transparent--visible" role="navigation">
+				<ul role="navigation" class="secondary-links">
+				  <li id="search-text-link">
+					<a aria-label="Search" href="https://www.sandia.gov/search/">Search Sandia.gov</a>
+				  </li>
+				  <li id="directory-text-link">
+					<a href="https://www.sandia.gov/directory.html" aria-expanded="false" aria-label="Site Directory">All Sandia Websites</a>
+				  </li>
+				</ul>
+			  </div>
+			</div>
+		  </div> 
+		</snlheader>
+	  </div>	  
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../usingdakota.html">Using Dakota</a> &raquo;</li>
+          <li><a href="../theory.html">Dakota Theory</a> &raquo;</li>
+      <li>Surrogate-Based Local Minimization</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/usingdakota/theory/surrogatebasedoptimization.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="surrogate-based-local-minimization">
+<span id="sblm"></span><h1>Surrogate-Based Local Minimization<a class="headerlink" href="#surrogate-based-local-minimization" title="Permalink to this headline"></a></h1>
+<p>A generally-constrained nonlinear programming problem takes the form</p>
+<div class="math notranslate nohighlight" id="equation-eq-nlp-standard">
+<span class="eqno">(234)<a class="headerlink" href="#equation-eq-nlp-standard" title="Permalink to this equation"></a></span>\[\begin{split}{\rm minimize\ } \hfil &amp; f({\bf x}) \nonumber \\
+{\rm subject\ to\ } &amp; {\bf g}_l \le {\bf g}({\bf x}) \le {\bf g}_u \nonumber \\
+            &amp;               {\bf h}({\bf x}) = {\bf h}_t \nonumber \\
+            &amp; {\bf x}_l \le {\bf x} \le {\bf x}_u\end{split}\]</div>
+<p>where <span class="math notranslate nohighlight">\({\bf x} \in \Re^n\)</span> is the vector of design variables, and
+<span class="math notranslate nohighlight">\(f\)</span>, <span class="math notranslate nohighlight">\({\bf g}\)</span>, and <span class="math notranslate nohighlight">\({\bf h}\)</span> are the objective
+function, nonlinear inequality constraints, and nonlinear equality
+constraints, respectively. (Any linear constraints are not approximated
+and may be added without modification to all formulations). Individual nonlinear inequality and
+equality constraints are enumerated using <span class="math notranslate nohighlight">\(i\)</span> and <span class="math notranslate nohighlight">\(j\)</span>,
+respectively (e.g., <span class="math notranslate nohighlight">\(g_i\)</span> and <span class="math notranslate nohighlight">\(h_j\)</span>). The corresponding
+surrogate-based optimization (SBO) algorithm may be formulated in
+several ways and applied to either optimization or least-squares
+calibration problems. In all cases, SBO solves a sequence of <span class="math notranslate nohighlight">\(k\)</span>
+approximate optimization subproblems subject to a trust region
+constraint <span class="math notranslate nohighlight">\(\Delta^k\)</span>; however, many different forms of the
+surrogate objectives and constraints in the approximate subproblem can
+be explored. In particular, the subproblem objective may be a surrogate
+of the original objective or a surrogate of a merit function (most
+commonly, the Lagrangian or augmented Lagrangian), and the subproblem
+constraints may be surrogates of the original constraints, linearized
+approximations of the surrogate constraints, or may be omitted entirely.
+Each of these combinations is shown in <a class="reference internal" href="#tab-sbo-subprob"><span class="std std-numref">Table 17</span></a>,
+where some combinations are marked <em>inappropriate</em>, others <em>acceptable</em>,
+and the remaining are common.</p>
+<table class="docutils align-default" id="tab-sbo-subprob">
+<caption><span class="caption-number">Table 17 </span><span class="caption-text">SBO approximate subproblem formulations.</span><a class="headerlink" href="#tab-sbo-subprob" title="Permalink to this table"></a></caption>
+<colgroup>
+<col style="width: 30%" />
+<col style="width: 25%" />
+<col style="width: 18%" />
+<col style="width: 28%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"></th>
+<th class="head"><p>Original Objective</p></th>
+<th class="head"><p>Lagrangian</p></th>
+<th class="head"><p>Augmented Lagrangian</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>No constraints</p></td>
+<td><p><em>inappropriate</em></p></td>
+<td><p><em>acceptable</em></p></td>
+<td><p>TRAL</p></td>
+</tr>
+<tr class="row-odd"><td><p>Linearized constraints</p></td>
+<td><p><em>acceptable</em></p></td>
+<td><p>SQP-like</p></td>
+<td><p><em>acceptable</em></p></td>
+</tr>
+<tr class="row-even"><td><p>Original constraints</p></td>
+<td><p>Direct surrogate</p></td>
+<td><p><em>acceptable</em></p></td>
+<td><p>IPTRSAO</p></td>
+</tr>
+</tbody>
+</table>
+<p>Initial approaches to nonlinearly-constrained SBO optimized an
+approximate merit function which incorporated the nonlinear
+constraints <span id="id1">[<a class="reference internal" href="../../misc/bibliography.html#id10" title="N. M. Alexandrov, R. M. Lewis, C. R. Gumbert, L. L. Green, and P. A. Newman. Optimization with variable-fidelity models applied to wing design. In Proceedings of the 38th Aerospace Sciences Meeting and Exhibit. Reno, NV, 2000. AIAA Paper 2000-0841.">ALG+00</a>, <a class="reference internal" href="../../misc/bibliography.html#id229" title="J. F. Rodriguez, J. E. Renaud, and L. T. Watson. Convergence of trust region augmented lagrangian methods using variable fidelity approximation data. Structural Optimization, 15:1–7, 1998.">RRW98</a>]</span>:</p>
+<div class="math notranslate nohighlight" id="equation-eq-nlp-sbo-tral">
+<span class="eqno">(235)<a class="headerlink" href="#equation-eq-nlp-sbo-tral" title="Permalink to this equation"></a></span>\[\begin{split}{\rm minimize\ } &amp; {\hat \Phi}^k({\bf x}) \nonumber \\
+{\rm subject\  to\ }
+    &amp; {\parallel {\bf x} - {\bf x}^k_c \parallel}_\infty \le \Delta^k\end{split}\]</div>
+<p>where the surrogate merit function is denoted as
+<span class="math notranslate nohighlight">\(\hat \Phi({\bf x})\)</span>, <span class="math notranslate nohighlight">\({\bf x}_c\)</span> is the center point of the
+trust region, and the trust region is truncated at the global variable
+bounds as needed. The merit function to approximate was typically chosen
+to be a standard implementation <span id="id2">[<a class="reference internal" href="../../misc/bibliography.html#id108" title="P. E. Gill, W. Murray, and M. H. Wright. Practical Optimization. Academic Press, San Diego, CA, 1981.">GMW81</a>, <a class="reference internal" href="../../misc/bibliography.html#id200" title="J. Nocedal and Wright S. J. Numerical Optimization. Springer Series in Operations Research. Springer, New York, 1999.">NJ99</a>, <a class="reference internal" href="../../misc/bibliography.html#id264" title="G. N. Vanderplaats. Numerical Optimization Techniques for Engineering Design: With Applications. McGraw-Hill, New York, 1984.">Van84</a>]</span> of
+the augmented Lagrangian merit function (see Eqs. <a class="reference internal" href="#equation-eq-aug-lag-merit">(243)</a>
+and <a class="reference internal" href="#equation-eq-aug-lang-psi">(244)</a>), where the surrogate augmented Lagrangian
+is constructed from individual
+surrogate models of the objective and constraints (approximate and
+assemble, rather than assemble and approximate). In
+<a class="reference internal" href="#tab-sbo-subprob"><span class="std std-numref">Table 17</span></a>, this corresponds to row 1, column 3,
+and is known as the trust-region augmented Lagrangian (TRAL) approach.
+While this approach was provably convergent, convergence rates to
+constrained minima have been observed to be slowed by the required
+updating of Lagrange multipliers and penalty
+parameters <span id="id3">[<a class="reference internal" href="../../misc/bibliography.html#id210" title="V. M. Pérez, J. E. Renaud, and L. T. Watson. An interior-point sequential approximation optimization methodology. Structural and Multidisciplinary Optimization, 27(5):360–370, July 2004.">PerezRW04</a>]</span>. Prior to converging these
+parameters, SBO iterates did not strictly respect constraint boundaries
+and were often infeasible. A subsequent approach
+(IPTRSAO <span id="id4">[<a class="reference internal" href="../../misc/bibliography.html#id210" title="V. M. Pérez, J. E. Renaud, and L. T. Watson. An interior-point sequential approximation optimization methodology. Structural and Multidisciplinary Optimization, 27(5):360–370, July 2004.">PerezRW04</a>]</span>) that sought to directly address
+this shortcoming added explicit surrogate constraints (row 3, column 3
+in <a class="reference internal" href="#tab-sbo-subprob"><span class="std std-numref">Table 17</span></a>):</p>
+<div class="math notranslate nohighlight" id="equation-eq-nlp-sbo-tral2">
+<span class="eqno">(236)<a class="headerlink" href="#equation-eq-nlp-sbo-tral2" title="Permalink to this equation"></a></span>\[\begin{split}{\rm minimize\ } &amp; {\hat \Phi}^k({\bf x}) \nonumber \\
+{\rm subject\  to\ }
+    &amp; {\bf g}_l \le {\bf {\hat g}}^k({\bf x}) \le {\bf g}_u \nonumber \\
+    &amp;               {\bf {\hat h}}^k({\bf x}) = {\bf h}_t \nonumber \\
+    &amp; {\parallel {\bf x} - {\bf x}^k_c \parallel}_\infty \le \Delta^k \; .\end{split}\]</div>
+<p>While this approach does address infeasible iterates, it still shares
+the feature that the surrogate merit function may reflect inaccurate
+relative weightings of the objective and constraints prior to
+convergence of the Lagrange multipliers and penalty parameters. That is,
+one may benefit from more feasible intermediate iterates, but the
+process may still be slow to converge to optimality. The concept of this
+approach is similar to that of SQP-like SBO
+approaches <span id="id5">[<a class="reference internal" href="../../misc/bibliography.html#id10" title="N. M. Alexandrov, R. M. Lewis, C. R. Gumbert, L. L. Green, and P. A. Newman. Optimization with variable-fidelity models applied to wing design. In Proceedings of the 38th Aerospace Sciences Meeting and Exhibit. Reno, NV, 2000. AIAA Paper 2000-0841.">ALG+00</a>]</span> which use linearized constraints:</p>
+<div class="math notranslate nohighlight" id="equation-eq-nlp-sbo-sqp">
+<span class="eqno">(237)<a class="headerlink" href="#equation-eq-nlp-sbo-sqp" title="Permalink to this equation"></a></span>\[\begin{split}{\rm minimize\ } &amp; {\hat \Phi}^k({\bf x}) \nonumber \\
+{\rm subject\  to\ }
+&amp; {\bf g}_l \le {\bf {\hat g}}^k({\bf x}^k_c) +
+\nabla {\bf {\hat g}}^k({\bf x}^k_c)^T ({\bf x} - {\bf x}^k_c) \le {\bf g}_u
+\nonumber \\
+&amp; {\bf {\hat h}}^k({\bf x}^k_c) + \nabla {\bf {\hat h}}^k({\bf x}^k_c)^T
+({\bf x} - {\bf x}^k_c) = {\bf h}_t \nonumber \\
+&amp; {\parallel {\bf x} - {\bf x}^k_c \parallel}_\infty \le \Delta^k \; .\end{split}\]</div>
+<p>in that the primary concern is minimizing a composite merit function of
+the objective and constraints, but under the restriction that the
+original problem constraints may not be wildly violated prior to
+convergence of Lagrange multiplier estimates. Here, the merit function
+selection of the Lagrangian function (row 2, column 2 in
+<a class="reference internal" href="#tab-sbo-subprob"><span class="std std-numref">Table 17</span></a>; see also
+Eq. <a class="reference internal" href="#equation-eq-lag-merit">(242)</a>) is most closely related to SQP,
+which includes the use of first-order Lagrange multiplier updates
+(Eq. <a class="reference internal" href="#equation-eq-lls-lambda">(248)</a>) that should converge more
+rapidly near a constrained minimizer than the zeroth-order updates
+(Eqs. <a class="reference internal" href="#equation-eq-lambda-psi">(245)</a> and <a class="reference internal" href="#equation-eq-lambda-h">(246)</a>)
+used for the augmented Lagrangian.</p>
+<p>All of these previous constrained SBO approaches involve a recasting of
+the approximate subproblem objective and constraints as a function of
+the original objective and constraint surrogates. A more direct approach
+is to use a formulation of:</p>
+<div class="math notranslate nohighlight" id="equation-eq-nlp-sbo-direct">
+<span class="eqno">(238)<a class="headerlink" href="#equation-eq-nlp-sbo-direct" title="Permalink to this equation"></a></span>\[\begin{split}{\rm minimize\ } &amp; {\hat f}^k({\bf x}) \nonumber \\
+{\rm subject\  to\ }
+    &amp; {\bf g}_l \le {\bf {\hat g}}^k({\bf x}) \le {\bf g}_u \nonumber \\
+    &amp;               {\bf {\hat h}}^k({\bf x}) = {\bf h}_t \nonumber \\
+    &amp; {\parallel {\bf x} - {\bf x}^k_c \parallel}_\infty \le \Delta^k\end{split}\]</div>
+<p>This approach has been termed the direct surrogate approach since it
+optimizes surrogates of the original objective and constraints (row 3,
+column 1 in <a class="reference internal" href="#tab-sbo-subprob"><span class="std std-numref">Table 17</span></a>) without any recasting. It
+is attractive both from its simplicity and potential for improved
+performance, and is the default approach taken in Dakota. Other Dakota
+defaults include the use of a filter method for <a class="reference internal" href="#sbm-sblm-con-iter"><span class="std std-ref">iterate acceptance</span></a>,
+an augmented Lagrangian merit <a class="reference internal" href="#sbm-sblm-con-merit"><span class="std std-ref">merit function</span></a>),
+Lagrangian <a class="reference internal" href="#sbm-sblm-con-hard"><span class="std std-ref">hard convergence assessment</span></a>), and
+<a class="reference internal" href="#sbm-sblm-con-relax"><span class="std std-ref">no constraint relaxation</span></a>.</p>
+<p>While the formulation of Eq. <a class="reference internal" href="#equation-eq-nlp-sbo-tral">(235)</a>
+(and others from row 1 in <a class="reference internal" href="#tab-sbo-subprob"><span class="std std-numref">Table 17</span></a>) can suffer
+from infeasible intermediate iterates and slow convergence to
+constrained minima, each of the approximate subproblem formulations with
+explicit constraints
+(Eqs. <a class="reference internal" href="#equation-eq-nlp-sbo-tral2">(236)</a>-<a class="reference internal" href="#equation-eq-nlp-sbo-direct">(238)</a>,
+and others from rows 2-3 in <a class="reference internal" href="#tab-sbo-subprob"><span class="std std-numref">Table 17</span></a>) can suffer
+from the lack of a feasible solution within the current trust region.
+Techniques for dealing with this latter challenge involve some form of
+constraint relaxation. Homotopy
+approaches <span id="id6">[<a class="reference internal" href="../../misc/bibliography.html#id211" title="V. M. Pérez, M. S. Eldred, and J. E. and Renaud. Solving the infeasible trust-region problem using approximations. In Proceedings of the 10th AIAA/ISSMO Multidisciplinary Analysis and Optimization Conference. Albany, NY, Aug. 30–Sept. 1, 2004. AIAA Paper 2004-4312.">PerezEaR04</a>, <a class="reference internal" href="../../misc/bibliography.html#id210" title="V. M. Pérez, J. E. Renaud, and L. T. Watson. An interior-point sequential approximation optimization methodology. Structural and Multidisciplinary Optimization, 27(5):360–370, July 2004.">PerezRW04</a>]</span> or composite step
+approaches such as Byrd-Omojokun <span id="id7">[<a class="reference internal" href="../../misc/bibliography.html#id204" title="E. O. Omojokun. Trust Region Algorithms for Optimization with Nonlinear Equality and Inequality Constraints. PhD thesis, University of Colorado, Boulder, Colorado, 1989.">Omo89</a>]</span>,
+Celis-Dennis-Tapia <span id="id8">[<a class="reference internal" href="../../misc/bibliography.html#id35" title="M. R. Celis, J. .E. Dennis, and R. .A Tapia. A trust region strategy for nonlinear equality constrained optimization. In P. .T. Boggs, R. H. Byrd, and R. B. Schnabel, editors, Numerical Optimization 1984, pages 71–82. SIAM, Philadelphia, USA, 1985.">CDT85</a>]</span>, or
+MAESTRO <span id="id9">[<a class="reference internal" href="../../misc/bibliography.html#id10" title="N. M. Alexandrov, R. M. Lewis, C. R. Gumbert, L. L. Green, and P. A. Newman. Optimization with variable-fidelity models applied to wing design. In Proceedings of the 38th Aerospace Sciences Meeting and Exhibit. Reno, NV, 2000. AIAA Paper 2000-0841.">ALG+00</a>]</span> may be used for this purpose (see
+<a class="reference internal" href="#sbm-sblm-con-relax"><span class="std std-ref">Constraint relaxation</span></a>).</p>
+<p>After each of the <span class="math notranslate nohighlight">\(k\)</span> iterations in the SBO method, the predicted
+step is validated by computing <span class="math notranslate nohighlight">\(f({\bf x}^k_\ast)\)</span>,
+<span class="math notranslate nohighlight">\({\bf g}({\bf x}^k_\ast)\)</span>, and <span class="math notranslate nohighlight">\({\bf h}({\bf x}^k_\ast)\)</span>.
+One approach forms the trust region ratio <span class="math notranslate nohighlight">\(\rho^k\)</span> which measures
+the ratio of the actual improvement to the improvement predicted by
+optimization on the surrogate model. When optimizing on an approximate
+merit function
+(Eqs. <a class="reference internal" href="#equation-eq-nlp-sbo-tral">(235)</a>-<a class="reference internal" href="#equation-eq-nlp-sbo-sqp">(237)</a>),
+the following ratio is natural to compute</p>
+<div class="math notranslate nohighlight" id="equation-eq-rho-phi-k">
+<span class="eqno">(239)<a class="headerlink" href="#equation-eq-rho-phi-k" title="Permalink to this equation"></a></span>\[\rho^k = \frac{     \Phi({\bf x}^k_c)      - \Phi({\bf x}^k_\ast)}
+          {\hat \Phi({\bf x}^k_c) - \hat \Phi({\bf x}^k_\ast)} \; .\]</div>
+<p>The formulation in Eq. <a class="reference internal" href="#equation-eq-nlp-sbo-direct">(238)</a> may
+also form a merit function for computing the trust region ratio;
+however, the omission of this merit function from explicit use in the
+approximate optimization cycles can lead to synchronization problems
+with the optimizer.</p>
+<p>Once computed, the value for <span class="math notranslate nohighlight">\(\rho^k\)</span> can be used to define the
+step acceptance and the next trust region size <span class="math notranslate nohighlight">\(\Delta^{k+1}\)</span>
+using logic similar to that shown in <a class="reference internal" href="#tab-rho-k"><span class="std std-numref">Table 18</span></a>. Typical
+factors for shrinking and expanding are 0.5 and 2.0, respectively, but
+these as well as the threshold ratio values are tunable parameters in
+the algorithm (see <a class="reference internal" href="../reference/method-surrogate_based_local.html#method-surrogate-based-local"><span class="std std-ref">surrogate-sased method</span></a>
+controls in the <a class="reference internal" href="../reference.html#keyword-reference-area"><span class="std std-ref">keyword reference area</span></a>
+In addition, the use of
+discrete thresholds is not required, and continuous relationships using
+adaptive logic can also be explored <span id="id10">[<a class="reference internal" href="../../misc/bibliography.html#id279" title="B. A. Wujek and J. E. Renaud. New adaptive move-limit management strategy for approximate optimization, part 1. AIAA Journal, 36(10):1911–1921, 1998.">WR98a</a>, <a class="reference internal" href="../../misc/bibliography.html#id281" title="B. A. Wujek and J. E. Renaud. New adaptive move-limit management strategy for approximate optimization, part 2. AIAA Journal, 36(10):1922–1934, 1998.">WR98b</a>]</span>.
+Iterate acceptance or rejection completes an SBO cycle, and the cycles
+are continued until either soft or
+<a class="reference internal" href="#sbm-sblm-con-hard"><span class="std std-ref">hard convergence criteria</span></a> are satisfied.</p>
+<table class="docutils align-default" id="tab-rho-k">
+<caption><span class="caption-number">Table 18 </span><span class="caption-text">Sample trust region ratio logic.</span><a class="headerlink" href="#tab-rho-k" title="Permalink to this table"></a></caption>
+<colgroup>
+<col style="width: 31%" />
+<col style="width: 23%" />
+<col style="width: 23%" />
+<col style="width: 23%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Ratio Value</p></th>
+<th class="head"><p>Surrogate
+Accuracy</p></th>
+<th class="head"><p>Iterate
+Acceptance</p></th>
+<th class="head"><p>Trust Region
+Sizing</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(\rho^k
+\le 0\)</span></p></td>
+<td><p>poor</p></td>
+<td><p>reject step</p></td>
+<td><p>shrink</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(0 &lt; \rho^k
+\le 0.25\)</span></p></td>
+<td><p>marginal</p></td>
+<td><p>accept step</p></td>
+<td><p>shrink</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(0.25 &lt;
+\rho^k &lt; 0.75\)</span>
+or
+<span class="math notranslate nohighlight">\(\rho^k
+&gt; 1.25\)</span></p></td>
+<td><p>moderate</p></td>
+<td><p>accept step</p></td>
+<td><p>retain</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(0.75
+\le \rho^k
+\le 1.25\)</span></p></td>
+<td><p>good</p></td>
+<td><p>accept step</p></td>
+<td><p>expand</p></td>
+</tr>
+</tbody>
+</table>
+<section id="iterate-acceptance-logic">
+<span id="sbm-sblm-con-iter"></span><h2>Iterate acceptance logic<a class="headerlink" href="#iterate-acceptance-logic" title="Permalink to this headline"></a></h2>
+<figure class="align-center" id="sbm-sblm-con-iter-filter">
+<a class="reference internal image-reference" href="../../_images/filter.png"><img alt="../../_images/filter.png" src="../../_images/filter.png" style="width: 50%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 82 </span><span class="caption-text">Illustration of slanting filter</span><a class="headerlink" href="#sbm-sblm-con-iter-filter" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<p>When a surrogate optimization is completed and the approximate solution
+has been validated, then the decision must be made to either accept or
+reject the step. The traditional approach is to base this decision on
+the value of the trust region ratio, as outlined previously in
+<a class="reference internal" href="#tab-rho-k"><span class="std std-numref">Table 18</span></a>. An alternate approach is to utilize a filter
+method <span id="id11">[<a class="reference internal" href="../../misc/bibliography.html#id91" title="R. Fletcher, S. Leyffer, and P. L. Toint. On the global convergence of a filter-SQP algorithm. SIAM J. Optim., 13(1):44–59, 2002.">FLT02</a>]</span>, which does not require penalty
+parameters or Lagrange multiplier estimates. The basic idea in a filter
+method is to apply the concept of Pareto optimality to the objective
+function and constraint violations and only accept an iterate if it is
+not dominated by any previous iterate. Mathematically, a new iterate is
+not dominated if at least one of the following:</p>
+<div class="math notranslate nohighlight">
+\[{\rm either~~~} f &lt; f^{(i)} {\rm ~~~or~~~} c &lt; c^{(i)}
+%  if (new_f &gt;= filt_f &amp;&amp; new_g &gt;= filt_g)
+%    return false;            // new point is dominated: reject iterate
+%  else if (new_f &lt; filt_f &amp;&amp; new_g &lt; filt_g)
+%    rm_list.insert(filt_it); // old pt dominated by new: queue for removal\]</div>
+<p>is true for all <span class="math notranslate nohighlight">\(i\)</span> in the filter, where <span class="math notranslate nohighlight">\(c\)</span> is a selected
+norm of the constraint violation. This basic description can be
+augmented with mild requirements to prevent point accumulation and
+assure convergence, known as a slanting
+filter <span id="id12">[<a class="reference internal" href="../../misc/bibliography.html#id91" title="R. Fletcher, S. Leyffer, and P. L. Toint. On the global convergence of a filter-SQP algorithm. SIAM J. Optim., 13(1):44–59, 2002.">FLT02</a>]</span>. <a class="reference internal" href="#sbm-sblm-con-iter-filter"><span class="std std-numref">Fig. 82</span></a>
+illustrates the filter concept, where objective values are plotted
+against constraint violation for accepted iterates (blue circles) to
+define the dominated region (denoted by the gray lines). A filter method
+relaxes the common enforcement of monotonicity in constraint violation
+reduction and, by allowing more flexibility in acceptable step
+generation, often allows the algorithm to be more efficient.</p>
+<p>The use of a filter method is compatible with any of the SBO
+formulations in Eqs. <a class="reference internal" href="#equation-eq-nlp-sbo-tral">(235)</a>-<a class="reference internal" href="#equation-eq-nlp-sbo-direct">(238)</a>.</p>
+</section>
+<section id="merit-functions">
+<span id="sbm-sblm-con-merit"></span><h2>Merit functions<a class="headerlink" href="#merit-functions" title="Permalink to this headline"></a></h2>
+<p>The merit function <span class="math notranslate nohighlight">\(\Phi({\bf x})\)</span> used in
+Eqs. <a class="reference internal" href="#equation-eq-nlp-sbo-tral">(235)</a>-<a class="reference internal" href="#equation-eq-nlp-sbo-sqp">(237)</a>, <a class="reference internal" href="#equation-eq-rho-phi-k">(239)</a>
+may be selected to be a penalty function, an adaptive penalty function,
+a Lagrangian function, or an augmented Lagrangian function. In each of
+these cases, the more flexible inequality and equality constraint
+formulations with two-sided bounds and targets
+(Eqs. <a class="reference internal" href="#equation-eq-nlp-standard">(234)</a>, <a class="reference internal" href="#equation-eq-nlp-sbo-tral2">(236)</a>-<a class="reference internal" href="#equation-eq-nlp-sbo-direct">(238)</a>)
+have been converted to a standard form of <span class="math notranslate nohighlight">\({\bf g}({\bf x}) \le 0\)</span>
+and <span class="math notranslate nohighlight">\({\bf h}({\bf x}) = 0\)</span> (in
+Eqs. <a class="reference internal" href="#equation-eq-penalty-merit">(240)</a>, <a class="reference internal" href="#equation-eq-lag-merit">(242)</a>-<a class="reference internal" href="#equation-eq-lls-lambda">(248)</a>).
+The active set of inequality constraints is denoted as
+<span class="math notranslate nohighlight">\({\bf g}^+\)</span>.</p>
+<p>The penalty function employed in this paper uses a quadratic penalty
+with the penalty schedule linked to SBO iteration number</p>
+<div class="math notranslate nohighlight" id="equation-eq-penalty-merit">
+<span class="eqno">(240)<a class="headerlink" href="#equation-eq-penalty-merit" title="Permalink to this equation"></a></span>\[\Phi({\bf x}, r_p) = f({\bf x})
++ r_p {\bf g}^+({\bf x})^T {\bf g}^+({\bf x})
++ r_p {\bf h}({\bf x})^T {\bf h}({\bf x})\]</div>
+<div class="math notranslate nohighlight" id="equation-eq-exp-rp">
+<span class="eqno">(241)<a class="headerlink" href="#equation-eq-exp-rp" title="Permalink to this equation"></a></span>\[r_p = e^{(k + {\rm offset})/10} % static offset = 21 gives r_p ~ 8 for k = 0\]</div>
+<p>The adaptive penalty function is identical in form to
+Eq. <a class="reference internal" href="#equation-eq-penalty-merit">(240)</a>, but adapts <span class="math notranslate nohighlight">\(r_p\)</span>
+using monotonic increases in the iteration offset value in order to
+accept any iterate that reduces the constraint violation.</p>
+<p>The Lagrangian merit function is</p>
+<div class="math notranslate nohighlight" id="equation-eq-lag-merit">
+<span class="eqno">(242)<a class="headerlink" href="#equation-eq-lag-merit" title="Permalink to this equation"></a></span>\[\Phi({\bf x}, \mbox{ $\boldsymbol{\lambda}$}_g, \mbox{
+$\boldsymbol \lambda$}_h) = f({\bf x})
++ \mbox{$\boldsymbol \lambda$}_g^T {\bf g}^+({\bf x})
++ \mbox{$\boldsymbol \lambda$}_h^T {\bf h}({\bf x})\]</div>
+<p>for which the Lagrange multiplier estimation is discussed in
+<a class="reference internal" href="#sbm-sblm-con-hard"><span class="std std-ref">Convergence Assessment</span></a>. Away from the optimum, it is
+possible for the least squares estimates of the Lagrange multipliers for
+active constraints to be zero, which equates to omitting the
+contribution of an active constraint from the merit function. This is
+undesirable for tracking SBO progress, so usage of the Lagrangian merit
+function is normally restricted to approximate subproblems and hard
+convergence assessments.</p>
+<p>The augmented Lagrangian employed in this paper follows the sign
+conventions described in <span id="id13">[<a class="reference internal" href="../../misc/bibliography.html#id264" title="G. N. Vanderplaats. Numerical Optimization Techniques for Engineering Design: With Applications. McGraw-Hill, New York, 1984.">Van84</a>]</span></p>
+<div class="math notranslate nohighlight" id="equation-eq-aug-lag-merit">
+<span class="eqno">(243)<a class="headerlink" href="#equation-eq-aug-lag-merit" title="Permalink to this equation"></a></span>\[\Phi({\bf x}, \mbox{$\boldsymbol \lambda$}_{\psi}, \mbox{
+$\boldsymbol \lambda$}_h, r_p) = f({\bf x})
++ \mbox{$\boldsymbol \lambda$}_{\psi}^T \mbox{$\boldsymbol \psi$}({\bf x})
++ r_p \mbox{$\boldsymbol \psi$}({\bf x})^T \mbox{$\boldsymbol \psi$}({\bf x})
++ \mbox{$\boldsymbol \lambda$}_h^T {\bf h}({\bf x})
++ r_p {\bf h}({\bf x})^T {\bf h}({\bf x})\]</div>
+<div class="math notranslate nohighlight" id="equation-eq-aug-lang-psi">
+<span class="eqno">(244)<a class="headerlink" href="#equation-eq-aug-lang-psi" title="Permalink to this equation"></a></span>\[\psi_i = \max\left\{g_i, -\frac{\lambda_{\psi_i}}{2r_p}\right\}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\psi\)</span>(<strong>x</strong>) is derived from the elimination of slack
+variables for the inequality constraints. In this case, simple
+zeroth-order Lagrange multiplier updates may be used:</p>
+<div class="math notranslate nohighlight" id="equation-eq-lambda-psi">
+<span class="eqno">(245)<a class="headerlink" href="#equation-eq-lambda-psi" title="Permalink to this equation"></a></span>\[\mbox{$\boldsymbol \lambda$}_{\psi}^{k+1}  =  \mbox{
+$\boldsymbol \lambda$}_{\psi}^k + 2r_p\mbox{$\boldsymbol \psi$}({\bf x})\]</div>
+<div class="math notranslate nohighlight" id="equation-eq-lambda-h">
+<span class="eqno">(246)<a class="headerlink" href="#equation-eq-lambda-h" title="Permalink to this equation"></a></span>\[\mbox{$\boldsymbol \lambda$}_h^{k+1} = \mbox{$\boldsymbol \lambda$}_h^k
++ 2 r_p {\bf h}({\bf x})\]</div>
+<p>The updating of multipliers and penalties is carefully
+orchestrated <span id="id14">[<a class="reference internal" href="../../misc/bibliography.html#id40" title="A. R. Conn, N. I. M. Gould, and P. L. Toint. Trust-Region Methods. MPS-SIAM Series on Optimization, SIAM-MPS, Philadelphia, 2000.">CGT00</a>]</span> to drive reduction in constraint
+violation of the iterates. The penalty updates can be more conservative
+than in Eq. <a class="reference internal" href="#equation-eq-exp-rp">(241)</a>, often using an infrequent
+application of a constant multiplier rather than a fixed exponential
+progression.</p>
+</section>
+<section id="convergence-assessment">
+<span id="sbm-sblm-con-hard"></span><h2>Convergence assessment<a class="headerlink" href="#convergence-assessment" title="Permalink to this headline"></a></h2>
+<p>To terminate the SBO process, hard and soft convergence metrics are
+monitored. It is preferable for SBO studies to satisfy hard convergence
+metrics, but this is not always practical (e.g., when gradients are
+unavailable or unreliable). Therefore, simple soft convergence criteria
+are also employed which monitor for diminishing returns (relative
+improvement in the merit function less than a tolerance for some number
+of consecutive iterations).</p>
+<p>To assess hard convergence, one calculates the norm of the projected
+gradient of a merit function whenever the feasibility tolerance is
+satisfied. The best merit function for this purpose is the Lagrangian
+merit function from Eq. <a class="reference internal" href="#equation-eq-lag-merit">(242)</a>. This
+requires a least squares estimation for the Lagrange multipliers that
+best minimize the projected gradient:</p>
+<div class="math notranslate nohighlight" id="equation-eq-lag-merit-grad">
+<span class="eqno">(247)<a class="headerlink" href="#equation-eq-lag-merit-grad" title="Permalink to this equation"></a></span>\[\nabla_x \Phi({\bf x}, \mbox{$\boldsymbol \lambda$}_g, \mbox{
+$\boldsymbol \lambda$}_h) = \nabla_x f({\bf x})
+%+ \sum_{i=1}^{n_g} (\lambda_i g_i({\bf x})
+%+ \sum_{i=1}^{n_h} (\lambda_i h_i({\bf x})
++ \mbox{$\boldsymbol \lambda$}_g^T \nabla_x {\bf g}^+({\bf x}) +
+\mbox{$\boldsymbol \lambda$}_h^T \nabla_x {\bf h}({\bf x})\]</div>
+<p>where gradient portions directed into active global variable bounds have
+been removed. This can be posed as a linear least squares problem for
+the multipliers:</p>
+<div class="math notranslate nohighlight" id="equation-eq-lls-lambda">
+<span class="eqno">(248)<a class="headerlink" href="#equation-eq-lls-lambda" title="Permalink to this equation"></a></span>\[{\bf A} \mbox{$\boldsymbol \lambda$} = -\nabla_x f\]</div>
+<p>where <span class="math notranslate nohighlight">\({\bf A}\)</span> is the matrix of active constraint gradients,
+<span class="math notranslate nohighlight">\(\mbox{$\boldsymbol \lambda$}_g\)</span> is constrained to be non-negative,
+and <span class="math notranslate nohighlight">\(\mbox{$\boldsymbol \lambda$}_h\)</span> is unrestricted in sign. To
+estimate the multipliers using non-negative and bound-constrained linear
+least squares, the NNLS and BVLS routines <span id="id15">[<a class="reference internal" href="../../misc/bibliography.html#id170" title="C. L. Lawson and R. J. Hanson. Solving Least Squares Problems. Prentice–Hall, 1974.">LH74</a>]</span> from
+NETLIB are used, respectively.</p>
+</section>
+<section id="constraint-relaxation">
+<span id="sbm-sblm-con-relax"></span><h2>Constraint relaxation<a class="headerlink" href="#constraint-relaxation" title="Permalink to this headline"></a></h2>
+<p>The goal of constraint relaxation is to achieve efficiency through the
+balance of feasibility and optimality when the trust region restrictions
+prevent the location of feasible solutions to constrained approximate
+subproblems
+(Eqs. <a class="reference internal" href="#equation-eq-nlp-sbo-tral2">(236)</a>-<a class="reference internal" href="#equation-eq-nlp-sbo-direct">(238)</a>,
+and other formulations from rows 2-3 in
+<a class="reference internal" href="#tab-sbo-subprob"><span class="std std-numref">Table 17</span></a>). The SBO algorithm starting from
+infeasible points will commonly generate iterates which seek to satisfy
+feasibility conditions without regard to objective
+reduction <span id="id16">[<a class="reference internal" href="../../misc/bibliography.html#id211" title="V. M. Pérez, M. S. Eldred, and J. E. and Renaud. Solving the infeasible trust-region problem using approximations. In Proceedings of the 10th AIAA/ISSMO Multidisciplinary Analysis and Optimization Conference. Albany, NY, Aug. 30–Sept. 1, 2004. AIAA Paper 2004-4312.">PerezEaR04</a>]</span>.</p>
+<p>One approach for achieving this balance is to use <em>relaxed constraints</em>
+when iterates are infeasible with respect to the surrogate constraints.
+We follow Perez, Renaud, and Watson <span id="id17">[<a class="reference internal" href="../../misc/bibliography.html#id210" title="V. M. Pérez, J. E. Renaud, and L. T. Watson. An interior-point sequential approximation optimization methodology. Structural and Multidisciplinary Optimization, 27(5):360–370, July 2004.">PerezRW04</a>]</span>, and use
+a <em>global homotopy</em> mapping the relaxed constraints and the surrogate
+constraints. For formulations in
+Eqs. <a class="reference internal" href="#equation-eq-nlp-sbo-tral2">(236)</a> and <a class="reference internal" href="#equation-eq-nlp-sbo-direct">(238)</a>
+(and others from row 3 <a class="reference internal" href="#tab-sbo-subprob"><span class="std std-numref">Table 17</span></a>), the relaxed constraints are
+defined from</p>
+<div class="math notranslate nohighlight" id="equation-eq-relaxed-ineq">
+<span class="eqno">(249)<a class="headerlink" href="#equation-eq-relaxed-ineq" title="Permalink to this equation"></a></span>\[{\bf {\tilde g}}^k({\bf x}, \tau) = {\bf {\hat g}}^k({\bf x}) +
+(1-\tau){\bf b}_{g}\]</div>
+<div class="math notranslate nohighlight" id="equation-eq-relaxed-eq">
+<span class="eqno">(250)<a class="headerlink" href="#equation-eq-relaxed-eq" title="Permalink to this equation"></a></span>\[{\bf {\tilde h}}^k({\bf x}, \tau) = {\bf {\hat h}}^k({\bf x}) +
+(1-\tau){\bf b}_{h}\]</div>
+<p>For Eq. <a class="reference internal" href="#equation-eq-nlp-sbo-sqp">(237)</a> (and others from row 2 in
+<a class="reference internal" href="#tab-sbo-subprob"><span class="std std-numref">Table 17</span></a>), the original surrogate constraints
+<span class="math notranslate nohighlight">\({\bf {\hat g}}^k({\bf x})\)</span> and <span class="math notranslate nohighlight">\({\bf {\hat h}}^k({\bf x})\)</span>
+in
+Eqs. <a class="reference internal" href="#equation-eq-relaxed-ineq">(249)</a>-<a class="reference internal" href="#equation-eq-relaxed-eq">(250)</a>
+are replaced with their linearized forms
+(<span class="math notranslate nohighlight">\({\bf {\hat g}}^k({\bf x}^k_c) +
+\nabla {\bf {\hat g}}^k({\bf x}^k_c)^T ({\bf x} - {\bf x}^k_c)\)</span> and
+<span class="math notranslate nohighlight">\({\bf {\hat h}}^k({\bf x}^k_c) + \nabla {\bf {\hat h}}^k({\bf x}^k_c)^T
+({\bf x} - {\bf x}^k_c)\)</span>, respectively). The approximate subproblem is
+then reposed using the relaxed constraints as</p>
+<div class="math notranslate nohighlight" id="equation-eq-nlp-relaxed">
+<span class="eqno">(251)<a class="headerlink" href="#equation-eq-nlp-relaxed" title="Permalink to this equation"></a></span>\[\begin{split}{\rm minimize\ } &amp; {\hat f^k}({\bf x})~~{\rm or}~~{\hat \Phi}^k({\bf x})
+\nonumber \\
+{\rm subject\  to\ }
+  &amp; {\bf g}_l \le {\bf {\tilde g}}^k({\bf x},\tau^k) \le {\bf g}_u \nonumber \\
+  &amp;               {\bf {\tilde h}}^k({\bf x},\tau^k) = {\bf h}_t \nonumber \\
+  &amp; {\parallel {\bf x} - {\bf x}^k_c \parallel}_\infty \le \Delta^k\end{split}\]</div>
+<p>in place of the corresponding subproblems in
+Eqs. <a class="reference internal" href="#equation-eq-nlp-sbo-tral2">(236)</a>-<a class="reference internal" href="#equation-eq-nlp-sbo-direct">(238)</a>.
+Alternatively, since the relaxation terms are constants for the
+<span class="math notranslate nohighlight">\(k^{th}\)</span> iteration, it may be more convenient for the
+implementation to constrain <span class="math notranslate nohighlight">\({\bf {\hat g}}^k({\bf x})\)</span> and
+<span class="math notranslate nohighlight">\({\bf {\hat h}}^k({\bf x})\)</span> (or their linearized forms) subject to
+relaxed bounds and targets (<span class="math notranslate nohighlight">\({\bf {\tilde g}}_l^k\)</span>,
+<span class="math notranslate nohighlight">\({\bf {\tilde g}}_u^k\)</span>, <span class="math notranslate nohighlight">\({\bf {\tilde h}}_t^k\)</span>). The
+parameter <span class="math notranslate nohighlight">\(\tau\)</span> is the homotopy parameter controlling the extent
+of the relaxation: when <span class="math notranslate nohighlight">\(\tau=0\)</span>, the constraints are fully
+relaxed, and when <span class="math notranslate nohighlight">\(\tau=1\)</span>, the surrogate constraints are
+recovered. The vectors <span class="math notranslate nohighlight">\({\bf b}_{g}, {\bf b}_{h}\)</span> are chosen so
+that the starting point, <span class="math notranslate nohighlight">\({\bf x}^0\)</span>, is feasible with respect to
+the fully relaxed constraints:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}&amp;{\bf g}_l \le {\bf {\tilde g}}^0({\bf x}^0, 0) \le {\bf g}_u \\
+&amp;{\bf {\tilde h}}^0({\bf x}^0, 0) =  {\bf h}_t\end{split}\]</div>
+<p>At the start of the SBO algorithm, <span class="math notranslate nohighlight">\(\tau^0=0\)</span> if <span class="math notranslate nohighlight">\({\bf x}^0\)</span>
+is infeasible with respect to the unrelaxed surrogate constraints;
+otherwise <span class="math notranslate nohighlight">\(\tau^0=1\)</span> (i.e., no constraint relaxation is used). At
+the start of the <span class="math notranslate nohighlight">\(k^{th}\)</span> SBO iteration where
+<span class="math notranslate nohighlight">\(\tau^{k-1} &lt; 1\)</span>, <span class="math notranslate nohighlight">\(\tau^k\)</span> is determined by solving the
+subproblem</p>
+<div class="math notranslate nohighlight" id="equation-eq-tau-max">
+<span class="eqno">(252)<a class="headerlink" href="#equation-eq-tau-max" title="Permalink to this equation"></a></span>\[\begin{split}{\rm maximize\ } &amp; \tau^k \nonumber \\
+{\rm subject\  to\ }
+  &amp; {\bf g}_l \le {\bf {\tilde g}}^k({\bf x},\tau^k) \le {\bf g}_u \nonumber \\
+  &amp;               {\bf {\tilde h}}^k({\bf x},\tau^k) = {\bf h}_t \nonumber \\
+  &amp; {\parallel {\bf x} - {\bf x}^k_c \parallel}_\infty \le \Delta^k \nonumber\\
+  &amp; \tau^k \ge 0\end{split}\]</div>
+<p>starting at <span class="math notranslate nohighlight">\(({\bf x}^{k-1}_*, \tau^{k-1})\)</span>, and then adjusted as
+follows:</p>
+<div class="math notranslate nohighlight">
+\[\tau^k = \min\left\{1,\tau^{k-1} + \alpha
+\left(\tau^{k}_{\max}-\tau^{k-1}\right)\right\}\]</div>
+<p>The adjustment parameter <span class="math notranslate nohighlight">\(0 &lt; \alpha &lt; 1\)</span> is chosen so that that
+the feasible region with respect to the relaxed constraints has positive
+volume within the trust region. Determining the optimal value for
+<span class="math notranslate nohighlight">\(\alpha\)</span> remains an open question and will be explored in future
+work.</p>
+<p>After <span class="math notranslate nohighlight">\(\tau^k\)</span> is determined using this procedure, the problem in
+Eq. <a class="reference internal" href="#equation-eq-nlp-relaxed">(251)</a> is solved for
+<span class="math notranslate nohighlight">\({\bf x}^k_\ast\)</span>. If the step is accepted, then the value of
+<span class="math notranslate nohighlight">\(\tau^k\)</span> is updated using the current iterate
+<span class="math notranslate nohighlight">\({\bf x}^k_\ast\)</span> and the validated constraints
+<span class="math notranslate nohighlight">\({\bf g}({\bf x}^k_\ast)\)</span> and <span class="math notranslate nohighlight">\({\bf h}({\bf x}^k_\ast)\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\tau^{k} &amp; = \min\left\{1,\min_i \tau_i , \min_j \tau_j \right\} \\
+\rm{where}~~
+\tau_i &amp; = 1 + \frac{\min \left\{g_i({\bf x}^k_\ast) - g_{l_{i}},
+g_{u_{i}} - g_i({\bf x}^k_\ast)\right\}}{b_{g_{i}}} \\
+\tau_j &amp; = 1 - \frac{| h_j({\bf x}^k_\ast) - h_{t_{j}} |}{b_{h_{j}}}\end{split}\]</div>
+<figure class="align-center" id="sbm-sblm-con-relax-tau-updates">
+<a class="reference internal image-reference" href="../../_images/tau_updates.png"><img alt="../../_images/tau_updates.png" src="../../_images/tau_updates.png" style="width: 50%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 83 </span><span class="caption-text">Illustration of SBO iterates using surrogate (red) and relaxed(blue)
+constraints.</span><a class="headerlink" href="#sbm-sblm-con-relax-tau-updates" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<p><a class="reference internal" href="#sbm-sblm-con-relax-tau-updates"><span class="std std-numref">Fig. 83</span></a> illustrates the SBO
+algorithm on a two-dimensional problem with one inequality constraint
+starting from an infeasible point, <span class="math notranslate nohighlight">\({\bf x}^0\)</span>. The minimizer of
+the problem is denoted as <span class="math notranslate nohighlight">\({\bf x}^*\)</span>. Iterates generated using
+the surrogate constraints are shown in red, where feasibility is
+achieved first, and then progress is made toward the optimal point. The
+iterates generated using the relaxed constraints are shown in blue,
+where a balance of satisfying feasibility and optimality has been
+achieved, leading to fewer overall SBO iterations.</p>
+<p>The behavior illustrated in
+<a class="reference internal" href="#sbm-sblm-con-relax-tau-updates"><span class="std std-numref">Fig. 83</span></a> is an example where
+using the relaxed constraints over the surrogate constraints may improve
+the overall performance of the SBO algorithm by reducing the number of
+iterations performed. This improvement comes at the cost of solving the
+minimization subproblem in Eq. <a class="reference internal" href="#equation-eq-tau-max">(252)</a>, which can
+be significant in some cases (i.e., when the cost of evaluating
+<span class="math notranslate nohighlight">\({\bf {\hat g}}^k({\bf x})\)</span> and <span class="math notranslate nohighlight">\({\bf {\hat h}}^k({\bf x})\)</span>
+is not negligible, such as with multifidelity or ROM surrogates). As
+shown in the numerical experiments involving the Barnes problem
+presented in  <span id="id18">[<a class="reference internal" href="../../misc/bibliography.html#id210" title="V. M. Pérez, J. E. Renaud, and L. T. Watson. An interior-point sequential approximation optimization methodology. Structural and Multidisciplinary Optimization, 27(5):360–370, July 2004.">PerezRW04</a>]</span>, the directions toward
+constraint violation reduction and objective function reduction may be
+in opposing directions. In such cases, the use of the relaxed
+constraints may result in an <em>increase</em> in the overall number of SBO
+iterations since feasibility must ultimately take precedence.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="surrogates.html" class="btn btn-neutral float-left" title="Surrogate Models" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="surrogatebasedglobaloptimization.html" class="btn btn-neutral float-right" title="Effcient Global Optimization" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <!--
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Sandia National Laboratories.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+  --> 
+
+</footer>
+        </div>
+      </div>
+	  
+	  <div style="background-color: #0f0f0f;color:#fafafa;padding:20px">
+	    <div>
+		  <h2><em>Exceptional service in the national interest</em></h2>
+		</div>
+		<p>© 2022 National Technology and Engineering Solutions of Sandia, LLC. | <a href="https://www.sandia.gov/contact_us/index.html">Questions &amp; Comments</a> | <a href="https://www.sandia.gov/general/privacy-security/index.html">Privacy &amp; Security</a></p>
+		<p><a href="http://energy.gov" rel="noopener noreferrer" target="_blank"><img alt="U.S. Department of Energy" longdesc="https://energy.gov" src="https://www.sandia.gov/_common/images/doe_logo_white.png" style="height:37px; width:140px"></a> <a href="http://nnsa.energy.gov/" rel="noopener noreferrer" target="_blank"> <img alt="National Nuclear Security Administration" longdesc="http://nnsa.gov" src="https://www.sandia.gov/_common/images/nnsa_logo_white.png" style="height:37px; width:116px"></a></p>
+		<p><a href="https://www.sandia.gov">Sandia National Laboratories</a> is a multimission laboratory managed and operated by National Technology and Engineering Solutions of Sandia, LLC., a wholly owned subsidiary of Honeywell International, Inc., for the U.S. Department of Energy’s National Nuclear Security Administration under contract DE-NA-0003525.</p>
+	  </div>	  	  
+	  
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

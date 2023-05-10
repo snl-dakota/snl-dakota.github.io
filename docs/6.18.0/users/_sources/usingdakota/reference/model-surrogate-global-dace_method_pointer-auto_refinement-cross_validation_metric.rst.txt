@@ -1,0 +1,65 @@
+.. _model-surrogate-global-dace_method_pointer-auto_refinement-cross_validation_metric:
+
+"""""""""""""""""""""""
+cross_validation_metric
+"""""""""""""""""""""""
+
+
+Choice of error metric to satisfy
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   model-surrogate-global-dace_method_pointer-auto_refinement-cross_validation_metric-folds
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* STRING
+
+- *Default:* root-mean-squared error
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+--------------------+---------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword     | Dakota Keyword Description                  |
+|                         | Group              |                    |                                             |
++=========================+====================+====================+=============================================+
+| Optional                                     | `folds`__          | Number of cross validation folds            |
++----------------------------------------------+--------------------+---------------------------------------------+
+
+.. __: model-surrogate-global-dace_method_pointer-auto_refinement-cross_validation_metric-folds.html
+
+
+
+**Description**
+
+
+The cross-validation score that the auto-refinement routine seeks
+to satisfy is based on an error metric. Any of the surrogate diagnostic
+:dakkw:`model-surrogate-global-metrics` may be used. These include:
+
+
+- root_mean_squared
+
+- mean_abs
+
+- rsquared
+
+- sum_squared
+
+- mean_squared
+
+- sum_abs
+
+- max_abs
+
+*Default Behavior*
+The default metric is the the root mean squared error ('root_mean_squared').
+
+

@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Instructions for Modifying Dakota’s Input Specification &mdash; dakota  documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/dakota_theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/sandiaheaderlite.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Interfacing with Dakota as a Library" href="interfacinglibrary.html" />
+    <link rel="prev" title="Coding Style Guidelines and Conventions" href="codingstyle.html" /> 
+  
+  <meta name="sandia.approval_type" content="formal"/>
+  <meta property="sandia.approved" content="SAND2022-15651 O"/>
+  <meta name="description" content="The Dakota project delivers both state-of-the-art research and robust, usable software for optimization and UQ."/>
+  <meta name="keywords" content="Dakota, optimization, UQ, uncertainty quantification, parametric analysis, design exploration, model calibration, risk analysis"/>
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../index.html" class="icon icon-home"> dakota
+            <img src="../../../_static/dakota_Arrow_Name_Tag_horiz_transparent.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../setupdakota.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usingdakota/usingdakota.html">Using Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usingdakotagui/usingdakotagui.html">Using Dakota GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../externaltools/externaltools.html">Using External Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../compiling/compiling.html">Compiling Dakota</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../developingdakota.html">Developing Dakota</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../devenvironment.html">Setup Your Development Environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../gitforversioncontrol.html">Git for Version Control</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../writingcode.html">Writing Dakota Code</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../overview.html">Overview of Dakota</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../services.html">Services</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../developmentpractices.html">Development Practices and Guidance</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="codingstyle.html">Coding Style Guidelines and Conventions</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Instructions for Modifying Dakota’s Input Specification</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#xml-input-specification">XML Input Specification</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#xml-build-requirements">XML Build Requirements</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#xml-editing-tools">XML Editing Tools</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#xml-features-with-map-to-nidr">XML Features (with map to NIDR)</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#rebuild-generated-files">Rebuild Generated Files</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#update-parser-source-nidrproblemdescdb-cpp">Update Parser Source NIDRProblemDescDB.cpp</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#update-corresponding-data-classes">Update Corresponding Data Classes</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#update-the-data-class-header-file">Update the Data Class Header File</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#update-the-cpp-file">Update the .cpp File</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#update-database-source-problemdescdb-cpp">Update Database Source ProblemDescDB.cpp</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#augment-update-get-data-type-functions">Augment/update get_&lt;data_type&gt;() Functions</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#use-get-data-type-functions">Use get_&lt;data_type&gt;() Functions</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#update-the-documentation">Update the Documentation</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="interfacinglibrary.html">Interfacing with Dakota as a Library</a></li>
+<li class="toctree-l4"><a class="reference internal" href="iteratorflow.html">Understanding Iterator Flow</a></li>
+<li class="toctree-l4"><a class="reference internal" href="performingfunctionevaluations.html">Performing Function Evaluations</a></li>
+<li class="toctree-l4"><a class="reference internal" href="workingwithvariablecontainers.html">Working with Variable Containers and Views</a></li>
+<li class="toctree-l4"><a class="reference internal" href="demotpl.html">Demo TPL</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../testingcode.html">Testing Dakota Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../documenting.html">Documenting Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../writingdocs.html">Dakota Documentation Mechanics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../tpls.html">Dakota’s Third-Party Libraries</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../misc/misc.html">Miscellaneous</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">dakota</a>
+      </nav>
+
+	  <!-- SNL Lite header -->
+	  <div class="snlheader-subsite--wrapper-default">
+		<snlheader class="snlheader-subsite" role="snlbanner">
+		  <div class="wrapper">
+			<a href="https://www.sandia.gov/index.html">
+			  <div class="logo-transparent"><p class="logo">Sandia National Laboratories</p></div>
+			</a>
+			<div class="nav-top">
+			  <a class="visuallyhidden" name="mainnav"></a>
+			  <div aria-label="main navigation" class="core-nav-transparent core-nav-transparent--visible" role="navigation">
+				<ul role="navigation" class="secondary-links">
+				  <li id="search-text-link">
+					<a aria-label="Search" href="https://www.sandia.gov/search/">Search Sandia.gov</a>
+				  </li>
+				  <li id="directory-text-link">
+					<a href="https://www.sandia.gov/directory.html" aria-expanded="false" aria-label="Site Directory">All Sandia Websites</a>
+				  </li>
+				</ul>
+			  </div>
+			</div>
+		  </div> 
+		</snlheader>
+	  </div>	  
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../../developingdakota.html">Developing Dakota</a> &raquo;</li>
+          <li><a href="../../writingcode.html">Writing Dakota Code</a> &raquo;</li>
+          <li><a href="../developmentpractices.html">Development Practices and Guidance</a> &raquo;</li>
+      <li>Instructions for Modifying Dakota’s Input Specification</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../_sources/developingdakota/writingcode/developmentpractices/modifyingdakotainput.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="instructions-for-modifying-dakota-s-input-specification">
+<h1>Instructions for Modifying Dakota’s Input Specification<a class="headerlink" href="#instructions-for-modifying-dakota-s-input-specification" title="Permalink to this headline"></a></h1>
+<p>To modify Dakota’s input specification (for maintenance or addition of new input syntax), specification maintenance mode must be enabled at Dakota configure time with the <code class="docutils literal notranslate"><span class="pre">-DENABLE_SPEC_MAINT</span></code> option, e.g.,</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>./cmake -DENABLE_SPEC_MAINT:BOOL=ON ..
+</pre></div>
+</div>
+<p>This will enable regeneration of NIDR and Dakota components which must be updated following a spec change.</p>
+<section id="xml-input-specification">
+<h2>XML Input Specification<a class="headerlink" href="#xml-input-specification" title="Permalink to this headline"></a></h2>
+<p>The authoritative source for valid Dakota input grammar is <code class="docutils literal notranslate"><span class="pre">dakota/src/dakota.xml</span></code>. The schema defining valid content for this XML file is in dakota/src/dakota.xsd. NIDR remains Dakota’s user input file parser, so dakota.xml is translated to dakota/src/dakota.input.nspec during the Dakota build process. To update the XML input definition:</p>
+<ul class="simple">
+<li><p>Make sure ENABLE_SPEC_MAINT is enabled in your build and necessary Java development tools are installed (see below).</p></li>
+<li><p>Edit the XML spec in dakota.xml.</p></li>
+<li><p>Perform a make in dakota.build/src which will regenerate dakota.source/src/dakota.input.nspec and related file.</p></li>
+<li><p>Review that any changes induced in the dakota.input.nspec file are as expected.</p></li>
+<li><p>Proceed with verifying code changes and making downstream parse handler changes as normal (described below).</p></li>
+<li><p>Commit the modified dakota.xml, dakota.input.nspec, and other files generated to dakota.source/src along with your other code changes.</p></li>
+</ul>
+<section id="xml-build-requirements">
+<h3>XML Build Requirements<a class="headerlink" href="#xml-build-requirements" title="Permalink to this headline"></a></h3>
+<p>Editing the XML and then compiling Dakota requires</p>
+<ul class="simple">
+<li><p>Java Development Kit (JDK) providing the Java compiler javac. Java 6 (version 1.6) or newer should work, with Java 8 recommended. Can satisfy on RHEL6 with RPM packages java-1.8.0-openjdk-devel and java-1.8.0-openjdk. This is needed to build the Java-based XML to NIDR translator. If this becomes too burdensome, we can check in the generated xml2nidr.jar file.</p></li>
+</ul>
+</section>
+<section id="xml-editing-tools">
+<h3>XML Editing Tools<a class="headerlink" href="#xml-editing-tools" title="Permalink to this headline"></a></h3>
+<p>The following tools will make editing dakota.input.xml easier.</p>
+<ul>
+<li><p><strong>Recommended: Eclipse Web Tools Platform.</strong> Includes both graphical and text editors.</p>
+<ol class="arabic simple">
+<li><p>Download Eclipse Standard (Classic)</p></li>
+<li><p>Configure proxy if needed, setting to manual: Window &gt; Preferences &gt; General &gt; Network Connection &gt; Proxy</p></li>
+<li><p>Install Web Tools Platform</p></li>
+</ol>
+<blockquote>
+<div><ul class="simple">
+<li><p>Help &gt; Install New Software</p></li>
+<li><p>Work With: Kepler - <a class="reference external" href="http://download.eclipse.org/releases/kepler">http://download.eclipse.org/releases/kepler</a></p></li>
+<li><p>Search “Eclipse X” and install two packages under Web, XML, Java</p>
+<ul>
+<li><p>Eclipse XML Editors and Tools</p></li>
+<li><p>Eclipse XSL Developer Tools</p></li>
+</ul>
+</li>
+<li><p>Optionally install C/C++ Development Tools</p></li>
+</ul>
+</div></blockquote>
+<ol class="arabic simple" start="4">
+<li><p>Optional: add Subclipse for subversion (Subversive is the other major competing tool and I don’t think requires JavaHL) Help &gt; Install New Software Work With: <a class="reference external" href="http://subclipse.tigris.org/update_1.6.x">http://subclipse.tigris.org/update_1.6.x</a> Install Subclipse On Linux: yum install subversion-javahl.x86_64</p></li>
+<li><p>Alternately install Eclipse for Java or Eclipse Java EE development which includes webtools, then optionally add subclipse and C/C++ dev</p></li>
+</ol>
+</li>
+<li><p><strong>Alternate: Emacs or your usual editor.</strong> For example, Emacs supports an Nxml mode. You can tell it where to find the schema, edit XML, and have it perform validation against the schema. See help at <a class="reference external" href="http://www.gnu.org/software/emacs/manual/html_mono/nxml-mode.html">http://www.gnu.org/software/emacs/manual/html_mono/nxml-mode.html</a></p></li>
+<li><p><strong>Other Suggested Alternates:</strong> XMLSpy, DreamWeaver, XML Copy Editor</p></li>
+</ul>
+</section>
+<section id="xml-features-with-map-to-nidr">
+<h3>XML Features (with map to NIDR)<a class="headerlink" href="#xml-features-with-map-to-nidr" title="Permalink to this headline"></a></h3>
+<p>Out of necessity, Dakota XML dakota.xml closely mirrors dakota.input.nspec. Valid Dakota input grammar is constrained by dakota.xml, an XML document which must validate against dakota.xsd. The top-level element of interest is &lt;input&gt;, which is comprised of a sequence of content elements (keywords, alternates, etc.), which may themselves contain additional child content elements. The key content types are:</p>
+<p><strong>Keyword ( &lt;keyword&gt;):</strong>, specified with the &lt;keyword&gt; element whose definition is given by keywordType in dakota.xsd.</p>
+<ul class="simple">
+<li><p>The required attributes are:</p>
+<ul>
+<li><p><strong>name:</strong> The keyword name (lower case with underscores) as it will be given in user input; must follow same uniqueness rules are historical NIDR. User input is allowed in mixed case, but the XML must use lower case names.
+Since the NIDR parser allows keyword abbreviation, you must not add a keyword that could be misinterpreted as an abbreviation for a different keyword within the same top-level keyword, such as “environment” and “method”. For example, adding the keyword “expansion” within the method specification would be a mistake if the keyword “expansion_factor” already was being used in this block.
+The NIDR input is somewhat order-dependent, allowing the same keyword to be reused multiple times in the specification. This often happens with aliases, such as lower_bounds, upper_bounds and initial_point. Ambiguities are resolved by attaching a keyword to the most recently seen context in which it could appear, if such exists, or to the first relevant context that subsequently comes along in the input file.</p></li>
+<li><p><strong>code</strong>: The verbatim NIDR handler to be invoked when this keyword parsed. In NIDR this was specified with {N_macro(…)}.</p></li>
+</ul>
+</li>
+<li><p>Optional/useful parser-related elements/attributes in order of importance are:</p>
+<ul>
+<li><p><strong>param sub-element:</strong> Parameters and data types: A keyword may have an associated parameter element with a specified data type: &lt;param type=”PARAMTYPE” /&gt;. NIDR data types remain the same (INTEGER, REAL, STRING and LISTs thereof, but new data types INPUT_FILE and OUTPUT_FILE add convenience for the GUI, mapping to STRING for NIDR purposes. Parameters can also include attributes constraint, in_taglist, or taglist, which are used to help validate the user-specified parameter value. For example constraint &gt;= 0 LEN normal_uncertain</p></li>
+<li><p><strong>alias sub-element:</strong> Historical aliases for this keyword (can appear multiple times). Alias has a single attribute name which must be lower case with underscores.</p></li>
+<li><p><strong>id:</strong> Unique ID for the keyword, usually name with an integer appended, but not currently used/enforced.</p></li>
+<li><p><strong>minOccurs:</strong> Minimum occurrences of the keyword in current context (set to 1 for required, 0 for optional)</p></li>
+<li><p><strong>maxOccurs:</strong> Maximum occurrences of the keyword in current context (for example environment may appear at most once)</p></li>
+</ul>
+</li>
+<li><p>And optional/useful GUI-related attributes are:
+- <strong>help:</strong> (Don’t add this attribute the new keywords!) A pointer to the corresponding reference manual section (deprecated as not needed with new reference manual format which mirrors keyword hierarchy).
+- <strong>label:</strong> a short, friendly label string for the keyword in the GUI. Format these like titles, e.g., “Initial Point for Search”.
+- <strong>group:</strong> Category or group for this keyword, e.g., optimization vs. parameter study if they are to be groups for GUI purposes</p></li>
+</ul>
+<p><strong>Alternation ( &lt;oneOf&gt;):</strong> Alternation of groups of content is done with the element &lt;oneOf&gt; which indicates that its immediate children are alternates. In NIDR this was done with the pipe symbol: OptionA | OptionB. oneOf allows the label attribute and its use is recommended.</p>
+<p><strong>Required Group ( &lt;required&gt;):</strong> A required group can be specified by enclosing the contents in the &lt;required&gt; element. In NIDR this was done by enclosing the content in parentheses: ( required group… )</p>
+<p><strong>Optional Group ( &lt;optional&gt;):</strong> An optional group can be specified by enclosing the contents in the &lt;optional&gt; element. In NIDR this was done by enclosing the content in brackets: [ optional group… ]</p>
+</section>
+</section>
+<section id="rebuild-generated-files">
+<h2>Rebuild Generated Files<a class="headerlink" href="#rebuild-generated-files" title="Permalink to this headline"></a></h2>
+<p>When configured with -DENABLE_SPEC_MAINT, performing a make in dakota.build/src will regenerate all files which derive from dakota.xml, include dakota.input.nspec, NIDR_keywds.hpp, and dakota.input.summary. If you commit changes to a source repository, be sure to commit any automatically generated files in addition to any modified in the following steps. It is not strictly necessary to run make at this point in the sequence, and in fact may generate errors if necessary handlers aren’t yet available.</p>
+<p><strong>Warning:</strong> Please do not manually modify generated files!</p>
+</section>
+<section id="update-parser-source-nidrproblemdescdb-cpp">
+<h2>Update Parser Source NIDRProblemDescDB.cpp<a class="headerlink" href="#update-parser-source-nidrproblemdescdb-cpp" title="Permalink to this headline"></a></h2>
+<p>Many keywords have data associated with them: an integer, a floating-point number, a string, or arrays of such entities. Data requirements are specified in dakota.input.nspec by the tokens INTEGER, REAL, STRING, INTEGERLIST, REALLIST, STRINGLIST. (Some keywords have no associated data and hence no such token.) After each keyword and data token, the dakota.input.nspec file specifies functions that the NIDR parser should call to record the appearance of the keyword and deal with any associated data. The general form of this specification is</p>
+<p>{ startfcn, startdata, stopfcn, stopdata }</p>
+<p>i.e., a brace-enclosed list of one to four functions and data pointers, with trailing entities taken to be zero if not present; zero for a function means no function will be called. The startfcn must deal with any associated data. Otherwise, the distinction between startfcn and stopfcn is relevant only to keywords that begin a group of keywords (enclosed in parentheses or square brackets). The startfcn is called before other entities in the group are processed, and the stop function is called after they are processed. Top-level keywords often have both startfcn and stopfcn; stopfcn is uncommon but possible for lower-level keywords. The startdata and (if needed) stopdata values are usually pointers to little structures that provide keyword-specific details to generic functions for startfcn and stopfcn. Some keywords that begin groups (such as “approx_problem” within the top-level “environment” keyword) have no need of either a startfcn or a stopfcn; this is indicated by “{0}”.</p>
+<p>Most of the things within braces in dakota.input.nspec are invocations of macros defined in dakota.source/src/NIDRProblemDescDB.cpp. The macros simplify writing dakota.input.nspec and make it more readable. Most macro invocations refer to little structures defined in NIDRProblemDescDB.cpp, usually with the help of other macros, some of which have different definitions in different parts of NIDRProblemDescDB.cpp. When adding a keyword to dakota.input.nspec, you may need to add a structure definition or even introduce a new data type. NIDRProblemDescDB.cpp has sections corresponding to each top-level keyword. The top-level keywords are in alphabetical order, and most entities in the section for a top-level keyword are also in alphabetical order. While not required, it is probably good practice to maintain this structure, as it makes things easier to find.</p>
+<p>Any integer, real, or string data associated with a keyword are provided to the keyword’s startfcn, whose second argument is a pointer to a Values structure, defined in header file nidr.h.</p>
+<p><strong>Example 1:</strong> if you added the specification:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>[method_setting REAL {method_setting_start, &amp;method_setting_details} ]
+</pre></div>
+</div>
+<p>you would provide a function</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>void NIDRProblemDescDB::
+<span class="k">method</span>_setting_start(const char *keyname, Values *val, void **g, void *v)
+{ ... }
+</pre></div>
+</div>
+<p>in NIDRProblemDescDB.cpp. In this example, argument &amp;method_setting_details would be passed as v, val-&gt;n (the number of values) would be 1 and *val-&gt;r would be the REAL value given for the method_setting keyword. The method_setting_start function would suitably store this value with the help of method_setting_details.</p>
+<p>For some top-level keywords, g (the third argument to the startfcn and stopfcn) provides access to a relevant context. For example, method_start (the startfcn for the top-level method keyword) executes</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>DataMethod *dm = new DataMethod;
+ g = (void*)dm;
+</pre></div>
+</div>
+<p>(and supplies a couple of default values to dm). The start functions for lower-level keywords within the method keyword get access to dm through their g arguments. Here is an example:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>void NIDRProblemDescDB::
+ method_str(const char *keyname, Values *val, void **g, void *v)
+ {
+         (*(DataMethod**)g)-&gt;**(String DataMethod::**)v = *val-&gt;s;
+         }
+</pre></div>
+</div>
+<p>In this example, v points to a pointer-to-member, and an assignment is made to one of the components of the DataMethod object pointed to by *g. The corresponding stopfcn for the top-level method keyword is</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span> void NIDRProblemDescDB::
+<span class="k">method</span>_stop(const char *keyname, Values *val, void **g, void *v)
+{
+        DataMethod *p = *(DataMethod**)g;
+        pDDBInstance-&gt;dataMethodList.insert(*p);
+        delete p;
+        }
+</pre></div>
+</div>
+<p>which copies the now populated DataMethod object to the right place and cleans up.</p>
+<p><strong>Example 2:</strong> if you added the specification</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>[method_setting REALLIST {{N_mdm(RealL,methodCoeffs)}
+</pre></div>
+</div>
+<p>…then method_RealL (defined in NIDRProblemDescDB.cpp) would be called as the startfcn, and methodCoeffs would be the name of a (currently nonexistent) component of DataMethod. The N_mdm macro is defined in NIDRProblemDescDB.cpp; among other things, it turns RealL into NIDRProblemDescDB::method_RealL. This function is used to process lists of REAL values for several keywords. By looking at the source, you can see that the list values are val-&gt;r[i] for 0 &lt;= i &lt; val-&gt;n.</p>
+</section>
+<section id="update-corresponding-data-classes">
+<h2>Update Corresponding Data Classes<a class="headerlink" href="#update-corresponding-data-classes" title="Permalink to this headline"></a></h2>
+<p>The Data classes (DataEnvironment, DataMethod, DataModel, DataVariables, DataInterface, and DataResponses) store the parsed user input data. In this step, we extend the Data class definitions to include any new attributes referred to in dakota.xml or NIDRProblemDescDB</p>
+<section id="update-the-data-class-header-file">
+<h3>Update the Data Class Header File<a class="headerlink" href="#update-the-data-class-header-file" title="Permalink to this headline"></a></h3>
+<p>Add a new attribute to the public data for each of the new specifications. Follow the style guide for class attribute naming conventions (or mimic the existing code).</p>
+</section>
+<section id="update-the-cpp-file">
+<h3>Update the .cpp File<a class="headerlink" href="#update-the-cpp-file" title="Permalink to this headline"></a></h3>
+<p>Define defaults for the new attributes in the constructor initialization list (if not a container with a sensible default constructor) in same order as they appear in the header. Add the new attributes to the write(MPIPackBuffer&amp;), read(MPIUnpackBuffer&amp;), and write(ostream&amp;) functions, paying careful attention to the use of a consistent ordering.</p>
+</section>
+</section>
+<section id="update-database-source-problemdescdb-cpp">
+<h2>Update Database Source ProblemDescDB.cpp<a class="headerlink" href="#update-database-source-problemdescdb-cpp" title="Permalink to this headline"></a></h2>
+<section id="augment-update-get-data-type-functions">
+<h3>Augment/update get_&lt;data_type&gt;() Functions<a class="headerlink" href="#augment-update-get-data-type-functions" title="Permalink to this headline"></a></h3>
+<p>The next update step involves extending the database retrieval functions in dakota.source/src/ProblemDescDB.cpp. These retrieval functions accept an identifier string and return a database attribute of a particular type, e.g., a RealVector:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>const RealVector&amp; get_rv(const String&amp; entry_name);
+</pre></div>
+</div>
+<p>The implementation of each of these functions contains tables of possible entry_name values and associated pointer-to-member values. There is one table for each relevant top-level keyword, with the top-level keyword omitted from the names in the table. Since binary search is used to look for names in these tables, each table must be kept in alphabetical order of its entry names. For example,</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>...
+else if ((L = Begins(entry_name, &quot;model.&quot;))) {
+  if (dbRep-&gt;methodDBLocked)
+      Locked_db();
+  #define P &amp;DataModelRep::
+  static KW&lt;RealVector, DataModelRep&gt; RVdmo[] = {     // must be sorted
+      {&quot;nested.primary_response_mapping&quot;, P primaryRespCoeffs},
+      {&quot;nested.secondary_response_mapping&quot;, P secondaryRespCoeffs},
+      {&quot;surrogate.kriging_conmin_seed&quot;, P krigingConminSeed},
+      {&quot;surrogate.kriging_correlations&quot;, P krigingCorrelations},
+      {&quot;surrogate.kriging_max_correlations&quot;, P krigingMaxCorrelations},
+      {&quot;surrogate.kriging_min_correlations&quot;, P krigingMinCorrelations}};
+  #undef P
+  KW&lt;RealVector, DataModelRep&gt; *kw;
+  if ((kw = (KW&lt;RealVector, DataModelRep&gt;*)Binsearch(RVdmo, L)))
+      return dbRep-&gt;dataModelIter-&gt;dataModelRep-&gt;*kw-&gt;p;
+}
+</pre></div>
+</div>
+<p>is the “model” portion of ProblemDescDB::get_rv(). Based on entry_name, it returns the relevant attribute from a DataModel object. Since there may be multiple model specifications, the dataModelIter list iterator identifies which node in the list of DataModel objects is used. In particular, dataModelList contains a list of all of the data_model objects, one for each time a top-level model keyword was seen by the parser. The particular model object used for the data retrieval is managed by dataModelIter, which is set in a set_db_list_nodes() operation that will not be described here.</p>
+<p>There may be multiple DataMethod, DataModel, DataVariables, DataInterface, and/or DataResponses objects. However, only one specification is currently allowed so a list of DataEnvironment objects is not needed. Rather, ProblemDescDB::environmentSpec is the lone DataEnvironment object.</p>
+<p>To augment the get_&lt;data_type&gt;() functions, add table entries with new identifier strings and pointer-to-member values that address the appropriate data attributes from the Data class object. The style for the identifier strings is a top-down hierarchical description, with specification levels separated by periods and words separated with underscores, e.g., “keyword.group_specification.individual_specification”. Use the dbRep-&gt;listIter-&gt;attribute syntax for variables, interface, responses, and method specifications. For example, the method_setting example attribute would be added to get_drv() as:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>{&quot;method_name.method_setting&quot;, P methodSetting},
+</pre></div>
+</div>
+<p>inserted at the beginning of the RVdmo array shown above (since the name in the existing first entry, i.e., “nested.primary_response_mapping”, comes alphabetically after “method_name.method_setting”).</p>
+</section>
+</section>
+<section id="use-get-data-type-functions">
+<h2>Use get_&lt;data_type&gt;() Functions<a class="headerlink" href="#use-get-data-type-functions" title="Permalink to this headline"></a></h2>
+<p>At this point, the new specifications have been mapped through all of the database classes. The only remaining step is to retrieve the new data within the constructors of the classes that need it. This is done by invoking the get_&lt;data_type&gt;() function on the ProblemDescDB object using the identifier string you selected in Augment/update get_&lt;data_type&gt;() Functions. For example:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>const String&amp; interface_type = problem_db.get_string(&quot;interface.type&quot;);
+</pre></div>
+</div>
+<p>passes the “interface.type” identifier string to the ProblemDescDB::get_string() retrieval function, which returns the desired attribute from the active DataInterface object.</p>
+<p><strong>Warning:</strong> Use of the get_&lt;data_type&gt;() functions is restricted to class constructors, since only in class constructors are the data list iterators (i.e., dataMethodIter, dataModelIter, dataVariablesIter, dataInterfaceIter, and dataResponsesIter) guaranteed to be set correctly. Outside of the constructors, the database list nodes will correspond to the last set operation, and may not return data from the desired list node.</p>
+</section>
+<section id="update-the-documentation">
+<h2>Update the Documentation<a class="headerlink" href="#update-the-documentation" title="Permalink to this headline"></a></h2>
+<p>Doxygen comments should be added to the Data class headers for the new attributes, and the reference manual sections describing the portions of dakota.xml that have been modified should be updated by updating files in dakota.source/docs/KeywordMetaData/. ddakota.xml, together with these metadata files generates the reference manual and GUI context-aware help documentation.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="codingstyle.html" class="btn btn-neutral float-left" title="Coding Style Guidelines and Conventions" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="interfacinglibrary.html" class="btn btn-neutral float-right" title="Interfacing with Dakota as a Library" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <!--
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Sandia National Laboratories.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+  --> 
+
+</footer>
+        </div>
+      </div>
+	  
+	  <div style="background-color: #0f0f0f;color:#fafafa;padding:20px">
+	    <div>
+		  <h2><em>Exceptional service in the national interest</em></h2>
+		</div>
+		<p>© 2022 National Technology and Engineering Solutions of Sandia, LLC. | <a href="https://www.sandia.gov/contact_us/index.html">Questions &amp; Comments</a> | <a href="https://www.sandia.gov/general/privacy-security/index.html">Privacy &amp; Security</a></p>
+		<p><a href="http://energy.gov" rel="noopener noreferrer" target="_blank"><img alt="U.S. Department of Energy" longdesc="https://energy.gov" src="https://www.sandia.gov/_common/images/doe_logo_white.png" style="height:37px; width:140px"></a> <a href="http://nnsa.energy.gov/" rel="noopener noreferrer" target="_blank"> <img alt="National Nuclear Security Administration" longdesc="http://nnsa.gov" src="https://www.sandia.gov/_common/images/nnsa_logo_white.png" style="height:37px; width:116px"></a></p>
+		<p><a href="https://www.sandia.gov">Sandia National Laboratories</a> is a multimission laboratory managed and operated by National Technology and Engineering Solutions of Sandia, LLC., a wholly owned subsidiary of Honeywell International, Inc., for the U.S. Department of Energy’s National Nuclear Security Administration under contract DE-NA-0003525.</p>
+	  </div>	  	  
+	  
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

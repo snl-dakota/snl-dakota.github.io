@@ -1,0 +1,972 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Surrogate Models &mdash; dakota  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/dakota_theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/sandiaheaderlite.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Surrogate-Based Local Minimization" href="surrogatebasedoptimization.html" />
+    <link rel="prev" title="Bayesian Methods" href="bayesian.html" /> 
+  
+  <meta name="sandia.approval_type" content="formal"/>
+  <meta property="sandia.approved" content="SAND2022-15651 O"/>
+  <meta name="description" content="The Dakota project delivers both state-of-the-art research and robust, usable software for optimization and UQ."/>
+  <meta name="keywords" content="Dakota, optimization, UQ, uncertainty quantification, parametric analysis, design exploration, model calibration, risk analysis"/>
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> dakota
+            <img src="../../_static/dakota_Arrow_Name_Tag_horiz_transparent.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../setupdakota.html">Getting Started</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../usingdakota.html">Using Dakota</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../introduction/aboutdakota.html">About Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../introduction/helloworld.html">Dakota Beginner’s Tutorial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples.html">Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../introduction/couplingtosimulations.html">Coupling Dakota to a Simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../inputfile.html">Dakota Input File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../running.html">Running Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../output.html">Dakota Output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../studytypes.html">Study Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../topics.html">Topics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../advanced.html">Advanced Topics</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../theory.html">Dakota Theory</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="sampling.html">Sampling Methods</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reliability.html">Reliability Methods</a></li>
+<li class="toctree-l3"><a class="reference internal" href="stochastic.html">Stochastic Expansion Methods</a></li>
+<li class="toctree-l3"><a class="reference internal" href="epistemic.html">Epistemic Methods</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bayesian.html">Bayesian Methods</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Surrogate Models</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#kriging-and-gaussian-process-models">Kriging and Gaussian Process Models</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#kriging-gaussian-processes-function-values-only">Kriging &amp; Gaussian Processes: Function Values Only</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#gradient-enhanced-kriging">Gradient Enhanced Kriging</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#experimental-gaussian-process">Experimental Gaussian Process</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#polynomial-models">Polynomial Models</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="surrogatebasedoptimization.html">Surrogate-Based Local Minimization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="surrogatebasedglobaloptimization.html">Effcient Global Optimization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dimensionreductionstrategies.html">Dimension Reduction Strategies</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ouu.html">Optimization Under Uncertainty (OUU)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../reference.html">Keyword Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../usingdakotagui/usingdakotagui.html">Using Dakota GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../externaltools/externaltools.html">Using External Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../compiling/compiling.html">Compiling Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developingdakota/developingdakota.html">Developing Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../misc/misc.html">Miscellaneous</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">dakota</a>
+      </nav>
+
+	  <!-- SNL Lite header -->
+	  <div class="snlheader-subsite--wrapper-default">
+		<snlheader class="snlheader-subsite" role="snlbanner">
+		  <div class="wrapper">
+			<a href="https://www.sandia.gov/index.html">
+			  <div class="logo-transparent"><p class="logo">Sandia National Laboratories</p></div>
+			</a>
+			<div class="nav-top">
+			  <a class="visuallyhidden" name="mainnav"></a>
+			  <div aria-label="main navigation" class="core-nav-transparent core-nav-transparent--visible" role="navigation">
+				<ul role="navigation" class="secondary-links">
+				  <li id="search-text-link">
+					<a aria-label="Search" href="https://www.sandia.gov/search/">Search Sandia.gov</a>
+				  </li>
+				  <li id="directory-text-link">
+					<a href="https://www.sandia.gov/directory.html" aria-expanded="false" aria-label="Site Directory">All Sandia Websites</a>
+				  </li>
+				</ul>
+			  </div>
+			</div>
+		  </div> 
+		</snlheader>
+	  </div>	  
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../usingdakota.html">Using Dakota</a> &raquo;</li>
+          <li><a href="../theory.html">Dakota Theory</a> &raquo;</li>
+      <li>Surrogate Models</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/usingdakota/theory/surrogates.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="surrogate-models">
+<span id="chap-surmod"></span><h1>Surrogate Models<a class="headerlink" href="#surrogate-models" title="Permalink to this headline"></a></h1>
+<p>This chapter deals with the theory behind Dakota’s surrogate models,
+which are also known as response surfaces and meta-models.</p>
+<section id="kriging-and-gaussian-process-models">
+<span id="sec-kriggp"></span><h2>Kriging and Gaussian Process Models<a class="headerlink" href="#kriging-and-gaussian-process-models" title="Permalink to this headline"></a></h2>
+<p>In this discussion of Kriging and Gaussian Process (GP) models, vectors
+are indicated by a single underline and matrices are indicated by a
+double underline. Capital letters indicate data, or functions of data,
+that is used to construct an emulator. Lower case letters indicate
+arbitrary points, i.e. points where the simulator may or may not have
+been evaluated, and functions of arbitrary points. Estimates,
+approximations, and models are indicated by hats. For instance,
+<span class="math notranslate nohighlight">\(\hat{f}\left(\underline{x}\right)\)</span> is a model/emulator of the
+function <span class="math notranslate nohighlight">\(f\left(\underline{x}\right)\)</span> and <span class="math notranslate nohighlight">\(\hat{y}\)</span> is the
+emulator’s prediction or estimate of the true response
+<span class="math notranslate nohighlight">\(y=f(\underline{x})\)</span> evaluated at the point <span class="math notranslate nohighlight">\(\underline{x}\)</span>.
+A tilde indicates a reordering of points/equations, with the possible
+omission of some but not all points. <span class="math notranslate nohighlight">\(N\)</span> is the number of points
+in the sample design and <span class="math notranslate nohighlight">\(M\)</span> is the number of input dimensions.</p>
+<section id="kriging-gaussian-processes-function-values-only">
+<span id="subsec-kriggp"></span><h3>Kriging &amp; Gaussian Processes: Function Values Only<a class="headerlink" href="#kriging-gaussian-processes-function-values-only" title="Permalink to this headline"></a></h3>
+<p>The set of interpolation techniques known as Kriging, also referred to
+as Gaussian Processes, were originally developed in the geostatistics
+and spatial statistics communities to produce maps of underground
+geologic deposits based on a set of widely and irregularly spaced
+borehole sites <span id="id1">[<a class="reference internal" href="../../misc/bibliography.html#id45" title="N. Cressie. Statistics of Spatial Data. John Wiley and Sons, New York, 1991.">Cre91</a>]</span>. Building a Kriging model
+typically involves the</p>
+<ol class="arabic simple">
+<li><p>Choice of a trend function,</p></li>
+<li><p>Choice of a correlation function, and</p></li>
+<li><p>Estimation of correlation parameters.</p></li>
+</ol>
+<p>A Kriging emulator, <span class="math notranslate nohighlight">\(\hat{f}\left(\underline{x}\right)\)</span>, consists
+of a trend function (frequently a least squares fit to the data,
+<span class="math notranslate nohighlight">\(\underline{g}\left(\underline{x}\right)^T\underline{\beta}\)</span>) plus
+a Gaussian process error model,
+<span class="math notranslate nohighlight">\(\epsilon\left(\underline{x}\right)\)</span>, that is used to correct the
+trend function.</p>
+<div class="math notranslate nohighlight">
+\[\hat{f}\left(\underline{x}\right)=\underline{g}\left(\underline{x}\right)^T\underline{\beta}+\epsilon\left(\underline{x}\right)\]</div>
+<p>This represents an estimated distribution for the unknown true surface,
+<span class="math notranslate nohighlight">\(f\left(\underline{x}\right)\)</span>. The error model,
+<span class="math notranslate nohighlight">\(\epsilon\left(\underline{x}\right)\)</span>, makes an adjustment to the
+trend function so that the emulator will interpolate, and have zero
+uncertainty at, the data points it was built from. The covariance
+between the error at two arbitrary points, <span class="math notranslate nohighlight">\(\underline{x}\)</span> and
+<span class="math notranslate nohighlight">\(\underline{x'}\)</span>, is modeled as</p>
+<div class="math notranslate nohighlight">
+\[{\rm Cov}\left(y\left(\underline{x}\right),y\left(\underline{x'}\right)\right)={\rm Cov}\left(\epsilon\left(\underline{x}\right),\epsilon\left(\underline{x'}\right)\right)=\sigma^2\ r\left(\underline{x},\underline{x'}\right).\]</div>
+<p>Here <span class="math notranslate nohighlight">\(\sigma^2\)</span> is known as the unadjusted variance and
+<span class="math notranslate nohighlight">\(r\left(\underline{x},\underline{x'}\right)\)</span> is a correlation
+function. Measurement error can be modeled explicitly by modifying this
+to</p>
+<div class="math notranslate nohighlight">
+\[{\rm Cov}\left(\epsilon\left(\underline{x}\right),\epsilon\left(\underline{x'}\right)\right)=\sigma^2\ r\left(\underline{x},\underline{x'}\right)+\Delta^2\delta\left(\underline{x}-\underline{x}'\right)\]</div>
+<p>where</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\delta\left(\underline{x}-\underline{x}'\right)=\left\{\begin{array}{ll} 1 &amp; if &amp; \underline{x}-\underline{x}'=\underline{0} \\ 0 &amp; otherwise \end{array} \right.\end{split}\]</div>
+<p>and <span class="math notranslate nohighlight">\(\Delta^2\)</span> is the variance of the measurement error. In this
+work, the term “nugget” refers to the ratio
+<span class="math notranslate nohighlight">\(\eta=\frac{\Delta^2}{\sigma^2}\)</span>.</p>
+<p>By convention, the terms simple Kriging, ordinary Kriging, and universal
+Kriging are used to indicate the three most common choices for the trend
+function. In simple Kriging, the trend is treated as a known constant,
+usually zero, <span class="math notranslate nohighlight">\(g\left(\underline{x}\right)\beta\equiv 0\)</span>.
+Universal Kriging <span id="id2">[<a class="reference internal" href="../../misc/bibliography.html#id181" title="G. Matheron. The theory of regionalized variables and its applications. Les Cahiers du Centre de morphologie mathématique de Fontainebleau. École national supérieure des mines, 1971. URL: http://books.google.com/books?id=TGhGAAAAYAAJ.">Mat71</a>]</span> uses a general polynomial
+trend model
+<span class="math notranslate nohighlight">\(\underline{g}\left(\underline{x}\right)^T\underline{\beta}\)</span> whose
+coefficients are determined by least squares regression. Ordinary
+Kriging is essentially universal Kriging with a trend order of zero,
+i.e. the trend function is treated as an unknown constant and
+<span class="math notranslate nohighlight">\(g\left(\underline{x}\right)=1\)</span>. <span class="math notranslate nohighlight">\(N_{\beta}\)</span> is the number
+of basis functions in <span class="math notranslate nohighlight">\(\underline{g}\left(\underline{x}\right)\)</span>
+and therefore number of elements in the vector
+<span class="math notranslate nohighlight">\(\underline{\beta}\)</span>.</p>
+<p>For a finite number of sample points, <span class="math notranslate nohighlight">\(N\)</span>, there will be
+uncertainty about the most appropriate value of the vector,
+<span class="math notranslate nohighlight">\(\underline{\beta}\)</span>, which can therefore be described as having a
+distribution of possible values. If one assumes zero prior knowledge
+about this distribution, which is referred to as the “vague prior”
+assumption, then the maximum likelihood value of
+<span class="math notranslate nohighlight">\(\underline{\beta}\)</span> can be computed via least squares generalized
+by the inverse of the error model’s correlation matrix,
+<span class="math notranslate nohighlight">\(\underline{\underline{R}}\)</span></p>
+<div class="math notranslate nohighlight">
+\[\underline{\hat{\beta}}=\left(\underline{\underline{G}}^T\underline{\underline{R}}^{-1}\underline{\underline{G}}\right)^{-1}\left(\underline{\underline{G}}^T\underline{\underline{R}}^{-1}\underline{Y}\right).\]</div>
+<p>Here <span class="math notranslate nohighlight">\(\underline{\underline{G}}\)</span> is a <span class="math notranslate nohighlight">\(N\)</span> by <span class="math notranslate nohighlight">\(N_\beta\)</span>
+matrix that contains the evaluation of the least squares basis functions
+at all points in <span class="math notranslate nohighlight">\(\underline{\underline{X}}\)</span>, such that
+<span class="math notranslate nohighlight">\(G_{i,l}=g_l\left(\underline{X_i}\right)\)</span>. The real, symmetric,
+positive-definite correlation matrix, <span class="math notranslate nohighlight">\(\underline{\underline{R}}\)</span>,
+of the error model contains evaluations of the correlation function,
+<span class="math notranslate nohighlight">\(r\)</span>, at all pairwise combination of points (rows) in the sample
+design, <span class="math notranslate nohighlight">\(\underline{\underline{X}}\)</span>.</p>
+<div class="math notranslate nohighlight">
+\[R_{i,j}=R_{j,i}=r\left(\underline{X_i},\underline{X_j}\right)=r\left(\underline{X_j},\underline{X_i}\right)\]</div>
+<p>There are many options for <span class="math notranslate nohighlight">\(r\)</span>, among them are the following
+families of correlation functions:</p>
+<ul>
+<li><p><strong>Powered-Exponential</strong></p>
+<div class="math notranslate nohighlight" id="equation-powexpcorrfunc">
+<span class="eqno">(209)<a class="headerlink" href="#equation-powexpcorrfunc" title="Permalink to this equation"></a></span>\[r\left(\underline{X_i},\underline{X_j}\right)=\exp\left(-\sum_{k=1}^M \theta_k\left|X_{i,k}-X_{j,k}\right|^\gamma\right)\]</div>
+<p>where <span class="math notranslate nohighlight">\(0&lt;\gamma\le2\)</span> and <span class="math notranslate nohighlight">\(0&lt;\theta_k\)</span>.</p>
+</li>
+<li><p><strong>Matern</strong></p>
+<div class="math notranslate nohighlight">
+\[r\left(\underline{X_i},\underline{X_j}\right)=\prod_{k=1}^M \frac{2^{1-\nu}}{\Gamma(\nu)}\left(\theta_k\left|X_{i,k}-X_{j,k}\right|\right)^\nu\mathcal{K}_\nu\left(\theta_k\left|X_{i,k}-X_{j,k}\right|\right)\]</div>
+<p>where <span class="math notranslate nohighlight">\(0&lt;\nu\)</span>, <span class="math notranslate nohighlight">\(0&lt;\theta_k\)</span>, and
+<span class="math notranslate nohighlight">\(\mathcal{K}_\nu(\cdot)\)</span> is the modified Bessel function of
+order <span class="math notranslate nohighlight">\(\nu\)</span>; <span class="math notranslate nohighlight">\(\nu=s+\frac{1}{2}\)</span> is the smallest value of
+<span class="math notranslate nohighlight">\(\nu\)</span> which results in a Kriging model that is <span class="math notranslate nohighlight">\(s\)</span> times
+differentiable.</p>
+</li>
+<li><p><strong>Cauchy</strong></p>
+<div class="math notranslate nohighlight">
+\[r\left(\underline{X_i},\underline{X_j}\right)=\prod_{k=1}^M \left(1+\theta_k\left|X_{i,k}-X_{j,k}\right|^\gamma\right)^{-\nu}\]</div>
+<p>where <span class="math notranslate nohighlight">\(0&lt;\gamma\le2\)</span>, <span class="math notranslate nohighlight">\(0&lt;\nu\)</span>, and <span class="math notranslate nohighlight">\(0&lt;\theta_k\)</span>.</p>
+</li>
+</ul>
+<p>Gneiting et al. <span id="id3">[<a class="reference internal" href="../../misc/bibliography.html#id120" title="T. Gneiting, M.G. Genton, and P. Guttorp. Geostatistical space-time models, stationarity, separability and full symmetry. In B. Finkenstadt, L. Held, and V. Isham, editors, Statistical Methods for Spatio-Temporal Systems, chapter 4, pages 151-172. Boca Raton: Chapman &amp; Hall/CRC, 2007.">GGG07</a>]</span> provide a more thorough
+discussion of the properties of and relationships between these three
+families. Some additional correlation functions include the Dagum family
+<span id="id4">[<a class="reference internal" href="../../misc/bibliography.html#id22" title="C. Berg, J. Mateu, and E. Porcu. The dagum family of isotropic correlation functions. Bernoulli, 14(4):1134–1149, 2008.">BMP08</a>]</span> and cubic splines.</p>
+<p>The squared exponential or Gaussian correlation function
+(Equation <a class="reference internal" href="#equation-powexpcorrfunc">(209)</a> with <span class="math notranslate nohighlight">\(\gamma=2\)</span>)
+was selected to be the first correlation function implemented in Dakota
+on the basis that its infinite smoothness or differentiability should
+aid in leveraging the anticipated and hopefully sparse data. For the
+Gaussian correlation function, the correlation parameters,
+<span class="math notranslate nohighlight">\(\underline{\theta}\)</span>, are related to the correlation lengths,
+<span class="math notranslate nohighlight">\(\underline{L}\)</span>, by</p>
+<div class="math notranslate nohighlight" id="equation-gausscorrfunc">
+<span class="eqno">(210)<a class="headerlink" href="#equation-gausscorrfunc" title="Permalink to this equation"></a></span>\[\theta_k=\frac{1}{2\ L_k^2}.\]</div>
+<p>Here, the correlation lengths, <span class="math notranslate nohighlight">\(\underline{L}\)</span>, are analogous to
+standard deviations in the Gaussian or normal distribution and often
+have physical meaning. The adjusted (by data) mean of the emulator is a
+best linear unbiased estimator of the unknown true function,</p>
+<div class="math notranslate nohighlight" id="equation-krigmean">
+<span class="eqno">(211)<a class="headerlink" href="#equation-krigmean" title="Permalink to this equation"></a></span>\[\hat{y}={\rm E}\left(\hat{f}\left(\underline{x}\right)|\underline{f}\left(\underline{\underline{X}}\right)\right)=\underline{g}\left(\underline{x}\right)^T\underline{\hat{\beta}}+\underline{r}\left(\underline{x}\right)^T\ \underline{\underline{R}}^{-1}\underline{\epsilon}.\]</div>
+<p>Here,
+<span class="math notranslate nohighlight">\(\underline{\epsilon}=\left(\underline{Y}-\underline{\underline{G}}\ \underline{\hat{\beta}}\right)\)</span>
+is the known vector of differences between the true outputs and trend
+function at all points in <span class="math notranslate nohighlight">\(\underline{\underline{X}}\)</span> and the
+vector <span class="math notranslate nohighlight">\(\underline{r}\left(\underline{x}\right)\)</span> is defined such
+that
+<span class="math notranslate nohighlight">\(r_i\left(\underline{x}\right)=r\left(\underline{x},\underline{X_i}\right)\)</span>.
+This correction can be interpreted as the projection of prior belief
+(the least squares fit) into the span of the data. The adjusted mean of
+the emulator will interpolate the data that the Kriging model was built
+from as long as its correlation matrix,
+<span class="math notranslate nohighlight">\(\underline{\underline{R}}\)</span>, is numerically non-singular.</p>
+<p>Ill-conditioning of <span class="math notranslate nohighlight">\(\underline{\underline{R}}\)</span> and other matrices
+is a recognized as a significant challenge for Kriging. Davis and Morris
+<span id="id5">[<a class="reference internal" href="../../misc/bibliography.html#id48" title="G.J. Davis and M.D. Morris. Six factors which affect the condition number of matrices associated with kriging. Mathematical geology, 29(5):669–683, 1997.">DM97</a>]</span> gave a thorough review of six factors
+affecting the condition number of matrices associated with Kriging (from
+the perspective of semivariograms rather than correlation functions).
+They concluded that “Perhaps the best advice we can give is to be
+mindful of the condition number when building and solving kriging
+systems.”</p>
+<p>In the context of estimating the optimal <span class="math notranslate nohighlight">\(\underline{\theta}\)</span>,
+Martin <span id="id6">[<a class="reference internal" href="../../misc/bibliography.html#id180" title="J.D. Martin. Computational improvements to estimating kriging metamodel parameters. Journal of Mechanical Design, 131:084501, 2009.">Mar09</a>]</span> stated that Kriging’s “three most
+prevalent issues are (1) ill-conditioned correlation matrices,(2)
+multiple local optimum, and (3) long ridges of near optimal values.”
+Because of the second issue, global optimization methods are more robust
+than local methods. Martin used constrained optimization to address
+ill-conditioning of <span class="math notranslate nohighlight">\(\underline{\underline{R}}\)</span>.</p>
+<p>Rennen <span id="id7">[<a class="reference internal" href="../../misc/bibliography.html#id224" title="G. Rennen. Subset selection from large datasets for kriging modeling. Structural and Multidisciplinary Optimization, 38(6):545–569, 2009.">Ren09</a>]</span> advocated that ill-conditioning be
+handled by building Kriging models from a uniform subset of available
+sample points. That option has been available in Dakota’s “Gaussian
+process” model (a separate implementation from Dakota’s “Kriging” model)
+since version 4.1 <span id="id8">[<a class="reference internal" href="../../misc/bibliography.html#id80" title="M.S. Eldred, B.M. Adams, D.M. Gay, L.P. Swiler, K. Haskell, W.J. Bohnhoff, J.P. Eddy, W.E. Hart, J.P Watson, J.D. Griffin, P.D. Hough, T.G. Kolda, P.J. Williams, and M.L. Martinez-Canales. Dakota version 4.1 users manual. Sandia Technical Report SAND2006-6337, Sandia National Laboratories, Albuquerque, NM, 2007. URL: http://dakota.sandia.gov/licensing/release/Users4.1.pdf.">EAG+07</a>]</span>. Note that
+Kriging/Gaussian-Process models will not exactly interpolate the
+discarded points. The implicit justification for this type of approach
+is that the row or columns of an ill-conditioned matrix contain a
+significant amount of duplicate information, and that when discarded,
+duplicate information should be easy to predict.</p>
+<p>Dakota’s <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/model-surrogate-global-gaussian_process-surfpack.html"><span class="pre">surfpack</span></a></code> model has a similar “discard
+near duplicate points” capability. However, it explicitly addresses the
+issue of unique information content. Points are <strong>not</strong> discarded prior
+to the construction of the Kriging model. Instead, for each vector
+<span class="math notranslate nohighlight">\(\underline{\theta}\)</span> examined that results in an ill-conditioned
+correlation matrix, <span class="math notranslate nohighlight">\(\underline{\underline{R}}\)</span>, a pivoted
+Cholesky factorization of <span class="math notranslate nohighlight">\(\underline{\underline{R}}\)</span> is
+performed. This ranks the points according to how much unique
+information they contain. Note that the definition of information
+content depends on <span class="math notranslate nohighlight">\(\underline{\theta}\)</span>. Low information points
+are then discarded until <span class="math notranslate nohighlight">\(\underline{\underline{R}}\)</span> is no longer
+ill-conditioned, i.e. until it tightly meets a constraint on condition
+number. This can be done efficiently using a bisection search that calls
+LAPACK’s fast estimate of the (reciprocal of the) condition number. The
+possibly, and often, improper subset of points used to construct the
+Kriging model is the one associated with the chosen
+<span class="math notranslate nohighlight">\(\underline{\theta}\)</span>. Methods for selecting
+<span class="math notranslate nohighlight">\(\underline{\theta}\)</span> are discussed below. Since the points that
+are discarded are the ones that contain the least unique information,
+they are the ones that are easiest to predict and provide maximum
+improvement to the condition number.</p>
+<p>Adding a nugget, <span class="math notranslate nohighlight">\(\eta\)</span>, to the diagonal entries of
+<span class="math notranslate nohighlight">\(\underline{\underline{R}}\)</span> is a popular approach for both
+accounting for measurement error in the data and alleviating
+ill-conditioning. However, doing so will cause the Kriging model to
+smooth or approximate rather than interpolate the data. Methods for
+choosing a nugget include:</p>
+<ul class="simple">
+<li><p>Choosing a nugget based on the variance of measurement error (if
+any); this will be an iterative process if <span class="math notranslate nohighlight">\(\sigma^2\)</span> is not
+known in advance.</p></li>
+<li><p>Iteratively adding a successively larger nugget until
+<span class="math notranslate nohighlight">\(\underline{\underline{R}}+\eta\underline{\underline{I}}\)</span> is no
+longer ill-conditioned.</p></li>
+<li><p>Exactly calculating the minimum nugget needed for a target condition
+number from <span class="math notranslate nohighlight">\(\underline{\underline{R}}\)</span>’s maximum
+<span class="math notranslate nohighlight">\(\lambda_{max}\)</span> and minimum <span class="math notranslate nohighlight">\(\lambda_{min}\)</span> eigenvalues.
+The condition number of
+<span class="math notranslate nohighlight">\(\underline{\underline{R}}+\eta\underline{\underline{I}}\)</span> is
+<span class="math notranslate nohighlight">\(\frac{\lambda_{max}+\eta}{\lambda_{min}+\eta}\)</span>. However,
+calculating eigenvalues is computationally expensive. Since Kriging’s
+<span class="math notranslate nohighlight">\(\underline{\underline{R}}\)</span> matrix has all ones on the
+diagonal, its trace and therefore sum of eigenvalues is <span class="math notranslate nohighlight">\(N\)</span>.
+Consequently, a nugget value of
+<span class="math notranslate nohighlight">\(\eta=\frac{N}{{\rm target\ condition\ number} - 1}\)</span> will
+always alleviate ill-conditioning. A smaller nugget that is also
+guaranteed to alleviate ill-conditioning can be calculated from
+LAPACK’s fast estimate of the reciprocal of
+<span class="math notranslate nohighlight">\(\underline{\underline{R}}\)</span>’s condition number,
+<span class="math notranslate nohighlight">\({\rm rcond}\left(\underline{\underline{R}}\right)\)</span>.</p></li>
+<li><p>Treating <span class="math notranslate nohighlight">\(\eta\)</span> as another parameter to be selected by the same
+process used to choose <span class="math notranslate nohighlight">\(\underline{\theta}\)</span>. Two such
+approaches are discussed below.</p></li>
+</ul>
+<p>The Kriging model’s adjusted variance is commonly used as a spatially
+varying measure of uncertainty. Knowing where, and by how much, the
+model “doubts” its own predictions helps build user confidence in the
+predictions and can be utilized to guide the selection of new sample
+points during optimization or to otherwise improve the surrogate. The
+adjusted variance is</p>
+<div class="math notranslate nohighlight" id="equation-krigvar">
+<span class="eqno">(212)<a class="headerlink" href="#equation-krigvar" title="Permalink to this equation"></a></span>\[\begin{split}\begin{aligned}
+{\rm Var}\left(\hat{y}\right) &amp;=&amp; {\rm Var}\left(\hat{f}\left(\underline{x}\right)|\underline{f}\left(\underline{\underline{X}}\right)\right) \\
+&amp;=&amp;\hat{\sigma}^2\left(1-\underline{r}\left(\underline{x}\right)^T\ \underline{\underline{R}}^{-1}\underline{r}\left(\underline{x}\right) + \right. ... \\
+&amp;&amp;\left. \left(\underline{g}\left(\underline{x}\right)^T-\underline{r}\left(\underline{x}\right)^T\ \underline{\underline{R}}^{-1}\underline{\underline{G}}\right) \left(\underline{\underline{G}}^T\underline{\underline{R}}^{-1} \underline{\underline{G}}\right)^{-1}\left(\underline{g}\left(\underline{x}\right)^T-\underline{r}\left(\underline{x}\right)^T\ \underline{\underline{R}}^{-1}\underline{\underline{G}}\right)^T\right)\end{aligned}\end{split}\]</div>
+<p>where the maximum likelihood estimate of the unadjusted variance is</p>
+<div class="math notranslate nohighlight">
+\[\hat{\sigma}^2=\frac{\underline{\epsilon}^T\underline{\underline{R}}^{-1}\underline{\epsilon}}{N-N_{\beta}}.\]</div>
+<p>There are two types of numerical approaches to choosing
+<span class="math notranslate nohighlight">\(\underline{\theta}\)</span>. One of these is to use Bayesian techniques
+such as Markov Chain Monte Carlo to obtain a distribution represented by
+an ensemble of vectors <span class="math notranslate nohighlight">\(\underline{\theta}\)</span>. In this case,
+evaluating the emulator’s mean involves taking a weighted average of
+Equation <a class="reference internal" href="#equation-krigmean">(211)</a> over the ensemble of <span class="math notranslate nohighlight">\(\underline{\theta}\)</span> vectors.</p>
+<p>The other, more common, approach to constructing a Kriging model
+involves using optimization to find the set of correlation parameters
+<span class="math notranslate nohighlight">\(\underline{\theta}\)</span> that maximizes the likelihood of the model
+given the data. Dakota’s <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/model-surrogate-global-gaussian_process.html"><span class="pre">gaussian_process</span></a></code> and
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/model-surrogate-global-gaussian_process-surfpack.html"><span class="pre">surfpack</span></a></code> models use
+the maximum likelihood approach. It is equivalent, and more convenient
+to maximize the natural logarithm of the likelihood, which assuming a
+vague prior is,</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+\log\left({\rm lik}\left(\underline{\theta}\right)\right)&amp;=&amp;
+-\frac{1}{2}\Bigg(\left(N-N_{\beta}\right)\left(\frac{\hat{\sigma}^2}{\sigma^2}+\log\left(\sigma^2\right)+\log(2\pi)\right)+...\\
+&amp;&amp; \log\left(\det\left(\underline{\underline{R}}\right)\right)+\log\left(\det\left(\underline{\underline{G}}^T\underline{\underline{R}}^{-1}\underline{\underline{G}}\right)\right)\Bigg).\end{aligned}\end{split}\]</div>
+<p>And, if one substitutes the maximum likelihood estimate
+<span class="math notranslate nohighlight">\(\hat{\sigma}^2\)</span> in for <span class="math notranslate nohighlight">\(\sigma^2\)</span>, then it is equivalent to
+minimize the following objective function</p>
+<div class="math notranslate nohighlight">
+\[{\rm obj}\left(\underline{\theta}\right)=\log\left(\hat{\sigma}^2\right)+\frac{\log\left(\det\left(\underline{\underline{R}}\right)\right)+\log\left(\det\left(\underline{\underline{G}}^T\underline{\underline{R}}^{-1}\underline{\underline{G}}\right)\right)}{N-N_{\beta}}.\]</div>
+<p>Because of the division by <span class="math notranslate nohighlight">\(N-N_{\beta}\)</span>, this “per-equation”
+objective function is mostly independent of the number of sample points,
+<span class="math notranslate nohighlight">\(N\)</span>. It is therefore useful for comparing the (estimated)
+“goodness” of Kriging models that have different numbers of sample
+points, e.g. when an arbitrary number of points can be discarded by the
+pivoted Cholesky approach described above.</p>
+<p>Note that the determinant of <span class="math notranslate nohighlight">\(\underline{\underline{R}}\)</span> (and
+<span class="math notranslate nohighlight">\(\left(\underline{\underline{G}}^T\underline{\underline{R}}^{-1}\underline{\underline{G}}\right)\)</span>)
+can be efficiently calculated as the square of the product of the
+diagonals of its Cholesky factorization. However, this will often
+underflow, i.e. go to zero, making its log incorrectly go to
+<span class="math notranslate nohighlight">\(-\infty\)</span>. A more accurate and robust calculation of
+<span class="math notranslate nohighlight">\(\log\left(\det\left(\underline{\underline{R}}\right)\right)\)</span> can
+be achieved by taking twice the sum of the log of the diagonals of
+<span class="math notranslate nohighlight">\(\underline{\underline{R}}\)</span>’s Cholesky factorization.</p>
+<p>Also note, that in the absence of constraints, maximizing the likelihood
+would result in singular <span class="math notranslate nohighlight">\(\underline{\underline{R}}\)</span> which makes
+the emulator incapable of reproducing the data from which it was built.
+This is because a singular <span class="math notranslate nohighlight">\(\underline{\underline{R}}\)</span> makes
+<span class="math notranslate nohighlight">\(\log\left(\det\left(\underline{\underline{R}}\right)\right)=-\infty\)</span>
+and the <em>estimate</em> of likelihood infinite. Constraints are therefore
+required. Two types of constraints are used in Dakota’s
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/model-surrogate-global-gaussian_process-surfpack.html"><span class="pre">surfpack</span></a></code> models.</p>
+<p>The first of these is an explicit constraint on LAPACK’s fast estimate
+of the (reciprocal of the) condition number,
+<span class="math notranslate nohighlight">\(2^{-40}&lt;{\rm rcond}\left(\underline{\underline{R}}\right)\)</span>. The
+value <span class="math notranslate nohighlight">\(2^{-40}\)</span> was chosen based on the assumption that double
+precision arithmetic is used. Double precision numbers have 52 bits of
+precision. Therefore the
+<span class="math notranslate nohighlight">\(2^{-40}&lt;{\rm rcond}\left(\det\left(\underline{\underline{R}}\right)\right)\)</span>
+implies that at least the leading three significant figures should be
+uncorrupted by round off error. In Dakota 5.2, this constraint is used
+to determine how many points can be retained in the pivoted Cholesky
+approach to subset selection described above.</p>
+<p>The second, is a box constraint defining a small “feasible” region in
+correlation length space to search during the maximum likelihood
+optimization. Many global optimizers, such as the DIRECT (DIvision of
+RECTangles) used by Dakota’s Gaussian Process (as the only option) and
+Kriging (as the default option) models, require a box constraint
+definition for the range of acceptable parameters. By default, Dakota’s
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/model-surrogate-global-gaussian_process-surfpack.html"><span class="pre">surfpack</span></a></code> model defines the input space to be the smallest
+hyper-rectangle that contains the sample design. The user has the option
+to define a larger input space that includes a region where they wish to
+extrapolate. Note that the emulator can be evaluated at points outside
+the defined input space, but this definition helps to determine the
+extent of the “feasible” region of correlation lengths. Let the input
+space be normalized to the unit hypercube centered at the origin. The
+average distance between nearest neighboring points is then</p>
+<div class="math notranslate nohighlight">
+\[d=\left(\frac{1}{N}\right)^{1/M}.\]</div>
+<p>Dakota’s “feasible” range of correlation lengths, <span class="math notranslate nohighlight">\(\underline{L}\)</span>,
+for the Gaussian correlation function is</p>
+<div class="math notranslate nohighlight">
+\[\frac{d}{4}\le L_k \le 8d.\]</div>
+<p>This range was chosen based on correlation lengths being analogous to
+the standard deviation in the Gaussian or Normal distribution. If the
+correlation lengths are set to <span class="math notranslate nohighlight">\(L_k=d/4\)</span>, then nearest neighboring
+points “should be” roughly four “standard deviations” away making them
+almost completely uncorrelated with each other.
+<span class="math notranslate nohighlight">\(\underline{\underline{R}}\)</span> would then be a good approximation of
+the identity matrix and have a condition number close to one. In the
+absence of a pathological spacing of points, this range of
+<span class="math notranslate nohighlight">\(\underline{L}\)</span> should contain some non-singular
+<span class="math notranslate nohighlight">\(\underline{\underline{R}}\)</span>. <span class="math notranslate nohighlight">\(L_k=8d\)</span> implies approximately
+<span class="math notranslate nohighlight">\(32\%\)</span> trust in what points 8 neighbors away have to say and
+<span class="math notranslate nohighlight">\(5\%\)</span> trust in what points 16 neighbors away have to say. It is
+possible that the optimal correlation lengths are larger than
+<span class="math notranslate nohighlight">\(8d\)</span>; but if so, then either almost all of the same information
+will be contained in more nearby neighbors, or it was not appropriate to
+use the squared-exponential/Gaussian correlation function. When other
+correlation functions are added to the Dakota Kriging implementation,
+each will be associated with its own range of appropriate correlation
+lengths chosen by similar reasoning. A different definition of <span class="math notranslate nohighlight">\(d\)</span>
+could be used for non-hypercube input domains.</p>
+</section>
+<section id="gradient-enhanced-kriging">
+<span id="subsec-gek"></span><h3>Gradient Enhanced Kriging<a class="headerlink" href="#gradient-enhanced-kriging" title="Permalink to this headline"></a></h3>
+<p>This section focuses on the incorporation of derivative information into
+Kriging models and challenges in their implementation. Special attention
+is paid to conditioning issues.</p>
+<p>There are at least three basic approaches for incorporating derivative
+information into Kriging. These are</p>
+<ol class="arabic">
+<li><p><strong>Indirect</strong>: The sample design is augmented with fictitious points
+nearby actual sample points which are predicted from derivative
+information and then a Kriging model is built from the augmented
+design.</p></li>
+<li><p><strong>Co-Kriging</strong>: The derivatives with respect to each input variables
+are treated as separate but correlated output variables and a
+Co-Kriging model is built for the set of output variables. This would
+use
+<span class="math notranslate nohighlight">\(\left(\begin{array}{c} M+2 \\ 2 \end{array}\right)\)</span>
+<span class="math notranslate nohighlight">\(\underline{\theta}\)</span> vectors.</p></li>
+<li><p><strong>Direct</strong>: The relationship between the response value and its
+derivatives is leveraged to use a single <span class="math notranslate nohighlight">\(\underline{\theta}\)</span>
+by assuming</p>
+<div class="math notranslate nohighlight" id="equation-gekcovassume">
+<span class="eqno">(213)<a class="headerlink" href="#equation-gekcovassume" title="Permalink to this equation"></a></span>\[{\rm Cov}\left(y\left(\underline{x^1}\right),\frac{\partial y\left(\underline{x^2}\right)}{\partial x_k^2}\right)=\frac{\partial}{\partial x_k^2}\left({\rm Cov}\left(y\left(\underline{x^1}\right),y\left(\underline{x^2}\right)\right)\right).\]</div>
+</li>
+</ol>
+<p>Dakota includes an implementation of the direct approach,
+herein referred to simply as Gradient Enhanced (universal) Kriging
+(GEK). The equations for GEK can be derived by assuming Equation
+<a class="reference internal" href="#equation-gekcovassume">(213)</a> and then taking the same
+steps used to derive function value only Kriging. The superscript on
+<span class="math notranslate nohighlight">\(\underline{x}\)</span> in Equation <a class="reference internal" href="#equation-gekcovassume">(213)</a> and below indicates whether
+it’s the 1st or 2nd input to
+<span class="math notranslate nohighlight">\(r\left(\underline{x^1},\underline{x^2}\right)\)</span>. Note that when
+the first and second arguments are the same, the derivative of
+<span class="math notranslate nohighlight">\(r\left(\ ,\ \right)\)</span> with respect to the first argument is equal
+in magnitude but opposite in sign compared to the derivative with
+respect to the second argument. The GEK equations can also be obtained
+by starting from a Kriging model and making the following substitutions
+<span class="math notranslate nohighlight">\(\underline{Y}\rightarrow\underline{Y_{\nabla}}\)</span>,
+<span class="math notranslate nohighlight">\(\underline{\underline{G}}\rightarrow\underline{\underline{G_{\nabla}}}\)</span>,
+<span class="math notranslate nohighlight">\(\underline{r}\rightarrow\underline{r_{\nabla}}\)</span>,
+<span class="math notranslate nohighlight">\(\underline{\underline{R}}\rightarrow\underline{\underline{R_{\nabla}}}\)</span>,
+and <span class="math notranslate nohighlight">\(N\rightarrow N_{\nabla}=N\ (1+M)\)</span>, where <span class="math notranslate nohighlight">\(N_{\nabla}\)</span>
+is the number of equations rather than the number of points,</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\underline{Y_{\nabla}}=\begin{bmatrix}
+\underline{Y} \\ \\
+\frac{\partial \underline{Y}}{\partial X_{:,1}} \\ \\
+\frac{\partial \underline{Y}}{\partial X_{:,2}} \\ \\
+\vdots \\ \\
+\frac{\partial \underline{Y}}{\partial X_{:,M}}
+\end{bmatrix},
+\underline{\underline{G_{\nabla}}}=\begin{bmatrix}
+\underline{\underline{G}}\\ \\
+\frac{\partial \underline{\underline{G}}}{\partial X_{:,1}}\\ \\
+\frac{\partial \underline{\underline{G}}}{\partial X_{:,2}}\\ \\
+\vdots \\ \\
+\frac{\partial \underline{\underline{G}}}{\partial X_{:,M}}
+\end{bmatrix},
+\underline{r_{\nabla}}=\begin{bmatrix}
+\underline{r} \\ \\
+\frac{\partial \underline{r}}{\partial X_{:,1}} \\ \\
+\frac{\partial \underline{r}}{\partial X_{:,2}} \\ \\
+\vdots \\ \\
+\frac{\partial \underline{r}}{\partial X_{:,M}}
+\end{bmatrix}\end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}\underline{\underline{R_{\nabla}}}=\begin{bmatrix}
+\underline{\underline{R}} &amp; \frac{\partial \underline{\underline{R}}}{\partial X_{:,1}^2} &amp; \frac{\partial \underline{\underline{R}}}{\partial X_{:,2}^2} &amp; \dotsc &amp; \frac{\partial \underline{\underline{R}}}{\partial X_{:,M}^2} \\ \\
+\frac{\partial \underline{\underline{R}}}{\partial X_{:,1}^1} &amp; \frac{\partial^2 \underline{\underline{R}}}{\partial X_{:,1}^1 \partial X_{:,1}^2} &amp; \frac{\partial^2 \underline{\underline{R}}}{\partial X_{:,1}^1 \partial X_{:,2}^2} &amp; \dotsc &amp; \frac{\partial^2 \underline{\underline{R}}}{\partial X_{:,1}^1 \partial X_{:,M}^2} \\ \\
+\frac{\partial \underline{\underline{R}}}{\partial X_{:,2}^1} &amp; \frac{\partial^2 \underline{\underline{R}}}{\partial X_{:,2}^1 \partial X_{:,1}^2} &amp; \frac{\partial^2 \underline{\underline{R}}}{\partial X_{:,2}^1 \partial X_{:,2}^2} &amp; \dotsc &amp; \frac{\partial^2 \underline{\underline{R}}}{\partial X_{:,2}^1 \partial X_{:,M}^2} \\ \\
+\vdots &amp; \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\ \\
+\frac{\partial \underline{\underline{R}}}{\partial X_{:,M}^1} &amp; \frac{\partial^2 \underline{\underline{R}}}{\partial X_{:,M}^1 \partial X_{:,1}^2} &amp; \frac{\partial^2 \underline{\underline{R}}}{\partial X_{:,M}^1 \partial X_{:,2}^2} &amp; \dotsc &amp; \frac{\partial^2 \underline{\underline{R}}}{\partial X_{:,M}^1 \partial X_{:,M}^2}
+\end{bmatrix}\end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[\frac{\partial \underline{\underline{R}}}{\partial X_{:,I}^1}=-\left(\frac{\partial \underline{\underline{R}}}{\partial X_{:,I}^1}\right)^T=-\frac{\partial \underline{\underline{R}}}{\partial X_{:,I}^2}=\left(\frac{\partial \underline{\underline{R}}}{\partial X_{:,I}^2}\right)^T\]</div>
+<div class="math notranslate nohighlight">
+\[\frac{\partial^2 \underline{\underline{R}}}{\partial X_{:,I}^1 \partial X_{:,J}^2}=\left(\frac{\partial^2 \underline{\underline{R}}}{\partial X_{:,I}^1 \partial X_{:,J}^2}\right)^T=\frac{\partial^2 \underline{\underline{R}}}{\partial X_{:,J}^1 \partial X_{:,I}^2}=\left(\frac{\partial^2 \underline{\underline{R}}}{\partial X_{:,J}^1 \partial X_{:,I}^2}\right)^T\]</div>
+<p>Here capital <span class="math notranslate nohighlight">\(I\)</span> and <span class="math notranslate nohighlight">\(J\)</span> are scalar indices for the input
+dimension (column) of the sample design,
+<span class="math notranslate nohighlight">\(\underline{\underline{X}}\)</span>. Note that for the Gaussian
+correlation function</p>
+<div class="math notranslate nohighlight">
+\[\frac{\partial^2 R_{j,j}}{\partial X_{j,I}^1 \partial X_{j,I}^2}=2\theta_I\]</div>
+<p>and has units of <span class="math notranslate nohighlight">\({\rm length}^{-2}\)</span>. Two of the conditions
+necessary for a matrix to qualify as a correlation matrix are that all
+of its elements must be dimensionless and all of its diagonal elements
+must identically equal one. Since
+<span class="math notranslate nohighlight">\(\underline{\underline{R_{\nabla}}}\)</span> does not satisfy these
+requirements, it technically does not qualify as a “correlation matrix.”
+However, referring to <span class="math notranslate nohighlight">\(\underline{\underline{R_{\nabla}}}\)</span> as such
+is a small abuse of terminology and allows GEK to use the same naming
+conventions as Kriging.</p>
+<p>A straight-forward implementation of GEK tends be significantly more
+accurate than Kriging given the same sample design provided that the</p>
+<ul class="simple">
+<li><p>Derivatives are accurate</p></li>
+<li><p>Derivatives are not infinite (or nearly so)</p></li>
+<li><p>Function is sufficiently smooth, and</p></li>
+<li><p><span class="math notranslate nohighlight">\(\underline{\underline{R_{\nabla}}}\)</span> is not ill-conditioned
+(this can be problematic).</p></li>
+</ul>
+<p>If gradients can be obtained cheaply (e.g. by automatic differentiation
+or adjoint techniques) and the previous conditions are met, GEK also
+tends to outperform Kriging for the same computational budget. Previous
+works, such as Dwight <span id="id9">[<a class="reference internal" href="../../misc/bibliography.html#id60" title="R.P. Dwight and Z. Han. Efficient uncertainty quantification using gradient-enhanced kriging. In 11th AIAA Non-Deterministic Approaches Conference. Reston, VA, USA, May 2009. American Institute of Aeronautics and Astronautics.">DH09</a>]</span>, state that the direct
+approach to GEK is significantly better conditioned than the indirect
+approach. While this is true, (direct) GEK’s
+<span class="math notranslate nohighlight">\(\underline{\underline{R_{\nabla}}}\)</span> matrix can still be, and
+often is, horribly ill-conditioned compared to Kriging’s
+<span class="math notranslate nohighlight">\(\underline{\underline{R}}\)</span> for the same
+<span class="math notranslate nohighlight">\(\underline{\theta}\)</span> and <span class="math notranslate nohighlight">\(\underline{\underline{X}}\)</span></p>
+<p>In the literature, ill-conditioning is often attributed to the choice of
+the correlation function. Although a different correlation function may
+alleviate the ill-conditioning for some problems, the root cause of the
+ill-conditioning is a poorly spaced sample design. Furthermore, a
+sufficiently bad sample design could make any interpolatory Kriging
+model, gradient enhanced or otherwise, ill-conditioned, regardless of
+the choice of correlation function. This root cause can be addressed
+directly by discarding points/equations.</p>
+<p>Discarding points/equations is conceptually similar to using a
+Moore-Penrose pseudo inverse of
+<span class="math notranslate nohighlight">\(\underline{\underline{R_{\nabla}}}\)</span>. However, there are important
+differences. A pseudo inverse handles ill-conditioning by discarding
+small singular values, which can be interpreted as throwing away the
+information that is least present while keeping all of what is most
+frequently duplicated. This causes a Kriging model to not interpolate
+any of the data points used to construct it while using some information
+from all rows.</p>
+<p>An alternate strategy is to discard additional copies of the information
+that is most duplicated and keep more of the barely present information.
+In the context of eigenvalues, this can be described as decreasing the
+maximum eigenvalue and increasing the minimum eigenvalue by a smaller
+amount than a pseudo inverse. The result is that the GEK model will
+exactly fit all of the retained information. This can be achieved using
+a pivoted Cholesky factorization, such as the one developed by Lucas
+<span id="id10">[<a class="reference internal" href="../../misc/bibliography.html#id176" title="C. Lucas. Lapack-style codes for level 2 and 3 pivoted cholesky factorizations. Numerical Analysis Reports 442, Manchester Centre for Computational Mathematics, Manchester, England, February 2004. LAPACK Working Note 161.">Luc04</a>]</span> to determine a reordering
+<span class="math notranslate nohighlight">\(\underline{\underline{\tilde{R}_{\nabla}}}\)</span> and dropping
+equations off its end until it tightly meets the constraint on rcond.
+However, a straight-forward implementation of this is neither efficient
+nor robust.</p>
+<p>In benchmarking tests, Lucas’ level 3 pivoted Cholesky implementation
+was not competitive with the level 3 LAPACK non-pivoted Cholesky in
+terms of computational efficiency. In some cases, it was an order of
+magnitude slower. Note that Lucas’ level 3 implementation can default to
+his level 2 implementation and this may explain some of the loss in
+performance.</p>
+<p>More importantly, applying pivoted Cholesky to
+<span class="math notranslate nohighlight">\(\underline{\underline{R_{\nabla}}}\)</span> tends to sort derivative
+equations to the top/front and function value equations to the end. This
+occurred even when <span class="math notranslate nohighlight">\(\underline{\underline{R_{\nabla}}}\)</span> was
+equilibrated to have ones for all of its diagonal elements. The result
+was that for many points at least some of the derivative equations were
+retained while the function values at the same points were discarded.
+This can (and often did) significantly degrade the accuracy of the GEK
+predictions. The implication is that derivative equations contain more
+information than, but are not as reliable as, function value equations.</p>
+<figure class="align-center" id="fig-subsetselectalgorithm">
+<a class="reference internal image-reference" href="../../_images/PivotCholSelectEqnAlgorithm.png"><img alt="A diagram with pseudo code for the pivoted Cholesky algorithm used to select the subset of equations to retain when :math:`\underline{\underline{R_{\nabla}}}` is ill-conditioned. Although it is part of the algorithm, the equilibration of :math:`\underline{\underline{R_{\nabla}}}` is not shown in this figure. The pseudo code uses MATLAB notation." src="../../_images/PivotCholSelectEqnAlgorithm.png" style="width: 600px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 81 </span><span class="caption-text">A diagram with pseudo code for the pivoted Cholesky algorithm used to
+select the subset of equations to retain when
+<span class="math notranslate nohighlight">\(\underline{\underline{R_{\nabla}}}\)</span> is ill-conditioned.
+Although it is part of the algorithm, the equilibration of
+<span class="math notranslate nohighlight">\(\underline{\underline{R_{\nabla}}}\)</span> is not shown in this
+figure. The pseudo code uses MATLAB notation.</span><a class="headerlink" href="#fig-subsetselectalgorithm" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<p>To address computational efficiency and robustness, Dakota’s pivoted
+Cholesky approach for GEK was modified to:</p>
+<ul>
+<li><p>Equilibrate <span class="math notranslate nohighlight">\(\underline{\underline{R_{\nabla}}}\)</span> to improve the
+accuracy of the Cholesky factorization; this is beneficial because
+<span class="math notranslate nohighlight">\(\underline{\underline{R_{\nabla}}}\)</span> can be poorly scaled.
+Theorem 4.1 of van der Sluis <span id="id11">[<a class="reference internal" href="../../misc/bibliography.html#id261" title="A. van der Sluis. Condition numbers and equilibration of matrices. Numerische Mathematik, 14(1):14–23, 1969.">vdS69</a>]</span> states that if
+<span class="math notranslate nohighlight">\(\underline{\underline{a}}\)</span> is a real, symmetric, positive
+definite <span class="math notranslate nohighlight">\(n\)</span> by <span class="math notranslate nohighlight">\(n\)</span> matrix and the diagonal matrix
+<span class="math notranslate nohighlight">\(\underline{\underline{\alpha}}\)</span> contains the square roots of
+the diagonals of <span class="math notranslate nohighlight">\(\underline{\underline{a}}\)</span>, then the
+equilibration</p>
+<div class="math notranslate nohighlight">
+\[\underline{\underline{\breve{a}}}=\underline{\underline{\alpha}}^{-1}\underline{\underline{a}}\ \underline{\underline{\alpha}}^{-1},\]</div>
+<p>minimizes the 2-norm condition number of
+<span class="math notranslate nohighlight">\(\underline{\underline{\breve{a}}}\)</span> (with respect to solving
+linear systems) over all such symmetric scalings, to within a factor
+of <span class="math notranslate nohighlight">\(n\)</span>. The equilibrated matrix
+<span class="math notranslate nohighlight">\(\underline{\underline{\breve{a}}}\)</span> will have all ones on the
+diagonal.</p>
+</li>
+<li><p>Perform pivoted Cholesky on <span class="math notranslate nohighlight">\(\underline{\underline{R}}\)</span>,
+instead of <span class="math notranslate nohighlight">\(\underline{\underline{R_{\nabla}}}\)</span>, to rank points
+according to how much new information they contain. This ranking was
+reflected by the ordering of points in
+<span class="math notranslate nohighlight">\(\underline{\underline{\tilde{R}}}\)</span>.</p></li>
+<li><p>Apply the ordering of points in
+<span class="math notranslate nohighlight">\(\underline{\underline{\tilde{R}}}\)</span> to whole points in
+<span class="math notranslate nohighlight">\(\underline{\underline{R_{\nabla}}}\)</span> to produce
+<span class="math notranslate nohighlight">\(\underline{\underline{\tilde{R}_{\nabla}}}\)</span>. Here a whole
+point means the function value at a point immediately followed by the
+derivatives at the same point.</p></li>
+<li><p>Perform a LAPACK non-pivoted Cholesky on the equilibrated
+<span class="math notranslate nohighlight">\(\underline{\underline{\tilde{R}_{\nabla}}}\)</span> and drop equations
+off the end until it satisfies the constraint on rcond. LAPACK’s
+rcond estimate requires the 1-norm of the original (reordered) matrix
+as input so the 1-norms for all possible sizes of
+<span class="math notranslate nohighlight">\(\underline{\underline{\tilde{R}_{\nabla}}}\)</span> are precomputed
+(using a rank one update approach) and stored prior to the Cholesky
+factorization. A bisection search is used to efficiently determine
+the number of equations that need to be retained/discarded. This
+requires <span class="math notranslate nohighlight">\({\rm ceil}\left(\log2\left(N_{\nabla}\right)\right)\)</span>
+or fewer evaluations of rcond. These rcond calls are all based off
+the same Cholesky factorization of
+<span class="math notranslate nohighlight">\(\underline{\underline{\tilde{R}_{\nabla}}}\)</span> but use different
+numbers of rows/columns, <span class="math notranslate nohighlight">\(\tilde{N}_{\nabla}\)</span>.</p></li>
+</ul>
+<p>This algorithm is visually depicted in
+<a class="reference internal" href="#fig-subsetselectalgorithm"><span class="std std-numref">Fig. 81</span></a>. Because inverting/factorizing a
+matrix with <span class="math notranslate nohighlight">\(n\)</span> rows and columns requires
+<span class="math notranslate nohighlight">\(\mathcal{O}\left(n^3\right)\)</span> flops, the cost to perform pivoted
+Cholesky on <span class="math notranslate nohighlight">\(\underline{\underline{R}}\)</span> will be much less than,
+i.e. <span class="math notranslate nohighlight">\(\mathcal{O}\left((1+M)^{-3}\right)\)</span>, that of
+<span class="math notranslate nohighlight">\(\underline{\underline{R_{\nabla}}}\)</span> when the number of dimensions
+<span class="math notranslate nohighlight">\(M\)</span> is large. It will also likely be negligible compared to the
+cost of performing LAPACK’s non-pivoted Cholesky on
+<span class="math notranslate nohighlight">\(\underline{\underline{\tilde{R}_{\nabla}}}\)</span>.</p>
+</section>
+<section id="experimental-gaussian-process">
+<span id="subsec-expgp"></span><h3>Experimental Gaussian Process<a class="headerlink" href="#experimental-gaussian-process" title="Permalink to this headline"></a></h3>
+<p>The experimental semi-parametric Gaussian process (GP) regression model
+in Dakota’s surrogates module contains two types of variables:
+hyperparameters <span class="math notranslate nohighlight">\(\boldsymbol{\theta}\)</span> that influence the kernel
+function <span class="math notranslate nohighlight">\(k(\boldsymbol{x},\boldsymbol{x}')\)</span> and polynomial trend
+coefficients <span class="math notranslate nohighlight">\(\boldsymbol{\beta}\)</span>. Building or fitting a GP
+involves determining these variables given a data matrix
+<span class="math notranslate nohighlight">\(\boldsymbol{X}\)</span> and vector of response values
+<span class="math notranslate nohighlight">\(\boldsymbol{y}\)</span> by minimizing the negative log marginal
+likelihood function <span class="math notranslate nohighlight">\(J(\boldsymbol{\theta},\boldsymbol{\beta})\)</span>.</p>
+<p>We consider an anisotropic squared exponential kernel
+<span class="math notranslate nohighlight">\(k_{\text{SE}}\)</span> augmented with a white noise term
+<span class="math notranslate nohighlight">\(k_{\text{W}}\)</span>, sometimes referred to as a “nugget” or “jitter” in
+the literature:</p>
+<div class="math notranslate nohighlight" id="equation-expgp-eq1">
+<span class="eqno">(214)<a class="headerlink" href="#equation-expgp-eq1" title="Permalink to this equation"></a></span>\[\begin{split}\begin{gathered}
+  \begin{aligned}
+    \bar{D} &amp;= \sum_{m=1}^{d} \frac{ \left(x_m - x'_m \right)^2}{\ell_m^2}, \\
+    k_{\text{SE}}(\boldsymbol{x},\boldsymbol{x}') &amp;= \sigma^2 \exp \left( - \frac{1}{2} \bar{D}^2 \right), \\
+    k_{\text{W}}(\boldsymbol{x},\boldsymbol{x}') &amp;= \eta^2 \delta_{\boldsymbol{x}\boldsymbol{x}'}.
+  \end{aligned}\end{gathered}\end{split}\]</div>
+<p>The parameter <span class="math notranslate nohighlight">\(\sigma^2\)</span> is a scaling term that affects the range
+of the output space. The vector
+<span class="math notranslate nohighlight">\(\boldsymbol{\ell} \in \mathbb{R}^d\)</span> contains the correlation
+lengths for each dimension of the input space. The smaller a given
+<span class="math notranslate nohighlight">\(\ell_m\)</span> the larger the variation of the function along that
+dimension. Lastly, the <span class="math notranslate nohighlight">\(\eta^2\)</span> parameter determines the size of
+the white noise term.</p>
+<p>As of Dakota 6.14, the Matérn <span class="math notranslate nohighlight">\(\nu = \frac{3}{2}\)</span> and
+<span class="math notranslate nohighlight">\(\nu = \frac{5}{2}\)</span> kernels may be used in place of the squared
+exponential kernel.</p>
+<div class="math notranslate nohighlight" id="equation-expgp-eq2">
+<span class="eqno">(215)<a class="headerlink" href="#equation-expgp-eq2" title="Permalink to this equation"></a></span>\[\begin{split}\begin{gathered}
+  \begin{aligned}
+    k_{\text{M32}}(\boldsymbol{x},\boldsymbol{x}') &amp;= \sigma^2 \left( 1 + \sqrt{3} \bar{D} \right) \exp \left( - \sqrt{3} \bar{D} \right), \\
+    k_{\text{M52}}(\boldsymbol{x},\boldsymbol{x}') &amp;= \sigma^2 \left( 1 + \sqrt{5} \bar{D} + \frac{5}{3} \bar{D}^2 \right) \exp \left( - \sqrt{5} \bar{D} \right).
+  \end{aligned}\end{gathered}\end{split}\]</div>
+<p>All of the kernel hyperparameters are strictly positive except for the
+nugget which is non-negative and will sometimes be omitted or set to a
+fixed value. These parameters may vary over several orders of magnitude
+such that variable scaling can have a significant effect on the
+performance of the optimizer used to find <span class="math notranslate nohighlight">\(\boldsymbol{\beta}\)</span> and
+<span class="math notranslate nohighlight">\(\boldsymbol{\theta}\)</span>. We perform log-scaling for each of the
+hyperparameters <span class="math notranslate nohighlight">\(\boldsymbol{\theta}\)</span> according to the
+transformation</p>
+<div class="math notranslate nohighlight" id="equation-expgp-eq3">
+<span class="eqno">(216)<a class="headerlink" href="#equation-expgp-eq3" title="Permalink to this equation"></a></span>\[\begin{gathered}
+\theta_i = \log \left( \frac{p_i}{p_{\text{ref}}} \right),\end{gathered}\]</div>
+<p>with <span class="math notranslate nohighlight">\(p_{\text{ref}} = 1\)</span> for all parameters for simplicity. Note
+that we take the original variables to be
+<span class="math notranslate nohighlight">\(\left\lbrace \sigma, \boldsymbol{\ell}, \eta \right\rbrace\)</span>, not
+their squares as is done by some authors. The log-transformed version of
+the squared exponential and white kernels are</p>
+<div class="math notranslate nohighlight" id="equation-expgp-eq4">
+<span class="eqno">(217)<a class="headerlink" href="#equation-expgp-eq4" title="Permalink to this equation"></a></span>\[\begin{split}\begin{gathered}
+  \begin{aligned}
+    \bar{D} &amp;= \sum_{m=1}^{d} \left(x_m - x'_m \right)^2 \exp(-2 \theta_m), \\
+    k_{\text{SE}}(\boldsymbol{x},\boldsymbol{x}') &amp;= \exp( 2 \theta_0 ) \exp \left( - \frac{1}{2} \bar{D}^2 \right), \\
+    k_{\text{W}}(\boldsymbol{x},\boldsymbol{x}') &amp;= \exp(2 \theta_{-1})  \delta_{\boldsymbol{x}\boldsymbol{x}'}.
+  \end{aligned}\end{gathered}\end{split}\]</div>
+<p>where the hyperparameters are ordered so that the log-transformed
+variables <span class="math notranslate nohighlight">\(\sigma = \theta_0\)</span> and <span class="math notranslate nohighlight">\(\eta = \theta_{-1}\)</span> are
+at the beginning and end of the vector of hyperparameters
+<span class="math notranslate nohighlight">\(\boldsymbol{\theta}\)</span>, respectively. The polynomial regression
+coefficients <span class="math notranslate nohighlight">\(\boldsymbol{\beta}\)</span> are left unscaled.</p>
+<p>An important quantity in Gaussian process regression is the <em>Gram
+matrix</em> <span class="math notranslate nohighlight">\(\boldsymbol{G}\)</span>:</p>
+<div class="math notranslate nohighlight" id="equation-expgp-eq5">
+<span class="eqno">(218)<a class="headerlink" href="#equation-expgp-eq5" title="Permalink to this equation"></a></span>\[\begin{gathered}
+G_{ij} := k(\boldsymbol{x}^i,\boldsymbol{x}^j),\end{gathered}\]</div>
+<p>where if the layout of the surrogate build samples matrix
+<span class="math notranslate nohighlight">\(\boldsymbol{X}\)</span> is number of samples <span class="math notranslate nohighlight">\(N\)</span> by dimension of
+the feature space <span class="math notranslate nohighlight">\(d\)</span> the quantities <span class="math notranslate nohighlight">\(\boldsymbol{x}^i\)</span> and
+<span class="math notranslate nohighlight">\(\boldsymbol{x}^j\)</span> represent the <span class="math notranslate nohighlight">\(i^{\text{th}}\)</span> and
+<span class="math notranslate nohighlight">\(j^{\text{th}}\)</span> rows of this matrix, respectively. The Gram matrix
+is positive definite provided there are no repeated samples, but it can
+be ill-conditioned if sample points are close together. Factorization of
+the (dense) Gram matrix and the computation of its inverse (needed for
+the gradient of the negative marginal log-likelihood function) are the
+computational bottlenecks in Gaussian process regression.</p>
+<p>The derivatives (shown only for the squared exponential and white/nugget
+kernels here) of the Gram matrix with respect to the hyperparameters are
+used in the regression procedure. To compute them it is helpful to
+partition the Gram matrix into two components, one that depends on the
+squared exponential piece of the kernel <span class="math notranslate nohighlight">\(\boldsymbol{K}\)</span> and
+another associated with the nugget term</p>
+<div class="math notranslate nohighlight" id="equation-expgp-eq6">
+<span class="eqno">(219)<a class="headerlink" href="#equation-expgp-eq6" title="Permalink to this equation"></a></span>\[\begin{gathered}
+\boldsymbol{G} =  \boldsymbol{K} + \exp(2 \theta_{-1})  \boldsymbol{I}.\end{gathered}\]</div>
+<p>Let <span class="math notranslate nohighlight">\(\boldsymbol{D}_m\)</span> denote the matrix of component-wise squared
+distances between points in the space of build points for dimension
+<span class="math notranslate nohighlight">\(m\)</span>:</p>
+<div class="math notranslate nohighlight" id="equation-expgp-eq7">
+<span class="eqno">(220)<a class="headerlink" href="#equation-expgp-eq7" title="Permalink to this equation"></a></span>\[\begin{gathered}
+D_{ijm}  = \left( x^i_m - x^j_m \right)^2.\end{gathered}\]</div>
+<p>The derivatives of <span class="math notranslate nohighlight">\(\boldsymbol{G}\)</span> are</p>
+<div class="math notranslate nohighlight" id="equation-expgp-eq8">
+<span class="eqno">(221)<a class="headerlink" href="#equation-expgp-eq8" title="Permalink to this equation"></a></span>\[\begin{split}\begin{gathered}
+\begin{aligned}
+\frac{d\boldsymbol{G}}{d\theta_0} &amp;= 2 \boldsymbol{K}, \\
+\frac{d\boldsymbol{G}}{d\theta_m} &amp;= \exp \left( -2 \theta_m \right) \boldsymbol{D}_m \odot \boldsymbol{K},  \quad  m = 1 \ldots d, \\
+\frac{d\boldsymbol{G}}{d\theta_{-1}} &amp;= 2 \exp(2 \theta_{-1}) \boldsymbol{I},
+\end{aligned}\end{gathered}\end{split}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\odot\)</span> denotes the Hadamard (i.e. element-wise) product.</p>
+<p>A polynomial trend function is obtained by multiplying a basis matrix
+for the samples <span class="math notranslate nohighlight">\(\boldsymbol{\Phi}\)</span> by the trend coefficients
+<span class="math notranslate nohighlight">\(\boldsymbol{\beta}\)</span>. The objective function for maximum
+likelihood estimation <span class="math notranslate nohighlight">\(J\)</span> depends on the residual
+<span class="math notranslate nohighlight">\(\boldsymbol{z} := \boldsymbol{y} - \Phi \boldsymbol{\beta}\)</span>.</p>
+<div class="math notranslate nohighlight" id="equation-expgp-eq9">
+<span class="eqno">(222)<a class="headerlink" href="#equation-expgp-eq9" title="Permalink to this equation"></a></span>\[\begin{gathered}
+J(\boldsymbol{\theta},\boldsymbol{\beta}) = \frac{1}{2} \log \left( \text{det} \left( \boldsymbol{G} \right) \right) + \frac{1}{2} \boldsymbol{z}^T \boldsymbol{G}^{-1} \boldsymbol{z} + \frac{N}{2} \log \left( 2 \pi \right).\end{gathered}\]</div>
+<p>The gradient of the objective function can be computed analytically
+using the derivatives of the Gram matrix. First we introduce</p>
+<div class="math notranslate nohighlight" id="equation-expgp-eq10">
+<span class="eqno">(223)<a class="headerlink" href="#equation-expgp-eq10" title="Permalink to this equation"></a></span>\[\begin{split}\begin{gathered}
+\begin{aligned}
+\boldsymbol{\alpha} &amp;:= \boldsymbol{G}^{-1} \boldsymbol{z}, \\
+\boldsymbol{Q} &amp;:= -\frac{1}{2} \left( \boldsymbol{\alpha} \boldsymbol{\alpha}^T - \boldsymbol{G}^{-1} \right).
+\end{aligned}\end{gathered}\end{split}\]</div>
+<p>The gradient is</p>
+<div class="math notranslate nohighlight" id="equation-expgp-eq11">
+<span class="eqno">(224)<a class="headerlink" href="#equation-expgp-eq11" title="Permalink to this equation"></a></span>\[\begin{split}\begin{gathered}
+\begin{aligned}
+\frac{dJ}{d\theta_0} &amp;= \sum_{i,j}  2 Q_{ij} K_{ij}, \\
+\frac{dJ}{d\theta_m} &amp;= \sum_{i,j} \left[   \boldsymbol{Q} \odot \boldsymbol{K}  \right]_{ij}   D_{ijm} \exp(-2 \theta_m), \quad m = 1, \ldots, d, \\
+\frac{dJ}{d\theta_{-1}} &amp;= \text{trace}(2 \boldsymbol{Q}) \exp(2\theta_{-1}), \\
+\frac{dJ}{d \boldsymbol{\beta}} &amp;= - \boldsymbol{\Phi}^T \boldsymbol{\alpha}.
+\end{aligned}\end{gathered}\end{split}\]</div>
+<p>We use the Rapid Optimization Library’s <span id="id12">[<a class="reference internal" href="../../misc/bibliography.html#id166" title="D. P. Kouri, D. Ridzal, B. G. van Bloeman Waanders, and G. von Winckel. Rapid optimization library. Technical Report SAND2014-19572, Sandia National Laboratories, Albuquerque, NM, 2014.">KRvBWvW14</a>]</span>
+gradient-based, bound-constrained implementation of the optimization
+algorithm L-BFGS-B <span id="id13">[<a class="reference internal" href="../../misc/bibliography.html#id304" title="Richard H Byrd, Peihuang Lu, Jorge Nocedal, and Ciyou Zhu. A limited memory algorithm for bound constrained optimization. SIAM Journal on scientific computing, 16(5):1190–1208, 1995.">BLNZ95</a>]</span> to minimize <span class="math notranslate nohighlight">\(J\)</span>.
+This is a local optimization method so it is typically run multiple
+times from different initial guesses to increase the chances of finding
+the global minimum.</p>
+<p>Once the regression problem has been solved, we may wish to evaluate the
+GP at a set of predictions points <span class="math notranslate nohighlight">\(\boldsymbol{X}^*\)</span> with an
+associated basis matrix <span class="math notranslate nohighlight">\(\boldsymbol{\Phi}^*\)</span>. Some useful
+quantities are</p>
+<div class="math notranslate nohighlight" id="equation-expgp-eq12">
+<span class="eqno">(225)<a class="headerlink" href="#equation-expgp-eq12" title="Permalink to this equation"></a></span>\[\begin{split}\begin{gathered}
+\begin{aligned}
+P^*_{ij} &amp;=  k\left(\left(\boldsymbol{x}^*\right)^i,\boldsymbol{x}^j\right), \\
+G^{**}_{ij} &amp;=  k\left(\left(\boldsymbol{x}^*\right)^i,\left(\boldsymbol{x}^*\right)^j\right), \\
+\boldsymbol{H} &amp;= \boldsymbol{\Phi}^T  \boldsymbol{G}^{-1}  \boldsymbol{\Phi}, \\
+\boldsymbol{R}^{*} &amp;= \boldsymbol{\Phi}^* - \boldsymbol{P}^{*} \boldsymbol{G}^{-1}  \boldsymbol{\Phi}.
+\end{aligned}\end{gathered}\end{split}\]</div>
+<p>The mean and covariance of the GP at the prediction points are</p>
+<div class="math notranslate nohighlight" id="equation-expgp-eq13">
+<span class="eqno">(226)<a class="headerlink" href="#equation-expgp-eq13" title="Permalink to this equation"></a></span>\[\begin{split}\begin{gathered}
+\begin{aligned}
+\boldsymbol{\mu}^{*} &amp;= \boldsymbol{\Phi}^* \boldsymbol{\beta} + \boldsymbol{P}^{*} \boldsymbol{\alpha}, \\
+\boldsymbol{\Sigma}^{**} &amp;= \boldsymbol{G}^{**} - \boldsymbol{P}^{*}  \boldsymbol{G}^{-1}  \left(\boldsymbol{P}^{*}\right)^T + \boldsymbol{R}^{*} \boldsymbol{H}^{-1} \left(\boldsymbol{R}^{*}\right)^T.
+\end{aligned}\end{gathered}\end{split}\]</div>
+</section>
+</section>
+<section id="polynomial-models">
+<span id="sec-poly-surr"></span><h2>Polynomial Models<a class="headerlink" href="#polynomial-models" title="Permalink to this headline"></a></h2>
+<p>A preliminary discussion of the surrogate polynomial models available in
+Dakota is presented in the <a class="reference internal" href="../inputfile/model.html#models-surrogate"><span class="std std-ref">main Surrogate Models section</span></a>,
+with select details reproduced here. For ease of notation, the discussion
+in this section assumes that the model returns a single response <span class="math notranslate nohighlight">\(\hat{f}\)</span>
+and that the design parameters <span class="math notranslate nohighlight">\(x\)</span> have dimension <span class="math notranslate nohighlight">\(n\)</span>.</p>
+<p>For each point <span class="math notranslate nohighlight">\(x\)</span>, a linear polynomial model is approximated by</p>
+<div class="math notranslate nohighlight" id="equation-polynomial-eq1">
+<span class="eqno">(227)<a class="headerlink" href="#equation-polynomial-eq1" title="Permalink to this equation"></a></span>\[\hat{f}(x) \approx c_0 + \sum_{i = 1}^{n} c_i x_i,\]</div>
+<p>a quadratic polynomial model is</p>
+<div class="math notranslate nohighlight" id="equation-polynomial-eq2">
+<span class="eqno">(228)<a class="headerlink" href="#equation-polynomial-eq2" title="Permalink to this equation"></a></span>\[\hat{f}(x) \approx c_0 + \sum_{i = 1}^{n} c_i x_i + \sum_{i = 1}^{n}
+\sum_{j \geq i}^{n} c_{ij} x_i x_j,\]</div>
+<p>and a cubic polynomial model is</p>
+<div class="math notranslate nohighlight" id="equation-polynomial-eq3">
+<span class="eqno">(229)<a class="headerlink" href="#equation-polynomial-eq3" title="Permalink to this equation"></a></span>\[\hat{f}(x) \approx c_0 + \sum_{i = 1}^{n} c_i x_i + \sum_{i = 1}^{n}
+\sum_{j \geq i}^{n} c_{ij} x_i x_j + \sum_{i = 1}^{n} \sum_{j \geq i}^{n}
+\sum_{k \geq j}^{n} c_{ijk} x_i x_j x_k.\]</div>
+<p>In these equations, <span class="math notranslate nohighlight">\(c_0\)</span>, <span class="math notranslate nohighlight">\(c_i\)</span>, <span class="math notranslate nohighlight">\(c_{ij}\)</span>, and
+<span class="math notranslate nohighlight">\(c_{ijk}\)</span> are the polynomial coefficients that are determined
+during the approximation of the surrogate. Furthermore, each point
+<span class="math notranslate nohighlight">\(x\)</span> corresponds to a vector <span class="math notranslate nohighlight">\(v_x\)</span> with entries given by the
+terms <span class="math notranslate nohighlight">\(1\)</span>, <span class="math notranslate nohighlight">\(x_i\)</span>, <span class="math notranslate nohighlight">\(x_i x_j\)</span>, and <span class="math notranslate nohighlight">\(x_i x_j x_k\)</span>.
+The length <span class="math notranslate nohighlight">\(n_c\)</span> of this vector corresponds to the number of
+coefficients present in the polynomial expression. For the linear,
+quadratic, and cubic polynomials, respectively,</p>
+<div class="math notranslate nohighlight" id="equation-polynomial-eq4">
+<span class="eqno">(230)<a class="headerlink" href="#equation-polynomial-eq4" title="Permalink to this equation"></a></span>\[\begin{split}\begin{aligned}
+n_{c}   &amp;=&amp; n+1, \\
+n_{c}   &amp;=&amp; \frac{(n+1)(n+2)}{2}, \\
+n_{c}   &amp;=&amp; \frac{n^3 + 6n^2 + 11n + 6}{6}.\end{aligned}\end{split}\]</div>
+<p>Let the matrix <span class="math notranslate nohighlight">\(X\)</span> be such that each row corresponds to the vector
+of a training point. Thus, given <span class="math notranslate nohighlight">\(m\)</span> training points,
+<span class="math notranslate nohighlight">\(X \in \mathbb{R}^{m \times
+n_c}\)</span>. Approximating the polynomial model then amounts to approximating
+the solution to</p>
+<div class="math notranslate nohighlight" id="equation-polynomial-eq5">
+<span class="eqno">(231)<a class="headerlink" href="#equation-polynomial-eq5" title="Permalink to this equation"></a></span>\[Xb = Y,\]</div>
+<p>where <span class="math notranslate nohighlight">\(b\)</span> is the vector of the polynomial coefficients described
+above, and <span class="math notranslate nohighlight">\(Y\)</span> contains the true responses <span class="math notranslate nohighlight">\(y(x)\)</span>. Details
+regarding the solution or approximate solution of this equation can be
+found in most mathematical texts and are not discussed here. For any of
+the training points, the estimated variance is given by</p>
+<div class="math notranslate nohighlight" id="equation-polynomial-eq6">
+<span class="eqno">(232)<a class="headerlink" href="#equation-polynomial-eq6" title="Permalink to this equation"></a></span>\[\sigma^{2}\left(\hat{f}(x)\right) = MSE\left(v_x^{T} (X^{T} X)^{-1} v_x\right),\]</div>
+<p>where <span class="math notranslate nohighlight">\(MSE\)</span> is the mean-squared error of the approximation over
+all of the training points. For any new design parameter, the prediction
+variance is given by</p>
+<div class="math notranslate nohighlight" id="equation-poly-var">
+<span class="eqno">(233)<a class="headerlink" href="#equation-poly-var" title="Permalink to this equation"></a></span>\[\sigma^{2}\left(\hat{f}(x_{new})\right) = MSE\left(1 + v_{x_{new}}^{T}
+(X^{T} X)^{-1} v_{x_{new}} \right).\]</div>
+<p>Additional discussion and detail can be found
+in <span id="id14">[<a class="reference internal" href="../../misc/bibliography.html#id194" title="J. Neter, W. Wasserman, and M. H. Kutner. Applied Linear Statistical Models. Irwin Professional Publishing, Burr Ridge, IL, 2nd edition, 1985.">NWK85</a>]</span>.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="bayesian.html" class="btn btn-neutral float-left" title="Bayesian Methods" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="surrogatebasedoptimization.html" class="btn btn-neutral float-right" title="Surrogate-Based Local Minimization" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <!--
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Sandia National Laboratories.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+  --> 
+
+</footer>
+        </div>
+      </div>
+	  
+	  <div style="background-color: #0f0f0f;color:#fafafa;padding:20px">
+	    <div>
+		  <h2><em>Exceptional service in the national interest</em></h2>
+		</div>
+		<p>© 2022 National Technology and Engineering Solutions of Sandia, LLC. | <a href="https://www.sandia.gov/contact_us/index.html">Questions &amp; Comments</a> | <a href="https://www.sandia.gov/general/privacy-security/index.html">Privacy &amp; Security</a></p>
+		<p><a href="http://energy.gov" rel="noopener noreferrer" target="_blank"><img alt="U.S. Department of Energy" longdesc="https://energy.gov" src="https://www.sandia.gov/_common/images/doe_logo_white.png" style="height:37px; width:140px"></a> <a href="http://nnsa.energy.gov/" rel="noopener noreferrer" target="_blank"> <img alt="National Nuclear Security Administration" longdesc="http://nnsa.gov" src="https://www.sandia.gov/_common/images/nnsa_logo_white.png" style="height:37px; width:116px"></a></p>
+		<p><a href="https://www.sandia.gov">Sandia National Laboratories</a> is a multimission laboratory managed and operated by National Technology and Engineering Solutions of Sandia, LLC., a wholly owned subsidiary of Honeywell International, Inc., for the U.S. Department of Energy’s National Nuclear Security Administration under contract DE-NA-0003525.</p>
+	  </div>	  	  
+	  
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>annotated &mdash; dakota  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/dakota_theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/sandiaheaderlite.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="freeform" href="environment-post_run-input-freeform.html" />
+    <link rel="prev" title="interface_id" href="environment-post_run-input-custom_annotated-interface_id.html" /> 
+  
+  <meta name="sandia.approval_type" content="formal"/>
+  <meta property="sandia.approved" content="SAND2022-15651 O"/>
+  <meta name="description" content="The Dakota project delivers both state-of-the-art research and robust, usable software for optimization and UQ."/>
+  <meta name="keywords" content="Dakota, optimization, UQ, uncertainty quantification, parametric analysis, design exploration, model calibration, risk analysis"/>
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> dakota
+            <img src="../../_static/dakota_Arrow_Name_Tag_horiz_transparent.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../setupdakota.html">Getting Started</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../usingdakota.html">Using Dakota</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../introduction/aboutdakota.html">About Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../introduction/helloworld.html">Dakota Beginner’s Tutorial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples.html">Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../introduction/couplingtosimulations.html">Coupling Dakota to a Simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../inputfile.html">Dakota Input File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../running.html">Running Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../output.html">Dakota Output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../studytypes.html">Study Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../topics.html">Topics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../advanced.html">Advanced Topics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../theory.html">Dakota Theory</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../reference.html">Keyword Reference</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="environment.html">environment</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="environment-tabular_data.html">tabular_data</a></li>
+<li class="toctree-l4"><a class="reference internal" href="environment-output_file.html">output_file</a></li>
+<li class="toctree-l4"><a class="reference internal" href="environment-error_file.html">error_file</a></li>
+<li class="toctree-l4"><a class="reference internal" href="environment-read_restart.html">read_restart</a></li>
+<li class="toctree-l4"><a class="reference internal" href="environment-write_restart.html">write_restart</a></li>
+<li class="toctree-l4"><a class="reference internal" href="environment-output_precision.html">output_precision</a></li>
+<li class="toctree-l4"><a class="reference internal" href="environment-results_output.html">results_output</a></li>
+<li class="toctree-l4"><a class="reference internal" href="environment-graphics.html">graphics</a></li>
+<li class="toctree-l4"><a class="reference internal" href="environment-check.html">check</a></li>
+<li class="toctree-l4"><a class="reference internal" href="environment-pre_run.html">pre_run</a></li>
+<li class="toctree-l4"><a class="reference internal" href="environment-run.html">run</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="environment-post_run.html">post_run</a><ul class="current">
+<li class="toctree-l5 current"><a class="reference internal" href="environment-post_run-input.html">input</a><ul class="current">
+<li class="toctree-l6"><a class="reference internal" href="environment-post_run-input-custom_annotated.html">custom_annotated</a></li>
+<li class="toctree-l6 current"><a class="current reference internal" href="#">annotated</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l6"><a class="reference internal" href="environment-post_run-input-freeform.html">freeform</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="environment-post_run-output.html">output</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="environment-top_method_pointer.html">top_method_pointer</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="method.html">method</a></li>
+<li class="toctree-l3"><a class="reference internal" href="model.html">model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="variables.html">variables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="interface.html">interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="responses.html">responses</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../usingdakotagui/usingdakotagui.html">Using Dakota GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../externaltools/externaltools.html">Using External Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../compiling/compiling.html">Compiling Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developingdakota/developingdakota.html">Developing Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../misc/misc.html">Miscellaneous</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">dakota</a>
+      </nav>
+
+	  <!-- SNL Lite header -->
+	  <div class="snlheader-subsite--wrapper-default">
+		<snlheader class="snlheader-subsite" role="snlbanner">
+		  <div class="wrapper">
+			<a href="https://www.sandia.gov/index.html">
+			  <div class="logo-transparent"><p class="logo">Sandia National Laboratories</p></div>
+			</a>
+			<div class="nav-top">
+			  <a class="visuallyhidden" name="mainnav"></a>
+			  <div aria-label="main navigation" class="core-nav-transparent core-nav-transparent--visible" role="navigation">
+				<ul role="navigation" class="secondary-links">
+				  <li id="search-text-link">
+					<a aria-label="Search" href="https://www.sandia.gov/search/">Search Sandia.gov</a>
+				  </li>
+				  <li id="directory-text-link">
+					<a href="https://www.sandia.gov/directory.html" aria-expanded="false" aria-label="Site Directory">All Sandia Websites</a>
+				  </li>
+				</ul>
+			  </div>
+			</div>
+		  </div> 
+		</snlheader>
+	  </div>	  
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../usingdakota.html">Using Dakota</a> &raquo;</li>
+          <li><a href="../reference.html">Keyword Reference</a> &raquo;</li>
+          <li><a href="environment.html">environment</a> &raquo;</li>
+          <li><a href="environment-post_run.html">post_run</a> &raquo;</li>
+          <li><a href="environment-post_run-input.html">input</a> &raquo;</li>
+      <li>annotated</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/usingdakota/reference/environment-post_run-input-annotated.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="annotated">
+<span id="environment-post-run-input-annotated"></span><h1>annotated<a class="headerlink" href="#annotated" title="Permalink to this headline"></a></h1>
+<p>Selects annotated tabular file format</p>
+<p><strong>Topics</strong></p>
+<p>file_formats</p>
+<div class="toctree-wrapper compound">
+</div>
+<p><strong>Specification</strong></p>
+<ul class="simple">
+<li><p><em>Alias:</em> None</p></li>
+<li><p><em>Arguments:</em> None</p></li>
+<li><p><em>Default:</em> annotated format</p></li>
+</ul>
+<p><strong>Description</strong></p>
+<p>An annotated tabular file is a whitespace-separated text file with one
+leading header row of comments/column labels.  Each subsequent row
+contains an evaluation ID and interface ID, followed by data for
+variables, or variables followed by responses, depending on context.</p>
+<p><em>Default Behavior</em></p>
+<p>By default, Dakota imports and exports tabular files in annotated
+format.  The <code class="docutils literal notranslate"><span class="pre">annotated</span></code> keyword can be used to explicitly specify
+this.</p>
+<p><em>Usage Tips</em></p>
+<ul class="simple">
+<li><p>To specify pre-Dakota 6.1 tabular format, which did not include interface_id, specify <code class="docutils literal notranslate"><span class="pre">custom_annotated</span></code> <code class="docutils literal notranslate"><span class="pre">header</span></code> <code class="docutils literal notranslate"><span class="pre">eval_id</span></code></p></li>
+<li><p>Prior to October 2011, calibration and surrogate data files were in free-form format. They now default to <code class="docutils literal notranslate"><span class="pre">annotated</span></code> format, though <code class="docutils literal notranslate"><span class="pre">freeform</span></code> remains an option.</p></li>
+<li><p>When importing tabular data, a warning will be generated if a specific number of data are expected, but extra is found and an error generated when there is insufficient data.</p></li>
+<li><p>Some TPLs like SCOLIB and JEGA manage their own file I/O and only support the <code class="docutils literal notranslate"><span class="pre">freeform</span></code> option.</p></li>
+</ul>
+<p><strong>Examples</strong></p>
+<p>Export an annotated top-level tabular data file containing a header
+row, leading eval_id and interface_id columns, and data for variables
+and responses.  Input file fragment:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span><span class="k">environment</span>
+  tabular_data
+    tabular_data_file = &#39;dakota_summary.dat&#39;
+    annotated
+</pre></div>
+</div>
+<p>Resulting tabular file:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>eval_id interface             x1             x2         obj_fn nln_ineq_con_1 nln_ineq_con_2
+1            NO_ID            0.9            1.1         0.0002           0.26           0.76
+2            NO_ID        0.90009            1.1 0.0001996404857   0.2601620081       0.759955
+3            NO_ID        0.89991            1.1 0.0002003604863   0.2598380081       0.760045
+...
+</pre></div>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="environment-post_run-input-custom_annotated-interface_id.html" class="btn btn-neutral float-left" title="interface_id" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="environment-post_run-input-freeform.html" class="btn btn-neutral float-right" title="freeform" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <!--
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Sandia National Laboratories.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+  --> 
+
+</footer>
+        </div>
+      </div>
+	  
+	  <div style="background-color: #0f0f0f;color:#fafafa;padding:20px">
+	    <div>
+		  <h2><em>Exceptional service in the national interest</em></h2>
+		</div>
+		<p>© 2022 National Technology and Engineering Solutions of Sandia, LLC. | <a href="https://www.sandia.gov/contact_us/index.html">Questions &amp; Comments</a> | <a href="https://www.sandia.gov/general/privacy-security/index.html">Privacy &amp; Security</a></p>
+		<p><a href="http://energy.gov" rel="noopener noreferrer" target="_blank"><img alt="U.S. Department of Energy" longdesc="https://energy.gov" src="https://www.sandia.gov/_common/images/doe_logo_white.png" style="height:37px; width:140px"></a> <a href="http://nnsa.energy.gov/" rel="noopener noreferrer" target="_blank"> <img alt="National Nuclear Security Administration" longdesc="http://nnsa.gov" src="https://www.sandia.gov/_common/images/nnsa_logo_white.png" style="height:37px; width:116px"></a></p>
+		<p><a href="https://www.sandia.gov">Sandia National Laboratories</a> is a multimission laboratory managed and operated by National Technology and Engineering Solutions of Sandia, LLC., a wholly owned subsidiary of Honeywell International, Inc., for the U.S. Department of Energy’s National Nuclear Security Administration under contract DE-NA-0003525.</p>
+	  </div>	  	  
+	  
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

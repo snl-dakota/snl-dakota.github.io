@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>optional_interface_pointer &mdash; dakota  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/dakota_theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/sandiaheaderlite.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="optional_interface_responses_pointer" href="model-nested-optional_interface_pointer-optional_interface_responses_pointer.html" />
+    <link rel="prev" title="nested" href="model-nested.html" /> 
+  
+  <meta name="sandia.approval_type" content="formal"/>
+  <meta property="sandia.approved" content="SAND2022-15651 O"/>
+  <meta name="description" content="The Dakota project delivers both state-of-the-art research and robust, usable software for optimization and UQ."/>
+  <meta name="keywords" content="Dakota, optimization, UQ, uncertainty quantification, parametric analysis, design exploration, model calibration, risk analysis"/>
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> dakota
+            <img src="../../_static/dakota_Arrow_Name_Tag_horiz_transparent.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../setupdakota.html">Getting Started</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../usingdakota.html">Using Dakota</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../introduction/aboutdakota.html">About Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../introduction/helloworld.html">Dakota Beginner’s Tutorial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples.html">Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../introduction/couplingtosimulations.html">Coupling Dakota to a Simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../inputfile.html">Dakota Input File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../running.html">Running Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../output.html">Dakota Output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../studytypes.html">Study Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../topics.html">Topics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../advanced.html">Advanced Topics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../theory.html">Dakota Theory</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../reference.html">Keyword Reference</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="environment.html">environment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="method.html">method</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="model.html">model</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="model-id_model.html">id_model</a></li>
+<li class="toctree-l4"><a class="reference internal" href="model-single.html">single</a></li>
+<li class="toctree-l4"><a class="reference internal" href="model-surrogate.html">surrogate</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="model-nested.html">nested</a><ul class="current">
+<li class="toctree-l5 current"><a class="current reference internal" href="#">optional_interface_pointer</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="model-nested-optional_interface_pointer-optional_interface_responses_pointer.html">optional_interface_responses_pointer</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="model-nested-sub_method_pointer.html">sub_method_pointer</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="model-active_subspace.html">active_subspace</a></li>
+<li class="toctree-l4"><a class="reference internal" href="model-adapted_basis.html">adapted_basis</a></li>
+<li class="toctree-l4"><a class="reference internal" href="model-random_field.html">random_field</a></li>
+<li class="toctree-l4"><a class="reference internal" href="model-variables_pointer.html">variables_pointer</a></li>
+<li class="toctree-l4"><a class="reference internal" href="model-responses_pointer.html">responses_pointer</a></li>
+<li class="toctree-l4"><a class="reference internal" href="model-hierarchical_tagging.html">hierarchical_tagging</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="variables.html">variables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="interface.html">interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="responses.html">responses</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../usingdakotagui/usingdakotagui.html">Using Dakota GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../externaltools/externaltools.html">Using External Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../compiling/compiling.html">Compiling Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developingdakota/developingdakota.html">Developing Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../misc/misc.html">Miscellaneous</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">dakota</a>
+      </nav>
+
+	  <!-- SNL Lite header -->
+	  <div class="snlheader-subsite--wrapper-default">
+		<snlheader class="snlheader-subsite" role="snlbanner">
+		  <div class="wrapper">
+			<a href="https://www.sandia.gov/index.html">
+			  <div class="logo-transparent"><p class="logo">Sandia National Laboratories</p></div>
+			</a>
+			<div class="nav-top">
+			  <a class="visuallyhidden" name="mainnav"></a>
+			  <div aria-label="main navigation" class="core-nav-transparent core-nav-transparent--visible" role="navigation">
+				<ul role="navigation" class="secondary-links">
+				  <li id="search-text-link">
+					<a aria-label="Search" href="https://www.sandia.gov/search/">Search Sandia.gov</a>
+				  </li>
+				  <li id="directory-text-link">
+					<a href="https://www.sandia.gov/directory.html" aria-expanded="false" aria-label="Site Directory">All Sandia Websites</a>
+				  </li>
+				</ul>
+			  </div>
+			</div>
+		  </div> 
+		</snlheader>
+	  </div>	  
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../usingdakota.html">Using Dakota</a> &raquo;</li>
+          <li><a href="../reference.html">Keyword Reference</a> &raquo;</li>
+          <li><a href="model.html">model</a> &raquo;</li>
+          <li><a href="model-nested.html">nested</a> &raquo;</li>
+      <li>optional_interface_pointer</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/usingdakota/reference/model-nested-optional_interface_pointer.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="optional-interface-pointer">
+<span id="model-nested-optional-interface-pointer"></span><h1>optional_interface_pointer<a class="headerlink" href="#optional-interface-pointer" title="Permalink to this headline"></a></h1>
+<p>Pointer to interface that provides non-nested responses</p>
+<p><strong>Topics</strong></p>
+<p>block_pointer</p>
+<div class="toctree-wrapper compound">
+</div>
+<p><strong>Specification</strong></p>
+<ul class="simple">
+<li><p><em>Alias:</em> None</p></li>
+<li><p><em>Arguments:</em> STRING</p></li>
+<li><p><em>Default:</em> no optional interface</p></li>
+</ul>
+<p><strong>Child Keywords:</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 19%" />
+<col style="width: 15%" />
+<col style="width: 32%" />
+<col style="width: 34%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Required/Optional</p></th>
+<th class="head"><p>Description of
+Group</p></th>
+<th class="head"><p>Dakota Keyword</p></th>
+<th class="head"><p>Dakota Keyword Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td colspan="2"><p>Optional</p></td>
+<td><p><a class="reference external" href="model-nested-optional_interface_pointer-optional_interface_responses_pointer.html">optional_interface_responses_pointer</a></p></td>
+<td><p>Pointer to responses block that defines
+non-nested responses</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Description</strong></p>
+<p><code class="docutils literal notranslate"><span class="pre">optional_interface_pointer</span></code> is used to specify an optional inferface (using
+that interface block’s <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/interface-id_interface.html"><span class="pre">id_interface</span></a></code> label) to provide non-nested
+responses to the nested model.</p>
+<p>To generate the complete set of primary responses (response functions,
+objective functions, and calibration terms) expected by the nested model,
+primary responses from the optional interface may be combined (by addition)
+with responses derived from sub-iterator results, or they may be presented
+unchanged to the nested model. The way that Dakota treats primary responses
+from these two sources depends on the number of rows of and entries in the
+<code class="docutils literal notranslate"><span class="pre">primary_response_mapping</span></code> matrix.</p>
+<p>To understand how, it is helpful to consider the following expression.
+Nested model primary responses <span class="math notranslate nohighlight">\(r\)</span>  are computed from
+the column vector of optional interface responses <span class="math notranslate nohighlight">\(f\)</span> , the
+<code class="docutils literal notranslate"><span class="pre">primary_response_mapping</span></code> matrix <span class="math notranslate nohighlight">\(W\)</span> , and the column vector of results
+from the sub-iterator <span class="math notranslate nohighlight">\(s\)</span> .</p>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}   \left\{r\right\} =\\\begin{split}  \left\{
+    \begin{array}{c}
+                     f \\
+                    \hline
+                     0
+  \end{array}
+ \right\}\end{split}\\+\\\begin{split}\left\{
+ \begin{array}{c}
+   \left[ W \right] \left\{s\right\} \\
+    \hline
+     0
+ \end{array}
+ \right\}\end{split}\end{aligned}\end{align} \]</div>
+<p>The number of rows in <span class="math notranslate nohighlight">\(f\)</span>  is equal to the number of primary responses
+returned by the optional interface, and in <span class="math notranslate nohighlight">\(r\)</span> , the number of primary
+responses expected by the nested model. In this expression, <span class="math notranslate nohighlight">\(0\)</span>  represents
+“padding” that may be needed by either the optional interface vector or the
+sub-iterator vector to make them the same dimension as <span class="math notranslate nohighlight">\(r\)</span> . One or the other
+of these quantities may be padded, but not both. In terms of the Dakota input,
+this means that the number of nested model primary responses must equal the
+larger of these two quantities: the number of optional interface
+responses or the number of rows in the <code class="docutils literal notranslate"><span class="pre">primary_response_mapping</span></code>.</p>
+<p>The nested model’s secondary responses (nonlinear constraints) are the
+secondary responses from the optional interface augmented by the secondary
+responses constructed from sub-iterator results. Unlike primary responses from
+these two sources, which may be combined by adding, it is not possible
+presently to combine secondary responses. For this reason, the number of nested
+model’s secondary responses must equal the number of secondary responses
+provided by the optional interface, plus the number provided by the sub-iterator
+(i.e. the  number of rows in the <code class="docutils literal notranslate"><span class="pre">secondary_response_mapping</span></code>). Secondary
+responses from the optional interface are inserted first into the nested model’s
+nonlinear constraints; those from the sub-iterator come after. If the nested
+model has secondary responses and an optional interface is used, it is necessary
+to specify a separate response block for the optional interface using the
+<code class="docutils literal notranslate"><span class="pre">optional_interface_response_pointer</span></code>. Targets and upper and lower bounds for
+the nonlinear constraints are taken from the nested model’s response block.</p>
+<p><strong>Examples</strong></p>
+<p>The first example illustrates the use of an optional interface and primary
+response mapping. No secondary responses are present. Assume that the inner
+method returns two results (suppose its the mean and standard deviation of a
+single response), so that the dimensions of <code class="docutils literal notranslate"><span class="pre">primary_response_mapping</span></code> will be
+interpreted by Dakota as 1x2, just as they are written here.</p>
+<p>The nested model ( <code class="docutils literal notranslate"><span class="pre">nested</span></code>) expects two primary responses
+( <code class="docutils literal notranslate"><span class="pre">outer_resp</span></code> block), and the optional interface returns two
+( <code class="docutils literal notranslate"><span class="pre">opt_resp</span></code> block).</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span><span class="k">model</span>
+  id_model &#39;nested&#39;
+  nested
+    optional_interface_pointer &#39;opt_intf&#39;
+      optional_interface_response_pointer &#39;opt_resp&#39;
+    sub_method_pointer &#39;inner_method&#39;
+      primary_response_mapping   1.0 2.0
+
+    responses_pointer &#39;outer_resp&#39;
+    variables_pointer &#39;outer_vars&#39;
+
+<span class="k">responses</span>
+  id_responses &#39;opt_resp&#39;
+  response_functions 2
+    descriptors &#39;opt1&#39; &#39;opt2&#39;
+  no_gradients
+  no_hessians
+
+<span class="k">responses</span>
+  id_responses &#39;outer_resp&#39;
+  response_functions 2
+    descriptors &#39;out1&#39; &#39;out2&#39;
+  no_gradients
+  no_hessians
+</pre></div>
+</div>
+<p>The first nested model response, <span class="math notranslate nohighlight">\(out1\)</span>
+will be computed <span class="math notranslate nohighlight">\(out1 = opt1 + 1.0*mean + 2.0*stddev\)</span> , and the second
+response <span class="math notranslate nohighlight">\(out2\)</span>  will be equal to simply <span class="math notranslate nohighlight">\(opt2\)</span> . In the matrix form
+introduced above, including the implicit padding:</p>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}\begin{split}  \left\{
+\begin{array}{c}
+   out1 \\
+   out2
+\end{array}
+  \right\}
+=
+ \left\{
+ \begin{array}{c}
+   opt1 \\
+   opt2
+ \end{array}
+ \right\}
++\end{split}\\\begin{split} \left\{
+ \begin{array}{c}
+   1.0 dot ``mean`` + 2.0 dot ``stddev`` \\
+    0
+ \end{array}
+ \right\}\end{split}\end{aligned}\end{align} \]</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">optional_interface_response_pointer</span></code> was not strictly needed. Because the
+number of responses returned by the optional interface and expected by the
+nested model is the same (and no secondary responses are present), the nested
+model’s response specification alone would have sufficed.</p>
+<p>If it were desired to combine <span class="math notranslate nohighlight">\(opt2\)</span>  with the sub-iterator’s results and
+set <span class="math notranslate nohighlight">\(out1\)</span>  to <span class="math notranslate nohighlight">\(opt1\)</span>  with no combination, then the <code class="docutils literal notranslate"><span class="pre">primary_response_mapping</span></code>
+matrix could be changed to:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>primary_response_mapping   0.0 0.0
+                           1.0 2.0
+</pre></div>
+</div>
+<p>&lt;hr&gt;
+Secondary responses will be demonstrated in the second example.</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span><span class="k">model</span>
+  id_model &#39;nested&#39;
+  nested
+    optional_interface_pointer &#39;opt_intf&#39;
+      optional_interface_response_pointer &#39;opt_resp&#39;
+    sub_method_pointer &#39;inner_method&#39;
+      primary_response_mapping   1.0 2.0
+      secondary_response_mapping 1.0 0.0
+    responses_pointer &#39;outer_resp&#39;
+    variables_pointer &#39;outer_vars&#39;
+
+<span class="k">responses</span>
+  id_responses &#39;opt_resp&#39;
+  objective_functions 2
+    descriptors &#39;opt1&#39; &#39;opt2&#39;
+  nonlinear_inequality_constraints 1
+    descriptors &#39;optc&#39;
+  no_gradients
+  no_hessians
+
+<span class="k">responses</span>
+  id_responses &#39;outer_resp&#39;
+  objective_functions 2
+    descriptors &#39;out1&#39; &#39;out2&#39;
+  nonlinear_inequality_constraints 2
+    descriptors &#39;outc1&#39; &#39;outc2&#39;
+  no_gradients
+  no_hessians
+</pre></div>
+</div>
+<p>The nested model expects a total of two constraints. Because the
+<code class="docutils literal notranslate"><span class="pre">secondary_response_mapping</span></code> has one row, one of these constraints will be
+supplied from the sub-iterator. The other is provided by the optional
+interface. Secondary responses from the optional iterator come first, and
+so <code class="docutils literal notranslate"><span class="pre">optc</span></code> is placed in <code class="docutils literal notranslate"><span class="pre">outc1</span></code>. <code class="docutils literal notranslate"><span class="pre">outc2</span></code> takes the value computed
+from the sub-iterator results.</p>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="model-nested.html" class="btn btn-neutral float-left" title="nested" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="model-nested-optional_interface_pointer-optional_interface_responses_pointer.html" class="btn btn-neutral float-right" title="optional_interface_responses_pointer" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <!--
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Sandia National Laboratories.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+  --> 
+
+</footer>
+        </div>
+      </div>
+	  
+	  <div style="background-color: #0f0f0f;color:#fafafa;padding:20px">
+	    <div>
+		  <h2><em>Exceptional service in the national interest</em></h2>
+		</div>
+		<p>© 2022 National Technology and Engineering Solutions of Sandia, LLC. | <a href="https://www.sandia.gov/contact_us/index.html">Questions &amp; Comments</a> | <a href="https://www.sandia.gov/general/privacy-security/index.html">Privacy &amp; Security</a></p>
+		<p><a href="http://energy.gov" rel="noopener noreferrer" target="_blank"><img alt="U.S. Department of Energy" longdesc="https://energy.gov" src="https://www.sandia.gov/_common/images/doe_logo_white.png" style="height:37px; width:140px"></a> <a href="http://nnsa.energy.gov/" rel="noopener noreferrer" target="_blank"> <img alt="National Nuclear Security Administration" longdesc="http://nnsa.gov" src="https://www.sandia.gov/_common/images/nnsa_logo_white.png" style="height:37px; width:116px"></a></p>
+		<p><a href="https://www.sandia.gov">Sandia National Laboratories</a> is a multimission laboratory managed and operated by National Technology and Engineering Solutions of Sandia, LLC., a wholly owned subsidiary of Honeywell International, Inc., for the U.S. Department of Energy’s National Nuclear Security Administration under contract DE-NA-0003525.</p>
+	  </div>	  	  
+	  
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

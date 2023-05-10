@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Testing Dakota Code &mdash; dakota  documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/dakota_theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/sandiaheaderlite.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Documenting Dakota" href="documenting.html" />
+    <link rel="prev" title="Demo TPL" href="writingcode/developmentpractices/demotpl.html" /> 
+  
+  <meta name="sandia.approval_type" content="formal"/>
+  <meta property="sandia.approved" content="SAND2022-15651 O"/>
+  <meta name="description" content="The Dakota project delivers both state-of-the-art research and robust, usable software for optimization and UQ."/>
+  <meta name="keywords" content="Dakota, optimization, UQ, uncertainty quantification, parametric analysis, design exploration, model calibration, risk analysis"/>
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> dakota
+            <img src="../_static/dakota_Arrow_Name_Tag_horiz_transparent.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../setupdakota.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usingdakota/usingdakota.html">Using Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usingdakotagui/usingdakotagui.html">Using Dakota GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../externaltools/externaltools.html">Using External Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../compiling/compiling.html">Compiling Dakota</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="developingdakota.html">Developing Dakota</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="devenvironment.html">Setup Your Development Environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gitforversioncontrol.html">Git for Version Control</a></li>
+<li class="toctree-l2"><a class="reference internal" href="writingcode.html">Writing Dakota Code</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Testing Dakota Code</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#unit-tests">Unit Tests</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#regression-tests">Regression Tests</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#unit-test-driven-system-tests">Unit Test-driven System Tests</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#test-environment-definition">Test environment definition</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#executing-the-environment">Executing the environment</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#extracting-results-and-test-assertions">Extracting results and test assertions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#unit-test-macros">Unit test macros</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="documenting.html">Documenting Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="writingdocs.html">Dakota Documentation Mechanics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tpls.html">Dakota’s Third-Party Libraries</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../misc/misc.html">Miscellaneous</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">dakota</a>
+      </nav>
+
+	  <!-- SNL Lite header -->
+	  <div class="snlheader-subsite--wrapper-default">
+		<snlheader class="snlheader-subsite" role="snlbanner">
+		  <div class="wrapper">
+			<a href="https://www.sandia.gov/index.html">
+			  <div class="logo-transparent"><p class="logo">Sandia National Laboratories</p></div>
+			</a>
+			<div class="nav-top">
+			  <a class="visuallyhidden" name="mainnav"></a>
+			  <div aria-label="main navigation" class="core-nav-transparent core-nav-transparent--visible" role="navigation">
+				<ul role="navigation" class="secondary-links">
+				  <li id="search-text-link">
+					<a aria-label="Search" href="https://www.sandia.gov/search/">Search Sandia.gov</a>
+				  </li>
+				  <li id="directory-text-link">
+					<a href="https://www.sandia.gov/directory.html" aria-expanded="false" aria-label="Site Directory">All Sandia Websites</a>
+				  </li>
+				</ul>
+			  </div>
+			</div>
+		  </div> 
+		</snlheader>
+	  </div>	  
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="developingdakota.html">Developing Dakota</a> &raquo;</li>
+      <li>Testing Dakota Code</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/developingdakota/testingcode.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="testing-dakota-code">
+<span id="testingcode-main"></span><h1>Testing Dakota Code<a class="headerlink" href="#testing-dakota-code" title="Permalink to this headline"></a></h1>
+<section id="unit-tests">
+<h2>Unit Tests<a class="headerlink" href="#unit-tests" title="Permalink to this headline"></a></h2>
+<p>Unit tests are intended for testing specific units, classes and functions
+when they can be readily constructed (and/or provided mocks) as needed.
+Unit testing also serves as a mechanism for Test Driven Development
+(TDD) which represents a best practice for implementing new capability.
+Just a few of the benefits of TDD include the following:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Enforces (and measures) modularity of code and functionality</p></li>
+<li><p>Encourages incrementally correct development</p></li>
+<li><p>Ensures correct behavior</p></li>
+<li><p>Documents API and software contract</p></li>
+<li><p>Promotes code coverage and other Software Quality Assurance (SQA) metrics</p></li>
+</ul>
+</div></blockquote>
+<p>Historically, Dakota has used both Boost.Test and Teuchos Unit Test
+features but has recently officially adopted the former.  For a minimal
+example for unit testing see:</p>
+<ul class="simple">
+<li><p><code class="file docutils literal notranslate"><span class="pre">src/unit/min_unit_test.cpp</span></code> (Boost.Test unit_test.hpp)</p></li>
+<li><p><code class="file docutils literal notranslate"><span class="pre">src/unit/leja_sampling.cpp</span></code> (Boost.Test minimal.hpp)</p></li>
+</ul>
+<p>Some more recent / modern examples include:</p>
+<ul class="simple">
+<li><p><code class="file docutils literal notranslate"><span class="pre">src/util/unit/MathToolsTest.cpp</span></code></p></li>
+<li><p><code class="file docutils literal notranslate"><span class="pre">src/util/unit/LinearSolverTest.cpp</span></code></p></li>
+<li><p><code class="file docutils literal notranslate"><span class="pre">src/surrogates/unit/PolynomialRegressionTest.cpp</span></code></p></li>
+</ul>
+<p>To add a test with a TDD mindset:</p>
+<ol class="arabic simple">
+<li><p>Call out the new unit test source file, e.g. <code class="docutils literal notranslate"><span class="pre">my_test.cpp</span></code>, in
+<code class="docutils literal notranslate"><span class="pre">CMakeLists.txt</span></code>,e.g. <code class="file docutils literal notranslate"><span class="pre">src/surrogate/unit/CMakeLists.txt</span></code>.
+See helper functions: dakota_add_unit_test (adds test, links libraries,
+registers with ctest), dakota_copy_test_file (copies with dependency).
+The build will fail because the file does not yet exist.</p></li>
+<li><p>Add a new file <code class="docutils literal notranslate"><span class="pre">my_test.cpp</span></code> with a failing test macro,
+e.g. <code class="docutils literal notranslate"><span class="pre">BOOST_CHECK(false)</span></code> to verify it builds but the test fails.
+Name files and associated data directories in a helpful and consistent
+manner.</p></li>
+<li><p>Use Boost utilities/macros to assess individual test conditions PASS /
+FAIL as needed.</p></li>
+<li><p>Compile and run with <code class="docutils literal notranslate"><span class="pre">ctest</span> <span class="pre">–L</span> <span class="pre">UnitTest</span></code> or <code class="docutils literal notranslate"><span class="pre">ctest</span> <span class="pre">–R</span> <span class="pre">my_test</span></code>.</p></li>
+<li><p>Iteratively add and refine tests and modify Dakota core source code
+as the capability evolves.</p></li>
+</ol>
+<p>To run all unit tests:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>cd dakota/build/
+
+<span class="c"># Run all unit tests:</span>
+ctest -L (--label-regex) UnitTest
+
+<span class="c"># With detailed output at top-level:</span>
+ctest -L (--label-regex) UnitTest -VV (--extra-verbose)
+
+<span class="c"># To run a single test, via regular expression:</span>
+ctest -L UnitTest -R surrogate_unit_tests
+</pre></div>
+</div>
+<p>A failing CTest unit test can be diagnosed using the following as a
+starting point:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>cd build/src/unit (or other directory containing the test executable)
+
+<span class="c"># First, manually run the failing test to see what information is provided related to the failure(s):</span>
+./surrogate_unit_tests
+
+<span class="c"># To see available Boost Test options:</span>
+./surrogate_unit_tests --help
+
+<span class="c"># To get detailed debugging info from a unit test:</span>
+./surrogate_unit_tests --log_level all
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>A google search can also provide current best practices with
+Boost.Test and specifics related to the details of the test
+failure(s)</p>
+</div>
+</section>
+<section id="regression-tests">
+<h2>Regression Tests<a class="headerlink" href="#regression-tests" title="Permalink to this headline"></a></h2>
+<p>These tests involve complete Dakota studies albeit typically small,
+fast and using models that represent known behavior such as polynomials
+or other canonical problems.  In brief, these tests:</p>
+<ul class="simple">
+<li><p>Are primarily located in source/test/dakota_*.in with gold standards
+in dakota_*.base</p></li>
+<li><p>Are categorized using CTest labels, e.g. use <code class="docutils literal notranslate"><span class="pre">ctest</span> <span class="pre">--print-labels</span></code>
+to view them</p></li>
+<li><p>Are usually wrappers to the native Dakota <code class="docutils literal notranslate"><span class="pre">test/dakota_test.perl</span></code>
+utility, e.g. use the option <code class="docutils literal notranslate"><span class="pre">--man</span></code> for supported options</p></li>
+</ul>
+<p>If a regression test fails, steps to disgnose the failure include the
+following which are performed in the Dakota build directory:</p>
+<ol class="arabic simple">
+<li><p>Remove previous test artifacts related to detailed differences and
+failures via <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">dakota-diffs-clean</span></code>.</p></li>
+<li><p>Rerun the failing CTest: <code class="docutils literal notranslate"><span class="pre">ctest</span> <span class="pre">-R</span> <span class="pre">test_name</span></code></p></li>
+<li><p>Generate details for how the test differs from the corresponding
+baseline: <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">dakota-diffs</span></code>.</p></li>
+<li><p>Go into the specific regression test directory and examine the
+<code class="docutils literal notranslate"><span class="pre">dakota_diffs.out</span></code> file to see which subtest(s) failed.</p></li>
+<li><p>Compare the <code class="docutils literal notranslate"><span class="pre">.tst</span></code> file contents with the <code class="docutils literal notranslate"><span class="pre">.base</span></code> file contents
+to determine which values have changed, if there was a catastrophic
+failure of the executable, etc.</p></li>
+</ol>
+</section>
+<section id="unit-test-driven-system-tests">
+<h2>Unit Test-driven System Tests<a class="headerlink" href="#unit-test-driven-system-tests" title="Permalink to this headline"></a></h2>
+<p>These hybrid tests can be useful when it’s difficult to mock up all
+the objects needed for testing, e.g., Dakota Model, Variables, Interface,
+Responses, and yet finer-grained control over results verification is
+desired compared with that of regression tests.  One way to view these
+types of unit tests are those that construct most of a complete Dakota
+study as a mock and which then do fine grained testing of selected
+functionality from the instantiated objects.  In brief, these tests:</p>
+<ul class="simple">
+<li><p>Are registered as unit tests</p></li>
+<li><p>Operate at the level of constructing a Dakota Environment from an
+input file and running a whole study to populate needed class data</p></li>
+<li><p>Test criteria that are more fine-grained and controllable than
+regression tests</p></li>
+</ul>
+<p>An illustrative example is described next and in
+<code class="file docutils literal notranslate"><span class="pre">src/unit_test/opt_tpl_rol_test_textbook.cpp</span></code>.</p>
+<p>The following provides a walkthrough for developers who wish to add a
+Test-driven System unit test that includes an end-to-end Dakota
+analysis. The procedure relies on setting up a problem description
+database using a Dakota input string and subsequently executing the
+environment. The last step involves extracting the quantities of
+interest (results) to be tested using unit test macros.</p>
+<section id="test-environment-definition">
+<h3>Test environment definition<a class="headerlink" href="#test-environment-definition" title="Permalink to this headline"></a></h3>
+<p>The developer defines a testing environment by constructing a problem
+description database from a Dakota input string, e.g.</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>// Dakota input string for serial case (cyl_head):
+static const char dakota_input[] =
+  &quot; method,&quot;
+  &quot;   output silent&quot;
+  &quot;   max_function_evaluations 300&quot;
+  &quot;   mesh_adaptive_search&quot;
+  &quot;     threshold_delta = 1.e-10&quot;
+  &quot; variables,&quot;
+  &quot;   continuous_design = 2&quot;
+  &quot;     initial_point    1.51         0.01&quot;
+  &quot;     upper_bounds     2.164        4.0&quot;
+  &quot;     lower_bounds     1.5          0.0&quot;
+  &quot;     descriptors      &#39;intake_dia&#39; &#39;flatness&#39;&quot;
+  &quot; interface,&quot;
+  &quot;   direct&quot;
+  &quot;     analysis_driver = &#39;cyl_head&#39;&quot;
+  &quot; responses,&quot;
+  &quot;   num_objective_functions = 1&quot;
+  &quot;   nonlinear_inequality_constraints = 3&quot;
+  &quot;   no_gradients&quot;
+  &quot;   no_hessians&quot;;
+</pre></div>
+</div>
+<p>The input string is then used to create a Dakota environment:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>// No input file set --&gt; no parsing:
+Dakota::ProgramOptions opts;
+opts.echo_input(false);
+
+opts.input_string(dakota_input);
+
+// delay validation/sync of the Dakota database and iterator
+// construction to allow update after all data is populated
+bool check_bcast_construct = false;
+
+// set up a Dakota instance
+Dakota::LibraryEnvironment * p_env = new Dakota::LibraryEnvironment(MPI_COMM_WORLD, opts, check_bcast_construct);
+Dakota::LibraryEnvironment &amp; env = *p_env;
+Dakota::ParallelLibrary&amp; parallel_lib = env.parallel_library();
+
+// configure Dakota to throw a std::runtime_error instead of calling exit
+env.exit_mode(&quot;throw&quot;);
+
+// once done with changes: check database, broadcast, and construct iterators
+env.done_modifying_db();
+</pre></div>
+</div>
+</section>
+<section id="executing-the-environment">
+<h3>Executing the environment<a class="headerlink" href="#executing-the-environment" title="Permalink to this headline"></a></h3>
+<p>Once an environment is defined, instantiation of Dakota objects and
+population of class data is achieved by executing the study:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>// Execute the environment
+env.execute();
+</pre></div>
+</div>
+</section>
+<section id="extracting-results-and-test-assertions">
+<h3>Extracting results and test assertions<a class="headerlink" href="#extracting-results-and-test-assertions" title="Permalink to this headline"></a></h3>
+<p>Following execution, the pertinent results are extracted and used to
+test correctness criteria. This is performed using the Boost unit test
+capabilities, e.g.</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>// retrieve the final parameter values
+const Variables&amp; vars = env.variables_results();
+
+// retrieve the final response values
+const Response&amp; resp  = env.response_results();
+
+// Convergence test: check that first continuous variable
+// has reached optimal value within given tolerance
+double target = 2.1224215765;
+double max_tol = 1.e-5;
+double rel_err = fabs((vars.continuous_variable(0) - target)/target);
+BOOST_CHECK(rel_err &lt; max_tol);
+
+// Convergence test: check that second continuous variable
+// has reached optimal value within given tolerance
+target = 1.7659069377;
+max_tol = 1.e-2;
+rel_err = fabs((vars.continuous_variable(1) - target)/target);
+BOOST_CHECK(rel_err &lt; max_tol);
+
+// Convergence test: check that the final response value
+// has reached the corresponding minimum within given tolerance
+target = -2.4614299775;
+max_tol = 1.e-3;
+rel_err = fabs((resp.function_value(0) - target)/target);
+BOOST_CHECK(rel_err &lt; max_tol);
+</pre></div>
+</div>
+</section>
+<section id="unit-test-macros">
+<h3>Unit test macros<a class="headerlink" href="#unit-test-macros" title="Permalink to this headline"></a></h3>
+<p>There are several unit test macros to support
+various comparisons, assertions, exceptions, etc.  See
+<a class="reference external" href="https://www.boost.org/doc/libs/1_69_0/libs/test/doc/html/boost_test/utf_reference/testing_tool_ref.html">https://www.boost.org/doc/libs/1_69_0/libs/test/doc/html/boost_test/utf_reference/testing_tool_ref.html</a>
+for details and exmaples.</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="writingcode/developmentpractices/demotpl.html" class="btn btn-neutral float-left" title="Demo TPL" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="documenting.html" class="btn btn-neutral float-right" title="Documenting Dakota" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <!--
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Sandia National Laboratories.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+  --> 
+
+</footer>
+        </div>
+      </div>
+	  
+	  <div style="background-color: #0f0f0f;color:#fafafa;padding:20px">
+	    <div>
+		  <h2><em>Exceptional service in the national interest</em></h2>
+		</div>
+		<p>© 2022 National Technology and Engineering Solutions of Sandia, LLC. | <a href="https://www.sandia.gov/contact_us/index.html">Questions &amp; Comments</a> | <a href="https://www.sandia.gov/general/privacy-security/index.html">Privacy &amp; Security</a></p>
+		<p><a href="http://energy.gov" rel="noopener noreferrer" target="_blank"><img alt="U.S. Department of Energy" longdesc="https://energy.gov" src="https://www.sandia.gov/_common/images/doe_logo_white.png" style="height:37px; width:140px"></a> <a href="http://nnsa.energy.gov/" rel="noopener noreferrer" target="_blank"> <img alt="National Nuclear Security Administration" longdesc="http://nnsa.gov" src="https://www.sandia.gov/_common/images/nnsa_logo_white.png" style="height:37px; width:116px"></a></p>
+		<p><a href="https://www.sandia.gov">Sandia National Laboratories</a> is a multimission laboratory managed and operated by National Technology and Engineering Solutions of Sandia, LLC., a wholly owned subsidiary of Honeywell International, Inc., for the U.S. Department of Energy’s National Nuclear Security Administration under contract DE-NA-0003525.</p>
+	  </div>	  	  
+	  
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

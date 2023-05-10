@@ -1,0 +1,50 @@
+.. _method-surrogate_based_local-constraint_relax:
+
+""""""""""""""""
+constraint_relax
+""""""""""""""""
+
+
+Enable constraint relaxation
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-surrogate_based_local-constraint_relax-homotopy
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+- *Default:* no relaxation
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+--------------------+---------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword     | Dakota Keyword Description                  |
+|                         | Group              |                    |                                             |
++=========================+====================+====================+=============================================+
+| Required                                     | `homotopy`__       | Surrogate-Based local constraint relaxation |
+|                                              |                    | method for infeasible iterates              |
++----------------------------------------------+--------------------+---------------------------------------------+
+
+.. __: method-surrogate_based_local-constraint_relax-homotopy.html
+
+
+
+**Description**
+
+
+The command ``constraint_relax`` followed by a method name specifies
+the type of relaxation to be used. Currently, <tt>homotopy</tt>
+:cite:p:`Per04a` is the only available method for
+constraint relaxation, and this method is dependent on the presence of
+the NPSOL library within the Dakota executable.
+
+

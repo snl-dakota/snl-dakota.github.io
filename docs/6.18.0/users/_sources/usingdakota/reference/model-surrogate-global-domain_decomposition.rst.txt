@@ -1,0 +1,61 @@
+.. _model-surrogate-global-domain_decomposition:
+
+""""""""""""""""""""
+domain_decomposition
+""""""""""""""""""""
+
+
+Piecewise Domain Decomposition for Global Surrogate Models
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   model-surrogate-global-domain_decomposition-cell_type
+   model-surrogate-global-domain_decomposition-support_layers
+   model-surrogate-global-domain_decomposition-discontinuity_detection
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+-----------------------------+---------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword              | Dakota Keyword Description                  |
+|                         | Group              |                             |                                             |
++=========================+====================+=============================+=============================================+
+| Optional                                     | `cell_type`__               | Type of the Geometric Cells Used for the    |
+|                                              |                             | Piecewise Decomposition Option of Global    |
+|                                              |                             | Surrogates                                  |
++----------------------------------------------+-----------------------------+---------------------------------------------+
+| Optional                                     | `support_layers`__          | Optional Number of Support Layers for the   |
+|                                              |                             | Piecewise Decomposition Option of Global    |
+|                                              |                             | Surrogates                                  |
++----------------------------------------------+-----------------------------+---------------------------------------------+
+| Optional                                     | `discontinuity_detection`__ | Optional Discontinuity Detection Capability |
+|                                              |                             | for the Piecewise Decomposition Option of   |
+|                                              |                             | Global Surrogates                           |
++----------------------------------------------+-----------------------------+---------------------------------------------+
+
+.. __: model-surrogate-global-domain_decomposition-cell_type.html
+__ model-surrogate-global-domain_decomposition-support_layers.html
+__ model-surrogate-global-domain_decomposition-discontinuity_detection.html
+
+
+
+**Description**
+
+
+Typical regression techniques use all available sample points to build continuous approximations the underlying function.
+
+An alternative option is to use piecewise decomposition to locally approximate the function at some point using a few sample points from its neighborhood only. This option currently supports Polynomial Regression, Gaussian Process (GP) Interpolation, and Radial Basis Functions (RBF) Regression. It requires a decomposition cell type (currently set to be Voronoi cells). Optional parameters are: the number of layers of neighbors used to solve the regression problem (default is one layer), and an optional discontinuity detection capability (identified by a user-input jump or gradient threshold).
+
+The method can also make use of the gradient and Hessian information, if available. The user needs to specify the keyword user_derivatives.
+
+

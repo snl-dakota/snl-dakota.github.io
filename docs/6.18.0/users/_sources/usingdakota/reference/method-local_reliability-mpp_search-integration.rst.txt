@@ -1,0 +1,64 @@
+.. _method-local_reliability-mpp_search-integration:
+
+"""""""""""
+integration
+"""""""""""
+
+
+Integration approach
+
+
+
+**Topics**
+
+
+reliability_methods
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-local_reliability-mpp_search-integration-first_order
+   method-local_reliability-mpp_search-integration-second_order
+   method-local_reliability-mpp_search-integration-probability_refinement
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+- *Default:* First-order integration
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+----------------------------+---------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword             | Dakota Keyword Description                  |
+|                         | Group              |                            |                                             |
++=========================+====================+============================+=============================================+
+| Required (Choose One)   | Integration Order  | `first_order`__            | First-order integration scheme              |
+|                         |                    +----------------------------+---------------------------------------------+
+|                         |                    | `second_order`__           | Second-order integration scheme             |
++-------------------------+--------------------+----------------------------+---------------------------------------------+
+| Optional                                     | `probability_refinement`__ | Allow refinement of probability and         |
+|                                              |                            | generalized reliability results using       |
+|                                              |                            | importance sampling                         |
++----------------------------------------------+----------------------------+---------------------------------------------+
+
+.. __: method-local_reliability-mpp_search-integration-first_order.html
+__ method-local_reliability-mpp_search-integration-second_order.html
+__ method-local_reliability-mpp_search-integration-probability_refinement.html
+
+
+
+**Description**
+
+
+This keyword controls how the probabilities at the MPP are computed: integration
+is followed by either first_order or second_order, indicating the order of the
+probability integration.
+
+

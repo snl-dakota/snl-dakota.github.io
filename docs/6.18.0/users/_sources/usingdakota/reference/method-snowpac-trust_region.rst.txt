@@ -1,0 +1,83 @@
+.. _method-snowpac-trust_region:
+
+""""""""""""
+trust_region
+""""""""""""
+
+
+Use trust region as the globalization strategy.
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-snowpac-trust_region-initial_size
+   method-snowpac-trust_region-minimum_size
+   method-snowpac-trust_region-contract_threshold
+   method-snowpac-trust_region-expand_threshold
+   method-snowpac-trust_region-contraction_factor
+   method-snowpac-trust_region-expansion_factor
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+------------------------+---------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword         | Dakota Keyword Description                  |
+|                         | Group              |                        |                                             |
++=========================+====================+========================+=============================================+
+| Optional                                     | `initial_size`__       | Trust region initial size (relative to      |
+|                                              |                        | bounds)                                     |
++----------------------------------------------+------------------------+---------------------------------------------+
+| Optional                                     | `minimum_size`__       | Trust region minimum size                   |
++----------------------------------------------+------------------------+---------------------------------------------+
+| Optional                                     | `contract_threshold`__ | Shrink trust region if trust region ratio   |
+|                                              |                        | is below this value                         |
++----------------------------------------------+------------------------+---------------------------------------------+
+| Optional                                     | `expand_threshold`__   | Expand trust region if trust region ratio   |
+|                                              |                        | is above this value                         |
++----------------------------------------------+------------------------+---------------------------------------------+
+| Optional                                     | `contraction_factor`__ | Amount by which step length is rescaled     |
++----------------------------------------------+------------------------+---------------------------------------------+
+| Optional                                     | `expansion_factor`__   | Trust region expansion factor               |
++----------------------------------------------+------------------------+---------------------------------------------+
+
+.. __: method-snowpac-trust_region-initial_size.html
+__ method-snowpac-trust_region-minimum_size.html
+__ method-snowpac-trust_region-contract_threshold.html
+__ method-snowpac-trust_region-expand_threshold.html
+__ method-snowpac-trust_region-contraction_factor.html
+__ method-snowpac-trust_region-expansion_factor.html
+
+
+
+**Description**
+
+
+The ``trust_region`` optional group specification can be used to
+specify the initial size of the trust region (using ``initial_size``)
+relative to the total variable bounds, the minimum size of the trust
+region (using ``minimum_size``), the contraction factor for the trust
+region size (using ``contraction_factor``) used when the surrogate
+model is performing poorly, and the expansion factor for the trust
+region size (using ``expansion_factor``) used when the the surrogate
+model is performing well. Two additional commands are the trust region
+size contraction threshold (using ``contract_threshold``) and the trust
+region size expansion threshold (using ``expand_threshold``).  These
+two commands are related to what is called the trust region ratio,
+which is the actual decrease in the truth model divided by the
+predicted decrease in the truth model in the current trust region. The
+command ``contract_threshold`` sets the minimum acceptable value for
+the trust region ratio, i.e., values below this threshold cause the
+trust region to shrink for the next SBL iteration. The command
+``expand_threshold`` determines the trust region value above which the
+trust region will expand for the next SBL iteration.
+
+

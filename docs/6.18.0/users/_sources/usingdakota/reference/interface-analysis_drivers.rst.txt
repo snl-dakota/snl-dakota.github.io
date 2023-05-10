@@ -1,0 +1,204 @@
+.. _interface-analysis_drivers:
+
+""""""""""""""""
+analysis_drivers
+""""""""""""""""
+
+
+Define how Dakota should run a function evaluation
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   interface-analysis_drivers-input_filter
+   interface-analysis_drivers-output_filter
+   interface-analysis_drivers-system
+   interface-analysis_drivers-fork
+   interface-analysis_drivers-direct
+   interface-analysis_drivers-plugin
+   interface-analysis_drivers-matlab
+   interface-analysis_drivers-python
+   interface-analysis_drivers-legacy_python
+   interface-analysis_drivers-scilab
+   interface-analysis_drivers-grid
+   interface-analysis_drivers-analysis_components
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* STRINGLIST
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+-------------------------+---------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword          | Dakota Keyword Description                  |
+|                         | Group              |                         |                                             |
++=========================+====================+=========================+=============================================+
+| Optional                                     | `input_filter`__        | Run a pre-processing script before the      |
+|                                              |                         | analysis drivers                            |
++----------------------------------------------+-------------------------+---------------------------------------------+
+| Optional                                     | `output_filter`__       | Run a post-processing script after the      |
+|                                              |                         | analysis drivers                            |
++-------------------------+--------------------+-------------------------+---------------------------------------------+
+| Required (Choose One)   | Interface Type     | `system`__              | (Not recommended) Launch analysis drivers   |
+|                         |                    |                         | with a system call                          |
+|                         |                    +-------------------------+---------------------------------------------+
+|                         |                    | `fork`__                | Launch analysis drivers using fork command  |
+|                         |                    +-------------------------+---------------------------------------------+
+|                         |                    | `direct`__              | Run analysis drivers that are linked-to or  |
+|                         |                    |                         | compiled-with Dakota                        |
+|                         |                    +-------------------------+---------------------------------------------+
+|                         |                    | `plugin`__              | Dynamically load a plugin analysis driver   |
+|                         |                    +-------------------------+---------------------------------------------+
+|                         |                    | `matlab`__              | Run Matlab through a direct interface -     |
+|                         |                    |                         | requires special Dakota build               |
+|                         |                    +-------------------------+---------------------------------------------+
+|                         |                    | `python`__              | Run Python through a Pybind11-based direct  |
+|                         |                    |                         | interface - requires a special Dakota build |
+|                         |                    +-------------------------+---------------------------------------------+
+|                         |                    | `legacy_python`__       | Run Python through a deprecated C-based     |
+|                         |                    |                         | direct interface - requires a special       |
+|                         |                    |                         | Dakota build                                |
+|                         |                    +-------------------------+---------------------------------------------+
+|                         |                    | `scilab`__              | Run Scilab through a direct interface -     |
+|                         |                    |                         | requires special Dakota build               |
+|                         |                    +-------------------------+---------------------------------------------+
+|                         |                    | `grid`__                | Deprecated grid computing interface         |
++-------------------------+--------------------+-------------------------+---------------------------------------------+
+| Optional                                     | `analysis_components`__ | Provide additional identifiers to analysis  |
+|                                              |                         | drivers.                                    |
++----------------------------------------------+-------------------------+---------------------------------------------+
+
+.. __: interface-analysis_drivers-input_filter.html
+__ interface-analysis_drivers-output_filter.html
+__ interface-analysis_drivers-system.html
+__ interface-analysis_drivers-fork.html
+__ interface-analysis_drivers-direct.html
+__ interface-analysis_drivers-plugin.html
+__ interface-analysis_drivers-matlab.html
+__ interface-analysis_drivers-python.html
+__ interface-analysis_drivers-legacy_python.html
+__ interface-analysis_drivers-scilab.html
+__ interface-analysis_drivers-grid.html
+__ interface-analysis_drivers-analysis_components.html
+
+
+
+**Description**
+
+
+The ``analysis_drivers`` keyword provides the names of one or more
+executable analysis programs or scripts, a.k.a. "drivers" which
+comprise a function evaluation. The optional and required sub-keywords
+specify how Dakota will manage directories and files, and run the
+driver(s).
+
+*Types of Interfaces*
+
+Dakota has two recommended ways of running analysis drivers:
+
+- as an external processes ( ``fork``), or
+- using internal code to couple to the analysis driver ( ``direct``)
+
+Other options are available for advanced users, and are not as well documented, supported, or tested:
+
+- external processes ( ``system``)
+- internal coupling ( ``python``, ``matlab``, ``scilab``, ``grid``)
+
+*Use Cases*
+
+The internally coupled codes have few options because many of the
+details are already handled with the coupling.  Their behavior is
+described in the :dakkw:`interface-analysis_drivers-direct` keyword.
+
+For external processes using the :dakkw:`interface-analysis_drivers-fork` keyword,
+
+A function evaluation may comprise:
+
+
+-<i>A single analysis driver</i>: Function evaluation, including all pre- and   post-processing is contained entirely within a single script/executable. <br>
+-<i>A single analysis driver with filters</i>: Function evaluation is   explicitly split into pre-processing (performed by the input filter),    analysis, and post-processing (by the output filter).
+-<i>A single analysis driver with environment variables</i>: Function   evaluation is contained within one analysis driver, but it requires    environment variables to be set before running.
+-<i>Multiple analysis drivers</i>: Drivers are run sequentially or concurrently   (See the ``asynchronous`` keyword) and can have any of the above options as    well.
+
+For fork and system interfaces, the analysis_driver list contains the
+names of one or more executable programs or scripts taking parameters
+files as input and producing results files as output.  The first field
+in each analysis driver string must be an executable program or script
+for Dakota to spawn to perform the function evaluation.  Drivers
+support:
+
+ - One set of nested quotes, for arguments with spaces
+
+ - Dakota will define special environment variables
+   ``DAKOTA_PARAMETERS_FILE`` and ``DAKOTA_RESULTS_FILE`` which can be used
+   in the driver script.
+
+ - Dakota will replace the tokens `{PARAMETERS}` and `{RESULTS}` in an
+   anslysis driver string with the names of the parameters and results
+   files for that analysis/evaluation. Along with the
+   :dakkw:`interface-analysis_drivers-fork-verbatim` keyword, which prevents
+   Dakota from appending the names of the parameters and reslts files
+   as command line arguments, this feature provides users with greater
+   control over how their analysis drivers are invoked by Dakota.
+
+ - Variable definitions preceding the executable program or script,
+   such as 'MY_VAR=2 run_analysis.sh' are no longer supported.
+
+For details and examples see the Simulation Interface
+Components section of the Interfaces chapter of the User's Manual; for
+details on the filters and environment variables, see the subsection on
+Syntax for Filter and Driver Strings.
+
+
+
+**Examples**
+
+
+Examples:
+
+.. code-block::
+
+      1. analysis_drivers = 'run_simulation_part1.sh' 'run_simulation_part2.sh'
+    
+      2. analysis_driver = 'run_simulation.sh -option "option 1"'
+    
+      3. analysis_driver = 'simulation.exe -option value -dakota_params $DAKOTA_PARAMETERS_FILE -input sim.in -dakota_results_file $DAKOTA_RESULTS_FILE'
+
+
+
+
+
+**FAQ**
+
+
+*Where will Dakota look for the analysis_driver?* Dakota will
+locate analysis_driver programs first in (or relative to) the present
+working directory (".", the
+interface-analysis_drivers-fork-work_directory if used, otherwise the
+directory in which Dakota is started), then the directory from which
+Dakota is started, then using the system $PATH environment variable
+(Path% on Windows).
+
+*Where should the driver be located?* When the driver is a script
+it is most commonly placed in the same directory as the Dakota input
+file.  When using a
+:dakkw:`interface-analysis_drivers-fork-work_directory`, Dakota will also look
+for drivers in the specified working directory, so link_files or
+copy_files may specify the driver to get copied or linked into the
+work directory.  When executable programs are used as drivers, they
+are often elsewhere on the filesystem.  These can be specified using
+absolute paths, or by prepending the PATH environment variable so
+Dakota finds them.
+
+*What if Dakota fails to run my analysis_driver?* Prepend the
+absolute location of the driver to the PATH environment variable
+before running Dakota, or specify an absolute path to the driver in
+the Dakota input file.
+
+

@@ -1,0 +1,87 @@
+.. _model-single:
+
+""""""
+single
+""""""
+
+
+A model with one of each block: variable, interface, and response
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   model-single-interface_pointer
+   model-single-solution_level_control
+   model-single-solution_level_cost
+   model-single-cost_recovery_metadata
+
+
+**Specification**
+
+- *Alias:* simulation 
+
+- *Arguments:* None
+
+- *Default:* N/A ( single if no model specification)
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+----------------------------+---------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword             | Dakota Keyword Description                  |
+|                         | Group              |                            |                                             |
++=========================+====================+============================+=============================================+
+| Optional                                     | `interface_pointer`__      | Interface block pointer for the single      |
+|                                              |                            | model type                                  |
++----------------------------------------------+----------------------------+---------------------------------------------+
+| Optional                                     | `solution_level_control`__ | Cost estimates associated with a set of     |
+|                                              |                            | solution control values.                    |
++-------------------------+--------------------+----------------------------+---------------------------------------------+
+| Optional (Choose One)   | Cost model for 1   | `solution_level_cost`__    | Cost estimates associated with a set of     |
+|                         | or more resolution |                            | solution control values.                    |
+|                         | levels             +----------------------------+---------------------------------------------+
+|                         |                    | `cost_recovery_metadata`__ | Identify metadata by label for capturing    |
+|                         |                    |                            | online cost estimates                       |
++-------------------------+--------------------+----------------------------+---------------------------------------------+
+
+.. __: model-single-interface_pointer.html
+__ model-single-solution_level_control.html
+__ model-single-solution_level_cost.html
+__ model-single-cost_recovery_metadata.html
+
+
+
+**Description**
+
+
+The single model is the simplest model type. It uses a single
+:dakkw:`interface` instance to map :dakkw:`variables`
+into :dakkw:`responses`. There is no recursion in this case.
+
+The optional :dakkw:`model-single-interface_pointer` specification identifies the interface block
+by cross-referencing with the ``id_interface`` string input from a particular interface keyword specification.
+This is only necessary when the input file has multiple interface blocks, and you
+wish to explicitly point to the desired block.
+The same logic follows for responses and variables blocks and pointers.
+
+
+
+**Examples**
+
+
+The example shows a minimal
+specification for a single model, which is the default model when no
+models are specified by the user.
+
+.. code-block::
+
+    model
+      single
+
+This example does not provide any pointer strings and therefore relies
+on the default behavior of constructing the model with the last
+variables, interface, and responses specifications parsed.
+
+

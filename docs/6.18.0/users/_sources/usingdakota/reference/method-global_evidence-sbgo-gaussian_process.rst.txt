@@ -1,0 +1,71 @@
+.. _method-global_evidence-sbgo-gaussian_process:
+
+""""""""""""""""
+gaussian_process
+""""""""""""""""
+
+
+Gaussian Process surrogate model
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-global_evidence-sbgo-gaussian_process-surfpack
+   method-global_evidence-sbgo-gaussian_process-dakota
+   method-global_evidence-sbgo-gaussian_process-experimental
+
+
+**Specification**
+
+- *Alias:* kriging 
+
+- *Arguments:* None
+
+- *Default:* Surfpack Gaussian process
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+--------------------+---------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword     | Dakota Keyword Description                  |
+|                         | Group              |                    |                                             |
++=========================+====================+====================+=============================================+
+| Required (Choose One)   | GP Implementation  | `surfpack`__       | Use the Surfpack version of Gaussian        |
+|                         |                    |                    | Process surrogates                          |
+|                         |                    +--------------------+---------------------------------------------+
+|                         |                    | `dakota`__         | Select the built in Gaussian Process        |
+|                         |                    |                    | surrogate                                   |
+|                         |                    +--------------------+---------------------------------------------+
+|                         |                    | `experimental`__   | Use the experimental Gaussian Process       |
+|                         |                    |                    | surrogate                                   |
++-------------------------+--------------------+--------------------+---------------------------------------------+
+
+.. __: method-global_evidence-sbgo-gaussian_process-surfpack.html
+__ method-global_evidence-sbgo-gaussian_process-dakota.html
+__ method-global_evidence-sbgo-gaussian_process-experimental.html
+
+
+
+**Description**
+
+
+Use the Gaussian process (GP) surrogate from Surfpack, which is
+specified using the
+:dakkw:`model-surrogate-global-gaussian_process-surfpack` keyword.
+
+An alternate version of GP surrogates was available in prior versions of
+Dakota. *For now, both versions are supported but the ``dakota`` version is
+deprecated and intended to be removed in a future release.*
+
+*Known Issue: When using discrete variables, there have been
+sometimes significant differences in surrogate behavior observed
+across computing platforms in some cases.  The cause has not yet been
+fully diagnosed and is currently under investigation.  In addition,
+guidance on appropriate construction and use of surrogates with
+discrete variables is under development.  In the meantime, users
+should therefore be aware that there is a risk of inaccurate results
+when using surrogates with discrete variables.*
+
+

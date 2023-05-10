@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>remoteNestedWorkflow &mdash; dakota  documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/dakota_theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/sandiaheaderlite.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Next-Gen Workflow Queue Submit Scripts" href="../QueueSubmitScripts.html" />
+    <link rel="prev" title="hdfExtractRow" href="hdfExtractRow.html" /> 
+  
+  <meta name="sandia.approval_type" content="formal"/>
+  <meta property="sandia.approved" content="SAND2022-15651 O"/>
+  <meta name="description" content="The Dakota project delivers both state-of-the-art research and robust, usable software for optimization and UQ."/>
+  <meta name="keywords" content="Dakota, optimization, UQ, uncertainty quantification, parametric analysis, design exploration, model calibration, risk analysis"/>
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../index.html" class="icon icon-home"> dakota
+            <img src="../../../_static/dakota_Arrow_Name_Tag_horiz_transparent.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../setupdakota.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usingdakota/usingdakota.html">Using Dakota</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../usingdakotagui.html">Using Dakota GUI</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../usingdakotagui.html#introduction">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../usingdakotagui.html#example-search">Example Search</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../usingdakotagui.html#wizards">Wizards</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../usingdakotagui.html#editing-dakota-input-files">Editing Dakota Input Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../usingdakotagui.html#running-dakota">Running Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../usingdakotagui.html#running-dakota-remotely">Running Dakota Remotely</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../usingdakotagui.html#output-from-dakota">Output from Dakota</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../usingdakotagui.html#gui-tools">GUI Tools</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../../chartreuse/Chartreuse.html">Chartreuse</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../NextGenWorkflow.html">Next-Gen Workflow</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="../NextGenWorkflowBasics.html">Next-Gen Workflow Basics</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../NextGenWorkflowAnalysisDrivers.html">Using Next-Gen Workflow as a Dakota Analysis Driver</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../NextGenWorkflowTutorial.html">Tutorial: Create an NGW Analysis Driver for Dakota</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="../NodeGlossary.html">Next-Gen Workflow Node Glossary</a><ul class="current">
+<li class="toctree-l5"><a class="reference internal" href="../NodeGlossary.html#blackbox">Blackbox</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../NodeGlossary.html#dakota">Dakota</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../NodeGlossary.html#data-visualization-chartreuse">“Data Visualization (Chartreuse)”</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../NodeGlossary.html#data-visualization-dakota-chartreuse-simple-plots">“Data Visualization (Dakota/Chartreuse Simple Plots)”</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../NodeGlossary.html#data-visualization-dakota-chartreuse-megaplotters">“Data Visualization (Dakota/Chartreuse Megaplotters)”</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../NodeGlossary.html#hdf">HDF</a></li>
+<li class="toctree-l5 current"><a class="reference internal" href="../NodeGlossary.html#remote-operations">Remote Operations</a><ul class="current">
+<li class="toctree-l6 current"><a class="current reference internal" href="#">remoteNestedWorkflow</a><ul>
+<li class="toctree-l7"><a class="reference internal" href="#description">Description</a></li>
+<li class="toctree-l7"><a class="reference internal" href="#properties">Properties</a></li>
+<li class="toctree-l7"><a class="reference internal" href="#input-ports">Input Ports</a></li>
+<li class="toctree-l7"><a class="reference internal" href="#output-ports">Output Ports</a></li>
+<li class="toctree-l7"><a class="reference internal" href="#usage-notes-sending-files">Usage Notes - Sending Files</a></li>
+<li class="toctree-l7"><a class="reference internal" href="#usage-notes-receiving-files">Usage Notes - Receiving Files</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="../QueueSubmitScripts.html">Next-Gen Workflow Queue Submit Scripts</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../NextGenWorkflow.html#highlighted-node-topics">Highlighted Node Topics</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../NextGenWorkflow.html#further-reading">Further Reading</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../qoi/QOI.html">QOI</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../usingdakotagui.html#miscellaneous">Miscellaneous</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../externaltools/externaltools.html">Using External Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../compiling/compiling.html">Compiling Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../developingdakota/developingdakota.html">Developing Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../misc/misc.html">Miscellaneous</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">dakota</a>
+      </nav>
+
+	  <!-- SNL Lite header -->
+	  <div class="snlheader-subsite--wrapper-default">
+		<snlheader class="snlheader-subsite" role="snlbanner">
+		  <div class="wrapper">
+			<a href="https://www.sandia.gov/index.html">
+			  <div class="logo-transparent"><p class="logo">Sandia National Laboratories</p></div>
+			</a>
+			<div class="nav-top">
+			  <a class="visuallyhidden" name="mainnav"></a>
+			  <div aria-label="main navigation" class="core-nav-transparent core-nav-transparent--visible" role="navigation">
+				<ul role="navigation" class="secondary-links">
+				  <li id="search-text-link">
+					<a aria-label="Search" href="https://www.sandia.gov/search/">Search Sandia.gov</a>
+				  </li>
+				  <li id="directory-text-link">
+					<a href="https://www.sandia.gov/directory.html" aria-expanded="false" aria-label="Site Directory">All Sandia Websites</a>
+				  </li>
+				</ul>
+			  </div>
+			</div>
+		  </div> 
+		</snlheader>
+	  </div>	  
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../../usingdakotagui.html">Using Dakota GUI</a> &raquo;</li>
+          <li><a href="../NextGenWorkflow.html">Next-Gen Workflow</a> &raquo;</li>
+          <li><a href="../NodeGlossary.html">Next-Gen Workflow Node Glossary</a> &raquo;</li>
+      <li>remoteNestedWorkflow</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../_sources/usingdakotagui/ngw/nodes/remoteNestedWorkflow.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="remotenestedworkflow">
+<span id="ngw-node-remotenestedworkflow"></span><span id="gui-job-submission-workflow-remotenestedworkflow"></span><h1>remoteNestedWorkflow<a class="headerlink" href="#remotenestedworkflow" title="Permalink to this headline"></a></h1>
+<figure class="align-center" id="jobsubnodes-figure01">
+<img alt="The remoteNestedWorkflow node" src="../../../_images/JobSubmission_NGW_1.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 140 </span><span class="caption-text">The remoteNestedWorkflow node</span><a class="headerlink" href="#jobsubnodes-figure01" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<section id="description">
+<h2>Description<a class="headerlink" href="#description" title="Permalink to this headline"></a></h2>
+<p>The remoteNestedWorkflow node is the cornerstone of job submission capabilities in Next-Gen Workflow. Its primary purpose is to transfer sub-workflows (or “nested workflows”)
+to remote machines, and execute them there.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You may also wish to consult <a class="reference external" href="https://dart.sandia.gov/ngw/reference/nodes/components/remoteNestedWorkflow.html">the official NGW node documentation site</a> to learn more about the remoteNestedWorkflow node.</p>
+</div>
+</section>
+<section id="properties">
+<h2>Properties<a class="headerlink" href="#properties" title="Permalink to this headline"></a></h2>
+<ul>
+<li><p><strong>fileName</strong>: The name of the local workflow to transfer to the remote machine</p></li>
+<li><p><strong>hostname</strong>: The hostname for the remote machine.</p></li>
+<li><p><strong>username</strong>: Your username to log in to the remote machine.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Login credentials for the remote machine must have already been previously configured. For example, you will not recieve an opportunity to type in your password
+once the workflow has begun executing. Refer to Window &gt; Preferences &gt; Connection &amp; Login Preferences to set your login credentials.</p>
+</div>
+</li>
+<li><p><strong>remotePath</strong>: The working directory on the remote machine.</p></li>
+<li><p><strong>clearRemoteWorkdir</strong>: Check this box to clean the remote working directory before remote workflow execution.</p></li>
+<li><p><strong>wflib</strong>: The path to Next-Gen Workflow’s installation on the remote machine.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>A presupposition of the remoteNestedWorkflow node is that the server/headless version of Next-Gen Workflow is already installed and available on the remote machine. Talk
+to your system administrator to ensure that Next-Gen Workflow has already been installed on whatever machine you will be submitting your workflow to.</p>
+</div>
+</li>
+<li><p><strong>Other files/directories</strong>: A comma-separated list of files and folders that also need to be sent to the remote machine. However, the preferred way to send additional files
+is via additional input ports.</p></li>
+</ul>
+</section>
+<section id="input-ports">
+<h2>Input Ports<a class="headerlink" href="#input-ports" title="Permalink to this headline"></a></h2>
+<p>No input ports are provided by default. Instead, you must add input ports for any data that you want passed to the remote machine.</p>
+</section>
+<section id="output-ports">
+<h2>Output Ports<a class="headerlink" href="#output-ports" title="Permalink to this headline"></a></h2>
+<ul class="simple">
+<li><p><strong>stdout</strong>: The stdout stream of the remote NGW process running on the remote machine.</p></li>
+<li><p><strong>stderr</strong>: The stderr stream of the remote NGW process running on the remote machine.</p></li>
+</ul>
+</section>
+<section id="usage-notes-sending-files">
+<span id="gui-job-submission-workflow-remotenestedworkflow-sendfiles"></span><h2>Usage Notes - Sending Files<a class="headerlink" href="#usage-notes-sending-files" title="Permalink to this headline"></a></h2>
+<p>If you need to send additional files from your local machine to the remote machine, simply create new input ports on the remoteNestedWorkflow node and connect the “fileReference” output ports
+of your file node to the new input port, like so:</p>
+<figure class="align-center" id="jobsubnodes-figure02">
+<img alt="An example workflow with a remoteNestedWorkflow node and &quot;Copy file to target&quot; file transfer behavior" src="../../../_images/JobSubmission_NGW_Example1_1.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 141 </span><span class="caption-text">An example workflow with a remoteNestedWorkflow node and “Copy file to target” file transfer behavior</span><a class="headerlink" href="#jobsubnodes-figure02" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<p>Note that the connections between the file nodes and the remoteNestedWorkflow node are green. Green lines denote that the File Transfer Behavior of the connection is set to “Copy file to target,”
+since the file must be moved from the local machine to the remote machine.</p>
+<figure class="align-center" id="jobsubnodes-figure03">
+<img alt="Green lines designate &quot;Copy file to target&quot; behavior" src="../../../_images/JobSubmission_NGW_4.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 142 </span><span class="caption-text">Green lines designate “Copy file to target” behavior</span><a class="headerlink" href="#jobsubnodes-figure03" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+</section>
+<section id="usage-notes-receiving-files">
+<span id="gui-job-submission-workflow-remotenestedworkflow-receivefiles"></span><h2>Usage Notes - Receiving Files<a class="headerlink" href="#usage-notes-receiving-files" title="Permalink to this headline"></a></h2>
+<p>To send remote files back to your local machine after the entire workflow has completed execution, you will need to create output ports and response nodes for each file or
+folder you want to bring back. Additionally, you will need to do this at every “level” of the workflow, starting from the point at which the files originate.
+Finally, you will need to set all this up <em>before</em> you run the workflow, not afterwards.</p>
+<p>Let’s assume we want to retrieve a Dakota tabular data file from a remote machine. Let’s further assume that Dakota ran on the remote machine via Next-Gen Workflow, like so:</p>
+<figure class="align-center" id="jobsubnodes-figure04">
+<img alt="Example remote workflow" src="../../../_images/JobSubmission_NGW_Example1_2.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 143 </span><span class="caption-text">Example remote workflow</span><a class="headerlink" href="#jobsubnodes-figure04" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<p>In our example, because Dakota ran on the remote machine, we will need to retrieve the tabular data file from the remote machine. But how do we do that?
+Well, because it is the Dakota process that generates this output file, we can use the “Grab Output File” option on the “dakota” node shown in <a class="reference internal" href="#jobsubnodes-figure04"><span class="std std-numref">Fig. 143</span></a>.</p>
+<p>Right-click the “dakota” node and choose “Grab Output File” from the context menu. You will be presented with the following dialog:</p>
+<figure class="align-center" id="jobsubnodes-figure05">
+<img alt="&quot;Grab Output File&quot; dialog" src="../../../_images/JobSubmission_NGW_3.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 144 </span><span class="caption-text">“Grab Output File” dialog</span><a class="headerlink" href="#jobsubnodes-figure05" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<p>Enter “tabular_data_file” (or something similar) in the “Port name” field, and enter the name of the tabular data file in the “File name” field. In our example,
+“tabular.data” is the name that Dakota uses for its tabular data output in this example.</p>
+<p>Click OK on this dialog, which will result in a new output port, “tabular_data_file,” being added to your “dakota” node. Now, pass the data from this output port to a response node, like so:</p>
+<figure class="align-center" id="jobsubnodes-figure06">
+<img alt="Attaching nodes to output ports" src="../../../_images/JobSubmission_NGW_Example1_4.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 145 </span><span class="caption-text">Attaching nodes to output ports</span><a class="headerlink" href="#jobsubnodes-figure06" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<p>Doing all this will result in the <em>path to the tabular data file</em> being provided as an output response of our remote workflow.</p>
+<p>This is all well and good, but we still need to send the file back to our local machine.</p>
+<p>Back on our local machine, manually add an output port to the “remoteNestedWorkflow” node that was used to launch the remote workflow, using the Output Ports tab in the Settings editor
+(there is no need to use the “Grab Output File” shortcut dialog here). This new output port should be called “tabular_data_file” (it should mirror
+the response node we set up in the other workflow). As before, pass the data from this output port to a response node:</p>
+<figure class="align-center" id="jobsubnodes-figure07">
+<img alt="Attaching nodes to output ports part 2" src="../../../_images/JobSubmission_NGW_Example1_5.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 146 </span><span class="caption-text">Attaching nodes to output ports part 2</span><a class="headerlink" href="#jobsubnodes-figure07" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<p>Now, when you run this workflow to completion, Dakota’s tabular data file will be returned to your local machine. You can follow this same process for any remote output file.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="hdfExtractRow.html" class="btn btn-neutral float-left" title="hdfExtractRow" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../QueueSubmitScripts.html" class="btn btn-neutral float-right" title="Next-Gen Workflow Queue Submit Scripts" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <!--
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Sandia National Laboratories.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+  --> 
+
+</footer>
+        </div>
+      </div>
+	  
+	  <div style="background-color: #0f0f0f;color:#fafafa;padding:20px">
+	    <div>
+		  <h2><em>Exceptional service in the national interest</em></h2>
+		</div>
+		<p>© 2022 National Technology and Engineering Solutions of Sandia, LLC. | <a href="https://www.sandia.gov/contact_us/index.html">Questions &amp; Comments</a> | <a href="https://www.sandia.gov/general/privacy-security/index.html">Privacy &amp; Security</a></p>
+		<p><a href="http://energy.gov" rel="noopener noreferrer" target="_blank"><img alt="U.S. Department of Energy" longdesc="https://energy.gov" src="https://www.sandia.gov/_common/images/doe_logo_white.png" style="height:37px; width:140px"></a> <a href="http://nnsa.energy.gov/" rel="noopener noreferrer" target="_blank"> <img alt="National Nuclear Security Administration" longdesc="http://nnsa.gov" src="https://www.sandia.gov/_common/images/nnsa_logo_white.png" style="height:37px; width:116px"></a></p>
+		<p><a href="https://www.sandia.gov">Sandia National Laboratories</a> is a multimission laboratory managed and operated by National Technology and Engineering Solutions of Sandia, LLC., a wholly owned subsidiary of Honeywell International, Inc., for the U.S. Department of Energy’s National Nuclear Security Administration under contract DE-NA-0003525.</p>
+	  </div>	  	  
+	  
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

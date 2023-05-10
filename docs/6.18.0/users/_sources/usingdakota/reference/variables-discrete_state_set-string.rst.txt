@@ -1,0 +1,78 @@
+.. _variables-discrete_state_set-string:
+
+""""""
+string
+""""""
+
+
+String-valued discrete state set variables
+
+
+
+
+**Topics**
+
+
+discrete_variables, state_variables
+
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   variables-discrete_state_set-string-elements_per_variable
+   variables-discrete_state_set-string-elements
+   variables-discrete_state_set-string-initial_state
+   variables-discrete_state_set-string-descriptors
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* INTEGER
+
+- *Default:* no discrete state set string variables
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+---------------------------+---------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword            | Dakota Keyword Description                  |
+|                         | Group              |                           |                                             |
++=========================+====================+===========================+=============================================+
+| Optional                                     | `elements_per_variable`__ | Number of admissible elements for each set  |
+|                                              |                           | variable                                    |
++----------------------------------------------+---------------------------+---------------------------------------------+
+| Required                                     | `elements`__              | The permissible values for each discrete    |
+|                                              |                           | variable                                    |
++----------------------------------------------+---------------------------+---------------------------------------------+
+| Optional                                     | `initial_state`__         | Initial values for variables                |
++----------------------------------------------+---------------------------+---------------------------------------------+
+| Optional                                     | `descriptors`__           | Labels for the variables                    |
++----------------------------------------------+---------------------------+---------------------------------------------+
+
+.. __: variables-discrete_state_set-string-elements_per_variable.html
+__ variables-discrete_state_set-string-elements.html
+__ variables-discrete_state_set-string-initial_state.html
+__ variables-discrete_state_set-string-descriptors.html
+
+
+
+**Description**
+
+
+Discrete state variables whose values come from a specified set of
+admissible strings. 
+
+See :ref:`variables:usage` for tips on specifying discrete set
+variables and :ref:`variables:state` for details on the behavior
+of state variables.
+
+Each string element value must be quoted and may contain alphanumeric,
+dash, underscore, and colon. White space, quote characters, and
+backslash/metacharacters are not permitted.
+
+
+

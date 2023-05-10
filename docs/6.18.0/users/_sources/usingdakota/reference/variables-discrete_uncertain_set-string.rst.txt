@@ -1,0 +1,102 @@
+.. _variables-discrete_uncertain_set-string:
+
+""""""
+string
+""""""
+
+
+Discrete, epistemic uncertain variable - strings within a set
+
+
+
+**Topics**
+
+
+discrete_variables, epistemic_uncertain_variables
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   variables-discrete_uncertain_set-string-elements_per_variable
+   variables-discrete_uncertain_set-string-elements
+   variables-discrete_uncertain_set-string-set_probabilities
+   variables-discrete_uncertain_set-string-initial_point
+   variables-discrete_uncertain_set-string-descriptors
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* INTEGER
+
+- *Default:* no discrete uncertain set string variables
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+---------------------------+---------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword            | Dakota Keyword Description                  |
+|                         | Group              |                           |                                             |
++=========================+====================+===========================+=============================================+
+| Optional                                     | `elements_per_variable`__ | Number of admissible elements for each set  |
+|                                              |                           | variable                                    |
++----------------------------------------------+---------------------------+---------------------------------------------+
+| Required                                     | `elements`__              | The permissible values for each discrete    |
+|                                              |                           | variable                                    |
++----------------------------------------------+---------------------------+---------------------------------------------+
+| Optional                                     | `set_probabilities`__     | This keyword defines the probabilities for  |
+|                                              |                           | the various elements of discrete sets.      |
++----------------------------------------------+---------------------------+---------------------------------------------+
+| Optional                                     | `initial_point`__         | Initial values for variables                |
++----------------------------------------------+---------------------------+---------------------------------------------+
+| Optional                                     | `descriptors`__           | Labels for the variables                    |
++----------------------------------------------+---------------------------+---------------------------------------------+
+
+.. __: variables-discrete_uncertain_set-string-elements_per_variable.html
+__ variables-discrete_uncertain_set-string-elements.html
+__ variables-discrete_uncertain_set-string-set_probabilities.html
+__ variables-discrete_uncertain_set-string-initial_point.html
+__ variables-discrete_uncertain_set-string-descriptors.html
+
+
+
+**Description**
+
+
+Discrete set variables may be used to specify categorical choices which are
+epistemic. For example, if we have three possible forms for a physics
+model (model 1, 2, or 3) and there is epistemic uncertainty about
+which one is correct, a discrete uncertain set
+may be used to represent this type of uncertainty.
+
+This variable is defined by a set of strings, in which the discrete value may
+take any value within the string set (for example, the set may be
+defined as 'coarse', 'medium', and 'fine')
+
+Other epistemic types include:
+
+- :dakkw:`variables-continuous_interval_uncertain`
+- :dakkw:`variables-discrete_interval_uncertain`
+- discrete_uncertain_set :dakkw:`variables-discrete_uncertain_set-integer`
+- discrete_uncertain_set :dakkw:`variables-discrete_uncertain_set-real`
+
+
+
+**Examples**
+
+
+
+.. code-block::
+
+    discrete_uncertain_set
+     string
+     num_set_values 2             3
+     set_values     'red' 'blue'  'coarse' 'medium' 'fine'
+     descriptors    'ds1'         'ds2'
+
+
+
+

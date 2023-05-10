@@ -1,0 +1,66 @@
+.. _method-stoch_collocation-export_approx_points_file:
+
+"""""""""""""""""""""""""
+export_approx_points_file
+"""""""""""""""""""""""""
+
+
+Output file for surrogate model value evaluations
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-stoch_collocation-export_approx_points_file-custom_annotated
+   method-stoch_collocation-export_approx_points_file-annotated
+   method-stoch_collocation-export_approx_points_file-freeform
+
+
+**Specification**
+
+- *Alias:* export_points_file 
+
+- *Arguments:* STRING
+
+- *Default:* no point export to a file
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+----------------------+---------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword       | Dakota Keyword Description                  |
+|                         | Group              |                      |                                             |
++=========================+====================+======================+=============================================+
+| Optional (Choose One)   | Tabular Format     | `custom_annotated`__ | Selects custom-annotated tabular file       |
+|                         |                    |                      | format                                      |
+|                         |                    +----------------------+---------------------------------------------+
+|                         |                    | `annotated`__        | Selects annotated tabular file format       |
+|                         |                    +----------------------+---------------------------------------------+
+|                         |                    | `freeform`__         | Selects freeform file format                |
++-------------------------+--------------------+----------------------+---------------------------------------------+
+
+.. __: method-stoch_collocation-export_approx_points_file-custom_annotated.html
+__ method-stoch_collocation-export_approx_points_file-annotated.html
+__ method-stoch_collocation-export_approx_points_file-freeform.html
+
+
+
+**Description**
+
+
+Specifies a file in which the points (input variable values) at which
+the surrogate model is evaluated and corresponding response values
+computed by the surrogate model will be written.  The response values
+are the surrogate's predicted approximation to the truth model
+responses at those points.
+
+*Usage Tips*
+
+Dakota exports tabular data in one of three formats:
+
+- ``annotated`` (default)
+- ``custom_annotated``
+- ``freeform``
+
+

@@ -1,0 +1,59 @@
+.. _method-moga-convergence_type:
+
+""""""""""""""""
+convergence_type
+""""""""""""""""
+
+
+Select the convergence type for JEGA methods
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-moga-convergence_type-metric_tracker
+   method-moga-convergence_type-percent_change
+   method-moga-convergence_type-num_generations
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+- *Default:* average_fitness_tracker
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+---------------------+---------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword      | Dakota Keyword Description                  |
+|                         | Group              |                     |                                             |
++=========================+====================+=====================+=============================================+
+| Required                                     | `metric_tracker`__  | Track changes in the non-dominated frontier |
++----------------------------------------------+---------------------+---------------------------------------------+
+| Optional                                     | `percent_change`__  | Define the convergence criterion for JEGA   |
+|                                              |                     | methods                                     |
++----------------------------------------------+---------------------+---------------------------------------------+
+| Optional                                     | `num_generations`__ | Define the convergence criterion for JEGA   |
+|                                              |                     | methods                                     |
++----------------------------------------------+---------------------+---------------------------------------------+
+
+.. __: method-moga-convergence_type-metric_tracker.html
+__ method-moga-convergence_type-percent_change.html
+__ method-moga-convergence_type-num_generations.html
+
+
+
+**Description**
+
+
+The two JEGA methods use different convergence types, which are
+described on their respective pages.
+
+All the convergence types are modified by the optional keywords
+``percent_change`` and ``num_generations``.
+
+

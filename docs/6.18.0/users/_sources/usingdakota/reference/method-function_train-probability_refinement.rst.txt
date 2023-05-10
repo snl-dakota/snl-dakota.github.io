@@ -1,0 +1,72 @@
+.. _method-function_train-probability_refinement:
+
+""""""""""""""""""""""
+probability_refinement
+""""""""""""""""""""""
+
+
+Allow refinement of probability and generalized reliability results using importance sampling
+
+
+
+**Topics**
+
+
+reliability_methods
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-function_train-probability_refinement-import
+   method-function_train-probability_refinement-adapt_import
+   method-function_train-probability_refinement-mm_adapt_import
+   method-function_train-probability_refinement-refinement_samples
+
+
+**Specification**
+
+- *Alias:* sample_refinement 
+
+- *Arguments:* None
+
+- *Default:* no refinement
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+------------------------+---------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword         | Dakota Keyword Description                  |
+|                         | Group              |                        |                                             |
++=========================+====================+========================+=============================================+
+| Required (Choose One)   | Importance         | `import`__             | Importance sampling option for probability  |
+|                         | Sampling Approach  |                        | refinement                                  |
+|                         |                    +------------------------+---------------------------------------------+
+|                         |                    | `adapt_import`__       | Importance sampling option for probability  |
+|                         |                    |                        | refinement                                  |
+|                         |                    +------------------------+---------------------------------------------+
+|                         |                    | `mm_adapt_import`__    | Importance sampling option for probability  |
+|                         |                    |                        | refinement                                  |
++-------------------------+--------------------+------------------------+---------------------------------------------+
+| Optional                                     | `refinement_samples`__ | Number of samples used to refine a          |
+|                                              |                        | probabilty estimate or sampling design.     |
++----------------------------------------------+------------------------+---------------------------------------------+
+
+.. __: method-function_train-probability_refinement-import.html
+__ method-function_train-probability_refinement-adapt_import.html
+__ method-function_train-probability_refinement-mm_adapt_import.html
+__ method-function_train-probability_refinement-refinement_samples.html
+
+
+
+**Description**
+
+
+The ``probability_refinement`` allows refinement of probability and generalized reliability results using importance sampling. If one specifies ``probability_refinement``, there are some additional options.  One can specify which type of importance sampling to use ( ``import``, ``adapt_import``, or ``mm_adapt_import``). Additionally, one can specify the number of refinement samples to use with ``.refinement_samples`` and the seed to use with ``seed``.
+
+The ``probability_refinement`` density reweighting accounts originally
+was developed based on Gaussian distributions.  It now accounts for
+additional non-Gaussian cases.
+
+

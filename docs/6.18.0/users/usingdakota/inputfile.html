@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dakota Input File &mdash; dakota  documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/dakota_theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/sandiaheaderlite.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Input File Formatting" href="inputfile/formatting.html" />
+    <link rel="prev" title="Coupling Dakota to a Simulation" href="introduction/couplingtosimulations.html" /> 
+  
+  <meta name="sandia.approval_type" content="formal"/>
+  <meta property="sandia.approved" content="SAND2022-15651 O"/>
+  <meta name="description" content="The Dakota project delivers both state-of-the-art research and robust, usable software for optimization and UQ."/>
+  <meta name="keywords" content="Dakota, optimization, UQ, uncertainty quantification, parametric analysis, design exploration, model calibration, risk analysis"/>
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> dakota
+            <img src="../_static/dakota_Arrow_Name_Tag_horiz_transparent.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../setupdakota.html">Getting Started</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="usingdakota.html">Using Dakota</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="introduction/aboutdakota.html">About Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="introduction/helloworld.html">Dakota Beginner’s Tutorial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html">Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="introduction/couplingtosimulations.html">Coupling Dakota to a Simulation</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Dakota Input File</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="inputfile/formatting.html">Input File Formatting</a></li>
+<li class="toctree-l3"><a class="reference internal" href="inputfile/model.html">Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="inputfile/variables.html">Variables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="inputfile/interfaces.html">Interfaces</a></li>
+<li class="toctree-l3"><a class="reference internal" href="inputfile/responses.html">Responses</a></li>
+<li class="toctree-l3"><a class="reference internal" href="inputfile/inputstodakota.html">Inputs to Dakota</a></li>
+<li class="toctree-l3"><a class="reference internal" href="inputfile/inputspec.html">Dakota Input Spec</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#video-resources">Video Resources</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="running.html">Running Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="output.html">Dakota Output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="studytypes.html">Study Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="topics.html">Topics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="advanced.html">Advanced Topics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="theory.html">Dakota Theory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference.html">Keyword Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../usingdakotagui/usingdakotagui.html">Using Dakota GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../externaltools/externaltools.html">Using External Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../compiling/compiling.html">Compiling Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developingdakota/developingdakota.html">Developing Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../misc/misc.html">Miscellaneous</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">dakota</a>
+      </nav>
+
+	  <!-- SNL Lite header -->
+	  <div class="snlheader-subsite--wrapper-default">
+		<snlheader class="snlheader-subsite" role="snlbanner">
+		  <div class="wrapper">
+			<a href="https://www.sandia.gov/index.html">
+			  <div class="logo-transparent"><p class="logo">Sandia National Laboratories</p></div>
+			</a>
+			<div class="nav-top">
+			  <a class="visuallyhidden" name="mainnav"></a>
+			  <div aria-label="main navigation" class="core-nav-transparent core-nav-transparent--visible" role="navigation">
+				<ul role="navigation" class="secondary-links">
+				  <li id="search-text-link">
+					<a aria-label="Search" href="https://www.sandia.gov/search/">Search Sandia.gov</a>
+				  </li>
+				  <li id="directory-text-link">
+					<a href="https://www.sandia.gov/directory.html" aria-expanded="false" aria-label="Site Directory">All Sandia Websites</a>
+				  </li>
+				</ul>
+			  </div>
+			</div>
+		  </div> 
+		</snlheader>
+	  </div>	  
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="usingdakota.html">Using Dakota</a> &raquo;</li>
+      <li>Dakota Input File</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/usingdakota/inputfile.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="dakota-input-file">
+<span id="topic-block"></span><span id="inputfile-main"></span><h1>Dakota Input File<a class="headerlink" href="#dakota-input-file" title="Permalink to this headline"></a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="inputfile/formatting.html">Input File Formatting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="inputfile/model.html">Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="inputfile/variables.html">Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="inputfile/interfaces.html">Interfaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="inputfile/responses.html">Responses</a></li>
+<li class="toctree-l1"><a class="reference internal" href="inputfile/inputstodakota.html">Inputs to Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="inputfile/inputspec.html">Dakota Input Spec</a></li>
+</ul>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you are looking for video resources on Dakota’s input file format, <a class="reference internal" href="#inputfile-videos"><span class="std std-ref">click here</span></a>.</p>
+</div>
+<p>There are six specification blocks that may appear in Dakota input files. These are identified in the input file using the following
+keywords: variables, interface, responses, model, method, and environment. While, these keyword blocks can appear in any
+order in a Dakota input file, there is an inherent relationship that ties them together. The simplest form of that relationship is
+shown in <a class="reference internal" href="#inputfile-figure01"><span class="std std-numref">Fig. 32</span></a>:</p>
+<figure class="align-center" id="inputfile-figure01">
+<a class="reference internal image-reference" href="../_images/InputBlocks.png"><img alt="Relationship between the six blocks, for a simple study." src="../_images/InputBlocks.png" style="width: 400px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 32 </span><span class="caption-text">Relationship between the six blocks, for a simple study.</span><a class="headerlink" href="#inputfile-figure01" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<p>It can be summarized as follows: <strong>In each iteration of its algorithm, a method block requests a variables-to-responses mapping from its model, which the model fulfills through an interface.</strong></p>
+<div class="literal-block-wrapper docutils container" id="tutorial-rosenbrock-multidim">
+<div class="code-block-caption"><span class="caption-number">Listing 24 </span><span class="caption-text">Rosenbrock 2-D parameter study example: the Dakota input file.</span><a class="headerlink" href="#tutorial-rosenbrock-multidim" title="Permalink to this code"></a></div>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span><span class="c"># Dakota Input File: rosen_multidim.in</span>
+<span class="c"># Usage:</span>
+<span class="c">#   dakota -i rosen_multidim.in -o rosen_multidim.out &gt; rosen_multidim.stdout</span>
+
+<span class="k">environment</span>
+  tabular_data
+    tabular_data_file = &#39;rosen_multidim.dat&#39;
+
+<span class="k">method</span>
+  multidim_parameter_study
+    partitions = 8 8
+
+<span class="k">model</span>
+  single
+
+<span class="k">variables</span>
+  continuous_design = 2
+    lower_bounds     -2.0     -2.0
+    upper_bounds      2.0      2.0
+    descriptors       &#39;x1&#39;     &quot;x2&quot;
+
+<span class="k">interface</span>
+  analysis_drivers = &#39;rosenbrock&#39;
+    direct
+
+<span class="k">responses</span>
+  response_functions = 1
+  no_gradients
+  no_hessians
+</pre></div>
+</div>
+</div>
+<p>As a concrete example, a simple Dakota input file, rosen_multidim.in, is shown above in <a class="reference internal" href="#tutorial-rosenbrock-multidim"><span class="std std-numref">Listing 24</span></a>, for a two-dimensional
+parameter study on Rosenbrock’s function. This input file will be used to describe the basic format and syntax used in all
+Dakota input files.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>To see the results of this study and more, consult the <a class="reference internal" href="examples/gettingstarted.html#examples-gettingstarted-rosenbrock"><span class="std std-ref">Examples section</span></a>.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>While most Dakota analyses satisfy the relationship where a single method runs a single model, <a class="reference internal" href="advanced/advancedmethods.html#adv-meth"><span class="std std-ref">advanced cases are possible</span></a>.</p>
+</div>
+<p>The first block of the input file is the <strong>environment block.</strong> This keyword block is used to specify the
+general Dakota settings such as Dakota’s graphical output (via the graphics flag) and the tabular data output (via the
+tabular data keyword). In advanced cases, it also identifies the top method pointer that will control the Dakota
+study. The environment block is optional, and at most one such block can appear in a Dakota input file.</p>
+<p>The <strong>method block</strong> of the input file specifies which iterative method Dakota will employ and associated method options. The
+keyword multidim parameter study in <a class="reference internal" href="#tutorial-rosenbrock-multidim"><span class="std std-numref">Listing 24</span></a> calls for a multidimensional parameter study, while the keyword
+partitions specifies the number of intervals per variable (a method option). In this case, there will be eight intervals (nine
+data points) evaluated between the lower and upper bounds of both variables (bounds provided subsequently in the variables
+section), for a total of 81 response function evaluations. At least one method block is required, and multiple blocks may appear
+in Dakota input files for advanced studies.</p>
+<p>The <a class="reference internal" href="inputfile/model.html#models-main"><span class="std std-ref">model block</span></a> of the input file specifies the model that Dakota will use. A model provides the logical unit for determining
+how a set of variables is mapped through an interface into a set of responses when needed by an iterative method. In the
+default case, the model allows one to specify a single set of variables, interface, and responses. The model block is optional in
+this simple case. Alternatively, it can be explicitly defined as in <a class="reference internal" href="#tutorial-rosenbrock-multidim"><span class="std std-numref">Listing 24</span></a>, where the keyword single specifies the use of
+a single model in the parameter study. If one wishes to perform more sophisticated studies such as surrogate-based analysis
+or optimization under uncertainty, the logical organization specified in the model block becomes critical in informing Dakota
+on how to manage the different components of such studies, and multiple model blocks are likely needed.</p>
+<p>The <a class="reference internal" href="inputfile/variables.html#variables-main"><span class="std std-ref">variables block</span></a> of the input file specifies the number, type, and characteristics of the parameters that will be varied
+by Dakota. The variables can be classified as design variables, uncertain variables, or state variables. Design variables are
+typically used in optimization and calibration, uncertain variables are used in UQ and sensitivity studies, and state variables are
+usually fixed. In all three cases, variables can be continuous or discrete, with discrete having real, integer, and string subtypes.
+The variables section shown in <a class="reference internal" href="#tutorial-rosenbrock-multidim"><span class="std std-numref">Listing 24</span></a>
+specifies that there are two continuous design variables. The sub-specifications for continuous design variables provide the
+descriptors “x1” and “x2” as well as lower and upper bounds for these variables. The information about the variables is
+organized in column format for readability. So, both variables x1 and x2 have a lower bound of -2.0 and an upper bound of
+2.0. At least one variables block is required, and multiple blocks may appear in Dakota input files for advanced studies.</p>
+<p>The <a class="reference internal" href="inputfile/interfaces.html#interfaces-main"><span class="std std-ref">interface block</span></a> of the input file specifies the simulation code that will be used to map variables into responses as well
+as details on how Dakota will pass data to and from that code. In this example, the keyword direct is used to indicate
+the use of a function linked directly into Dakota, and data is passed directly between the two. The name of the function is
+identified by the analysis driver keyword. Alternatively, fork or system executions can be used to invoke instances
+of a simulation code that is external to Dakota as explained <a class="reference internal" href="introduction/couplingtosimulations.html#couplingtosimulations-main"><span class="std std-ref">here</span></a> and <a class="reference internal" href="advanced/advancedsimulationcodeinterfaces.html#advint"><span class="std std-ref">here</span></a>.
+In this case, data is passed between Dakota and the simulation via text files. At least one interface block is required, and
+multiple blocks may appear in Dakota input files for advanced studies.</p>
+<p>The <a class="reference internal" href="inputfile/responses.html#responses-main"><span class="std std-ref">responses block</span></a> of the input file specifies the types of data that the interface will return to Dakota. They are categorized
+primarily according to usage. Objective functions are used in optimization, calibration terms in calibration, and response
+functions in sensitivity analysis and UQ. For the example shown in <a class="reference internal" href="#tutorial-rosenbrock-multidim"><span class="std std-numref">Listing 24</span></a>, the assignment <code class="docutils literal notranslate"><span class="pre">response</span> <span class="pre">functions</span> <span class="pre">=</span> <span class="pre">1</span></code>
+indicates that there is only one response function. The responses block can include additional information returned by the
+interface. That includes constraints and derivative information. In this example, there are no
+constraints associated with Rosenbrock’s function, so the keywords for constraint specifications are omitted. The keywords
+no gradients and no hessians indicate that no derivatives will be provided to the method; none are needed for a
+parameter study. At least one responses block is required, and multiple blocks may appear in Dakota input files for advanced
+studies.</p>
+<section id="video-resources">
+<span id="inputfile-videos"></span><h2>Video Resources<a class="headerlink" href="#video-resources" title="Permalink to this headline"></a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 49%" />
+<col style="width: 26%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Title</p></th>
+<th class="head"><p>Link</p></th>
+<th class="head"><p>Resources</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Input File Format</p></td>
+<td><p><a class="reference external" href="https://www.youtube.com/watch?v=f1l8DIXd9Gs&amp;list=PLouetuxaIMDo-NMFXT-hlHYhOkePLrayY&amp;index=2"><img alt="Watch Screencast 1.2: Input File Format" src="../_images/InputFileScreencastTeaser.png" /></a></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>Input Syntax / Building Blocks</p></td>
+<td><p><a class="reference external" href="http://digitalops.sandia.gov/Mediasite/Play/16134f3f4b6842d2b145a9600cbbcbbd1d"><img alt="Input Syntax / Building Blocks" src="../_images/InputFileTrainingTeaser.png" /></a></p></td>
+<td><p><a class="reference external" href="https://dakota.sandia.gov/sites/default/files/training/DakotaTraining_InputComponents.pdf">Slides</a> /
+<a class="reference external" href="https://dakota.sandia.gov/sites/default/files/training/input-151215.zip">Exercises</a></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="introduction/couplingtosimulations.html" class="btn btn-neutral float-left" title="Coupling Dakota to a Simulation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="inputfile/formatting.html" class="btn btn-neutral float-right" title="Input File Formatting" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <!--
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Sandia National Laboratories.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+  --> 
+
+</footer>
+        </div>
+      </div>
+	  
+	  <div style="background-color: #0f0f0f;color:#fafafa;padding:20px">
+	    <div>
+		  <h2><em>Exceptional service in the national interest</em></h2>
+		</div>
+		<p>© 2022 National Technology and Engineering Solutions of Sandia, LLC. | <a href="https://www.sandia.gov/contact_us/index.html">Questions &amp; Comments</a> | <a href="https://www.sandia.gov/general/privacy-security/index.html">Privacy &amp; Security</a></p>
+		<p><a href="http://energy.gov" rel="noopener noreferrer" target="_blank"><img alt="U.S. Department of Energy" longdesc="https://energy.gov" src="https://www.sandia.gov/_common/images/doe_logo_white.png" style="height:37px; width:140px"></a> <a href="http://nnsa.energy.gov/" rel="noopener noreferrer" target="_blank"> <img alt="National Nuclear Security Administration" longdesc="http://nnsa.gov" src="https://www.sandia.gov/_common/images/nnsa_logo_white.png" style="height:37px; width:116px"></a></p>
+		<p><a href="https://www.sandia.gov">Sandia National Laboratories</a> is a multimission laboratory managed and operated by National Technology and Engineering Solutions of Sandia, LLC., a wholly owned subsidiary of Honeywell International, Inc., for the U.S. Department of Energy’s National Nuclear Security Administration under contract DE-NA-0003525.</p>
+	  </div>	  	  
+	  
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,62 @@
+.. _method-approximate_control_variate-search_model_graphs-partial_recursion:
+
+"""""""""""""""""
+partial_recursion
+"""""""""""""""""
+
+
+Perform a partial recursion of admissible DAGs
+
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-approximate_control_variate-search_model_graphs-partial_recursion-depth_limit
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+--------------------+---------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword     | Dakota Keyword Description                  |
+|                         | Group              |                    |                                             |
++=========================+====================+====================+=============================================+
+| Required                                     | `depth_limit`__    | Throttle the depth for a partial recursion  |
+|                                              |                    | of admissible DAGs                          |
++----------------------------------------------+--------------------+---------------------------------------------+
+
+.. __: method-approximate_control_variate-search_model_graphs-partial_recursion-depth_limit.html
+
+
+
+**Description**
+
+
+
+A partial recursion includes admissible directed acyclic graphs
+(DAGs) up to a specified depth, where the depth specification is required.  Refer to
+:dakkw:`method-approximate_control_variate-search_model_graphs-partial_recursion-depth_limit`
+for additional details.
+
+Partial recursions are useful when the number of DAGs to explore grows large
+for a ``full_recursion``.
+
+
+
+
+**Theory**
+
+
+
+Refer to :cite:p:`Bomarito2022` for additional details on generalized ACV recursion.
+
+
+

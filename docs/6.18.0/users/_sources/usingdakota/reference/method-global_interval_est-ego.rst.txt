@@ -1,0 +1,64 @@
+.. _method-global_interval_est-ego:
+
+"""
+ego
+"""
+
+
+Use the Efficient Global Optimization method
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-global_interval_est-ego-gaussian_process
+   method-global_interval_est-ego-use_derivatives
+   method-global_interval_est-ego-import_build_points_file
+   method-global_interval_est-ego-export_approx_points_file
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+-------------------------------+---------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword                | Dakota Keyword Description                  |
+|                         | Group              |                               |                                             |
++=========================+====================+===============================+=============================================+
+| Optional                                     | `gaussian_process`__          | Gaussian Process surrogate model            |
++----------------------------------------------+-------------------------------+---------------------------------------------+
+| Optional                                     | `use_derivatives`__           | Use derivative data to construct surrogate  |
+|                                              |                               | models                                      |
++----------------------------------------------+-------------------------------+---------------------------------------------+
+| Optional                                     | `import_build_points_file`__  | File containing points you wish to use to   |
+|                                              |                               | build a surrogate                           |
++----------------------------------------------+-------------------------------+---------------------------------------------+
+| Optional                                     | `export_approx_points_file`__ | Output file for surrogate model value       |
+|                                              |                               | evaluations                                 |
++----------------------------------------------+-------------------------------+---------------------------------------------+
+
+.. __: method-global_interval_est-ego-gaussian_process.html
+__ method-global_interval_est-ego-use_derivatives.html
+__ method-global_interval_est-ego-import_build_points_file.html
+__ method-global_interval_est-ego-export_approx_points_file.html
+
+
+
+**Description**
+
+
+In the case of ``ego``, the efficient global optimization (EGO) method
+is used to calculate bounds. By default, the Surfpack GP (Kriging)
+model is used, but the Dakota implementation may be selected
+instead. If ``use_derivatives`` is specified the GP model will be built
+using available derivative data (Surfpack GP only).
+
+See :dakkw:`method-efficient_global` for more information.
+
+

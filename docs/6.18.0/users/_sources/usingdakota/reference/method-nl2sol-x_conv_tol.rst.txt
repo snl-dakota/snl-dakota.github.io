@@ -1,0 +1,36 @@
+.. _method-nl2sol-x_conv_tol:
+
+""""""""""
+x_conv_tol
+""""""""""
+
+
+X-convergence tolerance
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* REAL
+
+- *Default:* -1. (use NL2SOL internal default)
+
+
+**Description**
+
+
+``x_conv_tol`` maps to the internal NL2SOL control ``xctol``.
+It is the X-convergence tolerance (scaled relative
+accuracy of the solution variables).
+
+The internal default is a function of machine epsilon
+(as limited by ``function_precision``). The default is selected with a value of -1.
+
+

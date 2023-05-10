@@ -1,0 +1,108 @@
+.. _method-rol:
+
+"""
+rol
+"""
+
+
+Rapid Optimization Library (ROL) is a large-scale
+optimization package within Trilinos.
+
+
+
+**Topics**
+
+
+local_optimization_methods
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-rol-max_iterations
+   method-rol-variable_tolerance
+   method-rol-gradient_tolerance
+   method-rol-constraint_tolerance
+   method-rol-options_file
+   method-rol-scaling
+   method-rol-model_pointer
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+--------------------------+---------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword           | Dakota Keyword Description                  |
+|                         | Group              |                          |                                             |
++=========================+====================+==========================+=============================================+
+| Optional                                     | `max_iterations`__       | Number of iterations allowed for optimizers |
+|                                              |                          | and adaptive UQ methods                     |
++----------------------------------------------+--------------------------+---------------------------------------------+
+| Optional                                     | `variable_tolerance`__   | Step length-based stopping criteria for     |
+|                                              |                          | derivative-free optimizers                  |
++----------------------------------------------+--------------------------+---------------------------------------------+
+| Optional                                     | `gradient_tolerance`__   | Stopping critiera based on L2 norm of       |
+|                                              |                          | gradient                                    |
++----------------------------------------------+--------------------------+---------------------------------------------+
+| Optional                                     | `constraint_tolerance`__ | Maximum allowable constraint violation      |
+|                                              |                          | still considered feasible                   |
++----------------------------------------------+--------------------------+---------------------------------------------+
+| Optional                                     | `options_file`__         | File containing advanced ROL options        |
++----------------------------------------------+--------------------------+---------------------------------------------+
+| Optional                                     | `scaling`__              | Turn on scaling for variables, responses,   |
+|                                              |                          | and constraints                             |
++----------------------------------------------+--------------------------+---------------------------------------------+
+| Optional                                     | `model_pointer`__        | Identifier for model block to be used by a  |
+|                                              |                          | method                                      |
++----------------------------------------------+--------------------------+---------------------------------------------+
+
+.. __: method-rol-max_iterations.html
+__ method-rol-variable_tolerance.html
+__ method-rol-gradient_tolerance.html
+__ method-rol-constraint_tolerance.html
+__ method-rol-options_file.html
+__ method-rol-scaling.html
+__ method-rol-model_pointer.html
+
+
+
+**Description**
+
+
+ROL is used for the solution of optimal design, optimal control and
+inverse problems in large-scale engineering applications.
+
+*Usage Tips*
+
+ROL is a general gradient-based library designed to scale well to very
+large problem sizes.  For large problem sizes (i.e. number of variables),
+ROL’s trust region method and conjugate gradient methods exhibit good
+scalability for unconstrained problems. ROL handles equality constraints
+natively but converts inequality constraints into equality constraints
+with bounded slack variables.  This has might degrade convergence
+for problems involving large number of inequality constraints.  ROL has
+traditionally been applied to problems with analytic gradients (and
+Hessians)but can can be used with Dakota-provided finite-differencing
+approximations to the gradient of both objective and constraints.  However,
+a user employing these is advised to use alternative optimizers such as DOT
+until performance of ROL improves in future releases.
+
+*Expected HDF5 Output*
+
+If Dakota was built with HDF5 support and run with the
+:dakkw:`environment-results_output-hdf5` keyword, this method
+writes the following results to HDF5:
+
+
+- :ref:`hdf5_results-best_params`
+- :ref:`hdf5_results-best_obj_fncs` (when :dakkw:`responses-objective_functions`) are specified)
+- :ref:`hdf5_results-calibration` (when :dakkw:`responses-calibration_terms` are specified)
+
+

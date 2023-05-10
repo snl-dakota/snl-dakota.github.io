@@ -1,0 +1,72 @@
+.. _model-active_subspace-truncation_method:
+
+"""""""""""""""""
+truncation_method
+"""""""""""""""""
+
+
+Metric that estimates active subspace size
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   model-active_subspace-truncation_method-bing_li
+   model-active_subspace-truncation_method-constantine
+   model-active_subspace-truncation_method-energy
+   model-active_subspace-truncation_method-cross_validation
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+- *Default:* constantine
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+----------------------+---------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword       | Dakota Keyword Description                  |
+|                         | Group              |                      |                                             |
++=========================+====================+======================+=============================================+
+| Optional                                     | `bing_li`__          | Use the Bing Li "ladle" diagnostic to       |
+|                                              |                      | truncate subspace                           |
++----------------------------------------------+----------------------+---------------------------------------------+
+| Optional                                     | `constantine`__      | Use the Constantine diagnostic to truncate  |
+|                                              |                      | subspace                                    |
++----------------------------------------------+----------------------+---------------------------------------------+
+| Optional                                     | `energy`__           | Truncate the subspace based on eigenvalue   |
+|                                              |                      | energy                                      |
++----------------------------------------------+----------------------+---------------------------------------------+
+| Optional                                     | `cross_validation`__ | Truncate the subspace to minimize surrogate |
+|                                              |                      | cross-validation error                      |
++----------------------------------------------+----------------------+---------------------------------------------+
+
+.. __: model-active_subspace-truncation_method-bing_li.html
+__ model-active_subspace-truncation_method-constantine.html
+__ model-active_subspace-truncation_method-energy.html
+__ model-active_subspace-truncation_method-cross_validation.html
+
+
+
+**Description**
+
+
+Metric that controls how many basis vectors are retained in the active
+subspace.
+
+*Default Behavior*
+
+The default is to use the
+:dakkw:`model-active_subspace-truncation_method-constantine` diagnostic.
+
+*Usage Tips*
+
+If the automated subspace identification methods do not yield desirable results,
+consider using the explicit :dakkw:`model-active_subspace-dimension` truncation option.
+
+

@@ -1,0 +1,80 @@
+.. _model-surrogate-global-dace_method_pointer-auto_refinement:
+
+"""""""""""""""
+auto_refinement
+"""""""""""""""
+
+
+Experimental auto-refinement of surrogate model
+
+
+
+**Topics**
+
+
+surrogate_models
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   model-surrogate-global-dace_method_pointer-auto_refinement-max_iterations
+   model-surrogate-global-dace_method_pointer-auto_refinement-max_function_evaluations
+   model-surrogate-global-dace_method_pointer-auto_refinement-convergence_tolerance
+   model-surrogate-global-dace_method_pointer-auto_refinement-soft_convergence_limit
+   model-surrogate-global-dace_method_pointer-auto_refinement-cross_validation_metric
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+- *Default:* no refinement
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+------------------------------+---------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword               | Dakota Keyword Description                  |
+|                         | Group              |                              |                                             |
++=========================+====================+==============================+=============================================+
+| Optional                                     | `max_iterations`__           | Number of iterations allowed for optimizers |
+|                                              |                              | and adaptive UQ methods                     |
++----------------------------------------------+------------------------------+---------------------------------------------+
+| Optional                                     | `max_function_evaluations`__ | Number of function evaluations allowed for  |
+|                                              |                              | optimizers                                  |
++----------------------------------------------+------------------------------+---------------------------------------------+
+| Optional                                     | `convergence_tolerance`__    | Cross-validation threshold for surrogate    |
+|                                              |                              | convergence                                 |
++----------------------------------------------+------------------------------+---------------------------------------------+
+| Optional                                     | `soft_convergence_limit`__   | Maximum number of iterations without        |
+|                                              |                              | improvement in cross-validation             |
++----------------------------------------------+------------------------------+---------------------------------------------+
+| Optional                                     | `cross_validation_metric`__  | Choice of error metric to satisfy           |
++----------------------------------------------+------------------------------+---------------------------------------------+
+
+.. __: model-surrogate-global-dace_method_pointer-auto_refinement-max_iterations.html
+__ model-surrogate-global-dace_method_pointer-auto_refinement-max_function_evaluations.html
+__ model-surrogate-global-dace_method_pointer-auto_refinement-convergence_tolerance.html
+__ model-surrogate-global-dace_method_pointer-auto_refinement-soft_convergence_limit.html
+__ model-surrogate-global-dace_method_pointer-auto_refinement-cross_validation_metric.html
+
+
+
+**Description**
+
+
+(Experimental option) Automatically refine the surrogate model until
+desired cross-validation quality is achieved. Refinement is accomplished
+by iteratively adding more data to the training set until the cross-validation
+``convergence_tolerance`` is achieved, or ``max_function_evaluations`` or
+``max_iterations`` is exceeded.
+
+The amount of new training data that is incorporated each iteration is specified
+in the DACE method that is referred to by the model's ``dace_method_pointer``.
+See :dakkw:`method-sampling-refinement_samples` for more information.
+
+

@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Dakota Restart Utility &mdash; dakota  documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/dakota_theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/sandiaheaderlite.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Compiling Dakota" href="../compiling/compiling.html" />
+    <link rel="prev" title="Preprocessing with dprepro and pyprepro" href="dpreproandpyprepro.html" /> 
+  
+  <meta name="sandia.approval_type" content="formal"/>
+  <meta property="sandia.approved" content="SAND2022-15651 O"/>
+  <meta name="description" content="The Dakota project delivers both state-of-the-art research and robust, usable software for optimization and UQ."/>
+  <meta name="keywords" content="Dakota, optimization, UQ, uncertainty quantification, parametric analysis, design exploration, model calibration, risk analysis"/>
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> dakota
+            <img src="../_static/dakota_Arrow_Name_Tag_horiz_transparent.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../setupdakota.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usingdakota/usingdakota.html">Using Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usingdakotagui/usingdakotagui.html">Using Dakota GUI</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="externaltools.html">Using External Tools</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="dpreproandpyprepro.html">Preprocessing with dprepro and pyprepro</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">The Dakota Restart Utility</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#print-command">Print Command</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#to-from-neutral-file-format">To/From Neutral File Format</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#tabular-format">Tabular Format</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#controlling-tabular-format">Controlling tabular format</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#concatenation-of-multiple-restart-files">Concatenation of Multiple Restart Files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#removal-of-corrupted-data">Removal of Corrupted Data</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../compiling/compiling.html">Compiling Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developingdakota/developingdakota.html">Developing Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../misc/misc.html">Miscellaneous</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">dakota</a>
+      </nav>
+
+	  <!-- SNL Lite header -->
+	  <div class="snlheader-subsite--wrapper-default">
+		<snlheader class="snlheader-subsite" role="snlbanner">
+		  <div class="wrapper">
+			<a href="https://www.sandia.gov/index.html">
+			  <div class="logo-transparent"><p class="logo">Sandia National Laboratories</p></div>
+			</a>
+			<div class="nav-top">
+			  <a class="visuallyhidden" name="mainnav"></a>
+			  <div aria-label="main navigation" class="core-nav-transparent core-nav-transparent--visible" role="navigation">
+				<ul role="navigation" class="secondary-links">
+				  <li id="search-text-link">
+					<a aria-label="Search" href="https://www.sandia.gov/search/">Search Sandia.gov</a>
+				  </li>
+				  <li id="directory-text-link">
+					<a href="https://www.sandia.gov/directory.html" aria-expanded="false" aria-label="Site Directory">All Sandia Websites</a>
+				  </li>
+				</ul>
+			  </div>
+			</div>
+		  </div> 
+		</snlheader>
+	  </div>	  
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="externaltools.html">Using External Tools</a> &raquo;</li>
+      <li>The Dakota Restart Utility</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/externaltools/restartutility.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="the-dakota-restart-utility">
+<span id="dakota-restart-utility"></span><h1>The Dakota Restart Utility<a class="headerlink" href="#the-dakota-restart-utility" title="Permalink to this headline"></a></h1>
+<p>The Dakota restart utility program provides a variety of facilities for managing restart files from
+Dakota executions. The executable program name is <code class="docutils literal notranslate"><span class="pre">dakota_restart_util</span></code> and it has the following
+options, as shown by the usage message returned when executing the utility without any options:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>Usage:
+  dakota_restart_util command &lt;arg1&gt; [&lt;arg2&gt; &lt;arg3&gt; ...] --options
+    dakota_restart_util print &lt;restart_file&gt;
+    dakota_restart_util to_neutral &lt;restart_file&gt; &lt;neutral_file&gt;
+    dakota_restart_util from_neutral &lt;neutral_file&gt; &lt;restart_file&gt;
+    dakota_restart_util to_tabular &lt;restart_file&gt; &lt;text_file&gt;
+      [--custom_annotated [header] [eval_id] [interface_id]]
+      [--output_precision &lt;int&gt;]
+    dakota_restart_util remove &lt;double&gt; &lt;old_restart_file&gt; &lt;new_restart_file&gt;
+    dakota_restart_util remove_ids &lt;int_1&gt; ... &lt;int_n&gt; &lt;old_restart_file&gt; &lt;new_restart_file&gt;
+    dakota_restart_util cat &lt;restart_file_1&gt; ... &lt;restart_file_n&gt; &lt;new_restart_file&gt;
+options:
+  --help                       show dakota_restart_util help message
+  --custom_annotated arg       tabular file options: header, eval_id,
+                               interface_id
+  --freeform                   tabular file: freeform format
+  --output_precision arg (=10) set tabular output precision
+</pre></div>
+</div>
+<p>Several of these functions involve format conversions. In particular, the binary format used
+for restart files can be converted to ASCII text and printed to the screen, converted to and
+from a neutral file format, or converted to a tabular format for importing into
+3rd-party plotting programs. In addition, a restart file with corrupted data can be repaired by
+value or id, and multiple restart files can be combined to create a master database.</p>
+<section id="print-command">
+<h2>Print Command<a class="headerlink" href="#print-command" title="Permalink to this headline"></a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">print</span></code> option is useful to show contents of a restart file, since the binary format is not
+convenient for direct inspection. The restart data is printed in full precision, so that (near-)exact
+matching of points is possible for restarted runs or corrupted data removals. For example,
+the following command…</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>dakota_restart_util print dakota.rst
+</pre></div>
+</div>
+<p>…results in output similar to the following (output taken from
+the <a class="reference internal" href="../usingdakota/examples/additionalexamples.html#additional-cylinder"><span class="std std-ref">Cylinder example</span></a>):</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>------------------------------------------
+Restart record    1  (evaluation id    1):
+------------------------------------------
+Parameters:
+                      1.8000000000000000e+00 intake_dia
+                      1.0000000000000000e+00 flatness
+
+Active response data:
+Active set vector = { 3 3 3 3 }
+                     -2.4355973813420619e+00 obj_fn
+                     -4.7428486677140930e-01 nln_ineq_con_1
+                     -4.5000000000000001e-01 nln_ineq_con_2
+                      1.3971143170299741e-01 nln_ineq_con_3
+ [ -4.3644298963447897e-01  1.4999999999999999e-01 ] obj_fn gradient
+ [  1.3855136437818300e-01  0.0000000000000000e+00 ] nln_ineq_con_1 gradient
+ [  0.0000000000000000e+00  1.4999999999999999e-01 ] nln_ineq_con_2 gradient
+ [  0.0000000000000000e+00 -1.9485571585149869e-01 ] nln_ineq_con_3 gradient
+
+------------------------------------------
+Restart record    2  (evaluation id    2):
+------------------------------------------
+Parameters:
+                      2.1640000000000001e+00 intake_dia
+                      1.7169994018008317e+00 flatness
+
+Active response data:
+Active set vector = { 3 3 3 3 }
+                     -2.4869127192988878e+00 obj_fn
+                      6.9256958799989843e-01 nln_ineq_con_1
+                     -3.4245008972987528e-01 nln_ineq_con_2
+                      8.7142207937157910e-03 nln_ineq_con_3
+ [ -4.3644298963447897e-01  1.4999999999999999e-01 ] obj_fn gradient
+ [  2.9814239699997572e+01  0.0000000000000000e+00 ] nln_ineq_con_1 gradient
+ [  0.0000000000000000e+00  1.4999999999999999e-01 ] nln_ineq_con_2 gradient
+ [  0.0000000000000000e+00 -1.6998301774282701e-01 ] nln_ineq_con_3 gradient
+
+...&lt;snip&gt;...
+
+Restart file processing completed: 11 evaluations retrieved.
+</pre></div>
+</div>
+</section>
+<section id="to-from-neutral-file-format">
+<h2>To/From Neutral File Format<a class="headerlink" href="#to-from-neutral-file-format" title="Permalink to this headline"></a></h2>
+<p>A Dakota restart file can be converted to a neutral file format using a command like the following:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>dakota_restart_util to_neutral dakota.rst dakota.neu
+</pre></div>
+</div>
+<p>which results in a report similar to the following:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>Writing neutral file dakota.neu
+Restart file processing completed: 11 evaluations retrieved.
+</pre></div>
+</div>
+<p>Similarly, a neutral file can be returned to binary format using a command like the following:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>dakota_restart_util from_neutral dakota.neu dakota.rst
+</pre></div>
+</div>
+<p>which results in a report similar to the following:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>Reading neutral file dakota.neu
+Writing new restart file dakota.rst
+Neutral file processing completed: 11 evaluations retrieved.
+</pre></div>
+</div>
+<p>The contents of the generated neutral file are similar to the following (from the first
+two records for the <a class="reference internal" href="../usingdakota/examples/additionalexamples.html#additional-cylinder"><span class="std std-ref">Cylinder example</span></a>).</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>6 7 2 1.8000000000000000e+00 intake_dia 1.0000000000000000e+00 flatness 0 0 0 0
+NULL 4 2 1 0 3 3 3 3 1 2 obj_fn nln_ineq_con_1 nln_ineq_con_2 nln_ineq_con_3
+  -2.4355973813420619e+00 -4.7428486677140930e-01 -4.5000000000000001e-01
+   1.3971143170299741e-01 -4.3644298963447897e-01  1.4999999999999999e-01
+   1.3855136437818300e-01  0.0000000000000000e+00  0.0000000000000000e+00
+   1.4999999999999999e-01  0.0000000000000000e+00 -1.9485571585149869e-01 1
+6 7 2 2.1640000000000001e+00 intake_dia 1.7169994018008317e+00 flatness 0 0 0 0
+NULL 4 2 1 0 3 3 3 3 1 2 obj_fn nln_ineq_con_1 nln_ineq_con_2 nln_ineq_con_3
+  -2.4869127192988878e+00 6.9256958799989843e-01 -3.4245008972987528e-01
+   8.7142207937157910e-03 -4.3644298963447897e-01  1.4999999999999999e-01
+   2.9814239699997572e+01  0.0000000000000000e+00  0.0000000000000000e+00
+   1.4999999999999999e-01  0.0000000000000000e+00 -1.6998301774282701e-01 2
+</pre></div>
+</div>
+<p>This format is not intended for direct viewing (<code class="docutils literal notranslate"><span class="pre">print</span></code> should be used for this purpose). Rather,
+the neutral file capability has been used in the past for managing portability of restart
+data across platforms (recent use of more portable binary formats has largely eliminated this need)
+or for advanced repair of restart records (in cases where the remove command was insufficient).</p>
+</section>
+<section id="tabular-format">
+<span id="restart-utility-tabular"></span><h2>Tabular Format<a class="headerlink" href="#tabular-format" title="Permalink to this headline"></a></h2>
+<p>Conversion of a binary restart file to a tabular format enables convenient import of this data
+into 3rd-party post-processing tools such as Matlab, TECplot, Excel, etc. This facility is nearly
+identical to the output activated by the <code class="docutils literal notranslate"><a class="reference external" href="../usingdakota/reference/environment-tabular_data.html"><span class="pre">tabular_data</span></a></code> keyword in the Dakota input
+file specification, but with two important differences:</p>
+<p>1. No function evaluations are suppressed as they are with <code class="docutils literal notranslate"><a class="reference external" href="../usingdakota/reference/environment-tabular_data.html"><span class="pre">tabular_data</span></a></code>
+(i.e., any internal finite difference evaluations are included).
+2. The conversion can be performed later, i.e., for Dakota runs executed previously.</p>
+<p>An example command for converting a restart file to tabular format is:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>dakota_restart_util to_tabular dakota.rst dakota.m
+</pre></div>
+</div>
+<p>which results in a report similar to the following:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>Writing tabular text file dakota.m
+Restart file processing completed: 10 evaluations tabulated.
+</pre></div>
+</div>
+<p>The contents of the generated tabular file are similar to the following (from the
+<a class="reference internal" href="../usingdakota/examples/additionalexamples.html#additional-textbook-examples-gradient2"><span class="std std-ref">gradient-based optimization textbook problem example</span></a>).
+Note that while evaluations resulting from numerical derivative offsets would be reported
+(as described above), derivatives returned as part of the evaluations are not reported (since
+they do not readily fit within a compact tabular format):</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>%eval_id interface             x1             x2         obj_fn nln_ineq_con_1 nln_ineq_con_2
+1            NO_ID            0.9            1.1         0.0002           0.26           0.76
+2            NO_ID        0.90009            1.1 0.0001996404857   0.2601620081       0.759955
+3            NO_ID        0.89991            1.1 0.0002003604863   0.2598380081       0.760045
+4            NO_ID            0.9        1.10011 0.0002004407265       0.259945   0.7602420121
+5            NO_ID            0.9        1.09989 0.0001995607255       0.260055   0.7597580121
+6            NO_ID     0.58256179   0.4772224441   0.1050555937   0.1007670171 -0.06353963386
+7            NO_ID   0.5826200462   0.4772224441   0.1050386469   0.1008348962 -0.06356876195
+8            NO_ID   0.5825035339   0.4772224441   0.1050725476   0.1006991449 -0.06351050577
+9            NO_ID     0.58256179   0.4772701663   0.1050283245    0.100743156 -0.06349408333
+10           NO_ID     0.58256179   0.4771747219   0.1050828704   0.1007908783 -0.06358517983
+...
+</pre></div>
+</div>
+<section id="controlling-tabular-format">
+<h3>Controlling tabular format<a class="headerlink" href="#controlling-tabular-format" title="Permalink to this headline"></a></h3>
+<p>The command-line options <code class="docutils literal notranslate"><span class="pre">--freeform</span></code> and <code class="docutils literal notranslate"><span class="pre">--custom_annotated</span></code> give control of headers in the
+resulting tabular file. Freeform will generate a tabular file with no leading row nor columns
+(variable and response values only). Custom annotated format accepts any or all of the options:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">header</span></code>: include %-commented header row with labels</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">eval_id</span></code>: include leading column with evaluation ID</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">interface_id</span></code>: include leading column with interface ID</p></li>
+</ul>
+<p>For example, to recover Dakota 6.0 tabular format, which contained a header row,
+leading column with evaluation ID, but no interface ID:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>dakota_restart_util to_tabular dakota.rst dakota.m --custom_annotated header eval_id
+</pre></div>
+</div>
+<p>Resulting in</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>%eval_id             x1             x2         obj_fn nln_ineq_con_1 nln_ineq_con_2
+1                   0.9            1.1         0.0002           0.26           0.76
+2               0.90009            1.1 0.0001996404857   0.2601620081       0.759955
+3               0.89991            1.1 0.0002003604863   0.2598380081       0.760045
+...
+</pre></div>
+</div>
+<p>Finally, <code class="docutils literal notranslate"><span class="pre">--output_precision</span> <span class="pre">integer</span></code> will generate tabular output with the specified integer
+digits of precision.</p>
+</section>
+</section>
+<section id="concatenation-of-multiple-restart-files">
+<h2>Concatenation of Multiple Restart Files<a class="headerlink" href="#concatenation-of-multiple-restart-files" title="Permalink to this headline"></a></h2>
+<p>In some instances, it is useful to combine restart files into a single master function
+evaluation database. For example, when constructing a data fit surrogate model,
+data from previous studies can be pulled in and reused to create a combined data set for the
+surrogate fit. An example command for concatenating multiple restart files is:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>dakota_restart_util cat dakota.rst.1 dakota.rst.2 dakota.rst.3 dakota.rst.all
+</pre></div>
+</div>
+<p>which results in a report similar to the following:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>Writing new restart file dakota.rst.all
+dakota.rst.1 processing completed: 10 evaluations retrieved.
+dakota.rst.2 processing completed: 110 evaluations retrieved.
+dakota.rst.3 processing completed: 65 evaluations retrieved.
+</pre></div>
+</div>
+<p>The dakota.rst.all database now contains 185 evaluations and can be read in for use in
+a subsequent Dakota study using the <code class="docutils literal notranslate"><span class="pre">-read_restart</span></code> option to the dakota executable.</p>
+</section>
+<section id="removal-of-corrupted-data">
+<h2>Removal of Corrupted Data<a class="headerlink" href="#removal-of-corrupted-data" title="Permalink to this headline"></a></h2>
+<p>On occasion, a simulation or computer system failure may cause a corruption of the Dakota restart file.
+For example, a simulation crash may result in failure of a post-processor to retrieve meaningful data.
+If 0’s (or other erroneous data) are returned from the user’s analysis_driver, then this bad data will
+get recorded in the restart file. If there is a clear demarcation of where corruption initiated
+(typical in a process with feedback, such as gradient-based optimization), then use of the <code class="docutils literal notranslate"><span class="pre">-stop_restart</span></code>
+option for the Dakota executable can be effective in continuing the study from the point immediately
+prior to the introduction of bad data. If, however, there are interspersed corruptions throughout
+the restart database (typical in a process without feedback, such as sampling), then the remove
+and <code class="docutils literal notranslate"><span class="pre">remove_ids</span></code> options of dakota_restart_util can be useful.</p>
+<p>An example of the command syntax for the remove option is:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>dakota_restart_util remove 2.e-04 dakota.rst dakota.rst.repaired
+</pre></div>
+</div>
+<p>which results in a report similar to the following:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>Writing new restart file dakota.rst.repaired
+Restart repair completed: 65 evaluations retrieved, 2 removed, 63 saved.
+</pre></div>
+</div>
+<p>where any evaluations in dakota.rst having an active response function value that matches <code class="docutils literal notranslate"><span class="pre">2.e-04</span></code>
+within machine precision are discarded when creating dakota.rst.repaired.</p>
+<p>An example of the command syntax for the <code class="docutils literal notranslate"><span class="pre">remove_ids</span></code> option is:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>dakota_restart_util remove_ids 12 15 23 44 57 dakota.rst dakota.rst.repaired
+</pre></div>
+</div>
+<p>which results in a report similar to the following:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>Writing new restart file dakota.rst.repaired
+Restart repair completed: 65 evaluations retrieved, 5 removed, 60 saved.
+</pre></div>
+</div>
+<p>where evaluation ids 12, 15, 23, 44, and 57 have been discarded when creating dakota.rst.repaired. An
+important detail is that, unlike the <code class="docutils literal notranslate"><span class="pre">-stop_restart</span></code> option which operates on restart record numbers,
+the <code class="docutils literal notranslate"><span class="pre">remove_ids</span></code> option operates on evaluation ids. Thus, removal is not necessarily based on the order
+of appearance in the restart file. This distinction is important when removing restart records for a run
+that contained either asynchronous or duplicate evaluations, since the restart insertion order and evaluation
+ids may not correspond in these cases (asynchronous evaluations have ids assigned in the order of job creation
+but are inserted in the restart file in the order of job completion, and duplicate evaluations are not recorded
+which introduces offsets between evaluation id and record number). This can also be important if removing
+records from a concatenated restart file, since the same evaluation id could appear more than once. In this case,
+all evaluation records with ids matching the <code class="docutils literal notranslate"><span class="pre">remove_ids</span></code> list will be removed.</p>
+<p>If neither of these removal options is sufficient to handle a particular restart repair need, then
+the fallback position is to resort to direct editing of a neutral file to perform the necessary modifications.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="dpreproandpyprepro.html" class="btn btn-neutral float-left" title="Preprocessing with dprepro and pyprepro" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../compiling/compiling.html" class="btn btn-neutral float-right" title="Compiling Dakota" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <!--
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Sandia National Laboratories.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+  --> 
+
+</footer>
+        </div>
+      </div>
+	  
+	  <div style="background-color: #0f0f0f;color:#fafafa;padding:20px">
+	    <div>
+		  <h2><em>Exceptional service in the national interest</em></h2>
+		</div>
+		<p>© 2022 National Technology and Engineering Solutions of Sandia, LLC. | <a href="https://www.sandia.gov/contact_us/index.html">Questions &amp; Comments</a> | <a href="https://www.sandia.gov/general/privacy-security/index.html">Privacy &amp; Security</a></p>
+		<p><a href="http://energy.gov" rel="noopener noreferrer" target="_blank"><img alt="U.S. Department of Energy" longdesc="https://energy.gov" src="https://www.sandia.gov/_common/images/doe_logo_white.png" style="height:37px; width:140px"></a> <a href="http://nnsa.energy.gov/" rel="noopener noreferrer" target="_blank"> <img alt="National Nuclear Security Administration" longdesc="http://nnsa.gov" src="https://www.sandia.gov/_common/images/nnsa_logo_white.png" style="height:37px; width:116px"></a></p>
+		<p><a href="https://www.sandia.gov">Sandia National Laboratories</a> is a multimission laboratory managed and operated by National Technology and Engineering Solutions of Sandia, LLC., a wholly owned subsidiary of Honeywell International, Inc., for the U.S. Department of Energy’s National Nuclear Security Administration under contract DE-NA-0003525.</p>
+	  </div>	  	  
+	  
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

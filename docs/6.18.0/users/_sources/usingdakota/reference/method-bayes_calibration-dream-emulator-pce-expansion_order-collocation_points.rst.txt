@@ -1,0 +1,122 @@
+.. _method-bayes_calibration-dream-emulator-pce-expansion_order-collocation_points:
+
+""""""""""""""""""
+collocation_points
+""""""""""""""""""
+
+
+Number of collocation points used to estimate expansion coefficients
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-bayes_calibration-dream-emulator-pce-expansion_order-collocation_points-least_squares
+   method-bayes_calibration-dream-emulator-pce-expansion_order-collocation_points-orthogonal_matching_pursuit
+   method-bayes_calibration-dream-emulator-pce-expansion_order-collocation_points-basis_pursuit
+   method-bayes_calibration-dream-emulator-pce-expansion_order-collocation_points-basis_pursuit_denoising
+   method-bayes_calibration-dream-emulator-pce-expansion_order-collocation_points-least_angle_regression
+   method-bayes_calibration-dream-emulator-pce-expansion_order-collocation_points-least_absolute_shrinkage
+   method-bayes_calibration-dream-emulator-pce-expansion_order-collocation_points-cross_validation
+   method-bayes_calibration-dream-emulator-pce-expansion_order-collocation_points-ratio_order
+   method-bayes_calibration-dream-emulator-pce-expansion_order-collocation_points-response_scaling
+   method-bayes_calibration-dream-emulator-pce-expansion_order-collocation_points-use_derivatives
+   method-bayes_calibration-dream-emulator-pce-expansion_order-collocation_points-tensor_grid
+   method-bayes_calibration-dream-emulator-pce-expansion_order-collocation_points-reuse_points
+   method-bayes_calibration-dream-emulator-pce-expansion_order-collocation_points-max_solver_iterations
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* INTEGER
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+---------------------------------+---------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword                  | Dakota Keyword Description                  |
+|                         | Group              |                                 |                                             |
++=========================+====================+=================================+=============================================+
+| Optional (Choose One)   | Regression         | `least_squares`__               | Compute the coefficients of a polynomial    |
+|                         | Algorithm          |                                 | expansion using least squares               |
+|                         |                    +---------------------------------+---------------------------------------------+
+|                         |                    | `orthogonal_matching_pursuit`__ | Compute the coefficients of a polynomial    |
+|                         |                    |                                 | expansion using orthogonal matching pursuit |
+|                         |                    |                                 | (OMP)                                       |
+|                         |                    +---------------------------------+---------------------------------------------+
+|                         |                    | `basis_pursuit`__               | Compute the coefficients of a polynomial    |
+|                         |                    |                                 | expansion by solving the Basis Pursuit      |
+|                         |                    |                                 | :math:`\ell_1` -minimization problem using  |
+|                         |                    |                                 | linear programming.                         |
+|                         |                    +---------------------------------+---------------------------------------------+
+|                         |                    | `basis_pursuit_denoising`__     | Compute the coefficients of a polynomial    |
+|                         |                    |                                 | expansion by solving the Basis Pursuit      |
+|                         |                    |                                 | Denoising :math:`\ell_1` -minimization      |
+|                         |                    |                                 | problem using second order cone             |
+|                         |                    |                                 | optimization.                               |
+|                         |                    +---------------------------------+---------------------------------------------+
+|                         |                    | `least_angle_regression`__      | Compute the coefficients of a polynomial    |
+|                         |                    |                                 | expansion by using the greedy least angle   |
+|                         |                    |                                 | regression (LAR) method.                    |
+|                         |                    +---------------------------------+---------------------------------------------+
+|                         |                    | `least_absolute_shrinkage`__    | Compute the coefficients of a polynomial    |
+|                         |                    |                                 | expansion by using the LASSO problem.       |
++-------------------------+--------------------+---------------------------------+---------------------------------------------+
+| Optional                                     | `cross_validation`__            | Use cross validation to choose the 'best'   |
+|                                              |                                 | polynomial order of a polynomial chaos      |
+|                                              |                                 | expansion.                                  |
++----------------------------------------------+---------------------------------+---------------------------------------------+
+| Optional                                     | `ratio_order`__                 | Specify a non-linear the relationship       |
+|                                              |                                 | between the expansion order of a polynomial |
+|                                              |                                 | chaos expansion and the number of samples   |
+|                                              |                                 | that will be used to compute the PCE        |
+|                                              |                                 | coefficients.                               |
++----------------------------------------------+---------------------------------+---------------------------------------------+
+| Optional                                     | `response_scaling`__            | Perform bounds-scaling on response values   |
+|                                              |                                 | prior to surrogate emulation                |
++----------------------------------------------+---------------------------------+---------------------------------------------+
+| Optional                                     | `use_derivatives`__             | Use derivative data to construct surrogate  |
+|                                              |                                 | models                                      |
++----------------------------------------------+---------------------------------+---------------------------------------------+
+| Optional                                     | `tensor_grid`__                 | Use sub-sampled tensor-product quadrature   |
+|                                              |                                 | points to build a polynomial chaos          |
+|                                              |                                 | expansion.                                  |
++----------------------------------------------+---------------------------------+---------------------------------------------+
+| Optional                                     | `reuse_points`__                | This describes the behavior of reuse of     |
+|                                              |                                 | points in constructing polynomial chaos     |
+|                                              |                                 | expansion models.                           |
++----------------------------------------------+---------------------------------+---------------------------------------------+
+| Optional                                     | `max_solver_iterations`__       | Maximum iterations in determining           |
+|                                              |                                 | polynomial coefficients                     |
++----------------------------------------------+---------------------------------+---------------------------------------------+
+
+.. __: method-bayes_calibration-dream-emulator-pce-expansion_order-collocation_points-least_squares.html
+__ method-bayes_calibration-dream-emulator-pce-expansion_order-collocation_points-orthogonal_matching_pursuit.html
+__ method-bayes_calibration-dream-emulator-pce-expansion_order-collocation_points-basis_pursuit.html
+__ method-bayes_calibration-dream-emulator-pce-expansion_order-collocation_points-basis_pursuit_denoising.html
+__ method-bayes_calibration-dream-emulator-pce-expansion_order-collocation_points-least_angle_regression.html
+__ method-bayes_calibration-dream-emulator-pce-expansion_order-collocation_points-least_absolute_shrinkage.html
+__ method-bayes_calibration-dream-emulator-pce-expansion_order-collocation_points-cross_validation.html
+__ method-bayes_calibration-dream-emulator-pce-expansion_order-collocation_points-ratio_order.html
+__ method-bayes_calibration-dream-emulator-pce-expansion_order-collocation_points-response_scaling.html
+__ method-bayes_calibration-dream-emulator-pce-expansion_order-collocation_points-use_derivatives.html
+__ method-bayes_calibration-dream-emulator-pce-expansion_order-collocation_points-tensor_grid.html
+__ method-bayes_calibration-dream-emulator-pce-expansion_order-collocation_points-reuse_points.html
+__ method-bayes_calibration-dream-emulator-pce-expansion_order-collocation_points-max_solver_iterations.html
+
+
+
+**Description**
+
+
+Specify the number of collocation points used to estimate expansion coefficients
+using regression approaches.
+
+A corresponding sequence specification is documented at, e.g.,
+:dakkw:`method-multifidelity_polynomial_chaos-expansion_order_sequence-collocation_ratio-collocation_points_sequence` and
+:dakkw:`method-multilevel_polynomial_chaos-expansion_order_sequence-collocation_ratio-collocation_points_sequence`
+
+
