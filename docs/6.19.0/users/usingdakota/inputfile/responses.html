@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Responses &mdash; dakota 6.19.0 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/dakota_theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/sandiaheaderlite.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Inputs to Dakota" href="inputstodakota.html" />
+    <link rel="prev" title="Parameters and Results Using the Python dakota.interfacing module" href="interfaces/dakotainterfacing.html" /> 
+  
+  <meta name="sandia.approval_type" content="formal"/>
+  <meta property="sandia.approved" content="SAND2023-13392 O"/>
+  <meta name="description" content="The Dakota project delivers both state-of-the-art research and robust, usable software for optimization and UQ."/>
+  <meta name="keywords" content="Dakota, optimization, UQ, uncertainty quantification, parametric analysis, design exploration, model calibration, risk analysis"/>
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> dakota
+            <img src="../../_static/dakota_Arrow_Name_Tag_horiz_transparent.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                6.19
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../setupdakota.html">Getting Started</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../usingdakota.html">Using Dakota</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../introduction/aboutdakota.html">About Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../introduction/helloworld.html">Dakota Beginner’s Tutorial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples.html">Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../introduction/couplingtosimulations.html">Coupling Dakota to a Simulation</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../inputfile.html">Dakota Input File</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="formatting.html">Input File Formatting</a></li>
+<li class="toctree-l3"><a class="reference internal" href="model.html">Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="variables.html">Variables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="interfaces.html">Interfaces</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Responses</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#overview">Overview</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#response-function-types">Response function types</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#gradient-availability">Gradient availability</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#hessian-availability">Hessian availability</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#field-data">Field Data</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#dakota-results-file-data-format">Dakota Results File Data Format</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#active-variables-for-derivatives">Active Variables for Derivatives</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="inputstodakota.html">Inputs to Dakota</a></li>
+<li class="toctree-l3"><a class="reference internal" href="inputspec.html">Dakota Input Spec</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../inputfile.html#video-resources">Video Resources</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../running.html">Running Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../output.html">Dakota Output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../studytypes.html">Study Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../topics.html">Topics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../advanced.html">Advanced Topics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../theory.html">Dakota Theory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference.html">Keyword Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../usingdakotagui/usingdakotagui.html">Using Dakota GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../externaltools/externaltools.html">Using External Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../compiling/compiling.html">Compiling Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developingdakota/developingdakota.html">Developing Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../misc/misc.html">Miscellaneous</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">dakota</a>
+      </nav>
+
+	  <!-- SNL Lite header -->
+	  <div class="snlheader-subsite--wrapper-default">
+		<snlheader class="snlheader-subsite" role="snlbanner">
+		  <div class="wrapper">
+			<a href="https://www.sandia.gov/index.html">
+			  <div class="logo-transparent"><p class="logo">Sandia National Laboratories</p></div>
+			</a>
+			<div class="nav-top">
+			  <a class="visuallyhidden" name="mainnav"></a>
+			  <div aria-label="main navigation" class="core-nav-transparent core-nav-transparent--visible" role="navigation">
+				<ul role="navigation" class="secondary-links">
+				  <li id="search-text-link">
+					<a aria-label="Search" href="https://www.sandia.gov/search/">Search Sandia.gov</a>
+				  </li>
+				  <li id="directory-text-link">
+					<a href="https://www.sandia.gov/directory.html" aria-expanded="false" aria-label="Site Directory">All Sandia Websites</a>
+				  </li>
+				</ul>
+			  </div>
+			</div>
+		  </div> 
+		</snlheader>
+	  </div>	  
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../usingdakota.html">Using Dakota</a> &raquo;</li>
+          <li><a href="../inputfile.html">Dakota Input File</a> &raquo;</li>
+      <li>Responses</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/usingdakota/inputfile/responses.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="responses">
+<span id="responses-main"></span><h1>Responses<a class="headerlink" href="#responses" title="Permalink to this headline"></a></h1>
+<section id="overview">
+<span id="responses-overview"></span><h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline"></a></h2>
+<p>A <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/responses.html"><span class="pre">responses</span></a></code> block in a Dakota input file specifies the types
+of data that can be returned from an interface during Dakota’s
+execution. The specification includes the number and type of response
+functions (objective functions, nonlinear constraints, calibration
+terms, etc.) as well as availability of first and second derivatives
+(gradient vectors and Hessian matrices) of them. A brief overview of
+the response types and their uses follows, as well as discussion of
+response file formats and derivative vector and matrix sizing. See
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/responses.html"><span class="pre">responses</span></a></code> for additional details and examples.</p>
+<section id="response-function-types">
+<span id="responses-overview-types"></span><h3>Response function types<a class="headerlink" href="#response-function-types" title="Permalink to this headline"></a></h3>
+<p>The types of responses specified in an input file are commonly paired
+with the iterative technique called for in a <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method.html"><span class="pre">method</span></a></code>
+specification block:</p>
+<ul class="simple">
+<li><p><strong>Optimization</strong> data set comprised of <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/responses-objective_functions.html"><span class="pre">objective_functions</span></a></code>,
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/responses-objective_functions-nonlinear_inequality_constraints.html"><span class="pre">nonlinear_inequality_constraints</span></a></code>, and
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/responses-objective_functions-nonlinear_equality_constraints.html"><span class="pre">nonlinear_equality_constraints</span></a></code>. This
+data set is primarily for use with optimization methods, e.g., the
+methods in <a class="reference internal" href="../studytypes/optimization.html#opt"><span class="std std-ref">Optimization</span></a>.  When using <a class="reference internal" href="#responses-results"><span class="std std-ref">results files</span></a>, the responses must be ordered: objectives,
+inequalities, then equalities.</p></li>
+<li><p><strong>Calibration</strong> data set comprised of <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/responses-calibration_terms.html"><span class="pre">calibration_terms</span></a></code>,
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/responses-calibration_terms-nonlinear_inequality_constraints.html"><span class="pre">nonlinear_inequality_constraints</span></a></code>,
+and
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/responses-calibration_terms-nonlinear_equality_constraints.html"><span class="pre">nonlinear_equality_constraints</span></a></code>. This
+data set is primarily for use calibration
+algorithms, e.g., the methods in <a class="reference internal" href="../studytypes/nonlinearleastsquares.html#nls"><span class="std std-ref">Nonlinear Least Squares</span></a> and <a class="reference internal" href="../studytypes/uq.html#uq-bayesian"><span class="std std-ref">Bayesian Calibration Methods</span></a>. When using
+<a class="reference internal" href="#responses-results"><span class="std std-ref">results files</span></a> the responses must
+be ordered: calibration terms, inequalities, then equalities.</p></li>
+<li><p><strong>Generic</strong> data set comprised of
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/responses-response_functions.html"><span class="pre">response_functions</span></a></code>. This data set is appropriate
+for use with uncertainty quantification methods, e.g., the methods
+in <a class="reference internal" href="../studytypes/uq.html#uq"><span class="std std-ref">Uncertainty Quantification</span></a>.</p></li>
+</ul>
+<p>Certain general-purpose iterative techniques, such as parameter studies
+and design of experiments methods, can be used with any of these data
+sets.</p>
+</section>
+<section id="gradient-availability">
+<span id="responses-overview-gradient"></span><h3>Gradient availability<a class="headerlink" href="#gradient-availability" title="Permalink to this headline"></a></h3>
+<p>Gradient availability for these response functions may be described by:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/responses-no_gradients.html"><span class="pre">no_gradients</span></a></code>: gradients will not be used.</p></li>
+<li><p><code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/responses-numerical_gradients.html"><span class="pre">numerical_gradients</span></a></code>: gradients are needed and will be
+approximated by finite differences.</p></li>
+<li><p><code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/responses-analytic_gradients.html"><span class="pre">analytic_gradients</span></a></code>: gradients are needed and will
+be supplied by the simulation code (without any finite differencing
+by Dakota).</p></li>
+<li><p><code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/responses-mixed_gradients.html"><span class="pre">mixed_gradients</span></a></code>: the simulation will supply some
+gradient components and Dakota will approximate the others by finite
+differences.</p></li>
+</ul>
+<p>The gradient specification relates to the method in use.  Gradients
+are typically needed for studies such as gradient-based optimization,
+reliability analysis for uncertainty quantification, or local
+sensitivity analysis.</p>
+</section>
+<section id="hessian-availability">
+<span id="responses-overview-hessian"></span><h3>Hessian availability<a class="headerlink" href="#hessian-availability" title="Permalink to this headline"></a></h3>
+<p>Hessian availability for the response functions is similar to the
+gradient availability specifications, with the addition of support for
+“quasi-Hessians”:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/responses-no_hessians.html"><span class="pre">no_hessians</span></a></code>: Hessians will not be used.</p></li>
+<li><p><code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/responses-numerical_hessians.html"><span class="pre">numerical_hessians</span></a></code>: Hessians are needed and will
+be approximated by finite differences. These finite differences may
+involve first-order differences of gradients (if analytic gradients
+are available for the response function of interest) or second-order
+differences of function values (in all other cases).</p></li>
+<li><p><code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/responses-quasi_hessians.html"><span class="pre">quasi_hessians</span></a></code>: Hessians are needed and will be
+approximated by secant updates (BFGS or SR1) from a series of
+gradient evaluations.</p></li>
+<li><p><code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/responses-analytic_hessians.html"><span class="pre">analytic_hessians</span></a></code>: Hessians are needed and are
+available directly from the simulation code.</p></li>
+<li><p><code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/responses-mixed_hessians.html"><span class="pre">mixed_hessians</span></a></code>: Hessians are needed and will be
+obtained from a mix of numerical, analytic, and “quasi” sources.</p></li>
+</ul>
+<p>The Hessian specification also relates to the iterative method in use;
+Hessians commonly would be used in gradient-based optimization by full
+Newton methods or in reliability analysis with second-order limit
+state approximations or second-order probability integrations.</p>
+</section>
+<section id="field-data">
+<h3>Field Data<a class="headerlink" href="#field-data" title="Permalink to this headline"></a></h3>
+<p>Prior to Dakota 6.1, Dakota responses were always treated as scalar
+responses. That is, if the user specified <code class="docutils literal notranslate"><span class="pre">response_functions</span> <span class="pre">=</span> <span class="pre">5</span></code>,
+Dakota treated the five responses as five separate scalar quantities.
+There are some cases where responses are a “field” quantity, meaning
+that the responses are a function of one or more independent variables
+such as time and/or spatial location. In these cases, the responses
+should be treated as a field. For example, it can become extremely
+cumbersome to represent 5000 values from a time-temperature trace or a
+current-voltage curve in Dakota. With scalar response quantities, we
+ignore the independent variable(s). For example, if we have a response
+<span class="math notranslate nohighlight">\(R\)</span> as a function of time <span class="math notranslate nohighlight">\(t\)</span>, the user currently gives
+Dakota a set of discrete responses at particular times and Dakota
+isn’t aware of the time values.</p>
+<p>With the field data capability, the user can specify that they have
+one field response of size <span class="math notranslate nohighlight">\(5000 \times 1\)</span> (for example). Dakota
+will have a large set of data <span class="math notranslate nohighlight">\(R=f(t)\)</span>, with both the response
+<span class="math notranslate nohighlight">\(R\)</span> and independent coordinates <span class="math notranslate nohighlight">\(t\)</span> specified. The
+independent variable(s) can be useful in interpolation between
+simulation responses and experimental observations. It also can be
+useful in surrogate construction. We plan to handle correlation or
+structure between field responses, which is currently not handled when
+we treat the responses as individual, separate scalar quantities.</p>
+<p>For all three major response types (objective functions, calibration
+terms, and generic response functions), one can specify field
+responses (e.g. with
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/responses-objective_functions-field_objectives.html"><span class="pre">field_objectives</span></a></code>,
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/responses-calibration_terms-field_calibration_terms.html"><span class="pre">field_calibration_terms</span></a></code>, and
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/responses-response_functions-field_responses.html"><span class="pre">field_responses</span></a></code>). For each type
+of field response, one can specify the length of the field (e.g., with
+<code class="docutils literal notranslate"><span class="pre">lengths=5000</span></code>) and the number of independent coordinates
+(<code class="docutils literal notranslate"><span class="pre">num_coordinates_per_field</span></code>). The user can specify the independent
+coordinates by specifying and providing the coordinates in files named
+<code class="file docutils literal notranslate"><span class="pre">&lt;response_descriptor&gt;.coords</span></code>. In the case of field data from
+physical experiments used to calibrate field data from simulation
+experiments, the specification is more involved: the user should refer
+to the <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/responses.html"><span class="pre">responses</span></a></code> keywords for specific syntax.
+All methods can handle field data, but currently the calibration
+methods are the only methods specialized for field data, specifically
+they interpolate the simulation field data to the experiment field
+data points to calculate the residual terms. This is applicable to
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-nl2sol.html"><span class="pre">nl2sol</span></a></code>, <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-nlssol.html"><span class="pre">nlssol</span></a></code>,
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-optpp_g_newton.html"><span class="pre">optpp_g_newton</span></a></code>, the MCMC Bayesian methods, as well as
+general optimization methods that recast the residuals into a
+sum-of-squared errors. Other methods simply handle the field
+responses as a vector of scalar responses, as they did historically. Future
+versions might include additional methods to explicitly
+handle field data, including dimension reduction.</p>
+</section>
+</section>
+<section id="dakota-results-file-data-format">
+<span id="responses-results"></span><h2>Dakota Results File Data Format<a class="headerlink" href="#dakota-results-file-data-format" title="Permalink to this headline"></a></h2>
+<p>Simulation interfaces using system calls and forks to create separate
+simulation processes must communicate with the simulation through the
+file system. Dakota accomplishes this by writing parameters files with
+variable values and reading results files with response values. For
+the results file, only one text file format is supported (versus the
+two parameter file formats described in
+<a class="reference internal" href="variables.html#variables-parameters"><span class="std std-ref">Dakota Parameters File Data Format</span></a>). Ordering of response functions is as
+listed in <a class="reference internal" href="#responses-overview-types"><span class="std std-ref">Response function types</span></a>, i.e., objective functions
+or calibration terms are first, followed by nonlinear inequality
+constraints, followed by nonlinear equality constraints).</p>
+<p>After a simulation, Dakota expects to read a file containing responses
+reflecting the current parameters and corresponding to the function
+requests in the active set vector. The response data must be in the
+format shown in <a class="reference internal" href="#fig-responses-results-format"><span class="std std-numref">Listing 23</span></a>.</p>
+<div class="literal-block-wrapper docutils container" id="fig-responses-results-format">
+<div class="code-block-caption"><span class="caption-number">Listing 23 </span><span class="caption-text">Results file data format.</span><a class="headerlink" href="#fig-responses-results-format" title="Permalink to this code"></a></div>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>&lt;double&gt; &lt;fn_label_1&gt;
+&lt;double&gt; &lt;fn_label_2&gt;
+...
+&lt;double&gt; &lt;fn_label_m&gt;
+[ &lt;double&gt; &lt;double&gt; .. &lt;double&gt; ]
+[ &lt;double&gt; &lt;double&gt; .. &lt;double&gt; ]
+...
+[ &lt;double&gt; &lt;double&gt; .. &lt;double&gt; ]
+[[ &lt;double&gt; &lt;double&gt; .. &lt;double&gt; ]]
+[[ &lt;double&gt; &lt;double&gt; .. &lt;double&gt; ]]
+...
+[[ &lt;double&gt; &lt;double&gt; .. &lt;double&gt; ]]
+&lt;double&gt; &lt;md_label_1&gt;
+&lt;double&gt; &lt;md_label_2&gt;
+...
+&lt;double&gt; &lt;md_label_r)&gt;
+</pre></div>
+</div>
+</div>
+<p>The first block of data conveys the requested function values
+<span class="math notranslate nohighlight">\(1, \ldots, m\)</span> and is followed by a block of requested gradients
+delimited by single brackets, followed by a block of requested
+Hessians delimited by double brackets. If the amount of data in the
+file does not match the function active set request vector, Dakota
+will abort execution with an error message.</p>
+<p>Function values have no bracket delimiters, but each may be followed
+by its own non-numeric label. Labels must be separated from numeric
+function values by white space (one or more blanks, tabs, or newline
+characters) and they must not contain any white space themselves
+(e.g., use <code class="docutils literal notranslate"><span class="pre">response1</span></code> or <code class="docutils literal notranslate"><span class="pre">response_1</span></code>, but not <code class="docutils literal notranslate"><span class="pre">response</span> <span class="pre">1</span></code>).
+Labels also must not resemble numerical values.</p>
+<p>By default, function value labels are optional and are ignored by
+Dakota; they are permitted only as a convenience to the user. However,
+if strict checking is activated by including the <code class="docutils literal notranslate"><span class="pre">labeled</span></code> keyword in
+the interface section of the Dakota input file, then labels are required
+for every function value. Further, labels must exactly match the
+response descriptors of their corresponding function values. These
+stricter labeling requirements enable Dakota to detect and report when
+function values are returned out-of-order, or when specific function
+values are repeated or missing.</p>
+<p>Gradient vectors are surrounded by single brackets <span class="math notranslate nohighlight">\([\ldots
+n_{dvv}-\textrm{vector of doubles} \ldots]\)</span>. Labels are not used and
+must not be present. White space separating the brackets from the data
+is optional.</p>
+<p>Hessian matrices are surrounded by double brackets <span class="math notranslate nohighlight">\([[\ldots
+n_{dvv} \times n_{dvv}-\textrm{matrix of doubles} \ldots]]\)</span>. Hessian
+components (numeric values for second partial derivatives) are listed
+by rows and separated by white space; in particular, they can be
+spread across multiple lines for readability. Labels are not used and
+must not be present. White space after the initial double bracket and
+before the final one is optional, but none can appear within the
+double brackets.</p>
+<p>Any requested metadata values must appear at the end of the file
+(after any requested values, gradients, or Hessians). Their format
+requirements are the same as function values discussed above, and are
+similarly validated by the <code class="docutils literal notranslate"><span class="pre">labeled</span></code> keyword when specified.</p>
+<p>The format of the numeric fields may be floating point or scientific
+notation. In the latter case, acceptable exponent characters are <code class="docutils literal notranslate"><span class="pre">E</span></code>
+or <code class="docutils literal notranslate"><span class="pre">e.</span></code> A common problem when dealing with Fortran programs is that
+a C++ read of a numeric field using <code class="docutils literal notranslate"><span class="pre">D</span></code> or <code class="docutils literal notranslate"><span class="pre">d</span></code> as the exponent
+(i.e., a double precision value from Fortran) may fail or be truncated.
+In this case, the <code class="docutils literal notranslate"><span class="pre">D</span></code> exponent characters must be replaced either
+through modifications to the Fortran source or compiler flags or through
+a separate post-processing step (e.g., using the UNIX <code class="docutils literal notranslate"><span class="pre">sed</span></code> utility).</p>
+</section>
+<section id="active-variables-for-derivatives">
+<span id="responses-active"></span><h2>Active Variables for Derivatives<a class="headerlink" href="#active-variables-for-derivatives" title="Permalink to this headline"></a></h2>
+<p>An important question for proper management of both gradient and
+Hessian data is: if several different types of variables are used,
+<em>for which variables are response function derivatives needed?</em> That
+is, how is <span class="math notranslate nohighlight">\(n_{dvv}\)</span> determined? The short answer is that the
+derivative variables vector (DVV), communicated in the parameters
+file, specifies the set of variables to be used for computing
+derivatives, and <span class="math notranslate nohighlight">\(n_{dvv}\)</span> is the length of this vector.</p>
+<p>In most cases, the DVV is defined directly from the set of active
+continuous variables for the iterative method in use. Since methods
+operate over a subset, or view, of the variables that is active in the
+iteration, it is this same set of variables for which derivatives are
+most commonly computed. Derivatives are never needed with respect to any
+discrete variables (since these derivatives do not in general exist) and
+the active continuous variables depend on view override specifications,
+inference by response type, and inference by method type, in that order,
+as described in <a class="reference internal" href="variables.html#variables-mixed"><span class="std std-ref">Management of Mixed Variables by Method</span></a>.</p>
+<p>In a few cases, derivatives are needed with respect to the <em>inactive</em>
+continuous variables. This occurs for nested models where a top-level
+method sets derivative requirements (with respect to its active
+continuous variables) on the final solution of the lower-level/inner method
+(for which the top-level active variables are inactive). For example, in
+an uncertainty analysis within a nested design under uncertainty
+algorithm, derivatives of the lower-level response functions may be
+needed with respect to the design variables, which are active continuous
+variables at the top level but are inactive within the uncertainty
+quantification. These instances are the reason for the creation and
+inclusion of the DVV vector – to clearly indicate the variables whose
+partial derivatives are needed.</p>
+<p>In all cases, if the DVV is honored, then the correct derivative
+components are returned. In simple cases, such as optimization and
+calibration studies that only specify design variables and for
+nondeterministic analyses that only specify uncertain variables,
+derivative component subsets are not an issue and the exact content of
+the DVV may be safely ignored.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="interfaces/dakotainterfacing.html" class="btn btn-neutral float-left" title="Parameters and Results Using the Python dakota.interfacing module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="inputstodakota.html" class="btn btn-neutral float-right" title="Inputs to Dakota" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <!--
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Sandia National Laboratories.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+  --> 
+
+</footer>
+        </div>
+      </div>
+	  
+	  <div style="background-color: #0f0f0f;color:#fafafa;padding:20px">
+	    <div>
+		  <h2><em>Exceptional service in the national interest</em></h2>
+		</div>
+		<p>© 2023 National Technology and Engineering Solutions of Sandia, LLC. | <a href="https://www.sandia.gov/contact_us/index.html">Questions &amp; Comments</a> | <a href="https://www.sandia.gov/general/privacy-security/index.html">Privacy &amp; Security</a></p>
+		<p><a href="http://energy.gov" rel="noopener noreferrer" target="_blank"><img alt="U.S. Department of Energy" longdesc="https://energy.gov" src="https://www.sandia.gov/_common/images/doe_logo_white.png" style="height:37px; width:140px"></a> <a href="http://nnsa.energy.gov/" rel="noopener noreferrer" target="_blank"> <img alt="National Nuclear Security Administration" longdesc="http://nnsa.gov" src="https://www.sandia.gov/_common/images/nnsa_logo_white.png" style="height:37px; width:116px"></a></p>
+		<p><a href="https://www.sandia.gov">Sandia National Laboratories</a> is a multimission laboratory managed and operated by National Technology and Engineering Solutions of Sandia, LLC., a wholly owned subsidiary of Honeywell International, Inc., for the U.S. Department of Energy’s National Nuclear Security Administration under contract DE-NA-0003525.</p>
+	  </div>	  	  
+	  
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chartreuse in Next-Gen Workflow &mdash; dakota 6.19.0 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/dakota_theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/sandiaheaderlite.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Using Color Scales in Plot Traces" href="ColorScales.html" />
+    <link rel="prev" title="Chartreuse Sandbox View" href="ChartreuseSandbox.html" /> 
+  
+  <meta name="sandia.approval_type" content="formal"/>
+  <meta property="sandia.approved" content="SAND2023-13392 O"/>
+  <meta name="description" content="The Dakota project delivers both state-of-the-art research and robust, usable software for optimization and UQ."/>
+  <meta name="keywords" content="Dakota, optimization, UQ, uncertainty quantification, parametric analysis, design exploration, model calibration, risk analysis"/>
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> dakota
+            <img src="../../_static/dakota_Arrow_Name_Tag_horiz_transparent.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                6.19
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../setupdakota.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../usingdakota/usingdakota.html">Using Dakota</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../usingdakotagui.html">Using Dakota GUI</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#introduction">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#example-search">Example Search</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#wizards">Wizards</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#editing-dakota-input-files">Editing Dakota Input Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#running-dakota">Running Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#running-dakota-remotely">Running Dakota Remotely</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#output-from-dakota">Output from Dakota</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../usingdakotagui.html#gui-tools">GUI Tools</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="Chartreuse.html">Chartreuse</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="PlotTraceCreator.html">Plot Trace Creator</a></li>
+<li class="toctree-l4"><a class="reference internal" href="EditingPlotFiles.html">Editing Plot Files</a></li>
+<li class="toctree-l4"><a class="reference internal" href="PlotManager.html">Plot Manager:  Managing Multiple Traces and Canvases</a></li>
+<li class="toctree-l4"><a class="reference internal" href="PlotTemplates.html">Plot Templates</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ChartreuseSandbox.html">Chartreuse Sandbox View</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Chartreuse in Next-Gen Workflow</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#introduction">Introduction</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#which-node-should-i-use">Which Node Should I Use?</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#tutorial-single-plot-trace-workflow">Tutorial: Single Plot Trace Workflow</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#tutorial-multiple-plot-traces-workflow">Tutorial: Multiple Plot Traces Workflow</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#tutorial-multiple-plot-canvases">Tutorial: Multiple Plot Canvases</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#tutorial-create-a-scatter-plot-using-an-hdf5-database-file">Tutorial: Create a Scatter Plot Using an HDF5 Database File</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#tutorial-using-the-responsecompare-node">Tutorial:  Using the responseCompare node</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#recommended-reading">Recommended Reading</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="ColorScales.html">Using Color Scales in Plot Traces</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../ngw/NextGenWorkflow.html">Next-Gen Workflow</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../qoi/QOI.html">QOI</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#miscellaneous">Miscellaneous</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../externaltools/externaltools.html">Using External Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../compiling/compiling.html">Compiling Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developingdakota/developingdakota.html">Developing Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../misc/misc.html">Miscellaneous</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">dakota</a>
+      </nav>
+
+	  <!-- SNL Lite header -->
+	  <div class="snlheader-subsite--wrapper-default">
+		<snlheader class="snlheader-subsite" role="snlbanner">
+		  <div class="wrapper">
+			<a href="https://www.sandia.gov/index.html">
+			  <div class="logo-transparent"><p class="logo">Sandia National Laboratories</p></div>
+			</a>
+			<div class="nav-top">
+			  <a class="visuallyhidden" name="mainnav"></a>
+			  <div aria-label="main navigation" class="core-nav-transparent core-nav-transparent--visible" role="navigation">
+				<ul role="navigation" class="secondary-links">
+				  <li id="search-text-link">
+					<a aria-label="Search" href="https://www.sandia.gov/search/">Search Sandia.gov</a>
+				  </li>
+				  <li id="directory-text-link">
+					<a href="https://www.sandia.gov/directory.html" aria-expanded="false" aria-label="Site Directory">All Sandia Websites</a>
+				  </li>
+				</ul>
+			  </div>
+			</div>
+		  </div> 
+		</snlheader>
+	  </div>	  
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../usingdakotagui.html">Using Dakota GUI</a> &raquo;</li>
+          <li><a href="Chartreuse.html">Chartreuse</a> &raquo;</li>
+      <li>Chartreuse in Next-Gen Workflow</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/usingdakotagui/chartreuse/ChartreuseWorkflow.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="chartreuse-in-next-gen-workflow">
+<span id="chartreuse-ngw-main"></span><h1>Chartreuse in Next-Gen Workflow<a class="headerlink" href="#chartreuse-in-next-gen-workflow" title="Permalink to this headline"></a></h1>
+<section id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline"></a></h2>
+<p>Chartreuse offers robust support for <a class="reference internal" href="../ngw/NextGenWorkflow.html#ngw-main"><span class="std std-ref">Next-Gen Workflow (NGW)</span></a>, a node-based workflow creation tool included with Dakota GUI.</p>
+<p>This page contains a number of useful “getting started” topics and tutorials for utilizing Chartreuse in Next-Gen Workflow.</p>
+</section>
+<section id="which-node-should-i-use">
+<span id="ngw-choosing-node-guide"></span><h2>Which Node Should I Use?<a class="headerlink" href="#which-node-should-i-use" title="Permalink to this headline"></a></h2>
+<p>There are a lot of nodes in NGW. The number of Chartreuse plotting nodes alone can be overwhelming.
+If you are looking to create basic plots, the nodes in the “Data Visualization (Chartreuse)” folder are a good place to start.
+These nodes expect arrays of numbers as inputs; these nodes can also combine plot traces and plot canvases together
+to create more sophisticated plots.</p>
+<img alt="Data Visualization (Chartreuse)" src="../../_images/Plotting_Workflow_12.png" />
+<p>In the “Data Visualization (Dakota/Chartreuse Simple Plots)” folder, a library of simple plotting nodes are available:</p>
+<img alt="&quot;Data Visualization (Dakota/Chartreuse Simple Plots)&quot; nodes" src="../../_images/Plotting_HDF_1.png" />
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Note that many of these plot nodes’ names are prefixed by “hdf”.  <em>Most nodes in this folder require a Dakota-generated HDF5 database file to work properly.</em></p>
+</div>
+<p>These Dakota/Chartreuse/HDF5 plotting nodes provide a usability advantage over the old-school approach of <a class="reference internal" href="#chartreuse-ngw-main-single-plot-tutorial"><span class="std std-ref">extracting tabular columns one at a time</span></a>.
+If you drag one of these plot nodes onto the workflow canvas, note that only one input port is provided - “hdfFile.”  Having
+one input port that manages everything leads to much simpler-looking workflows.  For example:</p>
+<img alt="A simpler HDF-style workflow" src="../../_images/Plotting_HDF_2.png" />
+<p>These HDF5-based plotting nodes can produce much more sophisticated plots that simply weren’t possible with the column-extracting approach.</p>
+<p id="chartreuse-ngw-composite-plotters">There is yet another set of plotting nodes available in the “Data Visualization (Dakota/Chartreuse Megaplotters)” folder:</p>
+<img alt="This is the last of the plotting nodes, I promise" src="../../_images/Plotting_HDF_4.png" />
+<p>These nodes behave somewhat differently than other Chartreuse plotting nodes:</p>
+<ul class="simple">
+<li><p>Whereas all other Chartreuse plot nodes require you to manage the created plot data (usually by piping the created plot to a “file”
+node as the final destination), these nodes generate a multitude of plots when they are executed.  As such, they manage their own file creation process.</p></li>
+<li><p>These nodes are also specific to Dakota-generated HDF5 files, and will not work with general HDF5 files, or with other types of Dakota output files.</p></li>
+<li><p>Megaplotters are context-sensitive to the type of Dakota study that was run.  For example, the <a class="reference internal" href="../ngw/nodes/incrementalLHS.html#ngw-node-incrementallhs"><span class="std std-ref">“incrementalLHS”</span></a>
+node will not arbitrarily work with all types of Dakota HDF5 files, especially if the datasets unique to LHS studies are not present in the
+HDF5 file.</p></li>
+</ul>
+</section>
+<section id="tutorial-single-plot-trace-workflow">
+<span id="chartreuse-ngw-main-single-plot-tutorial"></span><h2>Tutorial: Single Plot Trace Workflow<a class="headerlink" href="#tutorial-single-plot-trace-workflow" title="Permalink to this headline"></a></h2>
+<p>Assume that we already have a Dakota tabular data file to use as our data source.  Beginning with a blank workflow, drag your tabular
+output file from the Project Explorer view onto the workflow canvas.</p>
+<img alt="A file node" src="../../_images/Plotting_Workflow_1.png" />
+<p>Next, drag two “column” nodes from the Arrays folder of the Palette view onto the workflow canvas.  Column nodes can extract single columns from tabular data files.</p>
+<img alt="Two column nodes" src="../../_images/Plotting_Workflow_2.png" />
+<p>Configure each column node to pull a different column from the tabular data file.  Note that the “columnIndex” property field assumes a one-based column
+index, not a zero-based column index.  Also, for Dakota tabular data files, you should specify a value of “1” for the “headerLines” property (that is, disregard
+the first row of the tabular data file, since it represents column labels).</p>
+<p>Then, draw two connector lines from the file node’s “dataOut” port to both column nodes’ “stdin” ports.</p>
+<img alt="Connecting the nodes" src="../../_images/Plotting_Workflow_3.png" />
+<p>Now, open the Chartreuse folder in the Palette and drag <a class="reference internal" href="../ngw/nodes/traceScatterPlot2d.html#ngw-node-tracescatterplot2d"><span class="std std-ref">“traceScatterPlot2d”</span></a> onto the canvas.  Note that it has two input ports – “X” and “Y.”  We will drag
+connectors from our two column nodes’ “stdout” ports to these two input ports.</p>
+<img alt="A traceScatterPlot2d node" src="../../_images/Plotting_Workflow_4.PNG" />
+<p>If you open the Settings editor view for the <a class="reference internal" href="../ngw/nodes/traceScatterPlot2d.html#ngw-node-tracescatterplot2d"><span class="std std-ref">“traceScatterPlot2d”</span></a> node, you will notice that many of the
+<a class="reference internal" href="PlotTraceCreator.html#chartreuse-plot-trace-scatter-2d"><span class="std std-ref">same configuration settings for 2D scatter plots</span></a> that were available in the
+<a class="reference internal" href="PlotTraceCreator.html#chartreuse-plot-trace"><span class="std std-ref">Plot Trace Creator</span></a> dialog are available here as well:</p>
+<img alt="The Settings editor" src="../../_images/Plotting_Workflow_5.PNG" />
+<p>Finally, we need to send our plot to a file to be able to view it. Drag a “file” node from the “File Operations” folder onto the canvas, and connect the
+plotFileDataOut port of our 2D scatter plot node to the “dataIn” port of the file node.  Don’t forget to provide a name for your plot file in the “fileName”
+field of your file node.</p>
+<img alt="Two column nodes" src="../../_images/Plotting_Workflow_13.png" />
+<p>Let’s go ahead and try running this workflow.  Assuming that it is successful, a new .plot file should be added to your workflow’s run directory.
+You can double-click the .plot file to view the result:</p>
+<img alt="Our plot result" src="../../_images/Plotting_Workflow_6.png" />
+</section>
+<section id="tutorial-multiple-plot-traces-workflow">
+<span id="chartreuse-ngw-main-multiple-trace-tutorial"></span><h2>Tutorial: Multiple Plot Traces Workflow<a class="headerlink" href="#tutorial-multiple-plot-traces-workflow" title="Permalink to this headline"></a></h2>
+<p>Let’s make this plot more interesting and add another trace to the same canvas.</p>
+<ul class="simple">
+<li><p>Add another column node to this workflow.  Configure it to extract a different column from our tabular data file.  Don’t forget to set headerLines to 1 to omit the first row.</p></li>
+<li><p>Connect the tabular data file node’s dataOut port to this new column node’s stdin port.</p></li>
+<li><p>You may want to consider using each column node’s label field to keep the column nodes straight.</p></li>
+<li><p>Add a second <a class="reference internal" href="../ngw/nodes/traceScatterPlot2d.html#ngw-node-tracescatterplot2d"><span class="std std-ref">“traceScatterPlot2d”</span></a> node.  Set its Trace Color property to something other than black.</p></li>
+<li><p>Wire the column output ports as appropriate.  In our example, the first two columns represent two variables, and the third column represents a response, so we send the
+response column data to both scatter plot nodes, but each variable only goes to one of the scatter plot nodes.</p></li>
+</ul>
+<img alt="Example of column extractors" src="../../_images/Plotting_Workflow_7.png" />
+<p>We need to combine the two plot traces onto one canvas so that they can be displayed together, so use a <a class="reference internal" href="../ngw/nodes/plotCanvas.html#ngw-node-plotcanvas"><span class="std std-ref">“plotCanvas”</span></a> node from the Chartreuse folder.
+A <a class="reference internal" href="../ngw/nodes/plotCanvas.html#ngw-node-plotcanvas"><span class="std std-ref">“plotCanvas”</span></a> node is somewhat unique in that it does not have any input ports by default, but we can create our own.  Create two new input ports for this node
+(call them trace1 and trace2), and draw connector lines from our two trace nodes’ trace output ports to the two input ports you just created:</p>
+<img alt="Example of PlotCanvas node" src="../../_images/Plotting_Workflow_8.png" />
+<p>Don’t forget to add a file node at the end to save our plot to a Chartreuse .plot file, like we did before:</p>
+<img alt="Final workflow for this tutorial" src="../../_images/Plotting_Workflow_14.png" />
+<p>Now try running this workflow.  We should get a plot where two traces are overlaid on each other on the same canvas:</p>
+<img alt="Two traces on one canvas" src="../../_images/Plotting_Workflow_9.png" />
+</section>
+<section id="tutorial-multiple-plot-canvases">
+<span id="chartreuse-ngw-main-multiple-canvas-tutorial"></span><h2>Tutorial: Multiple Plot Canvases<a class="headerlink" href="#tutorial-multiple-plot-canvases" title="Permalink to this headline"></a></h2>
+<p>Now let’s try separating these two plot traces onto their own canvases.  Because we will be dealing with multiple canvases (and therefore multiple
+<a class="reference internal" href="../ngw/nodes/plotCanvas.html#ngw-node-plotcanvas"><span class="std std-ref">plotCanvas</span></a> nodes) we will need a new type of node to aggregate canvases together – the <a class="reference internal" href="../ngw/nodes/plotWindow.html#ngw-node-plotwindow"><span class="std std-ref">“plotWindow”</span></a> node.</p>
+<ul class="simple">
+<li><p>Add a new <a class="reference internal" href="../ngw/nodes/plotCanvas.html#ngw-node-plotcanvas"><span class="std std-ref">“plotCanvas”</span></a> node and a new <a class="reference internal" href="../ngw/nodes/plotWindow.html#ngw-node-plotwindow"><span class="std std-ref">“plotWindow”</span></a> node to your workflow.</p></li>
+<li><p>Pipe the second <a class="reference internal" href="../ngw/nodes/traceScatterPlot2d.html#ngw-node-tracescatterplot2d"><span class="std std-ref">“traceScatterPlot2d”</span></a> node’s trace output port to the new <a class="reference internal" href="../ngw/nodes/plotCanvas.html#ngw-node-plotcanvas"><span class="std std-ref">“plotCanvas”</span></a> node.</p></li>
+<li><p>Delete the second <a class="reference internal" href="../ngw/nodes/traceScatterPlot2d.html#ngw-node-tracescatterplot2d"><span class="std std-ref">“traceScatterPlot2d”</span></a> node’s original pipe to the first <a class="reference internal" href="../ngw/nodes/plotCanvas.html#ngw-node-plotcanvas"><span class="std std-ref">“plotCanvas”</span></a> node,
+and make sure to delete the first <a class="reference internal" href="../ngw/nodes/plotCanvas.html#ngw-node-plotcanvas"><span class="std std-ref">“plotCanvas”</span></a> node’s second input port.</p></li>
+<li><p>Then, on the new <a class="reference internal" href="../ngw/nodes/plotWindow.html#ngw-node-plotwindow"><span class="std std-ref">“plotWindow”</span></a> node, add two custom input ports (for instance, “canvas1” and “canvas2”) and pipe your two canvas output ports to these two input ports.</p></li>
+<li><p>Also, make sure to set the <a class="reference internal" href="../ngw/nodes/plotWindow.html#ngw-node-plotwindow"><span class="std std-ref">“plotWindow”</span></a> node’s “Column count” field to “2” – this will ensure that the two canvases are stacked horizontally next to each other.
+If you wanted to stack the two canvases vertically, you would set the “Column count” field to 1 (that is, if you think about the canvases being on a grid,
+there would only be one column of canvases, so when the second canvas needs to be placed, it will move down to the next row).</p></li>
+<li><p>Keep the file node at the end as the final destination for our plot data.</p></li>
+</ul>
+<p>When you’re done, your workflow should look something like this:</p>
+<img alt="Example workflow using both PlotCanvas and PlotWindow nodes" src="../../_images/Plotting_Workflow_10.png" />
+<p>Running the workflow should produce the following:</p>
+<img alt="Two canvases on one plot window" src="../../_images/Plotting_Workflow_11.png" />
+</section>
+<section id="tutorial-create-a-scatter-plot-using-an-hdf5-database-file">
+<span id="chartreuse-ngw-hdf-tutorial"></span><h2>Tutorial: Create a Scatter Plot Using an HDF5 Database File<a class="headerlink" href="#tutorial-create-a-scatter-plot-using-an-hdf5-database-file" title="Permalink to this headline"></a></h2>
+<p>Let’s try creating a scatter plot using the <a class="reference internal" href="../ngw/nodes/hdfTraceScatterPlot2d.html#ngw-node-hdftracescatterplot2d"><span class="std std-ref">“hdfTraceScatterPlot2d”</span></a> node, instead of the classic traceScatterPlot2d node.</p>
+<p>Begin by dragging your .h5 file containing Dakota-generated results onto a blank workflow canvas:</p>
+<img alt="From humble beginnings" src="../../_images/Plotting_HDF_8.png" />
+<p>Next, drag an <a class="reference internal" href="../ngw/nodes/hdfTraceScatterPlot2d.html#ngw-node-hdftracescatterplot2d"><span class="std std-ref">“hdfTraceScatterPlot2d”</span></a> node onto the canvas, and connect the “fileReference” output
+port of the h5 file node to the “hdfFile” input port of the <a class="reference internal" href="../ngw/nodes/hdfTraceScatterPlot2d.html#ngw-node-hdftracescatterplot2d"><span class="std std-ref">“hdfTraceScatterPlot2d”</span></a> node:</p>
+<img alt="One node, two node, red node, blue node" src="../../_images/Plotting_HDF_6.png" />
+<p>Note that HDF5-based plotting nodes don’t “just work”, and need some additional configuration.  For example, this scatter plot node needs to be told which
+datasets to extract for the X and Y data of the scatter plot.  With the <a class="reference internal" href="../ngw/nodes/hdfTraceScatterPlot2d.html#ngw-node-hdftracescatterplot2d"><span class="std std-ref">“hdfTraceScatterPlot2d”</span></a> node selected, you can update
+its configuration in the Settings editor:</p>
+<img alt="Set the properties of the scatter plot node" src="../../_images/Plotting_HDF_7.png" />
+<p>At minimum, you must specify the Dakota variable/response names in the “xLabel” and “yLabel” fields.  For more complex Dakota studies with multiple models,
+you may also need to provide the label of the model in the “model” field, but this can be left blank for simple Dakota studies.</p>
+<p>Finally, add a file node to the canvas, and connect the “plotFileDataOut” output port of our scatter plot node to the “dataIn” input port of the file node.  Don’t forget to specify a name for the file!</p>
+<img alt="It's so simple!" src="../../_images/Plotting_HDF_5.png" />
+</section>
+<section id="tutorial-using-the-responsecompare-node">
+<h2>Tutorial:  Using the responseCompare node<a class="headerlink" href="#tutorial-using-the-responsecompare-node" title="Permalink to this headline"></a></h2>
+<p>Let’s try using the <a class="reference internal" href="../ngw/nodes/responseCompare.html#ngw-node-responsecompare"><span class="std std-ref">“responseCompare”</span></a> node.  This node will compare the variability of Dakota’s input variables against each of Dakota’s output responses, using
+one generated canvas per response.  It is similar to the <a class="reference internal" href="PlotTemplates.html#chartreuse-plot-templates-cps"><span class="std std-ref">Chartreuse Plotting Template for centered parameter studies, seen outside of Next-Gen Workflow</span></a>.</p>
+<p>To use this node, we must begin with a Dakota-generated HDF5 file that represents a parameter sweep study.
+That is, one of the following Dakota methods must have been used to generate the HDF5 file: <a class="reference internal" href="../../usingdakota/reference/method-centered_parameter_study.html#method-centered-parameter-study"><span class="std std-ref">centered_parameter_study</span></a>,
+<a class="reference internal" href="../../usingdakota/reference/method-list_parameter_study.html#method-list-parameter-study"><span class="std std-ref">list_parameter_study</span></a>, <a class="reference internal" href="../../usingdakota/reference/method-multidim_parameter_study.html#method-multidim-parameter-study"><span class="std std-ref">multidim_parameter_study</span></a>,
+or <a class="reference internal" href="../../usingdakota/reference/method-vector_parameter_study.html#method-vector-parameter-study"><span class="std std-ref">vector_parameter_study</span></a>.</p>
+<p>Converse to the strict upfront requirements for using a megaplotter, the workflow to build is trivial.  Simply drag the Dakota-generated HDF5 file onto
+the canvas as a “file” node, then drag a <a class="reference internal" href="../ngw/nodes/responseCompare.html#ngw-node-responsecompare"><span class="std std-ref">“responseCompare”</span></a> node node onto the canvas, and connect the “fileReference” output port of the file node to the
+“hdfFile” input port of the <a class="reference internal" href="../ngw/nodes/responseCompare.html#ngw-node-responsecompare"><span class="std std-ref">“responseCompare”</span></a> node node.</p>
+<img alt="responseCompare node" src="../../_images/Plotting_Workflow_16.png" />
+<p>Note that there is no need to configure the <a class="reference internal" href="../ngw/nodes/responseCompare.html#ngw-node-responsecompare"><span class="std std-ref">“responseCompare”</span></a> node node before running (although there are a number of useful configuration options available
+for each megaplotter node).  The megaplotter node will automatically iterate through your HDF5 file and produce the appropriate number of
+plots to represent your Dakota study data.</p>
+<p>Running this workflow will generate a number of .plot files in your workflow’s run directory - one .plot file per response.</p>
+<img alt="Fruits of our labors" src="../../_images/Plotting_Workflow_17.png" />
+<p>Open one of these .plot files to view a strip of plot canvases displaying the explored variable values for that response.  There will be one canvas per Dakota variable.</p>
+<img alt="displacement.plot" src="../../_images/Plotting_Workflow_18.png" />
+</section>
+<section id="recommended-reading">
+<h2>Recommended Reading<a class="headerlink" href="#recommended-reading" title="Permalink to this headline"></a></h2>
+<ul class="simple">
+<li><p>For more traditional Chartreuse plotting options, <a class="reference internal" href="PlotTraceCreator.html#chartreuse-plot-trace"><span class="std std-ref">see the main Chartreuse documentation page</span></a>.</p></li>
+<li><p>For fast plotting outside of Next-Gen Workflow, <a class="reference internal" href="ChartreuseSandbox.html#chartreuse-sandbox-main"><span class="std std-ref">see the documentation page for Chartreuse’s Sandbox View</span></a>.</p></li>
+<li><p>Refer to the <a class="reference internal" href="../ngw/NodeGlossary.html#ngw-node-glossary"><span class="std std-ref">NGW Node Glossary</span></a> for a more comprehensive exploration of node functionality.</p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="ChartreuseSandbox.html" class="btn btn-neutral float-left" title="Chartreuse Sandbox View" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="ColorScales.html" class="btn btn-neutral float-right" title="Using Color Scales in Plot Traces" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <!--
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Sandia National Laboratories.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+  --> 
+
+</footer>
+        </div>
+      </div>
+	  
+	  <div style="background-color: #0f0f0f;color:#fafafa;padding:20px">
+	    <div>
+		  <h2><em>Exceptional service in the national interest</em></h2>
+		</div>
+		<p>© 2023 National Technology and Engineering Solutions of Sandia, LLC. | <a href="https://www.sandia.gov/contact_us/index.html">Questions &amp; Comments</a> | <a href="https://www.sandia.gov/general/privacy-security/index.html">Privacy &amp; Security</a></p>
+		<p><a href="http://energy.gov" rel="noopener noreferrer" target="_blank"><img alt="U.S. Department of Energy" longdesc="https://energy.gov" src="https://www.sandia.gov/_common/images/doe_logo_white.png" style="height:37px; width:140px"></a> <a href="http://nnsa.energy.gov/" rel="noopener noreferrer" target="_blank"> <img alt="National Nuclear Security Administration" longdesc="http://nnsa.gov" src="https://www.sandia.gov/_common/images/nnsa_logo_white.png" style="height:37px; width:116px"></a></p>
+		<p><a href="https://www.sandia.gov">Sandia National Laboratories</a> is a multimission laboratory managed and operated by National Technology and Engineering Solutions of Sandia, LLC., a wholly owned subsidiary of Honeywell International, Inc., for the U.S. Department of Energy’s National Nuclear Security Administration under contract DE-NA-0003525.</p>
+	  </div>	  	  
+	  
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

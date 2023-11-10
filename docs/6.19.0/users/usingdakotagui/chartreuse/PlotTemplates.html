@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Plot Templates &mdash; dakota 6.19.0 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/dakota_theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/sandiaheaderlite.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Chartreuse Sandbox View" href="ChartreuseSandbox.html" />
+    <link rel="prev" title="Plot Manager: Managing Multiple Traces and Canvases" href="PlotManager.html" /> 
+  
+  <meta name="sandia.approval_type" content="formal"/>
+  <meta property="sandia.approved" content="SAND2023-13392 O"/>
+  <meta name="description" content="The Dakota project delivers both state-of-the-art research and robust, usable software for optimization and UQ."/>
+  <meta name="keywords" content="Dakota, optimization, UQ, uncertainty quantification, parametric analysis, design exploration, model calibration, risk analysis"/>
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> dakota
+            <img src="../../_static/dakota_Arrow_Name_Tag_horiz_transparent.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                6.19
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../setupdakota.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../usingdakota/usingdakota.html">Using Dakota</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../usingdakotagui.html">Using Dakota GUI</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#introduction">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#example-search">Example Search</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#wizards">Wizards</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#editing-dakota-input-files">Editing Dakota Input Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#running-dakota">Running Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#running-dakota-remotely">Running Dakota Remotely</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#output-from-dakota">Output from Dakota</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../usingdakotagui.html#gui-tools">GUI Tools</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="Chartreuse.html">Chartreuse</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="PlotTraceCreator.html">Plot Trace Creator</a></li>
+<li class="toctree-l4"><a class="reference internal" href="EditingPlotFiles.html">Editing Plot Files</a></li>
+<li class="toctree-l4"><a class="reference internal" href="PlotManager.html">Plot Manager:  Managing Multiple Traces and Canvases</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Plot Templates</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#bar-chart-variable-comparison">Bar Chart Variable Comparison</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#centered-parameter-study">Centered Parameter Study</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#correlation-coefficient-table">Correlation Coefficient Table</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#iteration-history">Iteration History</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#scatter-plot-matrix">Scatter Plot Matrix</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#sobol-indices">Sobol’ Indices</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="ChartreuseSandbox.html">Chartreuse Sandbox View</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ChartreuseWorkflow.html">Chartreuse in Next-Gen Workflow</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ColorScales.html">Using Color Scales in Plot Traces</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../ngw/NextGenWorkflow.html">Next-Gen Workflow</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../qoi/QOI.html">QOI</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#miscellaneous">Miscellaneous</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../externaltools/externaltools.html">Using External Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../compiling/compiling.html">Compiling Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developingdakota/developingdakota.html">Developing Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../misc/misc.html">Miscellaneous</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">dakota</a>
+      </nav>
+
+	  <!-- SNL Lite header -->
+	  <div class="snlheader-subsite--wrapper-default">
+		<snlheader class="snlheader-subsite" role="snlbanner">
+		  <div class="wrapper">
+			<a href="https://www.sandia.gov/index.html">
+			  <div class="logo-transparent"><p class="logo">Sandia National Laboratories</p></div>
+			</a>
+			<div class="nav-top">
+			  <a class="visuallyhidden" name="mainnav"></a>
+			  <div aria-label="main navigation" class="core-nav-transparent core-nav-transparent--visible" role="navigation">
+				<ul role="navigation" class="secondary-links">
+				  <li id="search-text-link">
+					<a aria-label="Search" href="https://www.sandia.gov/search/">Search Sandia.gov</a>
+				  </li>
+				  <li id="directory-text-link">
+					<a href="https://www.sandia.gov/directory.html" aria-expanded="false" aria-label="Site Directory">All Sandia Websites</a>
+				  </li>
+				</ul>
+			  </div>
+			</div>
+		  </div> 
+		</snlheader>
+	  </div>	  
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../usingdakotagui.html">Using Dakota GUI</a> &raquo;</li>
+          <li><a href="Chartreuse.html">Chartreuse</a> &raquo;</li>
+      <li>Plot Templates</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/usingdakotagui/chartreuse/PlotTemplates.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="plot-templates">
+<span id="chartreuse-plot-templates"></span><h1>Plot Templates<a class="headerlink" href="#plot-templates" title="Permalink to this headline"></a></h1>
+<p>The “Plot Templates” dialog fills a usage gap between the <a class="reference internal" href="PlotTraceCreator.html#chartreuse-plot-trace"><span class="std std-ref">Plot Trace Creator</span></a> dialog and the <a class="reference internal" href="PlotManager.html#chartreuse-plot-manager"><span class="std std-ref">Plot Window Manager</span></a> dialog…</p>
+<ul class="simple">
+<li><p>On one hand, the Plot Trace Creator dialog is limited to creating single-trace, single-canvas plots.</p></li>
+<li><p>On the other hand, the Plot Window Manager dialog becomes increasingly time-consuming to use as you manually add more canvases and traces.
+For instance, creating a comprehensive view of the Dakota centered parameter study for the cantilever beam model would require 21 traces (7 variables x 3 responses),
+which would take a long time to manually input, not to mention the fact that doing so is error-prone, requiring lots of trial and error to get the plot exactly the way you want it.</p></li>
+</ul>
+<p>The Dakota GUI includes templates that facilitate easy access to the most common types of plots that you would need as part of a study performed by Dakota.  To access the Plotting Templates dialog, either…</p>
+<ul class="simple">
+<li><p>From the Plot Window Manager dialog, click on the “Choose a plotting template” button in the top-left corner.</p></li>
+<li><p>Right-click on a file containing plottable data and select Chartreuse &gt; New plot template from this file.</p></li>
+</ul>
+<p>Each available plotting template is described in detail in the following sections.</p>
+<img alt="Plot Templates Dialog" src="../../_images/Plotting_Templates_Intro_1.png" />
+<section id="bar-chart-variable-comparison">
+<span id="chartreuse-plot-templates-barchart"></span><h2>Bar Chart Variable Comparison<a class="headerlink" href="#bar-chart-variable-comparison" title="Permalink to this headline"></a></h2>
+<img alt="Bar chart example" src="../../_images/Plotting_Templates_BarChart_1.png" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<img alt="Bar chart options" src="../../_images/PlottingTemplates_BarChart.png" />
+<ul class="simple">
+<li><p><strong>Plot Data</strong> Select a plottable data source, as in <a class="reference internal" href="PlotTraceCreator.html#chartreuse-plot-trace-getting-data"><span class="std std-ref">the Plot Trace Creator dialog</span></a>.</p></li>
+<li><p><strong>Choose canvas orientation</strong> Determine whether generated canvases will be added horizontally or vertically.</p></li>
+<li><p><strong>Choose bar orientation</strong> Determine whether bars in the bar charts will be oriented vertically or horizontally.</p></li>
+<li><p><strong>Create canvas by</strong> Create one canvas per response or one canvas per variable.  If “Response” is chosen, variables will act as the independent variables
+of each canvas.  If “Variable” is chosen, responses will act as the independent variables of each canvas.  If “All” is chosen, a canvas will be
+created for each variable and each response, and each variable/response relationship will be represented on each canvas.  “All” is not recommended
+unless you have a small number of variables and responses.</p></li>
+<li><p><strong>Autoscale individual canvases</strong> If selected, “autoscale” rules are applied to each canvas, so that each canvas ignores the scale of every other canvas.</p></li>
+<li><p><strong>Sort bars by size (tornado)</strong> Organizes the bars of each bar chart by <em>absolute value magnitude</em>, to create the visual image of a tornado.</p></li>
+<li><p><strong>Filter Parameters and Responses</strong> Use these options to filter parameters and responses from being included in the final plot.</p></li>
+</ul>
+</section>
+<section id="centered-parameter-study">
+<span id="chartreuse-plot-templates-cps"></span><h2>Centered Parameter Study<a class="headerlink" href="#centered-parameter-study" title="Permalink to this headline"></a></h2>
+<img alt="Centered parameter study response comparison" src="../../_images/Plotting_Templates_CPS_3.png" />
+<img alt="Centered parameter study options" src="../../_images/PlottingTemplates_CPS.png" />
+<ul class="simple">
+<li><p><strong>Plot Data</strong> Select a plottable data source, as in <a class="reference internal" href="PlotTraceCreator.html#chartreuse-plot-trace-getting-data"><span class="std std-ref">the Plot Trace Creator dialog</span></a>.</p></li>
+<li><p><strong>Choose an orientation</strong> Determine whether generated canvases will be added horizontally or vertically.</p></li>
+<li><p><strong>Filter Parameters and Responses</strong> Use these options to filter parameters and responses from being included in the final plot.</p></li>
+</ul>
+</section>
+<section id="correlation-coefficient-table">
+<span id="chartreuse-plot-templates-corrcoeff"></span><h2>Correlation Coefficient Table<a class="headerlink" href="#correlation-coefficient-table" title="Permalink to this headline"></a></h2>
+<img alt="Correlation coefficients example" src="../../_images/Plotting_Templates_Correlation_Matrix_3.png" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<img alt="Correlation coefficients table options" src="../../_images/PlottingTemplates_CorrCoeff.png" />
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The color scale for your correlation coefficients table is not controlled by this template.  Instead, this is
+controlled by <a class="reference internal" href="../miscgui/Preferences.html#gui-preferences-chartreuse"><span class="std std-ref">the global Chartreuse preference for default color scale</span></a>.</p>
+</div>
+<ul class="simple">
+<li><p><strong>Plot Data</strong> Select a plottable data source, as in <a class="reference internal" href="PlotTraceCreator.html#chartreuse-plot-trace-getting-data"><span class="std std-ref">the Plot Trace Creator dialog</span></a>.</p></li>
+<li><p><strong>Choose an orientation</strong> Determine whether the correlation coefficients table should put responses on the vertical axis and
+variables on the horizontal axis, or vice versa.  You can also choose “Mirror All Variables” to put both variables and responses on both the horizontal and vertical axes.</p></li>
+<li><p><strong>Filter Parameters and Responses</strong> Use these options to filter parameters and responses from being included in the final plot.</p></li>
+</ul>
+</section>
+<section id="iteration-history">
+<span id="chartreuse-plot-templates-iterhistory"></span><h2>Iteration History<a class="headerlink" href="#iteration-history" title="Permalink to this headline"></a></h2>
+<img alt="Iteration history example" src="../../_images/Plotting_Templates_IterationHistory_1.png" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<img alt="Iteration history options" src="../../_images/PlottingTemplates_IterHistory.png" />
+<ul class="simple">
+<li><p><strong>Plot Data</strong> Select a plottable data source, as in <a class="reference internal" href="PlotTraceCreator.html#chartreuse-plot-trace-getting-data"><span class="std std-ref">the Plot Trace Creator dialog</span></a>.</p></li>
+<li><p><strong>Choose an orientation</strong> Determine whether generated canvases will be added horizontally or vertically.</p></li>
+<li><p><strong>Overlay response canvases</strong> Group responses onto a single stack of overlaid canvases.</p></li>
+<li><p><strong>Ignore unchanging data</strong> If a variable’s value does not change over the course of the study, it does not get its own canvas in the final plot.</p></li>
+<li><p><strong>Filter Parameters and Responses</strong> Use these options to filter parameters and responses from being included in the final plot.</p></li>
+</ul>
+</section>
+<section id="scatter-plot-matrix">
+<span id="chartreuse-plot-templates-scatterplotmatrix"></span><h2>Scatter Plot Matrix<a class="headerlink" href="#scatter-plot-matrix" title="Permalink to this headline"></a></h2>
+<img alt="Scatter plot matrix example" src="../../_images/Plotting_Templates_Matrix_2.png" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<img alt="Scatter plot matrix options" src="../../_images/PlottingTemplates_ScatterPlotMatrix.png" />
+<ul class="simple">
+<li><p><strong>Plot Data</strong> Select a plottable data source, as in <a class="reference internal" href="PlotTraceCreator.html#chartreuse-plot-trace-getting-data"><span class="std std-ref">the Plot Trace Creator dialog</span></a>.</p></li>
+<li><p><strong>Choose a type of scatter plot</strong></p>
+<ul>
+<li><p><strong>Subset A to Subset B</strong> Allows you to put variables along one axis and responses along the other axis.</p></li>
+<li><p><strong>All to All</strong> Allows you to put all variables and all responses on each axis.</p></li>
+</ul>
+</li>
+</ul>
+<img alt="Scatter plot matrix options" src="../../_images/PlottingTemplates_ScatterPlotMatrix_2.png" />
+<ul class="simple">
+<li><p><strong>X Axis</strong> Specify the data for the X axis (only available for the “Subset A to Subset B” option)</p></li>
+<li><p><strong>Y Axis</strong> Specify the data for the Y axis (only available for the “Subset A to Subset B” option)</p></li>
+<li><p><strong>Axis</strong> Specify the data for both axes (only available for the “All to All” option)</p></li>
+<li><p><strong>Draw Linear Regression</strong> Draw a linear regression line on each generated canvas.</p></li>
+<li><p><strong>Blank Diagonal</strong> Do not put data along the diagonal, where a variable or response will be mapped against itself (only available for the “All to All” option)</p></li>
+<li><p><strong>Draw Lower Half Only</strong> Do not put mirrored data on the upper triangle of the grid of canvases (only available for the “All to All” option)</p></li>
+<li><p><strong>Text on Outer Axes Only</strong> Do not repeat canvas text for canvases that are “inside” the grid.  If unchecked, this will lead to redundant canvas labels throughout your final plot.</p></li>
+</ul>
+</section>
+<section id="sobol-indices">
+<span id="chartreuse-plot-templates-sobol"></span><h2>Sobol’ Indices<a class="headerlink" href="#sobol-indices" title="Permalink to this headline"></a></h2>
+<img alt="Sobol indices" src="../../_images/Plotting_Templates_Sobol.png" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<img alt="Sobol indices options" src="../../_images/PlottingTemplates_SobolIndices.png" />
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you select a plottable data file that contains Sobol index data, the Plotting Templates dialog will automatically retrieve this data for you.</p>
+</div>
+<ul class="simple">
+<li><p><strong>Plot Data</strong> Select a plottable data source, as in <a class="reference internal" href="PlotTraceCreator.html#chartreuse-plot-trace-getting-data"><span class="std std-ref">the Plot Trace Creator dialog</span></a>.</p></li>
+<li><p><strong>Effects Type</strong> For Sobol indices, we can plot the main effects dataset, the total effects dataset, or both.</p></li>
+<li><p><strong>One canvas per effects type</strong> Split main effects and total effects onto separate canvases.</p></li>
+<li><p><strong>One canvas per response type</strong> Create a canvas for each response.</p></li>
+<li><p><strong>Sort</strong> Sort the bars by absolute value magnitude (i.e. a tornado plot).</p></li>
+<li><p><strong>Filter Parameters and Responses</strong> Use these options to filter parameters and responses from being included in the final plot.</p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="PlotManager.html" class="btn btn-neutral float-left" title="Plot Manager: Managing Multiple Traces and Canvases" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="ChartreuseSandbox.html" class="btn btn-neutral float-right" title="Chartreuse Sandbox View" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <!--
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Sandia National Laboratories.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+  --> 
+
+</footer>
+        </div>
+      </div>
+	  
+	  <div style="background-color: #0f0f0f;color:#fafafa;padding:20px">
+	    <div>
+		  <h2><em>Exceptional service in the national interest</em></h2>
+		</div>
+		<p>© 2023 National Technology and Engineering Solutions of Sandia, LLC. | <a href="https://www.sandia.gov/contact_us/index.html">Questions &amp; Comments</a> | <a href="https://www.sandia.gov/general/privacy-security/index.html">Privacy &amp; Security</a></p>
+		<p><a href="http://energy.gov" rel="noopener noreferrer" target="_blank"><img alt="U.S. Department of Energy" longdesc="https://energy.gov" src="https://www.sandia.gov/_common/images/doe_logo_white.png" style="height:37px; width:140px"></a> <a href="http://nnsa.energy.gov/" rel="noopener noreferrer" target="_blank"> <img alt="National Nuclear Security Administration" longdesc="http://nnsa.gov" src="https://www.sandia.gov/_common/images/nnsa_logo_white.png" style="height:37px; width:116px"></a></p>
+		<p><a href="https://www.sandia.gov">Sandia National Laboratories</a> is a multimission laboratory managed and operated by National Technology and Engineering Solutions of Sandia, LLC., a wholly owned subsidiary of Honeywell International, Inc., for the U.S. Department of Energy’s National Nuclear Security Administration under contract DE-NA-0003525.</p>
+	  </div>	  	  
+	  
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

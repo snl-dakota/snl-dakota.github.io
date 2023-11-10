@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Simulation File Management &mdash; dakota 6.19.0 documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/dakota_theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/sandiaheaderlite.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Batched Evaluations" href="batchedevaluations.html" />
+    <link rel="prev" title="Simulation Interface Components" href="simulationinterfacecomponents.html" /> 
+  
+  <meta name="sandia.approval_type" content="formal"/>
+  <meta property="sandia.approved" content="SAND2023-13392 O"/>
+  <meta name="description" content="The Dakota project delivers both state-of-the-art research and robust, usable software for optimization and UQ."/>
+  <meta name="keywords" content="Dakota, optimization, UQ, uncertainty quantification, parametric analysis, design exploration, model calibration, risk analysis"/>
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../index.html" class="icon icon-home"> dakota
+            <img src="../../../_static/dakota_Arrow_Name_Tag_horiz_transparent.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                6.19
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../setupdakota.html">Getting Started</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../usingdakota.html">Using Dakota</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../introduction/aboutdakota.html">About Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../introduction/helloworld.html">Dakota Beginner’s Tutorial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../examples.html">Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../introduction/couplingtosimulations.html">Coupling Dakota to a Simulation</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../inputfile.html">Dakota Input File</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../formatting.html">Input File Formatting</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../model.html">Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../variables.html">Variables</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../interfaces.html">Interfaces</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="simulationinterfaces.html">Simulation Interfaces</a></li>
+<li class="toctree-l4"><a class="reference internal" href="buildingblackboxinterface.html">Building a Black-Box Interface to a Simulation Code</a></li>
+<li class="toctree-l4"><a class="reference internal" href="simulationinterfacecomponents.html">Simulation Interface Components</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Simulation File Management</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#file-saving">File Saving</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#file-tagging-for-evaluations">File Tagging for Evaluations</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#hierarchical-tagging">Hierarchical Tagging</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#temporary-files">Temporary Files</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#file-tagging-for-analysis-drivers">File Tagging for Analysis Drivers</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#work-directories">Work Directories</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="batchedevaluations.html">Batched Evaluations</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mappingexamples.html">Parameter to Response Mapping Examples</a></li>
+<li class="toctree-l4"><a class="reference internal" href="dakotainterfacing.html">Parameters and Results Using the Python dakota.interfacing module</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../responses.html">Responses</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../inputstodakota.html">Inputs to Dakota</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../inputspec.html">Dakota Input Spec</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../inputfile.html#video-resources">Video Resources</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../running.html">Running Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../output.html">Dakota Output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../studytypes.html">Study Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../topics.html">Topics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../advanced.html">Advanced Topics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../theory.html">Dakota Theory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../reference.html">Keyword Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usingdakotagui/usingdakotagui.html">Using Dakota GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../externaltools/externaltools.html">Using External Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../compiling/compiling.html">Compiling Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../developingdakota/developingdakota.html">Developing Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../misc/misc.html">Miscellaneous</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">dakota</a>
+      </nav>
+
+	  <!-- SNL Lite header -->
+	  <div class="snlheader-subsite--wrapper-default">
+		<snlheader class="snlheader-subsite" role="snlbanner">
+		  <div class="wrapper">
+			<a href="https://www.sandia.gov/index.html">
+			  <div class="logo-transparent"><p class="logo">Sandia National Laboratories</p></div>
+			</a>
+			<div class="nav-top">
+			  <a class="visuallyhidden" name="mainnav"></a>
+			  <div aria-label="main navigation" class="core-nav-transparent core-nav-transparent--visible" role="navigation">
+				<ul role="navigation" class="secondary-links">
+				  <li id="search-text-link">
+					<a aria-label="Search" href="https://www.sandia.gov/search/">Search Sandia.gov</a>
+				  </li>
+				  <li id="directory-text-link">
+					<a href="https://www.sandia.gov/directory.html" aria-expanded="false" aria-label="Site Directory">All Sandia Websites</a>
+				  </li>
+				</ul>
+			  </div>
+			</div>
+		  </div> 
+		</snlheader>
+	  </div>	  
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../../usingdakota.html">Using Dakota</a> &raquo;</li>
+          <li><a href="../../inputfile.html">Dakota Input File</a> &raquo;</li>
+          <li><a href="../interfaces.html">Interfaces</a> &raquo;</li>
+      <li>Simulation File Management</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../_sources/usingdakota/inputfile/interfaces/simulationfilemanagement.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="simulation-file-management">
+<span id="interfaces-file"></span><h1>Simulation File Management<a class="headerlink" href="#simulation-file-management" title="Permalink to this headline"></a></h1>
+<p>This section describes some management features used for files that
+transfer data between Dakota and simulation codes (i.e., when the system
+call or fork interfaces are used). These features can generate unique
+filenames when Dakota executes programs in parallel and can help you
+debug the interface between Dakota and a simulation code.</p>
+<section id="file-saving">
+<span id="interfaces-file-saving"></span><h2>File Saving<a class="headerlink" href="#file-saving" title="Permalink to this headline"></a></h2>
+<p>The <code class="docutils literal notranslate"><a class="reference external" href="../../../usingdakota/reference/file_save.html"><span class="pre">file_save</span></a></code> option in the interface specification allows the user
+to control whether parameters and results files are retained or removed from
+the working directory after the analysis completes. Dakota’s default behavior
+is to remove files once their use is complete to reduce clutter. If the method
+output setting is verbose, a file remove notification will follow the function
+evaluation echo, e.g.,</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>driver /usr/tmp/aaaa20305 /usr/tmp/baaa20305
+Removing /usr/tmp/aaaa20305 and /usr/tmp/baaa20305
+</pre></div>
+</div>
+<p>However, if <code class="docutils literal notranslate"><span class="pre">file_save</span></code> appears in the interface specification, these
+files will not be removed. This latter behavior is often useful for
+debugging communication between Dakota and simulator programs. An
+example of a <code class="docutils literal notranslate"><span class="pre">file_save</span></code> specification is shown in the <a class="reference internal" href="#interfaces-file-tagging1"><span class="std std-ref">file tagging
+example</span></a> below.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Before driver execution, any previous results file will be removed
+immediately prior to executing the analysis driver. This behavior
+addresses a previously common problem resulting from users starting
+Dakota with stale results files in the run directory. To override
+this default behavior and preserve any existing results files,
+you must specify <code class="docutils literal notranslate"><a class="reference external" href="../../../usingdakota/reference/interface-analysis_drivers-fork-allow_existing_results.html"><span class="pre">allow_existing_results</span></a></code>.</p>
+</div>
+</section>
+<section id="file-tagging-for-evaluations">
+<span id="interfaces-file-tagging1"></span><h2>File Tagging for Evaluations<a class="headerlink" href="#file-tagging-for-evaluations" title="Permalink to this headline"></a></h2>
+<p>When a user provides <code class="docutils literal notranslate"><a class="reference external" href="../../../usingdakota/reference/interface-analysis_drivers-fork-parameters_file.html"><span class="pre">parameters_file</span></a></code>
+and <code class="docutils literal notranslate"><a class="reference external" href="../../../usingdakota/reference/interface-analysis_drivers-fork-results_file.html"><span class="pre">results_file</span></a></code> specifications,
+the <code class="docutils literal notranslate"><a class="reference external" href="../../../usingdakota/reference/interface-analysis_drivers-fork-file_tag.html"><span class="pre">file_tag</span></a></code> option in the interface specification
+causes Dakota to make the names of these files unique by appending the
+function evaluation number to the root file names. Default behavior is
+to not tag these files, which has the advantage of allowing the user to
+ignore command line argument passing and always read to and write from
+the same file names. However, it has the disadvantage that files may be
+overwritten from one function evaluation to the next. When <code class="docutils literal notranslate"><span class="pre">file_tag</span></code>
+appears in the interface specification, the file names are made unique
+by the appended evaluation number. This uniqueness requires the user’s
+interface to get the names of these files from the command line. The
+file tagging feature is most often used when concurrent simulations are
+running in a common disk space, since it can prevent conflicts between
+the simulations. An example specification of <code class="docutils literal notranslate"><span class="pre">file_tag</span></code> and
+<code class="docutils literal notranslate"><a class="reference external" href="../../../usingdakota/reference/interface-analysis_drivers-fork-file_save.html"><span class="pre">file_save</span></a></code> is shown below:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span><span class="k">interface</span>
+    system
+        analysis_driver = &#39;text_book&#39;
+        parameters_file = &#39;text_book.in&#39;
+        results_file    = &#39;text_book.out&#39;
+        file_tag
+                file_save
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>When a user specifies names for the parameters and
+results files and <code class="docutils literal notranslate"><span class="pre">file_save</span></code> is used without <code class="docutils literal notranslate"><span class="pre">file_tag</span></code>, untagged
+files are used in the function evaluation but are then moved to tagged
+files after the function evaluation is complete, to prevent overwriting
+files for which a <code class="docutils literal notranslate"><span class="pre">file_save</span></code> request has been given. If the output
+control is set to verbose, then a notification similar to the following
+will follow the function evaluation echo:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>driver params.in results.out
+Files with non-unique names will be tagged to enable file_save:
+Moving params.in to params.in.1
+Moving results.out to results.out.1
+</pre></div>
+</div>
+</div>
+<section id="hierarchical-tagging">
+<h3>Hierarchical Tagging<a class="headerlink" href="#hierarchical-tagging" title="Permalink to this headline"></a></h3>
+<p>When a model’s specification includes the
+<code class="docutils literal notranslate"><a class="reference external" href="../../../usingdakota/reference/model-hierarchical_tagging.html"><span class="pre">hierarchical_tagging</span></a></code> keyword, the tag applied to parameter and
+results file names of any subordinate interfaces will reflect any model
+hierarchy present. This option is useful for studies involving multiple
+models with a nested or hierarchical relationship. For example a nested
+model has a sub-method, which itself likely operates on a sub-model, or
+a hierarchical approximation involves coordination of low and high
+fidelity models. Specifying <code class="docutils literal notranslate"><span class="pre">hierarchical_tagging</span></code> will yield function
+evaluation identifiers (“tags”) composed of the evaluation IDs of the
+models involved, e.g., outermodel.innermodel.interfaceid = 4.9.2. This
+communicates the outer contexts to the analysis driver when performing a
+function evaluation.</p>
+<p>For an example of using hierarchical tagging in a nested model context,
+see <code class="docutils literal notranslate"><span class="pre">dakota/share/dakota/test/dakota_uq_timeseries_*_optinterf.in</span></code>.</p>
+</section>
+</section>
+<section id="temporary-files">
+<span id="interfaces-file-temporary"></span><h2>Temporary Files<a class="headerlink" href="#temporary-files" title="Permalink to this headline"></a></h2>
+<p>If <code class="docutils literal notranslate"><a class="reference external" href="../../../usingdakota/reference/interface-analysis_drivers-fork-parameters_file.html"><span class="pre">parameters_file</span></a></code>
+and <code class="docutils literal notranslate"><a class="reference external" href="../../../usingdakota/reference/interface-analysis_drivers-fork-results_file.html"><span class="pre">results_file</span></a></code> are not specified by the
+user, temporary files having generated names are used. For example, a
+system call to a single analysis driver might appear as:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>driver /tmp/dakota_params_aaaa2035 /tmp/dakota_results_baaa2030
+</pre></div>
+</div>
+<p>and a system call to an analysis driver with filter programs might
+appear as:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>ifilter /tmp/dakota_params_aaaa2490 /tmp/dakota_results_baaa2490;
+     driver /tmp/dakota_params_aaaa2490 tmp/dakota_results_baaa2490;
+     ofilter /tmp/dakota_params_aaaa2490 /tmp/dakota_results_baa22490
+</pre></div>
+</div>
+<p>These files have unique names created by Boost filesystem utilities.
+This uniqueness requires the user’s interface to get the names of these
+files from the command line. File tagging with evaluation number is
+unnecessary with temporary files, but can be helpful for the user
+workflow to identify the evaluation number. Thus <code class="docutils literal notranslate"><a class="reference external" href="../../../usingdakota/reference/interface-analysis_drivers-fork-file_tag.html"><span class="pre">file_tag</span></a></code>
+requests will be honored. A <code class="docutils literal notranslate"><a class="reference external" href="../../../usingdakota/reference/interface-analysis_drivers-fork-file_save.html"><span class="pre">file_save</span></a></code>
+request will be honored, but it should be used with care since the temporary file
+directory could easily become cluttered without the user noticing.</p>
+</section>
+<section id="file-tagging-for-analysis-drivers">
+<span id="interfaces-file-tagging2"></span><h2>File Tagging for Analysis Drivers<a class="headerlink" href="#file-tagging-for-analysis-drivers" title="Permalink to this headline"></a></h2>
+<p>When multiple analysis drivers are involved in performing a function
+evaluation with either the system call or fork simulation interface, a
+secondary file tagging is <em>automatically</em> used to distinguish the
+results files used for the individual analyses. This applies to both the
+case of user-specified names for the parameters and results files and
+the default temporary file case. Examples for the former case were shown
+previously in the sections on multiple analysis drivers
+<a class="reference internal" href="simulationinterfacecomponents.html#interfaces-components-multiple1"><span class="std std-ref">without filters</span></a> and
+<a class="reference internal" href="simulationinterfacecomponents.html#interfaces-components-multiple2"><span class="std std-ref">with filters</span></a>.</p>
+<p>The following examples demonstrate the latter temporary file case. Even though Unix
+temporary files have unique names for a particular function evaluation,
+tagging is still needed to manage the individual contributions of the
+different analysis drivers to the response results, since the same root
+results filename is used for each component. For the system call
+interface, the syntax would be similar to the following:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>ifilter /var/tmp/aaawkaOKZ /var/tmp/baaxkaOKZ;
+     driver1 /var/tmp/aaawkaOKZ /var/tmp/baaxkaOKZ.1;
+     driver2 /var/tmp/aaawkaOKZ /var/tmp/baaxkaOKZ.2;
+     driver3 /var/tmp/aaawkaOKZ /var/tmp/baaxkaOKZ.3;
+     ofilter /var/tmp/aaawkaOKZ /var/tmp/baaxkaOKZ
+</pre></div>
+</div>
+<p>and, for the fork interface, similar to:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>blocking fork:
+     ifilter /var/tmp/aaawkaOKZ /var/tmp/baaxkaOKZ;
+     driver1 /var/tmp/aaawkaOKZ /var/tmp/baaxkaOKZ.1;
+     driver2 /var/tmp/aaawkaOKZ /var/tmp/baaxkaOKZ.2;
+     driver3 /var/tmp/aaawkaOKZ /var/tmp/baaxkaOKZ.3;
+     ofilter /var/tmp/aaawkaOKZ /var/tmp/baaxkaOKZ
+</pre></div>
+</div>
+<p>Tagging of results files with an analysis identifier is needed since
+each analysis driver must contribute a user-defined subset of the total
+response results for the evaluation. If an output filter is not
+supplied, Dakota will combine these portions through a simple overlaying
+of the individual contributions (i.e., summing the results in <code class="docutils literal notranslate"><span class="pre">/var/tmp/baaxkaOKZ.1</span></code>,
+<code class="docutils literal notranslate"><span class="pre">/var/tmp/baaxkaOKZ.2</span></code>, and <code class="docutils literal notranslate"><span class="pre">/var/tmp/baaxkaOKZ.3</span></code>).</p>
+<p>If this simple approach is inadequate, then an output filter should be
+supplied to perform the combination. This is the reason why the results
+file for the output filter does not use analysis tagging; it is
+responsible for the results combination (i.e., combining <code class="docutils literal notranslate"><span class="pre">/var/tmp/baaxkaOKZ.1</span></code>,
+<code class="docutils literal notranslate"><span class="pre">/var/tmp/baaxkaOKZ.2</span></code>, and <code class="docutils literal notranslate"><span class="pre">/var/tmp/baaxkaOKZ.3</span></code> into <code class="docutils literal notranslate"><span class="pre">/var/tmp/baaxkaOKZ</span></code>).
+In this case, Dakota will read only the results file from the output
+filter (i.e., <code class="docutils literal notranslate"><span class="pre">/var/tmp/baaxkaOKZ</span></code>) and interpret it as the total response set for the
+evaluation.</p>
+<p>Parameters files are not currently tagged with an analysis identifier.
+This reflects the fact that Dakota does not attempt to subdivide the
+requests in the active set vector for different analysis portions.
+Rather, the total active set vector is passed to each analysis driver
+and the appropriate subdivision of work <em>must be defined by the user</em>.
+This allows the division of labor to be very flexible. In some cases,
+this division might occur across response functions, with different
+analysis drivers managing the data requests for different response
+functions. And in other cases, the subdivision might occur within
+response functions, with different analysis drivers contributing
+portions to each of the response functions. The only restriction is that
+each of the analysis drivers must follow the response format dictated by
+the total active set vector. For response data for which an analysis
+driver has no contribution, 0’s must be used as placeholders.</p>
+</section>
+<section id="work-directories">
+<span id="interfaces-workdir"></span><h2>Work Directories<a class="headerlink" href="#work-directories" title="Permalink to this headline"></a></h2>
+<p>Sometimes it is convenient for simulators and filters to run in a
+directory different from the one where Dakota is invoked. For instance,
+when performing concurrent evaluations and/or analyses, it is often
+necessary to cloister input and output files in separate directories to
+avoid conflicts. A simulator script used as an <a class="reference internal" href="../../reference/interface-analysis_drivers.html#interface-analysis-drivers"><span class="std std-ref">analysis driver</span></a>
+can, of course, include commands to change to a different directory if desired
+(while still arranging to write a results file in the original
+directory), but Dakota has facilities that may simplify the creation of
+simulator scripts.</p>
+<p>When the <a class="reference internal" href="../../reference/interface-analysis_drivers-fork-work_directory.html#interface-analysis-drivers-fork-work-directory"><span class="std std-ref">work directory</span></a> feature is enabled,
+Dakota will create a directory for each evaluation/analysis (with
+optional tagging and saving as with files). To enable this feature,
+an interface specification must include the keyword <code class="docutils literal notranslate"><a class="reference external" href="../../../usingdakota/reference/interface-analysis_drivers-fork-work_directory.html"><span class="pre">work_directory</span></a></code>,
+then Dakota will arrange for the simulator and any filters to wake up in
+the work directory, with $PATH adjusted (if necessary) so programs that
+could be invoked without a relative path to them (i.e., by a name not
+involving any slashes) from Dakota’s directory can also be invoked from
+the simulator’s (and filter’s) directory.</p>
+<p>On occasion, it is convenient
+for the simulator to have various files, e.g., data files, available in
+the directory where it runs. If, say, <code class="docutils literal notranslate"><span class="pre">my/special/directory/</span></code> is such a directory (as seen from
+Dakota’s directory), the interface specification</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>work_directory
+    named &#39;my/special/directory&#39;
+</pre></div>
+</div>
+<p>would cause Dakota to start the simulator and any filters in that
+directory. If the directory did not already exist, Dakota would create
+it and would remove it after the simulator (or output filter, if
+specified) finished, unless instructed not to do so by the appearance of
+<code class="docutils literal notranslate"><a class="reference external" href="../../../usingdakota/reference/interface-analysis_drivers-fork-work_directory-directory_save.html"><span class="pre">directory_save</span></a></code>
+in the interface specification. If <code class="docutils literal notranslate"><a class="reference external" href="../../../usingdakota/reference/interface-analysis_drivers-fork-work_directory-named.html"><span class="pre">named</span></a></code>
+does not appear, then <code class="docutils literal notranslate"><span class="pre">directory_save</span></code> cannot appear either, and Dakota creates a temporary
+directory (using the <code class="docutils literal notranslate"><span class="pre">tmpnam</span></code> function to determine its name) for use
+by the simulator and any filters. If you specify
+<code class="docutils literal notranslate"><a class="reference external" href="../../../usingdakota/reference/interface-analysis_drivers-fork-work_directory-directory_tag.html"><span class="pre">directory_tag</span></a></code>,
+Dakota causes each invocation of the
+simulator and any filters to start in a subdirectory of the work
+directory with a name composed of the work directory’s name followed by
+a period and the invocation number (1, 2, <span class="math notranslate nohighlight">\(...\)</span>); this might be
+useful in debugging.</p>
+<p>Sometimes it can be helpful for the simulator and filters to start in a
+new directory populated with some files. Adding</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>link_files &#39;templatedir/*&#39;
+</pre></div>
+</div>
+<p>to the work directory specification would cause the contents of
+directory <code class="docutils literal notranslate"><span class="pre">templatedir/</span></code> to be linked into the work directory. Linking makes sense if
+files are large, but when practical, it is far more reliable to have
+copies of the files; adding <code class="docutils literal notranslate"><a class="reference external" href="../../../usingdakota/reference/interface-analysis_drivers-fork-work_directory-copy_files.html"><span class="pre">copy_files</span></a></code>
+to the specification would cause the contents of the template directory to be copied to the work
+directory. The linking or copying does not overwrite existing files
+unless <code class="docutils literal notranslate"><a class="reference external" href="../../../usingdakota/reference/interface-analysis_drivers-fork-work_directory-replace.html"><span class="pre">replace</span></a></code> also
+appears in the specification.</p>
+<p>Here is a summary of possibilities for a work directory specification,
+with <code class="docutils literal notranslate"><span class="pre">[...]</span></code> denoting that <span class="math notranslate nohighlight">\(...\)</span> is optional:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>work_directory
+[ named &#39;...&#39; ]
+[ directory_tag ]
+[ directory_save ]
+[ link_files &#39;...&#39; &#39;...&#39; ]
+[ copy_files &#39;...&#39; &#39;...&#39; ]
+[ replace ]
+</pre></div>
+</div>
+<p><a class="reference internal" href="#fig-interface-workdir"><span class="std std-numref">Listing 19</span></a> contains an
+example of these specifications in a Dakota input file for constrained
+optimization.</p>
+<div class="literal-block-wrapper docutils container" id="fig-interface-workdir">
+<div class="code-block-caption"><span class="caption-number">Listing 19 </span><span class="caption-text">The <code class="docutils literal notranslate"><span class="pre">workdir_textbook.in</span></code> input file.</span><a class="headerlink" href="#fig-interface-workdir" title="Permalink to this code"></a></div>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span><span class="c"># Minimal example with common work directory specifications</span>
+
+<span class="k">method</span>
+  rol
+    max_iterations = 60,
+    variable_tolerance = 1e-6
+    constraint_tolerance = 1e-6
+
+<span class="k">variables</span>
+  continuous_design = 2
+    initial_point    0.9    1.1
+    upper_bounds     5.8    2.9
+    lower_bounds     0.5   -2.9
+    descriptors      &#39;x1&#39;   &#39;x2&#39;
+
+<span class="k">interface</span>
+  # text_book driver must be in run directory or on PATH
+  fork analysis_driver = &#39;text_book&#39;
+    parameters_file = &#39;params.in&#39;
+    results_file    = &#39;results.out&#39;
+  work_directory named &#39;tb_work&#39;
+    directory_tag directory_save file_save
+
+<span class="k">responses</span>
+  objective_functions = 1
+  nonlinear_inequality_constraints = 2
+  analytic_gradients
+  no_hessians
+</pre></div>
+</div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="simulationinterfacecomponents.html" class="btn btn-neutral float-left" title="Simulation Interface Components" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="batchedevaluations.html" class="btn btn-neutral float-right" title="Batched Evaluations" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <!--
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Sandia National Laboratories.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+  --> 
+
+</footer>
+        </div>
+      </div>
+	  
+	  <div style="background-color: #0f0f0f;color:#fafafa;padding:20px">
+	    <div>
+		  <h2><em>Exceptional service in the national interest</em></h2>
+		</div>
+		<p>© 2023 National Technology and Engineering Solutions of Sandia, LLC. | <a href="https://www.sandia.gov/contact_us/index.html">Questions &amp; Comments</a> | <a href="https://www.sandia.gov/general/privacy-security/index.html">Privacy &amp; Security</a></p>
+		<p><a href="http://energy.gov" rel="noopener noreferrer" target="_blank"><img alt="U.S. Department of Energy" longdesc="https://energy.gov" src="https://www.sandia.gov/_common/images/doe_logo_white.png" style="height:37px; width:140px"></a> <a href="http://nnsa.energy.gov/" rel="noopener noreferrer" target="_blank"> <img alt="National Nuclear Security Administration" longdesc="http://nnsa.gov" src="https://www.sandia.gov/_common/images/nnsa_logo_white.png" style="height:37px; width:116px"></a></p>
+		<p><a href="https://www.sandia.gov">Sandia National Laboratories</a> is a multimission laboratory managed and operated by National Technology and Engineering Solutions of Sandia, LLC., a wholly owned subsidiary of Honeywell International, Inc., for the U.S. Department of Energy’s National Nuclear Security Administration under contract DE-NA-0003525.</p>
+	  </div>	  	  
+	  
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

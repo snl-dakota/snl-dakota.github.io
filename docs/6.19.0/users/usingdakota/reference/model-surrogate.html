@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>surrogate &mdash; dakota 6.19.0 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/dakota_theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/sandiaheaderlite.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="id_surrogates" href="model-surrogate-id_surrogates.html" />
+    <link rel="prev" title="cost_recovery_metadata" href="model-single-cost_recovery_metadata.html" /> 
+  
+  <meta name="sandia.approval_type" content="formal"/>
+  <meta property="sandia.approved" content="SAND2023-13392 O"/>
+  <meta name="description" content="The Dakota project delivers both state-of-the-art research and robust, usable software for optimization and UQ."/>
+  <meta name="keywords" content="Dakota, optimization, UQ, uncertainty quantification, parametric analysis, design exploration, model calibration, risk analysis"/>
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> dakota
+            <img src="../../_static/dakota_Arrow_Name_Tag_horiz_transparent.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                6.19
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../setupdakota.html">Getting Started</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../usingdakota.html">Using Dakota</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../introduction/aboutdakota.html">About Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../introduction/helloworld.html">Dakota Beginner’s Tutorial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples.html">Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../introduction/couplingtosimulations.html">Coupling Dakota to a Simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../inputfile.html">Dakota Input File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../running.html">Running Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../output.html">Dakota Output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../studytypes.html">Study Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../topics.html">Topics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../advanced.html">Advanced Topics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../theory.html">Dakota Theory</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../reference.html">Keyword Reference</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="environment.html">environment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="method.html">method</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="model.html">model</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="model-id_model.html">id_model</a></li>
+<li class="toctree-l4"><a class="reference internal" href="model-single.html">single</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">surrogate</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="model-surrogate-id_surrogates.html">id_surrogates</a></li>
+<li class="toctree-l5"><a class="reference internal" href="model-surrogate-global.html">global</a></li>
+<li class="toctree-l5"><a class="reference internal" href="model-surrogate-multipoint.html">multipoint</a></li>
+<li class="toctree-l5"><a class="reference internal" href="model-surrogate-local.html">local</a></li>
+<li class="toctree-l5"><a class="reference internal" href="model-surrogate-ensemble.html">ensemble</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="model-nested.html">nested</a></li>
+<li class="toctree-l4"><a class="reference internal" href="model-active_subspace.html">active_subspace</a></li>
+<li class="toctree-l4"><a class="reference internal" href="model-adapted_basis.html">adapted_basis</a></li>
+<li class="toctree-l4"><a class="reference internal" href="model-random_field.html">random_field</a></li>
+<li class="toctree-l4"><a class="reference internal" href="model-variables_pointer.html">variables_pointer</a></li>
+<li class="toctree-l4"><a class="reference internal" href="model-responses_pointer.html">responses_pointer</a></li>
+<li class="toctree-l4"><a class="reference internal" href="model-hierarchical_tagging.html">hierarchical_tagging</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="variables.html">variables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="interface.html">interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="responses.html">responses</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../usingdakotagui/usingdakotagui.html">Using Dakota GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../externaltools/externaltools.html">Using External Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../compiling/compiling.html">Compiling Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developingdakota/developingdakota.html">Developing Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../misc/misc.html">Miscellaneous</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">dakota</a>
+      </nav>
+
+	  <!-- SNL Lite header -->
+	  <div class="snlheader-subsite--wrapper-default">
+		<snlheader class="snlheader-subsite" role="snlbanner">
+		  <div class="wrapper">
+			<a href="https://www.sandia.gov/index.html">
+			  <div class="logo-transparent"><p class="logo">Sandia National Laboratories</p></div>
+			</a>
+			<div class="nav-top">
+			  <a class="visuallyhidden" name="mainnav"></a>
+			  <div aria-label="main navigation" class="core-nav-transparent core-nav-transparent--visible" role="navigation">
+				<ul role="navigation" class="secondary-links">
+				  <li id="search-text-link">
+					<a aria-label="Search" href="https://www.sandia.gov/search/">Search Sandia.gov</a>
+				  </li>
+				  <li id="directory-text-link">
+					<a href="https://www.sandia.gov/directory.html" aria-expanded="false" aria-label="Site Directory">All Sandia Websites</a>
+				  </li>
+				</ul>
+			  </div>
+			</div>
+		  </div> 
+		</snlheader>
+	  </div>	  
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../usingdakota.html">Using Dakota</a> &raquo;</li>
+          <li><a href="../reference.html">Keyword Reference</a> &raquo;</li>
+          <li><a href="model.html">model</a> &raquo;</li>
+      <li>surrogate</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/usingdakota/reference/model-surrogate.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="surrogate">
+<span id="model-surrogate"></span><h1>surrogate<a class="headerlink" href="#surrogate" title="Permalink to this headline"></a></h1>
+<p>An empirical model that is created from data or the results of a submodel</p>
+<div class="toctree-wrapper compound">
+</div>
+<p><strong>Specification</strong></p>
+<ul class="simple">
+<li><p><em>Alias:</em> None</p></li>
+<li><p><em>Arguments:</em> None</p></li>
+</ul>
+<p><strong>Child Keywords:</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 22%" />
+<col style="width: 18%" />
+<col style="width: 18%" />
+<col style="width: 42%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Required/Optional</p></th>
+<th class="head"><p>Description of
+Group</p></th>
+<th class="head"><p>Dakota Keyword</p></th>
+<th class="head"><p>Dakota Keyword Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td colspan="2"><p>Optional</p></td>
+<td><p><a class="reference external" href="model-surrogate-id_surrogates.html">id_surrogates</a></p></td>
+<td><p>Identifies the subset of the response
+functions by number that are to be
+approximated (the default is all functions).</p></td>
+</tr>
+<tr class="row-odd"><td rowspan="4"><p>Required (Choose One)</p></td>
+<td rowspan="4"><p>Surrogate Category</p></td>
+<td><p><a class="reference external" href="model-surrogate-global.html">global</a></p></td>
+<td><p>Select a surrogate model with global support</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="model-surrogate-multipoint.html">multipoint</a></p></td>
+<td><p>Construct a surrogate from multiple existing
+training points</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="model-surrogate-local.html">local</a></p></td>
+<td><p>Build a locally accurate surrogate from data
+at a single point</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="model-surrogate-ensemble.html">ensemble</a></p></td>
+<td><p>Ensemble surrogates employ a collection of
+lower-fidelity models to approximate a truth
+reference model at reduced cost.</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Description</strong></p>
+<p>Surrogate models are inexpensive approximate models that are intended
+to capture the salient features of an expensive high-fidelity model.
+They can be used to explore the variations in response quantities over
+regions of the parameter space, or they can serve as inexpensive
+stand-ins for optimization or uncertainty quantification studies (see,
+for example, the surrogate-based optimization methods,
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-surrogate_based_global.html"><span class="pre">surrogate_based_global</span></a></code> and <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-surrogate_based_local.html"><span class="pre">surrogate_based_local</span></a></code>).</p>
+<p>Surrogate models supported in Dakota are
+categorized as Data Fitting or Ensemble, as shown below.
+Each of these surrogate types provides an approximate representation
+of a “truth” model which is used to perform the parameter to response
+mappings. This approximation is built and updated using results from the
+truth model, called the “training data”.</p>
+<ul>
+<li><p>Data fits: <em>Known Issue: When using discrete variables, there have been sometimes significant differences in surrogate behavior observed across computing platforms in some cases.  The cause has not yet been fully diagnosed and is currently under investigation.  In addition, guidance on appropriate construction and use of surrogates with discrete variables is under development.  In the meantime, users should therefore be aware that there is a risk of inaccurate results when using surrogates with discrete variables.</em> Data fitting methods involve construction of an approximation or surrogate model using data (response values, gradients, and Hessians) generated from the original truth model. Data fit methods can be further categorized as local, multipoint, and global approximation techniques, based on the number of points used in generating the data fit.</p>
+<ol class="arabic simple">
+<li><p>Local: built from response data from a single point in parameter space</p></li>
+</ol>
+<blockquote>
+<div><ul class="simple">
+<li><p>Taylor series expansion: <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/model-surrogate-local-taylor_series.html"><span class="pre">taylor_series</span></a></code> Training data consists of a single point, plus gradient and Hessian information.</p></li>
+</ul>
+</div></blockquote>
+<ol class="arabic simple" start="2">
+<li><p>Multipoint:  built from two or more points in parameter space, often involving the current and previous iterates of a minimization algorithm.</p></li>
+</ol>
+<blockquote>
+<div><ul class="simple">
+<li><p>TANA-3: <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/model-surrogate-multipoint-tana.html"><span class="pre">tana</span></a></code> Training Data comes from a few previously evaluated points</p></li>
+</ul>
+</div></blockquote>
+<ol class="arabic simple" start="3">
+<li><p>Global full space response surface methods:</p></li>
+</ol>
+<blockquote>
+<div><ul class="simple">
+<li><p>Polynomial regression: <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/model-surrogate-global-polynomial.html"><span class="pre">polynomial</span></a></code></p></li>
+<li><p>Gaussian process (Kriging): <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/model-surrogate-global-gaussian_process.html"><span class="pre">gaussian_process</span></a></code></p></li>
+<li><p>Artifical neutral network: <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/model-surrogate-global-neural_network.html"><span class="pre">neural_network</span></a></code></p></li>
+<li><p>MARS: <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/model-surrogate-global-mars.html"><span class="pre">mars</span></a></code></p></li>
+<li><p>Radial Basis Functions: <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/model-surrogate-global-radial_basis.html"><span class="pre">radial_basis</span></a></code></p></li>
+<li><p>Orthogonal polynomials (only supported in PCE/SC for now): <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-polynomial_chaos.html"><span class="pre">polynomial_chaos</span></a></code> and <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-stoch_collocation.html"><span class="pre">stoch_collocation</span></a></code> Training data is generated using either a design of experiments method applied to the truth model ( specified by <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/model-surrogate-global-dace_method_pointer.html"><span class="pre">dace_method_pointer</span></a></code>), or from saved data (specified by <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/model-surrogate-global-reuse_points.html"><span class="pre">reuse_points</span></a></code> ) in a restart database, or an import file.</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>Multifidelity/ensemble: Multifidelity modeling involves the use of a low-fidelity physics-based model as a surrogate for the original high-fidelity model. The low-fidelity model typically involves a coarser mesh, looser convergence tolerances, reduced element order, or omitted physics. See <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/model-surrogate-ensemble.html"><span class="pre">ensemble</span></a></code>.</p></li>
+</ul>
+<p>The global and ensemble surrogates have a correction feature
+in order to improve the local accuracy of the surrogate models.
+The correction factors force the surrogate models to match the true
+function values and possibly true function derivatives at the center
+point of each trust region.</p>
+<p>Details can be found on global <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/model-surrogate-global-correction.html"><span class="pre">correction</span></a></code>
+or ensemble <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/model-surrogate-ensemble-ordered_model_fidelities-correction.html"><span class="pre">correction</span></a></code>.</p>
+<p><strong>Theory</strong></p>
+<p>Surrogate models are used extensively in the
+surrogate-based optimization and least squares methods, in
+which the goals are to reduce expense by minimizing the number of
+truth function evaluations and to smooth out noisy data with a global
+data fit. However, the use of surrogate models is not restricted to
+optimization techniques; uncertainty quantification and optimization
+under uncertainty methods are other primary users.</p>
+<p><em>Data Fit Surrogate Models</em></p>
+<p>A surrogate of the {em data fit} type is a non-physics-based
+approximation typically involving interpolation or regression of a set
+of data generated from the original model. Data fit surrogates can be
+further characterized by the number of data points used in the fit,
+where a local approximation (e.g., first or second-order Taylor
+series) uses data from a single point, a multipoint approximation
+(e.g., two-point exponential approximations (TPEA) or two-point
+adaptive nonlinearity approximations (TANA)) uses a small number of
+data points often drawn from the previous iterates of a particular
+algorithm, and a global approximation (e.g., polynomial response
+surfaces, kriging/gaussian_process, neural networks, radial basis
+functions, splines)
+uses a set of data points distributed over the domain of interest,
+often generated using a design of computer experiments.</p>
+<p>Dakota contains several types of surface fitting methods that can be
+used with optimization and uncertainty quantification methods and
+strategies such as surrogate-based optimization and optimization under
+uncertainty. These are: polynomial models (linear, quadratic, and
+cubic), first-order Taylor series expansion, kriging spatial
+interpolation, artificial neural networks, multivariate adaptive
+regression splines, radial basis functions, and moving least squares.
+With the exception of Taylor series methods, all of the above methods
+listed in the previous sentence are accessed in Dakota through the
+Surfpack library. All of these surface fitting methods can be
+applied to problems having an arbitrary number of design parameters.
+However, surface fitting methods usually are practical only for
+problems where there are a small number of parameters (e.g., a maximum
+of somewhere in the range of 30-50 design parameters). The
+mathematical models created by surface fitting methods have a variety
+of names in the engineering community. These include surrogate models,
+meta-models, approximation models, and response surfaces. For this
+manual, the terms surface fit model and surrogate model are used.</p>
+<p>The data fitting methods in Dakota include software developed by
+Sandia researchers and by various researchers in the academic
+community.</p>
+<p><em>Multifidelity Surrogate Models</em></p>
+<p>A second type of surrogate is the {em model ensemble} type (also
+called multifidelity, variable fidelity, variable complexity, etc.).
+In this case, one or more models that are still physics-based but are
+of lower fidelity (e.g., coarser discretization, reduced element
+order, looser convergence tolerances, omitted physics) are used as
+surrogates in place of the high-fidelity model. For example, an
+inviscid, incompressible Euler CFD model on a coarse discretization
+could be used as a low-fidelity surrogate for a high-fidelity
+large-eddy simulation model on a fine discretization.</p>
+<p><em>Surrogate Model Selection</em></p>
+<p>This section offers some guidance on choosing from among the available
+surrogate model types.</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>For Surrogate Based Local Optimization, using the <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-surrogate_based_local.html"><span class="pre">surrogate_based_local</span></a></code> method with a trust region: using the keywords: <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/model-surrogate.html"><span class="pre">surrogate</span></a></code> <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/model-surrogate-local.html"><span class="pre">local</span></a></code> <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/model-surrogate-local-taylor_series.html"><span class="pre">taylor_series</span></a></code> or <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/model-surrogate.html"><span class="pre">surrogate</span></a></code> <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/model-surrogate-multipoint.html"><span class="pre">multipoint</span></a></code> <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/model-surrogate-multipoint-tana.html"><span class="pre">tana</span></a></code> will probably work best. If for some reason you wish or need to use a global surrogate (not recommended) then the best of these options is likely to be either: <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/model-surrogate.html"><span class="pre">surrogate</span></a></code> <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/model-surrogate-global.html"><span class="pre">global</span></a></code> <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/model-surrogate-global-gaussian_process.html"><span class="pre">gaussian_process</span></a></code> <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/model-surrogate-global-gaussian_process-surfpack.html"><span class="pre">surfpack</span></a></code> or <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/model-surrogate.html"><span class="pre">surrogate</span></a></code> <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/model-surrogate-global.html"><span class="pre">global</span></a></code> <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/model-surrogate-global-moving_least_squares.html"><span class="pre">moving_least_squares</span></a></code>.</p></li>
+<li><p>For Efficient Global Optimization (EGO), the <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-efficient_global.html"><span class="pre">efficient_global</span></a></code> method: the default surrogate is: <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/model-surrogate-global-gaussian_process.html"><span class="pre">gaussian_process</span></a></code> <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/model-surrogate-global-gaussian_process-surfpack.html"><span class="pre">surfpack</span></a></code> which is likely to find a more optimal value and/or require fewer true function evaluations than the alternative, <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/model-surrogate-global-gaussian_process.html"><span class="pre">gaussian_process</span></a></code> <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/model-surrogate-global-gaussian_process-dakota.html"><span class="pre">dakota</span></a></code>. However, the <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/model-surrogate-global-gaussian_process-surfpack.html"><span class="pre">surfpack</span></a></code> will likely take more time to build than the <code class="docutils literal notranslate"><span class="pre">dakota</span></code> version. Note that currently the <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-efficient_global-use_derivatives.html"><span class="pre">use_derivatives</span></a></code> keyword is not recommended for use with EGO based methods.</p></li>
+<li><p>For EGO based global interval estimation, the <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-global_interval_est.html"><span class="pre">global_interval_est</span></a></code> <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-global_interval_est-ego.html"><span class="pre">ego</span></a></code> method: the default <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/model-surrogate-global-gaussian_process.html"><span class="pre">gaussian_process</span></a></code> <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/model-surrogate-global-gaussian_process-surfpack.html"><span class="pre">surfpack</span></a></code> will likely work better than the alternative <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/model-surrogate-global-gaussian_process.html"><span class="pre">gaussian_process</span></a></code> <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/model-surrogate-global-gaussian_process-dakota.html"><span class="pre">dakota</span></a></code>.</p></li>
+<li><p>For Efficient Global Reliability Analysis (EGRA), the <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-global_reliability.html"><span class="pre">global_reliability</span></a></code> method: the <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/model-surrogate-global-gaussian_process-surfpack.html"><span class="pre">surfpack</span></a></code> and <code class="docutils literal notranslate"><span class="pre">dakota</span></code> versions of the gaussian process tend to give similar answers with the <code class="docutils literal notranslate"><span class="pre">dakota</span></code> version tending to use fewer true function evaluations. Since this is based on EGO, it is likely that the default <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/model-surrogate-global-gaussian_process-surfpack.html"><span class="pre">surfpack</span></a></code> is more accurate, although this has not been rigorously demonstrated.</p></li>
+<li><p>For EGO based Dempster-Shafer Theory of Evidence, i.e. the <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-global_evidence.html"><span class="pre">global_evidence</span></a></code> <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-global_evidence-ego.html"><span class="pre">ego</span></a></code> method, the default <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/model-surrogate-global-gaussian_process.html"><span class="pre">gaussian_process</span></a></code> <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/model-surrogate-global-gaussian_process-surfpack.html"><span class="pre">surfpack</span></a></code> often use significantly fewer true function evaluations than the alternative <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/model-surrogate-global-gaussian_process.html"><span class="pre">gaussian_process</span></a></code> <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/model-surrogate-global-gaussian_process-dakota.html"><span class="pre">dakota</span></a></code>.</p></li>
+<li><p>When using a global surrogate to extrapolate, any of the surrogates:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/model-surrogate-global-gaussian_process.html"><span class="pre">gaussian_process</span></a></code> <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/model-surrogate-global-gaussian_process-surfpack.html"><span class="pre">surfpack</span></a></code></p></li>
+<li><p><code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/model-surrogate-global-polynomial.html"><span class="pre">polynomial</span></a></code> <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/model-surrogate-global-polynomial-quadratic.html"><span class="pre">quadratic</span></a></code></p></li>
+<li><p><code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/model-surrogate-global-polynomial.html"><span class="pre">polynomial</span></a></code> <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/model-surrogate-global-polynomial-cubic.html"><span class="pre">cubic</span></a></code> are recommended.</p></li>
+</ul>
+</li>
+<li><p>When there is over roughly two or three thousand data points and you wish to interpolate (or approximately interpolate) then a Taylor series, Radial Basis Function Network, or Moving Least Squares fit is recommended. The only reason that the <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/model-surrogate-global-gaussian_process.html"><span class="pre">gaussian_process</span></a></code> <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/model-surrogate-global-gaussian_process-surfpack.html"><span class="pre">surfpack</span></a></code> is not recommended is that it can take a considerable amount of time to construct when the number of data points is very large. Use of the third party MARS package included in Dakota is generally discouraged.</p></li>
+<li><p>In other situations that call for a global surrogate, the <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/model-surrogate-global-gaussian_process.html"><span class="pre">gaussian_process</span></a></code> <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/model-surrogate-global-gaussian_process-surfpack.html"><span class="pre">surfpack</span></a></code> is generally recommended. The <code class="docutils literal notranslate"><span class="pre">use_derivatives</span></code> keyword will only be useful if accurate and inexpensive derivatives are available. Finite difference derivatives are disqualified on both counts. However, derivatives generated by analytical, automatic differentiation, or continuous adjoint techniques can be appropriate. Currently, first order derivatives, i.e. gradients, are the highest order derivatives that can be used to construct the <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/model-surrogate-global-gaussian_process.html"><span class="pre">gaussian_process</span></a></code> <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/model-surrogate-global-gaussian_process-surfpack.html"><span class="pre">surfpack</span></a></code> model; Hessians will not be used even if they are available.</p></li>
+</ul>
+</div></blockquote>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="model-single-cost_recovery_metadata.html" class="btn btn-neutral float-left" title="cost_recovery_metadata" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="model-surrogate-id_surrogates.html" class="btn btn-neutral float-right" title="id_surrogates" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <!--
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Sandia National Laboratories.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+  --> 
+
+</footer>
+        </div>
+      </div>
+	  
+	  <div style="background-color: #0f0f0f;color:#fafafa;padding:20px">
+	    <div>
+		  <h2><em>Exceptional service in the national interest</em></h2>
+		</div>
+		<p>© 2023 National Technology and Engineering Solutions of Sandia, LLC. | <a href="https://www.sandia.gov/contact_us/index.html">Questions &amp; Comments</a> | <a href="https://www.sandia.gov/general/privacy-security/index.html">Privacy &amp; Security</a></p>
+		<p><a href="http://energy.gov" rel="noopener noreferrer" target="_blank"><img alt="U.S. Department of Energy" longdesc="https://energy.gov" src="https://www.sandia.gov/_common/images/doe_logo_white.png" style="height:37px; width:140px"></a> <a href="http://nnsa.energy.gov/" rel="noopener noreferrer" target="_blank"> <img alt="National Nuclear Security Administration" longdesc="http://nnsa.gov" src="https://www.sandia.gov/_common/images/nnsa_logo_white.png" style="height:37px; width:116px"></a></p>
+		<p><a href="https://www.sandia.gov">Sandia National Laboratories</a> is a multimission laboratory managed and operated by National Technology and Engineering Solutions of Sandia, LLC., a wholly owned subsidiary of Honeywell International, Inc., for the U.S. Department of Energy’s National Nuclear Security Administration under contract DE-NA-0003525.</p>
+	  </div>	  	  
+	  
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

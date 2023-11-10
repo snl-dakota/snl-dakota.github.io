@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Job Submission (Classic Job Management Tools) &mdash; dakota 6.19.0 documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/dakota_theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/sandiaheaderlite.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Using the Job Submission Tools" href="JobSubmissionClassicUsage.html" />
+    <link rel="prev" title="Job Submission (Using Next-Gen Workflow)" href="../JobSubmissionWorkflow.html" /> 
+  
+  <meta name="sandia.approval_type" content="formal"/>
+  <meta property="sandia.approved" content="SAND2023-13392 O"/>
+  <meta name="description" content="The Dakota project delivers both state-of-the-art research and robust, usable software for optimization and UQ."/>
+  <meta name="keywords" content="Dakota, optimization, UQ, uncertainty quantification, parametric analysis, design exploration, model calibration, risk analysis"/>
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../index.html" class="icon icon-home"> dakota
+            <img src="../../../_static/dakota_Arrow_Name_Tag_horiz_transparent.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                6.19
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../setupdakota.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usingdakota/usingdakota.html">Using Dakota</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../usingdakotagui.html">Using Dakota GUI</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../usingdakotagui.html#introduction">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../usingdakotagui.html#example-search">Example Search</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../usingdakotagui.html#wizards">Wizards</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../usingdakotagui.html#editing-dakota-input-files">Editing Dakota Input Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../usingdakotagui.html#running-dakota">Running Dakota</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../usingdakotagui.html#running-dakota-remotely">Running Dakota Remotely</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../JobSubmissionOverview.html">Job Submission Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../JobSubmissionDosAndDonts.html">Job Submission Do’s and Don’ts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../JobSubmissionWorkflow.html">Job Submission (Using Next-Gen Workflow)</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Job Submission (Classic Job Management Tools)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="JobSubmissionClassicUsage.html">Using the Job Submission Tools</a></li>
+<li class="toctree-l4"><a class="reference internal" href="JobSubmissionClassicModification.html">Modifying an Execution Template</a></li>
+<li class="toctree-l4"><a class="reference internal" href="JobSubmissionClassicCreation.html">Create your own Codes, Machines, and Execution Templates</a></li>
+<li class="toctree-l4"><a class="reference internal" href="JobSubmissionClassicExamples.html">Dakota Job Submission Examples</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../usingdakotagui.html#output-from-dakota">Output from Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../usingdakotagui.html#gui-tools">GUI Tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../usingdakotagui.html#miscellaneous">Miscellaneous</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../externaltools/externaltools.html">Using External Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../compiling/compiling.html">Compiling Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../developingdakota/developingdakota.html">Developing Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../misc/misc.html">Miscellaneous</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">dakota</a>
+      </nav>
+
+	  <!-- SNL Lite header -->
+	  <div class="snlheader-subsite--wrapper-default">
+		<snlheader class="snlheader-subsite" role="snlbanner">
+		  <div class="wrapper">
+			<a href="https://www.sandia.gov/index.html">
+			  <div class="logo-transparent"><p class="logo">Sandia National Laboratories</p></div>
+			</a>
+			<div class="nav-top">
+			  <a class="visuallyhidden" name="mainnav"></a>
+			  <div aria-label="main navigation" class="core-nav-transparent core-nav-transparent--visible" role="navigation">
+				<ul role="navigation" class="secondary-links">
+				  <li id="search-text-link">
+					<a aria-label="Search" href="https://www.sandia.gov/search/">Search Sandia.gov</a>
+				  </li>
+				  <li id="directory-text-link">
+					<a href="https://www.sandia.gov/directory.html" aria-expanded="false" aria-label="Site Directory">All Sandia Websites</a>
+				  </li>
+				</ul>
+			  </div>
+			</div>
+		  </div> 
+		</snlheader>
+	  </div>	  
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../../usingdakotagui.html">Using Dakota GUI</a> &raquo;</li>
+      <li>Job Submission (Classic Job Management Tools)</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../_sources/usingdakotagui/runningremote/JobSubmissionClassic/JobSubmissionClassicMain.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="job-submission-classic-job-management-tools">
+<span id="gui-job-submission-classic"></span><h1>Job Submission (Classic Job Management Tools)<a class="headerlink" href="#job-submission-classic-job-management-tools" title="Permalink to this headline"></a></h1>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The following sections are a paraphrase of documentation written for the Sandia Analysis Workbench tool, which features similar job submission capabilities.</p>
+</div>
+<p>The job submission tools shipped with Dakota GUI (collectively referred to as the Job Management Tool, or JMT) simplifies the task of submitting simulations to remote computing platforms.
+The JMT consists of two parts: <strong>a job submission system</strong> and a <strong>job monitoring system</strong>.</p>
+<ul class="simple">
+<li><p>The job submission system is an automated workflow that performs the tasks of pushing a set of files
+to a selected platform, running a set of instructions, and pulling back results files. The tool is script-based, allowing you to construct scripts to submit jobs on any remote compute
+platform. For your convenience, the tool is populated with built-in scripts (called execution templates) to run a number of commercial simulation codes on remote clusters.</p></li>
+<li><p>The job monitoring system keeps track of the jobs you have submitted, and allows you to kill jobs, and directly access the remote files associated with the jobs.</p></li>
+</ul>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>The Job Submission run configuration - while useful - can be somewhat overwhelming to set up, as well as ultimately limiting for what it enables you to do on remote machines.
+Please consider using the <a class="reference internal" href="../JobSubmissionWorkflow.html#gui-job-submission-workflow"><span class="std std-ref">remoteNestedWorkflow node in Next-Gen Workflow</span></a> to achieve the same result, as well as to rely on NGW-based workflows
+and enjoy the associated conveniences.</p>
+</div>
+<p>The basic elements of the JMT are <strong>codes</strong>, <strong>machines</strong>, and <strong>execution templates</strong>.  The relationship of these three elements is illustrated in <a class="reference internal" href="#jmtcomponents-figure01"><span class="std std-numref">Fig. 91</span></a>.</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Codes, as the name implies, are simply executables, usually simulation codes like Presto, Calore, Xyce, or a commercial code like LS-DYNA. In the context of Dakota GUI job submission, we consider Dakota itself to be an executable code.</p></li>
+<li><p>Machines are compute platforms where codes are executed.</p></li>
+<li><p>Execution templates are the specific instruction for executing a given code on a given platform.  This includes the script contents and its name, instructions to initiate the job,
+and instructions to execute after the job completes. All are variablizable.</p></li>
+</ul>
+</div></blockquote>
+<p>If viewed in a matrix of codes vs. machines, execution template coverage can be represented by an x in the matrix.  As the table illustrates, a code/platform combination may have multiple execution templates.
+One reason for doing this might be to run multiple versions of a code.</p>
+<figure class="align-center" id="jmtcomponents-figure01">
+<img alt="Code vs. Machines Matrix" src="../../../_images/JobSubmissionComponentMatrix.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 91 </span><span class="caption-text">Code vs. Machines Matrix</span><a class="headerlink" href="#jmtcomponents-figure01" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="JobSubmissionClassicUsage.html">Using the Job Submission Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="JobSubmissionClassicModification.html">Modifying an Execution Template</a></li>
+<li class="toctree-l1"><a class="reference internal" href="JobSubmissionClassicCreation.html">Create your own Codes, Machines, and Execution Templates</a></li>
+<li class="toctree-l1"><a class="reference internal" href="JobSubmissionClassicExamples.html">Dakota Job Submission Examples</a></li>
+</ul>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../JobSubmissionWorkflow.html" class="btn btn-neutral float-left" title="Job Submission (Using Next-Gen Workflow)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="JobSubmissionClassicUsage.html" class="btn btn-neutral float-right" title="Using the Job Submission Tools" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <!--
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Sandia National Laboratories.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+  --> 
+
+</footer>
+        </div>
+      </div>
+	  
+	  <div style="background-color: #0f0f0f;color:#fafafa;padding:20px">
+	    <div>
+		  <h2><em>Exceptional service in the national interest</em></h2>
+		</div>
+		<p>© 2023 National Technology and Engineering Solutions of Sandia, LLC. | <a href="https://www.sandia.gov/contact_us/index.html">Questions &amp; Comments</a> | <a href="https://www.sandia.gov/general/privacy-security/index.html">Privacy &amp; Security</a></p>
+		<p><a href="http://energy.gov" rel="noopener noreferrer" target="_blank"><img alt="U.S. Department of Energy" longdesc="https://energy.gov" src="https://www.sandia.gov/_common/images/doe_logo_white.png" style="height:37px; width:140px"></a> <a href="http://nnsa.energy.gov/" rel="noopener noreferrer" target="_blank"> <img alt="National Nuclear Security Administration" longdesc="http://nnsa.gov" src="https://www.sandia.gov/_common/images/nnsa_logo_white.png" style="height:37px; width:116px"></a></p>
+		<p><a href="https://www.sandia.gov">Sandia National Laboratories</a> is a multimission laboratory managed and operated by National Technology and Engineering Solutions of Sandia, LLC., a wholly owned subsidiary of Honeywell International, Inc., for the U.S. Department of Energy’s National Nuclear Security Administration under contract DE-NA-0003525.</p>
+	  </div>	  	  
+	  
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

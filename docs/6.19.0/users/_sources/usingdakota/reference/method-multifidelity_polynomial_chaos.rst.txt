@@ -1,0 +1,338 @@
+.. _method-multifidelity_polynomial_chaos:
+
+""""""""""""""""""""""""""""""
+multifidelity_polynomial_chaos
+""""""""""""""""""""""""""""""
+
+
+Multifidelity uncertainty quantification using polynomial chaos expansions
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-multifidelity_polynomial_chaos-p_refinement
+   method-multifidelity_polynomial_chaos-max_refinement_iterations
+   method-multifidelity_polynomial_chaos-convergence_tolerance
+   method-multifidelity_polynomial_chaos-metric_scale
+   method-multifidelity_polynomial_chaos-statistics_mode
+   method-multifidelity_polynomial_chaos-allocation_control
+   method-multifidelity_polynomial_chaos-discrepancy_emulation
+   method-multifidelity_polynomial_chaos-quadrature_order_sequence
+   method-multifidelity_polynomial_chaos-sparse_grid_level_sequence
+   method-multifidelity_polynomial_chaos-expansion_order_sequence
+   method-multifidelity_polynomial_chaos-orthogonal_least_interpolation
+   method-multifidelity_polynomial_chaos-askey
+   method-multifidelity_polynomial_chaos-wiener
+   method-multifidelity_polynomial_chaos-normalized
+   method-multifidelity_polynomial_chaos-export_expansion_file
+   method-multifidelity_polynomial_chaos-samples_on_emulator
+   method-multifidelity_polynomial_chaos-sample_type
+   method-multifidelity_polynomial_chaos-rng
+   method-multifidelity_polynomial_chaos-probability_refinement
+   method-multifidelity_polynomial_chaos-final_moments
+   method-multifidelity_polynomial_chaos-response_levels
+   method-multifidelity_polynomial_chaos-probability_levels
+   method-multifidelity_polynomial_chaos-reliability_levels
+   method-multifidelity_polynomial_chaos-gen_reliability_levels
+   method-multifidelity_polynomial_chaos-distribution
+   method-multifidelity_polynomial_chaos-variance_based_decomp
+   method-multifidelity_polynomial_chaos-diagonal_covariance
+   method-multifidelity_polynomial_chaos-full_covariance
+   method-multifidelity_polynomial_chaos-import_approx_points_file
+   method-multifidelity_polynomial_chaos-export_approx_points_file
+   method-multifidelity_polynomial_chaos-seed_sequence
+   method-multifidelity_polynomial_chaos-fixed_seed
+   method-multifidelity_polynomial_chaos-model_pointer
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+------------------------------------+-----------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword                     | Dakota Keyword Description                    |
+|                         | Group              |                                    |                                               |
++=========================+====================+====================================+===============================================+
+| Optional                                     | `p_refinement`__                   | Automatic polynomial order refinement         |
++----------------------------------------------+------------------------------------+-----------------------------------------------+
+| Optional                                     | `max_refinement_iterations`__      | Maximum number of expansion refinement        |
+|                                              |                                    | iterations                                    |
++----------------------------------------------+------------------------------------+-----------------------------------------------+
+| Optional                                     | `convergence_tolerance`__          | Stopping criterion based on objective         |
+|                                              |                                    | function or statistics convergence            |
++----------------------------------------------+------------------------------------+-----------------------------------------------+
+| Optional                                     | `metric_scale`__                   | define scaling of statistical metrics when    |
+|                                              |                                    | adapting UQ surrogates                        |
++----------------------------------------------+------------------------------------+-----------------------------------------------+
+| Optional                                     | `statistics_mode`__                | type of statistical metric roll-up for        |
+|                                              |                                    | multifidelity UQ methods                      |
++----------------------------------------------+------------------------------------+-----------------------------------------------+
+| Optional                                     | `allocation_control`__             | Sample allocation approach for multifidelity  |
+|                                              |                                    | expansions                                    |
++----------------------------------------------+------------------------------------+-----------------------------------------------+
+| Optional                                     | `discrepancy_emulation`__          | Formulation for emulation of model            |
+|                                              |                                    | discrepancies.                                |
++-------------------------+--------------------+------------------------------------+-----------------------------------------------+
+| Required (Choose One)   | Chaos Coefficient  | `quadrature_order_sequence`__      | Sequence of quadrature orders used in a       |
+|                         | Estimation         |                                    | multi-stage expansion                         |
+|                         | Approach           +------------------------------------+-----------------------------------------------+
+|                         |                    | `sparse_grid_level_sequence`__     | Sequence of sparse grid levels used in a      |
+|                         |                    |                                    | multi-stage expansion                         |
+|                         |                    +------------------------------------+-----------------------------------------------+
+|                         |                    | `expansion_order_sequence`__       | Sequence of expansion orders used in a        |
+|                         |                    |                                    | multi-stage expansion                         |
+|                         |                    +------------------------------------+-----------------------------------------------+
+|                         |                    | `orthogonal_least_interpolation`__ | Build a polynomial chaos expansion from       |
+|                         |                    |                                    | simulation samples using orthogonal least     |
+|                         |                    |                                    | interpolation.                                |
++-------------------------+--------------------+------------------------------------+-----------------------------------------------+
+| Optional (Choose One)   | Basis Polynomial   | `askey`__                          | Select the standardized random variables (and |
+|                         | Family             |                                    | associated basis polynomials) from the Askey  |
+|                         |                    |                                    | family that best match the user-specified     |
+|                         |                    |                                    | random variables.                             |
+|                         |                    +------------------------------------+-----------------------------------------------+
+|                         |                    | `wiener`__                         | Use standard normal random variables (along   |
+|                         |                    |                                    | with Hermite orthogonal basis polynomials)    |
+|                         |                    |                                    | when transforming to a standardized           |
+|                         |                    |                                    | probability space.                            |
++-------------------------+--------------------+------------------------------------+-----------------------------------------------+
+| Optional                                     | `normalized`__                     | The normalized specification requests output  |
+|                                              |                                    | of PCE coefficients that correspond to        |
+|                                              |                                    | normalized orthogonal basis polynomials       |
++----------------------------------------------+------------------------------------+-----------------------------------------------+
+| Optional                                     | `export_expansion_file`__          | Export the coefficients and multi-index of a  |
+|                                              |                                    | Polynomial Chaos Expansion (PCE) to a file    |
++----------------------------------------------+------------------------------------+-----------------------------------------------+
+| Optional                                     | `samples_on_emulator`__            | Number of samples at which to evaluate an     |
+|                                              |                                    | emulator (surrogate)                          |
++----------------------------------------------+------------------------------------+-----------------------------------------------+
+| Optional                                     | `sample_type`__                    | Selection of sampling strategy                |
++----------------------------------------------+------------------------------------+-----------------------------------------------+
+| Optional                                     | `rng`__                            | Selection of a random number generator        |
++----------------------------------------------+------------------------------------+-----------------------------------------------+
+| Optional                                     | `probability_refinement`__         | Allow refinement of probability and           |
+|                                              |                                    | generalized reliability results using         |
+|                                              |                                    | importance sampling                           |
++----------------------------------------------+------------------------------------+-----------------------------------------------+
+| Optional                                     | `final_moments`__                  | Output moments of the specified type and      |
+|                                              |                                    | include them within the set of final          |
+|                                              |                                    | statistics.                                   |
++----------------------------------------------+------------------------------------+-----------------------------------------------+
+| Optional                                     | `response_levels`__                | Values at which to estimate desired           |
+|                                              |                                    | statistics for each response                  |
++----------------------------------------------+------------------------------------+-----------------------------------------------+
+| Optional                                     | `probability_levels`__             | Specify probability levels at which to        |
+|                                              |                                    | estimate the corresponding response value     |
++----------------------------------------------+------------------------------------+-----------------------------------------------+
+| Optional                                     | `reliability_levels`__             | Specify reliability levels at which the       |
+|                                              |                                    | response values will be estimated             |
++----------------------------------------------+------------------------------------+-----------------------------------------------+
+| Optional                                     | `gen_reliability_levels`__         | Specify generalized relability levels at      |
+|                                              |                                    | which to estimate the corresponding response  |
+|                                              |                                    | value                                         |
++----------------------------------------------+------------------------------------+-----------------------------------------------+
+| Optional                                     | `distribution`__                   | Selection of cumulative or complementary      |
+|                                              |                                    | cumulative functions                          |
++----------------------------------------------+------------------------------------+-----------------------------------------------+
+| Optional                                     | `variance_based_decomp`__          | Activates global sensitivity analysis based   |
+|                                              |                                    | on decomposition of response variance into    |
+|                                              |                                    | main, interaction, and total effects          |
++-------------------------+--------------------+------------------------------------+-----------------------------------------------+
+| Optional (Choose One)   | Covariance Type    | `diagonal_covariance`__            | Display only the diagonal terms of the        |
+|                         |                    |                                    | covariance matrix                             |
+|                         |                    +------------------------------------+-----------------------------------------------+
+|                         |                    | `full_covariance`__                | Display the full covariance matrix            |
++-------------------------+--------------------+------------------------------------+-----------------------------------------------+
+| Optional                                     | `import_approx_points_file`__      | Filename for points at which to evaluate the  |
+|                                              |                                    | PCE/SC surrogate                              |
++----------------------------------------------+------------------------------------+-----------------------------------------------+
+| Optional                                     | `export_approx_points_file`__      | Output file for surrogate model value         |
+|                                              |                                    | evaluations                                   |
++----------------------------------------------+------------------------------------+-----------------------------------------------+
+| Optional                                     | `seed_sequence`__                  | Sequence of seed values for multi-stage       |
+|                                              |                                    | random sampling                               |
++----------------------------------------------+------------------------------------+-----------------------------------------------+
+| Optional                                     | `fixed_seed`__                     | Reuses the same seed value for multiple       |
+|                                              |                                    | random sampling sets                          |
++----------------------------------------------+------------------------------------+-----------------------------------------------+
+| Optional                                     | `model_pointer`__                  | Identifier for model block to be used by a    |
+|                                              |                                    | method                                        |
++----------------------------------------------+------------------------------------+-----------------------------------------------+
+
+.. __: method-multifidelity_polynomial_chaos-p_refinement.html
+__ method-multifidelity_polynomial_chaos-max_refinement_iterations.html
+__ method-multifidelity_polynomial_chaos-convergence_tolerance.html
+__ method-multifidelity_polynomial_chaos-metric_scale.html
+__ method-multifidelity_polynomial_chaos-statistics_mode.html
+__ method-multifidelity_polynomial_chaos-allocation_control.html
+__ method-multifidelity_polynomial_chaos-discrepancy_emulation.html
+__ method-multifidelity_polynomial_chaos-quadrature_order_sequence.html
+__ method-multifidelity_polynomial_chaos-sparse_grid_level_sequence.html
+__ method-multifidelity_polynomial_chaos-expansion_order_sequence.html
+__ method-multifidelity_polynomial_chaos-orthogonal_least_interpolation.html
+__ method-multifidelity_polynomial_chaos-askey.html
+__ method-multifidelity_polynomial_chaos-wiener.html
+__ method-multifidelity_polynomial_chaos-normalized.html
+__ method-multifidelity_polynomial_chaos-export_expansion_file.html
+__ method-multifidelity_polynomial_chaos-samples_on_emulator.html
+__ method-multifidelity_polynomial_chaos-sample_type.html
+__ method-multifidelity_polynomial_chaos-rng.html
+__ method-multifidelity_polynomial_chaos-probability_refinement.html
+__ method-multifidelity_polynomial_chaos-final_moments.html
+__ method-multifidelity_polynomial_chaos-response_levels.html
+__ method-multifidelity_polynomial_chaos-probability_levels.html
+__ method-multifidelity_polynomial_chaos-reliability_levels.html
+__ method-multifidelity_polynomial_chaos-gen_reliability_levels.html
+__ method-multifidelity_polynomial_chaos-distribution.html
+__ method-multifidelity_polynomial_chaos-variance_based_decomp.html
+__ method-multifidelity_polynomial_chaos-diagonal_covariance.html
+__ method-multifidelity_polynomial_chaos-full_covariance.html
+__ method-multifidelity_polynomial_chaos-import_approx_points_file.html
+__ method-multifidelity_polynomial_chaos-export_approx_points_file.html
+__ method-multifidelity_polynomial_chaos-seed_sequence.html
+__ method-multifidelity_polynomial_chaos-fixed_seed.html
+__ method-multifidelity_polynomial_chaos-model_pointer.html
+
+
+
+**Description**
+
+
+As described in :dakkw:`method-polynomial_chaos`, the polynomial chaos
+expansion (PCE) is a general framework for the approximate representation
+of random response functions in terms of series expansions in standardized
+random variables:
+
+
+.. math:: R = \sum_{i=0}^P \alpha_i \Psi_i(\xi) 
+
+where :math:`\alpha_i`  is a deterministic coefficient, :math:`\Psi_i`  is a
+multidimensional orthogonal polynomial and :math:`\xi`  is a vector of
+standardized random variables.
+
+In the multilevel and multifidelity cases, we decompose this expansion
+into several constituent expansions, one per model form or solution
+control level.  In a bi-fidelity case with low-fidelity (LF) and
+high-fidelity (HF) models and an additive discrepancy approach, we have:
+
+
+.. math:: R = \sum_{i=0}^{P^{LF}} \alpha^{LF}_i \Psi_i(\xi)
+     + \sum_{i=0}^{P^{HF}}      \delta_i \Psi_i(\xi) 
+
+where :math:`\delta_i`  is a coefficient for the discrepancy expansion.
+
+The same specification options are available as described in
+:dakkw:`method-polynomial_chaos` with one key difference: many of the
+coefficient estimation inputs change from a scalar input for a single
+expansion to a <i>sequence</i> specification for a low-fidelity expansion
+followed by multiple discrepancy expansions.
+
+To obtain the coefficients :math:`\alpha_i`  and :math:`\delta_i`  for each of
+the expansions, the following options are provided:
+
+
+
+1. multidimensional integration by a tensor-product of Gaussian quadrature rules (specified with ``quadrature_order_sequence``, and, optionally, ``dimension_preference``).
+
+2. multidimensional integration by the Smolyak sparse grid method (specified with ``sparse_grid_level_sequence`` and, optionally, ``dimension_preference``)
+
+3. multidimensional integration by Latin hypercube sampling (specified with ``expansion_order_sequence`` and ``expansion_samples_sequence``).
+
+4. linear regression (specified with ``expansion_order_sequence`` and either ``collocation_points_sequence`` or ``collocation_ratio``), using either over-determined (least squares) or under-determined (compressed sensing) approaches.
+
+5. orthogonal least interpolation (specified with ``orthogonal_least_interpolation`` and ``collocation_points_sequence``)
+
+
+
+It is important to note that, while ``quadrature_order_sequence``,
+``sparse_grid_level_sequence``, ``expansion_order_sequence``,
+``expansion_samples_sequence``, and ``collocation_points_sequence`` are
+array inputs, only one scalar from these arrays is active at a time
+for a particular expansion estimation.  In order to specify anisotropy
+in resolution across the random variable set, a ``dimension_preference``
+specification can be used to augment scalar specifications for
+quadrature order, sparse grid level, and expansion order.
+
+Multifidelity UQ using PCE requires that the model selected for
+iteration by the method specification is an ensemble surrogate model
+(see :dakkw:`model-surrogate-ensemble`), which defines an ordered
+sequence of model fidelities or resolutions.  Two types of hierarchies are
+supported: (i) a hierarchy of model forms composed from more than one
+model within the ``ordered_model_fidelities`` specification, or (ii) a
+hierarchy of discretization levels comprised from a single model
+(either from a ``truth_model_pointer`` specification or a single entry
+within an ``ordered_model_fidelities`` specification) which in turn
+specifies a ``solution_level_control`` (see
+:dakkw:`model-single-solution_level_control`).
+
+In both cases, an expansion will first be formed for the low fidelity
+model or coarse discretization, using the first value within the
+coefficient estimation sequence, along with any specified refinement
+strategy.  Second, expansions are formed for one or more model
+discrepancies (the difference between response results if ``additive``
+``correction`` or the ratio of results if ``multiplicative``
+``correction``), using all subsequent values in the coefficient estimation
+sequence (if the sequence does not provide a new value, then the
+previous value is reused) along with any specified refinement
+strategy.  The number of discrepancy expansions is determined by the
+number of model forms or discretization levels in the hierarchy.
+
+After formation and refinement of the constituent expansions, each of
+the expansions is combined (added or multiplied) into an expansion
+that approximates the high fidelity model, from which the final set of
+statistics are generated. For polynomial chaos expansions, this high
+fidelity expansion can differ significantly in form from the low
+fidelity and discrepancy expansions, particularly in the
+``multiplicative`` case where it is expanded to include all of the basis
+products.
+
+*Additional Resources*
+
+Dakota provides access to multifidelity PCE methods through the
+NonDMultilevelPolynomialChaos class. Refer to the 
+:ref:`theory:uq:expansion` section within the theory portion of the Users Guide
+for additional information on the Multifidelity PCE algorithm.
+
+*Expected HDF5 Output*
+
+If Dakota was built with HDF5 support and run with the
+:dakkw:`environment-results_output-hdf5` keyword, this method
+writes the following results to HDF5:
+
+
+- :ref:`hdf5_results-se_moments` (expansion moments only)
+- :ref:`hdf5_results-pdf`
+- :ref:`hdf5_results-level_mappings`
+
+In addition, the execution group has the attribute ``equiv_hf_evals``, which
+records the equivalent number of high-fidelity evaluations.
+
+
+
+**Examples**
+
+
+
+.. code-block::
+
+    method,
+     multifidelity_polynomial_chaos
+       model_pointer = 'HIERARCH'
+       sparse_grid_level_sequence = 4 3 2
+    
+    model,
+     id_model = 'HIERARCH'
+     surrogate ensemble
+       ordered_model_fidelities = 'LF' 'MF' 'HF'
+       correction additive zeroth_order
+
+
+
+

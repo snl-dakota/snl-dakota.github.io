@@ -1,0 +1,38 @@
+.. _method-multifidelity_sampling-solution_mode-pilot_projection:
+
+""""""""""""""""
+pilot_projection
+""""""""""""""""
+
+
+Specify a solution mode that estimates performance based on projecting initial correlation/variance estimates from a pilot sample
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+
+**Description**
+
+
+Multilevel / multifidelity sampling methods are adaptive
+UQ methods that utilize a pilot sample to estimate an initial set of
+correlations or variances, and then augment the pilot with additional
+sample increments to optimally allocate resources.  In this mode,
+evaluations are limited to the pilot sample and these initial estimates
+are used to project the potential performance under the assumption that
+these estimates are accurate.
+
+This mode is useful for comparing the projected performance of different
+estimators, which can inform method selection.
+
+

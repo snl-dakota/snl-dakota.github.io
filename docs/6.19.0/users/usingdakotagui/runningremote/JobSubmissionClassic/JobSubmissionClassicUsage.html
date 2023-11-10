@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Using the Job Submission Tools &mdash; dakota 6.19.0 documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/dakota_theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/sandiaheaderlite.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Modifying an Execution Template" href="JobSubmissionClassicModification.html" />
+    <link rel="prev" title="Job Submission (Classic Job Management Tools)" href="JobSubmissionClassicMain.html" /> 
+  
+  <meta name="sandia.approval_type" content="formal"/>
+  <meta property="sandia.approved" content="SAND2023-13392 O"/>
+  <meta name="description" content="The Dakota project delivers both state-of-the-art research and robust, usable software for optimization and UQ."/>
+  <meta name="keywords" content="Dakota, optimization, UQ, uncertainty quantification, parametric analysis, design exploration, model calibration, risk analysis"/>
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../index.html" class="icon icon-home"> dakota
+            <img src="../../../_static/dakota_Arrow_Name_Tag_horiz_transparent.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                6.19
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../setupdakota.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usingdakota/usingdakota.html">Using Dakota</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../usingdakotagui.html">Using Dakota GUI</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../usingdakotagui.html#introduction">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../usingdakotagui.html#example-search">Example Search</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../usingdakotagui.html#wizards">Wizards</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../usingdakotagui.html#editing-dakota-input-files">Editing Dakota Input Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../usingdakotagui.html#running-dakota">Running Dakota</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../usingdakotagui.html#running-dakota-remotely">Running Dakota Remotely</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../JobSubmissionOverview.html">Job Submission Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../JobSubmissionDosAndDonts.html">Job Submission Do’s and Don’ts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../JobSubmissionWorkflow.html">Job Submission (Using Next-Gen Workflow)</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="JobSubmissionClassicMain.html">Job Submission (Classic Job Management Tools)</a><ul class="current">
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Using the Job Submission Tools</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#submitting-a-job">Submitting a Job</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#monitoring-job-status">Monitoring Job Status</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#accessing-remote-files">Accessing Remote Files</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#monitoring-output-of-running-jobs">Monitoring Output of Running Jobs</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="JobSubmissionClassicModification.html">Modifying an Execution Template</a></li>
+<li class="toctree-l4"><a class="reference internal" href="JobSubmissionClassicCreation.html">Create your own Codes, Machines, and Execution Templates</a></li>
+<li class="toctree-l4"><a class="reference internal" href="JobSubmissionClassicExamples.html">Dakota Job Submission Examples</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../usingdakotagui.html#output-from-dakota">Output from Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../usingdakotagui.html#gui-tools">GUI Tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../usingdakotagui.html#miscellaneous">Miscellaneous</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../externaltools/externaltools.html">Using External Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../compiling/compiling.html">Compiling Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../developingdakota/developingdakota.html">Developing Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../misc/misc.html">Miscellaneous</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">dakota</a>
+      </nav>
+
+	  <!-- SNL Lite header -->
+	  <div class="snlheader-subsite--wrapper-default">
+		<snlheader class="snlheader-subsite" role="snlbanner">
+		  <div class="wrapper">
+			<a href="https://www.sandia.gov/index.html">
+			  <div class="logo-transparent"><p class="logo">Sandia National Laboratories</p></div>
+			</a>
+			<div class="nav-top">
+			  <a class="visuallyhidden" name="mainnav"></a>
+			  <div aria-label="main navigation" class="core-nav-transparent core-nav-transparent--visible" role="navigation">
+				<ul role="navigation" class="secondary-links">
+				  <li id="search-text-link">
+					<a aria-label="Search" href="https://www.sandia.gov/search/">Search Sandia.gov</a>
+				  </li>
+				  <li id="directory-text-link">
+					<a href="https://www.sandia.gov/directory.html" aria-expanded="false" aria-label="Site Directory">All Sandia Websites</a>
+				  </li>
+				</ul>
+			  </div>
+			</div>
+		  </div> 
+		</snlheader>
+	  </div>	  
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../../usingdakotagui.html">Using Dakota GUI</a> &raquo;</li>
+          <li><a href="JobSubmissionClassicMain.html">Job Submission (Classic Job Management Tools)</a> &raquo;</li>
+      <li>Using the Job Submission Tools</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../_sources/usingdakotagui/runningremote/JobSubmissionClassic/JobSubmissionClassicUsage.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="using-the-job-submission-tools">
+<span id="gui-job-submission-classic-usage"></span><h1>Using the Job Submission Tools<a class="headerlink" href="#using-the-job-submission-tools" title="Permalink to this headline"></a></h1>
+<p>This is the most basic interaction you will have with the job submission tool. In this mode you will:</p>
+<ul class="simple">
+<li><p>Submit jobs for any of the predefined codes, machines, and execution templates.</p></li>
+<li><p>Monitor the progress of running jobs.</p></li>
+<li><p>Access remote files for visualizing results.</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you are using the Dakota GUI outside of Sandia, you will most likely not have any machines defined, and you will have access
+to only one code, “DAKOTA.” In this situation, you will need to begin by <a class="reference internal" href="JobSubmissionClassicCreation.html#gui-job-submission-classic-creation-machine"><span class="std std-ref">creating machine definitions</span></a>
+and, optionally, <a class="reference internal" href="JobSubmissionClassicCreation.html#gui-job-submission-classic-exectemplate"><span class="std std-ref">execution templates</span></a>. You may also wish to define additional <a class="reference internal" href="JobSubmissionClassicCreation.html#gui-job-submission-classic-creation-code"><span class="std std-ref">code definitions</span></a>
+if you want to perform job submission with a code other than Dakota.</p>
+</div>
+<section id="submitting-a-job">
+<h2>Submitting a Job<a class="headerlink" href="#submitting-a-job" title="Permalink to this headline"></a></h2>
+<p>To submit a job:</p>
+<ol class="arabic">
+<li><p>Right-click the primary input file in the Project Explorer (or from an editor opened on the file) and select “Run As &gt; Run Job Submission.”</p>
+<figure class="align-center" id="jmtusage-figure01">
+<a class="reference internal image-reference" href="../../../_images/contextSubmit.png"><img alt="Submitting a Job from the Project Navigator" src="../../../_images/contextSubmit.png" style="width: 600px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 92 </span><span class="caption-text">Submitting a Job from the Project Navigator</span><a class="headerlink" href="#jmtusage-figure01" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<figure class="align-center" id="jmtusage-figure02">
+<img alt="Job Submission Dialog" src="../../../_images/submitDialog.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 93 </span><span class="caption-text">Job Submission Dialog</span><a class="headerlink" href="#jmtusage-figure02" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+</li>
+<li><p>Select the Machine you want to submit to.</p></li>
+<li><p>Select the execution template you want to run.</p></li>
+<li><p>Select the Input Files that you want submitted as part of the job.</p></li>
+<li><p>Edit the Output Files list to define what files you want to return when the simulation is complete.  The output files will be returned to the same directory location as the input files.</p></li>
+<li><p>Select whether you want to run out of the same directory where the input deck resides, or if you want to submit the job staged out of a subdirectory. You can specify the name of the
+subdirectory and use the # character to denote the run number. A directory will be automatically created with the lowest number that doesn’t already exist on your local system.
+You can specify multiple # characters to pad the number with leading zeros. For example, if you specify a subdirectory of “run###”, and this is your 4th run, a directory with the name “run004”
+will be created.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The default behavior of this functionality for newly created Job Submission launch configurations can be specified in the preferences on the Job Submission page.</p>
+</div>
+</li>
+<li><p>Select the Machine tab to edit machine parameters, including:</p>
+<ol class="loweralpha simple">
+<li><p><em>Queue.</em> If the selected machine has multiple queues, you select the desired queue here.</p></li>
+<li><p><em>Remote directory.</em> By default, the remote directory mirrors the path in your workspace toyour input deck prepended by the base directory defined for the specified machine. If the
+“run in subdirectory” option is enabled, the subdir.name variable is appended to the remote path.</p></li>
+<li><p><em>Clear remote directory.</em> This option is selected if you want the remote directory to becleared before the job is started. Note: If you do not check this option, only files
+that have been changed will be moved to the remote working directory.</p></li>
+<li><p><em>Number of processors.</em></p></li>
+<li><p><em>Job time.</em> Job time is specified in hours, minutes and seconds.</p></li>
+<li><p><em>Account.</em> If the selected machine is defined to require account information, you will beprompted to enter it with a message at the top of the dialog. All previously entered accounts
+will be available in the drop down selector, and the most recently used account will be selected by default.</p></li>
+</ol>
+<figure class="align-center" id="jmtusage-figure03">
+<img alt="The Machine Tab of the Job Submission Dialog" src="../../../_images/submitDialogMachine.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 94 </span><span class="caption-text">The Machine Tab of the Job Submission Dialog</span><a class="headerlink" href="#jmtusage-figure03" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+</li>
+<li><p>Select the Run button.</p></li>
+</ol>
+</section>
+<section id="monitoring-job-status">
+<h2>Monitoring Job Status<a class="headerlink" href="#monitoring-job-status" title="Permalink to this headline"></a></h2>
+<p>Once a job is submitted, you can view the status in the Job Status view.  To open the Job Status view, select “Window &gt; Show View &gt; Job Status.”  The Job Status view displays a complete list of
+jobs that you submitted, showing the job submit time, the host machine, the job id, the stage of the job, and the queue state.</p>
+<figure class="align-center" id="jmtusage-figure04">
+<img alt="The Job Status View" src="../../../_images/statusView.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 95 </span><span class="caption-text">The Job Status View</span><a class="headerlink" href="#jmtusage-figure04" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+</section>
+<section id="accessing-remote-files">
+<span id="gui-job-submission-classic-usage-remote"></span><h2>Accessing Remote Files<a class="headerlink" href="#accessing-remote-files" title="Permalink to this headline"></a></h2>
+<p>The job management tool is designed to automate the entire job submission process, automatically moving required files to the remote system and returning the results to your desktop.  As such, the
+user does not have to directly interact with the remote system.  In some cases, the user may want to directly access files on the remote system.  For example, if the results files are very large,
+the user can opt to not bring them back to the local workspace and instead visualize remotely.</p>
+<p>To access remote files of a submitted job:</p>
+<ol class="arabic simple">
+<li><p>Right-click any job in the <em>Job Status</em> view and select View Remote Files.  This will open a <em>File View</em> to the remote system.</p></li>
+<li><p>The File View allows you to drag and drop files to and from the remote system.  It also allows you to delete files on the remote system.</p></li>
+</ol>
+<figure class="align-center" id="jmtusage-figure05">
+<img alt="Viewing Remote Files of a Job" src="../../../_images/contextViewRemote.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 96 </span><span class="caption-text">Viewing Remote Files of a Job</span><a class="headerlink" href="#jmtusage-figure05" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<figure class="align-center" id="jmtusage-figure06">
+<img alt="File View Initialized to the Job's Remote Directory" src="../../../_images/remoteFileView.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 97 </span><span class="caption-text">File View Initialized to the Job’s Remote Directory</span><a class="headerlink" href="#jmtusage-figure06" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+</section>
+<section id="monitoring-output-of-running-jobs">
+<h2>Monitoring Output of Running Jobs<a class="headerlink" href="#monitoring-output-of-running-jobs" title="Permalink to this headline"></a></h2>
+<p>It is often desirable to tail an output file of a running job in order to monitor its progress.  To do this, perform the following steps:</p>
+<ol class="arabic simple">
+<li><p>Right-click the job in the <em>Job Status</em> view and select <em>View Remote Files</em>.</p></li>
+<li><p>In the <em>File View</em>, right click any fileand select Tail <em>(see below)</em>.  A terminal window will be opened with a <code class="docutils literal notranslate"><span class="pre">tail</span> <span class="pre">-f</span></code> executed in it, on the selected file.</p></li>
+</ol>
+<figure class="align-center" id="jmtusage-figure07">
+<img alt="Tailing Files on a Remote System" src="../../../_images/contextTailFile.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 98 </span><span class="caption-text">Tailing Files on a Remote System</span><a class="headerlink" href="#jmtusage-figure07" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<figure class="align-center" id="jmtusage-figure08">
+<img alt="Terminal Window Tailing an Output File" src="../../../_images/consoleTailFile.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 99 </span><span class="caption-text">Terminal Window Tailing an Output File</span><a class="headerlink" href="#jmtusage-figure08" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="JobSubmissionClassicMain.html" class="btn btn-neutral float-left" title="Job Submission (Classic Job Management Tools)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="JobSubmissionClassicModification.html" class="btn btn-neutral float-right" title="Modifying an Execution Template" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <!--
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Sandia National Laboratories.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+  --> 
+
+</footer>
+        </div>
+      </div>
+	  
+	  <div style="background-color: #0f0f0f;color:#fafafa;padding:20px">
+	    <div>
+		  <h2><em>Exceptional service in the national interest</em></h2>
+		</div>
+		<p>© 2023 National Technology and Engineering Solutions of Sandia, LLC. | <a href="https://www.sandia.gov/contact_us/index.html">Questions &amp; Comments</a> | <a href="https://www.sandia.gov/general/privacy-security/index.html">Privacy &amp; Security</a></p>
+		<p><a href="http://energy.gov" rel="noopener noreferrer" target="_blank"><img alt="U.S. Department of Energy" longdesc="https://energy.gov" src="https://www.sandia.gov/_common/images/doe_logo_white.png" style="height:37px; width:140px"></a> <a href="http://nnsa.energy.gov/" rel="noopener noreferrer" target="_blank"> <img alt="National Nuclear Security Administration" longdesc="http://nnsa.gov" src="https://www.sandia.gov/_common/images/nnsa_logo_white.png" style="height:37px; width:116px"></a></p>
+		<p><a href="https://www.sandia.gov">Sandia National Laboratories</a> is a multimission laboratory managed and operated by National Technology and Engineering Solutions of Sandia, LLC., a wholly owned subsidiary of Honeywell International, Inc., for the U.S. Department of Energy’s National Nuclear Security Administration under contract DE-NA-0003525.</p>
+	  </div>	  	  
+	  
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

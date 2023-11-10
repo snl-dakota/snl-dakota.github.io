@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Effcient Global Optimization &mdash; dakota 6.19.0 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/dakota_theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/sandiaheaderlite.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Dimension Reduction Strategies" href="dimensionreductionstrategies.html" />
+    <link rel="prev" title="Surrogate-Based Local Minimization" href="surrogatebasedoptimization.html" /> 
+  
+  <meta name="sandia.approval_type" content="formal"/>
+  <meta property="sandia.approved" content="SAND2023-13392 O"/>
+  <meta name="description" content="The Dakota project delivers both state-of-the-art research and robust, usable software for optimization and UQ."/>
+  <meta name="keywords" content="Dakota, optimization, UQ, uncertainty quantification, parametric analysis, design exploration, model calibration, risk analysis"/>
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> dakota
+            <img src="../../_static/dakota_Arrow_Name_Tag_horiz_transparent.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                6.19
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../setupdakota.html">Getting Started</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../usingdakota.html">Using Dakota</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../introduction/aboutdakota.html">About Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../introduction/helloworld.html">Dakota Beginner’s Tutorial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples.html">Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../introduction/couplingtosimulations.html">Coupling Dakota to a Simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../inputfile.html">Dakota Input File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../running.html">Running Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../output.html">Dakota Output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../studytypes.html">Study Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../topics.html">Topics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../advanced.html">Advanced Topics</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../theory.html">Dakota Theory</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="sampling.html">Sampling Methods</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reliability.html">Reliability Methods</a></li>
+<li class="toctree-l3"><a class="reference internal" href="stochastic.html">Stochastic Expansion Methods</a></li>
+<li class="toctree-l3"><a class="reference internal" href="epistemic.html">Epistemic Methods</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bayesian.html">Bayesian Methods</a></li>
+<li class="toctree-l3"><a class="reference internal" href="surrogates.html">Surrogate Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="surrogatebasedoptimization.html">Surrogate-Based Local Minimization</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Effcient Global Optimization</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#gaussian-process-model">Gaussian Process Model</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#acquisition-functions">Acquisition Functions</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#expected-improvement">Expected Improvement</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#probability-improvement-acquisition-function">Probability Improvement Acquisition Function</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#lower-confidence-bound-acquisition-function">Lower-Confidence Bound Acquisition Function</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#batch-sequential-parallel">Batch-sequential parallel</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dimensionreductionstrategies.html">Dimension Reduction Strategies</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ouu.html">Optimization Under Uncertainty (OUU)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../reference.html">Keyword Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../usingdakotagui/usingdakotagui.html">Using Dakota GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../externaltools/externaltools.html">Using External Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../compiling/compiling.html">Compiling Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developingdakota/developingdakota.html">Developing Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../misc/misc.html">Miscellaneous</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">dakota</a>
+      </nav>
+
+	  <!-- SNL Lite header -->
+	  <div class="snlheader-subsite--wrapper-default">
+		<snlheader class="snlheader-subsite" role="snlbanner">
+		  <div class="wrapper">
+			<a href="https://www.sandia.gov/index.html">
+			  <div class="logo-transparent"><p class="logo">Sandia National Laboratories</p></div>
+			</a>
+			<div class="nav-top">
+			  <a class="visuallyhidden" name="mainnav"></a>
+			  <div aria-label="main navigation" class="core-nav-transparent core-nav-transparent--visible" role="navigation">
+				<ul role="navigation" class="secondary-links">
+				  <li id="search-text-link">
+					<a aria-label="Search" href="https://www.sandia.gov/search/">Search Sandia.gov</a>
+				  </li>
+				  <li id="directory-text-link">
+					<a href="https://www.sandia.gov/directory.html" aria-expanded="false" aria-label="Site Directory">All Sandia Websites</a>
+				  </li>
+				</ul>
+			  </div>
+			</div>
+		  </div> 
+		</snlheader>
+	  </div>	  
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../usingdakota.html">Using Dakota</a> &raquo;</li>
+          <li><a href="../theory.html">Dakota Theory</a> &raquo;</li>
+      <li>Effcient Global Optimization</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/usingdakota/theory/surrogatebasedglobaloptimization.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="effcient-global-optimization">
+<span id="uq-ego"></span><h1>Effcient Global Optimization<a class="headerlink" href="#effcient-global-optimization" title="Permalink to this headline"></a></h1>
+<p>Efficient Global Optimization (EGO) was developed to facilitate the
+unconstrained minimization of expensive implicit response functions. The
+method builds an initial Gaussian process model as a global surrogate
+for the response function, then intelligently selects additional samples
+to be added for inclusion in a new Gaussian process model in subsequent
+iterations. The new samples are selected based on how much they are
+expected to improve the current best solution to the optimization
+problem. When this expected improvement is acceptably small, the
+globally optimal solution has been found. The application of this
+methodology to equality-constrained reliability analysis is the primary
+contribution of EGRA.</p>
+<p>Efficient global optimization was originally proposed by Jones et
+al. <span id="id1">[<a class="reference internal" href="../../misc/bibliography.html#id164" title="D. Jones, M. Schonlau, and W. Welch. Efficient global optimization of expensive black-box functions. Journal of Global Optimization, 13:455–492, 1998.">JSW98</a>]</span> and has been adapted into similar methods
+such as sequential kriging optimization (SKO) <span id="id2">[<a class="reference internal" href="../../misc/bibliography.html#id157" title="D. Huang, T. T. Allen, W. I. Notz, and N. Zeng. Global optimization of stochastic black-box systems via sequential kriging meta-models. Journal of Global Optimization, 34:441–466, 2006.">HANZ06</a>]</span>.
+The main difference between SKO and EGO lies within the specific
+formulation of what is known as the expected improvement function (EIF),
+which is the feature that sets all EGO/SKO-type methods apart from other
+global optimization methods. The EIF is used to select the location at
+which a new training point should be added to the Gaussian process model
+by maximizing the amount of improvement in the objective function that
+can be expected by adding that point. A point could be expected to
+produce an improvement in the objective function if its predicted value
+is better than the current best solution, or if the uncertainty in its
+prediction is such that the probability of it producing a better
+solution is high. Because the uncertainty is higher in regions of the
+design space with fewer observations, this provides a balance between
+exploiting areas of the design space that predict good solutions, and
+exploring areas where more information is needed.</p>
+<p>The general procedure of these EGO-type methods is:</p>
+<ol class="arabic simple">
+<li><p>Build an initial Gaussian process model of the objective function.</p></li>
+<li><p>Find the point that maximizes the EIF. If the EIF value at this point
+is sufficiently small, stop.</p></li>
+<li><p>Evaluate the objective function at the point where the EIF is
+maximized. Update the Gaussian process model using this new point. Go
+to Step 2.</p></li>
+</ol>
+<p>The following sections discuss the construction of the Gaussian process
+model used, the form of the EIF, and then a description of how that EIF
+is modified for application to reliability analysis.</p>
+<section id="gaussian-process-model">
+<span id="uq-ego-gpm"></span><h2>Gaussian Process Model<a class="headerlink" href="#gaussian-process-model" title="Permalink to this headline"></a></h2>
+<p>Gaussian process (GP) models are set apart from other surrogate models
+because they provide not just a predicted value at an unsampled point,
+but also an estimate of the prediction variance. This variance gives an
+indication of the uncertainty in the GP model, which results from the
+construction of the covariance function. This function is based on the
+idea that when input points are near one another, the correlation
+between their corresponding outputs will be high. As a result, the
+uncertainty associated with the model’s predictions will be small for
+input points which are near the points used to train the model, and will
+increase as one moves further from the training points.</p>
+<p>It is assumed that the true response function being modeled
+<span class="math notranslate nohighlight">\(G({\bf u})\)</span> can be described by: <span id="id3">[<a class="reference internal" href="../../misc/bibliography.html#id46" title="N. Cressie. Statistics of Spatial Data. John Wiley and Sons, New York, 1991.">Cre91</a>]</span></p>
+<div class="math notranslate nohighlight">
+\[G({\bf u})={\bf h}({\bf u})^T{\boldsymbol \beta} + Z({\bf u})\]</div>
+<p>where <span class="math notranslate nohighlight">\({\bf h}()\)</span> is the trend of the model,
+<span class="math notranslate nohighlight">\({\boldsymbol \beta}\)</span> is the vector of trend coefficients, and
+<span class="math notranslate nohighlight">\(Z()\)</span> is a stationary Gaussian process with zero mean (and
+covariance defined below) that describes the departure of the model from
+its underlying trend. The trend of the model can be assumed to be any
+function, but taking it to be a constant value has been reported to be
+generally sufficient. <span id="id4">[<a class="reference internal" href="../../misc/bibliography.html#id254" title="J. Sacks, S. B. Schiller, and W. Welch. Design for computer experiments. Technometrics, 31:41–47, 1989.">SSW89</a>]</span> For the work presented
+here, the trend is assumed constant and <span class="math notranslate nohighlight">\({\boldsymbol \beta}\)</span> is
+taken as simply the mean of the responses at the training points. The
+covariance between outputs of the Gaussian process <span class="math notranslate nohighlight">\(Z()\)</span> at points
+<span class="math notranslate nohighlight">\({\bf a}\)</span> and <span class="math notranslate nohighlight">\({\bf b}\)</span> is defined as:</p>
+<div class="math notranslate nohighlight" id="equation-eq-cov">
+<span class="eqno">(257)<a class="headerlink" href="#equation-eq-cov" title="Permalink to this equation"></a></span>\[Cov \left[ Z({\bf a}),Z({\bf b}) \right] = \sigma_Z^2 R({\bf a},{\bf b})\]</div>
+<p>where <span class="math notranslate nohighlight">\(\sigma_Z^2\)</span> is the process variance and <span class="math notranslate nohighlight">\(R()\)</span> is the
+correlation function. There are several options for the correlation
+function, but the squared-exponential function is
+common <span id="id5">[<a class="reference internal" href="../../misc/bibliography.html#id254" title="J. Sacks, S. B. Schiller, and W. Welch. Design for computer experiments. Technometrics, 31:41–47, 1989.">SSW89</a>]</span>, and is used here for <span class="math notranslate nohighlight">\(R()\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[R({\bf a},{\bf b}) = \exp \left[ -\sum_{i=1}^d \theta_i(a_i - b_i)^2 \right]\]</div>
+<p>where <span class="math notranslate nohighlight">\(d\)</span> represents the dimensionality of the problem (the number
+of random variables), and <span class="math notranslate nohighlight">\(\theta_i\)</span> is a scale parameter that
+indicates the correlation between the points within dimension <span class="math notranslate nohighlight">\(i\)</span>.
+A large <span class="math notranslate nohighlight">\(\theta_i\)</span> is representative of a short correlation
+length.</p>
+<p>The expected value <span class="math notranslate nohighlight">\(\mu_G()\)</span> and variance <span class="math notranslate nohighlight">\(\sigma_G^2()\)</span> of
+the GP model prediction at point <span class="math notranslate nohighlight">\({\bf u}\)</span> are:</p>
+<div class="math notranslate nohighlight" id="equation-eq-exp">
+<span class="eqno">(258)<a class="headerlink" href="#equation-eq-exp" title="Permalink to this equation"></a></span>\[\begin{aligned}
+\mu_G({\bf u}) &amp;= {\bf h}({\bf u})^T{\boldsymbol \beta} +
+  {\bf r}({\bf u})^T{\bf R}^{-1}({\bf g} - {\bf F}{\boldsymbol \beta})
+\end{aligned}\]</div>
+<div class="math notranslate nohighlight" id="equation-eq-var">
+<span class="eqno">(259)<a class="headerlink" href="#equation-eq-var" title="Permalink to this equation"></a></span>\[\begin{split}\begin{aligned}
+\sigma_G^2({\bf u}) &amp;= \sigma_Z^2 -
+  \begin{bmatrix} {\bf h}({\bf u})^T  &amp;
+                  {\bf r}({\bf u})^T  \end{bmatrix}
+  \begin{bmatrix} {\bf 0} &amp; {\bf F}^T \\
+                  {\bf F} &amp; {\bf R}   \end{bmatrix}^{-1}
+  \begin{bmatrix} {\bf h}({\bf u})    \\
+                  {\bf r}({\bf u})    \end{bmatrix}
+\end{aligned}\end{split}\]</div>
+<p>where <span class="math notranslate nohighlight">\({\bf r}({\bf u})\)</span> is a vector containing the covariance
+between <span class="math notranslate nohighlight">\({\bf u}\)</span> and each of the <span class="math notranslate nohighlight">\(n\)</span> training points
+(defined by Eq. <a class="reference internal" href="#equation-eq-cov">(257)</a>), <span class="math notranslate nohighlight">\({\bf R}\)</span> is an
+<span class="math notranslate nohighlight">\(n \times n\)</span> matrix containing the correlation between each pair
+of training points, <span class="math notranslate nohighlight">\({\bf g}\)</span> is the vector of response outputs at
+each of the training points, and <span class="math notranslate nohighlight">\({\bf F}\)</span> is an
+<span class="math notranslate nohighlight">\(n \times q\)</span> matrix with rows <span class="math notranslate nohighlight">\({\bf h}({\bf u}_i)^T\)</span> (the
+trend function for training point <span class="math notranslate nohighlight">\(i\)</span> containing <span class="math notranslate nohighlight">\(q\)</span> terms;
+for a constant trend <span class="math notranslate nohighlight">\(q\!=\!1\)</span>). This form of the variance
+accounts for the uncertainty in the trend coefficients
+<span class="math notranslate nohighlight">\(\boldsymbol \beta\)</span>, but assumes that the parameters governing the
+covariance function (<span class="math notranslate nohighlight">\(\sigma_Z^2\)</span> and <span class="math notranslate nohighlight">\(\boldsymbol \theta\)</span>)
+have known values.</p>
+<p>The parameters <span class="math notranslate nohighlight">\(\sigma_Z^2\)</span> and <span class="math notranslate nohighlight">\({\boldsymbol \theta}\)</span> are
+determined through maximum likelihood estimation. This involves taking
+the log of the probability of observing the response values
+<span class="math notranslate nohighlight">\({\bf g}\)</span> given the covariance matrix <span class="math notranslate nohighlight">\({\bf R}\)</span>, which can
+be written as: <span id="id6">[<a class="reference internal" href="../../misc/bibliography.html#id254" title="J. Sacks, S. B. Schiller, and W. Welch. Design for computer experiments. Technometrics, 31:41–47, 1989.">SSW89</a>]</span></p>
+<div class="math notranslate nohighlight" id="equation-eq-like">
+<span class="eqno">(260)<a class="headerlink" href="#equation-eq-like" title="Permalink to this equation"></a></span>\[\log \left[ p({\bf g} | {\bf R}) \right] =
+  -\frac{1}{n} \log \lvert{\bf R}\rvert - \log(\hat{\sigma}_Z^2)\]</div>
+<p>where <span class="math notranslate nohighlight">\(\lvert {\bf R} \rvert\)</span> indicates the determinant of
+<span class="math notranslate nohighlight">\({\bf R}\)</span>, and <span class="math notranslate nohighlight">\(\hat{\sigma}_Z^2\)</span> is the optimal value of
+the variance given an estimate of <span class="math notranslate nohighlight">\(\boldsymbol \theta\)</span> and is
+defined by:</p>
+<div class="math notranslate nohighlight">
+\[\hat{\sigma}_Z^2 = \frac{1}{n}({\bf g}-{\bf F}{\boldsymbol \beta})^T
+  {\bf R}^{-1}({\bf g}-{\bf F}{\boldsymbol \beta})\]</div>
+<p>Maximizing Eq. <a class="reference internal" href="#equation-eq-like">(260)</a> gives the maximum likelihood
+estimate of <span class="math notranslate nohighlight">\(\boldsymbol \theta\)</span>, which in turn defines
+<span class="math notranslate nohighlight">\(\sigma_Z^2\)</span>.</p>
+</section>
+<section id="acquisition-functions">
+<span id="uq-ego-acq"></span><h2>Acquisition Functions<a class="headerlink" href="#acquisition-functions" title="Permalink to this headline"></a></h2>
+<p>The acquisition function determines the location of the next sampling
+point or refinement points, in the sense that maximizing the acquisition
+function yields the next sampling point, as</p>
+<div class="math notranslate nohighlight">
+\[{\bf u}^* = \underset{\bf u}{\text{argmax}}~a({\bf u}).\]</div>
+<section id="expected-improvement">
+<span id="uq-ego-acq-eif"></span><h3>Expected Improvement<a class="headerlink" href="#expected-improvement" title="Permalink to this headline"></a></h3>
+<p>The expected improvement function is used to select the location at
+which a new training point should be added. The EIF is defined as the
+expectation that any point in the search space will provide a better
+solution than the current best solution based on the expected values and
+variances predicted by the GP model. An important feature of the EIF is
+that it provides a balance between exploiting areas of the design space
+where good solutions have been found, and exploring areas of the design
+space where the uncertainty is high. First, recognize that at any point
+in the design space, the GP prediction <span class="math notranslate nohighlight">\(\hat{G}()\)</span> is a Gaussian
+distribution:</p>
+<div class="math notranslate nohighlight">
+\[\hat{G}({\bf u}) \sim \mathcal{N}\left( \mu_G({\bf u}), \sigma_G({\bf u}) \right)\]</div>
+<p>where the mean <span class="math notranslate nohighlight">\(\mu_G()\)</span> and the variance <span class="math notranslate nohighlight">\(\sigma_G^2()\)</span>
+were defined in Eqs. <a class="reference internal" href="#equation-eq-exp">(258)</a> and <a class="reference internal" href="#equation-eq-var">(259)</a>,
+respectively. The EIF is defined as: <span id="id7">[<a class="reference internal" href="../../misc/bibliography.html#id164" title="D. Jones, M. Schonlau, and W. Welch. Efficient global optimization of expensive black-box functions. Journal of Global Optimization, 13:455–492, 1998.">JSW98</a>]</span></p>
+<div class="math notranslate nohighlight">
+\[EI\bigl( \hat{G}({\bf u}) \bigr) \equiv
+  E\left[ \max \left( G({\bf u}^*) - \hat{G}({\bf u}),0 \right) \right]\]</div>
+<p>where <span class="math notranslate nohighlight">\(G({\bf u}^*)\)</span> is the current best solution chosen from
+among the true function values at the training points (henceforth
+referred to as simply <span class="math notranslate nohighlight">\(G^*\)</span>). This expectation can then be
+computed by integrating over the distribution <span class="math notranslate nohighlight">\(\hat{G}({\bf u})\)</span>
+with <span class="math notranslate nohighlight">\(G^*\)</span> held constant:</p>
+<div class="math notranslate nohighlight" id="equation-eq-eif-int">
+<span class="eqno">(261)<a class="headerlink" href="#equation-eq-eif-int" title="Permalink to this equation"></a></span>\[EI\bigl( \hat{G}({\bf u}) \bigr) =
+  \int_{-\infty}^{G^*} \left( G^* - G \right) \, \hat{G}({\bf u}) \; dG\]</div>
+<p>where <span class="math notranslate nohighlight">\(G\)</span> is a realization of <span class="math notranslate nohighlight">\(\hat{G}\)</span>. This integral can
+be expressed analytically as: <span id="id8">[<a class="reference internal" href="../../misc/bibliography.html#id164" title="D. Jones, M. Schonlau, and W. Welch. Efficient global optimization of expensive black-box functions. Journal of Global Optimization, 13:455–492, 1998.">JSW98</a>]</span></p>
+<div class="math notranslate nohighlight" id="equation-eq-eif">
+<span class="eqno">(262)<a class="headerlink" href="#equation-eq-eif" title="Permalink to this equation"></a></span>\[EI\bigl( \hat{G}({\bf u}) \bigr) = \left( G^* - \mu_G \right) \,
+  \Phi\left( \frac{G^* - \mu_G}{\sigma_G} \right) + \sigma_G \,
+  \phi\left( \frac{G^* - \mu_G}{\sigma_G} \right)\]</div>
+<p>where it is understood that <span class="math notranslate nohighlight">\(\mu_G\)</span> and <span class="math notranslate nohighlight">\(\sigma_G\)</span> are
+functions of <span class="math notranslate nohighlight">\({\bf u}\)</span>. Rewritting in a more compact manner and
+dropping the subscript <span class="math notranslate nohighlight">\(_G\)</span>,</p>
+<div class="math notranslate nohighlight" id="equation-eq-eifshort">
+<span class="eqno">(263)<a class="headerlink" href="#equation-eq-eifshort" title="Permalink to this equation"></a></span>\[a_\text{EI}({\bf u}, \{{\bf u}_i,y_i \}_{i=1}^N,\theta)) = \sigma({\bf u}) \cdot( \gamma({\bf u}) \Phi(\gamma({\bf u}) ) + \phi(\gamma({\bf u})) ),\]</div>
+<p>where
+<span class="math notranslate nohighlight">\(\gamma({\bf u}) = \frac{G^* - \mu({\bf u})}{\sigma({\bf u})}\)</span>.
+This equation defines the expected improvement acquisition function for
+an unknown <span class="math notranslate nohighlight">\({\bf u}\)</span>.</p>
+<p>The point at which the EIF is maximized is selected as an additional
+training point. With the new training point added, a new GP model is
+built and then used to construct another EIF, which is then used to
+choose another new training point, and so on, until the value of the EIF
+at its maximized point is below some specified tolerance. In
+Ref. <span id="id9">[<a class="reference internal" href="../../misc/bibliography.html#id157" title="D. Huang, T. T. Allen, W. I. Notz, and N. Zeng. Global optimization of stochastic black-box systems via sequential kriging meta-models. Journal of Global Optimization, 34:441–466, 2006.">HANZ06</a>]</span> this maximization is performed using a
+Nelder-Mead simplex approach, which is a local optimization method.
+Because the EIF is often highly multimodal <span id="id10">[<a class="reference internal" href="../../misc/bibliography.html#id164" title="D. Jones, M. Schonlau, and W. Welch. Efficient global optimization of expensive black-box functions. Journal of Global Optimization, 13:455–492, 1998.">JSW98</a>]</span> it
+is expected that Nelder-Mead may fail to converge to the true global
+optimum. In Ref. <span id="id11">[<a class="reference internal" href="../../misc/bibliography.html#id164" title="D. Jones, M. Schonlau, and W. Welch. Efficient global optimization of expensive black-box functions. Journal of Global Optimization, 13:455–492, 1998.">JSW98</a>]</span>, a branch-and-bound technique
+for maximizing the EIF is used, but was found to often be too expensive
+to run to convergence. In Dakota, an implementation of the DIRECT global
+optimization algorithm is used <span id="id12">[<a class="reference internal" href="../../misc/bibliography.html#id99" title="J. Gablonsky. Direct version 2.0 userguide technical report. Technical Report CRSC-TR01-08, North Carolina State University, Center for Research in Scientific Computation, Raleigh, NC, 2001.">Gab01</a>]</span>.</p>
+<p>It is important to understand how the use of this EIF leads to optimal
+solutions. Eq. <a class="reference internal" href="#equation-eq-eif">(262)</a> indicates how much the objective
+function value at <span class="math notranslate nohighlight">\({\bf x}\)</span> is expected to be less than the
+predicted value at the current best solution. Because the GP model
+provides a Gaussian distribution at each predicted point, expectations
+can be calculated. Points with good expected values and even a small
+variance will have a significant expectation of producing a better
+solution (exploitation), but so will points that have relatively poor
+expected values and greater variance (exploration).</p>
+<p>The application of EGO to reliability analysis, however, is made more
+complicated due to the inclusion of equality constraints (see
+Eqs. <a class="reference internal" href="reliability.html#equation-eq-ria-opt">(57)</a>- <a class="reference internal" href="reliability.html#equation-eq-pma-opt">(58)</a>). For
+inverse reliability analysis, this extra complication is small. The
+response being modeled by the GP is the objective function of the
+optimization problem (see Eq. <a class="reference internal" href="reliability.html#equation-eq-pma-opt">(58)</a>) and the
+deterministic constraint might be handled through the use of a merit
+function, thereby allowing EGO to solve this equality-constrained
+optimization problem. Here the problem lies in the interpretation of the
+constraint for multimodal problems as mentioned previously. In the
+forward reliability case, the response function appears in the
+constraint rather than the objective. Here, the maximization of the EIF
+is inappropriate because feasibility is the main concern. This
+application is therefore a significant departure from the original
+objective of EGO and requires a new formulation. For this problem, the
+expected feasibility function is introduced.</p>
+</section>
+<section id="probability-improvement-acquisition-function">
+<span id="uq-ego-acq-pi"></span><h3>Probability Improvement Acquisition Function<a class="headerlink" href="#probability-improvement-acquisition-function" title="Permalink to this headline"></a></h3>
+<p>The probability of improvement (PI) acquisition function is proposed by
+<span id="id13">[<a class="reference internal" href="../../misc/bibliography.html#id330" title="Harold J Kushner. A new method of locating the maximum point of an arbitrary multipeak curve in the presence of noise. Journal of Basic Engineering, 86(1):97–106, 1964.">Kus64</a>]</span>, using the same argument that the GP
+prediction is a Gaussian distribution. Similar to Equation
+<a class="reference internal" href="#equation-eq-eifshort">(263)</a>, the PI acquisition function is given
+by</p>
+<div class="math notranslate nohighlight">
+\[a_{\text{PI}}({\bf u}) = \Phi(\gamma({\bf u})).\]</div>
+<p>Generally speaking, the EI acquisition function performs better than the
+PI acquisition function.</p>
+</section>
+<section id="lower-confidence-bound-acquisition-function">
+<span id="uq-ego-acq-lcb"></span><h3>Lower-Confidence Bound Acquisition Function<a class="headerlink" href="#lower-confidence-bound-acquisition-function" title="Permalink to this headline"></a></h3>
+<p>Another form of acquisition is lower-confidence bound (LCB), proposed
+recently by Srinivas et al.
+<span id="id14">[<a class="reference internal" href="../../misc/bibliography.html#id332" title="Niranjan Srinivas, Andreas Krause, Sham M Kakade, and Matthias Seeger. Gaussian process optimization in the bandit setting: No regret and experimental design. arXiv preprint arXiv:0912.3995, 2009.">SKKS09</a>, <a class="reference internal" href="../../misc/bibliography.html#id333" title="Niranjan Srinivas, Andreas Krause, Sham M Kakade, and Matthias W Seeger. Information-theoretic regret bounds for Gaussian process optimization in the bandit setting. IEEE Transactions on Information Theory, 58(5):3250–3265, 2012.">SKKS12</a>]</span>, which
+has shown to perform very well. The LCB acquisition function takes the
+form of</p>
+<div class="math notranslate nohighlight">
+\[a_{\text{LCB}}({\bf u}) = - \mu({\bf u}) + \kappa \sigma({\bf u}),\]</div>
+<p>where <span class="math notranslate nohighlight">\(\kappa\)</span> is a hyper-parameter describing the acquisition
+exploitation-exploration balance. In many cases in design optimization,
+<span class="math notranslate nohighlight">\(\kappa = 2\)</span> is preferred, but relaxing this <span class="math notranslate nohighlight">\(\kappa\)</span> as a
+function of iterations is also possible, cf. Daniel et al.
+<span id="id15">[<a class="reference internal" href="../../misc/bibliography.html#id331" title="Christian Daniel, Malte Viering, Jan Metz, Oliver Kroemer, and Jan Peters. Active reward learning. In Robotics: Science and Systems. 2014.">DVM+14</a>]</span>, as</p>
+<div class="math notranslate nohighlight">
+\[\kappa = \sqrt{\nu \gamma_n},\quad \nu = 1, \quad \gamma_n = 2\log{\left(\frac{N^{d/2 + 2}\pi^2}{3\delta} \right)},\]</div>
+<p>and <span class="math notranslate nohighlight">\(d\)</span> is the dimensionality of the problem, and
+<span class="math notranslate nohighlight">\(\delta \in (0,1)\)</span> <span id="id16">[<a class="reference internal" href="../../misc/bibliography.html#id333" title="Niranjan Srinivas, Andreas Krause, Sham M Kakade, and Matthias W Seeger. Information-theoretic regret bounds for Gaussian process optimization in the bandit setting. IEEE Transactions on Information Theory, 58(5):3250–3265, 2012.">SKKS12</a>]</span>.</p>
+</section>
+</section>
+<section id="batch-sequential-parallel">
+<h2>Batch-sequential parallel<a class="headerlink" href="#batch-sequential-parallel" title="Permalink to this headline"></a></h2>
+<p>The batch-sequential parallelization is mainly motivated by exploiting
+the computational resource, where multiple sampling points
+<span class="math notranslate nohighlight">\({\bf u}\)</span> can be queried concurrently on a high-performance
+computing platform. The benefit of batch implementation is that the
+physical time to converge to the optimal solution is significantly
+reduced with a factor of <span class="math notranslate nohighlight">\(\sqrt{K}\)</span>, where <span class="math notranslate nohighlight">\(K\)</span> is the batch
+size. While there are many flavors of batch-sequential parallelization,
+as well as asynchronous parallelization in EGO and Bayesian
+optimization, we mainly review the theory of GP-BUCB by Desautels et al.
+<span id="id17">[<a class="reference internal" href="../../misc/bibliography.html#id335" title="Thomas Desautels, Andreas Krause, and Joel W Burdick. Parallelizing exploration-exploitation tradeoffs in Gaussian process bandit optimization. The Journal of Machine Learning Research, 15(1):3873–3923, 2014.">DKB14</a>]</span>, GP-UCB-PE by Contal et
+al <span id="id18">[<a class="reference internal" href="../../misc/bibliography.html#id336" title="Emile Contal, David Buffoni, Alexandre Robicquet, and Nicolas Vayatis. Parallel Gaussian process optimization with upper confidence bound and pure exploration. In Joint European Conference on Machine Learning and Knowledge Discovery in Databases, 225–240. Springer, 2013.">CBRV13</a>]</span>, and pBO-2GP-3B by Tran et al
+<span id="id19">[<a class="reference internal" href="../../misc/bibliography.html#id334" title="Anh Tran, Jing Sun, John M Furlan, Krishnan V Pagalthivarthi, Robert J Visintainer, and Yan Wang. pBO-2GP-3B: A batch parallel known/unknown constrained Bayesian optimization with feasibility classification and its applications in computational fluid dynamics. Computer Methods in Applied Mechanics and Engineering, 347:827–852, 2019.">TSF+19</a>]</span>. The parallelization feature of EGO is
+sometimes referred to as lookahead or non-myopic Bayesian optimization
+in the literature, especially in the machine learning community.</p>
+<p>The approach by Desautels et al.
+<span id="id20">[<a class="reference internal" href="../../misc/bibliography.html#id335" title="Thomas Desautels, Andreas Krause, and Joel W Burdick. Parallelizing exploration-exploitation tradeoffs in Gaussian process bandit optimization. The Journal of Machine Learning Research, 15(1):3873–3923, 2014.">DKB14</a>]</span> mainly advocates for the
+“hallucination” scheme or heuristic liar, in which the unknown
+observation at the currently querying sampling point <span class="math notranslate nohighlight">\({\bf u}^*\)</span>
+is <em>temporarily</em> assumed as the posterior mean <span class="math notranslate nohighlight">\(\mu({\bf u}^*)\)</span>.
+Then, the underlying GP model updates based on this assumption and
+locates other points in the same batch, until the batch is filled. After
+the whole batch is constructed, it is then queried, and all the
+responses are received at once when the batch is completed. Contal et
+al. <span id="id21">[<a class="reference internal" href="../../misc/bibliography.html#id336" title="Emile Contal, David Buffoni, Alexandre Robicquet, and Nicolas Vayatis. Parallel Gaussian process optimization with upper confidence bound and pure exploration. In Joint European Conference on Machine Learning and Knowledge Discovery in Databases, 225–240. Springer, 2013.">CBRV13</a>]</span> extended from the work of
+Desautels et al. <span id="id22">[<a class="reference internal" href="../../misc/bibliography.html#id335" title="Thomas Desautels, Andreas Krause, and Joel W Burdick. Parallelizing exploration-exploitation tradeoffs in Gaussian process bandit optimization. The Journal of Machine Learning Research, 15(1):3873–3923, 2014.">DKB14</a>]</span> and
+proved that including pure exploration (i.e. sampling at
+<span class="math notranslate nohighlight">\({\bf u}^*\)</span> where <span class="math notranslate nohighlight">\(\sigma({\bf u})\)</span> is maximum) increases
+the efficiency. Tran et al. <span id="id23">[<a class="reference internal" href="../../misc/bibliography.html#id334" title="Anh Tran, Jing Sun, John M Furlan, Krishnan V Pagalthivarthi, Robert J Visintainer, and Yan Wang. pBO-2GP-3B: A batch parallel known/unknown constrained Bayesian optimization with feasibility classification and its applications in computational fluid dynamics. Computer Methods in Applied Mechanics and Engineering, 347:827–852, 2019.">TSF+19</a>]</span> adopted two
+aforementioned approaches and extended for known and unknown
+constraints.</p>
+<p>The asynchronous batch parallel EGO is implemented based on the idea
+of further leveraging computational efficiency when the computational
+query cost varies widely.  In this scenario, the batch-sequential
+parallel EGO finishes one iteration when the last worker of the batch
+finishes.  This mechanism makes the other workers, which might have
+finished the jobs or simulations earlier, wait for the last worker to
+finish, thus creating an unnecessary idle period.  The asynchronous
+batch parallel scheme is, therefore, created to accelerate the
+optimization process by immediately assigning the next jobs to workers
+that have finished earlier jobs, without waiting for each other.  When
+workers finish one query, the objective GP is updated, and the next
+sampling point is found by maximizing the acquisition function.
+Numerical comparison results are shown in one of our previous works
+<span id="id24">[<a class="reference internal" href="../../misc/bibliography.html#id337" title="Anh Tran, Mike Eldred, Tim Wildey, Scott McCann, Jing Sun, and Robert J Visintainer. aphBO-2GP-3B: a budgeted asynchronous parallel multi-acquisition functions for constrained Bayesian optimization on high-performing computing architecture. Structural and Multidisciplinary Optimization, 65(4):1–45, 2022.">TEW+22</a>]</span>, across a number of numerical functions and
+some engineering simulations as well.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="surrogatebasedoptimization.html" class="btn btn-neutral float-left" title="Surrogate-Based Local Minimization" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="dimensionreductionstrategies.html" class="btn btn-neutral float-right" title="Dimension Reduction Strategies" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <!--
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Sandia National Laboratories.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+  --> 
+
+</footer>
+        </div>
+      </div>
+	  
+	  <div style="background-color: #0f0f0f;color:#fafafa;padding:20px">
+	    <div>
+		  <h2><em>Exceptional service in the national interest</em></h2>
+		</div>
+		<p>© 2023 National Technology and Engineering Solutions of Sandia, LLC. | <a href="https://www.sandia.gov/contact_us/index.html">Questions &amp; Comments</a> | <a href="https://www.sandia.gov/general/privacy-security/index.html">Privacy &amp; Security</a></p>
+		<p><a href="http://energy.gov" rel="noopener noreferrer" target="_blank"><img alt="U.S. Department of Energy" longdesc="https://energy.gov" src="https://www.sandia.gov/_common/images/doe_logo_white.png" style="height:37px; width:140px"></a> <a href="http://nnsa.energy.gov/" rel="noopener noreferrer" target="_blank"> <img alt="National Nuclear Security Administration" longdesc="http://nnsa.gov" src="https://www.sandia.gov/_common/images/nnsa_logo_white.png" style="height:37px; width:116px"></a></p>
+		<p><a href="https://www.sandia.gov">Sandia National Laboratories</a> is a multimission laboratory managed and operated by National Technology and Engineering Solutions of Sandia, LLC., a wholly owned subsidiary of Honeywell International, Inc., for the U.S. Department of Energy’s National Nuclear Security Administration under contract DE-NA-0003525.</p>
+	  </div>	  	  
+	  
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

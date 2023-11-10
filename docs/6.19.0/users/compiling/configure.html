@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Configure with CMake &mdash; dakota 6.19.0 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/dakota_theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/sandiaheaderlite.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Build and Install Dakota" href="build.html" />
+    <link rel="prev" title="Obtain Source Code" href="getsource.html" /> 
+  
+  <meta name="sandia.approval_type" content="formal"/>
+  <meta property="sandia.approved" content="SAND2023-13392 O"/>
+  <meta name="description" content="The Dakota project delivers both state-of-the-art research and robust, usable software for optimization and UQ."/>
+  <meta name="keywords" content="Dakota, optimization, UQ, uncertainty quantification, parametric analysis, design exploration, model calibration, risk analysis"/>
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> dakota
+            <img src="../_static/dakota_Arrow_Name_Tag_horiz_transparent.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                6.19
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../setupdakota.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usingdakota/usingdakota.html">Using Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usingdakotagui/usingdakotagui.html">Using Dakota GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../externaltools/externaltools.html">Using External Tools</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="compiling.html">Compiling Dakota</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="devenv.html">Setup Development Environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="getsource.html">Obtain Source Code</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Configure with CMake</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#configuring-at-the-command-line">Configuring at the Command Line</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#configuring-with-a-cmake-script">Configuring with a CMake Script</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#using-builddakotatemplate-cmake">Using BuildDakotaTemplate.cmake</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#top-level-build-debug-options">Top-level Build/Debug Options</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#external-libraries">External Libraries</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#dakota-features">Dakota Features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#common-issues">Common Issues</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="build.html">Build and Install Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test.html">Running Dakota Tests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html">End-to-end Compilation Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../developingdakota/developingdakota.html">Developing Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../misc/misc.html">Miscellaneous</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">dakota</a>
+      </nav>
+
+	  <!-- SNL Lite header -->
+	  <div class="snlheader-subsite--wrapper-default">
+		<snlheader class="snlheader-subsite" role="snlbanner">
+		  <div class="wrapper">
+			<a href="https://www.sandia.gov/index.html">
+			  <div class="logo-transparent"><p class="logo">Sandia National Laboratories</p></div>
+			</a>
+			<div class="nav-top">
+			  <a class="visuallyhidden" name="mainnav"></a>
+			  <div aria-label="main navigation" class="core-nav-transparent core-nav-transparent--visible" role="navigation">
+				<ul role="navigation" class="secondary-links">
+				  <li id="search-text-link">
+					<a aria-label="Search" href="https://www.sandia.gov/search/">Search Sandia.gov</a>
+				  </li>
+				  <li id="directory-text-link">
+					<a href="https://www.sandia.gov/directory.html" aria-expanded="false" aria-label="Site Directory">All Sandia Websites</a>
+				  </li>
+				</ul>
+			  </div>
+			</div>
+		  </div> 
+		</snlheader>
+	  </div>	  
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="compiling.html">Compiling Dakota</a> &raquo;</li>
+      <li>Configure with CMake</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/compiling/configure.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="configure-with-cmake">
+<span id="configure"></span><h1>Configure with CMake<a class="headerlink" href="#configure-with-cmake" title="Permalink to this headline"></a></h1>
+<p>Dakota uses CMake to manage building and testing the complex set of
+codes and libraries that make up Dakota, including setting options and
+locations of external tools and libraries. The <a class="reference external" href="https://cmake.org/documentation/">CMake Documentation</a> offers reference documentation
+and tutorials.</p>
+<p>CMake uses two separate directories. In these instructions, the source
+directory is referred to as <code class="docutils literal notranslate"><span class="pre">DAK_SRC</span></code>; the build directory,
+<code class="docutils literal notranslate"><span class="pre">DAK_BUILD</span></code>. The source directory contains the Dakota source code
+and the cmake files. The user creates the build directory and builds
+from that directory. It is initially empty; it will be populated with
+the Dakota executable, libraries, packages and examples.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Dakota only supports out-of-source builds, not building in-place in
+the source tree. (The build directory can be outside the source
+tree, e.g., peer to it, or in a sub-folder of the source tree,
+e.g., <code class="docutils literal notranslate"><span class="pre">DAK_SRC/build</span></code>).</p>
+</div>
+<p>Dakota and CMake itself support numerous configuration settings. There
+are several ways to specify options to CMake, including at the command
+line, with a CMake cache initialization script, and through one of the
+CMake GUIs.</p>
+<div class="admonition attention">
+<p class="admonition-title">Attention</p>
+<p>CMake persists configuration information (including detected system
+properties and software) in a file
+<code class="file docutils literal notranslate"><span class="pre">$DAK_BUILD/CMakeCache.txt</span></code> and associated
+files/directories. When revising your Dakota CMake settings, it is
+helpful to remove these files or delete the entire build directory
+contents. This avoids inadvertently using previous settings.</p>
+</div>
+<div class="admonition attention">
+<p class="admonition-title">Attention</p>
+<p>When using the <code class="docutils literal notranslate"><span class="pre">CMAKE_INSTALL_PREFIX</span></code> CMake setting, configuration
+information can be stored there as well, and it is good practice
+to remove the installation directory contents when revising CMake
+settings.</p>
+</div>
+<section id="configuring-at-the-command-line">
+<h2>Configuring at the Command Line<a class="headerlink" href="#configuring-at-the-command-line" title="Permalink to this headline"></a></h2>
+<p><strong>Simple Command Line Example</strong>:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>mkdir build
+cd build
+
+<span class="c"># Configure the build tree.</span>
+cmake \
+  -D CMAKE_INSTALL_PREFIX=/home/myFavoriteUser/dakota \
+  -D DAKOTA_HAVE_MPI:BOOL=TRUE \
+  -D CMAKE_CXX_COMPILER:FILEPATH=/usr/bin/mpicxx \
+  -D MPI_LIBRARY:FILEPATH=/usr/lib/libmpi_cxx.so \
+  $DAK_SRC
+</pre></div>
+</div>
+<p>In this example the following CMake cache variables are defined:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">CMAKE_INSTALL_PREFIX</span></code>: where to install the Dakota executables,
+libraries and examples</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">DAKOTA_HAVE_MPI:BOOL=TRUE</span></code>: build with MPI to allow for parallel
+processing</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CMAKE_CXX_COMPILER:FILEPATH</span></code>: location of MPI compiler</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">MPI_LIBRARY:FILEPATH</span></code>: location of MPI library</p></li>
+</ul>
+</section>
+<section id="configuring-with-a-cmake-script">
+<h2>Configuring with a CMake Script<a class="headerlink" href="#configuring-with-a-cmake-script" title="Permalink to this headline"></a></h2>
+<p>Dakota build settings can be written in a CMake script file (referred
+to as build file here). The directory <code class="file docutils literal notranslate"><span class="pre">$DAK_SRC/cmake/examples</span></code> contains
+a collection of build files. There are historical platform-specific
+examples such as BuildRHEL7.cmake, BuildDarwin.cmake, and
+Build_win_msvc_ifort.cmake. The build file BuildDakotaTemplate.cmake
+is a template that contains the most commonly used Dakota CMake
+variables.</p>
+<p>Some common settings in a build file include:</p>
+<ul class="simple">
+<li><p>specify the folder where the Dakota binaries will be installed</p></li>
+<li><p>build without MPI</p></li>
+<li><p>build with MPI and tell cmake where to find the relevant MPI files</p></li>
+<li><p>turn on or off Dakota features</p></li>
+</ul>
+<p><strong>Simple Build File Example</strong></p>
+<p>See <a class="reference internal" href="#sec-using-dak-cmake-template"><span class="std std-ref">Using BuildDakotaTemplate.cmake</span></a> for a description of the
+variables and instructions for use. Once you have customized this
+script for your platform, run the CMake script as follows:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>mkdir build
+cd build
+cp ../cmake/BuildDakotaTemplate.cmake BuildDakota.cmake
+
+<span class="c"># Configure the build tree</span>
+cmake -C BuildDakota.cmake $DAK_SRC
+</pre></div>
+</div>
+<p>You can iteratively make changes to <code class="file docutils literal notranslate"><span class="pre">BuildDakota.cmake</span></code> for your
+platform (see link above). Once your script correctly builds Dakota,
+save it in a more permanent location for later reuse.</p>
+<section id="using-builddakotatemplate-cmake">
+<span id="sec-using-dak-cmake-template"></span><h3>Using BuildDakotaTemplate.cmake<a class="headerlink" href="#using-builddakotatemplate-cmake" title="Permalink to this headline"></a></h3>
+<p>The CMake variables in file
+<code class="file docutils literal notranslate"><span class="pre">$DAK_SRC/cmake/examples/BuildDakotaTemplate.cmake</span></code> represent
+the minimum set of variables necessary to:</p>
+<ul class="simple">
+<li><p>find all prerequisite third party libraries (TPLs)</p></li>
+<li><p>configure compiler and MPI options</p></li>
+<li><p>set Dakota install path</p></li>
+</ul>
+<p>Typically you would uncomment CMake variables <em>only</em> for values you
+need to change for your platform. Once you edit variables as needed,
+run CMake with the script file.</p>
+<p><strong>Linear Algebra:</strong> Set BLAS, LAPACK library paths if in non-standard
+locations.</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>set( BLAS_LIBS &quot;/usr/lib64&quot;
+  CACHE FILEPATH &quot;Use non-standard BLAS library path&quot; FORCE )
+set( LAPACK_LIBS &quot;/usr/lib64&quot;
+  CACHE FILEPATH &quot;Use non-standard BLAS library path&quot; FORCE )
+</pre></div>
+</div>
+<p><strong>Compiler Options:</strong> Uncomment and replace &lt;flag&gt; with actual
+compiler flag, e.g. <code class="docutils literal notranslate"><span class="pre">-xxe4.2</span></code>.</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>set( CMAKE_C_FLAGS &quot;${CMAKE_C_FLAGS} &lt;flag&gt;&quot;
+  CACHE STRING &quot;C Flags my platform&quot; )
+set( CMAKE_CXX_FLAGS &quot;${CMAKE_CXX_FLAGS} &lt;flag&gt;&quot;
+  CACHE STRING &quot;CXX Flags for my platform&quot; )
+set( CMAKE_Fortran_FLAGS &quot;${CMAKE_Fortran_FLAGS} &lt;flag&gt;&quot;
+  CACHE STRING &quot;Fortran Flags for my platform&quot; )
+</pre></div>
+</div>
+<p><strong>MPI options:</strong> Recommended practice is to set DAKOTA_HAVE_MPI and
+set MPI_CXX_COMPILER to a compiler wrapper.</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>set( DAKOTA_HAVE_MPI ON
+   CACHE BOOL &quot;Build with MPI enabled&quot; FORCE)
+set( MPI_CXX_COMPILER &quot;path/to/mpicxx&quot;
+   CACHE FILEPATH &quot;Use MPI compiler wrapper&quot; FORCE)
+</pre></div>
+</div>
+<p><strong>Boost:</strong> You will need to set the following variables iff CMake
+cannot find your installed version of Boost or if you have a custom
+Boost install location.</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>set(BOOST_ROOT
+  &quot;path/to/custom/Boost/install/directory&quot;
+  CACHE PATH &quot;Use non-standard Boost install&quot; FORCE)
+set( Boost_NO_SYSTEM_PATHS TRUE
+   CACHE BOOL &quot;Supress search paths other than BOOST_ROOT&quot; FORCE)
+</pre></div>
+</div>
+<p><strong>Trilinos:</strong> You will need to set the following variable if you
+have a custom Trilinos install location. If not set, the
+Dakota-shipped Trilinos will be built instead.</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>set( Trilinos_DIR
+  &quot;path/to/Trilinos/install&quot;
+  CACHE PATH &quot;Path to installed Trilinos&quot; FORCE )
+</pre></div>
+</div>
+<p><strong>Customize DAKOTA:</strong></p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>set( CMAKE_INSTALL_PREFIX
+  &quot;/path/to/Dakota/installation&quot;
+  CACHE PATH &quot;Path to Dakota installation&quot; )
+</pre></div>
+</div>
+</section>
+</section>
+<section id="top-level-build-debug-options">
+<h2>Top-level Build/Debug Options<a class="headerlink" href="#top-level-build-debug-options" title="Permalink to this headline"></a></h2>
+<p><strong>Compilers:</strong> To prevent CMake from identifying mixed toolchains
+during system introspection, it is good practice to explicitly set
+<code class="docutils literal notranslate"><span class="pre">CMAKE_C_COMPILER</span></code>, <code class="docutils literal notranslate"><span class="pre">CMAKE_CXX_COMPILER</span></code>, and
+<code class="docutils literal notranslate"><span class="pre">CMAKE_Fortran_COMPILER</span></code>.</p>
+<p><strong>Optimization and Debugging Symbols:</strong> The simplest way to set the
+optimization level and debug symbol inclusion for your builds is with
+<code class="docutils literal notranslate"><span class="pre">CMAKE_BUILD_TYPE</span></code>. For example set one of the following:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>CMAKE_BUILD_TYPE=Debug              # defaults to -g
+CMAKE_BUILD_TYPE=Release            # defaults to -O3 -DNDEBUG
+CMAKE_BUILD_TYPE=RelWithDebInfo     # defaults to -O2 -g
+</pre></div>
+</div>
+<p>You may also manually set the relevant flags at configure time and
+these will supplement any set by the CMAKE_BUILD_TYPE configurations
+shown immediately above. For example:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>CMAKE_C_FLAGS=-O2
+CMAKE_CXX_FLAGS=-O2
+CMAKE_Fortran_FLAGS=-O2
+</pre></div>
+</div>
+<p><strong>Shared vs. Static libraries:</strong> By default, Dakota builds and links
+external shared libraries but can also build static libraries if you
+need to link against static libraries without position-independent
+code, e.g,. an installed libblas.a or libmpi.a.</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span><span class="c"># Build static libraries ONLY</span>
+BUILD_SHARED_LIBS:BOOL=FALSE
+</pre></div>
+</div>
+<p><strong>Developer Convenience Macros:</strong> These shortcuts are designed to help
+routine development:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">-C</span> <span class="pre">cmake/DakotaDev.cmake</span></code>: enable MPI, docs, and specification
+maintenance.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-D</span> <span class="pre">DevDebugStatic:BOOL=ON</span></code> turns on most common developer
+options, with debug build type, static libs, and bounds
+checking. For a shared debug build, instead set <code class="docutils literal notranslate"><span class="pre">DevDebugShared</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-D</span> <span class="pre">DevDistro:BOOL=ON</span></code> turns on most common developer options and
+distribution build type, shared libs, no bounds checking (equivalent
+to <code class="docutils literal notranslate"><span class="pre">-C</span> <span class="pre">cmake/DakotaDistro.cmake</span> <span class="pre">-C</span> <span class="pre">cmake/DakotaDev.cmake</span></code>).</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>When combining these with additional options or configuration
+files, take care with their ordering to get the desired behavior.</p>
+</div>
+<p><strong>Verbose Make:</strong> To see detailed compile/link commands generated by
+CMake: <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">VERBOSE=1</span></code> (on Unix platforms), or set
+<code class="docutils literal notranslate"><span class="pre">CMAKE_VERBOSE_MAKEFILE:BOOL=TRUE</span></code> when configuring.</p>
+</section>
+<section id="external-libraries">
+<h2>External Libraries<a class="headerlink" href="#external-libraries" title="Permalink to this headline"></a></h2>
+<p>This section discusses the most common Dakota options for finding
+external libraries.</p>
+<p><strong>Message Passing Interface (MPI)</strong></p>
+<p>Dakota uses the standard <a class="reference external" href="https://cmake.org/cmake/help/latest/module/FindMPI.html">CMake FindMPI</a> to find
+and configure MPI. The minimum for compiling Dakota with MPI is to
+make sure appropriate MPI binaries and libraries are on necessary
+PATHs and by setting <code class="docutils literal notranslate"><span class="pre">DAKOTA_HAVE_MPI:BOOL=TRUE</span></code>.</p>
+<p>The recommended practice is to also specify a C++ compiler wrapper
+(and all specific compilers as discussed above to avoid mixed
+toolchains):</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>DAKOTA_HAVE_MPI:BOOL=TRUE
+MPI_CXX_COMPILER:FILEPATH=&quot;/path/to/mpicxx&quot;
+</pre></div>
+</div>
+<p>By default, the MPI compiler wrapper will be used by CMake to find
+MPI, but not actually used for compilation. Rather the detected
+defines, includes, and libraries will be added to relevant MPI-enabled
+targets in the build.</p>
+<p>If a compiler wrapper isn’t available, or specific MPI includes and
+libraries are needed, specify appropriate values for
+<code class="docutils literal notranslate"><span class="pre">MPI_CXX_LIBRARIES</span></code> and <code class="docutils literal notranslate"><span class="pre">MPI_CXX_INCLUDE_PATH</span></code>. This will
+circumvent any autodetection. If you want to force Dakota to use the
+MPI wrappers and <em>not</em> apply the detected libraries and headers, set</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>DAKOTA_HAVE_MPI:BOOL=TRUE
+CMAKE_CXX_COMPILER:FILEPATH=&quot;/path/to/mpicxx&quot;
+MPI_CXX_COMPILER:FILEPATH=&quot;/path/to/mpicxx&quot;
+DAKOTA_MPI_WRAPPER_ONLY:BOOL=TRUE
+</pre></div>
+</div>
+<p><strong>Boost C++ Libraries</strong></p>
+<p>Dakota uses the standard <a class="reference external" href="https://cmake.org/cmake/help/latest/module/FindBoost.html">CMake FindBoost</a>; see its
+documentation for the most up to date options. To identify a
+non-system default Boost installation, set
+<code class="docutils literal notranslate"><span class="pre">BOOST_ROOT:PATH=/path/to/boost/1.69</span></code>, where the specified path
+contains the <code class="docutils literal notranslate"><span class="pre">include/</span></code> and <code class="docutils literal notranslate"><span class="pre">lib/</span></code> directories.  Alternately, for
+split installations, set <code class="docutils literal notranslate"><span class="pre">BOOST_INCLUDEDIR</span></code> and
+<code class="docutils literal notranslate"><span class="pre">BOOST_LIBRARYDIR</span></code>.</p>
+<p>If you are using a non-system installed Boost, or your system has
+multiple Boost installations, it is often critical to set the
+following to avoid configuring Daktoa with a mix of headers from one
+Boost distribution and libraries from another:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span><span class="c"># Avoid using BoostConfig.cmake if found on system</span>
+Boost_NO_BOOST_CMAKE:BOOL=TRUE
+
+<span class="c"># Avoid using Boost from system location if found</span>
+Boost_NO_SYSTEM_PATHS:BOOL=TRUE
+</pre></div>
+</div>
+<p><strong>Linear Algebra</strong></p>
+<p>Variables <code class="docutils literal notranslate"><span class="pre">BLAS_LIBS=path/to/libblas.*</span></code> and
+<code class="docutils literal notranslate"><span class="pre">LAPACK_LIBS=path/to/liblapack.*</span></code> can be used to identify Fortran
+linear algebra libraries.  On some platforms these can be conveniently
+set to <code class="docutils literal notranslate"><span class="pre">$ENV{BLAS_LIBS}</span></code> and <code class="docutils literal notranslate"><span class="pre">$ENV{LAPACK_LIBS}</span></code> in a CMake cache
+initialization file.</p>
+<p>Note: Not all Dakota’s TPLs treat BLAS and LAPACK with the same cache
+variables. To use specific versions of these libraries, the following
+is likely necessary to handle HOPSPACK LAPACK dependency on BLAS:
+<code class="docutils literal notranslate"><span class="pre">LAPACK_ADD_LIBS=${BLAS_LIBS}</span></code>.</p>
+<p><strong>HDF5 (Hierarchical Data Format)</strong></p>
+<p>Dakota <a class="reference internal" href="../usingdakota/reference/environment-results_output-hdf5.html#environment-results-output-hdf5"><span class="std std-ref">HDF5 results output</span></a>
+requires the HDF5 C++ libraries.  Building Dakota with HDF5 support
+requires HDF5 version 1.10.4 or higher. Parallel HDF5 is not needed at
+this time, but will be in future Dakota releases. In addition, the
+Python <code class="docutils literal notranslate"><span class="pre">h5py</span></code> module is needed to run some of the HDF5-related tests
+and for the HDF5 examples.</p>
+<p>To enable HDF5:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>DAKOTA_HAVE_HDF5:BOOL=ON
+</pre></div>
+</div>
+<p>In addition, the variable <code class="docutils literal notranslate"><span class="pre">HDF5_ROOT</span></code> should typically be set to the
+top-level HDF5 directory (i.e. that contains the include and lib
+folders), cf <a class="reference external" href="https://cmake.org/cmake/help/latest/module/FindHDF5.html">CMake’s FindHDF5</a></p>
+<p><strong>External Trilinos</strong></p>
+<p>To compile Dakota against an externally installed Trilinos, set
+<code class="docutils literal notranslate"><span class="pre">Trilinos_DIR</span></code> to the directory in an install tree containing
+<code class="docutils literal notranslate"><span class="pre">TrilinosConfig.cmake</span></code>, e.g.,
+<code class="file docutils literal notranslate"><span class="pre">/usr/local/trilinos/lib/cmake/Trilinos/</span></code>, which contains
+<code class="docutils literal notranslate"><span class="pre">TrilinosConfig.cmake</span></code> (similarly <code class="docutils literal notranslate"><span class="pre">Teuchos_DIR</span></code> for location of
+<code class="docutils literal notranslate"><span class="pre">TeuchosConfig.cmake</span></code>).</p>
+<p>Set the variable <code class="docutils literal notranslate"><span class="pre">DAKOTA_NO_FIND_TRILINOS:BOOL=TRUE</span></code> to disallow
+Dakota from attempting to find the Trilinos package. This can be
+useful when building Dakota as part of a large CMake project that
+includes Trilinos.</p>
+</section>
+<section id="dakota-features">
+<span id="configure-dakota-features"></span><h2>Dakota Features<a class="headerlink" href="#dakota-features" title="Permalink to this headline"></a></h2>
+<p>See <code class="file docutils literal notranslate"><span class="pre">$DAK_SRC/cmake/DakotaOptions.cmake</span></code> for the most up-to-date
+common options.</p>
+<p><strong>Documentation</strong></p>
+<p>Building Dakota documentation requires appropriate versions of
+Java, Perl, Doxygen and Sphinx and only works on Unix platforms: set
+<code class="docutils literal notranslate"><span class="pre">ENABLE_DAKOTA_DOCS:BOOL=TRUE</span></code></p>
+<p><strong>Testing</strong></p>
+<p>The following options affect tests:</p>
+<table class="docutils align-default" id="id1">
+<caption><span class="caption-number">Table 24 </span><span class="caption-text">Dakota Testing Options</span><a class="headerlink" href="#id1" title="Permalink to this table"></a></caption>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>CMake Option</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Notes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>DAKOTA_ENABLE_TESTS</p></td>
+<td><p>ON</p></td>
+<td><p>Whether to enable Dakota system-level tests</p></td>
+</tr>
+<tr class="row-odd"><td><p>DAKOTA_EXPAND_SUBTESTS</p></td>
+<td><p>OFF</p></td>
+<td><p>Whether to register one CTest test per system-level subtest</p></td>
+</tr>
+<tr class="row-even"><td><p>DAKOTA_ENABLE_TPL_TESTS</p></td>
+<td><p>OFF</p></td>
+<td><p>Whether to enable the following TPL tests</p></td>
+</tr>
+<tr class="row-odd"><td><p>DDACE_ENABLE_TESTS</p></td>
+<td><p>OFF</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>HOPSPACK_ENABLE_TESTS</p></td>
+<td><p>OFF</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>LHS_ENABLE_TESTS</p></td>
+<td><p>OFF</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>OPTPP_ENABLE_TESTS</p></td>
+<td><p>OFF</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>PECOS_ENABLE_TESTS</p></td>
+<td><p>OFF</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>ENABLE_TESTS</p></td>
+<td><p>OFF</p></td>
+<td><p>Whether to enable tests in Acro and Utilib</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Specification maintenance</strong></p>
+<p>Dakota specification (input syntax) maintenance mode is used by developers when
+modifying Dakota XML input specification.  It generates <code class="docutils literal notranslate"><span class="pre">nidrgen</span></code>
+and <code class="docutils literal notranslate"><span class="pre">Dt</span></code> binaries in <code class="file docutils literal notranslate"><span class="pre">packages/nidr</span></code> and when
+<code class="docutils literal notranslate"><span class="pre">dakota.input.nspec</span></code> changes, will use them to update relevant
+generated files in <code class="file docutils literal notranslate"><span class="pre">$DAK_SRC/src</span></code> since currently they need to
+be checked in. To enable specification maintenance, use the option
+<code class="docutils literal notranslate"><span class="pre">ENABLE_SPEC_MAINT:BOOL=TRUE</span></code></p>
+<p><strong>QUESO for Bayesian Calibration</strong></p>
+<p>Compiling Dakota’s QUESO sub-package requires:</p>
+<ul class="simple">
+<li><p>A Unix-like platform (not supported on Windows)</p></li>
+<li><p>GSL 1.15 or newer, which means that <strong>resulting Dakota binaries will
+include GPL licensed components</strong></p></li>
+</ul>
+<p>Environment: If the program <code class="docutils literal notranslate"><span class="pre">gsl-config</span></code> is not on your PATH, you’ll
+either need to put it there, or set the environment variable export
+<code class="docutils literal notranslate"><span class="pre">GSL_CONFIG=/usr/local/gsl/1.15/bin/gsl-config</span></code> or similar. You may
+also need to <code class="docutils literal notranslate"><span class="pre">export</span> <span class="pre">BOOST_ROOT=/usr/local/boost/1.69.0</span></code> or similar
+to make sure that QUESO and Dakota are built with the same Boost.</p>
+<p>The following CMake settings are necessary to enable QUESO:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>HAVE_QUESO:BOOL=ON
+DAKOTA_HAVE_GSL:BOOL=ON
+
+<span class="c"># Optionally, to disable GPMSA:</span>
+HAVE_QUESO_GPMSA:BOOL=OFF
+
+<span class="c"># Optionally, specify a CBLAS to avoid numerical differences induced by using GSL&#39;s CBLAS, e.g., on RHEL6:</span>
+DAKOTA_CBLAS_LIBS:FILEPATH=/usr/lib64/atlas/libcblas.so.3
+</pre></div>
+</div>
+<p><strong>Dakota Components</strong></p>
+<table class="docutils align-default" id="id2">
+<caption><span class="caption-number">Table 25 </span><span class="caption-text">Dakota Core Component Options</span><a class="headerlink" href="#id2" title="Permalink to this table"></a></caption>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>CMake Option</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Notes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>DAKOTA_MODULE_UTIL</p></td>
+<td><p>ON</p></td>
+<td><p>Dakota utility module (can be built on its own)</p></td>
+</tr>
+<tr class="row-odd"><td><p>DAKOTA_MODULE_SURROGATES</p></td>
+<td><p>ON</p></td>
+<td><p>Dakota surrogates module (can be built on its own)</p></td>
+</tr>
+<tr class="row-even"><td><p>DAKOTA_MODULE_DAKOTA</p></td>
+<td><p>ON</p></td>
+<td><p>Balance of Dakota core capability</p></td>
+</tr>
+<tr class="row-odd"><td><p>DAKOTA_EXAMPLES_INSTALL</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">share/dakota</span></code></p></td>
+<td><p>Install destination for <code class="docutils literal notranslate"><span class="pre">examples/</span></code>, relative to <code class="docutils literal notranslate"><span class="pre">CMAKE_INSTALL_PREFIX</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>DAKOTA_TEST_INSTALL</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">share/dakota</span></code></p></td>
+<td><p>Install destination for <code class="docutils literal notranslate"><span class="pre">test/</span></code>, relative to <code class="docutils literal notranslate"><span class="pre">CMAKE_INSTALL_PREFIX</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>DAKOTA_EXAMPLES_INSTALL</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">share/dakota</span></code></p></td>
+<td><p>Install destination for top-level files like <code class="docutils literal notranslate"><span class="pre">README</span></code>, relative to <code class="docutils literal notranslate"><span class="pre">CMAKE_INSTALL_PREFIX</span></code></p></td>
+</tr>
+</tbody>
+</table>
+<table class="docutils align-default" id="id3">
+<caption><span class="caption-number">Table 26 </span><span class="caption-text">Dakota Python Options</span><a class="headerlink" href="#id3" title="Permalink to this table"></a></caption>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>CMake Option</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Notes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>DAKOTA_PYTHON</p></td>
+<td><p>ON</p></td>
+<td><p>Basic Dakota python usage requiring interpreter only</p></td>
+</tr>
+<tr class="row-odd"><td><p>DAKOTA_PYTHON_DIRECT_INTERFACE</p></td>
+<td><p>OFF</p></td>
+<td><p>Python direct function evaluation interface</p></td>
+</tr>
+<tr class="row-even"><td><p>DAKOTA_PYTHON_DIRECT_INTERFACE_NUMPY</p></td>
+<td><p>ON</p></td>
+<td><p>Enable NumPy for direct Python interface</p></td>
+</tr>
+<tr class="row-odd"><td><p>DAKOTA_PYTHON_WRAPPER</p></td>
+<td><p>OFF</p></td>
+<td><p>Top-level Dakota Python interface (<code class="docutils literal notranslate"><span class="pre">dakota.environment</span></code> wrapper)</p></td>
+</tr>
+<tr class="row-even"><td><p>DAKOTA_PYTHON_SURROGATES</p></td>
+<td><p>OFF</p></td>
+<td><p>Python interface to surrogates modules</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Dakota Sub-packages (TPLs)</strong></p>
+<p>This table lists the most common CMake options for enabling or
+disabling specific Dakota sub-packages. Note that Dakota builds may
+fail when disabling many of these packages, even if not
+marked as required, because various combinations of enable/disables aren’t
+routinely tested.</p>
+<table class="docutils align-default" id="id4">
+<caption><span class="caption-number">Table 27 </span><span class="caption-text">Dakota Package Options</span><a class="headerlink" href="#id4" title="Permalink to this table"></a></caption>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>CMake Option</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Notes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>HAVE_ACRO</p></td>
+<td><p>ON</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>HAVE_AMPL</p></td>
+<td><p>ON</p></td>
+<td><p>May need to be OFF if compiling with C99 support</p></td>
+</tr>
+<tr class="row-even"><td><p>HAVE_C3</p></td>
+<td><p>OFF</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>HAVE_CONMIN</p></td>
+<td><p>ON</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>HAVE_DDACE</p></td>
+<td><p>ON</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>HAVE_DEMO_TPL</p></td>
+<td><p>OFF</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>HAVE_DFFTPACK</p></td>
+<td><p>ON</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>HAVE_DOT</p></td>
+<td><p>ON</p></td>
+<td><p>Turns OFF if packages/DOT missing</p></td>
+</tr>
+<tr class="row-even"><td><p>HAVE_DREAM</p></td>
+<td><p>ON</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>HAVE_FFTW</p></td>
+<td><p>OFF</p></td>
+<td><p>Off due to GPL-license</p></td>
+</tr>
+<tr class="row-even"><td><p>HAVE_FSUDACE</p></td>
+<td><p>ON</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>HAVE_HOPSPACK</p></td>
+<td><p>ON</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>HAVE_JEGA</p></td>
+<td><p>ON</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>HAVE_LHS</p></td>
+<td><p>ON</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>HAVE_NCSUOPT</p></td>
+<td><p>ON</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>HAVE_NL2SOL</p></td>
+<td><p>ON</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>HAVE_NLPQL</p></td>
+<td><p>ON</p></td>
+<td><p>Turns OFF if packages/NLPQL missing</p></td>
+</tr>
+<tr class="row-odd"><td><p>HAVE_NOMAD</p></td>
+<td><p>ON</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>HAVE_NOWPAC</p></td>
+<td><p>OFF</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>HAVE_NPSOL</p></td>
+<td><p>ON</p></td>
+<td><p>Turns OFF if packages/NPSOL missing</p></td>
+</tr>
+<tr class="row-even"><td><p>HAVE_OPTPP</p></td>
+<td><p>ON</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>HAVE_PECOS</p></td>
+<td><p>ON</p></td>
+<td><p>Currently required</p></td>
+</tr>
+<tr class="row-even"><td><p>HAVE_PSUADE</p></td>
+<td><p>ON</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>HAVE_QUESO</p></td>
+<td><p>OFF</p></td>
+<td><p>Off due to dependence on GPL-licensed GSL</p></td>
+</tr>
+<tr class="row-even"><td><p>HAVE_QUESO_GPMSA</p></td>
+<td><p>OFF</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>DAKOTA_HAVE_GSL</p></td>
+<td><p>OFF</p></td>
+<td><p>Required when <code class="docutils literal notranslate"><span class="pre">HAVE_QUESO=ON</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>HAVE_ROL</p></td>
+<td><p>ON</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>HAVE_SPARSE_GRID</p></td>
+<td><p>ON</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>HAVE_SURFPACK</p></td>
+<td><p>ON</p></td>
+<td><p>Currently required</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="common-issues">
+<h2>Common Issues<a class="headerlink" href="#common-issues" title="Permalink to this headline"></a></h2>
+<p><strong>Errors running CMake:</strong> If you encounter errors running CMake, first
+inspect the console output/error. The files <code class="docutils literal notranslate"><span class="pre">CMakeOutput.log</span></code> and
+<code class="docutils literal notranslate"><span class="pre">CMakeError.log</span></code> contained in <code class="docutils literal notranslate"><span class="pre">$DAK_BUILD/CMakeFiles</span></code> are
+per-probe output and rarely help.</p>
+<p><strong>Mixing incompatible compilers:</strong> Be careful that incompatible compilers
+aren’t selected automatically, e.g., mixing g77 with gfortran or mixing
+compiler vendors.  We often see a specific gfortran get combined
+with system /usr/bin/cc due to CMake probes.  Solution:
+specify which C, C++, and Fortran compilers you want to use, e.g.
+explictly specify <code class="docutils literal notranslate"><span class="pre">CMAKE_C_COMPILER</span></code>, <code class="docutils literal notranslate"><span class="pre">CMAKE_CXX_COMPILER</span></code>, and
+<code class="docutils literal notranslate"><span class="pre">CMAKE_Fortran_COMPILER</span></code>.</p>
+<p><strong>Mixing MPI with incompatible compilers</strong>. Solution: explicitly
+specify <code class="docutils literal notranslate"><span class="pre">MPI_CXX_COMPILER</span></code>, as well as the standard compilers shown
+above.</p>
+<p><strong>Boost detection or link issues:</strong> Mixing a system and
+custom-installed Boost.  Solution: see the guidance on specifying
+Boost above.</p>
+<p><strong>TPLs found in CMAKE_INSTALL_PREFIX:</strong> Dakota finds packages, e.g.,
+Trilinos, in an old install tree and mis-configured the current
+build. Solution: remove the install tree prior to build or try setting
+CMake find options, e.g., <code class="docutils literal notranslate"><span class="pre">CMAKE_FIND_USE_INSTALL_PREFIX:BOOL=FALSE</span></code>
+from <a class="reference external" href="https://cmake.org/cmake/help/latest/command/find_package.html">https://cmake.org/cmake/help/latest/command/find_package.html</a>.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="getsource.html" class="btn btn-neutral float-left" title="Obtain Source Code" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="build.html" class="btn btn-neutral float-right" title="Build and Install Dakota" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <!--
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Sandia National Laboratories.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+  --> 
+
+</footer>
+        </div>
+      </div>
+	  
+	  <div style="background-color: #0f0f0f;color:#fafafa;padding:20px">
+	    <div>
+		  <h2><em>Exceptional service in the national interest</em></h2>
+		</div>
+		<p>© 2023 National Technology and Engineering Solutions of Sandia, LLC. | <a href="https://www.sandia.gov/contact_us/index.html">Questions &amp; Comments</a> | <a href="https://www.sandia.gov/general/privacy-security/index.html">Privacy &amp; Security</a></p>
+		<p><a href="http://energy.gov" rel="noopener noreferrer" target="_blank"><img alt="U.S. Department of Energy" longdesc="https://energy.gov" src="https://www.sandia.gov/_common/images/doe_logo_white.png" style="height:37px; width:140px"></a> <a href="http://nnsa.energy.gov/" rel="noopener noreferrer" target="_blank"> <img alt="National Nuclear Security Administration" longdesc="http://nnsa.gov" src="https://www.sandia.gov/_common/images/nnsa_logo_white.png" style="height:37px; width:116px"></a></p>
+		<p><a href="https://www.sandia.gov">Sandia National Laboratories</a> is a multimission laboratory managed and operated by National Technology and Engineering Solutions of Sandia, LLC., a wholly owned subsidiary of Honeywell International, Inc., for the U.S. Department of Energy’s National Nuclear Security Administration under contract DE-NA-0003525.</p>
+	  </div>	  	  
+	  
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

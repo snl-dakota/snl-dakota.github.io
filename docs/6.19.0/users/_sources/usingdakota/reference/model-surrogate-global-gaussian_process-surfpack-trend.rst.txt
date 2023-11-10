@@ -1,0 +1,65 @@
+.. _model-surrogate-global-gaussian_process-surfpack-trend:
+
+"""""
+trend
+"""""
+
+
+Choose a trend function for a Gaussian process surrogate
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   model-surrogate-global-gaussian_process-surfpack-trend-constant
+   model-surrogate-global-gaussian_process-surfpack-trend-linear
+   model-surrogate-global-gaussian_process-surfpack-trend-reduced_quadratic
+   model-surrogate-global-gaussian_process-surfpack-trend-quadratic
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+- *Default:* reduced_quadratic
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+-----------------------+-----------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword        | Dakota Keyword Description                    |
+|                         | Group              |                       |                                               |
++=========================+====================+=======================+===============================================+
+| Required (Choose One)   | Trend Order        | `constant`__          | Constant trend function                       |
+|                         |                    +-----------------------+-----------------------------------------------+
+|                         |                    | `linear`__            | Use a linear polynomial or trend function     |
+|                         |                    +-----------------------+-----------------------------------------------+
+|                         |                    | `reduced_quadratic`__ | Quadratic polynomials - main effects only     |
+|                         |                    +-----------------------+-----------------------------------------------+
+|                         |                    | `quadratic`__         | Use a quadratic polynomial or trend function  |
++-------------------------+--------------------+-----------------------+-----------------------------------------------+
+
+.. __: model-surrogate-global-gaussian_process-surfpack-trend-constant.html
+__ model-surrogate-global-gaussian_process-surfpack-trend-linear.html
+__ model-surrogate-global-gaussian_process-surfpack-trend-reduced_quadratic.html
+__ model-surrogate-global-gaussian_process-surfpack-trend-quadratic.html
+
+
+
+**Description**
+
+
+The only trend functions that are currently supported are polynomials.
+
+The trend function is selected using the ``trend``
+keyword, with options ``constant``, ``linear``, or ``reduced_quadratic``.
+The ``reduced_quadratic`` trend function includes the main
+effects, but not mixed/interaction terms.
+The Surfpack GP (See :dakkw:`model-surrogate-global-gaussian_process-surfpack`)
+has the additional option of (a full)
+``quadratic``.
+
+

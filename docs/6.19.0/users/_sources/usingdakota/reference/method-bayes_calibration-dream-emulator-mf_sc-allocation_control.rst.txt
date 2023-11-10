@@ -1,0 +1,57 @@
+.. _method-bayes_calibration-dream-emulator-mf_sc-allocation_control:
+
+""""""""""""""""""
+allocation_control
+""""""""""""""""""
+
+
+Sample allocation approach for multifidelity expansions
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-bayes_calibration-dream-emulator-mf_sc-allocation_control-greedy
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+--------------------+-----------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword     | Dakota Keyword Description                    |
+|                         | Group              |                    |                                               |
++=========================+====================+====================+===============================================+
+| Required (Choose One)   | Multifidelity      | `greedy`__         | Sample allocation based on greedy refinement  |
+|                         | Sample Allocation  |                    | within multifidelity stochastic collocation   |
+|                         | Control            |                    |                                               |
++-------------------------+--------------------+--------------------+-----------------------------------------------+
+
+.. __: method-bayes_calibration-dream-emulator-mf_sc-allocation_control-greedy.html
+
+
+
+**Description**
+
+
+Multifidelity surrogate approaches, including polynomial chaos,
+stochastic collocation, and function train, can optionally employ a
+integrated greedy competition across the model sequence, where each
+model index can supply one or more refinement candidates which are
+competed to determine the candidate with the greatest impact on the
+QoI statistics per unit cost.  This greedy competition implicitly
+determines the optimal sample allocation across model indices.
+
+*Default Behavior*
+
+The default, when ``allocation_control`` is not specified, is to
+compute or adapt separately for each model index (individual instead
+of integrated refinement).
+
+

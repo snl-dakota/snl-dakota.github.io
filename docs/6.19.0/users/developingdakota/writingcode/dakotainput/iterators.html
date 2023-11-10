@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Iterators &mdash; dakota 6.19.0 documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/dakota_theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/sandiaheaderlite.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Models" href="models.html" />
+    <link rel="prev" title="Environment" href="environment.html" /> 
+  
+  <meta name="sandia.approval_type" content="formal"/>
+  <meta property="sandia.approved" content="SAND2023-13392 O"/>
+  <meta name="description" content="The Dakota project delivers both state-of-the-art research and robust, usable software for optimization and UQ."/>
+  <meta name="keywords" content="Dakota, optimization, UQ, uncertainty quantification, parametric analysis, design exploration, model calibration, risk analysis"/>
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../index.html" class="icon icon-home"> dakota
+            <img src="../../../_static/dakota_Arrow_Name_Tag_horiz_transparent.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                6.19
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../setupdakota.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usingdakota/usingdakota.html">Using Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usingdakotagui/usingdakotagui.html">Using Dakota GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../externaltools/externaltools.html">Using External Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../compiling/compiling.html">Compiling Dakota</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../developingdakota.html">Developing Dakota</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../devenvironment.html">Setup Your Development Environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../gitforversioncontrol.html">Git for Version Control</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../writingcode.html">Writing Dakota Code</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="../overview.html">Overview of Dakota</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="environment.html">Environment</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Iterators</a></li>
+<li class="toctree-l4"><a class="reference internal" href="models.html">Models</a></li>
+<li class="toctree-l4"><a class="reference internal" href="variables.html">Variables</a></li>
+<li class="toctree-l4"><a class="reference internal" href="interfaces.html">Interfaces</a></li>
+<li class="toctree-l4"><a class="reference internal" href="responses.html">Responses</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../services.html">Services</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../developmentpractices.html">Development Practices and Guidance</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../testingcode.html">Testing Dakota Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../documenting.html">Documenting Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../writingdocs.html">Dakota Documentation Mechanics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../tpls.html">Dakota’s Third-Party Libraries</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../misc/misc.html">Miscellaneous</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">dakota</a>
+      </nav>
+
+	  <!-- SNL Lite header -->
+	  <div class="snlheader-subsite--wrapper-default">
+		<snlheader class="snlheader-subsite" role="snlbanner">
+		  <div class="wrapper">
+			<a href="https://www.sandia.gov/index.html">
+			  <div class="logo-transparent"><p class="logo">Sandia National Laboratories</p></div>
+			</a>
+			<div class="nav-top">
+			  <a class="visuallyhidden" name="mainnav"></a>
+			  <div aria-label="main navigation" class="core-nav-transparent core-nav-transparent--visible" role="navigation">
+				<ul role="navigation" class="secondary-links">
+				  <li id="search-text-link">
+					<a aria-label="Search" href="https://www.sandia.gov/search/">Search Sandia.gov</a>
+				  </li>
+				  <li id="directory-text-link">
+					<a href="https://www.sandia.gov/directory.html" aria-expanded="false" aria-label="Site Directory">All Sandia Websites</a>
+				  </li>
+				</ul>
+			  </div>
+			</div>
+		  </div> 
+		</snlheader>
+	  </div>	  
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../../developingdakota.html">Developing Dakota</a> &raquo;</li>
+          <li><a href="../../writingcode.html">Writing Dakota Code</a> &raquo;</li>
+          <li><a href="../overview.html">Overview of Dakota</a> &raquo;</li>
+      <li>Iterators</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../_sources/developingdakota/writingcode/dakotainput/iterators.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="iterators">
+<span id="developer-iterators-main"></span><h1>Iterators<a class="headerlink" href="#iterators" title="Permalink to this headline"></a></h1>
+<p>Class hierarchy: <a class="reference external" href="https://dakota.sandia.gov//sites/default/files/docs/latest_release/html-dev/classDakota_1_1Iterator.html">Iterator.</a>
+<a class="reference external" href="https://dakota.sandia.gov//sites/default/files/docs/latest_release/html-dev/classDakota_1_1Iterator.html">Iterator</a> implementations may choose to split operations up into run-time
+phases as described in <a class="reference internal" href="../developmentpractices/iteratorflow.html#developer-understanding-iterator-flow"><span class="std std-ref">Understanding Iterator Flow.</span></a></p>
+<p>The iterator hierarchy contains a variety of iterative algorithms for optimization, uncertainty quantification, nonlinear least squares, design of experiments, and parameter studies.
+The hierarchy is divided into <a class="reference external" href="https://dakota.sandia.gov//sites/default/files/docs/latest_release/html-dev/classDakota_1_1MetaIterator.html">MetaIterator</a>,
+<a class="reference external" href="https://dakota.sandia.gov//sites/default/files/docs/latest_release/html-dev/classDakota_1_1Minimizer.html">Minimizer</a>, and
+<a class="reference external" href="https://dakota.sandia.gov//sites/default/files/docs/latest_release/html-dev/classDakota_1_1Analyzer.html">Analyzer</a> branches.</p>
+<p>The <a class="reference external" href="https://dakota.sandia.gov//sites/default/files/docs/latest_release/html-dev/classDakota_1_1MetaIterator.html">MetaIterator</a> classes manage sequencing and collaboration among multiple
+methods with support for concurrent iterator parallelism. Methods include:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><a class="reference external" href="https://dakota.sandia.gov//sites/default/files/docs/latest_release/html-dev/classDakota_1_1SeqHybridMetaIterator.html">SeqHybridMetaIterator</a>: hybrid minimization using a set of iterators
+employing a corresponding set of models of varying fidelity. The sequential hybrid passes the best solutions from one method in as the starting points of the next method in the sequence.</p></li>
+<li><p><a class="reference external" href="https://dakota.sandia.gov//sites/default/files/docs/latest_release/html-dev/classDakota_1_1CollabHybridMetaIterator.html">CollabHybridMetaIterator</a>: hybrid minimization employing collaboration and
+sharing of response data among methods during the course if iteration. This class is currently a placeholder.</p></li>
+<li><p><a class="reference external" href="https://dakota.sandia.gov//sites/default/files/docs/latest_release/html-dev/classDakota_1_1EmbedHybridMetaIterator.html">EmbedHybridMetaIterator</a>: hybrid minimization involving periodic use of a
+local search method for refinement during the iteration of an outer global method. This class is currently a placeholder.</p></li>
+<li><p><a class="reference external" href="https://dakota.sandia.gov//sites/default/files/docs/latest_release/html-dev/classDakota_1_1ConcurrentMetaIterator.html">ConcurrentMetaIterator</a>: two similar algorithms are available: (1)
+multi-start iteration from several different starting points, and (2) pareto set optimization for several different multi-objective weightings. Employs a single iterator with a single model, but
+runs multiple instances of the iterator concurrently for different settings within the model.</p></li>
+</ul>
+</div></blockquote>
+<p>The <a class="reference external" href="https://dakota.sandia.gov//sites/default/files/docs/latest_release/html-dev/classDakota_1_1Minimizer.html">Minimizer</a> classes address optimization and deterministic calibration and are grouped into:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Optimization: <a class="reference external" href="https://dakota.sandia.gov//sites/default/files/docs/latest_release/html-dev/classDakota_1_1Optimizer.html">Optimizer</a> provides a base class for gradient-based
+(e.g., <a class="reference external" href="https://dakota.sandia.gov//sites/default/files/docs/latest_release/html-dev/classDakota_1_1CONMINOptimizer.html">CONMINOptimizer</a> and
+<a class="reference external" href="https://dakota.sandia.gov//sites/default/files/docs/latest_release/html-dev/classDakota_1_1SNLLOptimizer.html">SNLLOptimizer</a>) and derivative-free (e.g.,
+<a class="reference external" href="https://dakota.sandia.gov//sites/default/files/docs/latest_release/html-dev/classDakota_1_1NCSUOptimizer.html">NCSUOptimizer</a>,
+<a class="reference external" href="https://dakota.sandia.gov//sites/default/files/docs/latest_release/html-dev/classDakota_1_1JEGAOptimizer.html">JEGAOptimizer</a>) optimization solvers. Most of these are wrappers for third-party libraries
+that implement the optimization algorithms. Classes <a class="reference external" href="https://dakota.sandia.gov//sites/default/files/docs/latest_release/html-dev/classDakota_1_1APPSEvalMgr.html">APPSEvalMgr</a> and
+<a class="reference external" href="https://dakota.sandia.gov//sites/default/files/docs/latest_release/html-dev/classDakota_1_1COLINApplication.html">COLINApplication</a> provide the function evaluation interface for
+<a class="reference external" href="https://dakota.sandia.gov//sites/default/files/docs/latest_release/html-dev/classDakota_1_1APPSOptimizer.html">APPSOptimizer</a> and
+<a class="reference external" href="https://dakota.sandia.gov//sites/default/files/docs/latest_release/html-dev/classDakota_1_1COLINOptimizer.html">COLINOptimizer</a>, respectively.</p></li>
+<li><p>Parameter estimation: <a class="reference external" href="https://dakota.sandia.gov//sites/default/files/docs/latest_release/html-dev/classDakota_1_1LeastSq.html">LeastSq</a> provides a base class for
+<a class="reference external" href="https://dakota.sandia.gov//sites/default/files/docs/latest_release/html-dev/classDakota_1_1NL2SOLLeastSq.html">NL2SOLLeastSq</a>, a least-squares solver based on NL2SOL,
+<a class="reference external" href="https://dakota.sandia.gov//sites/default/files/docs/latest_release/html-dev/classDakota_1_1SNLLLeastSq.html">SNLLLeastSq</a>, a Gauss-Newton least-squares solver, and
+<a class="reference external" href="https://dakota.sandia.gov//sites/default/files/docs/latest_release/html-dev/classDakota_1_1NLSSOLLeastSq.html">NLSSOLLeastSq</a>, an SQP-based least-squares solver.</p></li>
+<li><p>Surrogate-based minimization (both optimization and nonlinear least squares): SurrBasedMinimizer provides a base class for SurrBasedLocalMinimizer, SurrBasedGlobalMinimizer, and EffGlobalMinimizer. The surrogate-based local and global methods employ a single iterator with any of the available SurrogateModel capabilities (local, multipoint, or global data fits or hierarchical approximations) and perform a sequence of approximate optimizations, each involving build, optimize, and verify steps. The efficient global method, on the other hand, hard-wires a recursion involving Gaussian process surrogate models coupled with the DIRECT global optimizer to maximize an expected improvement function.</p></li>
+</ul>
+</div></blockquote>
+<p>The Analyzer classes are grouped into:</p>
+<ul class="simple">
+<li><p>Uncertainty quantification: NonD provides a base class for non-deterministic methods in several categories:</p>
+<ul>
+<li><p>Sampling: NonDSampling is further specialized with the NonDLHSSampling class for Latin hypercube and Monte Carlo sampling, and a number of other classes supporting incremental and adaptive sampling such as NonDAdaptImpSampling for multi-modal adaptive importance sampling.</p></li>
+<li><p>Reliability Analysis: NonDReliability is further specialized with local and global methods (NonDLocalReliability and NonDGlobalReliability). NonDPOFDarts implements a computational geometry-based reliability method.</p></li>
+<li><p>Stochastic Expansions: NonDExpansion includes specializations for generalized polynomial chaos (NonDPolynomialChaos) and stochastic collocation (NonDStochCollocation) and is supported by the NonDIntegration helper class, which supplies cubature, tensor-product quadrature and Smolyak sparse grid methods (NonDCubature, NonDQuadrature, and NonDSparseGrid).</p></li>
+<li><p>Bayesian Calibration: NonDCalibration provides a base class for nondeterministic calibration methods with specialization to Bayesian calibration in NonDBayesCalibration, and specific implementations such as NonDQUESOBayesCalibration.</p></li>
+<li><p>NonDInterval provides a base class for epistemic interval-based UQ methods. Three interval analysis approaches are provided: LHS (NonDLHSInterval), efficient global optimization (NonDGlobalInterval), and local optimization (NonDLocalInterval). Each of these three has specializations for single interval and Dempster-Shafer Theory of Evidence approaches.</p></li>
+</ul>
+</li>
+<li><p>Parameter studies and design of experiments: PStudyDACE provides a base class for ParamStudy, which provides capabilities for directed parameter space interrogation, PSUADEDesignCompExp, which provides access to the Morris One-At-a-Time (MOAT) method for parameter screening, and DDACEDesignCompExp and FSUDesignCompExp, which provide for parameter space exploration through design and analysis of computer experiments. NonDLHSSampling from the uncertainty quantification branch also supports design of experiments when in active all variables mode.</p></li>
+<li><p>Solution verification studies: Verification provides a base class for RichExtrapVerification (verification via Richardson extrapolation) and other solution verification methods in development.</p></li>
+</ul>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="environment.html" class="btn btn-neutral float-left" title="Environment" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="models.html" class="btn btn-neutral float-right" title="Models" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <!--
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Sandia National Laboratories.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+  --> 
+
+</footer>
+        </div>
+      </div>
+	  
+	  <div style="background-color: #0f0f0f;color:#fafafa;padding:20px">
+	    <div>
+		  <h2><em>Exceptional service in the national interest</em></h2>
+		</div>
+		<p>© 2023 National Technology and Engineering Solutions of Sandia, LLC. | <a href="https://www.sandia.gov/contact_us/index.html">Questions &amp; Comments</a> | <a href="https://www.sandia.gov/general/privacy-security/index.html">Privacy &amp; Security</a></p>
+		<p><a href="http://energy.gov" rel="noopener noreferrer" target="_blank"><img alt="U.S. Department of Energy" longdesc="https://energy.gov" src="https://www.sandia.gov/_common/images/doe_logo_white.png" style="height:37px; width:140px"></a> <a href="http://nnsa.energy.gov/" rel="noopener noreferrer" target="_blank"> <img alt="National Nuclear Security Administration" longdesc="http://nnsa.gov" src="https://www.sandia.gov/_common/images/nnsa_logo_white.png" style="height:37px; width:116px"></a></p>
+		<p><a href="https://www.sandia.gov">Sandia National Laboratories</a> is a multimission laboratory managed and operated by National Technology and Engineering Solutions of Sandia, LLC., a wholly owned subsidiary of Honeywell International, Inc., for the U.S. Department of Energy’s National Nuclear Security Administration under contract DE-NA-0003525.</p>
+	  </div>	  	  
+	  
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

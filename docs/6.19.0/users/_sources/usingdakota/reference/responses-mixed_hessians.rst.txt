@@ -1,0 +1,99 @@
+.. _responses-mixed_hessians:
+
+""""""""""""""
+mixed_hessians
+""""""""""""""
+
+
+Hessians are needed and will be obtained from a mix of numerical,
+analytic, and "quasi" sources
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   responses-mixed_hessians-id_numerical_hessians
+   responses-mixed_hessians-relative
+   responses-mixed_hessians-absolute
+   responses-mixed_hessians-bounds
+   responses-mixed_hessians-forward
+   responses-mixed_hessians-central
+   responses-mixed_hessians-id_quasi_hessians
+   responses-mixed_hessians-id_analytic_hessians
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+---------------------------+-----------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword            | Dakota Keyword Description                    |
+|                         | Group              |                           |                                               |
++=========================+====================+===========================+===============================================+
+| Optional                                     | `id_numerical_hessians`__ | Identify which numerical-Hessian corresponds  |
+|                                              |                           | to which response                             |
++-------------------------+--------------------+---------------------------+-----------------------------------------------+
+| Optional (Choose One)   | Step Scaling       | `relative`__              | (Default) Scale step size by the parameter    |
+|                         |                    |                           | value                                         |
+|                         |                    +---------------------------+-----------------------------------------------+
+|                         |                    | `absolute`__              | Do not scale step-size                        |
+|                         |                    +---------------------------+-----------------------------------------------+
+|                         |                    | `bounds`__                | Scale step-size by the domain of the          |
+|                         |                    |                           | parameter                                     |
++-------------------------+--------------------+---------------------------+-----------------------------------------------+
+| Optional (Choose One)   | Finite Difference  | `forward`__               | (Default) Use forward differences             |
+|                         | Type               +---------------------------+-----------------------------------------------+
+|                         |                    | `central`__               | Use central differences                       |
++-------------------------+--------------------+---------------------------+-----------------------------------------------+
+| Optional                                     | `id_quasi_hessians`__     | Identify which quasi-Hessian corresponds to   |
+|                                              |                           | which response                                |
++----------------------------------------------+---------------------------+-----------------------------------------------+
+| Optional                                     | `id_analytic_hessians`__  | Identify which analytical Hessian corresponds |
+|                                              |                           | to which response                             |
++----------------------------------------------+---------------------------+-----------------------------------------------+
+
+.. __: responses-mixed_hessians-id_numerical_hessians.html
+__ responses-mixed_hessians-relative.html
+__ responses-mixed_hessians-absolute.html
+__ responses-mixed_hessians-bounds.html
+__ responses-mixed_hessians-forward.html
+__ responses-mixed_hessians-central.html
+__ responses-mixed_hessians-id_quasi_hessians.html
+__ responses-mixed_hessians-id_analytic_hessians.html
+
+
+
+**Description**
+
+
+The ``mixed_hessians`` specification means that some Hessian
+information is available directly from the simulation (analytic)
+whereas the rest will have to be estimated by finite differences
+(numerical) or approximated by secant updating. As for
+mixed gradients, this specification allows the user to make use of as
+much analytic information as is available and then
+estimate/approximate the rest.
+
+The ``id_analytic_hessians`` list
+specifies by number the functions which have analytic Hessians, and
+the ``id_numerical_hessians`` and ``id_quasi_hessians`` lists specify by
+number the functions which must use numerical Hessians and
+secant Hessian updates, respectively. Each function identifier,
+from 1 through the total number of functions, must appear once and
+only once within the union of the ``id_analytic_hessians``,
+``id_numerical_hessians``, and ``id_quasi_hessians`` lists.
+
+The
+``fd_hessian_step_size`` and ``bfgs``, ``damped`` ``bfgs``, or ``sr1``
+secant update selections are as described previously in
+:dakkw:`responses` and pertain to those functions
+listed by the ``id_numerical_hessians`` and ``id_quasi_hessians``
+lists.
+
+

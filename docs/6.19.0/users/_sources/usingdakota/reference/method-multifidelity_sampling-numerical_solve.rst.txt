@@ -1,0 +1,85 @@
+.. _method-multifidelity_sampling-numerical_solve:
+
+"""""""""""""""
+numerical_solve
+"""""""""""""""
+
+
+Specify the situations where numerical optimization is used for MFMC sample allocation
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-multifidelity_sampling-numerical_solve-fallback
+   method-multifidelity_sampling-numerical_solve-override
+   method-multifidelity_sampling-numerical_solve-sqp
+   method-multifidelity_sampling-numerical_solve-nip
+   method-multifidelity_sampling-numerical_solve-global_local
+   method-multifidelity_sampling-numerical_solve-competed_local
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+--------------------+-----------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword     | Dakota Keyword Description                    |
+|                         | Group              |                    |                                               |
++=========================+====================+====================+===============================================+
+| Optional (Choose One)   | Employ numerical   | `fallback`__       | Fall back to a numerical solve when needed    |
+|                         | solve              |                    | for mitigation in MFMC                        |
+|                         |                    +--------------------+-----------------------------------------------+
+|                         |                    | `override`__       | Replace MFMC analytic allocation with a       |
+|                         |                    |                    | numerical solution                            |
++-------------------------+--------------------+--------------------+-----------------------------------------------+
+| Optional (Choose One)   | Optimization       | `sqp`__            | Use a sequential quadratic programming method |
+|                         | Solver             |                    | for solving an optimization sub-problem       |
+|                         |                    +--------------------+-----------------------------------------------+
+|                         |                    | `nip`__            | Use a nonlinear interior point method for     |
+|                         |                    |                    | solving an optimization sub-problem           |
+|                         |                    +--------------------+-----------------------------------------------+
+|                         |                    | `global_local`__   | Use a hybrid global-local scheme for solving  |
+|                         |                    |                    | an optimization sub-problem                   |
+|                         |                    +--------------------+-----------------------------------------------+
+|                         |                    | `competed_local`__ | Use a competed local solver scheme for        |
+|                         |                    |                    | solving an optimization sub-problem           |
++-------------------------+--------------------+--------------------+-----------------------------------------------+
+
+.. __: method-multifidelity_sampling-numerical_solve-fallback.html
+__ method-multifidelity_sampling-numerical_solve-override.html
+__ method-multifidelity_sampling-numerical_solve-sqp.html
+__ method-multifidelity_sampling-numerical_solve-nip.html
+__ method-multifidelity_sampling-numerical_solve-global_local.html
+__ method-multifidelity_sampling-numerical_solve-competed_local.html
+
+
+
+**Description**
+
+
+Multifidelity Monte Carlo (MFMC) supports an analytic solution for the
+allocation of samples per model instance based on response correlations and
+relative simulation cost.  In some situations (over-estimated pilot sample,
+mis-ordered model correlations), this analytic solution may be either
+sub-optimal or undefined, requiring mitigation.
+
+This specification allows for control of this mitigation; in particular,
+whether recourse to a numerical solution is strictly a fallback (default)
+or is desired as an unconditional override (regardless of the need for
+specific mitigations).
+
+Further, when a numerical solve is employed, it can utilize either the
+``sqp`` or ``nip`` solver options.
+
+*Default Behavior*
+Analytic is preferred, with ``fallback`` to numerical only when mitigation
+is required.
+
+

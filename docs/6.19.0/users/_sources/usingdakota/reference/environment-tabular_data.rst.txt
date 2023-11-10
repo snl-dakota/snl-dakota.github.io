@@ -1,0 +1,80 @@
+.. _environment-tabular_data:
+
+""""""""""""
+tabular_data
+""""""""""""
+
+
+Write a tabular results file with variable and response history
+
+
+
+**Topics**
+
+
+dakota_output
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   environment-tabular_data-tabular_data_file
+   environment-tabular_data-custom_annotated
+   environment-tabular_data-annotated
+   environment-tabular_data-freeform
+
+
+**Specification**
+
+- *Alias:* tabular_graphics_data 
+
+- *Arguments:* None
+
+- *Default:* no tabular data output
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+-----------------------+-----------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword        | Dakota Keyword Description                    |
+|                         | Group              |                       |                                               |
++=========================+====================+=======================+===============================================+
+| Optional                                     | `tabular_data_file`__ | File name for tabular data output             |
++-------------------------+--------------------+-----------------------+-----------------------------------------------+
+| Optional (Choose One)   | Tabular Data       | `custom_annotated`__  | Selects custom-annotated tabular file format  |
+|                         | Format             +-----------------------+-----------------------------------------------+
+|                         |                    | `annotated`__         | Selects annotated tabular file format         |
+|                         |                    +-----------------------+-----------------------------------------------+
+|                         |                    | `freeform`__          | Selects freeform file format                  |
++-------------------------+--------------------+-----------------------+-----------------------------------------------+
+
+.. __: environment-tabular_data-tabular_data_file.html
+__ environment-tabular_data-custom_annotated.html
+__ environment-tabular_data-annotated.html
+__ environment-tabular_data-freeform.html
+
+
+
+**Description**
+
+
+Specifying the ``tabular_data`` flag writes to a data file the same
+variable and response function history data plotted when using the
+(deprecated) ``graphics`` flag.  Within the generated data file, the
+variables and response functions appear as columns and each function
+evaluation provides a new table row. This capability is most useful
+for post-processing of Dakota results with third-party graphics tools
+such as MatLab, Excel, Tecplot, etc.
+
+There is no dependence between the ``graphics`` flag and the
+``tabular_data`` flag; they may be used independently or
+concurrently.
+
+Dakota exports tabular data in one of three formats:
+
+- ``annotated`` (default)
+- ``custom_annotated``
+- ``freeform``
+
+

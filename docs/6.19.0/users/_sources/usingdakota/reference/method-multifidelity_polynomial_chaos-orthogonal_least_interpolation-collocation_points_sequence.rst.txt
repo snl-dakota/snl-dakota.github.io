@@ -1,0 +1,40 @@
+.. _method-multifidelity_polynomial_chaos-orthogonal_least_interpolation-collocation_points_sequence:
+
+"""""""""""""""""""""""""""
+collocation_points_sequence
+"""""""""""""""""""""""""""
+
+
+Sequence of collocation point counts used in a multi-stage expansion
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* INTEGERLIST
+
+
+**Description**
+
+
+Each level entry of the ``collocation_points_sequence`` applies to one
+expansion within a multi-stage expansion.  Current multi-stage
+expansions that support collocation point sequences include multilevel
+and multifidelity polynomial chaos and multilevel and multifidelity
+function train expansions.
+
+If adaptive refinement is active, then this sequence specifies the
+starting point for each level within either an individual or
+integrated refinement approach.
+
+A corresponding scalar specification is documented at, e.g.,
+:dakkw:`method-polynomial_chaos-expansion_order-collocation_points`
+
+

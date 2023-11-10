@@ -1,0 +1,53 @@
+.. _method-pof_darts-lipschitz:
+
+"""""""""
+lipschitz
+"""""""""
+
+
+Select the type of Lipschitz estimation (global or local)
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-pof_darts-lipschitz-local
+   method-pof_darts-lipschitz-global
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+--------------------+-----------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword     | Dakota Keyword Description                    |
+|                         | Group              |                    |                                               |
++=========================+====================+====================+===============================================+
+| Required (Choose One)   | Local/Global       | `local`__          | Specify local estimation of the Lipschitz     |
+|                         | Estimate           |                    | constant                                      |
+|                         |                    +--------------------+-----------------------------------------------+
+|                         |                    | `global`__         | Specify global estimation of the Lipschitz    |
+|                         |                    |                    | estimate                                      |
++-------------------------+--------------------+--------------------+-----------------------------------------------+
+
+.. __: method-pof_darts-lipschitz-local.html
+__ method-pof_darts-lipschitz-global.html
+
+
+
+**Description**
+
+
+There are two types of Lipschitz estimation used in sizing the disks used in
+POF Darts:  ``global`` and ``local``.  The global approach uses
+one Lipschitz estimate for the entire domain.  The local approach calculates
+the Lipschitz estimate separately for each Voronoi region based on nearby points.
+The local method is more expensive but more accurate.
+
+

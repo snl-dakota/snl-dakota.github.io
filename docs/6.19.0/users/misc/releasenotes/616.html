@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Version 6.16 (2022/05/16) &mdash; dakota 6.19.0 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/dakota_theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/sandiaheaderlite.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Version 6.15 (2021/11/15)" href="615.html" />
+    <link rel="prev" title="Version 6.17 (2022/11/15)" href="617.html" /> 
+  
+  <meta name="sandia.approval_type" content="formal"/>
+  <meta property="sandia.approved" content="SAND2023-13392 O"/>
+  <meta name="description" content="The Dakota project delivers both state-of-the-art research and robust, usable software for optimization and UQ."/>
+  <meta name="keywords" content="Dakota, optimization, UQ, uncertainty quantification, parametric analysis, design exploration, model calibration, risk analysis"/>
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> dakota
+            <img src="../../_static/dakota_Arrow_Name_Tag_horiz_transparent.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                6.19
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../setupdakota.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../usingdakota/usingdakota.html">Using Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../usingdakotagui/usingdakotagui.html">Using Dakota GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../externaltools/externaltools.html">Using External Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../compiling/compiling.html">Compiling Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developingdakota/developingdakota.html">Developing Dakota</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../misc.html">Miscellaneous</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../help.html">Help Resources</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../aboutteam.html">About the Team</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../contributing.html">Contributing to Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../contributors.html">Contributors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../license.html">License</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../citing.html">Citing Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../publications.html">Publications</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../releasenotes.html">Release Notes</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="../releasenotes.html#dakota">Dakota</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="619.html">Version 6.19 (2023/11/15)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="618.html">Version 6.18 (2023/05/15)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="617.html">Version 6.17 (2022/11/15)</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Version 6.16 (2022/05/16)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="615.html">Version 6.15 (2021/11/15)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="614.html">Version 6.14 (2021/05/17)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="613.html">Version 6.13 (2020/11/15)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="612.html">Version 6.12 (2020/06/15)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="611.html">Version 6.11 (2019/11/15)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="610.html">Version 6.10 (2019/05/15)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="69.html">Version 6.9 (2018/11/15)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="68.html">Version 6.8 (2018/05/15)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="67.html">Version 6.7 (2017/11/15)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="66.html">Version 6.6 (2017/05/15)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="65.html">Version 6.5 (2016/11/15)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="64.html">Version 6.4 (2016/05/16)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="63.html">Version 6.3 (2015/11/16)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="62.html">Version 6.2 (2015/05/15)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="61.html">Version 6.1 (2014/11/15)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="60.html">Version 6.0 (2014/05/15)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="54.html">Version 5.4 (2013/11/15)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="531.html">Version 5.3.1 (2013/05/15)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="53.html">Version 5.3 (2013/01/31)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="52.html">Version 5.2 (2011/11/30)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="51.html">Version 5.1 (2010/12/21)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="50.html">Version 5.0 (2009/12/21)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="42.html">Version 4.2 (2008/11/05)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="41.html">Version 4.1 (2007/09/21)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="40.html">Version 4.0 (2006/05/12)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="33.html">Version 3.3 (2004/12/23)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="32.html">Version 3.2 (2004/07/21)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="312.html">Version 3.1.2 (2003/07/09)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="311.html">Version 3.1.1 (2003/05/21)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="31.html">Version 3.1 (2003/04/04)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="30.html">Version 3.0 (2002/03/30)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="30beta.html">Version 3.0 beta (2001/11/29)</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../releasenotes.html#dakota-gui">Dakota GUI</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../bibliography.html">Bibliography</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../classictoc.html">I’m Lost!</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">dakota</a>
+      </nav>
+
+	  <!-- SNL Lite header -->
+	  <div class="snlheader-subsite--wrapper-default">
+		<snlheader class="snlheader-subsite" role="snlbanner">
+		  <div class="wrapper">
+			<a href="https://www.sandia.gov/index.html">
+			  <div class="logo-transparent"><p class="logo">Sandia National Laboratories</p></div>
+			</a>
+			<div class="nav-top">
+			  <a class="visuallyhidden" name="mainnav"></a>
+			  <div aria-label="main navigation" class="core-nav-transparent core-nav-transparent--visible" role="navigation">
+				<ul role="navigation" class="secondary-links">
+				  <li id="search-text-link">
+					<a aria-label="Search" href="https://www.sandia.gov/search/">Search Sandia.gov</a>
+				  </li>
+				  <li id="directory-text-link">
+					<a href="https://www.sandia.gov/directory.html" aria-expanded="false" aria-label="Site Directory">All Sandia Websites</a>
+				  </li>
+				</ul>
+			  </div>
+			</div>
+		  </div> 
+		</snlheader>
+	  </div>	  
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../misc.html">Miscellaneous</a> &raquo;</li>
+          <li><a href="../releasenotes.html">Release Notes</a> &raquo;</li>
+      <li>Version 6.16 (2022/05/16)</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/misc/releasenotes/616.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="version-6-16-2022-05-16">
+<span id="releasenotes-616"></span><h1>Version 6.16 (2022/05/16)<a class="headerlink" href="#version-6-16-2022-05-16" title="Permalink to this headline"></a></h1>
+<p><strong>Highlight: Multifidelity UQ Methods</strong></p>
+<p>Dakota 6.16 significantly extends capabilities for multifidelity uncertainty quantification (MF UQ) based on random sampling, including iterated versions of approximate control variate (ACV) and multifidelity Monte Carlo (MFMC), new solution modes (online pilot, offline pilot, and pilot projection), new final statistics goals supporting estimator selection and tuning, online cost recovery through metadata, and improved numerical solution options for MFMC and ACV.</p>
+<p><em>Documentation:</em> Refer to Reference Manual documentation on MF UQ methods, in particular multilevel_sampling, multifidelity_sampling, multilevel_multifidelity_sampling, and approximate_control_variate.</p>
+<p><strong>Highlight: Model Tuning for Multifidelity UQ</strong></p>
+<p>New capabilities for model tuning enable the optimization of hyper-parameters underlying low-fidelity approximations in order to achieve the best accuracy versus cost trade-off for a given multifidelity estimator.</p>
+<p><em>Documentation:</em> This involves configuration of an outer optimization with a nested model, which in turn employs an MF UQ method.  Refer to the Nested Model documentation (Reference and Users) and the test examples in the source distribution at dakota/test/dakota_nested_tunable_acv.in.</p>
+<p><strong>Improvements by Category</strong></p>
+<p><em>Interfaces, Input/Output</em></p>
+<ul class="simple">
+<li><p>New metadata response type collects auxiliary data from simulation interfaces (and induces changes in parameters and results APIs)</p></li>
+<li><p>Python dakota.interfacing:</p>
+<ul>
+<li><p>Type handling improvements</p></li>
+<li><p>New “python_interface” decorator to provide seamless integration with Python direct interface</p></li>
+</ul>
+</li>
+<li><p>New experimental plugin API and demo of runtime Python plugin</p></li>
+</ul>
+<p><em>Models</em></p>
+<p>AdapterModel / MinimizerAdapterModel: new derived Model classes that wrap function callbacks for solving (approximate) optimization sub-problems. These were developed for solving all-at-once model tuning problems, but are expected to have application more broadly.</p>
+<p><em>Optimization Methods</em></p>
+<p>Best evaluation reporting: Improvements made to best evaluation ID reporting, including clarifying errors vs. warnings and providing partial lookups when full matches can be pin-pointed. Also, optimal values of nonlinear constraints are better reported when model transformations are active.</p>
+<p><em>UQ Methods</em></p>
+<p><em>MLMF Sampling</em></p>
+<ul class="simple">
+<li><p>ACV/MFMC + non-hierarchical (ensemble) models</p>
+<ul>
+<li><p>Harden and benchmark iterated versions of {ACV,MFMC}, avoiding inaccuracy/inefficiency from under/over-estimation of the pilot sample.</p></li>
+<li><p>Add new solution modes in {ACV,MFMC}: online pilot, offline pilot, pilot projection.</p>
+<ul>
+<li><p>The online case (default) incorporates the pilot cost into the sample profile and updates the correlations/covariances as the number of shared samples is iteratively advanced.</p></li>
+<li><p>The offline case segregates pilot evaluation cost separate from online sample cost, making it useful as an “oracle” for computing a reference multifidelity solution based on an intentionally over-resolved pilot.</p></li>
+</ul>
+</li>
+<li><p>The projection mode estimates the expected performance of the estimator from the pilot sample, but does not perform any sample increments beyond the pilot.  It is intended for estimator down-selection based on expected performance.</p>
+<ul>
+<li><p>Relax requirement on separate model forms, allowing use with a single truth model containing multiple resolutions</p></li>
+<li><p>final_statistics can be configured as qoi_statistics (default computation of moments) or estimator_performance (optional mode for model tuning that only computes estimator variance and equivalent cost, bypassing final sample increments and moment post-processing)</p></li>
+<li><p>Support online cost recovery through metadata: an alternative to up-front specification of solution_level_cost, and generally required for model tuning when costs are a function of the tuning hyper-parameters.</p></li>
+</ul>
+</li>
+<li><p>Alternative MFMC solutions:</p>
+<ul>
+<li><p>Implement a reordered analytic solution for MFMC, with results used for defining an initial guess of numerical solutions in {MFMC,ACV}</p></li>
+<li><p>Implement a numerical solution for MFMC, enforcing pyramid sampling constraints for correlation-based re-ordering. Can be utilized either as a fallback (default, replacing analytic solution only when necessary) or a hard override (useful when pilot size may be over-estimated).</p></li>
+</ul>
+</li>
+<li><p>ACV initial guesses from related analytic solutions: two local optimizations now solved, starting from (reordered) analytic MFMC and ensemble CVMC, with the lowest estimator variance retained.</p></li>
+<li><p>Revisit ACV/MFMC fault tolerance to enforce consistent shared samples (finer-grained fault handling introduced more complexity than warranted).</p></li>
+</ul>
+</li>
+<li><p>Retrofit hierarchical methods to elevate each of the legacy approaches (MLMC, CVMC, MLCV MC) to newest standards:</p>
+<ul>
+<li><p>compute LF increments based on HF targets rather than current HF counts, which may include overshoot due to pilot or early mis-estimation</p></li>
+<li><p>defer all LF sample increments until after shared iteration has converged, avoiding increments based on inaccurate early estimates</p></li>
+<li><p>refine enforcement of sample budget allocation</p></li>
+<li><p>implement pilot solution modes {online, offline, projection}, online cost recovery, and estimator_performance mode, as for non-hierarchical estimators above.</p></li>
+</ul>
+</li>
+<li><p>The scalarization target for MLMC, which is a linear combination of mean and standard deviation, has been updated with a more robust and efficient approximation for the covariance term between the estimator mean and standard deviation. The new approximation relies on a closed-form solution for the covariance between the mean and variance and the assumption that the correlation between mean and variance can be used to approximate the correlation between mean and standard deviation. This approach significantly reduces the computational burden since all the needed terms can be obtained from pilot statistics rather than from bootstrapping.</p></li>
+</ul>
+<p><em>Model Tuning</em></p>
+<ul class="simple">
+<li><p>Nested optimization approaches for model tuning, supporting MLMC, CVMC, MLCVMC, MFMC, and ACV estimators and local, global, and surrogate-based minimizers.</p></li>
+<li><p>Online cost recovery when varying hyper-parameters, utilizing new response metadata.</p></li>
+<li><p>Support for heterogenous parameterization of inactive variables within subordinate models.  This is essential for maximizing the reuse of data, as pruning dependencies on tuning hyper-parameters allows the evaluation cache to better distinguish duplicates.</p></li>
+<li><p>Towards all-at-once model tuning: on-the-fly construction for surrogate-based minimizers, including surrogate_based_local, efficient_global, et al. This expands sub-problem solver options for numerical solutions in MF UQ methods.</p></li>
+</ul>
+<p><strong>Miscellaneous Enhancements and Bugfixes</strong></p>
+<ul class="simple">
+<li><p>Enh: Enabled Dakota, QUESO, and C3 (multilevel function train) to use consistent CBLAS for reproducible test behavior on RHEL7.</p></li>
+<li><p>Enh: Updates to JEGA TPL for maintenance and portability</p></li>
+<li><p>Enh: Restart files are now versioned and backward-importable (from this release forward)</p></li>
+<li><p>Enh: Enabled data_directory spec for location of calibration_data files</p></li>
+<li><p>Enh/Bug fix: Surrogate models now prefer the use of truth_model_pointer over actual_model_pointer, partially addressing a GUI parsing bug.</p></li>
+<li><p>Bug fix: QUESO GCC 10 portability fixed by commenting out invalid disabled code</p></li>
+<li><p>Bug fix: Clang 12 portability fixes in deprecated Motif/SciPlot libraries with thanks to Yuri</p></li>
+<li><p>Bug fix: LHS now properly samples “constant” random variables instead of seg faulting</p></li>
+<li><p>Bug fix: repair bug with method recourse when nested use of Fortran optimizers is detected</p></li>
+</ul>
+<p><strong>Deprecated and Changed</strong></p>
+<ul class="simple">
+<li><p>Backward-incompatible changes to Python direct APIs. Dictionary field names have changed.</p></li>
+<li><p>Deprecated C-based Python interface in favor of Pybind11; can still be used via “legacy_python” keyword.</p></li>
+<li><p>Metadata in APIs: Dakota parameters files now unconditionally include fields for number of response metadata (and their field names when present), possibly necessitating changes to parameter file parsers. Python interfaces have related API changes.</p></li>
+</ul>
+<p><strong>Compatibility</strong></p>
+<ul class="simple">
+<li><p>Minimum Boost version 1.69</p></li>
+<li><p>Minimum CMake version 3.15</p></li>
+<li><p>No other mandatory changes to required compilers or third-party libraries. Dakota has been smoke tested on newer GCC compilers such as gcc-10.x, but not fully tested.</p></li>
+</ul>
+<p><strong>Other Notes and Known Issues</strong></p>
+<ul class="simple">
+<li><p>Calibration with data from multiple unique experiment configurations in conjunction with nonlinear constraints is only supported if the constraint values are consistent across configurations.</p></li>
+</ul>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="617.html" class="btn btn-neutral float-left" title="Version 6.17 (2022/11/15)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="615.html" class="btn btn-neutral float-right" title="Version 6.15 (2021/11/15)" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <!--
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Sandia National Laboratories.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+  --> 
+
+</footer>
+        </div>
+      </div>
+	  
+	  <div style="background-color: #0f0f0f;color:#fafafa;padding:20px">
+	    <div>
+		  <h2><em>Exceptional service in the national interest</em></h2>
+		</div>
+		<p>© 2023 National Technology and Engineering Solutions of Sandia, LLC. | <a href="https://www.sandia.gov/contact_us/index.html">Questions &amp; Comments</a> | <a href="https://www.sandia.gov/general/privacy-security/index.html">Privacy &amp; Security</a></p>
+		<p><a href="http://energy.gov" rel="noopener noreferrer" target="_blank"><img alt="U.S. Department of Energy" longdesc="https://energy.gov" src="https://www.sandia.gov/_common/images/doe_logo_white.png" style="height:37px; width:140px"></a> <a href="http://nnsa.energy.gov/" rel="noopener noreferrer" target="_blank"> <img alt="National Nuclear Security Administration" longdesc="http://nnsa.gov" src="https://www.sandia.gov/_common/images/nnsa_logo_white.png" style="height:37px; width:116px"></a></p>
+		<p><a href="https://www.sandia.gov">Sandia National Laboratories</a> is a multimission laboratory managed and operated by National Technology and Engineering Solutions of Sandia, LLC., a wholly owned subsidiary of Honeywell International, Inc., for the U.S. Department of Energy’s National Nuclear Security Administration under contract DE-NA-0003525.</p>
+	  </div>	  	  
+	  
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

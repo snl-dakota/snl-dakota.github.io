@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>New Dakota Study &mdash; dakota 6.19.0 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/dakota_theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/sandiaheaderlite.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="New Dakota Wrapper Workflow" href="NewDakotaWrapperWorkflow.html" />
+    <link rel="prev" title="New Workflow-Based Driver" href="NewWorkflowDriver.html" /> 
+  
+  <meta name="sandia.approval_type" content="formal"/>
+  <meta property="sandia.approved" content="SAND2023-13392 O"/>
+  <meta name="description" content="The Dakota project delivers both state-of-the-art research and robust, usable software for optimization and UQ."/>
+  <meta name="keywords" content="Dakota, optimization, UQ, uncertainty quantification, parametric analysis, design exploration, model calibration, risk analysis"/>
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> dakota
+            <img src="../../_static/dakota_Arrow_Name_Tag_horiz_transparent.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                6.19
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../setupdakota.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../usingdakota/usingdakota.html">Using Dakota</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../usingdakotagui.html">Using Dakota GUI</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#introduction">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#example-search">Example Search</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../usingdakotagui.html#wizards">Wizards</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="NewDakotaProject.html">New Dakota Project</a></li>
+<li class="toctree-l3"><a class="reference internal" href="NewParameterResponseFile.html">New Parameter/Response File</a></li>
+<li class="toctree-l3"><a class="reference internal" href="NewWorkflowDriver.html">New Workflow-Based Driver</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">New Dakota Study</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#page-1-dakota-study-file-creation">Page 1 (Dakota Study File Creation)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#page-2-import-variables-and-responses">Page 2 (Import Variables and Responses)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#page-3-method-settings">Page 3 (Method Settings)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#page-4-variable-settings">Page 4 (Variable Settings)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#page-5-response-settings">Page 5 (Response Settings)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#page-6-interface-settings">Page 6 (Interface Settings)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#next-steps">Next Steps</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="NewDakotaWrapperWorkflow.html">New Dakota Wrapper Workflow</a></li>
+<li class="toctree-l3"><a class="reference internal" href="NewLazyDriver.html">New “Lazy” Driver</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#editing-dakota-input-files">Editing Dakota Input Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#running-dakota">Running Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#running-dakota-remotely">Running Dakota Remotely</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#output-from-dakota">Output from Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#gui-tools">GUI Tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#miscellaneous">Miscellaneous</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../externaltools/externaltools.html">Using External Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../compiling/compiling.html">Compiling Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developingdakota/developingdakota.html">Developing Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../misc/misc.html">Miscellaneous</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">dakota</a>
+      </nav>
+
+	  <!-- SNL Lite header -->
+	  <div class="snlheader-subsite--wrapper-default">
+		<snlheader class="snlheader-subsite" role="snlbanner">
+		  <div class="wrapper">
+			<a href="https://www.sandia.gov/index.html">
+			  <div class="logo-transparent"><p class="logo">Sandia National Laboratories</p></div>
+			</a>
+			<div class="nav-top">
+			  <a class="visuallyhidden" name="mainnav"></a>
+			  <div aria-label="main navigation" class="core-nav-transparent core-nav-transparent--visible" role="navigation">
+				<ul role="navigation" class="secondary-links">
+				  <li id="search-text-link">
+					<a aria-label="Search" href="https://www.sandia.gov/search/">Search Sandia.gov</a>
+				  </li>
+				  <li id="directory-text-link">
+					<a href="https://www.sandia.gov/directory.html" aria-expanded="false" aria-label="Site Directory">All Sandia Websites</a>
+				  </li>
+				</ul>
+			  </div>
+			</div>
+		  </div> 
+		</snlheader>
+	  </div>	  
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../usingdakotagui.html">Using Dakota GUI</a> &raquo;</li>
+      <li>New Dakota Study</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/usingdakotagui/wizards/NewDakotaStudy.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="new-dakota-study">
+<span id="wizards-newdakotastudy"></span><h1>New Dakota Study<a class="headerlink" href="#new-dakota-study" title="Permalink to this headline"></a></h1>
+<p>The New Dakota Study wizard allows you to wrap an existing, parameterized simulation model with a Dakota study.  This wizard is ideal for new Dakota users who are not familiar
+with Dakota input file syntax, but would like to have a new Dakota study up and running with minimal effort.</p>
+<p id="wizards-newdakotastudy-prereqs">That being said, this wizard is usually not the first step for a new Dakota study.  There are two prerequisites to using this wizard.  You will need:</p>
+<ul class="simple">
+<li><p>A parameterized simulation model that can be recognized as having variables and responses.  We recommend either
+using a <a class="reference internal" href="../introduction/simulationmodels.html#gui-simulation-models-ini-json-yaml"><span class="std std-ref">simple text file containing input parameter values</span></a>
+or a <a class="reference internal" href="../ngw/NextGenWorkflowTutorial.html#gui-nestedworkflowtutorial-main"><span class="std std-ref">Next-Gen Workflow file that wraps an external simulation model.</span></a></p></li>
+<li><p>An interface for Dakota to communicate with the simulation model.  We recommend either using
+a <a class="reference internal" href="../ngw/NextGenWorkflowTutorial.html#gui-nestedworkflowtutorial-main"><span class="std std-ref">Next-Gen Workflow file that wraps an external simulation model.</span></a></p></li>
+</ul>
+<p>You can open this wizard via “File &gt; New &gt; Dakota Study”.</p>
+<section id="page-1-dakota-study-file-creation">
+<h2>Page 1 (Dakota Study File Creation)<a class="headerlink" href="#page-1-dakota-study-file-creation" title="Permalink to this headline"></a></h2>
+<img alt="File creation page" src="../../_images/NewDakotaStudy_Wizard_1.png" />
+<p>On the first page, simply choose a file name and location for your new Dakota study.</p>
+</section>
+<section id="page-2-import-variables-and-responses">
+<h2>Page 2 (Import Variables and Responses)<a class="headerlink" href="#page-2-import-variables-and-responses" title="Permalink to this headline"></a></h2>
+<img alt="Import variables and responses page" src="../../_images/NewDakotaStudy_Wizard_2.png" />
+<p>Select the file that will provide variable and response information to the wizard.  This file is the <a class="reference internal" href="#wizards-newdakotastudy-prereqs"><span class="std std-ref">first of the two prerequisites</span></a> mentioned in the introduction.</p>
+<img alt="Imported variables and responses" src="../../_images/NewDakotaStudy_Wizard_3.png" />
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Some file types (such as <a class="reference internal" href="../ngw/NextGenWorkflow.html#ngw-main"><span class="std std-ref">IWF workflow files</span></a>) are “one-stop shops” for the Dakota Study wizard.  They can provide variable and response
+information on this “Import Variables and Responses” page of the wizard, but can also provide information as to how Dakota should interface with the IWF
+file (the last page of the wizard).</p>
+</div>
+<p><strong>The Preview Button</strong></p>
+<p>From the “Method Settings” page onward, you’ll notice a “Preview” button in the bottom-left corner of the wizard.  Hit this button at any moment to pop up another
+dialog that shows a preview of the Dakota study, so that you can observe how your Dakota study is coming along as you go through this wizard.</p>
+</section>
+<section id="page-3-method-settings">
+<h2>Page 3 (Method Settings)<a class="headerlink" href="#page-3-method-settings" title="Permalink to this headline"></a></h2>
+<img alt="Method page" src="../../_images/NewDakotaStudy_Wizard_4.png" />
+<p>Because Dakota is home to a large number of methods for different types of studies, providing a comprehensive list of methods on this page
+would not be helpful.  Instead, this page of the wizard guides you to a method recommendation based on how you answer a series of questions.
+For example, if you choose “Basic Parameter Sweep” in the first dropdown, you will be presented with a subsequent dropdown:</p>
+<img alt="Method page with a chosen method" src="../../_images/NewDakotaStudy_Wizard_5.png" />
+<p>In response to your choice of “Basic Parameter Sweep”, the wizard recommends three related methods –
+<a class="reference internal" href="../../usingdakota/reference/method-centered_parameter_study.html#method-centered-parameter-study"><span class="std std-ref">centered_parameter_study</span></a>,
+<a class="reference internal" href="../../usingdakota/reference/method-vector_parameter_study.html#method-vector-parameter-study"><span class="std std-ref">vector_parameter_study</span></a>, and
+<a class="reference internal" href="../../usingdakota/reference/method-multidim_parameter_study.html#method-multidim-parameter-study"><span class="std std-ref">multidim_parameter_study</span></a>, – each of which takes a slightly
+different approach to executing a parameter sweep of your problem.</p>
+<p>At this juncture, you can hit the “?” button to open the Dakota reference manual and find out more about your chosen method.</p>
+</section>
+<section id="page-4-variable-settings">
+<h2>Page 4 (Variable Settings)<a class="headerlink" href="#page-4-variable-settings" title="Permalink to this headline"></a></h2>
+<img alt="Variables page" src="../../_images/NewDakotaStudy_Wizard_6.png" />
+<p>The variables page allows you to configure the variables of your Dakota study.  There is a lot packed onto this page, so let’s go through it one section at a time.</p>
+<p>First of all, notice the table.  It is auto-populated with variables from your chosen source of variables and responses.</p>
+<ul class="simple">
+<li><p><strong>Selection Column</strong>  By default, each imported variable is selected.  Sometimes, we only want to provide Dakota with a subset that represents the variables we’re interested in.  To de-select
+an individual variable, simply click on the green checkmark.  To select it again, click on the red X.</p></li>
+<li><p><strong>Lock Column</strong> The lock icon indicates that a given variable was imported from another simulation model, and thus its label cannot be changed.  However, you are free to add extra
+Dakota variables using the “Add New Variable” button.  These will not have the same lock icon, indicating that they can be re-labeled or deleted.</p></li>
+<li><p><strong>Variable Column</strong> This column shows the variable name imported from the simulation model file, as well as the names of any user-defined variables.  Only user-added variables have editable names.</p></li>
+<li><p><strong>Category Column</strong> Clicking in a cell in this column will provide you with a dropdown containing categories for your variables.  Categorizing variables is a required step for
+building a Dakota study.  Note that this dropdown list only contains variable categories that are appropriate for the type of study you chose to perform back on the Method Settings page.</p></li>
+</ul>
+<p>Let’s also take a look at the button bar…</p>
+<img alt="Variable table button bar" src="../../_images/NewDakotaStudy_Wizard_7.png" />
+<p>From left to right…</p>
+<ul class="simple">
+<li><p><strong>Add New Variable</strong> This button allows you to add your own user-defined variables to the Dakota study.  This can be handy in the case where you’re building your Dakota
+study without a prior source of variables and responses.  It’s not recommended if you want your new Dakota study to adhere closely to an existing simulation model.  On
+the other hand, if you know for a fact that your Dakota-to-simulation-model workflow can handle user-defined variables, go ahead and create them here.</p></li>
+<li><p><strong>Edit Variable</strong> After a variable has been assigned to a category (for instance, continuous_design), use the Edit button to configure properties on that variable.</p></li>
+<li><p><strong>Remove Variable</strong> Delete a variable from the variables page.  You can only delete user-created variables; you cannot delete imported variables.</p></li>
+<li><p><strong>Variable Ordering within Category</strong> Dakota variables are ordered first by <em>variable category</em> (sometimes referred to as “spec order”), and then by user-customized
+ordering within that category.  This button allows you to configure the latter.</p></li>
+<li><p><strong>Enable All</strong> Batch-enable all your variables.</p></li>
+<li><p><strong>Disable All</strong> Batch-disable all your variables.</p></li>
+<li><p><strong>Reset to Model Defaults</strong> This reverts all your work on the variables page back to the state when you first imported from your source of variables and responses.
+A warning dialog appears when you hit this button (in case you click on it by mistake).</p></li>
+<li><p><strong>Open Dakota Manual</strong> Opens the Dakota manual for the selected variable category (for instance, <a class="reference internal" href="../../usingdakota/reference/variables-continuous_design.html#variables-continuous-design"><span class="std std-ref">continuous_design</span></a>).</p></li>
+<li><p><strong>Batch-assign category</strong> Auto-assign every variable to the same category.</p></li>
+</ul>
+<p><strong>Variable Properties</strong></p>
+<p>After assigning a variable to a category (such as <a class="reference internal" href="../../usingdakota/reference/variables-continuous_design.html#variables-continuous-design"><span class="std std-ref">continuous_design</span></a>), we can further assign specific properties on that variable.  To
+do this, click on the variable in the table, then click on the Edit Variable button (the second button from the left).</p>
+<img alt="Variable property editor dialog" src="../../_images/NewDakotaStudy_Wizard_81.png" />
+<p>A new dialog will pop up that allows you to edit each possible property for that variable category.  Help buttons are provided for each property so that you can read up on what each one does.</p>
+</section>
+<section id="page-5-response-settings">
+<h2>Page 5 (Response Settings)<a class="headerlink" href="#page-5-response-settings" title="Permalink to this headline"></a></h2>
+<img alt="Responses page" src="../../_images/NewDakotaStudy_Wizard_9.png" />
+<p>The response settings page is a mirror of the variable settings page, with a few key differences:</p>
+<ul class="simple">
+<li><p><strong>Response Type</strong>  Dakota responses have a global category of either <a class="reference internal" href="../../usingdakota/reference/responses-response_functions.html#responses-response-functions"><span class="std std-ref">response_functions</span></a>,
+<a class="reference internal" href="../../usingdakota/reference/responses-calibration_terms.html#responses-calibration-terms"><span class="std std-ref">calibration_terms</span></a>, or
+<a class="reference internal" href="../../usingdakota/reference/responses-objective_functions.html#responses-objective-functions"><span class="std std-ref">objective_functions</span></a>.</p></li>
+<li><p><strong>Gradients</strong>  Use this dropdown to select a <a class="reference internal" href="../../usingdakota/reference/responses-no_gradients.html#responses-no-gradients"><span class="std std-ref">gradient setting for your study.</span></a></p></li>
+<li><p><strong>Hessians</strong> Use this dropdown to select a <a class="reference internal" href="../../usingdakota/reference/responses-no_hessians.html#responses-no-hessians"><span class="std std-ref">hessian setting for your study.</span></a></p></li>
+</ul>
+</section>
+<section id="page-6-interface-settings">
+<h2>Page 6 (Interface Settings)<a class="headerlink" href="#page-6-interface-settings" title="Permalink to this headline"></a></h2>
+<img alt="Interface page" src="../../_images/NewDakotaStudy_Wizard_11.png" />
+<p>The final page of the wizard is concerned with configuring Dakota’s interface block.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you see a warning at the top of the page that says, “Analysis driver string appears to contain pre-processor markup. Make sure Dakota is invoked with an appropriate pre-processor,”
+this is usually triggered by selecting a Next-Gen Workflow IWF file as your chosen driver, which means the markup used will be <code class="docutils literal notranslate"><span class="pre">{DRIVER}</span></code>. You can smoothly launch Dakota with this
+type of pre-processor markup using either the <a class="reference internal" href="../ngw/NextGenWorkflowAnalysisDrivers.html#ngw-analysisdrivers-sandwich"><span class="std std-ref">New Dakota Wrapper Workflow wizard</span></a> or the <a class="reference internal" href="../running/DakotaRunConfiguration.html#gui-run-configurations-workflow"><span class="std std-ref">“Dakota (Workflow)” run configuration</span></a>.</p>
+</div>
+<ul class="simple">
+<li><p><strong>Analysis Driver:</strong> This section allows you to select your driver. The primary use case is to use the “Spawn driver subprocess (fork/system)” option, which instructs Dakota
+to launch a separate subprocess for the driver. If you <a class="reference internal" href="../ngw/NextGenWorkflowTutorial.html#gui-nestedworkflowtutorial-main"><span class="std std-ref">created a nested workflow</span></a>, the IWF file itself will be your target workflow, even though it is
+not executable (see above note). You can also alternately use this section to select a built-in Dakota driver by selecting the “Direct driver” radio option.</p></li>
+<li><p><strong>Working Directory:</strong> Use the dropdown to select how you want Dakota to configure its working directory. There are several ways to configure tagging/saving working directories and files, but the
+wizard provides the most common options. Additionally, this section provides you with a “Files to Link/Copy” area for adding files that Dakota must link/copy into working directories. This is critically
+important to specify manually, as it’s often not possible for the wizard to automatically determine which files need to be included as part of the core analysis driver file.</p></li>
+<li><p><strong>Evaluation concurrency (number of threads):</strong> Use this option to configure how multithreaded you want Dakota to be.</p></li>
+<li><p><strong>Failure capture option:</strong> Use this option to configure the <a class="reference internal" href="../../usingdakota/reference/interface-failure_capture.html#interface-failure-capture"><span class="std std-ref">failure capture option</span></a> you want Dakota to use.</p></li>
+</ul>
+</section>
+<section id="next-steps">
+<h2>Next Steps<a class="headerlink" href="#next-steps" title="Permalink to this headline"></a></h2>
+<p>If you used an IWF file as your analysis driver, learn about <a class="reference internal" href="../ngw/NextGenWorkflowAnalysisDrivers.html#ngw-analysisdrivers-sandwich"><span class="std std-ref">the final step</span></a> required to run your Dakota Study using Next-Gen Workflow.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="NewWorkflowDriver.html" class="btn btn-neutral float-left" title="New Workflow-Based Driver" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="NewDakotaWrapperWorkflow.html" class="btn btn-neutral float-right" title="New Dakota Wrapper Workflow" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <!--
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Sandia National Laboratories.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+  --> 
+
+</footer>
+        </div>
+      </div>
+	  
+	  <div style="background-color: #0f0f0f;color:#fafafa;padding:20px">
+	    <div>
+		  <h2><em>Exceptional service in the national interest</em></h2>
+		</div>
+		<p>© 2023 National Technology and Engineering Solutions of Sandia, LLC. | <a href="https://www.sandia.gov/contact_us/index.html">Questions &amp; Comments</a> | <a href="https://www.sandia.gov/general/privacy-security/index.html">Privacy &amp; Security</a></p>
+		<p><a href="http://energy.gov" rel="noopener noreferrer" target="_blank"><img alt="U.S. Department of Energy" longdesc="https://energy.gov" src="https://www.sandia.gov/_common/images/doe_logo_white.png" style="height:37px; width:140px"></a> <a href="http://nnsa.energy.gov/" rel="noopener noreferrer" target="_blank"> <img alt="National Nuclear Security Administration" longdesc="http://nnsa.gov" src="https://www.sandia.gov/_common/images/nnsa_logo_white.png" style="height:37px; width:116px"></a></p>
+		<p><a href="https://www.sandia.gov">Sandia National Laboratories</a> is a multimission laboratory managed and operated by National Technology and Engineering Solutions of Sandia, LLC., a wholly owned subsidiary of Honeywell International, Inc., for the U.S. Department of Energy’s National Nuclear Security Administration under contract DE-NA-0003525.</p>
+	  </div>	  	  
+	  
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

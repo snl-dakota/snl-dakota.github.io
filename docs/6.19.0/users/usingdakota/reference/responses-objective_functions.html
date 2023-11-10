@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>objective_functions &mdash; dakota 6.19.0 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/dakota_theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/sandiaheaderlite.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="sense" href="responses-objective_functions-sense.html" />
+    <link rel="prev" title="descriptors" href="responses-descriptors.html" /> 
+  
+  <meta name="sandia.approval_type" content="formal"/>
+  <meta property="sandia.approved" content="SAND2023-13392 O"/>
+  <meta name="description" content="The Dakota project delivers both state-of-the-art research and robust, usable software for optimization and UQ."/>
+  <meta name="keywords" content="Dakota, optimization, UQ, uncertainty quantification, parametric analysis, design exploration, model calibration, risk analysis"/>
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> dakota
+            <img src="../../_static/dakota_Arrow_Name_Tag_horiz_transparent.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                6.19
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../setupdakota.html">Getting Started</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../usingdakota.html">Using Dakota</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../introduction/aboutdakota.html">About Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../introduction/helloworld.html">Dakota Beginner’s Tutorial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples.html">Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../introduction/couplingtosimulations.html">Coupling Dakota to a Simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../inputfile.html">Dakota Input File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../running.html">Running Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../output.html">Dakota Output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../studytypes.html">Study Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../topics.html">Topics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../advanced.html">Advanced Topics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../theory.html">Dakota Theory</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../reference.html">Keyword Reference</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="environment.html">environment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="method.html">method</a></li>
+<li class="toctree-l3"><a class="reference internal" href="model.html">model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="variables.html">variables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="interface.html">interface</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="responses.html">responses</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="responses-id_responses.html">id_responses</a></li>
+<li class="toctree-l4"><a class="reference internal" href="responses-descriptors.html">descriptors</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">objective_functions</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="responses-objective_functions-sense.html">sense</a></li>
+<li class="toctree-l5"><a class="reference internal" href="responses-objective_functions-primary_scale_types.html">primary_scale_types</a></li>
+<li class="toctree-l5"><a class="reference internal" href="responses-objective_functions-primary_scales.html">primary_scales</a></li>
+<li class="toctree-l5"><a class="reference internal" href="responses-objective_functions-weights.html">weights</a></li>
+<li class="toctree-l5"><a class="reference internal" href="responses-objective_functions-nonlinear_inequality_constraints.html">nonlinear_inequality_constraints</a></li>
+<li class="toctree-l5"><a class="reference internal" href="responses-objective_functions-nonlinear_equality_constraints.html">nonlinear_equality_constraints</a></li>
+<li class="toctree-l5"><a class="reference internal" href="responses-objective_functions-scalar_objectives.html">scalar_objectives</a></li>
+<li class="toctree-l5"><a class="reference internal" href="responses-objective_functions-field_objectives.html">field_objectives</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="responses-calibration_terms.html">calibration_terms</a></li>
+<li class="toctree-l4"><a class="reference internal" href="responses-response_functions.html">response_functions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="responses-no_gradients.html">no_gradients</a></li>
+<li class="toctree-l4"><a class="reference internal" href="responses-analytic_gradients.html">analytic_gradients</a></li>
+<li class="toctree-l4"><a class="reference internal" href="responses-mixed_gradients.html">mixed_gradients</a></li>
+<li class="toctree-l4"><a class="reference internal" href="responses-numerical_gradients.html">numerical_gradients</a></li>
+<li class="toctree-l4"><a class="reference internal" href="responses-no_hessians.html">no_hessians</a></li>
+<li class="toctree-l4"><a class="reference internal" href="responses-numerical_hessians.html">numerical_hessians</a></li>
+<li class="toctree-l4"><a class="reference internal" href="responses-quasi_hessians.html">quasi_hessians</a></li>
+<li class="toctree-l4"><a class="reference internal" href="responses-analytic_hessians.html">analytic_hessians</a></li>
+<li class="toctree-l4"><a class="reference internal" href="responses-mixed_hessians.html">mixed_hessians</a></li>
+<li class="toctree-l4"><a class="reference internal" href="responses-metadata.html">metadata</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../usingdakotagui/usingdakotagui.html">Using Dakota GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../externaltools/externaltools.html">Using External Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../compiling/compiling.html">Compiling Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developingdakota/developingdakota.html">Developing Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../misc/misc.html">Miscellaneous</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">dakota</a>
+      </nav>
+
+	  <!-- SNL Lite header -->
+	  <div class="snlheader-subsite--wrapper-default">
+		<snlheader class="snlheader-subsite" role="snlbanner">
+		  <div class="wrapper">
+			<a href="https://www.sandia.gov/index.html">
+			  <div class="logo-transparent"><p class="logo">Sandia National Laboratories</p></div>
+			</a>
+			<div class="nav-top">
+			  <a class="visuallyhidden" name="mainnav"></a>
+			  <div aria-label="main navigation" class="core-nav-transparent core-nav-transparent--visible" role="navigation">
+				<ul role="navigation" class="secondary-links">
+				  <li id="search-text-link">
+					<a aria-label="Search" href="https://www.sandia.gov/search/">Search Sandia.gov</a>
+				  </li>
+				  <li id="directory-text-link">
+					<a href="https://www.sandia.gov/directory.html" aria-expanded="false" aria-label="Site Directory">All Sandia Websites</a>
+				  </li>
+				</ul>
+			  </div>
+			</div>
+		  </div> 
+		</snlheader>
+	  </div>	  
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../usingdakota.html">Using Dakota</a> &raquo;</li>
+          <li><a href="../reference.html">Keyword Reference</a> &raquo;</li>
+          <li><a href="responses.html">responses</a> &raquo;</li>
+      <li>objective_functions</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/usingdakota/reference/responses-objective_functions.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="objective-functions">
+<span id="responses-objective-functions"></span><h1>objective_functions<a class="headerlink" href="#objective-functions" title="Permalink to this headline"></a></h1>
+<p>Response type suitable for optimization</p>
+<div class="toctree-wrapper compound">
+</div>
+<p><strong>Specification</strong></p>
+<ul class="simple">
+<li><p><em>Alias:</em> num_objective_functions</p></li>
+<li><p><em>Arguments:</em> INTEGER</p></li>
+</ul>
+<p><strong>Child Keywords:</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 19%" />
+<col style="width: 15%" />
+<col style="width: 29%" />
+<col style="width: 36%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Required/Optional</p></th>
+<th class="head"><p>Description of
+Group</p></th>
+<th class="head"><p>Dakota Keyword</p></th>
+<th class="head"><p>Dakota Keyword Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td colspan="2"><p>Optional</p></td>
+<td><p><a class="reference external" href="responses-objective_functions-sense.html">sense</a></p></td>
+<td><p>Whether to minimize or maximize each
+objective function</p></td>
+</tr>
+<tr class="row-odd"><td colspan="2"><p>Optional</p></td>
+<td><p><a class="reference external" href="responses-objective_functions-primary_scale_types.html">primary_scale_types</a></p></td>
+<td><p>How to scale each objective function</p></td>
+</tr>
+<tr class="row-even"><td colspan="2"><p>Optional</p></td>
+<td><p><a class="reference external" href="responses-objective_functions-primary_scales.html">primary_scales</a></p></td>
+<td><p>Characteristic values to scale each objective
+function</p></td>
+</tr>
+<tr class="row-odd"><td colspan="2"><p>Optional</p></td>
+<td><p><a class="reference external" href="responses-objective_functions-weights.html">weights</a></p></td>
+<td><p>Specify weights for each objective function</p></td>
+</tr>
+<tr class="row-even"><td colspan="2"><p>Optional</p></td>
+<td><p><a class="reference external" href="responses-objective_functions-nonlinear_inequality_constraints.html">nonlinear_inequality_constraints</a></p></td>
+<td><p>Group to specify nonlinear inequality
+constraints</p></td>
+</tr>
+<tr class="row-odd"><td colspan="2"><p>Optional</p></td>
+<td><p><a class="reference external" href="responses-objective_functions-nonlinear_equality_constraints.html">nonlinear_equality_constraints</a></p></td>
+<td><p>Group to specify nonlinear equality
+constraints</p></td>
+</tr>
+<tr class="row-even"><td colspan="2"><p>Optional</p></td>
+<td><p><a class="reference external" href="responses-objective_functions-scalar_objectives.html">scalar_objectives</a></p></td>
+<td><p>Number of scalar objective functions</p></td>
+</tr>
+<tr class="row-odd"><td colspan="2"><p>Optional</p></td>
+<td><p><a class="reference external" href="responses-objective_functions-field_objectives.html">field_objectives</a></p></td>
+<td><p>Number of field objective functions</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Description</strong></p>
+<p>Specifies the number (1 or more) of objective functions <span class="math notranslate nohighlight">\(f_j\)</span>
+returned to Dakota for use in the general optimization problem
+formulation:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{eqnarray*}
+\hbox{minimize:} &amp; &amp; f(\mathbf{x}) = \sum_j{w_j f_j} \\
+&amp; &amp; \mathbf{x} \in \Re^{n} \\
+\hbox{subject to:} &amp; &amp;
+\mathbf{g}_{L} \leq \mathbf{g(x)} \leq \mathbf{g}_U \\
+&amp; &amp; \mathbf{h(x)}=\mathbf{h}_{t} \\
+&amp; &amp; \mathbf{a}_{L} \leq \mathbf{A}_i\mathbf{x} \leq \mathbf{a}_U \\
+&amp; &amp; \mathbf{A}_{e}\mathbf{x}=\mathbf{a}_{t} \\
+&amp; &amp; \mathbf{x}_{L} \leq \mathbf{x} \leq \mathbf{x}_U
+\end{eqnarray*}\end{split}\]</div>
+<p>Unless <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/responses-objective_functions-sense.html"><span class="pre">sense</span></a></code> is specified, Dakota
+will minimize the objective functions.</p>
+<p>The keywords
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/responses-objective_functions-nonlinear_inequality_constraints.html"><span class="pre">nonlinear_inequality_constraints</span></a></code> and
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/responses-objective_functions-nonlinear_equality_constraints.html"><span class="pre">nonlinear_equality_constraints</span></a></code>
+specify the number of nonlinear inequality constraints <em>g</em>, and nonlinear
+equality constraints <em>h</em>, respectively.  When interfacing to external
+applications, the responses must be returned to Dakota in this order
+in the <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/interface-analysis_drivers-fork-results_file.html"><span class="pre">results_file</span></a></code> :</p>
+<ol class="arabic simple">
+<li><p>objective functions</p></li>
+<li><p>nonlinear_inequality_constraints</p></li>
+<li><p>nonlinear_equality_constraints</p></li>
+</ol>
+<p>An optimization problem’s linear constraints are provided to the
+solver at startup only and do not need to be included in the data
+returned on every function evaluation. Linear constraints are
+therefore specified in the <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/variables.html"><span class="pre">variables</span></a></code> block through the
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/variables-linear_inequality_constraint_matrix.html"><span class="pre">linear_inequality_constraint_matrix</span></a></code> <span class="math notranslate nohighlight">\(A_i\)</span>  and
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/variables-linear_equality_constraint_matrix.html"><span class="pre">linear_equality_constraint_matrix</span></a></code> <span class="math notranslate nohighlight">\(A_e\)</span> .</p>
+<p>Lower and upper bounds on the design variables <em>x</em> are also
+specified in the <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/variables.html"><span class="pre">variables</span></a></code> block.</p>
+<p>The optional keywords relate to scaling the objective functions (for
+better numerical results), formulating the problem as minimization or
+maximization, and dealing with multiple objective functions through
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/responses-objective_functions-weights.html"><span class="pre">weights</span></a></code> <em>w</em>. If scaling is used,
+it is applied before multi-objective weighted sums are formed, so,
+e.g, when both weighting and characteristic value scaling are present
+the ultimate objective function would be:</p>
+<div class="math notranslate nohighlight">
+\[f = \sum_{j=1}^{n} w_{j} \frac{ f_{j} }{ s_j }\]</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="responses-descriptors.html" class="btn btn-neutral float-left" title="descriptors" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="responses-objective_functions-sense.html" class="btn btn-neutral float-right" title="sense" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <!--
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Sandia National Laboratories.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+  --> 
+
+</footer>
+        </div>
+      </div>
+	  
+	  <div style="background-color: #0f0f0f;color:#fafafa;padding:20px">
+	    <div>
+		  <h2><em>Exceptional service in the national interest</em></h2>
+		</div>
+		<p>© 2023 National Technology and Engineering Solutions of Sandia, LLC. | <a href="https://www.sandia.gov/contact_us/index.html">Questions &amp; Comments</a> | <a href="https://www.sandia.gov/general/privacy-security/index.html">Privacy &amp; Security</a></p>
+		<p><a href="http://energy.gov" rel="noopener noreferrer" target="_blank"><img alt="U.S. Department of Energy" longdesc="https://energy.gov" src="https://www.sandia.gov/_common/images/doe_logo_white.png" style="height:37px; width:140px"></a> <a href="http://nnsa.energy.gov/" rel="noopener noreferrer" target="_blank"> <img alt="National Nuclear Security Administration" longdesc="http://nnsa.gov" src="https://www.sandia.gov/_common/images/nnsa_logo_white.png" style="height:37px; width:116px"></a></p>
+		<p><a href="https://www.sandia.gov">Sandia National Laboratories</a> is a multimission laboratory managed and operated by National Technology and Engineering Solutions of Sandia, LLC., a wholly owned subsidiary of Honeywell International, Inc., for the U.S. Department of Energy’s National Nuclear Security Administration under contract DE-NA-0003525.</p>
+	  </div>	  	  
+	  
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

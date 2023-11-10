@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Obtain Source Code &mdash; dakota 6.19.0 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/dakota_theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/sandiaheaderlite.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Configure with CMake" href="configure.html" />
+    <link rel="prev" title="Setup Development Environment" href="devenv.html" /> 
+  
+  <meta name="sandia.approval_type" content="formal"/>
+  <meta property="sandia.approved" content="SAND2023-13392 O"/>
+  <meta name="description" content="The Dakota project delivers both state-of-the-art research and robust, usable software for optimization and UQ."/>
+  <meta name="keywords" content="Dakota, optimization, UQ, uncertainty quantification, parametric analysis, design exploration, model calibration, risk analysis"/>
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> dakota
+            <img src="../_static/dakota_Arrow_Name_Tag_horiz_transparent.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                6.19
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../setupdakota.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usingdakota/usingdakota.html">Using Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usingdakotagui/usingdakotagui.html">Using Dakota GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../externaltools/externaltools.html">Using External Tools</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="compiling.html">Compiling Dakota</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="devenv.html">Setup Development Environment</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Obtain Source Code</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#cloning-the-dakota-repository">Cloning the Dakota Repository</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#developers-with-full-access">Developers with Full Access</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#developers-with-gitlab-ex-access">Developers with Gitlab-ex Access</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#public-access">Public Access</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="configure.html">Configure with CMake</a></li>
+<li class="toctree-l2"><a class="reference internal" href="build.html">Build and Install Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test.html">Running Dakota Tests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html">End-to-end Compilation Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../developingdakota/developingdakota.html">Developing Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../misc/misc.html">Miscellaneous</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">dakota</a>
+      </nav>
+
+	  <!-- SNL Lite header -->
+	  <div class="snlheader-subsite--wrapper-default">
+		<snlheader class="snlheader-subsite" role="snlbanner">
+		  <div class="wrapper">
+			<a href="https://www.sandia.gov/index.html">
+			  <div class="logo-transparent"><p class="logo">Sandia National Laboratories</p></div>
+			</a>
+			<div class="nav-top">
+			  <a class="visuallyhidden" name="mainnav"></a>
+			  <div aria-label="main navigation" class="core-nav-transparent core-nav-transparent--visible" role="navigation">
+				<ul role="navigation" class="secondary-links">
+				  <li id="search-text-link">
+					<a aria-label="Search" href="https://www.sandia.gov/search/">Search Sandia.gov</a>
+				  </li>
+				  <li id="directory-text-link">
+					<a href="https://www.sandia.gov/directory.html" aria-expanded="false" aria-label="Site Directory">All Sandia Websites</a>
+				  </li>
+				</ul>
+			  </div>
+			</div>
+		  </div> 
+		</snlheader>
+	  </div>	  
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="compiling.html">Compiling Dakota</a> &raquo;</li>
+      <li>Obtain Source Code</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/compiling/getsource.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="obtain-source-code">
+<span id="getsource"></span><h1>Obtain Source Code<a class="headerlink" href="#obtain-source-code" title="Permalink to this headline"></a></h1>
+<p>Aquire the Dakota source code via <a class="reference internal" href="../setupdakota.html#setupdakota-download"><span class="std std-ref">downloading</span></a> and unpacking an archive or using Git.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Windows users will typically download the Windows <code class="docutils literal notranslate"><span class="pre">.zip</span></code> source
+archive, while all others will use the Unix <code class="docutils literal notranslate"><span class="pre">.tar.gz</span></code> source
+archive. This can help with compilation problems due to line ending
+style.</p>
+</div>
+<section id="cloning-the-dakota-repository">
+<h2>Cloning the Dakota Repository<a class="headerlink" href="#cloning-the-dakota-repository" title="Permalink to this headline"></a></h2>
+<p>Dakota’s public Git repositories are hosted in the <a class="reference external" href="https://github.com/snl-dakota">Dakota GitHub
+Organization</a>, where <code class="docutils literal notranslate"><span class="pre">dakota</span></code> is
+the core repository. It can be cloned using SSH
+(<code class="docutils literal notranslate"><span class="pre">git&#64;github.com:snl-dakota/dakota.git</span></code>) or HTTPS
+(<a class="reference external" href="https://github.com/snl-dakota/dakota.git">https://github.com/snl-dakota/dakota.git</a>).</p>
+<div class="admonition attention">
+<p class="admonition-title">Attention</p>
+<p>SNL Dakota developers should instead use the repositories at
+gitlab-ex.sandia.gov/dakota</p>
+</div>
+<p><strong>Primary branches:</strong> The default branch for development is
+<code class="docutils literal notranslate"><span class="pre">devel</span></code>. The <code class="docutils literal notranslate"><span class="pre">master</span></code> branch is a stable, release-quality branch
+that passed more extensive testing. Branches for specific Dakota
+versions, e.g, <code class="docutils literal notranslate"><span class="pre">6.17</span></code>, are also available.</p>
+<p><strong>Submodules:</strong> The Dakota repository is separated into public and
+private meta-packages. The core or top-level repository uses Git
+submodules to pull most components from public servers and
+(optionally) select SNL-specific components from private servers to
+create a complete Dakota checkout.</p>
+<div class="admonition attention">
+<p class="admonition-title">Attention</p>
+<p>If you lack full access, blindly checking out Dakota with all
+submodules may result in network errors and a partial clone. Select
+the procedure below that applies to you.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Substitute the server and branch names as needed in what follows.</p>
+</div>
+<section id="developers-with-full-access">
+<h3>Developers with Full Access<a class="headerlink" href="#developers-with-full-access" title="Permalink to this headline"></a></h3>
+<p><em>Development team members with full access to all repositories (most
+typical SNL team members).</em></p>
+<p>A full clone of Dakota (including submodules) can be checked out by
+with the single command:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>git clone --recursive git@gitlab-ex.sandia.gov:dakota/dakota
+cd dakota
+git checkout devel
+</pre></div>
+</div>
+<p>When switching to a branch, it is always best to ensure a consistent
+state of submodules, e.g.,:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>git submodule update --init
+</pre></div>
+</div>
+</section>
+<section id="developers-with-gitlab-ex-access">
+<h3>Developers with Gitlab-ex Access<a class="headerlink" href="#developers-with-gitlab-ex-access" title="Permalink to this headline"></a></h3>
+<p><em>Development team members with access to repositories on
+gitlab-ex.sandia.gov hosts (select SNL team members).</em></p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>git clone git@gitlab-ex.sandia.gov:dakota/dakota
+cd dakota
+git checkout devel
+</pre></div>
+</div>
+<p>When switching to a branch, it is always best to ensure a consistent
+state of submodules. However, you will need to turn off one
+inaccessible submodule:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>git submodule init
+git submodule deinit local
+git submodule update
+</pre></div>
+</div>
+</section>
+<section id="public-access">
+<h3>Public Access<a class="headerlink" href="#public-access" title="Permalink to this headline"></a></h3>
+<p>Users and developers with access only to repositories on github.com
+(most external developers and anonymous cloners).</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>git clone git@github.com:snl-dakota/dakota.git
+cd dakota
+git checkout devel
+</pre></div>
+</div>
+<p>When switching to a branch, it is always best to ensure a consistent
+state of submodules. However, only initialize the submodules you have
+access to:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>git submodule init packages/external
+git submodule init packages/pecos
+git submodule init packages/surfpack
+git submodule update
+</pre></div>
+</div>
+<p>Or alternately submodule deinit the others (dakota-examples,
+packages/local/DOT, packages/local/NLPQL, packages/local/NPSOL,
+local).</p>
+<p><strong>Note:</strong> With any of the above approaches, subsequent submodule
+operations such as <code class="docutils literal notranslate"><span class="pre">submodule</span> <span class="pre">update</span></code> can then be performed
+automatically over the set of initialized modules without the need to
+enumerate them.</p>
+<div class="admonition attention">
+<p class="admonition-title">Attention</p>
+<p>Git submodule update may not be appropriate when co-developing
+submodules with Dakota; see discussion later in this guide in
+<a class="reference internal" href="../developingdakota/git/submodules.html#git-submodules"><span class="std std-ref">Updating Submodules</span></a>.</p>
+</div>
+<p><strong>Submodules and Git Protocols:</strong> Top-level Dakota refers to its three
+primary submodules using relative paths, so Git should by default
+clone them from the same server using the same protocol as the
+top-level Dakota clone (for top-level HTTPS clone, submodules should
+pull via HTTPS). However, in some cases Git will want to switch to or
+default to another protocol, e.g., SSH instead of HTTPS. For these
+cases it may be necessary to edit .gitmodules to have absolute paths
+to the submodules, e.g., <a class="reference external" href="https://github.com/snl-dakota/pecos">https://github.com/snl-dakota/pecos</a>, and then
+run <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">submodule</span> <span class="pre">sync</span></code>. Or use a Git <code class="docutils literal notranslate"><span class="pre">insteadOf</span></code> directive in
+your Git config for these repos.</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="devenv.html" class="btn btn-neutral float-left" title="Setup Development Environment" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="configure.html" class="btn btn-neutral float-right" title="Configure with CMake" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <!--
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Sandia National Laboratories.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+  --> 
+
+</footer>
+        </div>
+      </div>
+	  
+	  <div style="background-color: #0f0f0f;color:#fafafa;padding:20px">
+	    <div>
+		  <h2><em>Exceptional service in the national interest</em></h2>
+		</div>
+		<p>© 2023 National Technology and Engineering Solutions of Sandia, LLC. | <a href="https://www.sandia.gov/contact_us/index.html">Questions &amp; Comments</a> | <a href="https://www.sandia.gov/general/privacy-security/index.html">Privacy &amp; Security</a></p>
+		<p><a href="http://energy.gov" rel="noopener noreferrer" target="_blank"><img alt="U.S. Department of Energy" longdesc="https://energy.gov" src="https://www.sandia.gov/_common/images/doe_logo_white.png" style="height:37px; width:140px"></a> <a href="http://nnsa.energy.gov/" rel="noopener noreferrer" target="_blank"> <img alt="National Nuclear Security Administration" longdesc="http://nnsa.gov" src="https://www.sandia.gov/_common/images/nnsa_logo_white.png" style="height:37px; width:116px"></a></p>
+		<p><a href="https://www.sandia.gov">Sandia National Laboratories</a> is a multimission laboratory managed and operated by National Technology and Engineering Solutions of Sandia, LLC., a wholly owned subsidiary of Honeywell International, Inc., for the U.S. Department of Energy’s National Nuclear Security Administration under contract DE-NA-0003525.</p>
+	  </div>	  	  
+	  
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

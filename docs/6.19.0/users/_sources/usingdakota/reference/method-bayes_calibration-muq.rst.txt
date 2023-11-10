@@ -1,0 +1,89 @@
+.. _method-bayes_calibration-muq:
+
+"""
+muq
+"""
+
+
+Markov Chain Monte Carlo algorithms from the MUQ package
+
+
+
+**Topics**
+
+
+bayesian_calibration
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-bayes_calibration-muq-chain_samples
+   method-bayes_calibration-muq-seed
+   method-bayes_calibration-muq-rng
+   method-bayes_calibration-muq-dram
+   method-bayes_calibration-muq-delayed_rejection
+   method-bayes_calibration-muq-adaptive_metropolis
+   method-bayes_calibration-muq-metropolis_hastings
+   method-bayes_calibration-muq-proposal_covariance
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+-------------------------+-----------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword          | Dakota Keyword Description                    |
+|                         | Group              |                         |                                               |
++=========================+====================+=========================+===============================================+
+| Required                                     | `chain_samples`__       | Number of Markov Chain Monte Carlo posterior  |
+|                                              |                         | samples                                       |
++----------------------------------------------+-------------------------+-----------------------------------------------+
+| Optional                                     | `seed`__                | Seed of the random number generator           |
++----------------------------------------------+-------------------------+-----------------------------------------------+
+| Optional                                     | `rng`__                 | Selection of a random number generator        |
++-------------------------+--------------------+-------------------------+-----------------------------------------------+
+| Optional (Choose One)   | MCMC Algorithm     | `dram`__                | Use the DRAM MCMC algorithm                   |
+|                         |                    +-------------------------+-----------------------------------------------+
+|                         |                    | `delayed_rejection`__   | Use the Delayed Rejection MCMC algorithm      |
+|                         |                    +-------------------------+-----------------------------------------------+
+|                         |                    | `adaptive_metropolis`__ | Use the Adaptive Metropolis MCMC algorithm    |
+|                         |                    +-------------------------+-----------------------------------------------+
+|                         |                    | `metropolis_hastings`__ | Use the Metropolis-Hastings MCMC algorithm    |
++-------------------------+--------------------+-------------------------+-----------------------------------------------+
+| Optional                                     | `proposal_covariance`__ | Defines the technique used to generate the    |
+|                                              |                         | MCMC proposal covariance.                     |
++----------------------------------------------+-------------------------+-----------------------------------------------+
+
+.. __: method-bayes_calibration-muq-chain_samples.html
+__ method-bayes_calibration-muq-seed.html
+__ method-bayes_calibration-muq-rng.html
+__ method-bayes_calibration-muq-dram.html
+__ method-bayes_calibration-muq-delayed_rejection.html
+__ method-bayes_calibration-muq-adaptive_metropolis.html
+__ method-bayes_calibration-muq-metropolis_hastings.html
+__ method-bayes_calibration-muq-proposal_covariance.html
+
+
+
+**Description**
+
+
+The ``muq`` method supports the following MCMC algorithms:
+adaptive metropolis (AM), Metropolis Hasting (MH), delayed
+rejection (DR), or delayed-rejection adaptive metropolis (DRAM).
+
+The ``muq`` method is currently an experimental method that relies
+on algorithms from MIT's MUQ code documented at:
+https://bitbucket.org/mituq/muq2/src/master/
+
+We anticipate using more advanced features of MUQ such as Hamiltonian
+Monte Carlo and Langevin methods in future releases of Dakota.
+
+

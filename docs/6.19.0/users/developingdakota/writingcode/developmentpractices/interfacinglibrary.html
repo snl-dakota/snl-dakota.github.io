@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Interfacing with Dakota as a Library &mdash; dakota 6.19.0 documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/dakota_theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/sandiaheaderlite.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Understanding Iterator Flow" href="iteratorflow.html" />
+    <link rel="prev" title="Instructions for Modifying Dakota’s Input Specification" href="modifyingdakotainput.html" /> 
+  
+  <meta name="sandia.approval_type" content="formal"/>
+  <meta property="sandia.approved" content="SAND2023-13392 O"/>
+  <meta name="description" content="The Dakota project delivers both state-of-the-art research and robust, usable software for optimization and UQ."/>
+  <meta name="keywords" content="Dakota, optimization, UQ, uncertainty quantification, parametric analysis, design exploration, model calibration, risk analysis"/>
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../index.html" class="icon icon-home"> dakota
+            <img src="../../../_static/dakota_Arrow_Name_Tag_horiz_transparent.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                6.19
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../setupdakota.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usingdakota/usingdakota.html">Using Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usingdakotagui/usingdakotagui.html">Using Dakota GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../externaltools/externaltools.html">Using External Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../compiling/compiling.html">Compiling Dakota</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../developingdakota.html">Developing Dakota</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../devenvironment.html">Setup Your Development Environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../gitforversioncontrol.html">Git for Version Control</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../writingcode.html">Writing Dakota Code</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../overview.html">Overview of Dakota</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../services.html">Services</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../developmentpractices.html">Development Practices and Guidance</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="codingstyle.html">Coding Style Guidelines and Conventions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="modifyingdakotainput.html">Instructions for Modifying Dakota’s Input Specification</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Interfacing with Dakota as a Library</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#introduction">Introduction</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#basic-dakota-library-instantiation">Basic Dakota library instantiation</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#configuring-dakota-operation">Configuring Dakota operation</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#input-data-parsing">Input data parsing</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#problem-database-insertion">Problem database insertion</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#mixed-mode-callbacks-and-late-updates">Mixed mode, callbacks, and late updates</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#creating-a-simulator-plugin-interface">Creating a simulator plugin interface</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#extension">Extension</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#derivation">Derivation</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#retrieving-data-after-a-run">Retrieving data after a run</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#linking-against-the-dakota-library">Linking against the Dakota library</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="iteratorflow.html">Understanding Iterator Flow</a></li>
+<li class="toctree-l4"><a class="reference internal" href="performingfunctionevaluations.html">Performing Function Evaluations</a></li>
+<li class="toctree-l4"><a class="reference internal" href="workingwithvariablecontainers.html">Working with Variable Containers and Views</a></li>
+<li class="toctree-l4"><a class="reference internal" href="demotpl.html">Demo TPL</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../testingcode.html">Testing Dakota Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../documenting.html">Documenting Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../writingdocs.html">Dakota Documentation Mechanics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../tpls.html">Dakota’s Third-Party Libraries</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../misc/misc.html">Miscellaneous</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">dakota</a>
+      </nav>
+
+	  <!-- SNL Lite header -->
+	  <div class="snlheader-subsite--wrapper-default">
+		<snlheader class="snlheader-subsite" role="snlbanner">
+		  <div class="wrapper">
+			<a href="https://www.sandia.gov/index.html">
+			  <div class="logo-transparent"><p class="logo">Sandia National Laboratories</p></div>
+			</a>
+			<div class="nav-top">
+			  <a class="visuallyhidden" name="mainnav"></a>
+			  <div aria-label="main navigation" class="core-nav-transparent core-nav-transparent--visible" role="navigation">
+				<ul role="navigation" class="secondary-links">
+				  <li id="search-text-link">
+					<a aria-label="Search" href="https://www.sandia.gov/search/">Search Sandia.gov</a>
+				  </li>
+				  <li id="directory-text-link">
+					<a href="https://www.sandia.gov/directory.html" aria-expanded="false" aria-label="Site Directory">All Sandia Websites</a>
+				  </li>
+				</ul>
+			  </div>
+			</div>
+		  </div> 
+		</snlheader>
+	  </div>	  
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../../developingdakota.html">Developing Dakota</a> &raquo;</li>
+          <li><a href="../../writingcode.html">Writing Dakota Code</a> &raquo;</li>
+          <li><a href="../developmentpractices.html">Development Practices and Guidance</a> &raquo;</li>
+      <li>Interfacing with Dakota as a Library</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../_sources/developingdakota/writingcode/developmentpractices/interfacinglibrary.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="interfacing-with-dakota-as-a-library">
+<h1>Interfacing with Dakota as a Library<a class="headerlink" href="#interfacing-with-dakota-as-a-library" title="Permalink to this headline"></a></h1>
+<section id="introduction">
+<span id="interfacing-with-dakota-as-library"></span><h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline"></a></h2>
+<p>Tightly integrating or linking Dakota into another application can improve user experience by delivering a more unified, inter-operable software tool for optimization and UQ analyses, improving performance by eliminating file system-based interfaces, and reducing challenges with parallel computing inter-operation. This benefit has been realized within several Sandia and external simulation applications. This section describes how to link Dakota into another C++ application.</p>
+<p>Dakota has two primary application programming interfaces (APIs). The LibraryEnvironment class facilitates use of Dakota as an algorithm service library within another application. In this case, the simulation application is providing a “front end” for Dakota. The second API, provided by the DirectApplicInterface class, provides an interface for Dakota to call the simulation code directly to perform function evaluations in core. This permits the simulation to be the “back end” for Dakota. The most complete library integration of Dakota would use both in combination, with the overall simulation framework providing both the front end and back end for Dakota, creating a sandwich, as loosely depicted here:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>[------------
+[ Application
+[
+[  ( -----
+[  ( Dakota (LibraryEnvironment)
+[  (
+[  (  { Function evaluation callback to Application (via DirectApplicInterface)
+[  (  {  |
+[ &lt;------/
+[  (  {
+[  (
+[  ( -----
+[
+[------------
+</pre></div>
+</div>
+<p><strong>Attention:</strong> Dakota may be integrated as a library in other software applications subject to the terms of the GNU Lesser General Public License (LGPL). Refer to <a class="reference external" href="http://www.gnu.org/licenses/lgpl.html">http://www.gnu.org/licenses/lgpl.html</a> or the LICENSE file included with Dakota.</p>
+<p>When Dakota is compiled and installed, the relevant library API headers are installed to CMAKE_INSTALL_PREFIX/include and the runtime libraries primarily to CMAKE_INSTALL_PREFIX/lib/ (on some platforms, to CMAKE_INSTALL_PREFIX/bin/. The core C/C++ code is in the library dakota_src, while Fortran code lives in the dakota_src_fortran library. Information on using the API in Dakota headers is included throughout this section, while considerations for configuring and linking against Dakota and its various required and optional third–party libraries are emphasized in the section Linking against the Dakota library.</p>
+<p>Steps involved in integrating Dakota into another application typically include:</p>
+<ol class="arabic simple">
+<li><p>Writing C++ code for your application to instantiate, configure, and execute Dakota’s LibraryEnvironment (“front end”); see Basic Dakota library instantiation and Configuring Dakota operation.</p></li>
+<li><p>Writing C++ code for Dakota to call a function in your application to perform function evaluations (“back end”); see Creating a simulator plugin interface.</p></li>
+<li><p>Compiling Dakota and linking into your application (Linking against the Dakota library).</p></li>
+</ol>
+<p>Several source code examples demonstrate Dakota library interfaces. The classes SIM::SerialDirectApplicInterface and SIM::ParallelDirectApplicInterface demonstrate serial and parallel simulation function evaluation plug-ins. The file library_mode.cpp includes a main program that exercises Dakota libraries in serial and parallel modes with these mock simulator programs, with various ways of configuring Dakota problem definition and operation. Finally, library_split.cpp demonstrates running Dakota as a library modular on an MPI sub-communicator.</p>
+</section>
+<section id="basic-dakota-library-instantiation">
+<h2>Basic Dakota library instantiation<a class="headerlink" href="#basic-dakota-library-instantiation" title="Permalink to this headline"></a></h2>
+<p>The function run_dakota_parse() in library_mode.cpp demonstrates the basic use of Dakota library objects as one would in another main application that embeds Dakota. In this example, Dakota is configured based on a typical user-provided text-based Dakota input file (the same that would be provided at the command line with dakota -i dakota_optimization.in) and a function evaluator derived from a DirectApplicInterface is plugged into the Dakota library environment.</p>
+<p>First, an object of type ProgramOptions which manages top-level Dakota settings is instantiated and configured to specify the name of the Dakota user input file. Additional options for output and error redirection, restart operation, and more may be set via ProgramOptions. See its class documentation for details.</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>string dakota_input_file = &quot;dakota_optimization.in&quot;;
+Dakota::ProgramOptions opts;
+opts.input_file(dakota_input_file);
+</pre></div>
+</div>
+<p>Next, a LibraryEnvironment is created, passing the desired settings from opts:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>Dakota::LibraryEnvironment env(opts);
+</pre></div>
+</div>
+<p>This standard constructor will parse the specified input and create Dakota objects. It assumes many default settings, including that the parent application initialized MPI if running in parallel mode. (In this case, Dakota will detect whether MPI was initialized and not call MPI_Init or MPI_Finalize.) For more advanced use cases described below, alternate constructors allow constructing based on MPI communicators, with delayed finalization, and with Dakota database update function callbacks. Then the application’s function evaluator implementing Dakota’s DirectApplicInterface is plugged in with a convenience function serial_interface_plugin() or parallel_interface_plugin(). Finally, the Dakota analysis is run by calling</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>env.execute();
+</pre></div>
+</div>
+<p>The next two sections offer additional details on (1) alternative and supplementary ways to configure Dakota’s operation (Configuring Dakota operation) and (2) how to specialize Dakota’s DirectApplicInterface to provide a function evaluator plugin to Dakota (Creating a simulator plugin interface).</p>
+<p><strong>Remarks</strong></p>
+<p>After LibraryEnvironment construction, all MPI communicator partitioning has been performed and the ParallelLibrary instance may be interrogated for parallel configuration data. For example, the lowest level communicators in Dakota’s multilevel parallel partitioning are the analysis communicators, which can be retrieved using:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>    // retrieve the set of analysis communicators for simulation initialization:
+// one analysis comm per ParallelConfiguration (PC), one PC per Model.
+    Array&lt;MPI_Comm&gt; analysis_comms = parallel_lib.analysis_intra_communicators();
+</pre></div>
+</div>
+<p>These communicators can then be used for initializing parallel simulation instances when registering the plugin interface, where the number of MPI communicators in the array corresponds to one communicator per ParallelConfiguration instance. This is demonstrated below in Derivation.</p>
+</section>
+<section id="configuring-dakota-operation">
+<h2>Configuring Dakota operation<a class="headerlink" href="#configuring-dakota-operation" title="Permalink to this headline"></a></h2>
+<p>This section describes several alternate ways to initially set and later manipulate Dakota’s configuration, including alternatives to using a text-based input file. The algorithm configuration for a particular Dakota analysis run is managed in its ProblemDescDB, which can be populated via an input file, string literal, or C++ API, and later modified through Dakota’s C++ API. All Dakota objects then draw information from this database upon instantiation.</p>
+<section id="input-data-parsing">
+<h3>Input data parsing<a class="headerlink" href="#input-data-parsing" title="Permalink to this headline"></a></h3>
+<p>The simplest way for an application to configure a Dakota analysis problem is to use Dakota’s normal input parsing system to populate its problem database (ProblemDescDB). This is done by providing standard Dakota input file syntax through the library interface, via either a file name or string literal. An advantage is that native Dakota syntax can be used, but disadvantages include the requirement for an additional input file beyond those already required by the parent application and that application users also need to know Dakota syntax.</p>
+<p>The two ways to configure Dakota via input parsing are shown near the beginning of run_dakota_mixed() in library_mode.cpp. Here the ProgramOptions are set to either parse from a named file:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>Dakota::ProgramOptions opts;
+opts.input_file(dakota_input_file);
+</pre></div>
+</div>
+<p>or from a string literal provided by the wrapping application:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>string serial_input = &quot;% Dakota input file ...&quot;;
+opts.input_string(serial_input);
+</pre></div>
+</div>
+<p>This library approach is coarse-grained in that input is parsed, objects constructed, and the environment is immediately ready to run. The next approaches are more modular.</p>
+</section>
+<section id="problem-database-insertion">
+<h3>Problem database insertion<a class="headerlink" href="#problem-database-insertion" title="Permalink to this headline"></a></h3>
+<p>A second approach to configuring Dakota’s operation is to bypass parsing phases and directly populate the ProblemDescDB with information on the methods, variables, interface, responses, etc., that define the Dakota analysis problem. This approach requires more interaction with Dakota classes and data structures. However, it can offer usability benefit when the integrating application does not want their users to interact with the full Dakota syntax, or efficiency benefit when for example there are a large number of variables to configure.</p>
+<p>In the direct database population approach, Dakota DataMethod, DataModel, DataVariables, DataInterface, and DataResponses objects are instantiated and populated with the desired problem data. These objects are then published to the problem database using insert_nodes() . An example of this approach is available in run_dakota_data() in library_mode.cpp, where the OPT++ Quasi-Newton method is configured to work on a plugin version of text_book or rosenbrock. The data objects are populated with their default values upon instantiation and are often sufficient for basic Dakota studies. Only the non-default values need to be specified. Moreover the default Dakota Model is a SingleModel, so this object need not be configured unless tailoring its configuration or using a more advanced model type. Refer to the DataMethod, DataModel, DataVariables, DataInterface, and DataResponses class documentation and source code for lists of attributes and their defaults. Here is an excerpt of run_dakota_data() that specifies the OPT++ solver after default construction of DataMethod:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>Dakota::DataMethod   dme;
+Dakota::DataMethodRep* dmr = dme.data_rep();
+dmr-&gt;methodName = Dakota::OPTPP_Q_NEWTON;
+</pre></div>
+</div>
+<p>When using direct database population, it is critical to leave the database in an open, accessible state after initial construction. In this run_dakota_data() example, a flag check_bcast_construct is passed into the LibraryEnvironment constructor, indicating that it should not finalize the database and construct Dakota objects. Moreover, it is only necessary to populate the database on rank 0 of the MPI Comm on which Dakota is running. After database objects are inserted or adjusted, the LibraryEnvironment::done_modifying_db() function must be called before proceeding to execute. This synchronizes problem data across all ranks and constructs Dakota objects needed to run the specified analysis.</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>bool check_bcast_construct = false;
+Dakota::LibraryEnvironment env(MPI_COMM_WORLD, opts, check_bcast_construct);
+if (rank == 0)
+  // insert/modify DB, then lock and proceed:
+env.done_modifying_db();
+env.execute();
+</pre></div>
+</div>
+</section>
+<section id="mixed-mode-callbacks-and-late-updates">
+<h3>Mixed mode, callbacks, and late updates<a class="headerlink" href="#mixed-mode-callbacks-and-late-updates" title="Permalink to this headline"></a></h3>
+<p>The LibraryEnvironment API also supports mixed approaches that combine the parsing of a Dakota input file (or input string literal) with direct database updates. This approach is motivated by large-scale applications where large vectors are cumbersome to specify in a Dakota input file or where later updates to an input template are needed. The example run_dakota_mixed() in library_mode.cpp demonstrates the combination of these more advanced approaches: (1) input text parsing, (2) database updates via a callback, (3) database updates via direct manipulation, and (4) further runtime updates to the Model before running.</p>
+<p>First, a ProgramOptions class is instantiated and configured to parse either an input file or input string literal (as in earlier examples). The passed input data must contain all required inputs so the parser can validate them. Since vector data like variable values/bounds/tags, linear/nonlinear constraint coefficients/bounds, etc., are optional, these potentially large vector specifications can be omitted from the input file and updated later through the database API. Only the variable/response counts necessary for sizing, e.g.:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span><span class="k">method</span>
+  linear_inequality_constraints = 500
+
+<span class="k">variables</span>
+  continuous_design = 1000
+
+<span class="k">responses</span>
+  objective_functions = 1
+  nonlinear_inequality_constraints = 100000
+</pre></div>
+</div>
+<p>and not the lists of values are required in this case. To update or add data after this initial parse, we use the ProblemDescDB::set() family of overloaded functions, e.g.</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>Dakota::RealVector drv(1000, 1.); // vector of length 1000, values initialized to 1.
+problem_db.set(&quot;variables.continuous_design.initial_point&quot;, drv);
+</pre></div>
+</div>
+<p>where the string identifiers are the same identifiers used when pulling information from the database using one of the get_&lt;datatype&gt;() functions (refer to ProblemDescDB for a full list). However, the supported ProblemDescDB::set() options are a restricted subset of the database attributes, focused on vector inputs that can be large scale.</p>
+<p>Second, the example demonstrates a user-provided callback function which Dakota will invoke after input parsing to update ProblemDescDB. In library_mode.cpp, callback_function() is a user-provided post-parse callback that implements the type Dakota::DbCallbackFunction.</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>static void callback_function(Dakota::ProblemDescDB* db, void *ptr);
+</pre></div>
+</div>
+<p>When Dakota calls this function it will pass back pointers to the ProblemDescDB instance and to user-provided data, so the application may convey its settings by calling methods on the ProblemDescDB, optionally using the provided data. An example of a user data structure is demonstrated in callback_data. In this case, when the LibraryEnvironment is constructed, it is constructed with the input data to initially parse, the callback function, and to leave it unlocked for further updates:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>bool done_with_db = false;
+Dakota::LibraryEnvironment env(opts, done_with_db, callback_function, &amp;data);
+</pre></div>
+</div>
+<p>Third, the example demonstrates changes to the database after parsing and callback-based updates. Again, these only need happen on Dakota’s rank 0 before finalizing the DB with LibraryEnvironment::done_modifying_db(). The example demonstrates:</p>
+<ol class="arabic simple">
+<li><p>Getting access to the database through env.problem_description_db()</p></li>
+<li><p>Setting the database nodes to the appropriate method through problem_db.resolve_top_method()</p></li>
+<li><p>Getting data from the DB with a get string array function: problem_db.get_sa(“interface.application.analysis_drivers”)</p></li>
+<li><p>Setting update data with problem_db.set(“variables.continuous_design.initial_point”, ip);</p></li>
+</ol>
+<p>After any of these three types updates, calling LibraryEnvironment::done_modifying_db() will broadcast any updates (including potentially large vector data and post-process specification data to fill in any vector defaults that have not yet been provided through either file parsing or direct updates. (Note: scalar defaults are handled in the Data class constructors.)</p>
+<p>Fourth and finally, run_dakota_mixed() demonstrates modifying a Model’s data after database operations and interface plugin are complete. This involves finding the right Model (or other class) instance to modify, and directly adjusting its data through the public API. Since the database is finalized, any updates must be performed through direct set operations on the constructed objects. For example, to update other data such as variable values/bounds/tags or response bounds/targets/tags, refer to the set functions documented in Iterator and Model. As an example, the following code updates the active continuous variable values, which will be employed as the initial guess for certain classes of Iterators:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>ModelList&amp; all_models  = problem_db.model_list();
+Model&amp;     first_model = *all_models.begin();
+Dakota::RealVector drv(1000, 1.); // vector of length 1000, values initialized to 1.
+first_model.continuous_variables(drv);
+</pre></div>
+</div>
+<p><strong>Remarks</strong></p>
+<p>If performing such data updates within the constructor of a DirectApplicInterface extension/derivation (see Creating a simulator plugin interface), then this code is sufficient since the database is unlocked, the active list nodes of the ProblemDescDB have been set for you, and the correct method/model/variables/interface/responses specification instance will get updated. The difficulty in this case stems from the order of instantiation. Since the Variables and Response instances are constructed in the base Model class, prior to construction of Interface instances in derived Model classes, database information related to Variables and Response objects will have already been extracted by the time the Interface constructor is invoked and the database update will not propagate.</p>
+<p>Therefore, it is preferred to perform these database set operations at a higher level (e.g., within your main program), prior to allowing Environment to broadcast, construct, and execute, such that instantiation order is not an issue. However, in this case, it is necessary to explicitly manage the list nodes of the ProblemDescDB using a specification instance identifier that corresponds to an identifier from the input file, e.g.:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>problem_db.set_db_variables_node(&quot;MY_VARIABLES_ID&quot;);
+Dakota::RealVector drv(1000, 1.); // vector of length 1000, values
+initialized to 1.
+problem_db.set(&quot;variables.continuous_design.initial_point&quot;, drv);
+</pre></div>
+</div>
+<p>Alternatively, rather than setting just a single data node, all data nodes may be set using a method specification identifier:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>problem_db.set_db_list_nodes(&quot;MY_METHOD_ID&quot;);
+</pre></div>
+</div>
+<p>since the method specification is responsible for identifying a model specification, which in turn identifies variables, interface, and responses specifications. If hard-wiring specification identifiers is undesirable, then</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>problem_db.resolve_top_method();
+</pre></div>
+</div>
+<p>can also be used to deduce the active method specification and set all list nodes based on it. This is most appropriate in the case where only single specifications exist for method/model/variables/interface/responses. This is the approach demonstrated in run_dakota_mixed(). In each of these cases, setting list nodes unlocks the corresponding portions of the database, allowing set/get operations.</p>
+</section>
+</section>
+<section id="creating-a-simulator-plugin-interface">
+<h2>Creating a simulator plugin interface<a class="headerlink" href="#creating-a-simulator-plugin-interface" title="Permalink to this headline"></a></h2>
+<p>The DirectApplicInterface class provides an interface for Dakota to call the simulation code directly to perform function evaluations mapping variables to responses. This provides the “back end” for Dakota to call back to the simulation framework. Two approaches to defining this direct interface are described here. The first is less common, while the second is recommended when possible.</p>
+<section id="extension">
+<h3>Extension<a class="headerlink" href="#extension" title="Permalink to this headline"></a></h3>
+<p>The first approach involves extending one of the existing DirectApplicInterface subclasses (TestDriverInterface, MatlabInterface, etc.) to support additional direct simulation interfaces. For example, Dakota algebraic test problems are implemented in TestDriverInterface. One could add additional direct functions to Dakota in TestDriverInterface::derived_map_ac(). In addition, TestDriverInterface::derived_map_if() and TestDriverInterface::derived_map_of() can be extended to perform pre- and post-processing tasks if desired, but this is not required.</p>
+<p>While this approach is the simplest, it has the disadvantage that the Dakota library will need to be recompiled when the simulation or its direct interface is modified. If it is desirable to maintain the independence of the Dakota library from the host application, then the derivation approach described in the next section should be employed.</p>
+<p><strong>Remarks</strong></p>
+<p>If the new direct evaluation function implementation will not be a member function of one of the Dakota classes, then the following prototype should be used in order to pass the required data:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>int sim(const Dakota::Variables&amp; vars, const Dakota::ActiveSet&amp; set,
+Dakota::Response&amp; response);
+</pre></div>
+</div>
+<p>If the new function will be a member function, e.g., in TestDriverInterface, then this can be simplified to</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>int sim();
+since the data access can be performed through the DirectApplicInterface class attributes.}
+</pre></div>
+</div>
+</section>
+<section id="derivation">
+<h3>Derivation<a class="headerlink" href="#derivation" title="Permalink to this headline"></a></h3>
+<p>The second approach is to derive a new interface from DirectApplicInterface and redefine several virtual functions. As demonstrated in SIM::SerialDirectApplicInterface and SIM::ParallelDirectApplicInterface, a typical derived class declaration might be</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>namespace SIM {
+class SerialDirectApplicInterface: public Dakota::DirectApplicInterface
+{
+public:
+  // Constructor and destructor
+  SerialDirectApplicInterface(const Dakota::ProblemDescDB&amp; problem_db);
+  ~SerialDirectApplicInterface();
+protected:
+  // Virtual function redefinitions
+  int derived_map_if(const Dakota::String&amp; if_name);
+  int derived_map_ac(const Dakota::String&amp; ac_name);
+  int derived_map_of(const Dakota::String&amp; of_name);
+private:
+  // Data
+}
+} // namespace SIM
+</pre></div>
+</div>
+<p>where the new derived class resides in the simulation’s namespace. Similar to the case of Extension, the DirectApplicInterface::derived_map_ac() function is the required redefinition, and DirectApplicInterface::derived_map_if() and DirectApplicInterface::derived_map_of() are optional.</p>
+<p>Typically the new derived_map_ac() implementation delegates to the main simulation application for a function evaluation. Here Dakota variables would get mapped into the simulation’s data structures, the simulation executed, and derived response data computed for return to Dakota.</p>
+<p>Once a derived application class is created, it must be plugged in, or registered, with the appropriate Interface in the LibraryEnvironment. In MPI cases where Dakota is potentially managing concurrent evaluations of the simulation, the plugin must be configured to run on the right MPI sub-communicator, or Dakota analysis_comm. The simpler case is demonstrated in serial_interface_plugin() in library_mode.cpp, while a more advanced case using the analysis communicator is shown in parallel_interface_plugin().</p>
+<p>The Dakota LibraryEnvironment provides a convenience function to plugin an Interface. This example will replace any interface found matching the given model, interface, and analysis driver with the passed plugin interface:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>std::string model_type(&quot;&quot;); // demo: empty string will match any model type
+std::string interf_type(&quot;direct&quot;);
+std::string an_driver(&quot;plugin_rosenbrock&quot;);
+Dakota::ProblemDescDB&amp; problem_db = env.problem_description_db();
+std::shared_ptr&lt;Dakota::Interface&gt; serial_iface =
+  std::make_shared&lt;SIM::SerialDirectApplicInterface&gt;(problem_db);
+bool plugged_in =
+  env.plugin_interface(model_type, interf_type, an_driver, serial_iface);
+</pre></div>
+</div>
+<p>The LibraryEnvironment also provides convenience functions that allow the client to iterate the lists of available interfaces or models for more advanced cases. For instance if the client knows there is only a single interface active, it could get the list of available interfaces of length 1 and plugin to the first one. In the more advanced case where the simulation interface instance should manage parallel simulations within the context of an MPI communicator, one should pass in the relevant analysis communicator(s) to the derived constructor. For the latter case of looping over a set of models, the simplest approach of passing a single analysis communicator would use code similar to</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>Dakota::ModelList filt_models =
+  env.filtered_model_list(&quot;single&quot;, &quot;direct&quot;, &quot;plugin_text_book&quot;);
+Dakota::ProblemDescDB&amp; problem_db = env.problem_description_db();
+Dakota::ModelLIter ml_iter;
+for (ml_iter = filt_models.begin(); ml_iter != filt_models.end(); ++ml_iter) {
+  // set DB nodes to input specification for this Model
+  problem_db.set_db_model_nodes(ml_iter-&gt;model_id());
+  Dakota::Interface&amp; model_interface = ml_iter-&gt;derived_interface();
+  // Parallel case: plug in derived Interface object with an analysisComm.
+  // Note: retrieval and passing of analysisComm is necessary only if
+  // parallel operations will be performed in the derived constructor.
+  // retrieve the currently active analysisComm from the Model.  In the most
+  // general case, need an array of Comms to cover all Model configurations.
+  const MPI_Comm&amp; analysis_comm = ml_iter-&gt;analysis_comm();
+  // don&#39;t increment ref count since no other envelope shares this letter
+  model_interface.assign_rep(new
+        SIM::ParallelDirectApplicInterface(problem_db, analysis_comm), false);
+}
+</pre></div>
+</div>
+<p>The file library_mode.cpp demonstrates each of these approaches. Since a Model may be used in multiple parallel contexts and may therefore have a set of parallel configurations, a more general approach would extract and pass an array of analysis communicators to allow initialization for each of the parallel configurations.</p>
+<p>New derived direct interface instances inherit various attributes of use in configuring the simulation. In particular, the ApplicationInterface::parallelLib reference provides access to MPI communicator data (e.g., the analysis communicators discussed above), DirectApplicInterface::analysisDrivers provides the analysis driver names specified by the user in the input file, and DirectApplicInterface::analysisComponents provides additional analysis component identifiers (such as mesh file names) provided by the user which can be used to distinguish different instances of the same simulation interface. It is worth noting that inherited attributes that are set as part of the parallel configuration (instead of being extracted from the ProblemDescDB) will be set to their defaults following construction of the base class instance for the derived class plug-in. It is not until run-time (i.e., within derived_map_if/derived_map_ac/derived_map_of) that the parallel configuration settings are re-propagated to the plug-in instance. This is the reason that the analysis communicator should be passed in to the constructor of a parallel plug-in, if the constructor will be responsible for parallel application initialization.</p>
+</section>
+</section>
+<section id="retrieving-data-after-a-run">
+<h2>Retrieving data after a run<a class="headerlink" href="#retrieving-data-after-a-run" title="Permalink to this headline"></a></h2>
+<p>After executing the Dakota Environment, final results can be obtained through the use of Environment::variables_results() and Environment::response_results(), e.g.:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>// retrieve the final parameter values
+const Variables&amp; vars = env.variables_results();
+// retrieve the final response values
+const Response&amp; resp  = env.response_results();
+</pre></div>
+</div>
+<p>In the case of optimization, the final design is returned, and in the case of uncertainty quantification, the final statistics are returned. Dakota has a prototype results database, which will eventually provide better access to the results from a study.</p>
+</section>
+<section id="linking-against-the-dakota-library">
+<h2>Linking against the Dakota library<a class="headerlink" href="#linking-against-the-dakota-library" title="Permalink to this headline"></a></h2>
+<p>This section presumes Dakota has been configured with CMake, compiled, and installed to a CMAKE_INSTALL_PREFIX using make install or equivalent. The Dakota libraries against which you must link will typically install to CMAKE_INSTALL_PREFIX/bin/ and CMAKE_INSTALL_PREFIX/lib/, while headers are provided in CMAKE_INSTALL_PREFIX/lib/. The core Dakota C and C++ code is in the library dakota_src, while Fortran code lives in the dakota_src_fortran library. Runtime libraries for any configure-enabled Dakota third-party software components (such as DOT, NPSOL, OPT++, LHS, etc.) are also installed to the lib/ directory. Applications link against these Dakota libraries by specifying appropriate include and link directives.</p>
+<p>There two primary ways to determine the necessary Dakota-related libraries and link order for linking your application. First, when running CMake, a list of required Dakota and Dakota-included third-party libraries will be output to the console, e.g.,</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>-- Dakota_LIBRARIES: dakota_src;dakota_src_fortran;nidr;teuchos;pecos;pecos_src;lhs;mods;mod;dfftpack;sparsegrid;surfpack;surfpack;surfpack_fortran;utilib;colin;interfaces;scolib;3po;pebbl;tinyxml;conmin;dace;analyzer;random;sampling;bose;dot;fsudace;hopspack;jega;jega_fe;moga;soga;eutils;utilities;ncsuopt;nlpql;cport;nomad;npsol;optpp;psuade;dakota_sciplot;amplsolver
+</pre></div>
+</div>
+<p>While external dependencies will be output as:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>-- Dakota_TPL_LIBRARIES: /usr/lib64/libcurl.so;/usr/lib64/openmpi/lib/libmpi_cxx.so;debug;/usr/lib64/libz.so;debug;/usr/lib64/librt.so;debug;/usr/lib64/libdl.so;debug;/usr/lib64/libm.so;debug;/apps/hdf5/1.8.11/lib/libhdf5_hl.so;debug;/apps/hdf5/1.8.11/lib/libhdf5.so;optimized;/usr/lib64/libz.so;optimized;/usr/lib64/librt.so;optimized;/usr/lib64/libdl.so;optimized;/usr/lib64/libm.so;optimized;/apps/hdf5/1.8.11/lib/libhdf5_hl.so;optimized;/apps/hdf5/1.8.11/lib/libhdf5.so;/apps/boost/1.49/lib/libboost_regex.so;/apps/boost/1.49/lib/libboost_filesystem.so;/apps/boost/1.49/lib/libboost_serialization.so;/apps/boost/1.49/lib/libboost_system.so;/apps/boost/1.49/lib/libboost_signals.so;/usr/lib64/libSM.so;/usr/lib64/libICE.so;/usr/lib64/libX11.so;/usr/lib64/libXext.so;/usr/lib64/libXm.so;/usr/lib64/libXpm.so;/usr/lib64/libXmu.so;/usr/lib64/libXt.so;-lpthread;/usr/lib64/liblapack.so;/usr/lib64/libblas.so
+</pre></div>
+</div>
+<p>Note that depending on how you configured Dakota, some libraries may be omitted from these lists (for example commercial add-ons NPSOL, DOT, and NLPQL), or additional libraries may appear.</p>
+<p>A second option is to check which libraries appear in CMAKE_INSTALL_PREFIX/bin/ CMAKE_INSTALL_PREFIX/lib/, or more accurately, see the file Makefile.export.Dakota in the Dakota build/src/ or installation include/ directory. Here are some additional notes on specific libraries:</p>
+<blockquote>
+<div><ul>
+<li><p>Some Boost libraries (boost_regex, boost_filesystem, boost_system, boost_serialization) are required, and other Boost library components may be required depending on configuration, e.g., boost_signals when configuring with HAVE_ACRO:BOOL=TRUE</p></li>
+<li><p>System compiler and math libraries may need to be included, as may additional system libraries such as Expat and Curl, depending on how Dakota is configured.</p></li>
+<li><p>If configuring with graphics, you will need to add the dakota_sciplot library and system X libraries (partial list here):</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>-lXpm -lXm -lXt -lXmu -lXp -lXext -lX11 -lSM -lICE
+</pre></div>
+</div>
+</li>
+<li><p>When configuring with AMPL (HAVE_AMPL:BOOL=ON), the AMPL solver library may require dl, funcadd0.o and fl libraries. We have experienced problems with the creation of libamplsolver.a on some platforms; inquire on Dakota’s <a class="reference internal" href="../../../misc/help.html#help-discussions"><span class="std std-ref">dicussions forum</span></a> to get help with any problems related to this.</p></li>
+<li><p>Optional library GSL (discouraged due to GPL license) and if linking with system-provided GSL, gslcblas may be needed if Dakota was configured with them.</p></li>
+<li><p>Newmat: as of Dakota 5.2, -lnewmat is no longer required</p></li>
+</ul>
+</div></blockquote>
+<p>Finally, it is important to use the same C++ compiler (possibly an MPI wrapper) for compiling Dakota and your application and potentially include Dakota-related preprocessor defines as emitted by CMake during compilation of Dakota and included in Makefile.export.Dakota. This ensures that the platform configuration settings are properly synchronized across Dakota and your application.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="modifyingdakotainput.html" class="btn btn-neutral float-left" title="Instructions for Modifying Dakota’s Input Specification" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="iteratorflow.html" class="btn btn-neutral float-right" title="Understanding Iterator Flow" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <!--
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Sandia National Laboratories.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+  --> 
+
+</footer>
+        </div>
+      </div>
+	  
+	  <div style="background-color: #0f0f0f;color:#fafafa;padding:20px">
+	    <div>
+		  <h2><em>Exceptional service in the national interest</em></h2>
+		</div>
+		<p>© 2023 National Technology and Engineering Solutions of Sandia, LLC. | <a href="https://www.sandia.gov/contact_us/index.html">Questions &amp; Comments</a> | <a href="https://www.sandia.gov/general/privacy-security/index.html">Privacy &amp; Security</a></p>
+		<p><a href="http://energy.gov" rel="noopener noreferrer" target="_blank"><img alt="U.S. Department of Energy" longdesc="https://energy.gov" src="https://www.sandia.gov/_common/images/doe_logo_white.png" style="height:37px; width:140px"></a> <a href="http://nnsa.energy.gov/" rel="noopener noreferrer" target="_blank"> <img alt="National Nuclear Security Administration" longdesc="http://nnsa.gov" src="https://www.sandia.gov/_common/images/nnsa_logo_white.png" style="height:37px; width:116px"></a></p>
+		<p><a href="https://www.sandia.gov">Sandia National Laboratories</a> is a multimission laboratory managed and operated by National Technology and Engineering Solutions of Sandia, LLC., a wholly owned subsidiary of Honeywell International, Inc., for the U.S. Department of Energy’s National Nuclear Security Administration under contract DE-NA-0003525.</p>
+	  </div>	  	  
+	  
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

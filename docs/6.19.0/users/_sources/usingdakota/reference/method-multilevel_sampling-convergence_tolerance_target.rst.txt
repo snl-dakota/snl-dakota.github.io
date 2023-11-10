@@ -1,0 +1,56 @@
+.. _method-multilevel_sampling-convergence_tolerance_target:
+
+""""""""""""""""""""""""""""
+convergence_tolerance_target
+""""""""""""""""""""""""""""
+
+
+
+Select target for MLMC sample allocation
+
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-multilevel_sampling-convergence_tolerance_target-variance_constraint
+   method-multilevel_sampling-convergence_tolerance_target-cost_constraint
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+- *Default:* variance_constraint
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+-------------------------+-----------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword          | Dakota Keyword Description                    |
+|                         | Group              |                         |                                               |
++=========================+====================+=========================+===============================================+
+| Required (Choose One)   | Convergence        | `variance_constraint`__ | Allocate samples to target specified variance |
+|                         | tolerance target   +-------------------------+-----------------------------------------------+
+|                         |                    | `cost_constraint`__     | Allocate samples to target specified cost     |
++-------------------------+--------------------+-------------------------+-----------------------------------------------+
+
+.. __: method-multilevel_sampling-convergence_tolerance_target-variance_constraint.html
+__ method-multilevel_sampling-convergence_tolerance_target-cost_constraint.html
+
+
+
+**Description**
+
+ 
+
+Sets the target of the MLMC sample allocation, i.e. the constraint of
+the MLMC sample allocation problem
+
+**Default Behavior:** ``variance_constraint``
+
+
+

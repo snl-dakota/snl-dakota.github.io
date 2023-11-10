@@ -1,0 +1,55 @@
+.. _interface-analysis_drivers-plugin:
+
+""""""
+plugin
+""""""
+
+
+Dynamically load a plugin analysis driver
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   interface-analysis_drivers-plugin-library_path
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+--------------------+-----------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword     | Dakota Keyword Description                    |
+|                         | Group              |                    |                                               |
++=========================+====================+====================+===============================================+
+| Required                                     | `library_path`__   | Path to the plugin shared object file         |
++----------------------------------------------+--------------------+-----------------------------------------------+
+
+.. __: interface-analysis_drivers-plugin-library_path.html
+
+
+
+**Description**
+
+
+Dakota 6.16 allows for run-time loading of a C++ or Python plugin
+analysis driver as a shared object file.
+
+Python plugins support batch evaluations ( :dakkw:`interface-batch`)
+through a list of dictionaries.
+
+
+
+**Examples**
+
+
+See ``dakota/src/plugins`` and ``dakota/share/dakota/test/dakota_plugin``.in
+for C++ and Python demos. These have only been tested on Linux.
+
+

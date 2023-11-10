@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Create your own Codes, Machines, and Execution Templates &mdash; dakota 6.19.0 documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/dakota_theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/sandiaheaderlite.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Dakota Job Submission Examples" href="JobSubmissionClassicExamples.html" />
+    <link rel="prev" title="Modifying an Execution Template" href="JobSubmissionClassicModification.html" /> 
+  
+  <meta name="sandia.approval_type" content="formal"/>
+  <meta property="sandia.approved" content="SAND2023-13392 O"/>
+  <meta name="description" content="The Dakota project delivers both state-of-the-art research and robust, usable software for optimization and UQ."/>
+  <meta name="keywords" content="Dakota, optimization, UQ, uncertainty quantification, parametric analysis, design exploration, model calibration, risk analysis"/>
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../index.html" class="icon icon-home"> dakota
+            <img src="../../../_static/dakota_Arrow_Name_Tag_horiz_transparent.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                6.19
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../setupdakota.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usingdakota/usingdakota.html">Using Dakota</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../usingdakotagui.html">Using Dakota GUI</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../usingdakotagui.html#introduction">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../usingdakotagui.html#example-search">Example Search</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../usingdakotagui.html#wizards">Wizards</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../usingdakotagui.html#editing-dakota-input-files">Editing Dakota Input Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../usingdakotagui.html#running-dakota">Running Dakota</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../usingdakotagui.html#running-dakota-remotely">Running Dakota Remotely</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../JobSubmissionOverview.html">Job Submission Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../JobSubmissionDosAndDonts.html">Job Submission Do’s and Don’ts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../JobSubmissionWorkflow.html">Job Submission (Using Next-Gen Workflow)</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="JobSubmissionClassicMain.html">Job Submission (Classic Job Management Tools)</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="JobSubmissionClassicUsage.html">Using the Job Submission Tools</a></li>
+<li class="toctree-l4"><a class="reference internal" href="JobSubmissionClassicModification.html">Modifying an Execution Template</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Create your own Codes, Machines, and Execution Templates</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#creating-a-new-code">Creating a New Code</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#creating-a-new-machine">Creating a New Machine</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#creating-a-new-execution-template">Creating a New Execution Template</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="JobSubmissionClassicExamples.html">Dakota Job Submission Examples</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../usingdakotagui.html#output-from-dakota">Output from Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../usingdakotagui.html#gui-tools">GUI Tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../usingdakotagui.html#miscellaneous">Miscellaneous</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../externaltools/externaltools.html">Using External Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../compiling/compiling.html">Compiling Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../developingdakota/developingdakota.html">Developing Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../misc/misc.html">Miscellaneous</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">dakota</a>
+      </nav>
+
+	  <!-- SNL Lite header -->
+	  <div class="snlheader-subsite--wrapper-default">
+		<snlheader class="snlheader-subsite" role="snlbanner">
+		  <div class="wrapper">
+			<a href="https://www.sandia.gov/index.html">
+			  <div class="logo-transparent"><p class="logo">Sandia National Laboratories</p></div>
+			</a>
+			<div class="nav-top">
+			  <a class="visuallyhidden" name="mainnav"></a>
+			  <div aria-label="main navigation" class="core-nav-transparent core-nav-transparent--visible" role="navigation">
+				<ul role="navigation" class="secondary-links">
+				  <li id="search-text-link">
+					<a aria-label="Search" href="https://www.sandia.gov/search/">Search Sandia.gov</a>
+				  </li>
+				  <li id="directory-text-link">
+					<a href="https://www.sandia.gov/directory.html" aria-expanded="false" aria-label="Site Directory">All Sandia Websites</a>
+				  </li>
+				</ul>
+			  </div>
+			</div>
+		  </div> 
+		</snlheader>
+	  </div>	  
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../../usingdakotagui.html">Using Dakota GUI</a> &raquo;</li>
+          <li><a href="JobSubmissionClassicMain.html">Job Submission (Classic Job Management Tools)</a> &raquo;</li>
+      <li>Create your own Codes, Machines, and Execution Templates</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../_sources/usingdakotagui/runningremote/JobSubmissionClassic/JobSubmissionClassicCreation.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="create-your-own-codes-machines-and-execution-templates">
+<span id="gui-job-submission-classic-creation"></span><h1>Create your own Codes, Machines, and Execution Templates<a class="headerlink" href="#create-your-own-codes-machines-and-execution-templates" title="Permalink to this headline"></a></h1>
+<p>The Job Submission Tool (JMT) allows you to fully customize it, adding your own codes, machines, and execution templates.</p>
+<section id="creating-a-new-code">
+<span id="gui-job-submission-classic-creation-code"></span><h2>Creating a New Code<a class="headerlink" href="#creating-a-new-code" title="Permalink to this headline"></a></h2>
+<p>To create a new code:</p>
+<ol class="arabic">
+<li><p>Select “Window &gt; Preferences” (on Mac, select “Dakota GUI &gt; Preferences”).</p></li>
+<li><p>Expand and select “Job Submission &gt; Codes” to see a list of codes.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Codes in bold are the built-in or predefined codes.  Those not in bold are your custom codes that are only available to you.</p>
+</div>
+</li>
+<li><p>Perform one of the following steps:</p>
+<ol class="loweralpha simple">
+<li><p>Select the New button.</p></li>
+<li><p>If you want to start from one of your existing codes, select a code in the Preferences panel and select the Duplicate button.</p></li>
+</ol>
+</li>
+<li><p>Edit the code preferences in the Edit Code dialog. These values are used to identify input decks so that the corresponding code can be available in the
+“Submit Job” contextual menu item.  The values you may edit include:</p>
+<ol class="loweralpha simple">
+<li><p>The code name.</p></li>
+<li><p>The name patterns of the primary input file.</p></li>
+<li><p>Unique content strings that can be used to identify the primary input deck.</p></li>
+</ol>
+</li>
+</ol>
+<figure class="align-center" id="jmtcreate-figure01">
+<img alt="Edit Code Dialog" src="../../../_images/editCode.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 106 </span><span class="caption-text">Edit Code Dialog</span><a class="headerlink" href="#jmtcreate-figure01" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+</section>
+<section id="creating-a-new-machine">
+<span id="gui-job-submission-classic-creation-machine"></span><h2>Creating a New Machine<a class="headerlink" href="#creating-a-new-machine" title="Permalink to this headline"></a></h2>
+<p>To create a new machine:</p>
+<ol class="arabic">
+<li><p>Select “Window &gt; Preferences” (on Mac, select “Dakota GUI &gt; Preferences”).</p></li>
+<li><p>Select “Machines” to see a list of machines.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Machines in bold are the built-in or predefined machines. Those not in bold are your custom machines that are only available to you.</p>
+</div>
+</li>
+<li><p>Perform one of the following steps:</p>
+<ol class="loweralpha simple">
+<li><p>Select the New button.</p></li>
+<li><p>If you want to start from one of your existing machines, select a machine in the Preferences panel and select the Duplicate button.</p></li>
+</ol>
+</li>
+<li><p>Edit the machine preferences in the Edit Machine dialog. The values you may edit include:</p>
+<ol class="loweralpha simple">
+<li><p><em>Machine name:</em> The name of the machine.</p></li>
+<li><p><em>Host:</em> The url to the login node that will be used to submit jobs and do file transfers.</p></li>
+<li><p><em>Base host:</em> This is used if remote viz capabilities are provided to the machine.  For example, if the login node is “shasta1.sandia.gov”, the base host will be “shasta”.
+The base host is passed to the corresponding viz script (e.g. ensight2shasta).</p></li>
+<li><p><em>Port:</em>  Leave blank unless the machine uses another port for sftp.</p></li>
+<li><p><em>Protocol:</em> This is generally ftp for remote machines and file for your localhost.</p></li>
+<li><p><em>Base Directory:</em>  The base scratch directory where you perform simulations (e.g. /scratch1/username).</p></li>
+<li><p><em>Environment Path:</em>  This specifies the execution environment path for all ssh commands executed on the remote system. You’ll likely want to include $PATH somewhere in here to
+get the pre-existing environment path on the system.</p></li>
+</ol>
+</li>
+</ol>
+<figure class="align-center" id="jmtcreate-figure02">
+<img alt="Edit Machine Dialog" src="../../../_images/editMachine.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 107 </span><span class="caption-text">Edit Machine Dialog</span><a class="headerlink" href="#jmtcreate-figure02" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+</section>
+<section id="creating-a-new-execution-template">
+<span id="gui-job-submission-classic-exectemplate"></span><h2>Creating a New Execution Template<a class="headerlink" href="#creating-a-new-execution-template" title="Permalink to this headline"></a></h2>
+<p>To create a new execution template:</p>
+<ol class="arabic">
+<li><p>Select “Window &gt; Preferences” (on Mac, select “Dakota GUI &gt; Preferences”).</p></li>
+<li><p>Expand and select “Job Submission &gt; Execution Templates” to see a list of execution templates.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Templates in bold are the built-in or predefined execution templates. Those not in bold are your custom templates that are only available to you.</p>
+</div>
+</li>
+<li><p>Perform one of the following steps:</p>
+<ol class="loweralpha simple">
+<li><p>Select the New button.</p></li>
+<li><p>If you want to start from one of your existing templates, select an execution template in the Preferences panel and select the Duplicate button.</p></li>
+</ol>
+</li>
+<li><p>Edit the template preferences in the Edit Execution Template dialog. The values you may edit include:</p>
+<ol class="loweralpha simple">
+<li><p><em>Code.</em>  The code is usually not changed unless you are creating a new execution template.</p></li>
+<li><p><em>Machine.</em>  The machine is usually not changed unless you are creating a new execution template.</p></li>
+<li><p><em>Execution Tab:</em></p>
+<ol class="lowerroman simple">
+<li><p><em>Commands to execute.</em> These are the commands you would type in an interactive terminal window to submit a job. If you are overriding these commands, or creating your own template,
+in order to monitor job status in the Job Status View, and have the post-processing commands run and have files returned when the job is complete, you must capture the job ID
+returned by the quing system from the submit call. This ID must be just the number. The ID must be writen in a file named with the <code class="docutils literal notranslate"><span class="pre">${job.id.filename}</span></code> variable inside the remote working directory.
+Examples of how do do this can be found in any of the built-in execution templates. You’ll note that the examples use the <code class="docutils literal notranslate"><span class="pre">tee</span></code> command in order to allow the console output from the submit
+command to still come through the console that gets displayed in Dakota GUI when running a job.</p></li>
+<li><p><em>Script Name.</em> Most jobs are submitted to the remote host’s queuing systems (such as Slurm). This is the name of the script that will be created and submitted in the “Commands to Execute” field.</p></li>
+<li><p><em>Script contents.</em> The contents of the script that will be submitted by the job submission system.</p></li>
+<li><p><em>Post job commands.</em> The commands that should be executed when the job is completed. This may include steps such as concatenating results files, or running a post-processing tool
+(e.g. matlab)to generate another results file. These commands are executed within a shell script.</p></li>
+</ol>
+</li>
+<li><p><em>Initial Values:</em></p>
+<ol class="lowerroman simple">
+<li><p><em>Output files.</em> You can specify the file names or patterns (e.g. *.e) to be returned when the job is complete.</p></li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+<figure class="align-center" id="jmtcreate-figure03">
+<img alt="Edit Execution Template Dialog" src="../../../_images/ExecEdit.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 108 </span><span class="caption-text">Edit Execution Template Dialog</span><a class="headerlink" href="#jmtcreate-figure03" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="JobSubmissionClassicModification.html" class="btn btn-neutral float-left" title="Modifying an Execution Template" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="JobSubmissionClassicExamples.html" class="btn btn-neutral float-right" title="Dakota Job Submission Examples" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <!--
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Sandia National Laboratories.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+  --> 
+
+</footer>
+        </div>
+      </div>
+	  
+	  <div style="background-color: #0f0f0f;color:#fafafa;padding:20px">
+	    <div>
+		  <h2><em>Exceptional service in the national interest</em></h2>
+		</div>
+		<p>© 2023 National Technology and Engineering Solutions of Sandia, LLC. | <a href="https://www.sandia.gov/contact_us/index.html">Questions &amp; Comments</a> | <a href="https://www.sandia.gov/general/privacy-security/index.html">Privacy &amp; Security</a></p>
+		<p><a href="http://energy.gov" rel="noopener noreferrer" target="_blank"><img alt="U.S. Department of Energy" longdesc="https://energy.gov" src="https://www.sandia.gov/_common/images/doe_logo_white.png" style="height:37px; width:140px"></a> <a href="http://nnsa.energy.gov/" rel="noopener noreferrer" target="_blank"> <img alt="National Nuclear Security Administration" longdesc="http://nnsa.gov" src="https://www.sandia.gov/_common/images/nnsa_logo_white.png" style="height:37px; width:116px"></a></p>
+		<p><a href="https://www.sandia.gov">Sandia National Laboratories</a> is a multimission laboratory managed and operated by National Technology and Engineering Solutions of Sandia, LLC., a wholly owned subsidiary of Honeywell International, Inc., for the U.S. Department of Energy’s National Nuclear Security Administration under contract DE-NA-0003525.</p>
+	  </div>	  	  
+	  
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chartreuse Sandbox View &mdash; dakota 6.19.0 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/dakota_theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/sandiaheaderlite.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Chartreuse in Next-Gen Workflow" href="ChartreuseWorkflow.html" />
+    <link rel="prev" title="Plot Templates" href="PlotTemplates.html" /> 
+  
+  <meta name="sandia.approval_type" content="formal"/>
+  <meta property="sandia.approved" content="SAND2023-13392 O"/>
+  <meta name="description" content="The Dakota project delivers both state-of-the-art research and robust, usable software for optimization and UQ."/>
+  <meta name="keywords" content="Dakota, optimization, UQ, uncertainty quantification, parametric analysis, design exploration, model calibration, risk analysis"/>
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> dakota
+            <img src="../../_static/dakota_Arrow_Name_Tag_horiz_transparent.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                6.19
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../setupdakota.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../usingdakota/usingdakota.html">Using Dakota</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../usingdakotagui.html">Using Dakota GUI</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#introduction">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#example-search">Example Search</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#wizards">Wizards</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#editing-dakota-input-files">Editing Dakota Input Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#running-dakota">Running Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#running-dakota-remotely">Running Dakota Remotely</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#output-from-dakota">Output from Dakota</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../usingdakotagui.html#gui-tools">GUI Tools</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="Chartreuse.html">Chartreuse</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="PlotTraceCreator.html">Plot Trace Creator</a></li>
+<li class="toctree-l4"><a class="reference internal" href="EditingPlotFiles.html">Editing Plot Files</a></li>
+<li class="toctree-l4"><a class="reference internal" href="PlotManager.html">Plot Manager:  Managing Multiple Traces and Canvases</a></li>
+<li class="toctree-l4"><a class="reference internal" href="PlotTemplates.html">Plot Templates</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Chartreuse Sandbox View</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#introduction">Introduction</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#supported-data-sources">Supported Data Sources</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#sending-data-to-the-sandbox">Sending Data to the Sandbox</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#method-1-embedded-buttons-located-throughout-the-gui">Method 1:  Embedded Buttons Located throughout the GUI</a><ul>
+<li class="toctree-l7"><a class="reference internal" href="#dakota-visual-editor-variables-table">Dakota Visual Editor:  Variables Table</a></li>
+</ul>
+</li>
+<li class="toctree-l6"><a class="reference internal" href="#method-2-project-explorer-context-menu">Method 2:  Project Explorer Context Menu</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#options">Options</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#recommended-reading">Recommended Reading</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="ChartreuseWorkflow.html">Chartreuse in Next-Gen Workflow</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ColorScales.html">Using Color Scales in Plot Traces</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../ngw/NextGenWorkflow.html">Next-Gen Workflow</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../qoi/QOI.html">QOI</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#miscellaneous">Miscellaneous</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../externaltools/externaltools.html">Using External Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../compiling/compiling.html">Compiling Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developingdakota/developingdakota.html">Developing Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../misc/misc.html">Miscellaneous</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">dakota</a>
+      </nav>
+
+	  <!-- SNL Lite header -->
+	  <div class="snlheader-subsite--wrapper-default">
+		<snlheader class="snlheader-subsite" role="snlbanner">
+		  <div class="wrapper">
+			<a href="https://www.sandia.gov/index.html">
+			  <div class="logo-transparent"><p class="logo">Sandia National Laboratories</p></div>
+			</a>
+			<div class="nav-top">
+			  <a class="visuallyhidden" name="mainnav"></a>
+			  <div aria-label="main navigation" class="core-nav-transparent core-nav-transparent--visible" role="navigation">
+				<ul role="navigation" class="secondary-links">
+				  <li id="search-text-link">
+					<a aria-label="Search" href="https://www.sandia.gov/search/">Search Sandia.gov</a>
+				  </li>
+				  <li id="directory-text-link">
+					<a href="https://www.sandia.gov/directory.html" aria-expanded="false" aria-label="Site Directory">All Sandia Websites</a>
+				  </li>
+				</ul>
+			  </div>
+			</div>
+		  </div> 
+		</snlheader>
+	  </div>	  
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../usingdakotagui.html">Using Dakota GUI</a> &raquo;</li>
+          <li><a href="Chartreuse.html">Chartreuse</a> &raquo;</li>
+      <li>Chartreuse Sandbox View</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/usingdakotagui/chartreuse/ChartreuseSandbox.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="chartreuse-sandbox-view">
+<span id="chartreuse-sandbox-main"></span><h1>Chartreuse Sandbox View<a class="headerlink" href="#chartreuse-sandbox-view" title="Permalink to this headline"></a></h1>
+<section id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline"></a></h2>
+<p>Historically, Chartreuse has required the user to provide some upfront configuration before they can turn a data output file into a visualized plot.
+However, there’s often a need to quickly visualize the data using the most reasonable default options.</p>
+<p>To that end, the Chartreuse Sandbox View can be thought of a “staging area” where the user can send data, look at that data, and overlay
+it with other datasets for comparison purposes.  With the Sandbox, there’s no need to worry about things like configuring how the data will be
+extracted, how the canvases will be laid out, etc.</p>
+<p>By default, the Chartreuse Sandbox View is hidden.  It can be activated in one of two ways:</p>
+<ul class="simple">
+<li><p>Trigger the Sandbox View to appear by <a class="reference internal" href="#chartreuse-sandbox-main-sending-data"><span class="std std-ref">sending data to it</span></a>.</p></li>
+<li><p>Open the “Show View” dialog by selecting Window &gt; Show View &gt; Other…, then selecting Chartreuse &gt; Sandbox.</p></li>
+</ul>
+<img alt="In the &quot;Show View&quot; dialog, the Sandbox view is located under the Chartreuse folder." src="../../_images/Plotting_Sandbox_1.png" />
+</section>
+<section id="supported-data-sources">
+<span id="chartreuse-sandbox-main-supported-sources"></span><h2>Supported Data Sources<a class="headerlink" href="#supported-data-sources" title="Permalink to this headline"></a></h2>
+<p>The Chartreuse Sandbox View can receive data from the following sources of plot data:</p>
+<ul class="simple">
+<li><p>CSV files</p></li>
+<li><p>Dakota input files (i.e. the PDF curve of a given uncertainty variable)</p></li>
+<li><p>Dakota tabular data files</p></li>
+<li><p>Dakota-based HDF5 files (generic HDF5 files are not supported)</p></li>
+</ul>
+</section>
+<section id="sending-data-to-the-sandbox">
+<span id="chartreuse-sandbox-main-sending-data"></span><h2>Sending Data to the Sandbox<a class="headerlink" href="#sending-data-to-the-sandbox" title="Permalink to this headline"></a></h2>
+<p>There are two primary methods to send data to the Sandbox.  Both methods will be illustrated using a single example.</p>
+<section id="method-1-embedded-buttons-located-throughout-the-gui">
+<h3>Method 1:  Embedded Buttons Located throughout the GUI<a class="headerlink" href="#method-1-embedded-buttons-located-throughout-the-gui" title="Permalink to this headline"></a></h3>
+<p>Buttons have been made available at key locations in Dakota GUI to send currently-selected data to the Sandbox.</p>
+<section id="dakota-visual-editor-variables-table">
+<h4>Dakota Visual Editor:  Variables Table<a class="headerlink" href="#dakota-visual-editor-variables-table" title="Permalink to this headline"></a></h4>
+<p>While viewing a Dakota variables block in the <a class="reference internal" href="../inputfiles/DakotaVisualEditor.html#gui-visual-editor-main"><span class="std std-ref">Dakota Visual Editor</span></a>, you can select one or more variables
+to enable the “Auto-Visualize Variable” button.  The variables selected must belong to an <a class="reference internal" href="../../usingdakota/inputfile/variables.html#variables-uncertain"><span class="std std-ref">uncertain variable category</span></a>.
+Selecting this button will immediately visualize the <strong>probability density function</strong> for each variable in the Sandbox.</p>
+<img alt="The location of the &quot;Auto-Visualize Variable&quot; button near the variables table" src="../../_images/Plotting_Sandbox_2.png" />
+<p>For example, suppose we send both x1 and x2 to the Sandbox.  We will see the PDF of their normal uncertainty distributions right away:</p>
+<img alt="Example PDF curves for the x1 and x2 variables" src="../../_images/Plotting_Sandbox_4.png" />
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Viewing Dakota variables in their category-specific tables allows for quick editing of the variable’s properties.  This makes it extremely easy
+to modify a Dakota variable and immediately re-send it to the Sandbox to see how changing a value impacts the PDF curve.  The “View category”
+dropdown allows you to switch which variable table you are viewing.</p>
+</div>
+<img alt="Normal variables in the variables table" src="../../_images/Plotting_Sandbox_3.png" />
+</section>
+</section>
+<section id="method-2-project-explorer-context-menu">
+<h3>Method 2:  Project Explorer Context Menu<a class="headerlink" href="#method-2-project-explorer-context-menu" title="Permalink to this headline"></a></h3>
+<p>You can also right-click a file that contains <a class="reference internal" href="#chartreuse-sandbox-main-supported-sources"><span class="std std-ref">plottable data</span></a> in the Project Explorer view.
+Select “Chartreuse” in the context menu, then the “Fast plot in sandbox” sub-menu.  From here, you have a number of options for creating plots
+quickly with no configuration.</p>
+<img alt="The location of &quot;Fast plot in sandbox&quot; submenu in the Chartreuse context menu" src="../../_images/Plotting_Sandbox_5.png" />
+<p>For example, let’s continue with the example of two Dakota normal uncertain variables x1 and x2.  Suppose we ran a sampling study in Dakota
+using x1 and x2, and we generated a tabular data file containing data for the variables.  Selecting the histogram option will overlay a histogram
+over each variable curve, showing the rough correspondence between the expected curve and the actual data.</p>
+<img alt="Histograms of actual data for x1 and x2" src="../../_images/Plotting_Sandbox_6.png" />
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The first time you send file data to the Sandbox, you may see this dialog asking which datasets you want to send to the Sandbox:</p>
+<img alt="The Plot Sandbox Options dialog" src="../../_images/Plotting_Sandbox_7.png" />
+<p>Depending on what you want to do, you may want to send all the file data to the Sandbox, or only the data matching labels that are already in the
+Sandbox (what we did in the previous example), or even the data that doesn’t match the labels in the Sandbox.  It just depends on what you want to visualize.
+You can also opt to not show this dialog again once you have made your preferred selection.</p>
+</div>
+</section>
+</section>
+<section id="options">
+<h2>Options<a class="headerlink" href="#options" title="Permalink to this headline"></a></h2>
+<p><em>(or How to Play in the Sandbox)</em></p>
+<p>Once you have some data in the Sandbox view, you have some options for how to manipulate it.</p>
+<img alt="Sandbox View options" src="../../_images/Plotting_Sandbox_8.png" />
+<ul class="simple">
+<li><p><strong>Save</strong> Save the plot to a file.  You can choose .plot (native Chartreuse format), .png (still screenshot), or .html (for web-based viewing of the plot).</p></li>
+<li><p><strong>Edit</strong> Change the label of any given canvas in the Sandbox.  Note that this will impact data grouping if you later try to automatically combine plots with matching data labels.</p></li>
+<li><p><strong>Edit Color</strong> Change the color of a given trace.</p></li>
+<li><p><strong>Delete</strong> Delete a canvas (and all its traces) from the Sandbox.</p></li>
+<li><p><strong>Delete All</strong> Delete all data in the Sandbox.  <em>This button will not prompt you to be sure about deleting your data.</em></p></li>
+<li><p><strong>Layout Strategy</strong> Tell the Sandbox what to do with matching data labels:</p>
+<ul>
+<li><p><strong>Replace Matching Labels</strong> If a dataset is added to the Sandbox and it matches the label of an existing canvas, the existing canvas will be removed in favor of the dataset being added.</p></li>
+<li><p><strong>Overlay Matching Labels</strong> (this is the default option) If a dataset is added to the Sandbox and it matches the label of an existing canvas, the two datasets will be combined onto the same canvas.</p></li>
+<li><p><strong>Group Matching Labels</strong> If a dataset is added to the Sandbox and it matches the label of an existing canvas, the added dataset will be placed on a new canvas located to the right of the existing canvas.</p></li>
+</ul>
+</li>
+<li><p><strong>Manually Overlay</strong> Force two plot traces to be combined onto the same canvas, even if they are unrelated datasets.</p></li>
+</ul>
+</section>
+<section id="recommended-reading">
+<h2>Recommended Reading<a class="headerlink" href="#recommended-reading" title="Permalink to this headline"></a></h2>
+<ul class="simple">
+<li><p>For more traditional Chartreuse plotting options, <a class="reference internal" href="PlotTraceCreator.html#chartreuse-plot-trace"><span class="std std-ref">see the main Chartreuse documentation page</span></a>.</p></li>
+<li><p>For visualizing PDF curves of Dakota’s uncertain variable types using Next-Gen Workflow, <a class="reference internal" href="../ngw/nodes/variablePdfVisualizer.html#chartreuse-ngw-uncertainty-variables"><span class="std std-ref">see the page on Chartreuse/Next-Gen Workflow integration</span></a>.</p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="PlotTemplates.html" class="btn btn-neutral float-left" title="Plot Templates" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="ChartreuseWorkflow.html" class="btn btn-neutral float-right" title="Chartreuse in Next-Gen Workflow" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <!--
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Sandia National Laboratories.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+  --> 
+
+</footer>
+        </div>
+      </div>
+	  
+	  <div style="background-color: #0f0f0f;color:#fafafa;padding:20px">
+	    <div>
+		  <h2><em>Exceptional service in the national interest</em></h2>
+		</div>
+		<p>© 2023 National Technology and Engineering Solutions of Sandia, LLC. | <a href="https://www.sandia.gov/contact_us/index.html">Questions &amp; Comments</a> | <a href="https://www.sandia.gov/general/privacy-security/index.html">Privacy &amp; Security</a></p>
+		<p><a href="http://energy.gov" rel="noopener noreferrer" target="_blank"><img alt="U.S. Department of Energy" longdesc="https://energy.gov" src="https://www.sandia.gov/_common/images/doe_logo_white.png" style="height:37px; width:140px"></a> <a href="http://nnsa.energy.gov/" rel="noopener noreferrer" target="_blank"> <img alt="National Nuclear Security Administration" longdesc="http://nnsa.gov" src="https://www.sandia.gov/_common/images/nnsa_logo_white.png" style="height:37px; width:116px"></a></p>
+		<p><a href="https://www.sandia.gov">Sandia National Laboratories</a> is a multimission laboratory managed and operated by National Technology and Engineering Solutions of Sandia, LLC., a wholly owned subsidiary of Honeywell International, Inc., for the U.S. Department of Energy’s National Nuclear Security Administration under contract DE-NA-0003525.</p>
+	  </div>	  	  
+	  
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

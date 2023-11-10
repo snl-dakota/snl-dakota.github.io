@@ -1,0 +1,50 @@
+.. _method-multifidelity_sampling-search_model_graphs:
+
+"""""""""""""""""""
+search_model_graphs
+"""""""""""""""""""
+
+
+Perform a search over admissible model relationships for a given model ensemble
+
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-multifidelity_sampling-search_model_graphs-model_selection
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+- *Default:* NO_GRAPH_RECURSION
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+---------------------+-----------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword      | Dakota Keyword Description                    |
+|                         | Group              |                     |                                               |
++=========================+====================+=====================+===============================================+
+| Optional                                     | `model_selection`__ | Perform a recursion of admissible model       |
+|                                              |                     | subsets for a given model ensemble            |
++----------------------------------------------+---------------------+-----------------------------------------------+
+
+.. __: method-multifidelity_sampling-search_model_graphs-model_selection.html
+
+
+
+**Description**
+
+
+Relative to generalized ACV (:cite:p:`Bomarito2022`), MFMC is restricted
+to a single DAG definition per model subset.  Thus, this keyword is only
+used to search over possible model subsets (refer to \c model_selection).
+
+
+

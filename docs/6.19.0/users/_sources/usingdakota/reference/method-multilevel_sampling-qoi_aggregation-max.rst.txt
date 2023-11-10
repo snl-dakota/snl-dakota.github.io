@@ -1,0 +1,49 @@
+.. _method-multilevel_sampling-qoi_aggregation-max:
+
+"""
+max
+"""
+
+
+Compute sample allocation for each response and use maximum over responses for each level in a MLMC algorithm
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+
+**Description**
+
+
+An individual sample allocation for each response using the respective variances of the ``allocation_target`` of :math:`Y^i_\ell`  over all levels is computed; the maximum over all responses for each level is taken.
+
+
+
+**Examples**
+
+
+The following method block
+
+.. code-block::
+
+    method,
+     model_pointer = 'HIERARCH'
+            multilevel_sampling
+       pilot_samples = 20 seed = 1237
+       convergence_tolerance = .01
+       allocation_target = mean
+          qoi_aggregation = max
+
+
+uses the max rule to aggregate the variance over the qois.
+
+

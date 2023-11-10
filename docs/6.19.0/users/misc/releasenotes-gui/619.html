@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Version 6.19 - Poisonous Pipeline (2023/11) &mdash; dakota 6.19.0 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/dakota_theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/sandiaheaderlite.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Version 6.18 - Oil Drum Alley (2023/05)" href="618.html" />
+    <link rel="prev" title="Version 3.0 beta (2001/11/29)" href="../releasenotes/30beta.html" /> 
+  
+  <meta name="sandia.approval_type" content="formal"/>
+  <meta property="sandia.approved" content="SAND2023-13392 O"/>
+  <meta name="description" content="The Dakota project delivers both state-of-the-art research and robust, usable software for optimization and UQ."/>
+  <meta name="keywords" content="Dakota, optimization, UQ, uncertainty quantification, parametric analysis, design exploration, model calibration, risk analysis"/>
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> dakota
+            <img src="../../_static/dakota_Arrow_Name_Tag_horiz_transparent.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                6.19
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../setupdakota.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../usingdakota/usingdakota.html">Using Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../usingdakotagui/usingdakotagui.html">Using Dakota GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../externaltools/externaltools.html">Using External Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../compiling/compiling.html">Compiling Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developingdakota/developingdakota.html">Developing Dakota</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../misc.html">Miscellaneous</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../help.html">Help Resources</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../aboutteam.html">About the Team</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../contributing.html">Contributing to Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../contributors.html">Contributors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../license.html">License</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../citing.html">Citing Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../publications.html">Publications</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../releasenotes.html">Release Notes</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../releasenotes.html#dakota">Dakota</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../releasenotes.html#dakota-gui">Dakota GUI</a><ul class="current">
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Version 6.19 - Poisonous Pipeline (2023/11)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="618.html">Version 6.18 - Oil Drum Alley (2023/05)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="617.html">Version 6.17 - Northern Kremisphere (2022/11)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="616.html">Version 6.16 - Manic Mincers (2022/05)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="615.html">Version 6.15 -  Lakeside Limbo (2021/11)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="614.html">Version 6.14 - Koindozer Klamber (2021/05)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="613.html">Version 6.13 - Jungle Japes (2020/11)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="612.html">Version 6.12 - Ice Age Alley (2020/06)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="611.html">Version 6.11 - Hot Head Hop (2019/11)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="610.html">Version 6.10 - Gangplank Galleon (2019/05)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="69.html">Version 6.9 - Frantic Factory (2018/11)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="68.html">Version 6.8 - Elevator Antics (2018/05)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="67.html">Version 6.7 - Doorstop Dash (2017/11)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="66.html">Version 6.6 - Coral Capers (2017/05)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="65.html">Version 6.5 - Blazing Bazookas (2016/11)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="64.html">Version 6.4 - Arctic Abyss (2016/05)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../bibliography.html">Bibliography</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../classictoc.html">I’m Lost!</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">dakota</a>
+      </nav>
+
+	  <!-- SNL Lite header -->
+	  <div class="snlheader-subsite--wrapper-default">
+		<snlheader class="snlheader-subsite" role="snlbanner">
+		  <div class="wrapper">
+			<a href="https://www.sandia.gov/index.html">
+			  <div class="logo-transparent"><p class="logo">Sandia National Laboratories</p></div>
+			</a>
+			<div class="nav-top">
+			  <a class="visuallyhidden" name="mainnav"></a>
+			  <div aria-label="main navigation" class="core-nav-transparent core-nav-transparent--visible" role="navigation">
+				<ul role="navigation" class="secondary-links">
+				  <li id="search-text-link">
+					<a aria-label="Search" href="https://www.sandia.gov/search/">Search Sandia.gov</a>
+				  </li>
+				  <li id="directory-text-link">
+					<a href="https://www.sandia.gov/directory.html" aria-expanded="false" aria-label="Site Directory">All Sandia Websites</a>
+				  </li>
+				</ul>
+			  </div>
+			</div>
+		  </div> 
+		</snlheader>
+	  </div>	  
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../misc.html">Miscellaneous</a> &raquo;</li>
+          <li><a href="../releasenotes.html">Release Notes</a> &raquo;</li>
+      <li>Version 6.19 - Poisonous Pipeline (2023/11)</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/misc/releasenotes-gui/619.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="version-6-19-poisonous-pipeline-2023-11">
+<span id="releasenotes-gui-619"></span><h1>Version 6.19 - Poisonous Pipeline (2023/11)<a class="headerlink" href="#version-6-19-poisonous-pipeline-2023-11" title="Permalink to this headline"></a></h1>
+<img alt="Dakota GUI 6.19 splash screen" src="../../_images/DakotaGui_PoisonousPipeline.png" />
+<p>Version 6.19 of the Dakota GUI contains several exciting new features, including the ability to selectively restart individual Dakota evaluations.</p>
+<p><strong>Restart Capabilities</strong></p>
+<ul class="simple">
+<li><p>The Dakota GUI now features a new wizard called the “New Lazy Driver Wizard.” The concept behind a lazy driver is to allow Dakota to “set and forget”
+its individual evaluations. A lazy driver performs no calculations of its own, but simply wraps itself around the actual analysis driver which performs
+all the work. With a lazy driver, once Dakota has spun up separate analysis driver processes for each evaluation, Dakota will exit early,
+returning NaN values in place of the final evaluations. At a later stage, the user is able to re-run Dakota, and, thanks to the logic built in to the
+lazy analysis driver, each previously calculated evaluation will be picked up without re-running the analysis driver calculations required to arrive
+at that value. The most beneficial use case for lazy analysis drivers is for evaluations that take an exceedingly long time to run. Lazy analysis drivers
+can also be used in conjunction with remote job submission, if remote high-performance computers must be used to complete the calculations. The Dakota GUI
+supports lazy analysis drivers written in Python, Bash, or IWF (Next-Gen Workflow) format.</p></li>
+<li><p>In addition to the New Lazy Driver Wizard, the Dakota GUI is now equipped with a context menu that allows the user to re-run individual evaluations (but
+only for studies that use lazy drivers). Imagine a study during which 49 out of 50 evaluations returned successfuly, but 1 evaluation mysteriously failed.
+With the new “Re-Run” context menu option, the user can opt to individually re-run that single evaluation without disrupting the other previously calculated
+evaluation results.</p></li>
+</ul>
+<p><strong>Enhancements to the Dakota Visual Editor</strong></p>
+<ul class="simple">
+<li><p>The Dakota Visual Editor is now equipped with a context menu for adding, deleting, and re-organizing top-level blocks in a Dakota study. This was a key
+feature that was previously missing from the Visual Editor, and its absence would have prevented a Dakota user from remaining in the Visual Editor to perform all of their
+edits. Now, top-level blocks can be managed without switching contexts to either the classic text editor or the expandable tree in the Project Navigator.</p></li>
+<li><p>All of the remaining methods have been added to the Dakota Visual Editor. We have performed extensive testing on each method editor, but please contact the Dakota
+development team if you observe any problematic behavior with any of the new method editors.</p></li>
+<li><p>To support the breadth of Dakota methods now available in the Visual Editor, the method selection dropdown has been replaced with a Google-esque search bar that
+allows the user to partially type in the method name and get matching search results.</p></li>
+</ul>
+<p><strong>Enhancements to New Dakota Study Wizard</strong></p>
+<ul class="simple">
+<li><p>The final page of the New Dakota Study wizard (which allows for interface block configuration) has been significantly refactored. Most importantly, failure capture
+options are now configurable on this page of the wizard.</p></li>
+<li><p>The New Dakota Study wizard now accepts the possibility of 0 responses as a valid finishing condition for the wizard.</p></li>
+<li><p>The New Dakota Study wizard now opens the newly-created input file as soon as the wizard is closed.</p></li>
+</ul>
+<p><strong>New Next-Gen Workflow Nodes</strong></p>
+<ul class="simple">
+<li><p>New displayPlot node: This node will automatically open a stream of Chartreuse-generated plot data for display in the main editor area of the GUI. This node circumvents
+the need to use a “file” node to save the plot data and then an “openFile” node to open the saved plot.</p></li>
+<li><p>New PlotInputGather node: This node allows you to iterate over a folder of completed evaluation results and gather the data for plotting. This node circumvents the need
+to use a Dakota-generated tabular data file and/or Dakota-generated HDF5 file. Note that this node presumes the evaluation data was generated using Next-Gen Workflow.</p></li>
+<li><p>New LocalDispatchAndCollect node: This node works exactly like the DispatchAndCollect node, except that it is equipped to do “set-and-forget” analysis driver
+data collection without sending the data to a remote high-performance computer. This node is used in conjunction with the New Lazy Driver wizard if you opt to generated
+an NGW-based lazy driver.</p></li>
+</ul>
+<p><strong>Misc.</strong></p>
+<ul class="simple">
+<li><p>Additional miscellaneous enhancements have now been made to the DispatchAndCollect node in Next-Gen Workflow.</p></li>
+<li><p>Bugfix: An open HDF5 file is now automatically closed when the tree view is collapsed in the Project Navigator. Previously, dangling “open” files were causing problems
+if the Dakota GUI user wished to later delete the HDF5 file.</p></li>
+</ul>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../releasenotes/30beta.html" class="btn btn-neutral float-left" title="Version 3.0 beta (2001/11/29)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="618.html" class="btn btn-neutral float-right" title="Version 6.18 - Oil Drum Alley (2023/05)" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <!--
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Sandia National Laboratories.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+  --> 
+
+</footer>
+        </div>
+      </div>
+	  
+	  <div style="background-color: #0f0f0f;color:#fafafa;padding:20px">
+	    <div>
+		  <h2><em>Exceptional service in the national interest</em></h2>
+		</div>
+		<p>© 2023 National Technology and Engineering Solutions of Sandia, LLC. | <a href="https://www.sandia.gov/contact_us/index.html">Questions &amp; Comments</a> | <a href="https://www.sandia.gov/general/privacy-security/index.html">Privacy &amp; Security</a></p>
+		<p><a href="http://energy.gov" rel="noopener noreferrer" target="_blank"><img alt="U.S. Department of Energy" longdesc="https://energy.gov" src="https://www.sandia.gov/_common/images/doe_logo_white.png" style="height:37px; width:140px"></a> <a href="http://nnsa.energy.gov/" rel="noopener noreferrer" target="_blank"> <img alt="National Nuclear Security Administration" longdesc="http://nnsa.gov" src="https://www.sandia.gov/_common/images/nnsa_logo_white.png" style="height:37px; width:116px"></a></p>
+		<p><a href="https://www.sandia.gov">Sandia National Laboratories</a> is a multimission laboratory managed and operated by National Technology and Engineering Solutions of Sandia, LLC., a wholly owned subsidiary of Honeywell International, Inc., for the U.S. Department of Energy’s National Nuclear Security Administration under contract DE-NA-0003525.</p>
+	  </div>	  	  
+	  
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,1165 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Advanced Methods &mdash; dakota 6.19.0 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/dakota_theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/sandiaheaderlite.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Advanced Model Recursions" href="advancedmodelrecursions.html" />
+    <link rel="prev" title="Advanced Topics" href="../advanced.html" /> 
+  
+  <meta name="sandia.approval_type" content="formal"/>
+  <meta property="sandia.approved" content="SAND2023-13392 O"/>
+  <meta name="description" content="The Dakota project delivers both state-of-the-art research and robust, usable software for optimization and UQ."/>
+  <meta name="keywords" content="Dakota, optimization, UQ, uncertainty quantification, parametric analysis, design exploration, model calibration, risk analysis"/>
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> dakota
+            <img src="../../_static/dakota_Arrow_Name_Tag_horiz_transparent.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                6.19
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../setupdakota.html">Getting Started</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../usingdakota.html">Using Dakota</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../introduction/aboutdakota.html">About Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../introduction/helloworld.html">Dakota Beginner’s Tutorial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples.html">Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../introduction/couplingtosimulations.html">Coupling Dakota to a Simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../inputfile.html">Dakota Input File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../running.html">Running Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../output.html">Dakota Output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../studytypes.html">Study Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../topics.html">Topics</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../advanced.html">Advanced Topics</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Advanced Methods</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#hybrid-minimization">Hybrid Minimization</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#multistart-local-minimization">Multistart Local Minimization</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pareto-optimization">Pareto Optimization</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mixed-integer-nonlinear-programming-minlp">Mixed Integer Nonlinear Programming (MINLP)</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#example-minlp-problem">Example MINLP Problem</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#surrogate-based-minimization">Surrogate-Based Minimization</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#surrogate-based-local-minimization">Surrogate-Based Local Minimization</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#sbo-with-data-fits">SBO with Data Fits</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#sbo-with-multifidelity-models">SBO with Multifidelity Models</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#sbo-with-reduced-order-models">SBO with Reduced Order Models</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#surrogate-based-global-minimization">Surrogate-Based Global Minimization</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="advancedmodelrecursions.html">Advanced Model Recursions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="advancedsimulationcodeinterfaces.html">Advanced Simulation Code Interfaces</a></li>
+<li class="toctree-l3"><a class="reference internal" href="parallelcomputing.html">Parallel Computing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="simulationfailurecapturing.html">Simulation Failure Capturing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="activesubspace.html">Active Subspace Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="basisadaptation.html">Basis Adaptation Models</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../theory.html">Dakota Theory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference.html">Keyword Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../usingdakotagui/usingdakotagui.html">Using Dakota GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../externaltools/externaltools.html">Using External Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../compiling/compiling.html">Compiling Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developingdakota/developingdakota.html">Developing Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../misc/misc.html">Miscellaneous</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">dakota</a>
+      </nav>
+
+	  <!-- SNL Lite header -->
+	  <div class="snlheader-subsite--wrapper-default">
+		<snlheader class="snlheader-subsite" role="snlbanner">
+		  <div class="wrapper">
+			<a href="https://www.sandia.gov/index.html">
+			  <div class="logo-transparent"><p class="logo">Sandia National Laboratories</p></div>
+			</a>
+			<div class="nav-top">
+			  <a class="visuallyhidden" name="mainnav"></a>
+			  <div aria-label="main navigation" class="core-nav-transparent core-nav-transparent--visible" role="navigation">
+				<ul role="navigation" class="secondary-links">
+				  <li id="search-text-link">
+					<a aria-label="Search" href="https://www.sandia.gov/search/">Search Sandia.gov</a>
+				  </li>
+				  <li id="directory-text-link">
+					<a href="https://www.sandia.gov/directory.html" aria-expanded="false" aria-label="Site Directory">All Sandia Websites</a>
+				  </li>
+				</ul>
+			  </div>
+			</div>
+		  </div> 
+		</snlheader>
+	  </div>	  
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../usingdakota.html">Using Dakota</a> &raquo;</li>
+          <li><a href="../advanced.html">Advanced Topics</a> &raquo;</li>
+      <li>Advanced Methods</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/usingdakota/advanced/advancedmethods.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="advanced-methods">
+<span id="adv-meth"></span><h1>Advanced Methods<a class="headerlink" href="#advanced-methods" title="Permalink to this headline"></a></h1>
+<section id="overview">
+<span id="adv-meth-overview"></span><h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline"></a></h2>
+<p>A variety of “meta-algorithm” capabilities have been developed in order
+to provide a mechanism for employing individual iterators and models as
+reusable components within higher-level solution approaches. This
+capability allows the use of existing iterative algorithm and
+computational model software components as building blocks to accomplish
+more sophisticated studies, such as hybrid, multistart, Pareto, or
+surrogate-based minimization. Further multi-component capabilities are
+enabled by the model recursion capabilities described in the page <a class="reference internal" href="../inputfile/model.html#models-main"><span class="std std-ref">Models</span></a> with specific examples in the page <a class="reference internal" href="advancedmodelrecursions.html#adv-models"><span class="std std-ref">Advanced Models</span></a>.</p>
+</section>
+<section id="hybrid-minimization">
+<span id="adv-meth-hybrid"></span><h2>Hybrid Minimization<a class="headerlink" href="#hybrid-minimization" title="Permalink to this headline"></a></h2>
+<p>In the hybrid minimization method (keyword: <code class="docutils literal notranslate"><span class="pre">hybrid</span></code>), a sequence of
+minimization methods are applied to find an optimal design point. The
+goal of this method is to exploit the strengths of different
+minimization algorithms through different stages of the minimization
+process. Global/local optimization hybrids (e.g., genetic algorithms
+combined with nonlinear programming) are a common example in which the
+desire for a global optimum is balanced with the need for efficient
+navigation to a local optimum. An important related feature is that the
+sequence of minimization algorithms can employ models of varying
+fidelity. In the global/local case, for example, it would often be
+advantageous to use a low-fidelity model in the global search phase,
+followed by use of a more refined model in the local search phase.</p>
+<p>The specification for hybrid minimization involves a list of method
+identifier strings, and each of the corresponding method specifications
+has the responsibility for identifying the model specification (which
+may in turn identify variables, interface, and responses specifications)
+that each method will use (see the Dakota Reference
+Manual <a class="reference internal" href="../reference.html#keyword-reference-area"><span class="std std-ref">Keyword Reference</span></a> and the example discussed below).
+Currently, only the sequential hybrid approach is available. The
+<code class="docutils literal notranslate"><span class="pre">embedded</span></code> and <code class="docutils literal notranslate"><span class="pre">collaborative</span></code> approaches are not fully functional
+at this time.</p>
+<p>In the <code class="docutils literal notranslate"><span class="pre">sequential</span></code> hybrid minimization approach, a sequence of
+minimization methods is invoked in the order specified in the Dakota
+input file. After each method completes execution, the best solution or
+solutions from that method are used as the starting point(s) for the
+following method. The number of solutions transferred is defined by how
+many that method can generate and how many the user specifies with the
+individual method keyword <code class="docutils literal notranslate"><span class="pre">final_solutions</span></code>. For example, currently
+only a few of the global optimization methods such as genetic algorithms
+(e.g. <code class="docutils literal notranslate"><span class="pre">moga</span></code> and <code class="docutils literal notranslate"><span class="pre">coliny_ea</span></code>) and sampling methods return multiple
+solutions. In this case, the specified number of solutions from the
+previous method will be used to initialize the subsequent method. If the
+subsequent method cannot accept multiple input points (currently only a
+few methods such as the genetic algorithms in JEGA allow multiple input
+points), then multiple instances of the subsequent method are generated,
+each one initialized by one of the optimal solutions from the previous
+method. For example, if LHS sampling were run as the first method and
+the number of final solutions was 10 and the DOT conjugate gradient was
+the second method, there would be 10 instances of <code class="docutils literal notranslate"><span class="pre">dot_frcg</span></code> started,
+each with a separate LHS sample solution as its initial point. Method
+switching is governed by the separate convergence controls of each
+method; that is, <em>each method is allowed to run to its own internal
+definition of completion without interference</em>. Individual method
+completion may be determined by convergence criteria (e.g.,
+<code class="docutils literal notranslate"><span class="pre">convergence_tolerance</span></code>) or iteration limits (e.g.,
+<code class="docutils literal notranslate"><span class="pre">max_iterations</span></code>).</p>
+<p><a class="reference internal" href="#adv-meth-figure01"><span class="std std-numref">Listing 55</span></a> shows a Dakota input file that specifies a
+sequential hybrid optimization method to solve the “textbook”
+optimization test problem. The <code class="docutils literal notranslate"><span class="pre">textbook_hybrid_strat.in</span></code> file
+provided in <code class="docutils literal notranslate"><span class="pre">dakota/share/dakota/examples/users</span></code> starts with a
+<code class="docutils literal notranslate"><span class="pre">coliny_ea</span></code> solution which feeds its best point into a
+<code class="docutils literal notranslate"><span class="pre">coliny_pattern_search</span></code> optimization which feeds its best point into
+<code class="docutils literal notranslate"><span class="pre">optpp_newton</span></code>. While this approach is overkill for such a simple
+problem, it is useful for demonstrating the coordination between
+multiple sub-methods in the hybrid minimization algorithm.</p>
+<p>The three optimization methods are identified using the <code class="docutils literal notranslate"><span class="pre">method_list</span></code>
+specification in the hybrid method section of the input file. The
+identifier strings listed in the specification are ‘<code class="docutils literal notranslate"><span class="pre">GA</span></code>’ for genetic
+algorithm, ‘<code class="docutils literal notranslate"><span class="pre">PS</span></code>’ for pattern search, and ‘<code class="docutils literal notranslate"><span class="pre">NLP</span></code>’ for nonlinear
+programming. Following the hybrid method keyword block are the three
+corresponding method keyword blocks. Note that each method has a tag
+following the <code class="docutils literal notranslate"><span class="pre">id_method</span></code> keyword that corresponds to one of the
+method names listed in the hybrid method keyword block. By following the
+identifier tags from <code class="docutils literal notranslate"><span class="pre">method</span></code> to <code class="docutils literal notranslate"><span class="pre">model</span></code> and from <code class="docutils literal notranslate"><span class="pre">model</span></code> to
+<code class="docutils literal notranslate"><span class="pre">variables</span></code>, <code class="docutils literal notranslate"><span class="pre">interface</span></code>, and <code class="docutils literal notranslate"><span class="pre">responses</span></code>, it is easy to see the
+specification linkages for this problem. The GA optimizer runs first and
+uses model ‘<code class="docutils literal notranslate"><span class="pre">M1</span></code>’ which includes variables ‘<code class="docutils literal notranslate"><span class="pre">V1</span></code>’, interface
+‘<code class="docutils literal notranslate"><span class="pre">I1</span></code>’, and responses ‘<code class="docutils literal notranslate"><span class="pre">R1</span></code>’. Note that in the specification,
+<code class="docutils literal notranslate"><span class="pre">final_solutions=1</span></code>, so only one (the best) solution is returned from
+the GA. However, it is possible to change this to <code class="docutils literal notranslate"><span class="pre">final_solutions=5</span></code>
+and get five solutions passed from the GA to the Pattern Search (for
+example). Once the GA is complete, the PS optimizer starts from the best
+GA result and again uses model ‘<code class="docutils literal notranslate"><span class="pre">M1</span></code>’. Since both GA and PS are
+nongradient-based optimization methods, there is no need for gradient or
+Hessian information in the ‘<code class="docutils literal notranslate"><span class="pre">R1</span></code>’ response keyword block. The NLP
+optimizer runs last, using the best result from the PS method as its
+starting point. It uses model ‘<code class="docutils literal notranslate"><span class="pre">M2</span></code>’ which includes the same ‘<code class="docutils literal notranslate"><span class="pre">V1</span></code>’
+and ‘<code class="docutils literal notranslate"><span class="pre">I1</span></code>’ keyword blocks, but uses the responses keyword block
+‘<code class="docutils literal notranslate"><span class="pre">R2</span></code>’ since the full Newton optimizer used in this example
+(<code class="docutils literal notranslate"><span class="pre">optpp_newton</span></code>) needs analytic gradient and Hessian data to perform
+its search.</p>
+<div class="literal-block-wrapper docutils container" id="adv-meth-figure01">
+<div class="code-block-caption"><span class="caption-number">Listing 55 </span><span class="caption-text">Dakota input file for a sequential hybrid optimization
+method – see
+<code class="docutils literal notranslate"><span class="pre">dakota/share/dakota/examples/users/textbook_hybrid_strat.in</span></code></span><a class="headerlink" href="#adv-meth-figure01" title="Permalink to this code"></a></div>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span><span class="c"># Dakota Input File: textbook_hybrid_strat.in</span>
+
+<span class="k">environment</span>
+  top_method_pointer = &#39;HS&#39;
+
+<span class="k">method</span>
+  id_method = &#39;HS&#39;
+  hybrid sequential
+    method_pointer_list = &#39;GA&#39; &#39;PS&#39; &#39;NLP&#39;
+
+<span class="k">method</span>
+  id_method = &#39;GA&#39;
+  coliny_ea
+    seed = 1234
+    population_size = 5
+    model_pointer = &#39;M1&#39;
+  final_solutions = 1
+  output verbose
+
+<span class="k">method</span>
+  id_method = &#39;PS&#39;
+  coliny_pattern_search
+    stochastic
+    initial_delta = 0.1
+    seed = 1234
+    variable_tolerance = 1e-4
+  solution_target = 1.e-10
+  exploratory_moves
+    basic_pattern
+  model_pointer = &#39;M1&#39;
+  output verbose
+
+<span class="k">method</span>
+  id_method = &#39;NLP&#39;
+  optpp_newton
+    gradient_tolerance = 1.e-12
+    convergence_tolerance = 1.e-15
+    model_pointer = &#39;M2&#39;
+  output verbose
+
+<span class="k">model</span>
+  id_model = &#39;M1&#39;
+  single
+    interface_pointer = &#39;I1&#39;
+  variables_pointer = &#39;V1&#39;
+  responses_pointer = &#39;R1&#39;
+
+<span class="k">model</span>
+  id_model = &#39;M2&#39;
+  single
+    interface_pointer = &#39;I1&#39;
+  variables_pointer = &#39;V1&#39;
+  responses_pointer = &#39;R2&#39;
+
+<span class="k">variables</span>
+  id_variables = &#39;V1&#39;
+  continuous_design = 2
+    initial_point    0.6    0.7
+    upper_bounds     5.8    2.9
+    lower_bounds     0.5   -2.9
+    descriptors      &#39;x1&#39;   &#39;x2&#39;
+
+<span class="k">interface</span>
+  id_interface = &#39;I1&#39;
+  analysis_drivers =  &#39;text_book&#39;
+    direct
+
+<span class="k">responses</span>
+  id_responses = &#39;R1&#39;
+  objective_functions = 1
+  no_gradients
+  no_hessians
+
+<span class="k">responses</span>
+  id_responses = &#39;R2&#39;
+  objective_functions = 1
+  analytic_gradients
+  analytic_hessians
+</pre></div>
+</div>
+</div>
+</section>
+<section id="multistart-local-minimization">
+<span id="adv-meth-multistart"></span><h2>Multistart Local Minimization<a class="headerlink" href="#multistart-local-minimization" title="Permalink to this headline"></a></h2>
+<p>A simple, heuristic, global minimization technique is to use many local
+minimization runs, each of which is started from a different initial
+point in the parameter space. This is known as multistart local
+minimization. This is an attractive method in situations where multiple
+local optima are known or expected to exist in the parameter space.
+However, there is no theoretical guarantee that the global optimum will
+be found. This approach combines the efficiency of local minimization
+methods with a user-specified global stratification (using a specified
+<code class="docutils literal notranslate"><span class="pre">starting_points</span></code> list, a number of specified <code class="docutils literal notranslate"><span class="pre">random_starts</span></code>, or
+both; see the Dakota Reference Manual <a class="reference internal" href="../reference.html#keyword-reference-area"><span class="std std-ref">Keyword Reference</span></a> for
+additional specification details). Since solutions for different
+starting points are independent, parallel computing may be used to
+concurrently run the local minimizations.</p>
+<p>An example input file for multistart local optimization on the
+“quasi_sine” test function (see <code class="docutils literal notranslate"><span class="pre">quasi_sine_fcn.C</span></code> in
+<code class="docutils literal notranslate"><span class="pre">dakota_source/test</span></code>) is shown in
+<a class="reference internal" href="#adv-meth-figure02"><span class="std std-numref">Listing 56</span></a>. The method keyword
+block in the input file contains the keyword <code class="docutils literal notranslate"><span class="pre">multi_start</span></code>, along with
+the set of starting points (3 random and 5 listed) that will be used for
+the optimization runs. The other keyword blocks in the input file are
+similar to what would be used in a single optimization run.</p>
+<div class="literal-block-wrapper docutils container" id="adv-meth-figure02">
+<div class="code-block-caption"><span class="caption-number">Listing 56 </span><span class="caption-text">Dakota input file for a multistart local optimization
+method – see
+<code class="docutils literal notranslate"><span class="pre">dakota/share/dakota/examples/users/qsf_multistart_strat.in</span></code></span><a class="headerlink" href="#adv-meth-figure02" title="Permalink to this code"></a></div>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span><span class="c"># Dakota Input File: qsf_multistart_strat.in</span>
+
+<span class="k">environment</span>
+  top_method_pointer = &#39;MS&#39;
+
+<span class="k">method</span>
+  id_method = &#39;MS&#39;
+  multi_start
+    method_pointer = &#39;NLP&#39;
+    random_starts = 3 seed = 123
+    starting_points = -0.8  -0.8
+                      -0.8   0.8
+                       0.8  -0.8
+                       0.8   0.8
+                       0.0   0.0
+
+<span class="k">method</span>
+  id_method = &#39;NLP&#39;
+<span class="c">## (DOT requires a software license; if not available, try</span>
+<span class="c">## conmin_mfd or optpp_q_newton instead)</span>
+  dot_bfgs
+
+<span class="k">variables</span>
+  continuous_design = 2
+    lower_bounds    -1.0     -1.0
+    upper_bounds     1.0      1.0
+    descriptors      &#39;x1&#39;     &#39;x2&#39;
+
+<span class="k">interface</span>
+  analysis_drivers = &#39;quasi_sine_fcn&#39;
+    fork #asynchronous
+
+<span class="k">responses</span>
+  objective_functions = 1
+  analytic_gradients
+  no_hessians
+</pre></div>
+</div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">quasi_sine</span></code> test function has multiple local minima, but there is
+an overall trend in the function that tends toward the global minimum at
+<span class="math notranslate nohighlight">\((x1,x2)=(0.177,0.177)\)</span>. See <span id="id1">[<a class="reference internal" href="../../misc/bibliography.html#id119" title="A. A. Giunta and M. S. Eldred. Implementation of a trust region model management strategy in the DAKOTA optimization toolkit. In Proc. 8th AIAA/USAF/NASA/ISSMO Symposium on Multidisciplinary Analysis and Optimization, number AIAA-2000-4935. Long Beach, CA, September 6–8, 2000.">GE00</a>]</span> for more
+information on this test function.
+<a class="reference internal" href="#adv-meth-figure03"><span class="std std-numref">Listing 57</span></a> shows the results
+summary for the eight local optimizations performed. From the five
+specified starting points and the 3 random starting points (as
+identified by the <code class="docutils literal notranslate"><span class="pre">x1</span></code>, <code class="docutils literal notranslate"><span class="pre">x2</span></code> headers), the eight local optima (as
+identified by the <code class="docutils literal notranslate"><span class="pre">x1*</span></code>, <code class="docutils literal notranslate"><span class="pre">x2*</span></code> headers) are all different and only
+one of the local optimizations finds the global minimum.</p>
+<div class="literal-block-wrapper docutils container" id="adv-meth-figure03">
+<div class="code-block-caption"><span class="caption-number">Listing 57 </span><span class="caption-text">Dakota results summary for a multistart local optimization method.</span><a class="headerlink" href="#adv-meth-figure03" title="Permalink to this code"></a></div>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>   &lt;&lt;&lt;&lt;&lt; Results summary:
+      set_id             x1             x2            x1*            x2*         obj_fn
+           1           -0.8           -0.8  -0.8543728666  -0.8543728666   0.5584096919
+           2           -0.8            0.8  -0.9998398719    0.177092822    0.291406596
+           3            0.8           -0.8    0.177092822  -0.9998398719    0.291406596
+           4            0.8            0.8   0.1770928217   0.1770928217   0.0602471946
+           5              0              0  0.03572926375  0.03572926375  0.08730499239
+           6  -0.7767971993  0.01810943539  -0.7024118387  0.03572951143   0.3165522387
+           7  -0.3291571008  -0.7697378755   0.3167607374  -0.4009188363   0.2471403213
+           8   0.8704730469   0.7720679005    0.177092899   0.3167611757  0.08256082751
+</pre></div>
+</div>
+</div>
+</section>
+<section id="pareto-optimization">
+<span id="adv-meth-pareto"></span><h2>Pareto Optimization<a class="headerlink" href="#pareto-optimization" title="Permalink to this headline"></a></h2>
+<p>The Pareto optimization method (keyword: <code class="docutils literal notranslate"><span class="pre">pareto_set</span></code> ) is one of three
+multiobjective optimization capabilities discussed in
+Section <a class="reference internal" href="../studytypes/optimization.html#opt-additional-multiobjective"><span class="std std-ref">Multiobjective Optimization</span></a>.
+In the Pareto optimization method, multiple sets of multiobjective
+weightings are evaluated. The user can specify these weighting sets in
+the method keyword block using a list, a number of , or both (see the
+Dakota Reference Manual <a class="reference internal" href="../reference.html#keyword-reference-area"><span class="std std-ref">Keyword Reference</span></a> for additional
+specification details).</p>
+<p>Dakota performs one multiobjective optimization problem for each set of
+multiobjective weights. The collection of computed optimal solutions
+form a Pareto set, which can be useful in making trade-off decisions in
+engineering design. Since solutions for different multiobjective weights
+are independent, parallel computing may be used to concurrently execute
+the multiobjective optimization problems.</p>
+<p><a class="reference internal" href="#adv-meth-figure05"><span class="std std-numref">Listing 59</span></a> shows the results
+summary for the Pareto-set optimization method. For the four
+multiobjective weighting sets (as identified by the <code class="docutils literal notranslate"><span class="pre">w1</span></code>, <code class="docutils literal notranslate"><span class="pre">w2</span></code>,
+<code class="docutils literal notranslate"><span class="pre">w3</span></code> headers), the local optima (as identified by the <code class="docutils literal notranslate"><span class="pre">x1</span></code>, <code class="docutils literal notranslate"><span class="pre">x2</span></code>
+headers) are all different and correspond to individual objective
+function values of (<span class="math notranslate nohighlight">\(f_1,f_2,f_3\)</span>) = (0.0,0.5,0.5),
+(13.1,-1.2,8.16), (532.,33.6,-2.9), and (0.125,0.0,0.0) (note: the
+composite objective function is tabulated under the <code class="docutils literal notranslate"><span class="pre">obj_fn</span></code> header).
+The first three solutions reflect exclusive optimization of each of the
+individual objective functions in turn, whereas the final solution
+reflects a balanced weighting and the lowest sum of the three
+objectives. Plotting these (<span class="math notranslate nohighlight">\(f_1,f_2,f_3\)</span>) triplets on a
+3-dimensional plot results in a Pareto surface (not shown), which is
+useful for visualizing the trade-offs in the competing objectives.</p>
+<div class="literal-block-wrapper docutils container" id="adv-meth-figure04">
+<div class="code-block-caption"><span class="caption-number">Listing 58 </span><span class="caption-text">Dakota input file for the Pareto optimization method –
+see
+<code class="docutils literal notranslate"><span class="pre">dakota/share/dakota/examples/users/textbook_pareto_strat.in</span></code></span><a class="headerlink" href="#adv-meth-figure04" title="Permalink to this code"></a></div>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span><span class="c"># Dakota Input File: textbook_pareto_strat.in</span>
+
+<span class="k">environment</span>
+  top_method_pointer = &#39;PS&#39;
+
+<span class="k">method</span>
+  id_method = &#39;PS&#39;
+  pareto_set
+    method_pointer = &#39;NLP&#39;
+    weight_sets =
+      1.0    0.0    0.0
+      0.0    1.0    0.0
+      0.0    0.0    1.0
+      0.333  0.333  0.333
+
+<span class="k">method</span>
+  id_method = &#39;NLP&#39;
+<span class="c">## (DOT requires a software license; if not available, try</span>
+<span class="c">## conmin_mfd or optpp_q_newton instead)</span>
+  dot_bfgs
+
+<span class="k">model</span>
+  single
+
+<span class="k">variables</span>
+  continuous_design = 2
+    initial_point     0.9    1.1
+    upper_bounds      5.8    2.9
+    lower_bounds      0.5   -2.9
+    descriptors       &#39;x1&#39;   &#39;x2&#39;
+
+<span class="k">interface</span>
+  analysis_drivers = &#39;text_book&#39;
+    direct
+
+<span class="k">responses</span>
+  objective_functions = 3
+  analytic_gradients
+  no_hessians
+</pre></div>
+</div>
+</div>
+<div class="literal-block-wrapper docutils container" id="adv-meth-figure05">
+<div class="code-block-caption"><span class="caption-number">Listing 59 </span><span class="caption-text">Dakota results summary for the Pareto-set optimization method.</span><a class="headerlink" href="#adv-meth-figure05" title="Permalink to this code"></a></div>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>   &lt;&lt;&lt;&lt;&lt; Results summary:
+      set_id             w1             w2             w3             x1             x2         obj_fn
+           1              1              0              0   0.9996554048    0.997046351 7.612301561e-11
+           2              0              1              0            0.5            2.9           -1.2
+           3              0              0              1            5.8 1.12747589e-11           -2.9
+           4          0.333          0.333          0.333            0.5   0.5000000041       0.041625
+</pre></div>
+</div>
+</div>
+</section>
+<section id="mixed-integer-nonlinear-programming-minlp">
+<span id="adv-meth-minlp"></span><h2>Mixed Integer Nonlinear Programming (MINLP)<a class="headerlink" href="#mixed-integer-nonlinear-programming-minlp" title="Permalink to this headline"></a></h2>
+<p>Many nonlinear optimization problems involve a combination of discrete
+and continuous variables. These are known as mixed integer nonlinear
+programming (MINLP) problems. A typical MINLP optimization problem is
+formulated as follows:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+  \hbox{minimize:} &amp; &amp; f(\mathbf{x,d})\nonumber\\
+  \hbox{subject to:} &amp; &amp; \mathbf{g}_{L} \leq \mathbf{g(x,d)}
+    \leq \mathbf{g}_{U}\nonumber\\
+  &amp; &amp; \mathbf{h(x,d)}=\mathbf{h}_{t}\label{adv_meth:equation01}\\
+  &amp; &amp; \mathbf{x}_{L} \leq \mathbf{x} \leq \mathbf{x}_{U}\nonumber\\
+  &amp; &amp; \mathbf{d} \in \{-2,-1,0,1,2\}\nonumber\end{aligned}\end{split}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\mathbf{d}\)</span> is a vector whose elements are integer values.
+In situations where the discrete variables can be temporarily relaxed
+(i.e., noncategorical discrete variables, see Section
+<a class="reference internal" href="../inputfile/variables.html#variables-design-ddv"><span class="std std-ref">Discrete Design Variables</span></a>, the
+branch-and-bound algorithm can be applied. Categorical variables (e.g.,
+true/false variables, feature counts, etc.) that are not relaxable
+cannot be used with the branch and bound method. During the branch and
+bound process, the discrete variables are treated as continuous
+variables and the integrality conditions on these variables are
+incrementally enforced through a sequence of optimization subproblems.
+By the end of this process, an optimal solution that is feasible with
+respect to the integrality conditions is computed.</p>
+<p>Dakota’s branch and bound method (keyword: <code class="docutils literal notranslate"><span class="pre">branch_and_bound</span></code>) can
+solve optimization problems having either discrete or mixed
+continuous/discrete variables. This method uses the parallel
+branch-and-bound algorithm from the PEBBL software
+package <span id="id2">[<a class="reference internal" href="../../misc/bibliography.html#id67" title="J. Eckstein, C. A. Phillips, and W. E. Hart. PEBBL 1.0 user guide. Technical Report, N/A, October 2009. \url http://www.researchgate.net/publication/266173679_PEBBL_1.0_User_Guide.">EPH09</a>]</span> to generate a series of optimization
+subproblems (“branches”). These subproblems are solved as continuous
+variable problems using any of Dakota’s nonlinear optimization
+algorithms (e.g., DOT, NPSOL). When a solution to a branch is feasible
+with respect to the integrality constraints, it provides an upper bound
+on the optimal objective function, which can be used to prune branches
+with higher objective functions that are not yet feasible. Since
+solutions for different branches are independent, parallel computing may
+be used to concurrently execute the optimization subproblems.</p>
+<p>PEBBL, by itself, targets the solution of mixed integer linear
+programming (MILP) problems, and through coupling with Dakota’s
+nonlinear optimizers, is extended to solution of MINLP problems. In the
+case of MILP problems, the upper bound obtained with a feasible solution
+is an exact bound and the branch and bound process is provably
+convergent to the global minimum. For nonlinear problems which may
+exhibit nonconvexity or multimodality, the process is heuristic in
+general, since there may be good solutions that are missed during the
+solution of a particular branch. However, the process still computes a
+series of locally optimal solutions, and is therefore a natural
+extension of the results from local optimization techniques for
+continuous domains. Only with rigorous global optimization of each
+branch can a global minimum be guaranteed when performing branch and
+bound on nonlinear problems of unknown structure.</p>
+<p>In cases where there are only a few discrete variables and when the
+discrete values are drawn from a small set, then it may be reasonable to
+perform a separate optimization problem for all of the possible
+combinations of the discrete variables. However, this brute force
+approach becomes computationally intractable if these conditions are not
+met. The branch-and-bound algorithm will generally require solution of
+fewer subproblems than the brute force method, although it will still be
+significantly more expensive than solving a purely continuous design
+problem.</p>
+<section id="example-minlp-problem">
+<span id="adv-meth-minlp-example"></span><h3>Example MINLP Problem<a class="headerlink" href="#example-minlp-problem" title="Permalink to this headline"></a></h3>
+<p>As an example, consider the following MINLP
+problem <span id="id3">[<a class="reference internal" href="../../misc/bibliography.html#id76" title="M. S. Eldred and B. D. Schimel. Extended parallelism models for optimization on massively parallel computers. In Proc. 3rd World Congress of Structural and Multidisciplinary Optimization (WCSMO-3), number 16-POM-2. Amherst, NY, May 17–21 1999.">ES99</a>]</span>:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+  \hbox{minimize:} &amp; &amp;
+  f(\mathbf{x})=\sum_{i=1}^{6}(x_{i}-1.4)^{4}\nonumber\\
+  &amp; &amp; g_{1}=x_{1}^{2}-\frac{x_{2}}{2} \leq 0\nonumber\\
+  &amp; &amp; g_{2}=x_{2}^{2}-\frac{x_{1}}{2} \leq 0\label{adv_meth:equation02}\\
+  &amp; &amp; -10 \leq x_{1},x_{2},x_{3},x_{4} \leq 10\nonumber\\
+  &amp; &amp; x_{5},x_{6} \in \{0,1,2,3,4\}\nonumber\end{aligned}\end{split}\]</div>
+<p>This problem is a variant of the textbook test problem described in
+Section <a class="reference internal" href="../examples/additionalexamples.html#additional-textbook"><span class="std std-ref">Additional Examples Textbook</span></a>. In addition to
+the introduction of two integer variables, a modified value of
+<span class="math notranslate nohighlight">\(1.4\)</span> is used inside the quartic sum to render the continuous
+solution a non-integral solution.</p>
+<p>Figure <a class="reference external" href="#adv_meth:figure07">45</a> shows the sequence of branches
+generated for this problem. The first optimization subproblem relaxes
+the integrality constraint on parameters <span class="math notranslate nohighlight">\(x_{5}\)</span> and
+<span class="math notranslate nohighlight">\(x_{6}\)</span>, so that <span class="math notranslate nohighlight">\(0
+\leq x_{5} \leq 4\)</span> and <span class="math notranslate nohighlight">\(0 \leq x_{6} \leq 4\)</span>. The values for
+<span class="math notranslate nohighlight">\(x_{5}\)</span> and <span class="math notranslate nohighlight">\(x_{6}\)</span> at the solution to this first subproblem
+are <span class="math notranslate nohighlight">\(x_{5}=x_{6}=1.4\)</span>. Since <span class="math notranslate nohighlight">\(x_{5}\)</span> and <span class="math notranslate nohighlight">\(x_{6}\)</span> must
+be integers, the next step in the solution process “branches” on
+parameter <span class="math notranslate nohighlight">\(x_{5}\)</span> to create two new optimization subproblems; one
+with <span class="math notranslate nohighlight">\(0 \leq x_{5} \leq
+1\)</span> and the other with <span class="math notranslate nohighlight">\(2 \leq x_{5} \leq 4\)</span>. Note that, at this
+first branching, the bounds on <span class="math notranslate nohighlight">\(x_{6}\)</span> are still
+<span class="math notranslate nohighlight">\(0 \leq x_{6} \leq 4\)</span>. Next, the two new optimization subproblems
+are solved. Since they are independent, they can be performed in
+parallel. The branch-and-bound process continues, operating on both
+<span class="math notranslate nohighlight">\(x_{5}\)</span> and <span class="math notranslate nohighlight">\(x_{6}\)</span> , until a optimization subproblem is
+solved where <span class="math notranslate nohighlight">\(x_{5}\)</span> and <span class="math notranslate nohighlight">\(x_{6}\)</span> are integer-valued. At the
+solution to this problem, the optimal values for <span class="math notranslate nohighlight">\(x_{5}\)</span> and
+<span class="math notranslate nohighlight">\(x_{6}\)</span> are <span class="math notranslate nohighlight">\(x_{5}=x_{6}=1\)</span>.</p>
+<figure class="align-default" id="adv-meth-figure07">
+<img alt="Branching history for example MINLP optimization problem." src="../../_images/branch_history.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 53 </span><span class="caption-text">Branching history for example MINLP optimization problem.</span><a class="headerlink" href="#adv-meth-figure07" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<p>In this example problem, the branch-and-bound algorithm executes as few
+as five and no more than seven optimization subproblems to reach the
+solution. For comparison, the brute force approach would require 25
+optimization problems to be solved (i.e., five possible values for each
+of <span class="math notranslate nohighlight">\(x_{5}\)</span> and <span class="math notranslate nohighlight">\(x_{6}\)</span> ).</p>
+<p>In the example given above, the discrete variables are integer-valued.
+In some cases, the discrete variables may be real-valued, such as
+<span class="math notranslate nohighlight">\(x
+\in \{0.0,0.5,1.0,1.5,2.0\}\)</span>. The branch-and-bound algorithm is
+restricted to work with integer values. Therefore, it is up to the user
+to perform a transformation between the discrete integer values from
+Dakota and the discrete real values that are passed to the simulation
+code (see Section:ref:<cite>Discrete Design Variables &lt;variables:design:ddv&gt;</cite>).
+When integrality is not being relaxed, a common mapping is to use the
+integer value from Dakota as the index into a vector of discrete real
+values. However, when integrality is relaxed, additional logic for
+interpolating between the discrete real values is needed.</p>
+</section>
+</section>
+<section id="surrogate-based-minimization">
+<span id="adv-meth-sbm"></span><h2>Surrogate-Based Minimization<a class="headerlink" href="#surrogate-based-minimization" title="Permalink to this headline"></a></h2>
+<p>Surrogate models approximate an original, high fidelity “truth” model,
+typically at reduced computational cost. In Dakota, several surrogate
+model selections are possible, which are categorized as data fits,
+multifidelity models, and reduced-order models, as described in
+Section <a class="reference internal" href="../inputfile/model.html#models-surrogate"><span class="std std-ref">Models Surrogate</span></a>. In the context of
+minimization (optimization or calibration), surrogate models can speed
+convergence by reducing function evaluation cost or smoothing noisy
+response functions. Three categories of surrogate-based minimization are
+discussed in this chapter:</p>
+<ul class="simple">
+<li><p>Trust region-managed surrogate-based local minimization, with data
+fit surrogate, multifidelity models, or reduced-order models.</p></li>
+<li><p>Surrogate-based global minimization, where a single surrogate is
+built (and optionally iteratively updated) over the whole design
+space.</p></li>
+<li><p>Efficient global minimization: nongradient-based constrained and
+unconstrained optimization and nonlinear least squares based on
+Gaussian process models, guided by an expected improvement function.</p></li>
+</ul>
+<section id="surrogate-based-local-minimization">
+<span id="adv-meth-sbm-sblm"></span><h3>Surrogate-Based Local Minimization<a class="headerlink" href="#surrogate-based-local-minimization" title="Permalink to this headline"></a></h3>
+<p>In the surrogate-based local minimization method (keyword:
+<code class="docutils literal notranslate"><span class="pre">surrogate_based_local</span></code>) the minimization algorithm operates on a
+surrogate model instead of directly operating on the computationally
+expensive simulation model. The surrogate model can be based on data
+fits, multifidelity models, or reduced-order models, as described in
+Section <a class="reference internal" href="../inputfile/model.html#models-surrogate"><span class="std std-ref">Models Surrogate</span></a>. Since the surrogate
+will generally have a limited range of accuracy, the surrogate-based
+local algorithm periodically checks the accuracy of the surrogate model
+against the original simulation model and adaptively manages the extent
+of the approximate optimization cycles using a trust region approach.</p>
+<p>Refer to the Dakota Reference
+Manual <a class="reference internal" href="../reference.html#keyword-reference-area"><span class="std std-ref">Keyword Reference</span></a> for
+algorithmic guidelines and details on iterate acceptance, merit function formulations,
+convergence assessment, and constraint relaxation.</p>
+<section id="sbo-with-data-fits">
+<span id="adv-meth-sbm-sblm-surface"></span><h4>SBO with Data Fits<a class="headerlink" href="#sbo-with-data-fits" title="Permalink to this headline"></a></h4>
+<p>When performing SBO with local, multipoint, and global data fit
+surrogates, it is necessary to regenerate or update the data fit for
+each new trust region. In the global data fit case, this can mean
+performing a new design of experiments on the original high-fidelity
+model for each trust region, which can effectively limit the approach to
+use on problems with, at most, tens of variables.
+Figure <a class="reference external" href="#fig:sbo_df">46</a> displays this case. However, an important
+benefit of the global sampling is that the global data fits can tame
+poorly-behaved, non-smooth, discontinuous response variations within the
+original model into smooth, differentiable, easily navigable, and easily navigated surrogates.
+This allows SBO with global data fits to extract the relevant global
+design trends from noisy simulation data.</p>
+<figure class="align-default" id="fig-sbo-df">
+<img alt="SBO iteration progression for global data fits." src="../../_images/sbo_df.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 54 </span><span class="caption-text">SBO iteration progression for global data fits.</span><a class="headerlink" href="#fig-sbo-df" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<p>When enforcing local consistency between a global data fit surrogate and
+a high-fidelity model at a point, care must be taken to balance this
+local consistency requirement with the global accuracy of the surrogate.
+In particular, performing a correction on an existing global data fit in
+order to enforce local consistency can skew the data fit and destroy its
+global accuracy. One approach for achieving this balance is to include
+the consistency requirement within the data fit process by constraining
+the global data fit calculation (e.g., using constrained linear least
+squares). This allows the data fit to satisfy the consistency
+requirement while still addressing global accuracy with its remaining
+degrees of freedom. Embedding the consistency within the data fit also
+reduces the sampling requirements. For example, a quadratic polynomial
+normally requires at least <span class="math notranslate nohighlight">\((n+1)(n+2)/2\)</span> samples for <span class="math notranslate nohighlight">\(n\)</span>
+variables to perform the fit. However, with an embedded first-order
+consistency constraint at a single point, the minimum number of samples
+is reduced by <span class="math notranslate nohighlight">\(n+1\)</span> to <span class="math notranslate nohighlight">\((n^2+n)/2\)</span>.</p>
+<p>In the local and multipoint data fit cases, the iteration progression
+will appear as in <a class="reference internal" href="#fig-sbo-mh"><span class="std std-numref">Fig. 55</span></a>. Both cases
+involve a single new evaluation of the original high-fidelity model per
+trust region, with the distinction that multipoint approximations reuse
+information from previous SBO iterates. Like model hierarchy surrogates,
+these techniques scale to larger numbers of design variables. Unlike
+model hierarchy surrogates, they generally do not require surrogate
+corrections, since the matching conditions are embedded in the surrogate
+form (as discussed for the global Taylor series approach above). The
+primary disadvantage to these surrogates is that the region of accuracy
+tends to be smaller than for global data fits and multifidelity
+surrogates, requiring more SBO cycles with smaller trust regions. More
+information on the design of experiments methods is available in <a class="reference internal" href="../studytypes/designofexperiments.html#dace"><span class="std std-ref">Section Dace</span></a>, and the data fit surrogates are described in <a class="reference internal" href="../inputfile/model.html#models-surrogate-datafit"><span class="std std-ref">Section Models Surrogate Datafit</span></a>.</p>
+<p><a class="reference internal" href="#sbm-sblm-rosen"><span class="std std-numref">Listing 60</span></a> shows a Dakota input file
+that implements surrogate-based optimization on Rosenbrock’s function.
+The first method keyword block contains the SBO keyword
+<code class="docutils literal notranslate"><span class="pre">surrogate_based_local</span></code>, plus the commands for specifying the trust
+region size and scaling factors. The optimization portion of SBO, using
+the CONMIN Fletcher-Reeves conjugate gradient method, is specified in
+the following keyword blocks for <code class="docutils literal notranslate"><span class="pre">method</span></code>, <code class="docutils literal notranslate"><span class="pre">model</span></code>, <code class="docutils literal notranslate"><span class="pre">variables</span></code>,
+and <code class="docutils literal notranslate"><span class="pre">responses</span></code>. The model used by the optimization method specifies
+that a global surrogate will be used to map variables into responses (no
+<code class="docutils literal notranslate"><span class="pre">interface</span></code> specification is used by the surrogate model). The global
+surrogate is constructed using a DACE method which is identified with
+the <code class="docutils literal notranslate"><span class="pre">‘SAMPLING’</span></code> identifier. This data sampling portion of SBO is
+specified in the final set of keyword blocks for <code class="docutils literal notranslate"><span class="pre">method</span></code>, <code class="docutils literal notranslate"><span class="pre">model</span></code>,
+<code class="docutils literal notranslate"><span class="pre">interface</span></code>, and <code class="docutils literal notranslate"><span class="pre">responses</span></code> (the earlier <code class="docutils literal notranslate"><span class="pre">variables</span></code>
+specification is reused). This example problem uses the Latin hypercube
+sampling method in the LHS software to select 10 design points in each
+trust region. A single surrogate model is constructed for the objective
+function using a quadratic polynomial. The initial trust region is
+centered at the design point <span class="math notranslate nohighlight">\((x_1,x_2)=(-1.2,1.0)\)</span>, and extends
+<span class="math notranslate nohighlight">\(\pm 0.4\)</span> (10% of the global bounds) from this point in the
+<span class="math notranslate nohighlight">\(x_1\)</span> and <span class="math notranslate nohighlight">\(x_2\)</span> coordinate directions.</p>
+<div class="literal-block-wrapper docutils container" id="sbm-sblm-rosen">
+<div class="code-block-caption"><span class="caption-number">Listing 60 </span><span class="caption-text">Dakota input file for the surrogate-based local
+optimization example – see
+<code class="docutils literal notranslate"><span class="pre">dakota/share/dakota/examples/users/rosen_opt_sbo.in</span></code></span><a class="headerlink" href="#sbm-sblm-rosen" title="Permalink to this code"></a></div>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span><span class="c"># Dakota Input File: rosen_opt_sbo.in</span>
+
+<span class="k">environment</span>
+  tabular_data
+    tabular_data_file = &#39;rosen_opt_sbo.dat&#39;
+  top_method_pointer = &#39;SBLO&#39;
+
+<span class="k">method</span>
+  id_method = &#39;SBLO&#39;
+  surrogate_based_local
+    model_pointer = &#39;SURROGATE&#39;
+    method_pointer = &#39;NLP&#39;
+    max_iterations = 500
+  trust_region
+    initial_size = 0.10
+    minimum_size = 1.0e-6
+    contract_threshold = 0.25
+    expand_threshold   = 0.75
+    contraction_factor = 0.50
+    expansion_factor   = 1.50
+
+<span class="k">method</span>
+  id_method = &#39;NLP&#39;
+  conmin_frcg
+    max_iterations = 50
+    convergence_tolerance = 1e-8
+
+<span class="k">model</span>
+  id_model = &#39;SURROGATE&#39;
+  surrogate global
+    correction additive zeroth_order
+    polynomial quadratic
+    dace_method_pointer = &#39;SAMPLING&#39;
+  responses_pointer = &#39;SURROGATE_RESP&#39;
+
+<span class="k">variables</span>
+  continuous_design = 2
+    initial_point   -1.2  1.0
+    lower_bounds    -2.0 -2.0
+    upper_bounds     2.0  2.0
+    descriptors      &#39;x1&#39; &#39;x2&#39;
+
+<span class="k">responses</span>
+  id_responses = &#39;SURROGATE_RESP&#39;
+  objective_functions = 1
+  numerical_gradients
+    method_source dakota
+    interval_type central
+    fd_step_size = 1.e-6
+  no_hessians
+
+<span class="k">method</span>
+  id_method = &#39;SAMPLING&#39;
+  sampling
+    samples = 10
+    seed = 531
+    sample_type lhs
+    model_pointer = &#39;TRUTH&#39;
+
+<span class="k">model</span>
+  id_model = &#39;TRUTH&#39;
+  single
+    interface_pointer = &#39;TRUE_FN&#39;
+    responses_pointer = &#39;TRUE_RESP&#39;
+
+<span class="k">interface</span>
+  id_interface = &#39;TRUE_FN&#39;
+  analysis_drivers = &#39;rosenbrock&#39;
+    direct
+  deactivate evaluation_cache restart_file
+
+<span class="k">responses</span>
+  id_responses = &#39;TRUE_RESP&#39;
+  objective_functions = 1
+  no_gradients
+  no_hessians
+</pre></div>
+</div>
+</div>
+<p>If this input file is executed in Dakota, it will converge to the
+optimal design point at <span class="math notranslate nohighlight">\((x_{1},x_{2})=(1,1)\)</span> in approximately 800
+function evaluations. While this solution is correct, it is obtained at
+a much higher cost than a traditional gradient-based optimizer (e.g.,
+see the results obtained in <a class="reference internal" href="../examples/gettingstarted.html#examples-gettingstarted-optimization"><span class="std std-ref">Optimization</span></a>.
+This demonstrates that the SBO method with global data fits is not
+really intended for use with smooth continuous optimization problems;
+direct gradient-based optimization can be more efficient for such
+applications. Rather, SBO with global data fits is best-suited for the
+types of problems that occur in engineering design where the response
+quantities may be discontinuous, nonsmooth, or may have multiple local
+optima <span id="id4">[<a class="reference internal" href="../../misc/bibliography.html#id120" title="A. A. Giunta. Use of data sampling, surrogate models, and numerical optimization in engineering design. In Proc. 40th AIAA Aerospace Science Meeting and Exhibit, number AIAA-2002-0538. Reno, NV, January 2002.">Giu02</a>]</span>. In these types of engineering design
+problems, traditional gradient-based optimizers often are ineffective,
+whereas global data fits can extract the global trends of interest
+despite the presence of local nonsmoothness (for an example problem with
+multiple local optima, look in <code class="docutils literal notranslate"><span class="pre">dakota/share/dakota/test</span></code> for the file
+<code class="docutils literal notranslate"><span class="pre">dakota_sbo_sine_fcn.in</span></code>  <span id="id5">[<a class="reference internal" href="../../misc/bibliography.html#id119" title="A. A. Giunta and M. S. Eldred. Implementation of a trust region model management strategy in the DAKOTA optimization toolkit. In Proc. 8th AIAA/USAF/NASA/ISSMO Symposium on Multidisciplinary Analysis and Optimization, number AIAA-2000-4935. Long Beach, CA, September 6–8, 2000.">GE00</a>]</span>).</p>
+<p>The surrogate-based local minimizer is only mathematically guaranteed to
+find a local minimum. However, in practice, SBO can often find the
+global minimum. Due to the random sampling method used within the SBO
+algorithm, the SBO method will solve a given problem a little
+differently each time it is run (unless the user specifies a particular
+random number seed in the dakota input file as is shown in
+<a class="reference internal" href="#sbm-sblm-rosen"><span class="std std-numref">Listing 60</span></a>). Our experience on the
+quasi-sine function mentioned above is that if you run this problem 10
+times with the same starting conditions but different seeds, then you
+will find the global minimum in about 70-80% of the trials. This is good
+performance for what is mathematically only a local optimization method.</p>
+</section>
+<section id="sbo-with-multifidelity-models">
+<span id="adv-meth-sbm-sblm-multifidelity"></span><h4>SBO with Multifidelity Models<a class="headerlink" href="#sbo-with-multifidelity-models" title="Permalink to this headline"></a></h4>
+<p>When performing SBO with model hierarchies, the low-fidelity model is
+normally fixed, requiring only a single high-fidelity evaluation to
+compute a new correction for each new trust region.
+<a class="reference internal" href="#fig-sbo-mh"><span class="std std-numref">Fig. 55</span></a> displays this case. This renders
+the multifidelity SBO technique more scalable to larger numbers of
+design variables since the number of high-fidelity evaluations per
+iteration (assuming no finite differencing for derivatives) is
+independent of the scale of the design problem. However, the ability to
+smooth poorly-behaved response variations in the high-fidelity model is
+lost, and the technique becomes dependent on having a well-behaved
+low-fidelity model <a class="reference internal" href="#footnote-hybridfit" id="id6"><span>[footnote_hybridfit]</span></a>. In addition, the parameterizations for the low
+and high-fidelity models may differ, requiring the use of a mapping
+between these parameterizations. Space mapping, corrected space mapping,
+POD mapping, and hybrid POD space mapping are being explored for this
+purpose <span id="id7">[<a class="reference internal" href="../../misc/bibliography.html#id248" title="T. D. Robinson, M. S. Eldred, K. E. Willcox, and R. Haimes. Strategies for multifidelity optimization with variable dimensional hierarchical models. In Proceedings of the 47th AIAA/ASME/ASCE/AHS/ASC Structures, Structural Dynamics, and Materials Conference (2nd AIAA Multidisciplinary Design Optimization Specialist Conference). Newport, RI, May 1–4, 2006. AIAA Paper 2006-1819.">REWH06</a>, <a class="reference internal" href="../../misc/bibliography.html#id250" title="T. D. Robinson, K. E. Willcox, M. S. Eldred, and R. Haimes. Multifidelity optimization for variable-complexity design. In Proceedings of the 11th AIAA/ISSMO Multidisciplinary Analysis and Optimization Conference. Portsmouth, VA, September 6–8, 2006. AIAA Paper 2006-7114.">RWEH06</a>]</span>.</p>
+<figure class="align-default" id="fig-sbo-mh">
+<img alt="SBO iteration progression for model hierarchies." src="../../_images/sbo_mh.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 55 </span><span class="caption-text">SBO iteration progression for model hierarchies.</span><a class="headerlink" href="#fig-sbo-mh" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<p>When applying corrections to the low-fidelity model, there is no concern
+for balancing global accuracy with the local consistency requirements.
+However, with only a single high-fidelity model evaluation at the center
+of each trust region, it is critical to use the best correction possible
+on the low-fidelity model in order to achieve rapid convergence rates to
+the optimum of the high-fidelity model <span id="id8">[<a class="reference internal" href="../../misc/bibliography.html#id79" title="M. S. Eldred, A. A. Giunta, and S. S. Collis. Second-order corrections for surrogate-based optimization with model hierarchies. In Proceedings of the 10th AIAA/ISSMO Multidisciplinary Analysis and Optimization Conference. Albany, NY,, Aug. 30–Sept. 1, 2004. AIAA Paper 2004-4457.">EGC04</a>]</span>.</p>
+<p>A multifidelity test problem named <code class="docutils literal notranslate"><span class="pre">dakota_sbo_hierarchical.in</span></code>
+is available in <code class="docutils literal notranslate"><span class="pre">dakota/share/dakota/test</span></code> to demonstrate this
+SBO approach. This test problem uses the Rosenbrock function as the high
+fidelity model and a function named “lf_rosenbrock” as the low fidelity
+model. Here, lf_rosenbrock is a variant of the Rosenbrock function
+(see <code class="docutils literal notranslate"><span class="pre">dakota_source/test/lf_rosenbrock.C</span></code>
+for formulation) with the minimum point at
+<span class="math notranslate nohighlight">\((x_1,x_2)=(0.80,0.44)\)</span>, whereas the minimum of the original
+Rosenbrock function is <span class="math notranslate nohighlight">\((x_1,x_2)=(1,1)\)</span>. Multifidelity SBO
+locates the high-fidelity minimum in 11 high fidelity evaluations for
+additive second-order corrections and in 208 high fidelity evaluations
+for additive first-order corrections, but fails for zeroth-order
+additive corrections by converging to the low-fidelity minimum.</p>
+</section>
+<section id="sbo-with-reduced-order-models">
+<span id="adv-meth-sbm-sblm-rom"></span><h4>SBO with Reduced Order Models<a class="headerlink" href="#sbo-with-reduced-order-models" title="Permalink to this headline"></a></h4>
+<p>When performing SBO with reduced-order models (ROMs), the ROM is
+mathematically generated from the high-fidelity model. A critical issue
+in this ROM generation is the ability to capture the effect of
+parametric changes within the ROM. Two approaches to parametric ROM are
+extended ROM (E-ROM) and spanning ROM (S-ROM)
+techniques <span id="id9">[<a class="reference internal" href="../../misc/bibliography.html#id297" title="G. Weickum, M. S. Eldred, and K. Maute. Multi-point extended reduced order modeling for design optimization and uncertainty analysis. In Proceedings of the 47th AIAA/ASME/ASCE/AHS/ASC Structures, Structural Dynamics, and Materials Conference (2nd AIAA Multidisciplinary Design Optimization Specialist Conference). Newport, RI, May 1–4, 2006. AIAA Paper 2006-2145.">WEM06</a>]</span>. Closely related techniques include
+tensor singular value decomposition (SVD)
+methods <span id="id10">[<a class="reference internal" href="../../misc/bibliography.html#id181" title="L. D. Lathauwer, B. D. Moor, and J. Vandewalle. A multilinear singular value decomposition. SIAM Journal on Matrix Analysis and Applications, 21(4):1253–1278, 2000.">LMV00</a>]</span>. In the single-point and multipoint
+E-ROM cases, the SBO iteration can appear as in
+<a class="reference internal" href="#fig-sbo-mh"><span class="std std-numref">Fig. 55</span></a>, whereas in the S-ROM, global E-ROM,
+and tensor SVD cases, the SBO iteration will appear as in
+<a class="reference internal" href="#fig-sbo-df"><span class="std std-numref">Fig. 54</span></a>. In addition to the high-fidelity model
+analysis requirements, procedures for updating the system matrices and
+basis vectors are also required.</p>
+<p>Relative to data fits and multifidelity models, ROMs have some
+attractive advantages. Compared to data fits such as regression-based
+polynomial models, they are more physics-based and would be expected to
+be more predictive (e.g., in extrapolating away from the immediate
+data). Compared to multifidelity models, ROMS may be more practical in
+that they do not require multiple computational models or meshes which
+are not always available. The primary disadvantage is potential
+invasiveness to the simulation code for projecting the system using the
+reduced basis.</p>
+</section>
+</section>
+<section id="surrogate-based-global-minimization">
+<span id="adv-meth-sbm-sbgm"></span><h3>Surrogate-Based Global Minimization<a class="headerlink" href="#surrogate-based-global-minimization" title="Permalink to this headline"></a></h3>
+<p>In surrogate-based global minimization, the optimization method operates
+over the whole domain on a global surrogate constructed over a (static
+or adaptively augmented) set of truth model sample points. There are no
+trust regions and no convergence guarantees for the original
+optimization problem, though optimizers can be reasonably expected to
+converge as expected on the approximate (surrogate) problem.</p>
+<p>In the first, and perhaps most common, global surrogate use case, a user
+wishes to use existing function evaluations or a fixed sample size
+(perhaps based on computational cost and allocation of resources) to
+build a surrogate once and optimize on it. For this single global
+optimization on a surrogate model, the set of surrogate build points is
+determined in advance. Contrast this with trust-region local methods in
+which the number of “true” function evaluations depends on the location
+and size of the trust region, the goodness of the surrogate within it,
+and overall problem characteristics. Any Dakota optimizer can be used
+with a (build-once) global surrogate by specifying the of a global
+surrogate model with the optimizer’s keyword.</p>
+<p>The more tailored, adaptive method supports the second use case:
+globally updating the surrogate during optimization. This method
+iteratively adds points to the sample set used to create the surrogate,
+rebuilds the surrogate, and then performs global optimization on the new
+surrogate. Thus, surrogate-based global optimization can be used in an
+iterative scheme. In one iteration, minimizers of the surrogate model
+are found, and a selected subset of these are passed to the next
+iteration. In the next iteration, these surrogate points are evaluated
+with the “truth” model, and then added to the set of points upon which
+the next surrogate is constructed. This presents a more accurate
+surrogate to the minimizer at each subsequent iteration, presumably
+driving to optimality quickly. Note that a global surrogate is
+constructed using the same bounds in each iteration. This approach has
+no guarantee of convergence.</p>
+<p>The surrogate-based global method was originally designed for MOGA (a
+multi-objective genetic algorithm). Since genetic algorithms often need
+thousands or tens of thousands of points to produce optimal or
+near-optimal solutions, surrogates can help by reducing the necessary
+truth model evaluations. Instead of creating one set of surrogates for
+the individual objectives and running the optimization algorithm on the
+surrogate once, the idea is to select points along the (surrogate)
+Pareto frontier, which can be used to supplement the existing points. In
+this way, one does not need to use many points initially to get a very
+accurate surrogate. The surrogate becomes more accurate as the
+iterations progress.</p>
+<p>Most single objective optimization methods will return only a single
+optimal point. In that case, only one point from the surrogate model
+will be evaluated with the “true” function and added to the pointset
+upon which the surrogate is based. In this case, it will take many
+iterations of the surrogate-based global optimization for the approach
+to converge, and its utility may not be as great as for the
+multi-objective case when multiple optimal solutions are passed from one
+iteration to the next to supplement the surrogate. Note that the user
+has the option of appending the optimal points from the surrogate model
+to the current set of truth points or using the optimal points from the
+surrogate model to replace the optimal set of points from the previous
+iteration. Although appending to the set is the default behavior, at
+this time we strongly recommend using the option <code class="docutils literal notranslate"><span class="pre">replace_points</span></code>
+because it appears to be more accurate and robust.</p>
+<p>When using the surrogate-based global method, we first recommend running
+one optimization on a single surrogate model. That is, set
+<code class="docutils literal notranslate"><span class="pre">max_iterations</span></code> to 1. This will allow one to get a sense of where the
+optima are located and also what surrogate types are the most accurate
+to use for the problem. Note that by fixing the seed of the sample on
+which the surrogate is built, one can take a Dakota input file, change
+the surrogate type, and re-run the problem without any additional
+function evaluations by specifying the use of the dakota restart file
+which will pick up the existing function evaluations, create the new
+surrogate type, and run the optimization on that new surrogate. Also
+note that one can specify that surrogates be built for all primary
+functions and constraints or for only a subset of these functions and
+constraints. This allows one to use a “truth” model directly for some of
+the response functions, perhaps due to them being much less expensive
+than other functions. Finally, a diagnostic threshold can be used to
+stop the method if the surrogate is so poor that it is unlikely to
+provide useful points. If the goodness-of-fit has an R-squared value
+less than 0.5, meaning that less than half the variance of the output
+can be explained or accounted for by the surrogate model, the
+surrogate-based global optimization stops and outputs an error message.
+This is an arbitrary threshold, but generally one would want to have an
+R-squared value as close to 1.0 as possible, and an R-squared value
+below 0.5 indicates a very poor fit.</p>
+<p>For the surrogate-based global method, we initially recommend a small
+number of maximum iterations, such as 3–5, to get a sense of how the
+optimization is evolving as the surrogate gets updated globally. If it
+appears to be changing significantly, then a larger number (used in
+combination with restart) may be needed.</p>
+<p><a class="reference internal" href="#sbm-sbgm-moga"><span class="std std-numref">Listing 61</span></a> shows a Dakota input file
+that implements surrogate-based global optimization on a multi-objective
+test function. The first method keyword block contains the keyword
+<code class="docutils literal notranslate"><span class="pre">surrogate_based_global</span></code>, plus the commands for specifying five as the
+maximum iterations and the option to replace points in the global
+surrogate construction. The method block identified as MOGA specifies a
+multi-objective genetic algorithm optimizer and its controls. The model
+keyword block specifies a surrogate model. In this case, a
+<code class="docutils literal notranslate"><span class="pre">gaussian_process</span></code> model is used as a surrogate. The
+<code class="docutils literal notranslate"><span class="pre">dace_method_pointer</span></code> specifies that the surrogate will be build on
+100 Latin Hypercube samples with a seed = 531. The remainder of the
+input specification deals with the interface to the actual analysis
+driver and the 2 responses being returned as objective functions from
+that driver.</p>
+<div class="literal-block-wrapper docutils container" id="sbm-sbgm-moga">
+<div class="code-block-caption"><span class="caption-number">Listing 61 </span><span class="caption-text">MOGA example – see
+<code class="docutils literal notranslate"><span class="pre">dakota/share/dakota/examples/users/mogatest1_opt_sbo.in</span></code></span><a class="headerlink" href="#sbm-sbgm-moga" title="Permalink to this code"></a></div>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span><span class="c"># Dakota Input File: mogatest1_opt_sbo.in</span>
+
+<span class="k">environment</span>
+  tabular_data
+    tabular_data_file = &#39;mogatest1_opt_sbo.dat&#39;
+  top_method_pointer = &#39;SBGO&#39;
+
+<span class="k">method</span>
+  id_method = &#39;SBGO&#39;
+  surrogate_based_global
+    model_pointer = &#39;SURROGATE&#39;
+    method_pointer = &#39;MOGA&#39;
+    max_iterations = 5
+    replace_points
+  output verbose
+
+<span class="k">method</span>
+  id_method = &#39;MOGA&#39;
+  moga
+        seed = 10983
+    population_size = 300
+    max_function_evaluations = 5000
+    initialization_type unique_random
+    crossover_type shuffle_random
+        num_offspring = 2 num_parents = 2
+        crossover_rate = 0.8
+    mutation_type replace_uniform
+        mutation_rate = 0.1
+    fitness_type domination_count
+    replacement_type below_limit = 6
+        shrinkage_percentage = 0.9
+    niching_type distance 0.05 0.05
+    postprocessor_type
+        orthogonal_distance 0.05 0.05
+    convergence_type metric_tracker
+        percent_change = 0.05 num_generations = 10
+  output silent
+
+<span class="k">model</span>
+    id_model = &#39;SURROGATE&#39;
+    surrogate global
+        dace_method_pointer = &#39;SAMPLING&#39;
+        correction additive zeroth_order
+        gaussian_process dakota
+
+<span class="k">method</span>
+    id_method = &#39;SAMPLING&#39;
+    sampling
+      samples = 100
+      seed = 531
+      sample_type lhs
+      model_pointer = &#39;TRUTH&#39;
+
+<span class="k">model</span>
+    id_model = &#39;TRUTH&#39;
+    single
+      interface_pointer = &#39;TRUE_FN&#39;
+
+<span class="k">variables</span>
+    continuous_design = 3
+        initial_point      0     0     0
+        upper_bounds       4     4     4
+        lower_bounds      -4    -4    -4
+        descriptors      &#39;x1&#39;  &#39;x2&#39;  &#39;x3&#39;
+
+<span class="k">interface</span>
+    id_interface = &#39;TRUE_FN&#39;
+    analysis_drivers = &#39;mogatest1&#39;
+      direct
+
+<span class="k">responses</span>
+    objective_functions = 2
+    no_gradients
+    no_hessians
+</pre></div>
+</div>
+</div>
+<p class="rubric">Footnotes</p>
+<dl class="citation">
+<dt class="label" id="footnote-hybridfit"><span class="brackets"><a class="fn-backref" href="#id6">footnote_hybridfit</a></span></dt>
+<dd><p>It is also possible to use a hybrid data fit/multifidelity approach
+in which a smooth data fit of a noisy low fidelity model is used in
+combination with a high fidelity model</p>
+</dd>
+</dl>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../advanced.html" class="btn btn-neutral float-left" title="Advanced Topics" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="advancedmodelrecursions.html" class="btn btn-neutral float-right" title="Advanced Model Recursions" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <!--
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Sandia National Laboratories.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+  --> 
+
+</footer>
+        </div>
+      </div>
+	  
+	  <div style="background-color: #0f0f0f;color:#fafafa;padding:20px">
+	    <div>
+		  <h2><em>Exceptional service in the national interest</em></h2>
+		</div>
+		<p>© 2023 National Technology and Engineering Solutions of Sandia, LLC. | <a href="https://www.sandia.gov/contact_us/index.html">Questions &amp; Comments</a> | <a href="https://www.sandia.gov/general/privacy-security/index.html">Privacy &amp; Security</a></p>
+		<p><a href="http://energy.gov" rel="noopener noreferrer" target="_blank"><img alt="U.S. Department of Energy" longdesc="https://energy.gov" src="https://www.sandia.gov/_common/images/doe_logo_white.png" style="height:37px; width:140px"></a> <a href="http://nnsa.energy.gov/" rel="noopener noreferrer" target="_blank"> <img alt="National Nuclear Security Administration" longdesc="http://nnsa.gov" src="https://www.sandia.gov/_common/images/nnsa_logo_white.png" style="height:37px; width:116px"></a></p>
+		<p><a href="https://www.sandia.gov">Sandia National Laboratories</a> is a multimission laboratory managed and operated by National Technology and Engineering Solutions of Sandia, LLC., a wholly owned subsidiary of Honeywell International, Inc., for the U.S. Department of Energy’s National Nuclear Security Administration under contract DE-NA-0003525.</p>
+	  </div>	  	  
+	  
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

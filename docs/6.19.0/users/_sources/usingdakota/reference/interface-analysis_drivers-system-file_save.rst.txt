@@ -1,0 +1,41 @@
+.. _interface-analysis_drivers-system-file_save:
+
+"""""""""
+file_save
+"""""""""
+
+
+Keep the parameters & results files after the analysis driver completes
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+- *Default:* file cleanup
+
+
+**Description**
+
+
+If ``file_save`` is used, Dakota will not delete the parameters and
+results files after the function evaluation is completed.
+
+The default behavior is NOT to save these files.
+
+If ``file_tag`` is not specified and the saved files would be overwritten
+by a future evaluation, Dakota renames them after the analysis driver has
+run by tagging them with the evaluation number.
+
+File saving is most useful when debugging the
+data communication between Dakota and the simulation.
+
+

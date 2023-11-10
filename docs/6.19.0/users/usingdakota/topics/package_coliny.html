@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Package: COLINY &mdash; dakota 6.19.0 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/dakota_theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/sandiaheaderlite.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Package: CONMIN" href="package_conmin.html" />
+    <link rel="prev" title="Optimization and Calibration" href="optimization_and_calibration.html" /> 
+  
+  <meta name="sandia.approval_type" content="formal"/>
+  <meta property="sandia.approved" content="SAND2023-13392 O"/>
+  <meta name="description" content="The Dakota project delivers both state-of-the-art research and robust, usable software for optimization and UQ."/>
+  <meta name="keywords" content="Dakota, optimization, UQ, uncertainty quantification, parametric analysis, design exploration, model calibration, risk analysis"/>
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> dakota
+            <img src="../../_static/dakota_Arrow_Name_Tag_horiz_transparent.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                6.19
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../setupdakota.html">Getting Started</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../usingdakota.html">Using Dakota</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../introduction/aboutdakota.html">About Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../introduction/helloworld.html">Dakota Beginner’s Tutorial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples.html">Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../introduction/couplingtosimulations.html">Coupling Dakota to a Simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../inputfile.html">Dakota Input File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../running.html">Running Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../output.html">Dakota Output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../studytypes.html">Study Types</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../topics.html">Topics</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="aleatory_uncertainty_quantification_methods.html">Aleatory Uncertainty Quantification Methods</a></li>
+<li class="toctree-l3"><a class="reference internal" href="design_and_analysis_of_computer_experiments.html">Design and Analysis of Computer Experiments (DACE)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="epistemic_uncertainty_quantification_methods.html">Epistemic Uncertainty Quantification Methods</a></li>
+<li class="toctree-l3"><a class="reference internal" href="evidence_theory.html">Evidence Theory</a></li>
+<li class="toctree-l3"><a class="reference internal" href="interval_estimation.html">Interval Estimation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="linear_constraints.html">Linear Constraints</a></li>
+<li class="toctree-l3"><a class="reference internal" href="method_independent_controls.html">Method-Independent Controls</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nonlinear_constraints.html">Nonlinear Constraints</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nonlinear_least_squares.html">Nonlinear Least Squares</a></li>
+<li class="toctree-l3"><a class="reference internal" href="optimization_and_calibration.html">Optimization and Calibration</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Package: COLINY</a></li>
+<li class="toctree-l3"><a class="reference internal" href="package_conmin.html">Package: CONMIN</a></li>
+<li class="toctree-l3"><a class="reference internal" href="package_ddace.html">Package: DDACE</a></li>
+<li class="toctree-l3"><a class="reference internal" href="package_dot.html">Package: DOT</a></li>
+<li class="toctree-l3"><a class="reference internal" href="package_fsudace.html">Package: FSUDace</a></li>
+<li class="toctree-l3"><a class="reference internal" href="package_hopspack.html">Package: HOPSPACK</a></li>
+<li class="toctree-l3"><a class="reference internal" href="package_jega.html">Package: JEGA</a></li>
+<li class="toctree-l3"><a class="reference internal" href="package_nlpql.html">Package: NLPQL</a></li>
+<li class="toctree-l3"><a class="reference internal" href="package_npsol.html">Package: NPSOL</a></li>
+<li class="toctree-l3"><a class="reference internal" href="package_optpp.html">Package: OPT++</a></li>
+<li class="toctree-l3"><a class="reference internal" href="package_psuade.html">Package: PSUADE</a></li>
+<li class="toctree-l3"><a class="reference internal" href="package_queso.html">Package: QUESO</a></li>
+<li class="toctree-l3"><a class="reference internal" href="package_scolib.html">Package: SCOLIB</a></li>
+<li class="toctree-l3"><a class="reference internal" href="parameter_studies.html">Parameter Studies</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pointers.html">Pointers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reliability_methods.html">Reliability Methods</a></li>
+<li class="toctree-l3"><a class="reference internal" href="response_types.html">Response Types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sampling.html">Sampling</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sequential_quadratic_programming.html">Sequential Quadratic Programming (SQP)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="stochastic_expansion_methods.html">Stochastic Expansion Methods</a></li>
+<li class="toctree-l3"><a class="reference internal" href="uncertainty_quantification.html">Uncertainty Quantification</a></li>
+<li class="toctree-l3"><a class="reference internal" href="variable_support.html">Variable Support</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../advanced.html">Advanced Topics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../theory.html">Dakota Theory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference.html">Keyword Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../usingdakotagui/usingdakotagui.html">Using Dakota GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../externaltools/externaltools.html">Using External Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../compiling/compiling.html">Compiling Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developingdakota/developingdakota.html">Developing Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../misc/misc.html">Miscellaneous</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">dakota</a>
+      </nav>
+
+	  <!-- SNL Lite header -->
+	  <div class="snlheader-subsite--wrapper-default">
+		<snlheader class="snlheader-subsite" role="snlbanner">
+		  <div class="wrapper">
+			<a href="https://www.sandia.gov/index.html">
+			  <div class="logo-transparent"><p class="logo">Sandia National Laboratories</p></div>
+			</a>
+			<div class="nav-top">
+			  <a class="visuallyhidden" name="mainnav"></a>
+			  <div aria-label="main navigation" class="core-nav-transparent core-nav-transparent--visible" role="navigation">
+				<ul role="navigation" class="secondary-links">
+				  <li id="search-text-link">
+					<a aria-label="Search" href="https://www.sandia.gov/search/">Search Sandia.gov</a>
+				  </li>
+				  <li id="directory-text-link">
+					<a href="https://www.sandia.gov/directory.html" aria-expanded="false" aria-label="Site Directory">All Sandia Websites</a>
+				  </li>
+				</ul>
+			  </div>
+			</div>
+		  </div> 
+		</snlheader>
+	  </div>	  
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../usingdakota.html">Using Dakota</a> &raquo;</li>
+          <li><a href="../topics.html">Topics</a> &raquo;</li>
+      <li>Package: COLINY</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/usingdakota/topics/package_coliny.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="package-coliny">
+<span id="topic-package-coliny"></span><h1>Package: COLINY<a class="headerlink" href="#package-coliny" title="Permalink to this headline"></a></h1>
+<p>SCOLIB (formerly known as COLINY) is a collection of nongradient-based
+optimizers that support the Common Optimization Library INterface
+(COLIN).  SCOLIB optimizers currently include <code class="docutils literal notranslate"><span class="pre">coliny_cobyla</span></code>,
+<code class="docutils literal notranslate"><span class="pre">coliny_direct</span></code>, <code class="docutils literal notranslate"><span class="pre">coliny_ea</span></code>, <code class="docutils literal notranslate"><span class="pre">coliny_pattern_search</span></code> and
+<code class="docutils literal notranslate"><span class="pre">coliny_solis_wets</span></code>.  (Yes, the input spec still has “coliny” prepended
+to the method name.)  Additional SCOLIB information is available from
+<a class="reference external" href="https://software.sandia.gov/trac/acro">https://software.sandia.gov/trac/acro</a>.</p>
+<p>SCOLIB solvers now support bound constraints and general nonlinear
+constraints.  Supported nonlinear constraints include both equality
+and two-sided inequality constraints.  SCOLIB solvers do not yet
+support linear constraints.  Most SCOLIB optimizers treat constraints
+with a simple penalty scheme that adds <code class="docutils literal notranslate"><span class="pre">constraint_penalty</span></code> times the
+sum of squares of the constraint violations to the objective function.
+Specific exceptions to this method for handling constraint violations
+are noted below.  (The default value of <code class="docutils literal notranslate"><span class="pre">constraint_penalty</span></code> is
+1000.0, except for methods that dynamically adapt their constraint
+penalty, for which the default value is 1.0.)</p>
+<p>The method independent controls for <code class="docutils literal notranslate"><span class="pre">max_iterations</span></code> and
+<code class="docutils literal notranslate"><span class="pre">max_function_evaluations</span></code> limit the number of major iterations and the
+number of function evaluations that can be performed during a SCOLIB
+optimization, respectively. The <code class="docutils literal notranslate"><span class="pre">convergence_tolerance</span></code> control
+defines the threshold value on relative change in the objective
+function that indicates convergence. The <code class="docutils literal notranslate"><span class="pre">output</span></code> verbosity
+specification controls the amount of information generated by SCOLIB:
+the <code class="docutils literal notranslate"><span class="pre">silent</span></code>, <code class="docutils literal notranslate"><span class="pre">quiet</span></code>, and <code class="docutils literal notranslate"><span class="pre">normal</span></code> settings correspond to minimal
+reporting from SCOLIB, whereas the <code class="docutils literal notranslate"><span class="pre">verbose</span></code> setting corresponds to a
+higher level of information, and <code class="docutils literal notranslate"><span class="pre">debug</span></code> outputs method
+initialization and a variety of internal SCOLIB diagnostics. The
+majority of SCOLIB’s methods perform independent function evaluations
+that can directly take advantage of Dakota’s parallel
+capabilities. Only <code class="docutils literal notranslate"><span class="pre">coliny_solis_wets</span></code>, <code class="docutils literal notranslate"><span class="pre">coliny_cobyla</span></code>, and certain
+configurations of <code class="docutils literal notranslate"><span class="pre">coliny_pattern_search</span></code> are inherently serial.
+The parallel methods automatically utilize
+parallel logic when the Dakota configuration supports
+parallelism. Lastly, neither <code class="docutils literal notranslate"><span class="pre">speculative</span></code> gradients nor linear
+constraints are currently supported with SCOLIB.</p>
+<p>Some SCOLIB methods exploit parallelism through the use of Dakota’s
+concurrent function evaluations. The nature of the algorithms,
+however, limits the amount of concurrency that can be exploited. The
+maximum amount of evaluation concurrency that can be leveraged by the
+various methods is as follows:</p>
+<ul class="simple">
+<li><p>COBYLA: one</p></li>
+<li><p>DIRECT: twice the number of variables</p></li>
+<li><p>Evolutionary Algorithms: size of the population</p></li>
+<li><p>Pattern Search: size of the search pattern</p></li>
+<li><p>Solis-Wets: one</p></li>
+</ul>
+<p>All SCOLIB methods support the <code class="docutils literal notranslate"><span class="pre">show_misc_options</span></code> optional
+specification which results in a dump of all the allowable method
+inputs. Note that the information provided by this command refers to
+optimizer parameters that are internal to SCOLIB, and which may differ
+from corresponding parameters used by the Dakota interface. The
+<code class="docutils literal notranslate"><span class="pre">misc_options</span></code> optional specification provides a means for inputing
+additional settings supported by the SCOLIB methods but which are not
+currently mapped through the Dakota input specification. Care must be
+taken in using this specification; they should only be employed by
+users familiar with the full range of parameter specifications
+available directly from SCOLIB and understand any differences that
+exist between those specifications and the ones available through
+Dakota.</p>
+<p>Each of the SCOLIB methods supports the <code class="docutils literal notranslate"><span class="pre">solution_target</span></code> control,
+which defines a convergence criterion in which the optimizer will
+terminate if it finds an objective function value lower than the
+specified target.</p>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="optimization_and_calibration.html" class="btn btn-neutral float-left" title="Optimization and Calibration" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="package_conmin.html" class="btn btn-neutral float-right" title="Package: CONMIN" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <!--
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Sandia National Laboratories.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+  --> 
+
+</footer>
+        </div>
+      </div>
+	  
+	  <div style="background-color: #0f0f0f;color:#fafafa;padding:20px">
+	    <div>
+		  <h2><em>Exceptional service in the national interest</em></h2>
+		</div>
+		<p>© 2023 National Technology and Engineering Solutions of Sandia, LLC. | <a href="https://www.sandia.gov/contact_us/index.html">Questions &amp; Comments</a> | <a href="https://www.sandia.gov/general/privacy-security/index.html">Privacy &amp; Security</a></p>
+		<p><a href="http://energy.gov" rel="noopener noreferrer" target="_blank"><img alt="U.S. Department of Energy" longdesc="https://energy.gov" src="https://www.sandia.gov/_common/images/doe_logo_white.png" style="height:37px; width:140px"></a> <a href="http://nnsa.energy.gov/" rel="noopener noreferrer" target="_blank"> <img alt="National Nuclear Security Administration" longdesc="http://nnsa.gov" src="https://www.sandia.gov/_common/images/nnsa_logo_white.png" style="height:37px; width:116px"></a></p>
+		<p><a href="https://www.sandia.gov">Sandia National Laboratories</a> is a multimission laboratory managed and operated by National Technology and Engineering Solutions of Sandia, LLC., a wholly owned subsidiary of Honeywell International, Inc., for the U.S. Department of Energy’s National Nuclear Security Administration under contract DE-NA-0003525.</p>
+	  </div>	  	  
+	  
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

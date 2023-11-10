@@ -1,0 +1,42 @@
+.. _method-bayes_calibration-wasabi-pushforward_samples:
+
+"""""""""""""""""""
+pushforward_samples
+"""""""""""""""""""
+
+
+
+(Experimental Capability) Number of samples of the prior to push
+forward through the model
+
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* INTEGER
+
+- *Default:* method-dependent
+
+
+**Description**
+
+
+
+WASABI requires a forward UQ that maps samples from the prior
+parameter distribution through the model.  The corresponding responses
+then are used to see their relative likelihood according to the
+density of the observational data.  The `pushforward_samples` refers
+to the number of samples taken from the prior and used in the forward
+UQ.  It typically should be high, e.g., 10000, of which only a small
+fraction may be in a high density region of the posterior.
+
+
+
