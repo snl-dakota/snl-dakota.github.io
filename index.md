@@ -37,11 +37,11 @@ These capabilities may be used on their own or as components within advanced str
 
 Learn More: [Dakota Website](https://dakota.sandia.gov)
 
-Start Using: [User Guide](./docs/latest/users/)
+Start Using: [User Guide](./docs/latest_release/users/)
 
 Get Help: [Dakota Discussion Forum](https://github.com/orgs/snl-dakota/discussions)
 
-Start Developing: [Developing Dakota](./docs/latest/users/developingdakota/developingdakota.html), [Code Documentation](https://dakota.sandia.gov/sites/default/files/docs/6.17.0-release/html-dev/)
+Start Developing: [Developing Dakota](./docs/latest_release/users/developingdakota/developingdakota.html), [Code Documentation](https://dakota.sandia.gov/sites/default/files/docs/6.17.0-release/html-dev/)
 
 [Contribute](https://github.com/snl-dakota/.github/blob/main/CONTRIBUTING.md) user help, examples, code.
 
