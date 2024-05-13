@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Standard Output &mdash; dakota  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/dakota_theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/sandiaheaderlite.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Error Messages Output" href="standarderror.html" />
+    <link rel="prev" title="Dakota Output" href="../output.html" /> 
+  
+  <meta name="sandia.approval_type" content="formal"/>
+  <meta property="sandia.approved" content="SAND2023-13392 O"/>
+  <meta name="description" content="The Dakota project delivers both state-of-the-art research and robust, usable software for optimization and UQ."/>
+  <meta name="keywords" content="Dakota, optimization, UQ, uncertainty quantification, parametric analysis, design exploration, model calibration, risk analysis"/>
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> dakota
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../setupdakota.html">Getting Started</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../usingdakota.html">Using Dakota</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../introduction/aboutdakota.html">About Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../introduction/helloworld.html">Dakota Beginner’s Tutorial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples.html">Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../introduction/couplingtosimulations.html">Coupling Dakota to a Simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../inputfile.html">Dakota Input File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../running.html">Running Dakota</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../output.html">Dakota Output</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Standard Output</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#simple-output-example">Simple Output Example</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#detailed-output">Detailed Output</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="standarderror.html">Error Messages Output</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tabulardata.html">Tabular Output Data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hdf.html">HDF5 Output</a></li>
+<li class="toctree-l3"><a class="reference internal" href="graphicslegacy.html">Legacy Graphics Output</a></li>
+<li class="toctree-l3"><a class="reference internal" href="otheroutput.html">Other Dakota Outputs</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../studytypes.html">Study Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../topics.html">Topics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../advanced.html">Advanced Topics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../theory.html">Dakota Theory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference.html">Keyword Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../usingdakotagui/usingdakotagui.html">Using Dakota GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../externaltools/externaltools.html">Using External Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../compiling/compiling.html">Compiling Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developingdakota/developingdakota.html">Developing Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../misc/misc.html">Miscellaneous</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">dakota</a>
+      </nav>
+
+	  <!-- SNL Lite header -->
+	  <div class="snlheader-subsite--wrapper-default">
+		<snlheader class="snlheader-subsite" role="snlbanner">
+		  <div class="wrapper">
+			<a href="https://www.sandia.gov/index.html">
+			  <div class="logo-transparent"><p class="logo">Sandia National Laboratories</p></div>
+			</a>
+			<div class="nav-top">
+			  <a class="visuallyhidden" name="mainnav"></a>
+			  <div aria-label="main navigation" class="core-nav-transparent core-nav-transparent--visible" role="navigation">
+				<ul role="navigation" class="secondary-links">
+				  <li id="search-text-link">
+					<a aria-label="Search" href="https://www.sandia.gov/search/">Search Sandia.gov</a>
+				  </li>
+				  <li id="directory-text-link">
+					<a href="https://www.sandia.gov/directory.html" aria-expanded="false" aria-label="Site Directory">All Sandia Websites</a>
+				  </li>
+				</ul>
+			  </div>
+			</div>
+		  </div> 
+		</snlheader>
+	  </div>	  
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../usingdakota.html">Using Dakota</a></li>
+          <li class="breadcrumb-item"><a href="../output.html">Dakota Output</a></li>
+      <li class="breadcrumb-item active">Standard Output</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/usingdakota/output/standardoutput.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="standard-output">
+<span id="output-standard"></span><h1>Standard Output<a class="headerlink" href="#standard-output" title="Link to this heading"></a></h1>
+<p>Dakota prints information on algorithm progress, function evaluations,
+and summary results to standard out and error (screen, terminal, or
+console) as it runs. Detailed information for a function evaluation may
+include an evaluation number, parameter values, execution syntax, the
+active set vector, and the response data set.</p>
+<p>This output may optionally be redirected to a file using <a class="reference internal" href="../running/commandline.html#command-line-main"><span class="std std-ref">command-line options</span></a>
+or the keyword <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/environment-output_file.html"><span class="pre">output_file</span></a></code>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Whenever an output_file is specified for a Dakota run, the screen output itself
+becomes quite minimal, consisting of version statements, environment statements and execution times.</p>
+</div>
+<section id="simple-output-example">
+<h2>Simple Output Example<a class="headerlink" href="#simple-output-example" title="Link to this heading"></a></h2>
+<p>Output from a Rosenbrock multidimensional parameter study (see <a class="reference internal" href="../inputfile.html#tutorial-rosenbrock-multidim"><span class="std std-numref">Listing 24</span></a>) is shown here:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>{Writing new restart file dakota.rst
+<span class="k">method</span>Name = multidim_parameter_study
+gradientType = none
+hessianType = none
+
+&gt;&gt;&gt;&gt;&gt; Running multidim_parameter_study iterator.
+
+Multidimensional parameter study for variable partitions of
+                                     8
+                                     8
+
+
+------------------------------
+Begin Function Evaluation 1
+------------------------------
+Parameters for function evaluation 1:
+                     -2.0000000000e+00 x1
+                     -2.0000000000e+00 x2
+
+Direct function: invoking rosenbrock
+
+Active response data for function evaluation 1:
+Active set vector = { 1 }
+                      3.6090000000e+03 response_fn_1
+.
+.
+.
+&lt;&lt;&lt;&lt;&lt; Function evaluation summary: 81 total (81 new, 0 duplicate)
+
+Simple Correlation Matrix among all inputs and outputs:
+                       x1           x2  response_fn_1
+          x1  1.00000e+00
+          x2  1.73472e-17  1.00000e+00
+response_fn_1 -3.00705e-03 -5.01176e-01 1.00000e+00
+.
+.
+.
+&lt;&lt;&lt;&lt;&lt; Iterator multidim_parameter_study completed.}
+</pre></div>
+</div>
+<p>Excluding the copy of the input file at the beginning and timing information at the end, the file is organized into three basic
+parts:</p>
+<ol class="arabic">
+<li><p>Information on the problem</p>
+<p>For this example, we see that a new restart file is being created and Dakota has carried out a multi-dim parameter study with 8 partitions for each of two variables.</p>
+</li>
+<li><p>Information on each function evaluation</p>
+<p>Each function evaluation is numbered. Details for function evaluation 1 show that at input variable values
+<code class="docutils literal notranslate"><span class="pre">x1</span> <span class="pre">=</span> <span class="pre">−2.0</span></code> and <code class="docutils literal notranslate"><span class="pre">x2</span> <span class="pre">=</span> <span class="pre">−2.0</span></code>, the direct rosenbrock function is being evaluated. There is one response with
+a value of <code class="docutils literal notranslate"><span class="pre">3.609e+03</span></code>.</p>
+</li>
+<li><p>Summary statistics</p>
+<p>The function evaluation summary is preceded by <code class="docutils literal notranslate"><span class="pre">&lt;&lt;&lt;&lt;&lt;</span></code>. For this example 81 total evaluations were
+assessed; all were new, none were read in from the restart file. Correlation matrices complete the statistics
+and output for this problem. Successful runs will finish with <code class="docutils literal notranslate"><span class="pre">&lt;&lt;&lt;&lt;&lt;</span> <span class="pre">Iterator</span> <span class="pre">study</span> <span class="pre">type</span> <span class="pre">completed.</span></code></p>
+</li>
+</ol>
+</section>
+<section id="detailed-output">
+<h2>Detailed Output<a class="headerlink" href="#detailed-output" title="Link to this heading"></a></h2>
+<p>Here, optimization of <a class="reference internal" href="../examples/additionalexamples.html#additional-container"><span class="std std-ref">the “container” problem</span></a> is used as an example to
+describe Dakota output. The input file shown in <a class="reference internal" href="#output-incont"><span class="std std-numref">Listing 25</span></a> specifies one equality
+constraint, and that Dakota’s finite difference algorithm will provide
+central difference numerical gradients to the NPSOL optimizer.</p>
+<div class="literal-block-wrapper docutils container" id="output-incont">
+<div class="code-block-caption"><span class="caption-number">Listing 25 </span><span class="caption-text">Dakota input file for the “container” test problem – see <code class="docutils literal notranslate"><span class="pre">dakota/share/dakota/examples/users/container_opt_npsol.in</span></code></span><a class="headerlink" href="#output-incont" title="Link to this code"></a></div>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span><span class="c"># Dakota Input File: container_opt_npsol.in</span>
+
+<span class="k">environment</span>
+  tabular_data
+    tabular_data_file = &#39;container_opt_npsol.dat&#39;
+
+<span class="k">method</span>
+<span class="c">## (NPSOL requires a software license; if not available, try</span>
+<span class="c">## conmin_mfd or optpp_q_newton instead)</span>
+  npsol_sqp
+
+<span class="k">variables</span>
+  continuous_design = 2
+    descriptors   &#39;H&#39; &#39;D&#39;
+    initial_point 4.5 4.5
+    lower_bounds  0.0 0.0
+
+<span class="k">interface</span>
+  analysis_drivers = &#39;container&#39;
+    fork
+    parameters_file = &#39;container.in&#39;
+    results_file    = &#39;container.out&#39;
+    file_tag
+
+<span class="k">responses</span>
+  objective_functions = 1
+  nonlinear_equality_constraints = 1
+  numerical_gradients
+    method_source dakota
+    interval_type central
+    fd_step_size = 0.001
+  no_hessians
+</pre></div>
+</div>
+</div>
+<p>A partial listing of the Dakota output for the container optimization
+example follows:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>Dakota version 5.4+ (stable) released May  2 2014.
+Subversion revision 2508 built May  2 2014 15:26:14.
+Running MPI Dakota executable in serial mode.
+Start time: Fri May  2 15:38:11 2014
+
+----------------------------------------------------------------
+Begin DAKOTA input file
+/home/user/dakota/build/examples/users/container_opt_npsol.in
+----------------------------------------------------------------
+<span class="c"># Dakota Input File: container_opt_npsol.in</span>
+<span class="k">environment</span>
+
+&lt;SNIP&gt;
+
+---------------------
+End DAKOTA input file
+---------------------
+
+Using Dakota input file &#39;/home/user/dakota/build/examples/users/container_opt_npsol.in&#39;
+Writing new restart file dakota.rst
+
+&gt;&gt;&gt;&gt;&gt; Executing environment.
+
+&gt;&gt;&gt;&gt;&gt; Running npsol_sqp iterator.
+
+------------------------------------------
+Begin Dakota derivative estimation routine
+------------------------------------------
+
+&gt;&gt;&gt;&gt;&gt; Initial map for analytic portion of response:
+
+---------------------
+Begin Evaluation    1
+---------------------
+Parameters for evaluation 1:
+                      4.5000000000e+00 H
+                      4.5000000000e+00 D
+
+blocking fork: container container.in.1 container.out.1
+
+Active response data for evaluation 1:
+Active set vector = { 1 1 }
+                      1.0713145108e+02 obj_fn
+                      8.0444076396e+00 nln_eq_con_1
+
+
+&gt;&gt;&gt;&gt;&gt; Dakota finite difference gradient evaluation for x[1] + h:
+
+---------------------
+Begin Evaluation    2
+---------------------
+Parameters for evaluation 2:
+                      4.5045000000e+00 H
+                      4.5000000000e+00 D
+
+blocking fork: container container.in.2 container.out.2
+
+Active response data for evaluation 2:
+Active set vector = { 1 1 }
+                      1.0719761302e+02 obj_fn
+                      8.1159770472e+00 nln_eq_con_1
+
+
+&gt;&gt;&gt;&gt;&gt; Dakota finite difference gradient evaluation for x[1] - h:
+
+---------------------
+Begin Evaluation    3
+---------------------
+Parameters for evaluation 3:
+                      4.4955000000e+00 H
+                      4.5000000000e+00 D
+
+blocking fork: container container.in.3 container.out.3
+
+Active response data for evaluation 3:
+Active set vector = { 1 1 }
+                      1.0706528914e+02 obj_fn
+                      7.9728382320e+00 nln_eq_con_1
+
+
+&gt;&gt;&gt;&gt;&gt; Dakota finite difference gradient evaluation for x[2] + h:
+
+---------------------
+Begin Evaluation    4
+---------------------
+Parameters for evaluation 4:
+                      4.5000000000e+00 H
+                      4.5045000000e+00 D
+
+blocking fork: container container.in.4 container.out.4
+
+Active response data for evaluation 4:
+Active set vector = { 1 1 }
+                      1.0727959301e+02 obj_fn
+                      8.1876180243e+00 nln_eq_con_1
+
+
+&gt;&gt;&gt;&gt;&gt; Dakota finite difference gradient evaluation for x[2] - h:
+
+---------------------
+Begin Evaluation    5
+---------------------
+Parameters for evaluation 5:
+                      4.5000000000e+00 H
+                      4.4955000000e+00 D
+
+blocking fork: container container.in.5 container.out.5
+
+Active response data for evaluation 5:
+Active set vector = { 1 1 }
+                      1.0698339109e+02 obj_fn
+                      7.9013403937e+00 nln_eq_con_1
+
+
+&gt;&gt;&gt;&gt;&gt; Total response returned to iterator:
+
+Active set vector = { 3 3 } Deriv vars vector = { 1 2 }
+                      1.0713145108e+02 obj_fn
+                      8.0444076396e+00 nln_eq_con_1
+ [  1.4702653619e+01  3.2911324639e+01 ] obj_fn gradient
+ [  1.5904312809e+01  3.1808625618e+01 ] nln_eq_con_1 gradient
+
+
+&lt;SNIP&gt;
+
+
+&gt;&gt;&gt;&gt;&gt; Dakota finite difference gradient evaluation for x[2] - h:
+
+---------------------
+Begin Evaluation   40
+---------------------
+Parameters for evaluation 40:
+                      4.9873894231e+00 H
+                      4.0230575428e+00 D
+
+blocking fork: container container.in.40 container.out.40
+
+Active response data for evaluation 40:
+Active set vector = { 1 1 }
+                      9.8301287596e+01 obj_fn
+                     -1.2698647501e-01 nln_eq_con_1
+
+
+&gt;&gt;&gt;&gt;&gt; Total response returned to iterator:
+
+Active set vector = { 3 3 } Deriv vars vector = { 1 2 }
+                      9.8432498116e+01 obj_fn
+                     -9.6918029158e-12 nln_eq_con_1
+ [  1.3157517860e+01  3.2590159623e+01 ] obj_fn gradient
+ [  1.2737124497e+01  3.1548877601e+01 ] nln_eq_con_1 gradient
+
+
+
+NPSOL exits with INFORM code = 0 (see &quot;Interpretation of output&quot; section in NPSOL manual)
+
+NOTE: see Fortran device 9 file (fort.9 or ftn09)
+      for complete NPSOL iteration history.
+&lt;&lt;&lt;&lt;&lt; Function evaluation summary: 40 total (40 new, 0 duplicate)
+&lt;&lt;&lt;&lt;&lt; Best parameters          =
+                      4.9873894231e+00 H
+                      4.0270846274e+00 D
+&lt;&lt;&lt;&lt;&lt; Best objective function  =
+                      9.8432498116e+01
+&lt;&lt;&lt;&lt;&lt; Best constraint values   =
+                     -9.6918029158e-12
+&lt;&lt;&lt;&lt;&lt; Best evaluation ID: 36
+
+
+&lt;&lt;&lt;&lt;&lt; Iterator npsol_sqp completed.
+&lt;&lt;&lt;&lt;&lt; Environment execution completed.
+DAKOTA execution time in seconds:
+  Total CPU        =       0.03 [parent =   0.023997, child =   0.006003]
+  Total wall clock =   0.090703
+</pre></div>
+</div>
+<p>The output begins with information on the Dakota version, compilation
+date, and run mode. It then echos the user input file before proceeding
+to execution phase. The lines following
+<code class="docutils literal notranslate"><span class="pre">&gt;&gt;&gt;&gt;&gt;</span> <span class="pre">Running</span> <span class="pre">npsol_sqp</span> <span class="pre">iterator.</span></code> show Dakota performing function
+evaluations 1–5 that have been requested by NPSOL. Evaluations 6 through
+39 have been omitted from the listing for brevity.</p>
+<p>Immediately following the line <code class="docutils literal notranslate"><span class="pre">Begin</span> <span class="pre">Function</span> <span class="pre">Evaluation</span> <span class="pre">1</span></code>, the
+initial values of the design variables, the syntax of the blocking fork
+function evaluation, and the resulting objective and constraint function
+values returned by the simulation are listed. The values of the design
+variables are labeled with the tags <code class="docutils literal notranslate"><span class="pre">H</span></code> and <code class="docutils literal notranslate"><span class="pre">D</span></code>, respectively,
+according to the descriptors given in the input file,
+<a class="reference internal" href="#output-incont"><span class="std std-numref">Listing 25</span></a>. The values of the objective
+function and volume constraint are labeled with the tags <code class="docutils literal notranslate"><span class="pre">obj_fn</span></code> and
+<code class="docutils literal notranslate"><span class="pre">nln_eq_con_1</span></code>, respectively. Note that the initial design parameters
+are infeasible since the equality constraint is violated
+(<span class="math notranslate nohighlight">\(\ne 0\)</span>). However, by the end of the run, the optimizer finds a
+design that is both feasible and optimal for this example. Between the
+design variables and response values, the content of the system call to
+the simulator is displayed as
+<code class="docutils literal notranslate"><span class="pre">(container</span> <span class="pre">container.in.1</span> <span class="pre">container.out.1)</span></code>, with <code class="docutils literal notranslate"><span class="pre">container</span></code>
+being the name of the simulator and <code class="docutils literal notranslate"><span class="pre">container.in.1</span></code> and
+<code class="docutils literal notranslate"><span class="pre">container.out.1</span></code> being the names of the parameters and results
+files, respectively.</p>
+<p>Just preceding the output of the objective and constraint function
+values is the line <code class="docutils literal notranslate"><span class="pre">Active</span> <span class="pre">set</span> <span class="pre">vector</span> <span class="pre">=</span> <span class="pre">{1</span> <span class="pre">1}</span></code>. The active set
+vector indicates the types of data that are required from the simulator
+for the objective and constraint functions, and values of “<code class="docutils literal notranslate"><span class="pre">1</span></code>”
+indicate that the simulator must return values for these functions
+(gradient and Hessian data are not required).</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Refer to <a class="reference internal" href="../inputfile/variables.html#variables-asv"><span class="std std-ref">the Active Set Vector section</span></a> for more details.</p>
+</div>
+<p>Since finite difference gradients have been specified, Dakota computes
+their values by making additional function evaluation requests to the
+simulator at perturbed parameter values. Examples of the
+gradient-related function evaluations have been included in the sample
+output, beginning with the line that reads
+<code class="docutils literal notranslate"><span class="pre">&gt;&gt;&gt;&gt;&gt;</span> <span class="pre">Dakota</span> <span class="pre">finite</span> <span class="pre">difference</span> <span class="pre">evaluation</span> <span class="pre">for</span> <span class="pre">x[1]</span> <span class="pre">+</span> <span class="pre">h:</span></code>. The
+resulting finite difference gradients are listed after function
+evaluation 5 beginning with the line
+<code class="docutils literal notranslate"><span class="pre">&gt;&gt;&gt;&gt;&gt;</span> <span class="pre">Total</span> <span class="pre">response</span> <span class="pre">returned</span> <span class="pre">to</span> <span class="pre">iterator:</span></code>. Here, another active
+set vector is displayed in the Dakota output file. The line
+<code class="docutils literal notranslate"><span class="pre">Active</span> <span class="pre">set</span> <span class="pre">vector</span> <span class="pre">=</span> <span class="pre">{</span> <span class="pre">3</span> <span class="pre">3</span> <span class="pre">}</span></code> indicates that the total response
+resulting from the finite differencing contains function values and
+gradients.</p>
+<p>The final lines of the Dakota output, beginning with the line
+<code class="docutils literal notranslate"><span class="pre">&lt;&lt;&lt;&lt;&lt;</span> <span class="pre">Function</span> <span class="pre">evaluation</span> <span class="pre">summary:</span></code>, summarize the results of the
+optimization study. The best values of the optimization parameters,
+objective function, and volume constraint are presented along with the
+function evaluation number where they occurred, total function
+evaluation counts, and a timing summary. In the end, the objective
+function has been minimized and the equality constraint has been
+satisfied (driven to zero within the constraint tolerance).</p>
+<div class="line-block">
+<div class="line">The Dakota results may be intermixed with iteration information from
+the NPSOL library. For example lines with the heading</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">Majr</span> <span class="pre">Minr</span> <span class="pre">Step</span> <span class="pre">Fun</span> <span class="pre">Merit</span> <span class="pre">function</span> <span class="pre">Norm</span> <span class="pre">gZ</span> <span class="pre">Violtn</span> <span class="pre">nZ</span> <span class="pre">Penalty</span> <span class="pre">Conv</span></code></div>
+<div class="line">come from Fortran write statements within NPSOL. The output is mixed
+since both Dakota and NPSOL are writing to the same standard output
+stream. The relative locations of these output contributions can vary
+depending on the specifics of output buffering and flushing on a
+particular platform and depending on whether or not the standard
+output is being redirected to a file. In some cases, output from the
+optimization library may appear on each iteration (as in this
+example), and in other cases, it may appear at the end of the Dakota
+output. Finally, a more detailed summary of the NPSOL iterations is
+written to the Fortran device 9 file (e.g., <code class="docutils literal notranslate"><span class="pre">fort.9</span></code> or <code class="docutils literal notranslate"><span class="pre">ftn09</span></code>).</div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../output.html" class="btn btn-neutral float-left" title="Dakota Output" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="standarderror.html" class="btn btn-neutral float-right" title="Error Messages Output" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <!--
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Sandia National Laboratories.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+  --> 
+
+</footer>
+        </div>
+      </div>
+	  
+	  <div style="background-color: #0f0f0f;color:#fafafa;padding:20px">
+	    <div>
+		  <h2><em>Exceptional service in the national interest</em></h2>
+		</div>
+		<p>© 2023 National Technology and Engineering Solutions of Sandia, LLC. | <a href="https://www.sandia.gov/contact_us/index.html">Questions &amp; Comments</a> | <a href="https://www.sandia.gov/general/privacy-security/index.html">Privacy &amp; Security</a></p>
+		<p><a href="http://energy.gov" rel="noopener noreferrer" target="_blank"><img alt="U.S. Department of Energy" longdesc="https://energy.gov" src="https://www.sandia.gov/_common/images/doe_logo_white.png" style="height:37px; width:140px"></a> <a href="http://nnsa.energy.gov/" rel="noopener noreferrer" target="_blank"> <img alt="National Nuclear Security Administration" longdesc="http://nnsa.gov" src="https://www.sandia.gov/_common/images/nnsa_logo_white.png" style="height:37px; width:116px"></a></p>
+		<p><a href="https://www.sandia.gov">Sandia National Laboratories</a> is a multimission laboratory managed and operated by National Technology and Engineering Solutions of Sandia, LLC., a wholly owned subsidiary of Honeywell International, Inc., for the U.S. Department of Energy’s National Nuclear Security Administration under contract DE-NA-0003525.</p>
+	  </div>	  	  
+	  
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

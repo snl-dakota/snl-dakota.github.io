@@ -1,0 +1,61 @@
+.. _method-multifidelity_function_train-sample_type-lhs:
+
+"""
+lhs
+"""
+
+
+Uses Latin Hypercube Sampling (LHS) to sample variables
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+
+**Description**
+
+
+The ``lhs`` keyword invokes Latin Hypercube Sampling as the means of
+drawing samples of uncertain variables according to their probability
+distributions.  This is a stratified, space-filling approach that
+selects variable values from a set of equi-probable bins.
+
+*Default Behavior*
+
+Latin Hypercube Sampling is the default sampling mode in most contexts
+(exception: multilevel_sampling).  To explicitly specify LHS in the
+Dakota input file, the ``lhs`` keyword must appear in conjunction with
+the ``sample_type`` keyword.
+
+*Usage Tips*
+
+Latin Hypercube Sampling is very robust and can be applied to any
+problem.  It is fairly effective at estimating the mean of model
+responses and linear correlations with a reasonably small number of
+samples relative to the number of variables.
+
+
+
+**Examples**
+
+
+
+.. code-block::
+
+    method
+      sampling
+        sample_type lhs
+        samples = 20
+
+
+
+

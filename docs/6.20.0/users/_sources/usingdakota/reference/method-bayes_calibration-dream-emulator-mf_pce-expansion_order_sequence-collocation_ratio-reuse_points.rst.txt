@@ -1,0 +1,34 @@
+.. _method-bayes_calibration-dream-emulator-mf_pce-expansion_order_sequence-collocation_ratio-reuse_points:
+
+""""""""""""
+reuse_points
+""""""""""""
+
+
+This describes the behavior of reuse of points in constructing polynomial
+chaos expansion models.
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+
+
+**Specification**
+
+- *Alias:* reuse_samples 
+
+- *Arguments:* None
+
+- *Default:* no sample reuse in coefficient estimation
+
+
+**Description**
+
+
+The ``reuse_points`` option controls the reuse behavior of points for various types of polynomial chaos expansions, including: ``collocation_points``,
+``collocation_ratio``, ``expansion_samples``, or ``orthogonal_least_interpolation``.  If any of these approaches are specified to create a set of points
+for the polynomial chaos expansion, one can specify ``reuse_points`` so that any points that have been previously generated (for example, from the ``import_points`` file) can be reused.
+
+

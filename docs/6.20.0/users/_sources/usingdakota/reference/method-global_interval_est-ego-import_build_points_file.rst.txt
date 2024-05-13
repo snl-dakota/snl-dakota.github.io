@@ -1,0 +1,94 @@
+.. _method-global_interval_est-ego-import_build_points_file:
+
+""""""""""""""""""""""""
+import_build_points_file
+""""""""""""""""""""""""
+
+
+File containing points you wish to use to build a surrogate
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-global_interval_est-ego-import_build_points_file-custom_annotated
+   method-global_interval_est-ego-import_build_points_file-annotated
+   method-global_interval_est-ego-import_build_points_file-freeform
+   method-global_interval_est-ego-import_build_points_file-active_only
+
+
+**Specification**
+
+- *Alias:* import_points_file 
+
+- *Arguments:* STRING
+
+- *Default:* no point import from a file
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+----------------------+-----------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword       | Dakota Keyword Description                    |
+|                         | Group              |                      |                                               |
++=========================+====================+======================+===============================================+
+| Optional (Choose One)   | Tabular Format     | `custom_annotated`__ | Selects custom-annotated tabular file format  |
+|                         |                    +----------------------+-----------------------------------------------+
+|                         |                    | `annotated`__        | Selects annotated tabular file format         |
+|                         |                    +----------------------+-----------------------------------------------+
+|                         |                    | `freeform`__         | Selects freeform file format                  |
++-------------------------+--------------------+----------------------+-----------------------------------------------+
+| Optional                                     | `active_only`__      | Import only active variables from tabular     |
+|                                              |                      | data file                                     |
++----------------------------------------------+----------------------+-----------------------------------------------+
+
+.. __: method-global_interval_est-ego-import_build_points_file-custom_annotated.html
+__ method-global_interval_est-ego-import_build_points_file-annotated.html
+__ method-global_interval_est-ego-import_build_points_file-freeform.html
+__ method-global_interval_est-ego-import_build_points_file-active_only.html
+
+
+
+**Description**
+
+
+The ``import_build_points_file`` allows the user to specify a file that
+contains a list of points and truth model responses used to construct
+a surrogate model.  These can be used by all methods that (explicitly,
+e.g. surrogate-based optimization, or implicitly, e.g. efficient
+global optimization) operate on a surrogate.  In particular, these
+points and responses are used in place of truth model evaluations to
+construct the initial surrogate.  When used to construct surrogate
+models or emulators these are often called build points or training
+data.
+
+*Default Behavior*
+
+By default, methods do not import points from a file.
+
+*Usage Tips*
+
+Dakota parses input files without regard to whitespace, but the
+import_build_points_file must be in one of three formats:
+
+- ``annotated`` (default)
+- ``custom_annotated``
+- ``freeform``
+
+
+
+**Examples**
+
+
+
+.. code-block::
+
+    method
+      polynomial_chaos
+        expansion_order = 4
+        import_build_points_file = 'dakota_uq_rosenbrock_pce_import.annot.pts.dat'
+
+
+
+

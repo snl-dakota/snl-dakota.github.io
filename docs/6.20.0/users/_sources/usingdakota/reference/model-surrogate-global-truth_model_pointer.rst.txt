@@ -1,0 +1,29 @@
+.. _model-surrogate-global-truth_model_pointer:
+
+"""""""""""""""""""
+truth_model_pointer
+"""""""""""""""""""
+
+
+A surrogate model pointer that guides a method to whether it should use a surrogate model or compute truth function evaluations
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+
+
+**Specification**
+
+- *Alias:* actual_model_pointer 
+
+- *Arguments:* STRING
+
+
+**Description**
+
+
+Dakota methods use global surrogate models to compute surrogate function approximations. They also need to know the true function evaluations. A global surrogate model now must have a truth_model_pointer keyword to decide for the method whether to evaluate the global surrogate model, or compute the true function evaluations if truth_model_pointer = ‘TRUTH’.
+
+

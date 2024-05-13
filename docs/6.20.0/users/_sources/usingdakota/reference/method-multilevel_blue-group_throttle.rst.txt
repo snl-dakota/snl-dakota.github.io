@@ -1,0 +1,66 @@
+.. _method-multilevel_blue-group_throttle:
+
+""""""""""""""
+group_throttle
+""""""""""""""
+
+
+Reduce the number of groups in multilevel BLUE using a throttle
+
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-multilevel_blue-group_throttle-mfmc_groups
+   method-multilevel_blue-group_throttle-common_groups
+   method-multilevel_blue-group_throttle-group_size
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+--------------------+-----------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword     | Dakota Keyword Description                    |
+|                         | Group              |                    |                                               |
++=========================+====================+====================+===============================================+
+| Required (Choose One)   | Throttle Approach  | `mfmc_groups`__    | Throttle multilevel BLUE to only search over  |
+|                         |                    |                    | MFMC groups                                   |
+|                         |                    +--------------------+-----------------------------------------------+
+|                         |                    | `common_groups`__  | Throttle multilevel BLUE to only search over  |
+|                         |                    |                    | common groups                                 |
+|                         |                    +--------------------+-----------------------------------------------+
+|                         |                    | `group_size`__     | Throttle multilevel BLUE to only search over  |
+|                         |                    |                    | groups of a maximum size                      |
++-------------------------+--------------------+--------------------+-----------------------------------------------+
+
+.. __: method-multilevel_blue-group_throttle-mfmc_groups.html
+__ method-multilevel_blue-group_throttle-common_groups.html
+__ method-multilevel_blue-group_throttle-group_size.html
+
+
+
+**Description**
+
+
+The number of groups in ML BLUE is, by default, determined by all
+combinations of the model indices, spanning the truth model and all
+approximations.  This combinatorial growth quickly results in very
+large group counts as the number of model approximations grows.  This
+number of combinations may be optionally throttled using one of the
+following schemes: ``mfmc_groups``, ``common_groups``, or
+``group_size``.
+
+*Default Behavior*
+
+The default is no throttle: all model combinations are included.
+
+
+

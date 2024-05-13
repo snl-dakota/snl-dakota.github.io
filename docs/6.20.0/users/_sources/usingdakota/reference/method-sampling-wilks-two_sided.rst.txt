@@ -1,0 +1,50 @@
+.. _method-sampling-wilks-two_sided:
+
+"""""""""
+two_sided
+"""""""""
+
+
+Specifies two-sided order statistics (an interval) to be used when
+determining sample sizes for random sampling using Wilks order statistics.
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+
+**Description**
+
+
+This option causes the sample size to be based on the interval defined by
+the lowest N and uppermost N outputs for order N statistics (default N=1).
+
+*Default Behavior*
+The default for Wilks is one_sided_upper.
+
+
+
+**Examples**
+
+
+
+.. code-block::
+
+    method
+      sampling
+        sample_type random
+        wilks
+          two_sided
+
+
+
+

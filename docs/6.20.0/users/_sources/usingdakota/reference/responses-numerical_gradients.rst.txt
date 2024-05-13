@@ -1,0 +1,73 @@
+.. _responses-numerical_gradients:
+
+"""""""""""""""""""
+numerical_gradients
+"""""""""""""""""""
+
+
+Gradients are needed and will be approximated by finite differences
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   responses-numerical_gradients-method_source
+   responses-numerical_gradients-dakota
+   responses-numerical_gradients-vendor
+   responses-numerical_gradients-interval_type
+   responses-numerical_gradients-forward
+   responses-numerical_gradients-central
+   responses-numerical_gradients-fd_step_size
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+--------------------+-----------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword     | Dakota Keyword Description                    |
+|                         | Group              |                    |                                               |
++=========================+====================+====================+===============================================+
+| Optional                                     | `method_source`__  | Specify which finite difference routine is    |
+|                                              |                    | used                                          |
++-------------------------+--------------------+--------------------+-----------------------------------------------+
+| Optional (Choose One)   | Gradient Source    | `dakota`__         | (Default) Use internal Dakota finite          |
+|                         |                    |                    | differences algorithm                         |
+|                         |                    +--------------------+-----------------------------------------------+
+|                         |                    | `vendor`__         | Use non-Dakota fd algorithm                   |
++-------------------------+--------------------+--------------------+-----------------------------------------------+
+| Optional                                     | `interval_type`__  | Specify how to compute gradients and hessians |
++-------------------------+--------------------+--------------------+-----------------------------------------------+
+| Optional (Choose One)   | Finite Difference  | `forward`__        | (Default) Use forward differences             |
+|                         | Type               +--------------------+-----------------------------------------------+
+|                         |                    | `central`__        | Use central differences                       |
++-------------------------+--------------------+--------------------+-----------------------------------------------+
+| Optional                                     | `fd_step_size`__   | Step size used when computing gradients and   |
+|                                              |                    | Hessians                                      |
++----------------------------------------------+--------------------+-----------------------------------------------+
+
+.. __: responses-numerical_gradients-method_source.html
+__ responses-numerical_gradients-dakota.html
+__ responses-numerical_gradients-vendor.html
+__ responses-numerical_gradients-interval_type.html
+__ responses-numerical_gradients-forward.html
+__ responses-numerical_gradients-central.html
+__ responses-numerical_gradients-fd_step_size.html
+
+
+
+**Description**
+
+
+The ``numerical_gradients`` specification means that gradient
+information is needed and will be computed with finite differences
+using either the native or one of the vendor finite differencing
+routines.
+
+

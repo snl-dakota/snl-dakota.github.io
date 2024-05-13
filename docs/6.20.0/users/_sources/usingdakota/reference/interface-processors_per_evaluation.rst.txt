@@ -1,0 +1,43 @@
+.. _interface-processors_per_evaluation:
+
+"""""""""""""""""""""""""
+processors_per_evaluation
+"""""""""""""""""""""""""
+
+
+Specify the number of processors per evaluation server when Dakota is run in parallel
+
+
+
+**Topics**
+
+
+concurrency_and_parallelism
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* INTEGER
+
+- *Default:* automatic (see discussion)
+
+
+**Description**
+
+
+The optional ``processors_per_evaluation`` specification supports user override
+of the automatic parallel configuration for the number of processors in each
+evaluation server. That is, if the automatic configuration is
+undesirable for some reason, the user can enforce a desired server size
+at the evaluation parallelism level. Refer to ParallelLibrary
+and the :ref:`Parallel Computing section <parallel>` for additional information.
+
+

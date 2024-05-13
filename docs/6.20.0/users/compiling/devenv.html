@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Setup Development Environment &mdash; dakota  documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/dakota_theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/sandiaheaderlite.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Obtain Source Code" href="getsource.html" />
+    <link rel="prev" title="Compiling Dakota" href="compiling.html" /> 
+  
+  <meta name="sandia.approval_type" content="formal"/>
+  <meta property="sandia.approved" content="SAND2023-13392 O"/>
+  <meta name="description" content="The Dakota project delivers both state-of-the-art research and robust, usable software for optimization and UQ."/>
+  <meta name="keywords" content="Dakota, optimization, UQ, uncertainty quantification, parametric analysis, design exploration, model calibration, risk analysis"/>
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> dakota
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../setupdakota.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usingdakota/usingdakota.html">Using Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usingdakotagui/usingdakotagui.html">Using Dakota GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../externaltools/externaltools.html">Using External Tools</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="compiling.html">Compiling Dakota</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Setup Development Environment</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#toolchains">Toolchains</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#packages">Packages</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#platform-specific-hints">Platform-specific Hints</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#rhel-7">RHEL 7</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#rhel-8">RHEL 8</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ubuntu">Ubuntu</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mac-os">Mac OS</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#windows">Windows</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="getsource.html">Obtain Source Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configure.html">Configure with CMake</a></li>
+<li class="toctree-l2"><a class="reference internal" href="build.html">Build and Install Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test.html">Running Dakota Tests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html">End-to-end Compilation Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../developingdakota/developingdakota.html">Developing Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../misc/misc.html">Miscellaneous</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">dakota</a>
+      </nav>
+
+	  <!-- SNL Lite header -->
+	  <div class="snlheader-subsite--wrapper-default">
+		<snlheader class="snlheader-subsite" role="snlbanner">
+		  <div class="wrapper">
+			<a href="https://www.sandia.gov/index.html">
+			  <div class="logo-transparent"><p class="logo">Sandia National Laboratories</p></div>
+			</a>
+			<div class="nav-top">
+			  <a class="visuallyhidden" name="mainnav"></a>
+			  <div aria-label="main navigation" class="core-nav-transparent core-nav-transparent--visible" role="navigation">
+				<ul role="navigation" class="secondary-links">
+				  <li id="search-text-link">
+					<a aria-label="Search" href="https://www.sandia.gov/search/">Search Sandia.gov</a>
+				  </li>
+				  <li id="directory-text-link">
+					<a href="https://www.sandia.gov/directory.html" aria-expanded="false" aria-label="Site Directory">All Sandia Websites</a>
+				  </li>
+				</ul>
+			  </div>
+			</div>
+		  </div> 
+		</snlheader>
+	  </div>	  
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="compiling.html">Compiling Dakota</a></li>
+      <li class="breadcrumb-item active">Setup Development Environment</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/compiling/devenv.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="setup-development-environment">
+<span id="devenv"></span><h1>Setup Development Environment<a class="headerlink" href="#setup-development-environment" title="Link to this heading"></a></h1>
+<p>Dakota has the following toolchain and software package
+dependencies. See sections that follow for suggestions on how to
+satisfy them.</p>
+<p>Dakota regression test baselines are based on the recommended Dakota
+RHEL 7 configuration below. Regression tests will typically exhibit
+numerical differences when running on other platforms. For developers
+needing to reproduce RHEL 7 baselines on other platforms, e.g., for
+pre-push code verification, a Docker-based build/test process is also
+described in <a class="reference internal" href="../developingdakota/devenvironment.html#devenvironment-main"><span class="std std-ref">Setup Your Development Environment</span></a>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Dakota developers at SNL should augment this information with
+site-specific documentation.</p>
+</div>
+<section id="toolchains">
+<h2>Toolchains<a class="headerlink" href="#toolchains" title="Link to this heading"></a></h2>
+<table class="docutils align-default" id="id1">
+<caption><span class="caption-number">Table 22 </span><span class="caption-text">Dakota Build Toolchains</span><a class="headerlink" href="#id1" title="Link to this table"></a></caption>
+<thead>
+<tr class="row-odd"><th class="head"><p>Tool</p></th>
+<th class="head"><p>Version</p></th>
+<th class="head"><p>Notes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><a class="reference external" href="https://cmake.org/">CMake</a></p></td>
+<td><p>&gt;= 3.17</p></td>
+<td><p>Required</p></td>
+</tr>
+<tr class="row-odd"><td><p>C Compiler</p></td>
+<td><p>&gt;= C99</p></td>
+<td><p>Required</p></td>
+</tr>
+<tr class="row-even"><td><p>C++ Compiler</p></td>
+<td><p>&gt;= C++11</p></td>
+<td><p>Required</p></td>
+</tr>
+<tr class="row-odd"><td><p>Fortran Compiler</p></td>
+<td><p>77, 90</p></td>
+<td><p>Required</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://www.python.org/">Python</a></p></td>
+<td><p>&gt;= 2.7 or &gt;= 3.6</p></td>
+<td><p>Required; 3.6 or newer recommended</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://www.perl.org/">Perl</a></p></td>
+<td><p>&gt;= 5.16</p></td>
+<td><p>Required</p></td>
+</tr>
+<tr class="row-even"><td><p>Java JDK</p></td>
+<td><p>= 11</p></td>
+<td><p>Optional; required for dakota.xml maintenance, generating user docs</p></td>
+</tr>
+<tr class="row-odd"><td><p>Doxygen</p></td>
+<td><p>= 1.8.20</p></td>
+<td><p>Optional; required for generating C++ code docs</p></td>
+</tr>
+<tr class="row-even"><td><p>Sphinx</p></td>
+<td><p>&gt;= 5.0</p></td>
+<td><p>Optional; required for generating user docs. Requires
+sub-packages , myst-parser, sphinx-rtd-theme,
+sphinxcontrib-bibtex</p></td>
+</tr>
+</tbody>
+</table>
+<p>Notes on toolchains:</p>
+<ul class="simple">
+<li><p>Dakota is most commonly built with GCC, Intel, and Visual C++
+compilers, and to a lesser extent with Cray, PGI, IBM, and
+Clang. Recent versions of these compilers are not covered by
+automated testing so using really new ones may require patches or
+disabling some Dakota packages (often Acro and/or AMPL).</p></li>
+<li><p>Typically the compilers should be from the same toolchain and
+version, i.e., don’t mix Intel C++ with GCC Fortran unless you
+understand the consequences.</p></li>
+<li><p>C99 is not supported by Dakota’s AMPL package.</p></li>
+<li><p>Refer to <a class="reference internal" href="../developingdakota/writingdocs.html#writing-dakota-docs"><span class="std std-ref">Writing Dakota Documentation</span></a> for detailed instructions on
+installing Sphinx into your preferred Python environment.</p></li>
+</ul>
+</section>
+<section id="packages">
+<h2>Packages<a class="headerlink" href="#packages" title="Link to this heading"></a></h2>
+<table class="docutils align-default" id="id2">
+<caption><span class="caption-number">Table 23 </span><span class="caption-text">Core Dakota Packages</span><a class="headerlink" href="#id2" title="Link to this table"></a></caption>
+<thead>
+<tr class="row-odd"><th class="head"><p>Package</p></th>
+<th class="head"><p>Version</p></th>
+<th class="head"><p>Notes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Linear Algebra</p></td>
+<td><p>any</p></td>
+<td><p>Required, e.g., BLAS/LAPACK, MKL, Accelerate</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://www.hdfgroup.org/">Boost</a></p></td>
+<td><p>&gt;= 1.69</p></td>
+<td><p>Required; headers, plus libraries: filesystem, program_options,
+regex, serialization, system</p></td>
+</tr>
+<tr class="row-even"><td><p>MPI</p></td>
+<td><p>any</p></td>
+<td><p>Optional, e.g., MPICH, OpenMPI</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://www.hdfgroup.org/">HDF5</a></p></td>
+<td><p>= 1.10.4 (Dakota may work with 1.10.x for x &gt; 4; untested)</p></td>
+<td><p>Optional; required for Dakota structured results output</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://www.h5py.org/">h5py</a></p></td>
+<td></td>
+<td><p>Optional; required to enable HDF5-based tests (recommended for
+developers)</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://www.hdfgroup.org/">GSL</a></p></td>
+<td><p>&gt;= 1.15</p></td>
+<td><p>Optional; required for QUESO Bayesian calibration, <strong>induces
+GPL dependency</strong></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://trilinos.github.io/">Trilinos</a> (Teuchos and ROL)</p></td>
+<td><p>&gt;= 13.0</p></td>
+<td><p>Optional, as Dakota includes a snapshot in
+<code class="file docutils literal notranslate"><span class="pre">packages/external/trilinos</span></code></p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Notes on Packages:</strong></p>
+<p>Linear Algebra:</p>
+<ul class="simple">
+<li><p>If installing with a package manager, consider including the user
+runtime as well as development packages, e.g., <code class="docutils literal notranslate"><span class="pre">blas</span></code>,
+<code class="docutils literal notranslate"><span class="pre">blas-devel</span></code>, <code class="docutils literal notranslate"><span class="pre">lapack</span></code>, <code class="docutils literal notranslate"><span class="pre">lapack-devel</span></code>, to facilitate both
+dynamic and static linking.</p></li>
+<li><p>Some systems do not provide canonically named versions of these
+libraries, so it may be necessary to symbolically link, e.g.,
+<code class="docutils literal notranslate"><span class="pre">libblas.so</span> <span class="pre">-&gt;</span> <span class="pre">libblas.so.3</span></code>. Otherwise you may be able to specify
+full paths to the desired libraries using the CMake variables
+<code class="docutils literal notranslate"><span class="pre">BLAS_LIBS</span></code>, <code class="docutils literal notranslate"><span class="pre">LAPACK_LIBS</span></code></p></li>
+</ul>
+<p>Boost:</p>
+<ul class="simple">
+<li><p>Make sure the CMake version you’re using is newer than the Boost
+version to properly find Boost.</p></li>
+<li><p>If compiling Boost from source, it may be necessary to compile Boost
+with C++11, e.g., by setting <code class="docutils literal notranslate"><span class="pre">-std=c++11</span></code> or similar.</p></li>
+</ul>
+<p>MPI:</p>
+<ul class="simple">
+<li><p>The MPI installation must be compatible with the compiler toolchain.</p></li>
+</ul>
+<p>HDF5:</p>
+<ul class="simple">
+<li><p>If compiling HDF5 from source, C++ and HL support must be enabled
+(<code class="docutils literal notranslate"><span class="pre">--enable-cxx</span></code> and <code class="docutils literal notranslate"><span class="pre">--enable-hl</span></code> options to configure), which are not the defaults when
+building it from source.</p></li>
+</ul>
+<p>Trilinos:</p>
+<ul class="simple">
+<li><p>Dakota’s Trilinos snapshot suffices for most users. Those who need
+Dakota to be compatible with a specific Trilinos installation, e.g.,
+when linking Dakota as a library with a Trilinos-dependent
+application, should provide their own Trilinos.</p></li>
+<li><p>If compiling Trilinos from source, enable at least the Teuchos and
+ROL packages.</p></li>
+<li><p>Dakota likely cannot be compiled against Kokkos-enabled Trilinos.</p></li>
+<li><p>Compatibility:</p>
+<ul>
+<li><p>Dakota 6.10–6.12 require Trilinos dated May 2019 or newer, or
+otherwise disabling deprecated code in Teuchos due to removal of
+<code class="docutils literal notranslate"><span class="pre">ostream::operator&lt;&lt;</span></code>.</p></li>
+<li><p>Dakota 6.13 and newer require Trilinos 13.0 or newer.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="platform-specific-hints">
+<h2>Platform-specific Hints<a class="headerlink" href="#platform-specific-hints" title="Link to this heading"></a></h2>
+<p>For Linux platforms in general, it’s easiest to satisfy Dakota’s
+dependencies using OS package managers, supplementing with compiling
+from source as needed.</p>
+<section id="rhel-7">
+<h3>RHEL 7<a class="headerlink" href="#rhel-7" title="Link to this heading"></a></h3>
+<p>On RHEL 7 (most recently 7.8), we satisfied Dakota’s dependencies with
+the following which are all from either the standard package or EPEL (<code class="docutils literal notranslate"><span class="pre">yum</span>
+<span class="pre">install</span> <span class="pre">epel-release</span></code>) repositories and installed with yum install.</p>
+<p>Core development tools: GCC 4.8.5, Java 11, Python 3.6.8 (alternately
+2.7.5 via the <code class="docutils literal notranslate"><span class="pre">python</span></code> package), Perl 5.16.3:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>yum install git cmake3 gcc gcc-c++ gcc-gfortran java-11-openjdk-devel python3 perl
+</pre></div>
+</div>
+<p>Libraries/runtimes: Boost 1.69, OpenMPI 1.10.3, GSL 1.15.</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>yum install blas blas-devel lapack lapack-devel boost169 boost169-devel openmpi openmpi-devel gsl gsl-devel
+</pre></div>
+</div>
+<p>Enabling HDF5 requires compiling and installing HDF5 1.10.4 and
+optionally an h5py that uses it. (Dakota may work with, but hasn’t
+been verified with, newer HDF5 1.10.x)</p>
+<p>If building documentation, see above for Python packages as well.</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>yum install doxygen texlive-collection-latexrecommended
+</pre></div>
+</div>
+<p>When configuring use <code class="docutils literal notranslate"><span class="pre">cmake3</span></code> and specify Boost include/library
+directories to point to, e.g., <code class="docutils literal notranslate"><span class="pre">/usr/include/boost169</span></code>.</p>
+</section>
+<section id="rhel-8">
+<h3>RHEL 8<a class="headerlink" href="#rhel-8" title="Link to this heading"></a></h3>
+<p>The following list of packages work for a trial Dakota build on CentOS
+or Rocky Linux 8 distro.</p>
+<p>Base Packages resulting in GCC 8.5.0, Python 3.6.8, CMake 3.20.2, and
+OpenMPI 4.1.1:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span><span class="c"># yum or dnf install the following packages...</span>
+git make cmake gcc gcc-c++ gcc-gfortran python3 perl blas lapack openmpi openmpi-devel
+
+<span class="c"># Omit boost as will install 1.66</span>
+<span class="c">## boost boost-devel</span>
+
+<span class="c"># GSL only needed if enabling Dakota&#39;s QUESO library</span>
+gsl gsl-devel
+
+<span class="c"># NOTE: Java should only be needed if maintaining Dakota or building documentation</span>
+java-11-openjdk-devel
+
+<span class="c"># For Python features (optional)</span>
+python3-h5py python3-numpy
+
+<span class="c"># Enable the PowerTools repo via editing /etc/yum.repos.d/CentOS-PowerTools.repo and install</span>
+blas-devel lapack-devel
+</pre></div>
+</div>
+<p>EPEL Packages add Boost 1.69 and HDF 1.10.5:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>epel-release
+
+<span class="c"># EPEL, PowerTools for Boost to /usr/include/boost169</span>
+boost169 boost169-devel
+
+<span class="c"># Optional; also needs powertools for libsz and libaec deps</span>
+hdf5 hdf5-devel: 1.10.5
+
+<span class="c"># Optional python linked library:</span>
+python36-devel
+</pre></div>
+</div>
+<p>Basic build example:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>cmake -D BOOST_INCLUDEDIR:PATH=/usr/include/boost169 -DBOOST_LIBRARYDIR:PATH=/usr/lib64/boost169 ../source
+</pre></div>
+</div>
+</section>
+<section id="ubuntu">
+<h3>Ubuntu<a class="headerlink" href="#ubuntu" title="Link to this heading"></a></h3>
+<p>An incomplete, but perhaps helpful, list of packages for Ubuntu 20.04
+LTS, starting from a minimal desktop installation:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>apt-get install gcc g++ gfortran cmake libboost-all-dev libblas-dev liblapack-dev libopenmpi-dev openmpi-bin gsl-bin libgsl-dev python perl libhdf5-dev
+</pre></div>
+</div>
+<p>An incomplete, but perhaps helpful, list of packages for Ubuntu 18.04
+LTS:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>apt-get install gcc g++ gfortran cmake libboost-all-dev libblas-dev liblapack-dev libopenmpi-dev openmpi-bin gsl-bin libgsl-dev python perl
+</pre></div>
+</div>
+<p>Other possibly helpful package names:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>doxygen texlive-latex-base openjdk-11-jre-headless
+</pre></div>
+</div>
+</section>
+<section id="mac-os">
+<span id="devenv-mac"></span><h3>Mac OS<a class="headerlink" href="#mac-os" title="Link to this heading"></a></h3>
+<p>A number of approaches can be used to satisfy Dakota’s dependencies on
+Mac OS / OS X. Typically the OS-provided Accelerate linear algebra
+suffices. These are listed in reverse chronological order, in hopes of
+archiving useful information, with the first being the most promising
+approach currently.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Mac SIP and other security features can be highly problematic when
+running Dakota tests or even using the Dakota binaries.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you build your own toolchains, make sure that the TPLs are built
+with the compiler you intend to use for Dakota and not the system
+compiler. It may be necessary to explicitly enable C++11 when
+compiling Boost, particularly with GCC compilers.</p>
+</div>
+<p id="devenv-mac-clang-homebrew"><strong>Verified on MacOS 11 (Big Sur):</strong> System Clang + GFortran</p>
+<p>Uses system-provided clang/clang++, perl, python, VecLib/Accelerate,
+with Homebrew GFortran. Demonstrated on Intel MacBook Pro (2020)</p>
+<ol class="arabic">
+<li><p>Follow the instructions on the homebrew website to install the
+homebrew package manager.</p></li>
+<li><p>Install packages:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>brew install cmake gcc open-mpi boost gsl hdf5 openjdk@11
+</pre></div>
+</div>
+</li>
+<li><p>Sample basic build:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>cmake -D CMAKE_C_COMPILER=clang -D CMAKE_CXX_COMPILER=clang++ -D CMAKE_Fortran_COMPILER=gfortran -D BOOST_ROOT:PATH=/usr/local -D DAKOTA_HAVE_MPI:BOOL=TRUE -D HAVE_QUESO:BOOL=TRUE -D DAKOTA_HAVE_GSL:BOOL=TRUE -D DAKOTA_HAVE_HDF5:BOOL=TRUE ../source
+</pre></div>
+</div>
+</li>
+</ol>
+<p><strong>Verified August 2020 (probably on OS X 10.15 Catalina):</strong></p>
+<p>Follow the instructions on the homebrew website to install the
+homebrew package manager.</p>
+<ul>
+<li><p>Install the desired version of gcc from homebrew:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>brew install gcc@7
+</pre></div>
+</div>
+</li>
+</ul>
+<p>Boost:</p>
+<ul>
+<li><p>Download a source package for Boost 1.69 and unpack it someplace.</p></li>
+<li><p>Follow the instructions on the Boost website to build Boost.Build.</p></li>
+<li><p>Create ~/user-config.jam with the following in it. (Switch gcc-7 to the desired version, if different):</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>using darwin : : gcc-7 : &lt;cxxflags&gt;&quot;-std=c++11&quot; ;
+</pre></div>
+</div>
+</li>
+<li><p>At the top of the boost source directory, invoke b2 with the following options, making sure to replace/set <code class="docutils literal notranslate"><span class="pre">$INSTALL_PATH</span></code> and <code class="docutils literal notranslate"><span class="pre">$BUILD_PATH</span></code> to something convenient:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>b2 link=static --without-python define=_GLIBCXX_USE_CXX11_ABI=1 --prefix=$INSTALL_PATH --build-dir=$BUILD_PATH install
+</pre></div>
+</div>
+</li>
+</ul>
+<p>HDF5:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>export CXX=&lt;homebrew C++ compiler&gt;
+export CC=&lt;homebrew C compiler&gt;
+export CXXFLAGS=&#39;-std=c++11 -D_GLIBCXX_USE_CXX11_ABI=1&#39;
+./configure --enable-cxx --prefix=&lt;install location&gt;
+make install
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>When building Dakota with C++11, CMake
+<code class="docutils literal notranslate"><span class="pre">-D_GLIBCXX_USE_CXX11_ABI=1</span></code> by default. You can see this by
+running <cite>make VERBOSE=1</cite>. This define is <a class="reference external" href="https://gcc.gnu.org/onlinedocs/libstdc++/manual/using_dual_abi.html">explained here</a>. The
+above configuration produces a compatible Boost build.</p>
+<p>Alternately, one might be able to explicitly disable this by
+adding <code class="docutils literal notranslate"><span class="pre">-D_GLIBCXX_USE_CXX11_ABI=0</span></code> to <code class="docutils literal notranslate"><span class="pre">CMAKE_CXX_FLAGS</span></code>; CMake
+is smart enough to pass that option to the compiler only once, with
+it set to 0. Which of these is the best approach, building with the
+define turned on or off, is currently unclear. Things just need to be
+consistent.</p>
+</div>
+<div class="admonition attention">
+<p class="admonition-title">Attention</p>
+<p>The following details for OS X 12.12 are outdated but serve an archival
+role for providing hints for building on Mac OS X more generally.</p>
+</div>
+<p><strong>Verified on OS X 10.12:</strong> All homebrew approach.</p>
+<ol class="arabic">
+<li><p>Follow the instructions on the homebrew website to install the
+homebrew package manager.</p></li>
+<li><p>Install gcc&#64;5, which includes all needed compilers, with the
+command</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>brew install gcc@5
+</pre></div>
+</div>
+</li>
+<li><p>Install CMake with the command</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>brew install cmake
+</pre></div>
+</div>
+</li>
+<li><p>Install Boost 1.55. It is necessary to instruct brew to build Boost
+from source using the gcc-5 compiler.</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>brew install --build-from-source --cc=gcc-5 boost@1.55
+</pre></div>
+</div>
+</li>
+<li><p>Optional (needed for message-passing parallelism): Install OpenMPI
+1.6, building it from source, too.</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>brew install --build-from-source --cc=gcc-5 open-mpi@1.6
+</pre></div>
+</div>
+</li>
+<li><p>Optional (needed to use bayes_calibration queso): GSL 1.16 from
+source.</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>brew install --build-from-source --cc=gcc-5 gsl@1.16
+</pre></div>
+</div>
+</li>
+</ol>
+<p><strong>Verified on OS X 10.9 – 10.12:</strong> CMake from DMG, XCode, GCC
+compilers from <a class="reference external" href="http://hpc.sourceforge.net">http://hpc.sourceforge.net</a>. Use them to build Boost,
+OpenMPI, and GSL from source.</p>
+</section>
+<section id="windows">
+<span id="devenv-windows"></span><h3>Windows<a class="headerlink" href="#windows" title="Link to this heading"></a></h3>
+<p>We regularly compile 64-bit Dakota binaries on Windows 10 64-bit with
+the following tools:</p>
+<ul class="simple">
+<li><p>CMake: install using Windows installer from <a class="reference external" href="http://cmake.org">http://cmake.org</a></p></li>
+<li><p>Microsoft Visual Studio Community 2019, update 11 (version 16.11)</p></li>
+<li><p>Intel Fortran: Intel Parallel Studio XE 2020, update 4 to work with MSVS</p></li>
+<li><p>Python 3.10.6</p></li>
+<li><p>Strawberry Perl 5.32.1.1</p></li>
+<li><p>Eclipse Temurin JDK 11 (LTS) HotSpot</p></li>
+</ul>
+<p>And packages:</p>
+<ul class="simple">
+<li><p>BLAS/LAPACK: reference LAPACK 3.10.1 built statically with
+MSVS/Intel Fortran, e.g., <code class="docutils literal notranslate"><span class="pre">cmake</span> <span class="pre">-G</span> <span class="pre">&quot;Visual</span> <span class="pre">Studio</span> <span class="pre">16</span> <span class="pre">2019&quot;</span> <span class="pre">-A</span>
+<span class="pre">x64</span> <span class="pre">-D</span> <span class="pre">BUILD_SHARED_LIBS=FALSE</span></code></p></li>
+<li><p>Boost 1.71.0 binary package for MSVC 14.2</p></li>
+<li><p>HDF5 1.10.8 built statically with MSVS</p></li>
+</ul>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="compiling.html" class="btn btn-neutral float-left" title="Compiling Dakota" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="getsource.html" class="btn btn-neutral float-right" title="Obtain Source Code" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <!--
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Sandia National Laboratories.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+  --> 
+
+</footer>
+        </div>
+      </div>
+	  
+	  <div style="background-color: #0f0f0f;color:#fafafa;padding:20px">
+	    <div>
+		  <h2><em>Exceptional service in the national interest</em></h2>
+		</div>
+		<p>© 2023 National Technology and Engineering Solutions of Sandia, LLC. | <a href="https://www.sandia.gov/contact_us/index.html">Questions &amp; Comments</a> | <a href="https://www.sandia.gov/general/privacy-security/index.html">Privacy &amp; Security</a></p>
+		<p><a href="http://energy.gov" rel="noopener noreferrer" target="_blank"><img alt="U.S. Department of Energy" longdesc="https://energy.gov" src="https://www.sandia.gov/_common/images/doe_logo_white.png" style="height:37px; width:140px"></a> <a href="http://nnsa.energy.gov/" rel="noopener noreferrer" target="_blank"> <img alt="National Nuclear Security Administration" longdesc="http://nnsa.gov" src="https://www.sandia.gov/_common/images/nnsa_logo_white.png" style="height:37px; width:116px"></a></p>
+		<p><a href="https://www.sandia.gov">Sandia National Laboratories</a> is a multimission laboratory managed and operated by National Technology and Engineering Solutions of Sandia, LLC., a wholly owned subsidiary of Honeywell International, Inc., for the U.S. Department of Energy’s National Nuclear Security Administration under contract DE-NA-0003525.</p>
+	  </div>	  	  
+	  
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

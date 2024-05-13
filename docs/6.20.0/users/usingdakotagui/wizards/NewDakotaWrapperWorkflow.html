@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>New Dakota Wrapper Workflow &mdash; dakota  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/dakota_theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/sandiaheaderlite.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="New “Lazy” Driver" href="NewLazyDriver.html" />
+    <link rel="prev" title="New Dakota Study" href="NewDakotaStudy.html" /> 
+  
+  <meta name="sandia.approval_type" content="formal"/>
+  <meta property="sandia.approved" content="SAND2023-13392 O"/>
+  <meta name="description" content="The Dakota project delivers both state-of-the-art research and robust, usable software for optimization and UQ."/>
+  <meta name="keywords" content="Dakota, optimization, UQ, uncertainty quantification, parametric analysis, design exploration, model calibration, risk analysis"/>
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> dakota
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../setupdakota.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../usingdakota/usingdakota.html">Using Dakota</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../usingdakotagui.html">Using Dakota GUI</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#introduction">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#example-search">Example Search</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../usingdakotagui.html#wizards">Wizards</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="NewDakotaProject.html">New Dakota Project</a></li>
+<li class="toctree-l3"><a class="reference internal" href="NewParameterResponseFile.html">New Parameter/Response File</a></li>
+<li class="toctree-l3"><a class="reference internal" href="NewWorkflowDriver.html">New Workflow-Based Driver</a></li>
+<li class="toctree-l3"><a class="reference internal" href="NewDakotaStudy.html">New Dakota Study</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">New Dakota Wrapper Workflow</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#context">Context</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#wizard-overview">Wizard Overview</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="NewLazyDriver.html">New “Lazy” Driver</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#editing-dakota-input-files">Editing Dakota Input Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#running-dakota">Running Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#running-dakota-remotely">Running Dakota Remotely</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#output-from-dakota">Output from Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#gui-tools">GUI Tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#miscellaneous">Miscellaneous</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../externaltools/externaltools.html">Using External Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../compiling/compiling.html">Compiling Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developingdakota/developingdakota.html">Developing Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../misc/misc.html">Miscellaneous</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">dakota</a>
+      </nav>
+
+	  <!-- SNL Lite header -->
+	  <div class="snlheader-subsite--wrapper-default">
+		<snlheader class="snlheader-subsite" role="snlbanner">
+		  <div class="wrapper">
+			<a href="https://www.sandia.gov/index.html">
+			  <div class="logo-transparent"><p class="logo">Sandia National Laboratories</p></div>
+			</a>
+			<div class="nav-top">
+			  <a class="visuallyhidden" name="mainnav"></a>
+			  <div aria-label="main navigation" class="core-nav-transparent core-nav-transparent--visible" role="navigation">
+				<ul role="navigation" class="secondary-links">
+				  <li id="search-text-link">
+					<a aria-label="Search" href="https://www.sandia.gov/search/">Search Sandia.gov</a>
+				  </li>
+				  <li id="directory-text-link">
+					<a href="https://www.sandia.gov/directory.html" aria-expanded="false" aria-label="Site Directory">All Sandia Websites</a>
+				  </li>
+				</ul>
+			  </div>
+			</div>
+		  </div> 
+		</snlheader>
+	  </div>	  
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../usingdakotagui.html">Using Dakota GUI</a></li>
+      <li class="breadcrumb-item active">New Dakota Wrapper Workflow</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/usingdakotagui/wizards/NewDakotaWrapperWorkflow.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="new-dakota-wrapper-workflow">
+<span id="wizards-newwrapperworkflow-main"></span><h1>New Dakota Wrapper Workflow<a class="headerlink" href="#new-dakota-wrapper-workflow" title="Link to this heading"></a></h1>
+<section id="context">
+<h2>Context<a class="headerlink" href="#context" title="Link to this heading"></a></h2>
+<p>The “New Dakota Wrapper Workflow” wizard allows you to easily create a secondary workflow that launches Dakota for you.</p>
+<p>“Why would I want to create a workflow that does nothing but execute Dakota?” you may be asking yourself.</p>
+<p>A Dakota study that was created using the <a class="reference internal" href="NewDakotaStudy.html#wizards-newdakotastudy"><span class="std std-ref">New Dakota Study wizard</span></a> and set up to interface with a
+<a class="reference internal" href="../ngw/NextGenWorkflowTutorial.html#gui-nestedworkflowtutorial-main"><span class="std std-ref">Next-Gen Workflow IWF file as the analysis driver</span></a> will have an interface block that looks
+something like this:</p>
+<img alt="Interface block for a nested NGW workflow" src="../../_images/Run_Using_Workflow_111.png" />
+<p>Note that the value for the <a class="reference internal" href="../../usingdakota/reference/interface-analysis_drivers.html#interface-analysis-drivers"><span class="std std-ref">analysis_drivers</span></a> keyword is DPREPRO markup.  This means that the Dakota study will not run by itself.
+Executing <code class="docutils literal notranslate"><span class="pre">dakota</span> <span class="pre">-input</span> <span class="pre">my_cool_input_file.in</span></code> on the command line won’t work for this input file, and neither will using an Eclipse run configuration.</p>
+<p>We need a tool that has enough context to appropriately substitute the DPREPRO markup with the correct IWF file as an analysis driver.</p>
+<p>For this situation, we need to create a <strong>second wrapper workflow</strong> that launches Dakota for us.  This is the right solution because the “dakota” node in Next-Gen Workflow
+knows how to substitute DPREPRO markup.  Additionally, Next-Gen Workflow also provides a special node that converts IWF workflow files into run-ready Dakota analysis drivers.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul class="simple">
+<li><p>In lieu of using this wizard, you can alternately use the <a class="reference internal" href="../running/DakotaRunConfiguration.html#gui-run-configurations-workflow"><span class="std std-ref">“Dakota (Workflow)” run configuration</span></a> to launch Dakota in an NGW context.
+This is sometimes faster than using the “New Dakota Wrapper Workflow” wizard.</p></li>
+<li><p>You can read more about the relationship between Dakota analysis drivers and Next-Gen Workflow <a class="reference internal" href="../ngw/NextGenWorkflowAnalysisDrivers.html#ngw-analysisdrivers"><span class="std std-ref">here</span></a>.</p></li>
+</ul>
+</div>
+</section>
+<section id="wizard-overview">
+<h2>Wizard Overview<a class="headerlink" href="#wizard-overview" title="Link to this heading"></a></h2>
+<p>To access this wizard:</p>
+<ul class="simple">
+<li><p>Go to “File &gt; New &gt; Other” and then “Dakota &gt; Dakota Wrapper Workflow”.</p></li>
+<li><p>You can also right-click on a Dakota input file and choose “New &gt; Wrapper workflow for Dakota”.</p></li>
+</ul>
+<img alt="New wrapper workflow for Dakota" src="../../_images/WrapperWorkflowWizard_1.png" />
+<p>This wizard is extremely short.  On the first page, choose a name and location for your wrapper workflow (a common convention is to call it “RunDakota.iwf”)</p>
+<img alt="First wizard page" src="../../_images/WrapperWorkflowWizard_2.png" />
+<p>On the second and final page of the wizard, use the file selector control to select your target Dakota input file.  If you used the context menu option for launching the wizard, this field will already be populated.</p>
+<p>There is an additional set of fields below, which represent pre-processing markup parsed out of the Dakota input file. In the case of a Dakota study with an NGW analysis driver, you
+will typically only see one piece of pre-processing markup to fill out - “DRIVER.” You can either use the ellipsis button to the right to choose your NGW analysis driver file, or simply type in the path to the NGW analysis driver.</p>
+<p>Note that all DPREPRO-compatible markup will be recognized, potentially leading to multiple fields on this page.</p>
+<img alt="Second wizard page" src="../../_images/WrapperWorkflowWizard_3.png" />
+<p>Hitting Finish will generate a run-ready workflow that executes your Dakota study in concert with your chosen IWF file as the analysis driver (via the dakotaWorkflowDriver node):</p>
+<img alt="A run-ready workflow" src="../../_images/WrapperWorkflowWizard_41.png" />
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="NewDakotaStudy.html" class="btn btn-neutral float-left" title="New Dakota Study" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="NewLazyDriver.html" class="btn btn-neutral float-right" title="New “Lazy” Driver" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <!--
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Sandia National Laboratories.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+  --> 
+
+</footer>
+        </div>
+      </div>
+	  
+	  <div style="background-color: #0f0f0f;color:#fafafa;padding:20px">
+	    <div>
+		  <h2><em>Exceptional service in the national interest</em></h2>
+		</div>
+		<p>© 2023 National Technology and Engineering Solutions of Sandia, LLC. | <a href="https://www.sandia.gov/contact_us/index.html">Questions &amp; Comments</a> | <a href="https://www.sandia.gov/general/privacy-security/index.html">Privacy &amp; Security</a></p>
+		<p><a href="http://energy.gov" rel="noopener noreferrer" target="_blank"><img alt="U.S. Department of Energy" longdesc="https://energy.gov" src="https://www.sandia.gov/_common/images/doe_logo_white.png" style="height:37px; width:140px"></a> <a href="http://nnsa.energy.gov/" rel="noopener noreferrer" target="_blank"> <img alt="National Nuclear Security Administration" longdesc="http://nnsa.gov" src="https://www.sandia.gov/_common/images/nnsa_logo_white.png" style="height:37px; width:116px"></a></p>
+		<p><a href="https://www.sandia.gov">Sandia National Laboratories</a> is a multimission laboratory managed and operated by National Technology and Engineering Solutions of Sandia, LLC., a wholly owned subsidiary of Honeywell International, Inc., for the U.S. Department of Energy’s National Nuclear Security Administration under contract DE-NA-0003525.</p>
+	  </div>	  	  
+	  
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

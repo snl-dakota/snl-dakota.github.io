@@ -1,0 +1,68 @@
+.. _method-multilevel_function_train-metric_scale:
+
+""""""""""""
+metric_scale
+""""""""""""
+
+
+define scaling of statistical metrics when adapting UQ surrogates
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-multilevel_function_train-metric_scale-relative
+   method-multilevel_function_train-metric_scale-absolute
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+- *Default:* relative
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+--------------------+-----------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword     | Dakota Keyword Description                    |
+|                         | Group              |                    |                                               |
++=========================+====================+====================+===============================================+
+| Required (Choose One)   | scale of           | `relative`__       | relative scaling of statistical metrics when  |
+|                         | refinement metric  |                    | adapting UQ surrogates                        |
+|                         |                    +--------------------+-----------------------------------------------+
+|                         |                    | `absolute`__       | use of absolute statistical metrics when      |
+|                         |                    |                    | adapting UQ surrogates                        |
++-------------------------+--------------------+--------------------+-----------------------------------------------+
+
+.. __: method-multilevel_function_train-metric_scale-relative.html
+__ method-multilevel_function_train-metric_scale-absolute.html
+
+
+
+**Description**
+
+
+When adapting a UQ surrogate model, e.g., by change in
+response covariance matrix or level mappings, this option controls the
+use of scaling.  The ``absolute`` option indicates that there is no
+scaling such that the statistical change is compared directly to the
+convergence tolerance.  The ``relative`` option indicates that the
+change is measured relative to the current reference value (which
+evolves during the refinement), such that the convergence tolerance
+controls the relative change.
+
+*Default Behavior*
+
+The default is ``relative``.
+
+*Expected Output*
+
+*Usage Tips*
+
+*Additional Discussion*
+
+

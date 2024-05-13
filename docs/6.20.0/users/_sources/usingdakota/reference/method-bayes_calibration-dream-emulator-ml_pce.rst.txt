@@ -1,0 +1,96 @@
+.. _method-bayes_calibration-dream-emulator-ml_pce:
+
+""""""
+ml_pce
+""""""
+
+
+Multilevel Polynomial Chaos Expansion as an emulator model.
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-bayes_calibration-dream-emulator-ml_pce-allocation_control
+   method-bayes_calibration-dream-emulator-ml_pce-discrepancy_emulation
+   method-bayes_calibration-dream-emulator-ml_pce-expansion_order_sequence
+   method-bayes_calibration-dream-emulator-ml_pce-orthogonal_least_interpolation
+   method-bayes_calibration-dream-emulator-ml_pce-askey
+   method-bayes_calibration-dream-emulator-ml_pce-wiener
+   method-bayes_calibration-dream-emulator-ml_pce-normalized
+   method-bayes_calibration-dream-emulator-ml_pce-export_expansion_file
+   method-bayes_calibration-dream-emulator-ml_pce-diagonal_covariance
+   method-bayes_calibration-dream-emulator-ml_pce-full_covariance
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+------------------------------------+-----------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword                     | Dakota Keyword Description                    |
+|                         | Group              |                                    |                                               |
++=========================+====================+====================================+===============================================+
+| Optional                                     | `allocation_control`__             | Sample allocation approach for multilevel     |
+|                                              |                                    | expansions                                    |
++----------------------------------------------+------------------------------------+-----------------------------------------------+
+| Optional                                     | `discrepancy_emulation`__          | Formulation for emulation of model            |
+|                                              |                                    | discrepancies.                                |
++-------------------------+--------------------+------------------------------------+-----------------------------------------------+
+| Required (Choose One)   | Required (Choose   | `expansion_order_sequence`__       | Sequence of expansion orders used in a        |
+|                         | One)               |                                    | multi-stage expansion                         |
+|                         |                    +------------------------------------+-----------------------------------------------+
+|                         |                    | `orthogonal_least_interpolation`__ | Build a polynomial chaos expansion from       |
+|                         |                    |                                    | simulation samples using orthogonal least     |
+|                         |                    |                                    | interpolation.                                |
++-------------------------+--------------------+------------------------------------+-----------------------------------------------+
+| Optional (Choose One)   | Basis Polynomial   | `askey`__                          | Select the standardized random variables (and |
+|                         | Family             |                                    | associated basis polynomials) from the Askey  |
+|                         |                    |                                    | family that best match the user-specified     |
+|                         |                    |                                    | random variables.                             |
+|                         |                    +------------------------------------+-----------------------------------------------+
+|                         |                    | `wiener`__                         | Use standard normal random variables (along   |
+|                         |                    |                                    | with Hermite orthogonal basis polynomials)    |
+|                         |                    |                                    | when transforming to a standardized           |
+|                         |                    |                                    | probability space.                            |
++-------------------------+--------------------+------------------------------------+-----------------------------------------------+
+| Optional                                     | `normalized`__                     | The normalized specification requests output  |
+|                                              |                                    | of PCE coefficients that correspond to        |
+|                                              |                                    | normalized orthogonal basis polynomials       |
++----------------------------------------------+------------------------------------+-----------------------------------------------+
+| Optional                                     | `export_expansion_file`__          | Export the coefficients and multi-index of a  |
+|                                              |                                    | Polynomial Chaos Expansion (PCE) to a file    |
++-------------------------+--------------------+------------------------------------+-----------------------------------------------+
+| Optional (Choose One)   | Covariance Type    | `diagonal_covariance`__            | Display only the diagonal terms of the        |
+|                         |                    |                                    | covariance matrix                             |
+|                         |                    +------------------------------------+-----------------------------------------------+
+|                         |                    | `full_covariance`__                | Display the full covariance matrix            |
++-------------------------+--------------------+------------------------------------+-----------------------------------------------+
+
+.. __: method-bayes_calibration-dream-emulator-ml_pce-allocation_control.html
+__ method-bayes_calibration-dream-emulator-ml_pce-discrepancy_emulation.html
+__ method-bayes_calibration-dream-emulator-ml_pce-expansion_order_sequence.html
+__ method-bayes_calibration-dream-emulator-ml_pce-orthogonal_least_interpolation.html
+__ method-bayes_calibration-dream-emulator-ml_pce-askey.html
+__ method-bayes_calibration-dream-emulator-ml_pce-wiener.html
+__ method-bayes_calibration-dream-emulator-ml_pce-normalized.html
+__ method-bayes_calibration-dream-emulator-ml_pce-export_expansion_file.html
+__ method-bayes_calibration-dream-emulator-ml_pce-diagonal_covariance.html
+__ method-bayes_calibration-dream-emulator-ml_pce-full_covariance.html
+
+
+
+**Description**
+
+
+Selects a multilevel polynomial chaos expansion (ML PCE) surrogate model
+to use in the Bayesian likelihood calculations.  Most specification options are
+carried over for using ML PCE as a surrogate within the Bayesian framework.
+
+

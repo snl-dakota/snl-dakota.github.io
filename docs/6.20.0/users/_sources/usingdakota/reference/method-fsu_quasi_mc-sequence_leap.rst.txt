@@ -1,0 +1,54 @@
+.. _method-fsu_quasi_mc-sequence_leap:
+
+"""""""""""""
+sequence_leap
+"""""""""""""
+
+
+Specify how often the sequence is sampled
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* INTEGERLIST
+
+- *Default:* Vector of ones
+
+
+**Description**
+
+
+``sequence_leap`` controls the "leaping" of
+terms in the sequence. The default is 1 for each variable,
+meaning that each term in the sequence be returned.
+
+
+
+**Examples**
+
+
+If the user specifies
+a sequence_leap of 2 for a variable, the points returned would be every other
+term from the QMC sequence.
+
+
+
+**Theory**
+
+
+The advantage to using a leap value greater than
+one is mainly for high-dimensional sets of random deviates. In this case,
+setting a leap value to the next prime number larger than the largest
+prime base can help maintain uniformity when generating sample sets for high
+dimensions. For more information about the efficacy of leaped
+Halton sequences, see :cite:p:`Robinson1999`.
+
+

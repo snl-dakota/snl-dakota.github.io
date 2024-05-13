@@ -1,0 +1,71 @@
+.. _method-surrogate_based_local-merit_function:
+
+""""""""""""""
+merit_function
+""""""""""""""
+
+
+Select type of penalty or merit function
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-surrogate_based_local-merit_function-penalty_merit
+   method-surrogate_based_local-merit_function-adaptive_penalty_merit
+   method-surrogate_based_local-merit_function-lagrangian_merit
+   method-surrogate_based_local-merit_function-augmented_lagrangian_merit
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+- *Default:* augmented_lagrangian_merit
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+--------------------------------+-----------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword                 | Dakota Keyword Description                    |
+|                         | Group              |                                |                                               |
++=========================+====================+================================+===============================================+
+| Required (Choose One)   | Merit Function     | `penalty_merit`__              | Use penalty merit function                    |
+|                         |                    +--------------------------------+-----------------------------------------------+
+|                         |                    | `adaptive_penalty_merit`__     | Use adaptive penalty merit function           |
+|                         |                    +--------------------------------+-----------------------------------------------+
+|                         |                    | `lagrangian_merit`__           | Use first-order Lagrangian merit function     |
+|                         |                    +--------------------------------+-----------------------------------------------+
+|                         |                    | `augmented_lagrangian_merit`__ | Use combined penalty and zeroth-order         |
+|                         |                    |                                | Lagrangian merit function                     |
++-------------------------+--------------------+--------------------------------+-----------------------------------------------+
+
+.. __: method-surrogate_based_local-merit_function-penalty_merit.html
+__ method-surrogate_based_local-merit_function-adaptive_penalty_merit.html
+__ method-surrogate_based_local-merit_function-lagrangian_merit.html
+__ method-surrogate_based_local-merit_function-augmented_lagrangian_merit.html
+
+
+
+**Description**
+
+
+Following optimization of the approximate subproblem, the candidate
+iterate is evaluated using a merit function, which can be selected to
+be a simple penalty function with penalty ramped by
+surrogate_based_local iteration number ( ``penalty_merit``), an adaptive
+penalty function where the penalty ramping may be accelerated in order
+to avoid rejecting good iterates which decrease the constraint
+violation ( ``adaptive_penalty_merit``), a Lagrangian merit function
+which employs first-order Lagrange multiplier updates (
+``lagrangian_merit``), or an augmented Lagrangian merit function which
+employs both a penalty parameter and zeroth-order Lagrange multiplier
+updates ( ``augmented_lagrangian_merit``). When an augmented Lagrangian
+is selected for either the subproblem objective or the merit function
+(or both), updating of penalties and multipliers follows the approach
+described in :cite:p:`Con00`.
+
+

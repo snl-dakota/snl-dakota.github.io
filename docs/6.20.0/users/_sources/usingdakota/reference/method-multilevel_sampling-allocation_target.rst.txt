@@ -1,0 +1,84 @@
+.. _method-multilevel_sampling-allocation_target:
+
+"""""""""""""""""
+allocation_target
+"""""""""""""""""
+
+
+Allocation statistics/target for the MLMC sample allocation.
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-multilevel_sampling-allocation_target-mean
+   method-multilevel_sampling-allocation_target-variance
+   method-multilevel_sampling-allocation_target-standard_deviation
+   method-multilevel_sampling-allocation_target-scalarization
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+- *Default:* mean
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+------------------------+-----------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword         | Dakota Keyword Description                    |
+|                         | Group              |                        |                                               |
++=========================+====================+========================+===============================================+
+| Required (Choose One)   | Allocation target  | `mean`__               | Fit MLMC sample allocation to control the     |
+|                         |                    |                        | variance of the estimator for the mean.       |
+|                         |                    +------------------------+-----------------------------------------------+
+|                         |                    | `variance`__           | Fit MLMC sample allocation to control the     |
+|                         |                    |                        | variance of the estimator for the variance.   |
+|                         |                    +------------------------+-----------------------------------------------+
+|                         |                    | `standard_deviation`__ | Fit MLMC sample allocation to control the     |
+|                         |                    |                        | variance of the estimator for the standard    |
+|                         |                    |                        | deviation.                                    |
+|                         |                    +------------------------+-----------------------------------------------+
+|                         |                    | `scalarization`__      | Fit MLMC sample allocation to a mixture of    |
+|                         |                    |                        | terms of means and standard deviations.       |
++-------------------------+--------------------+------------------------+-----------------------------------------------+
+
+.. __: method-multilevel_sampling-allocation_target-mean.html
+__ method-multilevel_sampling-allocation_target-variance.html
+__ method-multilevel_sampling-allocation_target-standard_deviation.html
+__ method-multilevel_sampling-allocation_target-scalarization.html
+
+
+
+**Description**
+
+
+Computes the variance of the estimator for a given statistics/target and fits sample allocation by solving the corresponding optimization problem. The ``allocation_target`` specification supports options of ``mean`` (default), ``variance`` an analytic approximation is available. Additionally, a numerical optimization can be used in that case, see ``variance`` option :dakkw:`method-multilevel_sampling-allocation_target-variance-optimization`.
+
+*Default Behavior*
+"mean"
+
+
+
+**Examples**
+
+
+The following method block
+
+.. code-block::
+
+    method,
+     model_pointer = 'HIERARCH'
+            multilevel_sampling
+       pilot_samples = 20 seed = 1237
+       convergence_tolerance = .01
+       allocation_target = variance
+
+
+uses the variance as sample allocation target by computing its variance.
+
+

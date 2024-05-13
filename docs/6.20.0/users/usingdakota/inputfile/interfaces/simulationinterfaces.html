@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Simulation Interfaces &mdash; dakota  documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/dakota_theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/sandiaheaderlite.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Building a Black-Box Interface to a Simulation Code" href="buildingblackboxinterface.html" />
+    <link rel="prev" title="Interfaces" href="../interfaces.html" /> 
+  
+  <meta name="sandia.approval_type" content="formal"/>
+  <meta property="sandia.approved" content="SAND2023-13392 O"/>
+  <meta name="description" content="The Dakota project delivers both state-of-the-art research and robust, usable software for optimization and UQ."/>
+  <meta name="keywords" content="Dakota, optimization, UQ, uncertainty quantification, parametric analysis, design exploration, model calibration, risk analysis"/>
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../index.html" class="icon icon-home"> dakota
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../setupdakota.html">Getting Started</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../usingdakota.html">Using Dakota</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../introduction/aboutdakota.html">About Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../introduction/helloworld.html">Dakota Beginner’s Tutorial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../examples.html">Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../introduction/couplingtosimulations.html">Coupling Dakota to a Simulation</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../inputfile.html">Dakota Input File</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../formatting.html">Input File Formatting</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../model.html">Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../variables.html">Variables</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../interfaces.html">Interfaces</a><ul class="current">
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Simulation Interfaces</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#fork-simulation-interface">Fork Simulation Interface</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#direct-simulation-interface">Direct Simulation Interface</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#system-call-simulation-interface">System Call Simulation Interface</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#syntax-for-filter-and-driver-strings">Syntax for Filter and Driver Strings</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#fork-or-system-call-which-to-use">Fork or System Call: Which to Use?</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="buildingblackboxinterface.html">Building a Black-Box Interface to a Simulation Code</a></li>
+<li class="toctree-l4"><a class="reference internal" href="simulationinterfacecomponents.html">Simulation Interface Components</a></li>
+<li class="toctree-l4"><a class="reference internal" href="simulationfilemanagement.html">Simulation File Management</a></li>
+<li class="toctree-l4"><a class="reference internal" href="batchedevaluations.html">Batched Evaluations</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mappingexamples.html">Parameter to Response Mapping Examples</a></li>
+<li class="toctree-l4"><a class="reference internal" href="dakotainterfacing.html">Parameters and Results Using the Python dakota.interfacing module</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../responses.html">Responses</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../inputstodakota.html">Inputs to Dakota</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../inputspec.html">Dakota Input Spec</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../inputfile.html#video-resources">Video Resources</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../running.html">Running Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../output.html">Dakota Output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../studytypes.html">Study Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../topics.html">Topics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../advanced.html">Advanced Topics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../theory.html">Dakota Theory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../reference.html">Keyword Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usingdakotagui/usingdakotagui.html">Using Dakota GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../externaltools/externaltools.html">Using External Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../compiling/compiling.html">Compiling Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../developingdakota/developingdakota.html">Developing Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../misc/misc.html">Miscellaneous</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">dakota</a>
+      </nav>
+
+	  <!-- SNL Lite header -->
+	  <div class="snlheader-subsite--wrapper-default">
+		<snlheader class="snlheader-subsite" role="snlbanner">
+		  <div class="wrapper">
+			<a href="https://www.sandia.gov/index.html">
+			  <div class="logo-transparent"><p class="logo">Sandia National Laboratories</p></div>
+			</a>
+			<div class="nav-top">
+			  <a class="visuallyhidden" name="mainnav"></a>
+			  <div aria-label="main navigation" class="core-nav-transparent core-nav-transparent--visible" role="navigation">
+				<ul role="navigation" class="secondary-links">
+				  <li id="search-text-link">
+					<a aria-label="Search" href="https://www.sandia.gov/search/">Search Sandia.gov</a>
+				  </li>
+				  <li id="directory-text-link">
+					<a href="https://www.sandia.gov/directory.html" aria-expanded="false" aria-label="Site Directory">All Sandia Websites</a>
+				  </li>
+				</ul>
+			  </div>
+			</div>
+		  </div> 
+		</snlheader>
+	  </div>	  
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../usingdakota.html">Using Dakota</a></li>
+          <li class="breadcrumb-item"><a href="../../inputfile.html">Dakota Input File</a></li>
+          <li class="breadcrumb-item"><a href="../interfaces.html">Interfaces</a></li>
+      <li class="breadcrumb-item active">Simulation Interfaces</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../_sources/usingdakota/inputfile/interfaces/simulationinterfaces.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="simulation-interfaces">
+<span id="interfaces-sim"></span><h1>Simulation Interfaces<a class="headerlink" href="#simulation-interfaces" title="Link to this heading"></a></h1>
+<p>The invocation of a simulation code is performed using either system
+calls or forks or via direct linkage. In the system call and fork cases,
+a separate process is created for the simulation and communication
+between Dakota and the simulation occurs through parameter and response
+files. For system call and fork interfaces, the interface section must
+specify the details of this data transfer. In the direct case, a
+separate process is not created and communication occurs in memory
+through a prescribed API.</p>
+<p>The following sub-sections provide information on the simulation interfacing approaches:</p>
+<section id="fork-simulation-interface">
+<span id="interfaces-fork"></span><h2>Fork Simulation Interface<a class="headerlink" href="#fork-simulation-interface" title="Link to this heading"></a></h2>
+<p>The <code class="docutils literal notranslate"><a class="reference external" href="../../../usingdakota/reference/interface-fork.html"><span class="pre">fork</span></a></code> simulation interface is the most common
+method for interfacing Dakota with an external simulation model.</p>
+<p>The fork simulation interface uses the <code class="docutils literal notranslate"><span class="pre">fork</span></code>, <code class="docutils literal notranslate"><span class="pre">exec</span></code>, and <code class="docutils literal notranslate"><span class="pre">wait</span></code>
+families of functions to manage simulation codes or simulation drivers.
+Calls to <code class="docutils literal notranslate"><span class="pre">fork</span></code> or <code class="docutils literal notranslate"><span class="pre">vfork</span></code> create a copy of the Dakota process,
+<code class="docutils literal notranslate"><span class="pre">execvp</span></code> replaces this copy with the simulation code or driver process,
+and then Dakota uses the <code class="docutils literal notranslate"><span class="pre">wait</span></code> or <code class="docutils literal notranslate"><span class="pre">waitpid</span></code> functions to wait for
+completion of the new process.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In a native Windows version of Dakota, similar Win32 functions, such
+as <code class="docutils literal notranslate"><span class="pre">_spawnvp()</span></code>, are used instead.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Transfer of variables and response data between Dakota and the simulator
+code or driver occurs through the file system in exactly the same manner
+as for the <a class="reference internal" href="#interfaces-system"><span class="std std-ref">system call interface</span></a>.</p>
+</div>
+<p>An example of a fork interface specification follows:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span><span class="k">interface</span>
+    fork
+        input_filter    = &#39;test_3pc_if&#39;
+        output_filter   = &#39;test_3pc_of&#39;
+        analysis_driver = &#39;test_3pc_ac&#39;
+        parameters_file = &#39;tb.in&#39;
+        results_file    = &#39;tb.out&#39;
+        file_tag
+</pre></div>
+</div>
+<p><strong>Further Reading</strong></p>
+<ul class="simple">
+<li><p>More detailed examples of using the fork call interface are provided in <a class="reference internal" href="buildingblackboxinterface.html#interfaces-building"><span class="std std-ref">the section below on building a black-box interface to a simulation code</span></a>.</p></li>
+<li><p>This <a class="reference internal" href="../../introduction/couplingtosimulations.html#user-supplied-sim-code-case1"><span class="std std-ref">compiled Rosenbrock example</span></a> may also be instructive for understanding the functionality of the <code class="docutils literal notranslate"><span class="pre">fork</span></code> interface.</p></li>
+<li><p>Information on asynchronous usage of the fork call interface is provided in <a class="reference internal" href="../../advanced/parallelcomputing.html#parallel-slp-local-fork"><span class="std std-ref">this section</span></a>.</p></li>
+</ul>
+</section>
+<section id="direct-simulation-interface">
+<span id="interfaces-direct"></span><h2>Direct Simulation Interface<a class="headerlink" href="#direct-simulation-interface" title="Link to this heading"></a></h2>
+<p>The direct interface may be used to invoke simulations that are linked
+into the Dakota executable. This interface eliminates overhead from
+process creation and file I/O and can simplify operations on massively
+parallel computers. These advantages are balanced with the practicality
+of converting an existing simulation code into a library with a
+subroutine interface. Sandia codes for structural dynamics (Salinas),
+computational fluid dynamics (Sage), and circuit simulation (Xyce) and
+external codes such as Phoenix Integration’s ModelCenter framework and
+The Mathworks’ Matlab have been linked in this way, and a direct
+interface to Sandia’s SIERRA multiphysics framework is under
+development. In the latter case, the additional effort is particularly
+justified since SIERRA unifies an entire suite of physics codes.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The “sandwich implementation” of combining a direct interface plug-in
+with Dakota’s library mode is discussed <a class="reference internal" href="../../../developingdakota/writingcode/developmentpractices/interfacinglibrary.html#interfacing-with-dakota-as-library"><span class="std std-ref">here</span></a>.</p>
+</div>
+<p>In addition to direct linking with simulation codes, the direct
+interface also provides access to internal polynomial test functions
+that are used for algorithm performance and regression testing. The
+following test functions are available: <code class="docutils literal notranslate"><span class="pre">cantilever</span></code>, <code class="docutils literal notranslate"><span class="pre">cyl_head</span></code>,
+<code class="docutils literal notranslate"><span class="pre">log_ratio</span></code>, <code class="docutils literal notranslate"><span class="pre">rosenbrock</span></code>, <code class="docutils literal notranslate"><span class="pre">short_column</span></code>, and <code class="docutils literal notranslate"><span class="pre">text_book</span></code>
+(including <code class="docutils literal notranslate"><span class="pre">text_book1</span></code>, <code class="docutils literal notranslate"><span class="pre">text_book2</span></code>, <code class="docutils literal notranslate"><span class="pre">text_book3</span></code>, and
+<code class="docutils literal notranslate"><span class="pre">text_book_ouu</span></code>).</p>
+<p>While these functions are also available as external
+programs in the <code class="docutils literal notranslate"><span class="pre">dakota/share/dakota/test</span></code> directory, maintaining internally
+linked versions allows more rapid testing. See <a class="reference internal" href="../../examples/additionalexamples.html#additional"><span class="std std-ref">the Additional Examples page</span></a> for
+additional information on several of these test problems.</p>
+<p>An example input specification for a direct interface follows:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span><span class="k">interface</span>
+    direct
+        analysis_driver = &#39;rosenbrock&#39;
+</pre></div>
+</div>
+<p><strong>Further Reading</strong></p>
+<ul class="simple">
+<li><p>Additional specification examples are provided in the <a class="reference internal" href="../../examples/gettingstarted.html#examples-gettingstarted-main"><span class="std std-ref">“Getting Started” tutorial</span></a>.</p></li>
+<li><p>Additional information on asynchronous usage of the direct function interface is provided in <a class="reference internal" href="../../advanced/parallelcomputing.html#parallel-slp-local-direct"><span class="std std-ref">this section</span></a>.</p></li>
+<li><p>Guidance for usage of some particular direct simulation interfaces is in <a class="reference internal" href="../../advanced/advancedsimulationcodeinterfaces.html#advint-existingdirect"><span class="std std-ref">the section on connecting existing direct interfaces to external simulators.</span></a></p></li>
+<li><p>Details of adding a simulation code to the direct interface are provided in <a class="reference internal" href="../../advanced/advancedsimulationcodeinterfaces.html#advint-direct"><span class="std std-ref">this section</span></a>.</p></li>
+</ul>
+</section>
+<section id="system-call-simulation-interface">
+<span id="interfaces-system"></span><h2>System Call Simulation Interface<a class="headerlink" href="#system-call-simulation-interface" title="Link to this heading"></a></h2>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Users are strongly encouraged to use the fork simulation interface if
+possible, though the system interface is still supported for portability
+and backward compatibility.</p>
+</div>
+<p>The system call approach invokes a simulation code or simulation driver by
+using the <code class="docutils literal notranslate"><a class="reference external" href="../../../usingdakota/reference/interface-system.html"><span class="pre">system</span></a></code> function from the standard C library <span id="id1">[<a class="reference internal" href="../../../misc/bibliography.html#id169" title="B. W. Kernighan and D. M. Ritchie. The C Programming Language. Prentice Hall PTR, Englewood Cliffs, NJ, 2nd edition, 1988.">KR88</a>]</span>.</p>
+<p>In this approach, the system call creates a new process that communicates with Dakota
+through parameter and response files. The system call approach allows
+the simulation to be initiated via its standard invocation procedure (as
+a “black box”) and then coordinated with a variety of tools for pre- and
+post-processing. This approach has been widely used in previous
+studies <span id="id2">[<a class="reference internal" href="../../../misc/bibliography.html#id75" title="M. S. Eldred. Optimization strategies for complex engineering applications. Technical Report SAND98-0340, Sandia National Laboratories, Albuquerque, NM, 1998.">Eld98</a>, <a class="reference internal" href="../../../misc/bibliography.html#id72" title="M. S. Eldred, W. E. Hart, W. J. Bohnhoff, V. J. Romero, S. A. Hutchinson, and A. G. Salinger. Utilizing object-oriented design to build advanced optimization strategies with generic implementation. In Proc. 6th AIAA/USAF/NASA/ISSMO Symposium on Multidisciplinary Analysis and Optimization, number AIAA-96-4164, 1568–1582. Bellevue, WA, September 4–6 1996.">EHB+96</a>, <a class="reference internal" href="../../../misc/bibliography.html#id73" title="M. S. Eldred, D. E. Outka, W. J. Bohnhoff, W. R. Witkowski, V. J. Romero, E. R. Ponslet, and K. S. Chen. Optimization of complex mechanics simulations with object-oriented software design. Computer Modeling and Simulation in Engineering, August 1996.">EOB+96</a>]</span>. The system call
+approach involves more process creation and file I/O overhead than the
+direct function approach, but this extra overhead is usually
+insignificant compared with the cost of a simulation. An example of a
+system call interface specification follows:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span><span class="k">interface</span>
+    system
+        analysis_driver = &#39;text_book&#39;
+        parameters_file = &#39;text_book.in&#39;
+        results_file    = &#39;text_book.out&#39;
+        file_tag
+                file_save
+</pre></div>
+</div>
+<p>Information on asynchronous usage of the system interface is provided in
+the :ref`section on system call synchronization &lt;parallel:SLP:local:system&gt;`.</p>
+</section>
+<section id="syntax-for-filter-and-driver-strings">
+<span id="interfaces-syntax"></span><h2>Syntax for Filter and Driver Strings<a class="headerlink" href="#syntax-for-filter-and-driver-strings" title="Link to this heading"></a></h2>
+<p>Dakota’s default behavior is to construct input filter, analysis driver,
+and output filter commands by appending the names of the parameters file
+and results file for the evaluation/analysis to the user-provided
+<code class="docutils literal notranslate"><span class="pre">input_filter</span></code>, <code class="docutils literal notranslate"><span class="pre">output_filter</span></code>, and <code class="docutils literal notranslate"><span class="pre">analysis_drivers</span></code> strings.
+After adding its working directory to the <code class="docutils literal notranslate"><span class="pre">PATH</span></code>, Dakota executes
+these commands in its working directory or, if the <code class="docutils literal notranslate"><span class="pre">work_directory</span></code>
+keyword group is present, in a work directory.</p>
+<p>Filter and driver strings may contain absolute or relative path
+information and whitespace; Dakota will pass them through without
+modification.</p>
+<p>Quotes are also permitted with the restriction that if double-quotes (“)
+are used to enclose the driver or filter string as a whole, then only
+single quotes (’) are allowed within it, and vice versa. The input
+filter string <code class="docutils literal notranslate"><span class="pre">’dprepro</span> <span class="pre">–var</span> <span class="pre">&quot;foo=1&quot;’</span></code> works, as does
+<code class="docutils literal notranslate"><span class="pre">&quot;dprepro</span> <span class="pre">–var</span> <span class="pre">’foo=1’&quot;</span></code>, but not <code class="docutils literal notranslate"><span class="pre">&quot;dprepro</span> <span class="pre">–var</span> <span class="pre">&quot;foo=1&quot;&quot;</span></code>.</p>
+<p>In some situations, users may not wish Dakota to append the names of the
+parameters or results files to filter and driver strings. The
+<code class="docutils literal notranslate"><span class="pre">verbatim</span></code> keyword prevents this behavior, and causes Dakota to
+execute filter and driver strings “as is”.</p>
+<p>Beginning with version 6.10, Dakota will substitute the tokens
+<code class="docutils literal notranslate"><span class="pre">{PARAMETERS}</span></code> and <code class="docutils literal notranslate"><span class="pre">{RESULTS}</span></code> in driver and filter strings with the
+names of the parameters and results files for that analysis/evaluation
+just prior to execution.</p>
+<p>For example, if an <code class="docutils literal notranslate"><span class="pre">interface</span></code> block in the input file included:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>input_filter &#39;preprocess {PARAMETERS}&#39;
+analysis_drivers &#39;run_sim.sh&#39;
+output_filter &#39;postprocess {RESULTS}&#39;
+verbatim
+</pre></div>
+</div>
+<p>Then, the input filter <code class="docutils literal notranslate"><span class="pre">preprocess</span></code> would be run with only the
+parameters file as a command line argument, the analysis driver
+<code class="docutils literal notranslate"><span class="pre">run_sim.sh</span></code> would receive no command line arguments, and the output
+filter <code class="docutils literal notranslate"><span class="pre">postprocess</span></code> would receive only the results file name.</p>
+<p>The combination of <code class="docutils literal notranslate"><span class="pre">verbatim</span></code> and substitution provide users with
+considerable flexibility in specifying the form of filter and driver
+commands.</p>
+</section>
+<section id="fork-or-system-call-which-to-use">
+<span id="interfaces-which"></span><h2>Fork or System Call: Which to Use?<a class="headerlink" href="#fork-or-system-call-which-to-use" title="Link to this heading"></a></h2>
+<p>The primary operational difference between the fork and system call
+simulation interfaces is that, in the fork interface, the
+<code class="docutils literal notranslate"><span class="pre">fork</span></code>/<code class="docutils literal notranslate"><span class="pre">exec</span></code> functions return a process identifier that the
+<code class="docutils literal notranslate"><span class="pre">wait</span></code>/<code class="docutils literal notranslate"><span class="pre">waitpid</span></code> functions can use to detect the completion of a
+simulation for either synchronous or asynchronous operations. The system
+call simulation interface, on the other hand, must use a response file
+detection scheme for this purpose in the asynchronous case. Thus, an
+important advantage of the fork interface over the system call interface
+is that it avoids the potential of a file race condition when employing
+asynchronous local parallelism (refer to
+<a class="reference internal" href="../../advanced/parallelcomputing.html#parallel-slp-local"><span class="std std-ref">Asynchronous Local Parallelism</span></a>). This condition
+can occur when the responses file has been created but the writing of
+the response data set to this file has not been completed (see
+<a class="reference internal" href="../../advanced/parallelcomputing.html#parallel-slp-local-system"><span class="std std-ref">System Call Synchronization</span></a>).
+While significant care has been taken to manage this file race condition
+in the system call case, the fork interface still has the potential to
+be more robust when performing function evaluations asynchronously.</p>
+<p>Another advantage of the fork interface is that it has additional
+asynchronous capabilities when a function evaluation involves multiple
+analyses. As shown in <a class="reference internal" href="../../advanced/parallelcomputing.html#parallel-table01"><span class="std std-numref">Table 17</span></a>,
+the fork interface supports asynchronous local and hybrid parallelism
+modes for managing concurrent analyses within function evaluations,
+whereas the system call interface does not. These additional
+capabilities again stem from the ability to track child processes by
+their process identifiers.</p>
+<p>The only disadvantage to the fork interface compared with the system
+interface is that the <code class="docutils literal notranslate"><span class="pre">fork</span></code>/<code class="docutils literal notranslate"><span class="pre">exec</span></code>/<code class="docutils literal notranslate"><span class="pre">wait</span></code> functions are not part
+of the standard C library, whereas the <code class="docutils literal notranslate"><span class="pre">system</span></code> function is. As a
+result, support for implementations of the <code class="docutils literal notranslate"><span class="pre">fork</span></code>/<code class="docutils literal notranslate"><span class="pre">exec</span></code>/<code class="docutils literal notranslate"><span class="pre">wait</span></code>
+functions can vary from platform to platform. At one time, these
+commands were not available on some of Sandia’s massively parallel
+computers. However, in the more mainstream UNIX environments,
+availability of <code class="docutils literal notranslate"><span class="pre">fork</span></code>/<code class="docutils literal notranslate"><span class="pre">exec</span></code>/<code class="docutils literal notranslate"><span class="pre">wait</span></code> should not be an issue.</p>
+<p>In summary, the system call interface has been a workhorse for many
+years and is well tested and proven, but the fork interface supports
+additional capabilities and is recommended when managing asynchronous
+simulation code executions. Having both interfaces available has proven
+to be useful on a number of occasions and they will both continue to be
+supported for the foreseeable future.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../interfaces.html" class="btn btn-neutral float-left" title="Interfaces" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="buildingblackboxinterface.html" class="btn btn-neutral float-right" title="Building a Black-Box Interface to a Simulation Code" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <!--
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Sandia National Laboratories.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+  --> 
+
+</footer>
+        </div>
+      </div>
+	  
+	  <div style="background-color: #0f0f0f;color:#fafafa;padding:20px">
+	    <div>
+		  <h2><em>Exceptional service in the national interest</em></h2>
+		</div>
+		<p>© 2023 National Technology and Engineering Solutions of Sandia, LLC. | <a href="https://www.sandia.gov/contact_us/index.html">Questions &amp; Comments</a> | <a href="https://www.sandia.gov/general/privacy-security/index.html">Privacy &amp; Security</a></p>
+		<p><a href="http://energy.gov" rel="noopener noreferrer" target="_blank"><img alt="U.S. Department of Energy" longdesc="https://energy.gov" src="https://www.sandia.gov/_common/images/doe_logo_white.png" style="height:37px; width:140px"></a> <a href="http://nnsa.energy.gov/" rel="noopener noreferrer" target="_blank"> <img alt="National Nuclear Security Administration" longdesc="http://nnsa.gov" src="https://www.sandia.gov/_common/images/nnsa_logo_white.png" style="height:37px; width:116px"></a></p>
+		<p><a href="https://www.sandia.gov">Sandia National Laboratories</a> is a multimission laboratory managed and operated by National Technology and Engineering Solutions of Sandia, LLC., a wholly owned subsidiary of Honeywell International, Inc., for the U.S. Department of Energy’s National Nuclear Security Administration under contract DE-NA-0003525.</p>
+	  </div>	  	  
+	  
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

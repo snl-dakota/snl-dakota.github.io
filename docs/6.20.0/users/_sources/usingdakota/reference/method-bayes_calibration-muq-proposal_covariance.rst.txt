@@ -1,0 +1,91 @@
+.. _method-bayes_calibration-muq-proposal_covariance:
+
+"""""""""""""""""""
+proposal_covariance
+"""""""""""""""""""
+
+
+Defines the technique used to generate the MCMC proposal covariance.
+
+
+
+**Topics**
+
+
+bayesian_calibration
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-bayes_calibration-muq-proposal_covariance-prior
+   method-bayes_calibration-muq-proposal_covariance-derivatives
+   method-bayes_calibration-muq-proposal_covariance-values
+   method-bayes_calibration-muq-proposal_covariance-filename
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+--------------------+-----------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword     | Dakota Keyword Description                    |
+|                         | Group              |                    |                                               |
++=========================+====================+====================+===============================================+
+| Required (Choose One)   | Proposal           | `prior`__          | Uses the covariance of the prior              |
+|                         | Covariance Source  |                    | distributions to define the MCMC proposal     |
+|                         |                    |                    | covariance.                                   |
+|                         |                    +--------------------+-----------------------------------------------+
+|                         |                    | `derivatives`__    | Use derivatives to inform the MCMC proposal   |
+|                         |                    |                    | covariance.                                   |
+|                         |                    +--------------------+-----------------------------------------------+
+|                         |                    | `values`__         | Specifies matrix values to use as the MCMC    |
+|                         |                    |                    | proposal covariance.                          |
+|                         |                    +--------------------+-----------------------------------------------+
+|                         |                    | `filename`__       | Uses a file to import a user-specified MCMC   |
+|                         |                    |                    | proposal covariance.                          |
++-------------------------+--------------------+--------------------+-----------------------------------------------+
+
+.. __: method-bayes_calibration-muq-proposal_covariance-prior.html
+__ method-bayes_calibration-muq-proposal_covariance-derivatives.html
+__ method-bayes_calibration-muq-proposal_covariance-values.html
+__ method-bayes_calibration-muq-proposal_covariance-filename.html
+
+
+
+**Description**
+
+
+The proposal covariance is used to define a multivariate normal (MVN)
+jumping distribution used to create new points within a Markov chain.
+That is, a new point in the chain is determined by sampling within a
+MVN probability density with prescribed covariance that is centered at
+the current chain point.  The accuracy of the proposal covariance has
+a significant effect on rejection rates and the efficiency of chain mixing.
+
+*Default Behavior*
+
+The default proposal covariance is ``prior`` when no emulator is
+present; ``derivatives`` when an emulator is present.
+
+*Expected Output*
+
+The effect of the proposal covariance is reflected in the MCMC chain
+values and the rejection rates, which can be seen in the diagnostic
+outputs from the QUESO solver within the ``QuesoDiagnostics``
+directory.
+
+*Usage Tips*
+
+When derivative information is available inexpensively (e.g., from an
+emulator model), the derived-based proposal covariance forms a more
+accurate proposal distribution, resulting in lower rejection rates and
+faster chain mixing.
+
+

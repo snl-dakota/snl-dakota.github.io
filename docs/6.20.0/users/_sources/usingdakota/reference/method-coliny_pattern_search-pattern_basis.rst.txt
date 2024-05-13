@@ -1,0 +1,54 @@
+.. _method-coliny_pattern_search-pattern_basis:
+
+"""""""""""""
+pattern_basis
+"""""""""""""
+
+
+Pattern basis selection
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-coliny_pattern_search-pattern_basis-coordinate
+   method-coliny_pattern_search-pattern_basis-simplex
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+- *Default:* coordinate
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+--------------------+-----------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword     | Dakota Keyword Description                    |
+|                         | Group              |                    |                                               |
++=========================+====================+====================+===============================================+
+| Required (Choose One)   | Pattern Basis Type | `coordinate`__     | Use coordinate directions as search pattern   |
+|                         |                    +--------------------+-----------------------------------------------+
+|                         |                    | `simplex`__        | Use a minimal simplex for the search pattern  |
++-------------------------+--------------------+--------------------+-----------------------------------------------+
+
+.. __: method-coliny_pattern_search-pattern_basis-coordinate.html
+__ method-coliny_pattern_search-pattern_basis-simplex.html
+
+
+
+**Description**
+
+
+The particular form of the search pattern is controlled by the
+``pattern_basis`` specification.  If ``pattern_basis`` is ``coordinate``
+basis, then the pattern search uses a plus and minus offset in each
+coordinate direction, for a total of *2n* function evaluations in the
+pattern.  This case is depicted in Figure 5.3 for three coordinate
+dimensions.
+
+

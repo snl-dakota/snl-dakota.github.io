@@ -1,0 +1,86 @@
+.. _interface-analysis_drivers-system:
+
+""""""
+system
+""""""
+
+
+(Not recommended) Launch analysis drivers with a system call
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   interface-analysis_drivers-system-parameters_file
+   interface-analysis_drivers-system-results_file
+   interface-analysis_drivers-system-file_tag
+   interface-analysis_drivers-system-file_save
+   interface-analysis_drivers-system-labeled
+   interface-analysis_drivers-system-aprepro
+   interface-analysis_drivers-system-work_directory
+   interface-analysis_drivers-system-allow_existing_results
+   interface-analysis_drivers-system-verbatim
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+----------------------------+-----------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword             | Dakota Keyword Description                    |
+|                         | Group              |                            |                                               |
++=========================+====================+============================+===============================================+
+| Optional                                     | `parameters_file`__        | Specify the name of the parameters file       |
++----------------------------------------------+----------------------------+-----------------------------------------------+
+| Optional                                     | `results_file`__           | Specify the name of the results file          |
++----------------------------------------------+----------------------------+-----------------------------------------------+
+| Optional                                     | `file_tag`__               | Tag each parameters & results file name with  |
+|                                              |                            | the function evaluation number                |
++----------------------------------------------+----------------------------+-----------------------------------------------+
+| Optional                                     | `file_save`__              | Keep the parameters & results files after the |
+|                                              |                            | analysis driver completes                     |
++----------------------------------------------+----------------------------+-----------------------------------------------+
+| Optional                                     | `labeled`__                | Requires correct function value labels in     |
+|                                              |                            | results file                                  |
++----------------------------------------------+----------------------------+-----------------------------------------------+
+| Optional                                     | `aprepro`__                | Write parameters files in APREPRO syntax      |
++----------------------------------------------+----------------------------+-----------------------------------------------+
+| Optional                                     | `work_directory`__         | Perform each function evaluation in a         |
+|                                              |                            | separate working directory                    |
++----------------------------------------------+----------------------------+-----------------------------------------------+
+| Optional                                     | `allow_existing_results`__ | Change how Dakota deals with existing results |
+|                                              |                            | files                                         |
++----------------------------------------------+----------------------------+-----------------------------------------------+
+| Optional                                     | `verbatim`__               | Specify the command Dakota uses to launch     |
+|                                              |                            | analysis driver(s) and filters                |
++----------------------------------------------+----------------------------+-----------------------------------------------+
+
+.. __: interface-analysis_drivers-system-parameters_file.html
+__ interface-analysis_drivers-system-results_file.html
+__ interface-analysis_drivers-system-file_tag.html
+__ interface-analysis_drivers-system-file_save.html
+__ interface-analysis_drivers-system-labeled.html
+__ interface-analysis_drivers-system-aprepro.html
+__ interface-analysis_drivers-system-work_directory.html
+__ interface-analysis_drivers-system-allow_existing_results.html
+__ interface-analysis_drivers-system-verbatim.html
+
+
+
+**Description**
+
+
+The system call interface is included in Dakota for portability and
+backward compatibility. Users are strongly encouraged to use the
+``fork`` interface if possible, reverting to system only when
+necessary. To enable the system call interface, replace the ``fork``
+keyword with ``system``. All other keywords have identical meanings to
+those for the fork interface
+
+

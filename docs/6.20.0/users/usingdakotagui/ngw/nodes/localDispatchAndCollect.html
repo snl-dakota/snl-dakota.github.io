@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>localDispatchAndCollect &mdash; dakota  documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/dakota_theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/sandiaheaderlite.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="posPrePro" href="posPrePro.html" />
+    <link rel="prev" title="dprepro" href="dprepro.html" /> 
+  
+  <meta name="sandia.approval_type" content="formal"/>
+  <meta property="sandia.approved" content="SAND2023-13392 O"/>
+  <meta name="description" content="The Dakota project delivers both state-of-the-art research and robust, usable software for optimization and UQ."/>
+  <meta name="keywords" content="Dakota, optimization, UQ, uncertainty quantification, parametric analysis, design exploration, model calibration, risk analysis"/>
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../index.html" class="icon icon-home"> dakota
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../setupdakota.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usingdakota/usingdakota.html">Using Dakota</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../usingdakotagui.html">Using Dakota GUI</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../usingdakotagui.html#introduction">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../usingdakotagui.html#example-search">Example Search</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../usingdakotagui.html#wizards">Wizards</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../usingdakotagui.html#editing-dakota-input-files">Editing Dakota Input Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../usingdakotagui.html#running-dakota">Running Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../usingdakotagui.html#running-dakota-remotely">Running Dakota Remotely</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../usingdakotagui.html#output-from-dakota">Output from Dakota</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../usingdakotagui.html#gui-tools">GUI Tools</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../../chartreuse/Chartreuse.html">Chartreuse</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../NextGenWorkflow.html">Next-Gen Workflow</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="../NextGenWorkflowBasics.html">Next-Gen Workflow Basics</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../NextGenWorkflowAnalysisDrivers.html">Using Next-Gen Workflow as a Dakota Analysis Driver</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../NextGenWorkflowTutorial.html">Tutorial: Create an NGW Analysis Driver for Dakota</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="../NodeGlossary.html">Next-Gen Workflow Node Glossary</a><ul class="current">
+<li class="toctree-l5"><a class="reference internal" href="../NodeGlossary.html#blackbox">Blackbox</a></li>
+<li class="toctree-l5 current"><a class="reference internal" href="../NodeGlossary.html#dakota">Dakota</a><ul class="current">
+<li class="toctree-l6"><a class="reference internal" href="dakota.html">dakota</a></li>
+<li class="toctree-l6"><a class="reference internal" href="dakotaParametersMap.html">dakotaParametersMap</a></li>
+<li class="toctree-l6"><a class="reference internal" href="dakotaQueueSubmit.html">dakotaQueueSubmit</a></li>
+<li class="toctree-l6"><a class="reference internal" href="dakotaResultsFile.html">dakotaResultsFile</a></li>
+<li class="toctree-l6"><a class="reference internal" href="dakotaWorkflowDriver.html">dakotaWorkflowDriver</a></li>
+<li class="toctree-l6"><a class="reference internal" href="dispatchAndCollect.html">dispatchAndCollect</a></li>
+<li class="toctree-l6"><a class="reference internal" href="dprepro.html">dprepro</a></li>
+<li class="toctree-l6 current"><a class="current reference internal" href="#">localDispatchAndCollect</a><ul>
+<li class="toctree-l7"><a class="reference internal" href="#description">Description</a></li>
+<li class="toctree-l7"><a class="reference internal" href="#properties">Properties</a></li>
+<li class="toctree-l7"><a class="reference internal" href="#input-ports">Input Ports</a></li>
+<li class="toctree-l7"><a class="reference internal" href="#output-ports">Output Ports</a></li>
+</ul>
+</li>
+<li class="toctree-l6"><a class="reference internal" href="posPrePro.html">posPrePro</a></li>
+<li class="toctree-l6"><a class="reference internal" href="pyprepro.html">pyprepro</a></li>
+<li class="toctree-l6"><a class="reference internal" href="qoiExtractor.html">qoiExtractor</a></li>
+<li class="toctree-l6"><a class="reference internal" href="surrogate.html">surrogate</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="../NodeGlossary.html#data-visualization-chartreuse">“Data Visualization (Chartreuse)”</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../NodeGlossary.html#data-visualization-dakota-chartreuse-simple-plots">“Data Visualization (Dakota/Chartreuse Simple Plots)”</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../NodeGlossary.html#data-visualization-dakota-chartreuse-megaplotters">“Data Visualization (Dakota/Chartreuse Megaplotters)”</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../NodeGlossary.html#hdf">HDF</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../NodeGlossary.html#remote-operations">Remote Operations</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="../QueueSubmitScripts.html">Next-Gen Workflow Queue Submit Scripts</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../NextGenWorkflow.html#highlighted-node-topics">Highlighted Node Topics</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../NextGenWorkflow.html#further-reading">Further Reading</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../qoi/QOI.html">QOI</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../usingdakotagui.html#miscellaneous">Miscellaneous</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../externaltools/externaltools.html">Using External Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../compiling/compiling.html">Compiling Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../developingdakota/developingdakota.html">Developing Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../misc/misc.html">Miscellaneous</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">dakota</a>
+      </nav>
+
+	  <!-- SNL Lite header -->
+	  <div class="snlheader-subsite--wrapper-default">
+		<snlheader class="snlheader-subsite" role="snlbanner">
+		  <div class="wrapper">
+			<a href="https://www.sandia.gov/index.html">
+			  <div class="logo-transparent"><p class="logo">Sandia National Laboratories</p></div>
+			</a>
+			<div class="nav-top">
+			  <a class="visuallyhidden" name="mainnav"></a>
+			  <div aria-label="main navigation" class="core-nav-transparent core-nav-transparent--visible" role="navigation">
+				<ul role="navigation" class="secondary-links">
+				  <li id="search-text-link">
+					<a aria-label="Search" href="https://www.sandia.gov/search/">Search Sandia.gov</a>
+				  </li>
+				  <li id="directory-text-link">
+					<a href="https://www.sandia.gov/directory.html" aria-expanded="false" aria-label="Site Directory">All Sandia Websites</a>
+				  </li>
+				</ul>
+			  </div>
+			</div>
+		  </div> 
+		</snlheader>
+	  </div>	  
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../usingdakotagui.html">Using Dakota GUI</a></li>
+          <li class="breadcrumb-item"><a href="../NextGenWorkflow.html">Next-Gen Workflow</a></li>
+          <li class="breadcrumb-item"><a href="../NodeGlossary.html">Next-Gen Workflow Node Glossary</a></li>
+      <li class="breadcrumb-item active">localDispatchAndCollect</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../_sources/usingdakotagui/ngw/nodes/localDispatchAndCollect.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="localdispatchandcollect">
+<span id="ngw-node-localdispatchandcollect"></span><h1>localDispatchAndCollect<a class="headerlink" href="#localdispatchandcollect" title="Link to this heading"></a></h1>
+<section id="description">
+<h2>Description<a class="headerlink" href="#description" title="Link to this heading"></a></h2>
+<p>The localDispatchAndCollect node is used to asynchronously kick off a process separate from Dakota. It is designed to ingest a Dakota
+parameter file and produce results that will be written to a Dakota results file. Because it takes a single
+set of Dakota parameters and produces a single set of Dakota results, this node is
+<strong>intended to be run as part of a Dakota analysis driver.</strong> That is, a localDispatchAndCollect node is not designed to iterate
+over a parameter space, but is itself driven by Dakota.</p>
+<p>The localDispatchAndCollect node’s name comes from its two-step strategy. It is intended to be run asynchronously
+with Dakota (in what is sometimes called “offline mode”). After this node spawns a new process (i.e. the dispatch step),
+the node will exit early, returning fail values to Dakota. Even though they are “fail” values, this immediate return
+indicates that the spawned process is off running somewhere else. Then, at a later date, the analyst is expected to run Dakota
+at least one more time. When it’s executed again, the localDispatchAndCollect node is smart enough to pick up the data
+generated by each job on the remote machine and return it to Dakota (i.e. the collect step), rather than send
+fresh values for remote job submission.</p>
+<p>In short - it is not necessary to leave Dakota up and running while you wait for all your evaluation processes to complete.</p>
+<p>Finally, note that this node’s name starts with “local.” This is done to differentiate its behavior from a similar node,
+<a class="reference internal" href="dispatchAndCollect.html#ngw-node-dispatchandcollect"><span class="std std-ref">the dispatchAndCollect node,</span></a> which is designed to submit jobs to remote machines, not spawn
+local processes.</p>
+</section>
+<section id="properties">
+<h2>Properties<a class="headerlink" href="#properties" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>driver:</strong> The key text needed to start the inner driver separate from Dakota. This is intended to be a command-line
+statement - for example, launching a Python script. If you intend to launch another Next-Gen Workflow IWF file as your inner driver,
+it is recommended that it first passes through a <a class="reference internal" href="dakotaWorkflowDriver.html#ngw-node-dakotaworkflowdriver"><span class="std std-ref">dakotaWorkflowDriver</span></a> node and then is
+passed in through the “driver” input port instead.</p></li>
+<li><p><strong>responseFileName:</strong> The expected name of the file that response names and values will be written to. As a reminder,
+this responses file will be filled with “fail values” the first time this node dispatches a process for the evaluation,
+but responses will be collected to this file once the spawned process completes successfully.</p></li>
+<li><p><strong>failValue:</strong> The value used for the localDispatchAndCollect node to recognize that the evaluation failed for whatever
+reason on the remote machine. “Fail” is used somewhat broadly here, as any unfinished process is also considered a failure.
+Typically, “NaN” is used to designate a fail value, but you are allowed to change it
+if “NaN” already has reserved meaning according to your driver. However, you must select <em>some</em> reserved value to indicate failure.</p></li>
+<li><p><strong>expectedEvals:</strong> A comma-separated string that allows you to control which evaluations are processed. This feature is particularly
+useful if you would like to “throttle” Dakota on subsequent runs, and force it only re-evaluate certain evaluations. For example, a
+string value of “4,10,11” used here would make Dakota re-evaluate evaluations 4, 10, and 11, but all other evaluations previously
+completed would preserve their existing values.</p></li>
+<li><p><strong>rerunFailedEvaluations:</strong> Set this to true to force the evaluation to re-run - even if data already exists in the
+evaluation directory - but only if the previous evaluation failed.</p></li>
+</ul>
+</section>
+<section id="input-ports">
+<h2>Input Ports<a class="headerlink" href="#input-ports" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>paramsFile:</strong> The Dakota parameters file which provides the input to the inner driver that will be spawned as a separate process.</p></li>
+<li><p><strong>driver:</strong> The input port version of “driver.” This is intended to be a command-line statement passed in as a string -
+for example, the command needed to launch a Python script. However, if you intend to launch another Next-Gen Workflow
+IWF file as your inner driver, it is recommended that it first passes through a <a class="reference internal" href="dakotaWorkflowDriver.html#ngw-node-dakotaworkflowdriver"><span class="std std-ref">dakotaWorkflowDriver</span></a>
+node before being passed into this input port.</p></li>
+</ul>
+</section>
+<section id="output-ports">
+<h2>Output Ports<a class="headerlink" href="#output-ports" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>responsesMap:</strong> A map of response labels and response values. This map can be passed to a <a class="reference internal" href="dakotaResultsFile.html#ngw-node-dakotaresultsfile"><span class="std std-ref">dakotaResultsFile</span></a> node for further processing.</p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="dprepro.html" class="btn btn-neutral float-left" title="dprepro" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="posPrePro.html" class="btn btn-neutral float-right" title="posPrePro" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <!--
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Sandia National Laboratories.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+  --> 
+
+</footer>
+        </div>
+      </div>
+	  
+	  <div style="background-color: #0f0f0f;color:#fafafa;padding:20px">
+	    <div>
+		  <h2><em>Exceptional service in the national interest</em></h2>
+		</div>
+		<p>© 2023 National Technology and Engineering Solutions of Sandia, LLC. | <a href="https://www.sandia.gov/contact_us/index.html">Questions &amp; Comments</a> | <a href="https://www.sandia.gov/general/privacy-security/index.html">Privacy &amp; Security</a></p>
+		<p><a href="http://energy.gov" rel="noopener noreferrer" target="_blank"><img alt="U.S. Department of Energy" longdesc="https://energy.gov" src="https://www.sandia.gov/_common/images/doe_logo_white.png" style="height:37px; width:140px"></a> <a href="http://nnsa.energy.gov/" rel="noopener noreferrer" target="_blank"> <img alt="National Nuclear Security Administration" longdesc="http://nnsa.gov" src="https://www.sandia.gov/_common/images/nnsa_logo_white.png" style="height:37px; width:116px"></a></p>
+		<p><a href="https://www.sandia.gov">Sandia National Laboratories</a> is a multimission laboratory managed and operated by National Technology and Engineering Solutions of Sandia, LLC., a wholly owned subsidiary of Honeywell International, Inc., for the U.S. Department of Energy’s National Nuclear Security Administration under contract DE-NA-0003525.</p>
+	  </div>	  	  
+	  
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

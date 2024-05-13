@@ -1,0 +1,57 @@
+.. _method-soga-crossover_type-shuffle_random:
+
+""""""""""""""
+shuffle_random
+""""""""""""""
+
+
+Perform crossover by choosing design variable(s)
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-soga-crossover_type-shuffle_random-num_parents
+   method-soga-crossover_type-shuffle_random-num_offspring
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+--------------------+-----------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword     | Dakota Keyword Description                    |
+|                         | Group              |                    |                                               |
++=========================+====================+====================+===============================================+
+| Optional                                     | `num_parents`__    | Number of parents in random shuffle crossover |
++----------------------------------------------+--------------------+-----------------------------------------------+
+| Optional                                     | `num_offspring`__  | Number of offspring in random shuffle         |
+|                                              |                    | crossover                                     |
++----------------------------------------------+--------------------+-----------------------------------------------+
+
+.. __: method-soga-crossover_type-shuffle_random-num_parents.html
+__ method-soga-crossover_type-shuffle_random-num_offspring.html
+
+
+
+**Description**
+
+
+The final crossover type is ``shuffle_random``.  This crossover type
+performs crossover by choosing design variables at random from a
+specified number of parents enough times that the requested number of
+children are produced.  For example, consider the case of 3 parents
+producing 2 children.  This operator would go through and for each
+design variable, select one of the parents as the donor for the child.
+So it creates a random shuffle of the parent design variable values.
+The relative numbers of children and parents are controllable to allow
+for as much mixing as desired.  The more parents involved, the less
+likely that the children will wind up exact duplicates of the parents.
+
+

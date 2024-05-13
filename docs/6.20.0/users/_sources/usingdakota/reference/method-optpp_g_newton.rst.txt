@@ -1,0 +1,126 @@
+.. _method-optpp_g_newton:
+
+""""""""""""""
+optpp_g_newton
+""""""""""""""
+
+
+Newton method based least-squares calbration
+
+
+
+**Topics**
+
+
+package_optpp, local_optimization_methods
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-optpp_g_newton-search_method
+   method-optpp_g_newton-merit_function
+   method-optpp_g_newton-steplength_to_boundary
+   method-optpp_g_newton-centering_parameter
+   method-optpp_g_newton-max_step
+   method-optpp_g_newton-gradient_tolerance
+   method-optpp_g_newton-max_iterations
+   method-optpp_g_newton-convergence_tolerance
+   method-optpp_g_newton-speculative
+   method-optpp_g_newton-max_function_evaluations
+   method-optpp_g_newton-scaling
+   method-optpp_g_newton-model_pointer
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+------------------------------+-----------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword               | Dakota Keyword Description                    |
+|                         | Group              |                              |                                               |
++=========================+====================+==============================+===============================================+
+| Optional                                     | `search_method`__            | Select a search method for Newton-based       |
+|                                              |                              | optimizers                                    |
++----------------------------------------------+------------------------------+-----------------------------------------------+
+| Optional                                     | `merit_function`__           | Balance goals of reducing objective function  |
+|                                              |                              | and satisfying constraints                    |
++----------------------------------------------+------------------------------+-----------------------------------------------+
+| Optional                                     | `steplength_to_boundary`__   | Controls how close to the boundary of the     |
+|                                              |                              | feasible region the algorithm is allowed to   |
+|                                              |                              | move                                          |
++----------------------------------------------+------------------------------+-----------------------------------------------+
+| Optional                                     | `centering_parameter`__      | Controls how closely the algorithm should     |
+|                                              |                              | follow the "central path"                     |
++----------------------------------------------+------------------------------+-----------------------------------------------+
+| Optional                                     | `max_step`__                 | Max change in design point                    |
++----------------------------------------------+------------------------------+-----------------------------------------------+
+| Optional                                     | `gradient_tolerance`__       | Stopping critiera based on L2 norm of         |
+|                                              |                              | gradient                                      |
++----------------------------------------------+------------------------------+-----------------------------------------------+
+| Optional                                     | `max_iterations`__           | Number of iterations allowed for optimizers   |
+|                                              |                              | and adaptive UQ methods                       |
++----------------------------------------------+------------------------------+-----------------------------------------------+
+| Optional                                     | `convergence_tolerance`__    | Stopping criterion based on objective         |
+|                                              |                              | function or statistics convergence            |
++----------------------------------------------+------------------------------+-----------------------------------------------+
+| Optional                                     | `speculative`__              | Compute speculative gradients                 |
++----------------------------------------------+------------------------------+-----------------------------------------------+
+| Optional                                     | `max_function_evaluations`__ | Number of function evaluations allowed for    |
+|                                              |                              | optimizers                                    |
++----------------------------------------------+------------------------------+-----------------------------------------------+
+| Optional                                     | `scaling`__                  | Turn on scaling for variables, responses, and |
+|                                              |                              | constraints                                   |
++----------------------------------------------+------------------------------+-----------------------------------------------+
+| Optional                                     | `model_pointer`__            | Identifier for model block to be used by a    |
+|                                              |                              | method                                        |
++----------------------------------------------+------------------------------+-----------------------------------------------+
+
+.. __: method-optpp_g_newton-search_method.html
+__ method-optpp_g_newton-merit_function.html
+__ method-optpp_g_newton-steplength_to_boundary.html
+__ method-optpp_g_newton-centering_parameter.html
+__ method-optpp_g_newton-max_step.html
+__ method-optpp_g_newton-gradient_tolerance.html
+__ method-optpp_g_newton-max_iterations.html
+__ method-optpp_g_newton-convergence_tolerance.html
+__ method-optpp_g_newton-speculative.html
+__ method-optpp_g_newton-max_function_evaluations.html
+__ method-optpp_g_newton-scaling.html
+__ method-optpp_g_newton-model_pointer.html
+
+
+
+**Description**
+
+
+The Gauss-Newton algorithm is available as ``optpp_g_newton`` and
+supports unconstrained, bound-constrained, and generally-constrained
+problems. When interfaced with the unconstrained, bound-constrained,
+and nonlinear interior point full-Newton optimizers from the OPT++
+library, it provides a Gauss-Newton least squares capability which --
+on zero-residual test problems -- can exhibit quadratic convergence
+rates near the solution.  (Real problems almost never have zero
+residuals, i.e., perfect fits.)
+
+See :ref:`topic-package_optpp` for info related to all ``optpp`` methods.
+
+*Expected HDF5 Output*
+
+If Dakota was built with HDF5 support and run with the
+:dakkw:`environment-results_output-hdf5` keyword, this method
+writes the following results to HDF5:
+
+
+- :ref:`hdf5_results-best_params`
+- :ref:`hdf5_results-best_constraints`
+- :ref:`hdf5_results-calibration` (when :dakkw:`responses-calibration_terms` are specified)
+- :ref:`hdf5_results-lsq_confidence_intervals` (when :dakkw:`responses-calibration_terms-calibration_data-num_experiments` equals 1)
+
+

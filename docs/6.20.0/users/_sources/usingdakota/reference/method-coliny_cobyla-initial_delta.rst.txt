@@ -1,0 +1,41 @@
+.. _method-coliny_cobyla-initial_delta:
+
+"""""""""""""
+initial_delta
+"""""""""""""
+
+
+Reasonable initial changes to optimization variables
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* REAL
+
+- *Default:* 1.0 (COBYLA), 0.1*range (PS, SW)
+
+
+**Description**
+
+
+``initial_delta`` for COBYLA should be set to be a value that is
+reasonable for initial changes to the optimization variables.  It
+represents a distance from the initial simplex within which linear
+approximation subproblems can be trusted to be sufficiently
+representative of the true problem.  It is analagous to the initial
+trust-region size used in trust-region methods.
+
+
+*Default Behavior*
+
+The default value is 1.0.
+
+

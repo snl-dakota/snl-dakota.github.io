@@ -1,0 +1,54 @@
+.. _interface-analysis_drivers-python:
+
+""""""
+python
+""""""
+
+
+Run Python through a Pybind11-based direct interface - requires a special Dakota build
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   interface-analysis_drivers-python-numpy
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+--------------------+-----------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword     | Dakota Keyword Description                    |
+|                         | Group              |                    |                                               |
++=========================+====================+====================+===============================================+
+| Optional                                     | `numpy`__          | Enable the use of numpy in Dakota's Python    |
+|                                              |                    | interface                                     |
++----------------------------------------------+--------------------+-----------------------------------------------+
+
+.. __: interface-analysis_drivers-python-numpy.html
+
+
+
+**Description**
+
+
+Dakota supports :ref:`a library-linked interface to Python <advint:existingdirect>`, which
+may not be available in pre-built downloads of Dakota and must be explicitly enabled when
+compiling Dakota from source.
+
+The :dakkw:`interface-analysis_drivers` keyword specifies a
+Python module:function which implements the parameter to
+response mapping.  List data structures are the default,
+but NumPy is also supported, if enabled in the build.
+
+Batch evaluations ( :dakkw:`interface-batch`) are supported through a
+list of dictionaries.
+
+

@@ -1,0 +1,40 @@
+.. _model-surrogate-global-function_train-rounding_tolerance:
+
+""""""""""""""""""
+rounding_tolerance
+""""""""""""""""""
+
+
+An accuracy tolerance that is used to guide rounding during rank adaptation.
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* REAL
+
+- *Default:* 1.e-10
+
+
+**Description**
+
+
+The rounding tolerance is used to measure how closely one can approximate
+a functional tensor train representation at a step of the optimization
+procedure using one of lower ranks. If this tolerance is small, then less
+compression is achieved but greater accuracy is obtained. If this
+tolerance is big, greater compression is achieved at the expense of
+accuracy.
+
+*Default Behavior*
+
+If this tolerance is not specified, then we adopt the internal C3 default.
+
+

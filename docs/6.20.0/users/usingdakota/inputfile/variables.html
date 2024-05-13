@@ -1,0 +1,968 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Variables &mdash; dakota  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/dakota_theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/sandiaheaderlite.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Interfaces" href="interfaces.html" />
+    <link rel="prev" title="Models" href="model.html" /> 
+  
+  <meta name="sandia.approval_type" content="formal"/>
+  <meta property="sandia.approved" content="SAND2023-13392 O"/>
+  <meta name="description" content="The Dakota project delivers both state-of-the-art research and robust, usable software for optimization and UQ."/>
+  <meta name="keywords" content="Dakota, optimization, UQ, uncertainty quantification, parametric analysis, design exploration, model calibration, risk analysis"/>
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> dakota
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../setupdakota.html">Getting Started</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../usingdakota.html">Using Dakota</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../introduction/aboutdakota.html">About Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../introduction/helloworld.html">Dakota Beginner’s Tutorial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples.html">Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../introduction/couplingtosimulations.html">Coupling Dakota to a Simulation</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../inputfile.html">Dakota Input File</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="formatting.html">Input File Formatting</a></li>
+<li class="toctree-l3"><a class="reference internal" href="model.html">Models</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Variables</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#design-variables">Design Variables</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#continuous-design-variables">Continuous Design Variables</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#discrete-design-variables">Discrete Design Variables</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#uncertain-variables">Uncertain Variables</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#aleatory-uncertain-variables">Aleatory Uncertain Variables</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#continuous-aleatory-uncertain-variables">Continuous Aleatory Uncertain Variables</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#discrete-aleatory-uncertain-variables">Discrete Aleatory Uncertain Variables</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#epistemic-uncertain-variables">Epistemic Uncertain Variables</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#state-variables">State Variables</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#management-of-mixed-variables-by-method">Management of Mixed Variables by Method</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#active-variables-view">Active Variables View</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#variable-domain">Variable Domain</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#usage-notes">Usage Notes</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dakota-parameters-file-data-format">Dakota Parameters File Data Format</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#parameters-file-format-standard">Parameters file format (standard)</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#parameters-file-format-aprepro">Parameters file format (APREPRO)</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#the-active-set-vector">The Active Set Vector</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="interfaces.html">Interfaces</a></li>
+<li class="toctree-l3"><a class="reference internal" href="responses.html">Responses</a></li>
+<li class="toctree-l3"><a class="reference internal" href="inputstodakota.html">Inputs to Dakota</a></li>
+<li class="toctree-l3"><a class="reference internal" href="inputspec.html">Dakota Input Spec</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../inputfile.html#video-resources">Video Resources</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../running.html">Running Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../output.html">Dakota Output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../studytypes.html">Study Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../topics.html">Topics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../advanced.html">Advanced Topics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../theory.html">Dakota Theory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference.html">Keyword Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../usingdakotagui/usingdakotagui.html">Using Dakota GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../externaltools/externaltools.html">Using External Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../compiling/compiling.html">Compiling Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developingdakota/developingdakota.html">Developing Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../misc/misc.html">Miscellaneous</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">dakota</a>
+      </nav>
+
+	  <!-- SNL Lite header -->
+	  <div class="snlheader-subsite--wrapper-default">
+		<snlheader class="snlheader-subsite" role="snlbanner">
+		  <div class="wrapper">
+			<a href="https://www.sandia.gov/index.html">
+			  <div class="logo-transparent"><p class="logo">Sandia National Laboratories</p></div>
+			</a>
+			<div class="nav-top">
+			  <a class="visuallyhidden" name="mainnav"></a>
+			  <div aria-label="main navigation" class="core-nav-transparent core-nav-transparent--visible" role="navigation">
+				<ul role="navigation" class="secondary-links">
+				  <li id="search-text-link">
+					<a aria-label="Search" href="https://www.sandia.gov/search/">Search Sandia.gov</a>
+				  </li>
+				  <li id="directory-text-link">
+					<a href="https://www.sandia.gov/directory.html" aria-expanded="false" aria-label="Site Directory">All Sandia Websites</a>
+				  </li>
+				</ul>
+			  </div>
+			</div>
+		  </div> 
+		</snlheader>
+	  </div>	  
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../usingdakota.html">Using Dakota</a></li>
+          <li class="breadcrumb-item"><a href="../inputfile.html">Dakota Input File</a></li>
+      <li class="breadcrumb-item active">Variables</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/usingdakota/inputfile/variables.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="variables">
+<span id="variables-main"></span><h1>Variables<a class="headerlink" href="#variables" title="Link to this heading"></a></h1>
+<section id="overview">
+<span id="topic-variables"></span><span id="variables-overview"></span><h2>Overview<a class="headerlink" href="#overview" title="Link to this heading"></a></h2>
+<p>The <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/variables.html"><span class="pre">variables</span></a></code> specification in a Dakota input file specifies the
+parameter set to be iterated by a particular method. In the case of an
+optimization study, these variables are adjusted in order to locate an
+optimal design; in the case of parameter studies/sensitivity
+analysis/design of experiments, these parameters are perturbed to
+explore the parameter space; and in the case of uncertainty analysis,
+the variables are associated with distribution/interval
+characterizations which are used to compute corresponding
+distribution/interval characterizations for response functions. To
+accommodate these and other types of studies, Dakota supports design,
+uncertain, and state variable types for continuous and discrete variable
+domains. Uncertain types can be further categorized as either aleatory
+or epistemic, and discrete domains can include discrete range, discrete
+integer set, discrete string set, and discrete real set.</p>
+<p>This chapter surveys key variables concepts, categories, and specific
+types, and addresses variable-related file formats and the active set
+vector. See the <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/variables.html"><span class="pre">variables</span></a></code> keyword for additional
+specification details.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In several contexts, Dakota inputs must express variable
+specifications in what is referred to as “input specification
+order.” This means the ordering of variables types given in the
+primary <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/variables.html"><span class="pre">variables</span></a></code> table.</p>
+</div>
+<p>Key Dakota variable concepts include:</p>
+<ul class="simple">
+<li><p>Category (design, uncertain (aleatory/epistemic), state) which
+groups variables by their primary use.</p></li>
+<li><p>Active View: the subset of variables (categories) being explored in
+a particular study.</p></li>
+<li><p>Type: a specific named variable</p></li>
+<li><p>Domain: continuous vs. discrete (integer-, string-, or real-valued).
+Discrete variables span categories and are specified via ranges,
+admissible sets, and integer-valued discrete probability
+distributions.</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Characterizing the properties of a specific type of variable, e.g.,
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/variables-discrete_design_set.html"><span class="pre">discrete_design_set</span></a></code> or
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/variables-lognormal_uncertain.html"><span class="pre">lognormal_uncertain</span></a></code> often requires providing
+arrays of data. For example a list of <code class="docutils literal notranslate"><span class="pre">means</span></code> or set
+<code class="docutils literal notranslate"><span class="pre">elements_per_variable</span></code>. The ordering of these arrays must match
+the ordering of the <code class="docutils literal notranslate"><span class="pre">descriptors</span></code> for that variable type.</p>
+</div>
+</section>
+<section id="design-variables">
+<span id="variables-design"></span><h2>Design Variables<a class="headerlink" href="#design-variables" title="Link to this heading"></a></h2>
+<p>Design variables are adjusted in the course of determining an optimal
+design or an optimal set of deterministic calibration
+parameters. These variables may be continuous (real-valued between
+bounds), discrete range (integer-valued between bounds), discrete set
+of integers (integer-valued from finite set), discrete set of strings
+(string-valued from finite set), and discrete set of reals
+(real-valued from finite set). Continuous design variables are the
+most common design variable type in engineering applications. All but
+a handful of the optimization algorithms in Dakota support continuous
+design variables exclusively.</p>
+<section id="continuous-design-variables">
+<span id="variables-design-cdv"></span><h3>Continuous Design Variables<a class="headerlink" href="#continuous-design-variables" title="Link to this heading"></a></h3>
+<p>The most common type of design variables encountered in engineering
+applications are of the continuous type. These variables may assume any
+real value (e.g., <code class="docutils literal notranslate"><span class="pre">12.34</span></code>, <code class="docutils literal notranslate"><span class="pre">-1.735e+07</span></code>) within their bounds. All
+but a handful of the optimization algorithms in Dakota support
+continuous design variables exclusively.</p>
+</section>
+<section id="discrete-design-variables">
+<span id="variables-design-ddv"></span><h3>Discrete Design Variables<a class="headerlink" href="#discrete-design-variables" title="Link to this heading"></a></h3>
+<p>Engineering design problems may contain discrete variables such as
+material types, feature counts, stock gauge selections, etc. These
+variables may assume only a fixed number of values, as compared to a
+continuous variable which has an uncountable number of possible values
+within its range. Discrete variables may involve a range of consecutive
+integers (<span class="math notranslate nohighlight">\(x\)</span> can be any integer between <code class="docutils literal notranslate"><span class="pre">1</span></code> and <code class="docutils literal notranslate"><span class="pre">10</span></code>), a set
+of integer values (<span class="math notranslate nohighlight">\(x\)</span> can be <code class="docutils literal notranslate"><span class="pre">101</span></code>, <code class="docutils literal notranslate"><span class="pre">212</span></code>, or <code class="docutils literal notranslate"><span class="pre">355</span></code>), a set
+of string values (<span class="math notranslate nohighlight">\(x\)</span> can be <code class="docutils literal notranslate"><span class="pre">'direct'</span></code>, <code class="docutils literal notranslate"><span class="pre">'gmres'</span></code>, or
+<code class="docutils literal notranslate"><span class="pre">'jacobi'</span></code>), or a set of real values (e.g., <span class="math notranslate nohighlight">\(x\)</span> can be
+identically <code class="docutils literal notranslate"><span class="pre">4.2</span></code>, <code class="docutils literal notranslate"><span class="pre">6.4</span></code>, or <code class="docutils literal notranslate"><span class="pre">8.5</span></code>).</p>
+<p>Discrete variables may be classified as either “categorical” or
+“noncategorical.” In the latter noncategorical case, the discrete
+requirement can be relaxed during the solution process since the model
+can still compute meaningful response functions for values outside the
+allowed discrete range or set. For example, a discrete variable
+representing the thickness of a structure is generally a noncategorical
+variable since it can assume a continuous range of values during the
+algorithm iterations, even if it is desired to have a stock gauge
+thickness in the end. In the former categorical case, the discrete
+requirement cannot be relaxed since the model cannot obtain a solution
+for values outside the range or set. For example, feature counts are
+generally categorical discrete variables, since most computational
+models will not support a non-integer value for the number of instances
+of some feature (e.g., number of support brackets). An optional
+<code class="docutils literal notranslate"><span class="pre">categorical</span></code> specification indicates which discrete real and
+discrete integer variables are restricted vs. relaxable. String
+variables cannot be relaxed.</p>
+<p>Gradient-based optimization methods cannot be directly applied to
+problems with discrete variables since derivatives only exist for a
+variable continuum. For problems with noncategorical variables, the
+experimental branch and bound capability
+(<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-branch_and_bound.html"><span class="pre">branch_and_bound</span></a></code>) can be
+used to relax the discrete requirements and apply gradient-based methods
+to a series of generated subproblems. For problems with categorical
+variables, nongradient-based methods (e.g., <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-coliny_ea.html"><span class="pre">coliny_ea</span></a></code>)
+are commonly
+used; however, most of those methods do not take advantage of any
+structure that may be associated with the categorical variables. The
+exception is <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-mesh_adaptive_search.html"><span class="pre">mesh_adaptive_search</span></a></code>.
+If it is possible to define a
+subjective relationship between the different values a given categorical
+variable can take on, that relationship can be expressed via a
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/variables.html"><span class="pre">variables</span></a></code>
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-mesh_adaptive_search-adjacency_matrix.html"><span class="pre">adjacency_matrix</span></a></code> option. The
+method will take that relationship into consideration, together with
+any expressed
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-mesh_adaptive_search-neighbor_order.html"><span class="pre">neighbor_order</span></a></code>. Branch and bound
+techniques are expanded on in <a class="reference internal" href="../advanced/advancedmethods.html#adv-meth-minlp"><span class="std std-ref">Mixed Integer Nonlinear Programming (MINLP)</span></a> and
+nongradient-based methods are further described in <a class="reference internal" href="../studytypes/optimization.html#opt"><span class="std std-ref">Optimization</span></a>.</p>
+<p>In addition to engineering applications, many non-engineering
+applications in the fields of scheduling, logistics, and resource
+allocation contain discrete design parameters. Within the Department of
+Energy, solution techniques for these problems impact programs in
+stockpile evaluation and management, production planning,
+nonproliferation, transportation (routing, packing, logistics),
+infrastructure analysis and design, energy production, environmental
+remediation, and tools for massively parallel computing such as domain
+decomposition and meshing.</p>
+<p><strong>Discrete Design Variable Types:</strong></p>
+<ul>
+<li><p>The <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/variables-discrete_design_range.html"><span class="pre">discrete_design_range</span></a></code> type supports a range
+of consecutive integers between specified
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/variables-discrete_design_range-lower_bounds.html"><span class="pre">lower_bounds</span></a></code> and
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/variables-discrete_design_range-upper_bounds.html"><span class="pre">upper_bounds</span></a></code>.</p></li>
+<li><p>The <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/discrete_design_set.html"><span class="pre">discrete_design_set</span></a></code> type admits a set of enumerated
+integer, string, or real values through an <code class="docutils literal notranslate"><span class="pre">elements</span></code>
+specification. The set of values must be specified as an ordered,
+unique set and is stored internally the same way, with a
+corresponding set of indices that run from 0 to one less than the
+number of set values. These indices are used by some iterative
+algorithms (e.g., parameter studies, SCOLIB methods) for
+simplicity in discrete value enumeration when the actual
+corresponding set values are immaterial. In the case of
+<a class="reference internal" href="../studytypes/parameterstudies.html#ps"><span class="std std-ref">parameter studies</span></a>, this index representation is required
+in certain step and partition controls.</p>
+<p>Each string element value must be quoted in the Dakota input file
+and may contain alphanumeric, dash, underscore, and colon. White
+space, quote characters, and backslash/meta-characters are not
+permitted.</p>
+</li>
+</ul>
+</section>
+</section>
+<section id="uncertain-variables">
+<span id="variables-uncertain"></span><h2>Uncertain Variables<a class="headerlink" href="#uncertain-variables" title="Link to this heading"></a></h2>
+<p>Deterministic variables (i.e., those with a single known value) do not
+capture the behavior of the input variables in all situations. In many
+cases, the exact value of a model parameter is not precisely known. An
+example of such an input variable is the thickness of a heat treatment
+coating on a structural steel I-beam used in building construction. Due
+to variability and tolerances in the coating process, the thickness of
+the layer is known to follow a normal distribution with a certain mean
+and standard deviation as determined from experimental data. The
+inclusion of the uncertainty in the coating thickness is essential to
+accurately represent the resulting uncertainty in the response of the
+building.</p>
+<p>Uncertain variables directly support the use of probabilistic
+uncertainty quantification methods such as sampling, reliability, and
+stochastic expansion methods.  They also admit lower and upper
+distribution bounds (whether explicitly defined, implicitly defined,
+or inferred), which permits allows their use in methods that rely on a
+bounded region to define a set of function evaluations (i.e., design
+of experiments and some parameter study methods).</p>
+<section id="aleatory-uncertain-variables">
+<span id="variables-uncertain-auv"></span><h3>Aleatory Uncertain Variables<a class="headerlink" href="#aleatory-uncertain-variables" title="Link to this heading"></a></h3>
+<p>Aleatory uncertainty is also known as inherent variability,
+irreducible uncertainty, or randomness. It is typically modeled using
+probability distributions, and probabilistic methods are commonly used
+for propagating input aleatory uncertainties described by probability
+distribution specifications. The two following sections describe the
+continuous and discrete aleatory uncertain variables supported by
+Dakota.</p>
+<section id="continuous-aleatory-uncertain-variables">
+<span id="variables-uncertain-cauv"></span><h4>Continuous Aleatory Uncertain Variables<a class="headerlink" href="#continuous-aleatory-uncertain-variables" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><a class="reference internal" href="../reference/variables-normal_uncertain.html#variables-normal-uncertain"><span class="std std-ref">Normal</span></a>: a probability
+distribution characterized by a mean and
+standard deviation. Also referred to as Gaussian. Bounded normal is
+also supported by some methods with an additional specification of
+lower and upper bounds.</p></li>
+<li><p><a class="reference internal" href="../reference/variables-lognormal_uncertain.html#variables-lognormal-uncertain"><span class="std std-ref">Lognormal</span></a>: a probability
+distribution characterized by a mean and
+either a standard deviation or an error factor. The natural logarithm
+of a lognormal variable has a normal distribution. Bounded lognormal
+is also supported by some methods with an additional specification of
+lower and upper bounds.</p></li>
+<li><p><a class="reference internal" href="../reference/variables-uniform_uncertain.html#variables-uniform-uncertain"><span class="std std-ref">Uniform</span></a>: a probability
+distribution characterized by a lower bound
+and an upper bound. Probability is constant between the bounds.</p></li>
+<li><p><a class="reference internal" href="../reference/variables-loguniform_uncertain.html#variables-loguniform-uncertain"><span class="std std-ref">Loguniform</span></a>: a probability
+distribution characterized by a lower bound
+and an upper bound. The natural logarithm of a loguniform variable
+has a uniform distribution.</p></li>
+<li><p><a class="reference internal" href="../reference/variables-triangular_uncertain.html#variables-triangular-uncertain"><span class="std std-ref">Triangular</span></a>: a probability distribution
+characterized by a mode, a lower bound, and an upper bound.</p></li>
+<li><p><a class="reference internal" href="../reference/variables-exponential_uncertain.html#variables-exponential-uncertain"><span class="std std-ref">Exponential</span></a>: a probability
+distribution characterized by a beta parameter.</p></li>
+<li><p><a class="reference internal" href="../reference/variables-beta_uncertain.html#variables-beta-uncertain"><span class="std std-ref">Beta</span></a>: a flexible probability
+distribution characterized by a lower
+bound and an upper bound and alpha and beta parameters. The uniform
+distribution is a special case.</p></li>
+<li><p><a class="reference internal" href="../reference/variables-gamma_uncertain.html#variables-gamma-uncertain"><span class="std std-ref">Gamma</span></a>: a flexible probability
+distribution characterized by alpha and
+beta parameters. The exponential distribution is a special case.</p></li>
+<li><p><a class="reference internal" href="../reference/variables-gumbel_uncertain.html#variables-gumbel-uncertain"><span class="std std-ref">Gumbel</span></a>: the Type I Largest
+Extreme Value probability distribution.
+Characterized by alpha and beta parameters.</p></li>
+<li><p><a class="reference internal" href="../reference/variables-frechet_uncertain.html#variables-frechet-uncertain"><span class="std std-ref">Frechet</span></a>: the Type II Largest
+Extreme Value probability distribution.
+Characterized by alpha and beta parameters.</p></li>
+<li><p><a class="reference internal" href="../reference/variables-weibull_uncertain.html#variables-weibull-uncertain"><span class="std std-ref">Weibull</span></a>: the Type III Smallest
+Extreme Value probability
+distribution. Characterized by alpha and beta parameters.</p></li>
+<li><p><a class="reference internal" href="../reference/variables-histogram_bin_uncertain.html#variables-histogram-bin-uncertain"><span class="std std-ref">Histogram Bin</span></a>: an
+empirically-based probability distribution
+characterized by a set of <span class="math notranslate nohighlight">\((x,y)\)</span> pairs that map out histogram
+bins (a continuous interval with associated bin count).</p></li>
+</ul>
+</section>
+<section id="discrete-aleatory-uncertain-variables">
+<span id="variables-uncertain-dauv"></span><h4>Discrete Aleatory Uncertain Variables<a class="headerlink" href="#discrete-aleatory-uncertain-variables" title="Link to this heading"></a></h4>
+<p>The following types of discrete aleatory uncertain variables are
+available:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="../reference/variables-poisson_uncertain.html#variables-poisson-uncertain"><span class="std std-ref">Poisson</span></a>: integer-valued
+distribution used to predict the number of
+discrete events that happen in a given time interval.</p></li>
+<li><p><a class="reference internal" href="../reference/variables-binomial_uncertain.html#variables-binomial-uncertain"><span class="std std-ref">Binomial</span></a>: integer-valued
+distribution used to predict the number of
+failures in a number of independent tests or trials.</p></li>
+<li><p><a class="reference internal" href="../reference/variables-negative_binomial_uncertain.html#variables-negative-binomial-uncertain"><span class="std std-ref">Negative Binomial</span></a>:
+integer-valued distribution used to predict the
+number of times to perform a test to have a target number of
+successes.</p></li>
+<li><p><a class="reference internal" href="../reference/variables-geometric_uncertain.html#variables-geometric-uncertain"><span class="std std-ref">Geometric</span></a>: integer-valued
+distribution used to model the number of
+successful trials that might occur before a failure is observed.</p></li>
+<li><p><a class="reference internal" href="../reference/variables-hypergeometric_uncertain.html#variables-hypergeometric-uncertain"><span class="std std-ref">Hypergeometric</span></a>:
+integer-valued distribution used to model the number
+of failures observed in a set of tests that has a known proportion of
+failures.</p></li>
+<li><p><a class="reference internal" href="../reference/variables-histogram_point_uncertain.html#variables-histogram-point-uncertain"><span class="std std-ref">Histogram Point (integer, string, real)</span></a>: an empirically-based
+probability distribution characterized by a set of integer-valued
+<span class="math notranslate nohighlight">\((i,c)\)</span>, string-valued <span class="math notranslate nohighlight">\((s,c)\)</span>, and/or real-valued
+<span class="math notranslate nohighlight">\({r,c}\)</span> pairs that map out histogram points (each a discrete
+point value <span class="math notranslate nohighlight">\(i\)</span>, <span class="math notranslate nohighlight">\(s\)</span>, or <span class="math notranslate nohighlight">\(r\)</span>, with associated count
+<span class="math notranslate nohighlight">\(c\)</span>).</p></li>
+</ul>
+<p>For aleatory random variables, Dakota admits an
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/variables-uncertain_correlation_matrix.html"><span class="pre">uncertain_correlation_matrix</span></a></code> that specifies
+correlations among the input variables. The correlation matrix
+defaults to the identity matrix, i.e., no correlation among the
+uncertain variables.</p>
+<p>For additional information on random variable probability
+distributions, refer to <span id="id1">[<a class="reference internal" href="../../misc/bibliography.html#id139" title="A. Haldar and S. Mahadevan. Probability, Reliability, and Statistical Methods in Engineering Design. Wiley, New York, 2000.">HM00</a>]</span> and <span id="id2">[<a class="reference internal" href="../../misc/bibliography.html#id275" title="L. P. Swiler and G. D. Wyss. A user's guide to Sandia's latin hypercube sampling software: LHS UNIX library and standalone version. Technical Report SAND04-2439, Sandia National Laboratories, Albuquerque, NM, July 2004.">SW04</a>]</span>. Refer to
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/variables.html"><span class="pre">variables</span></a></code> for more detail on the uncertain variable
+specifications and to <a class="reference internal" href="../studytypes/uq.html#uq"><span class="std std-ref">Uncertainty Quantification</span></a> for available methods to quantify the
+uncertainty in the response.</p>
+</section>
+</section>
+<section id="epistemic-uncertain-variables">
+<span id="variables-uncertain-euv"></span><h3>Epistemic Uncertain Variables<a class="headerlink" href="#epistemic-uncertain-variables" title="Link to this heading"></a></h3>
+<p>Epistemic uncertainty is reducible uncertainty due to lack of
+knowledge. Characterization of epistemic uncertainties is often based
+on subjective prior knowledge rather than objective data.</p>
+<p>In Dakota, epistemic uncertainty can be characterized by interval- or
+set-valued variables (see relevant keywords below) that are propagated
+to calculate bounding intervals on simulation output using interval
+analysis methods. These epistemic variable types can optionally
+include belief structures or basic probability assignments for use in
+Dempster-Shafer theory of evidence methods. Epistemic uncertainty can
+alternately be modeled with probability density functions, although
+results from UQ studies are then typically interpreted as
+possibilities or bounds, as opposed to a probability distribution of
+responses.</p>
+<p>Dakota supports the following epistemic uncertain variable types:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="../reference/variables-continuous_interval_uncertain.html#variables-continuous-interval-uncertain"><span class="std std-ref">Continuous Interval</span></a>:
+a real-valued interval-based specification
+characterized by sets of lower and upper bounds and Basic Probability
+Assignments (BPAs) associated with each interval. The intervals may
+be overlapping, contiguous, or disjoint, and a single interval (with
+probability = 1) per variable is an important special case. The
+interval distribution is not a probability distribution, as the exact
+structure of the probabilities within each interval is not known. It
+is commonly used with epistemic uncertainty methods.</p></li>
+<li><p><a class="reference internal" href="../reference/variables-discrete_interval_uncertain.html#variables-discrete-interval-uncertain"><span class="std std-ref">Discrete Interval</span></a>: an
+integer-valued variant of the Continuous Interval variable.</p></li>
+<li><p><a class="reference internal" href="../reference/variables-discrete_uncertain_set.html#variables-discrete-uncertain-set"><span class="std std-ref">Discrete Set (integer, string, and real)</span></a>: Similar to discrete design set
+variables, these epistemic variables admit a finite number of values
+(<code class="docutils literal notranslate"><span class="pre">elements</span></code>) for type integer, string, or real, each with an
+associated probability.</p></li>
+</ul>
+<p>In the discrete case, interval variables may be used to specify
+categorical choices which are epistemic.  For example, if there are
+three possible forms for a physics model (model 1, 2, or 3) and there
+is epistemic uncertainty about which one is correct, a discrete
+uncertain interval or a discrete set could represent this type of
+uncertainty.</p>
+<p>Through <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/model-nested.html"><span class="pre">nested</span></a></code>, Dakota can perform combined aleatory /
+epistemic analyses such as second-order probability or probability of
+frequency. For example, a variable can be assumed to have a lognormal
+distribution with specified variance, with its mean expressed as an
+epistemic uncertainty lying in an expert-specified interval. See
+examples in <a class="reference internal" href="../advanced/advancedmodelrecursions.html#adv-models"><span class="std std-ref">Advanced Model Recursions</span></a>.</p>
+</section>
+</section>
+<section id="state-variables">
+<span id="variables-state"></span><h2>State Variables<a class="headerlink" href="#state-variables" title="Link to this heading"></a></h2>
+<p>State variables consist of auxiliary variables to be mapped through
+the simulation interface, but are not to be designed nor modeled as
+uncertain. State variables provide a means to parameterize additional
+model inputs which, in the case of a numerical simulator, might
+include solver convergence tolerances, time step controls, or mesh
+fidelity parameters.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The term “state variable” is overloaded in math, science, and
+engineering. For Dakota it typically means a fixed parameter and
+does not refer to, e.g., the solution variables of a differential
+equation.</p>
+</div>
+<p>State variable configuration mirrors that of <a class="reference internal" href="#variables-design"><span class="std std-ref">design variables</span></a>. They can be specified via
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/variables-continuous_state.html"><span class="pre">continuous_state</span></a></code> (real-valued between bounds),
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/variables-discrete_state_range.html"><span class="pre">discrete_state_range</span></a></code> (integer-valued between
+bounds), or <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/variables-discrete_state_set.html"><span class="pre">discrete_state_set</span></a></code> (a discrete
+integer-, string-, or real-valued set). Model parameterizations with
+strings (e.g., “mesh1.exo”), are also possible using an interface
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/interrface-analysis_drivers-analysis_components.html"><span class="pre">analysis_components</span></a></code> specification
+(see also <a class="reference internal" href="#variables-parameters-standard"><span class="std std-ref">Parameters file format (standard)</span></a>)</p>
+<p>State variables, as with other types of variables, are viewed
+differently depending on the method in use. By default, only parameter
+studies, design of experiments, and verification methods will vary
+state variables. This can be overridden as discussed in
+<a class="reference internal" href="#variables-mixedview"><span class="std std-ref">Active Variables View</span></a>.</p>
+<p>Since these variables are neither design nor uncertain variables,
+algorithms for optimization, least squares, and uncertainty
+quantification do not iterate on these variables by default. They are
+inactive and hidden from the algorithm.  However, Dakota still maps
+these variables through the user’s interface where they affect the
+computational model in use. This allows optimization, least squares,
+and uncertainty quantification studies to be executed under different
+simulation conditions (which will result, in general, in different
+results). Parameter studies and design of experiments methods, on the
+other hand, are general-purpose iterative techniques which do not by
+default draw a distinction between variable types. They include state
+variables in the set of variables to be studied, which permit them to
+explore the effect of state variable values on the responses of
+interest.</p>
+<p>When a state variable is held fixed, the specified <code class="docutils literal notranslate"><span class="pre">initial_state</span></code>
+is used as its sole value. If the state variable is defined only by
+its bounds, then the initial_state will be inferred from the variable
+bounds or valid set values. If a method iterates on a state variable,
+the variable is treated as a design variable with the given bounds, or
+as a uniform uncertain variable with the given bounds.</p>
+<p>In some cases, state variables are used direct coordination with an
+optimization, least squares, or uncertainty quantification algorithm.
+For example, state variables could be used to enact model adaptivity
+through the use of a coarse mesh or loose solver tolerances in the
+initial stages of an optimization with continuous model refinement as
+the algorithm nears the optimal solution. They also are used to
+control model fidelity in some UQ approaches.</p>
+</section>
+<section id="management-of-mixed-variables-by-method">
+<span id="variables-mixed"></span><h2>Management of Mixed Variables by Method<a class="headerlink" href="#management-of-mixed-variables-by-method" title="Link to this heading"></a></h2>
+<section id="active-variables-view">
+<span id="variables-mixedview"></span><h3>Active Variables View<a class="headerlink" href="#active-variables-view" title="Link to this heading"></a></h3>
+<p>As alluded to in the previous section, the iterative method selected
+for use in Dakota partially determines what subset, or view, of the
+variables data is active in the study. In general, a mixture of
+various different types of variables is supported within all methods,
+though by default certain methods will only modify certain types of
+variables. For example, by default, optimizers and least squares
+methods only modify design variables, and uncertainty quantification
+methods typically only utilize uncertain variables. This implies that
+variables which are not directly controlled by a particular method
+will be mapped through the interface unmodified. This allows for
+parameterizations within the model beyond those used by a the method,
+which can provide the convenience of consolidating the control over
+various modeling parameters in a single file (the Dakota input
+file). An important related point is that the active variable set
+dictates over which continuous variables derivatives are typically
+computed (see <a class="reference internal" href="responses.html#responses-active"><span class="std std-ref">Active Variables for Derivatives</span></a>).</p>
+<p><strong>Default Variables View:</strong> The default active variables view is
+determined from a combination of the response function type and
+method. If <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/responses-objective_functions.html"><span class="pre">objective_functions</span></a></code> or
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/responses-calibration_terms.html"><span class="pre">calibration_terms</span></a></code> is given in the response
+specification block, the design variables will be active.</p>
+<p>General <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/responses-response_functions.html"><span class="pre">response_functions</span></a></code> do not have a specific
+interpretation the way objective functions or calibration terms
+do. For these, the active view is inferred from the method.</p>
+<ul class="simple">
+<li><p>For parameter studies, or any of the dace, psuade, or fsu methods,
+the active view is set to <em>all</em> variables.</p></li>
+<li><p>For sampling uncertainty quantification methods, the view is set to
+<em>aleatory</em> if only aleatory variables are present, <em>epistemic</em> if only
+epistemic variables are present, or <em>uncertain</em> (covering both
+aleatory and epistemic) if both are present.</p></li>
+<li><p>For interval estimation or evidence calculations, the view is set to
+<em>epistemic</em>.</p></li>
+<li><p>For other uncertainty quantification, e.g., reliability methods or
+stochastic expansion methods, the view is set to <em>aleatory</em>.</p></li>
+<li><p>Finally, for verification studies using
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-richardson_extrap.html"><span class="pre">richardson_extrap</span></a></code> studies, the active view is set to
+<em>state</em>.</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>For surrogate-based optimization, where the surrogate is built over
+points generated by a <code class="docutils literal notranslate"><span class="pre">dace_method_pointer</span></code>, the point generation
+is only over the design variables unless otherwise specified, i.e.,
+state variables will not be sampled for surrogate construction.</p>
+</div>
+<p><strong>Explicit View Control:</strong> The subset of active variables for a Dakota
+method can be explicitly controlled by specifying the variables
+keyword <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/variables-active.html"><span class="pre">active</span></a></code>, together with one of
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/variables-all.html"><span class="pre">all</span></a></code>, <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/variables-design.html"><span class="pre">design</span></a></code>,
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/variables-uncertain.html"><span class="pre">uncertain</span></a></code>, <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/variables-aleatory.html"><span class="pre">aleatory</span></a></code>,
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/variables-epistemic.html"><span class="pre">epistemic</span></a></code>, or <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/variables-state.html"><span class="pre">state</span></a></code>.  This
+causes the Dakota method to operate on the specified variable types,
+and overriding the defaults. For example, the default behavior for a
+nondeterministic sampling method is to sample the uncertain
+variables. However, if the user specified <code class="docutils literal notranslate"><span class="pre">active</span> <span class="pre">all</span></code> in the
+variables block, the sampling would be performed over all variables
+(e.g. design and state variables in addition to uncertain
+variables). This may be desired in situations such as surrogate based
+optimization under uncertainty, where a surrogate may be built over
+both design and uncertain variables. Another situation where one may
+want the fine-grained control available by specifying one of these
+variable types is when one has state variables but only wants to
+sample over the design variables when constructing a surrogate
+model. Finally, more sophisticated uncertainty studies may involve
+various combinations of epistemic vs. aleatory variables being active
+in nested models.</p>
+</section>
+<section id="variable-domain">
+<span id="variables-domain"></span><h3>Variable Domain<a class="headerlink" href="#variable-domain" title="Link to this heading"></a></h3>
+<p>The variable domain setting controls how discrete variables (whether
+design, uncertain, or state) are treated. If <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/variables-mixed.html"><span class="pre">mixed</span></a></code>
+is specified, the continuous and non-categorical discrete variables
+are treated separately. When <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/variables-relaxed.html"><span class="pre">relaxed</span></a></code>, the discrete
+variables are relaxed and treated as continuous variables.</p>
+<p>Domain control can be useful in optimization problems involving both
+continuous and discrete variables in order to apply a continuous
+optimizer to a mixed variable problem. All methods default to a mixed
+domain except for the experimental branch-and-bound method, which
+defaults to relaxed.</p>
+</section>
+</section>
+<section id="usage-notes">
+<span id="variables-usage"></span><h2>Usage Notes<a class="headerlink" href="#usage-notes" title="Link to this heading"></a></h2>
+<p><strong>Specifying set variables:</strong> Sets of integers, reals, and strings
+have similar specifications, though different value types. The
+variables are specified using three keywords:</p>
+<ul class="simple">
+<li><p>Variable declaration keyword, e.g.,
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/variables-discrete_design_set.html"><span class="pre">discrete_design_set</span></a></code>: specifies the number of
+variables being defined.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">elements_per_variable</span></code>: a list of positive integers specifying
+how many set members each variable admits</p>
+<ul>
+<li><p>Length: # of variables</p></li>
+<li><p>Default: equal apportionment of elements among variables</p></li>
+</ul>
+</li>
+<li><p>elements: a list of the permissible integer values in ALL sets,
+concatenated together.</p>
+<ul>
+<li><p>Length: sum of <code class="docutils literal notranslate"><span class="pre">elements_per_variable</span></code>, or an integer multiple
+of number of variables</p></li>
+<li><p>The order is very important here.</p></li>
+<li><p>The list is partitioned according to the values of
+<code class="docutils literal notranslate"><span class="pre">elements_per_variable</span></code>, and each partition is assigned to a
+variable.</p></li>
+</ul>
+</li>
+<li><p>The ordering of elements_per_variable, and the partitions of
+elements must match the strings from descriptors</p></li>
+</ul>
+</section>
+<section id="dakota-parameters-file-data-format">
+<span id="variables-parameters"></span><h2>Dakota Parameters File Data Format<a class="headerlink" href="#dakota-parameters-file-data-format" title="Link to this heading"></a></h2>
+<p>Simulation interfaces which employ system calls and forks to create
+separate simulation processes must communicate with the simulation
+code through the file system. This is accomplished through the reading
+and writing of parameters and results files. Dakota uses a particular
+format for this data input/output. Depending on the user’s interface
+specification, Dakota will write the parameters file in either
+standard or APREPRO format. The former uses a simple <code class="docutils literal notranslate"><span class="pre">value</span> <span class="pre">tag</span></code>
+format, whereas latter option uses a <code class="docutils literal notranslate"><span class="pre">{</span> <span class="pre">tag</span> <span class="pre">=</span> <span class="pre">value</span> <span class="pre">}</span></code> format for
+compatibility with the APREPRO utility <span id="id3">[<a class="reference internal" href="../../misc/bibliography.html#id265" title="G. D. Sjaardema. APREPRO: an algebraic preprocessor for parameterizing finite element analyses. Technical Report SAND92-2291, Sandia National Laboratories, Albuquerque, NM, 1992.">Sja92</a>]</span> (as well as
+DPrePro, BPREPRO, and JPrePost variants).</p>
+<section id="parameters-file-format-standard">
+<span id="variables-parameters-standard"></span><h3>Parameters file format (standard)<a class="headerlink" href="#parameters-file-format-standard" title="Link to this heading"></a></h3>
+<p>Prior to invoking a simulation, Dakota creates a parameters file which
+contains the current parameter values and a set of function requests.
+The standard format for this parameters file is shown in
+<a class="reference internal" href="#variables-std-params-format"><span class="std std-numref">Listing 14</span></a>.</p>
+<div class="literal-block-wrapper docutils container" id="variables-std-params-format">
+<div class="code-block-caption"><span class="caption-number">Listing 14 </span><span class="caption-text">Parameters file data format - standard option.</span><a class="headerlink" href="#variables-std-params-format" title="Link to this code"></a></div>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>&lt;int&gt;    variables
+&lt;double&gt; &lt;label_cdv_i&gt;         (i = 1 to n_cdv)
+&lt;int&gt;    &lt;label_ddiv_i&gt;        (i = 1 to n_ddiv)
+&lt;string&gt; &lt;label_ddsv_i&gt;        (i = 1 to n_ddsv)
+&lt;double&gt; &lt;label_ddrv_i&gt;        (i = 1 to n_ddrv)
+&lt;double&gt; &lt;label_cauv_i&gt;        (i = 1 to n_cauv)
+&lt;int&gt;    &lt;label_dauiv_i&gt;       (i = 1 to n_dauiv)
+&lt;string&gt; &lt;label_dausv_i&gt;       (i = 1 to n_dausv)
+&lt;double&gt; &lt;label_daurv_i&gt;       (i = 1 to n_daurv)
+&lt;double&gt; &lt;label_ceuv_i&gt;        (i = 1 to n_ceuv)
+&lt;int&gt;    &lt;label_deuiv_i&gt;       (i = 1 to n_deuiv)
+&lt;string&gt; &lt;label_deusv_i&gt;       (i = 1 to n_deusv)
+&lt;double&gt; &lt;label_deurv_i&gt;       (i = 1 to n_deurv)
+&lt;double&gt; &lt;label_csv_i&gt;         (i = 1 to n_csv)
+&lt;int&gt;    &lt;label_dsiv_i&gt;        (i = 1 to n_dsiv)
+&lt;string&gt; &lt;label_dssv_i&gt;        (i = 1 to n_dssv)
+&lt;double&gt; &lt;label_dsrv_i&gt;        (i = 1 to n_dsrv)
+&lt;int&gt;    functions
+&lt;int&gt;    ASV_i:label_response_i       (i = 1 to m)
+&lt;int&gt;    derivative_variables
+&lt;int&gt;    DVV_i:label_cdv_i            (i = 1 to p)
+&lt;int&gt;    analysis_components
+&lt;string&gt; AC_i:analysis_driver_name_i  (i = 1 to q)
+&lt;string&gt; eval_id
+&lt;int&gt;    metadata
+&lt;string&gt; MD_i                         (i = 1 to r)
+</pre></div>
+</div>
+</div>
+<p>Integer values are denoted by <code class="docutils literal notranslate"><span class="pre">&lt;int&gt;</span></code>, <code class="docutils literal notranslate"><span class="pre">&lt;double&gt;</span></code> denotes a double
+precision value, and <code class="docutils literal notranslate"><span class="pre">&lt;string&gt;</span></code> denotes a string value. Each of the
+major blocks denotes an array which begins with an array length and a
+descriptive tag. These array lengths can be useful for dynamic memory
+allocation within a simulator or filter program.</p>
+<p>The first array for variables begins with the total number of variables
+(<code class="docutils literal notranslate"><span class="pre">n</span></code>) with its identifier string <code class="docutils literal notranslate"><span class="pre">variables</span></code>. The next <code class="docutils literal notranslate"><span class="pre">n</span></code> lines
+specify the current values and descriptors of all of the variables
+within the parameter set <em>in input specification order</em>: continuous design,
+discrete integer design (integer range, integer set), discrete string
+design (string set), discrete real design (real set), continuous
+aleatory uncertain (normal, lognormal, uniform, loguniform, triangular,
+exponential, beta, gamma, gumbel, frechet, weibull, histogram bin),
+discrete integer aleatory uncertain (poisson, binomial, negative
+binomial, geometric, hypergeometric, histogram point integer), discrete
+string aleatory uncertain (histogram point string), discrete real
+aleatory uncertain (histogram point real), continuous epistemic
+uncertain (real interval), discrete integer epistemic uncertain
+(interval, then set), discrete string epistemic uncertain (set),
+discrete real epistemic uncertain (set), continuous state, discrete
+integer state (integer range, integer set), discrete string state, and
+discrete real state (real set) variables.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The authoritative variable ordering (as noted above in
+<a class="reference internal" href="#variables-overview"><span class="std std-ref">Overview</span></a>) is given by the primary table in
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/variables.html"><span class="pre">variables</span></a></code>.</p>
+</div>
+<p>The lengths of these vectors add to a total of <span class="math notranslate nohighlight">\(n\)</span>, i.e.,</p>
+<div class="math notranslate nohighlight">
+\[n = n_{cdv} + n_{ddiv} + n_{ddsv} + n_{ddrv} + n_{cauv}
++ n_{dauiv} + n_{dausv} + n_{daurv} + n_{ceuv} + n_{deuiv} + n_{deusv}
++ n_{deurv} + n_{csv} + n_{dsiv} + n_{dssv} + n_{dsrv}.\]</div>
+<p>If any of the variable types are not present in the problem, then its
+block is omitted entirely from the parameters file. The labels come
+from the variable descriptors specified in the Dakota input file, or
+default descriptors based on variable type if not specified.</p>
+<p>The second array for the active set vector (ASV) begins with the total
+number of functions (<code class="docutils literal notranslate"><span class="pre">m</span></code>) and its identifier string <code class="docutils literal notranslate"><span class="pre">functions</span></code>.
+The next <code class="docutils literal notranslate"><span class="pre">m</span></code> lines specify the request vector for each of the <code class="docutils literal notranslate"><span class="pre">m</span></code>
+functions in the response data set followed by the tags
+<code class="docutils literal notranslate"><span class="pre">ASV_i:label_response</span></code>, where the label is either a user-provided
+response descriptor or a default-generated one. These integer codes
+indicate what data is required on the current function evaluation and
+are described further in <a class="reference internal" href="#variables-asv"><span class="std std-ref">The Active Set Vector</span></a>.</p>
+<p>The third array for the derivative variables vector (DVV) begins with
+the number of derivative variables (<code class="docutils literal notranslate"><span class="pre">p</span></code>) and its identifier string
+<code class="docutils literal notranslate"><span class="pre">derivative_variables</span></code>. The next <code class="docutils literal notranslate"><span class="pre">p</span></code> lines specify integer
+variable identifiers followed by the tags <code class="docutils literal notranslate"><span class="pre">DVV_i:label_cdv</span></code>. These
+integer identifiers are used to identify the subset of variables that
+are active for the calculation of derivatives (gradient vectors and
+Hessian matrices), and correspond to the list of variables in the first
+array (e.g., an identifier of 2 indicates that the second variable in
+the list is active for derivatives). The labels are again taken from
+user-provided or default variable descriptors.</p>
+<p>The fourth array for the analysis components (AC) begins with the number
+of analysis components (<code class="docutils literal notranslate"><span class="pre">q</span></code>) and its identifier string
+<code class="docutils literal notranslate"><span class="pre">analysis_components</span></code>. The next <code class="docutils literal notranslate"><span class="pre">q</span></code> lines provide additional
+strings for use in specializing a simulation interface followed by the
+tags <code class="docutils literal notranslate"><span class="pre">AC_i:analysis_driver_name</span></code>, where <code class="docutils literal notranslate"><span class="pre">analysis_driver_name</span></code>
+indicates the driver associated with this component. These strings are
+specified in the input file for a set of <code class="docutils literal notranslate"><span class="pre">analysis_drivers</span></code> using
+the <code class="docutils literal notranslate"><span class="pre">analysis_components</span></code> specification. The subset of the analysis
+components used for a particular analysis driver is the set passed in a
+particular parameters file.</p>
+<p>The next entry <code class="docutils literal notranslate"><span class="pre">eval_id</span></code> in the parameters file is the evaluation
+ID, by default an integer indicating interface evaluation ID
+number. When hierarchical tagging is enabled as described in
+<a class="reference internal" href="interfaces/simulationfilemanagement.html#interfaces-file-tagging1"><span class="std std-ref">File Tagging for Evaluations</span></a>, the identifier will be a
+colon-separated string, e.g., <code class="docutils literal notranslate"><span class="pre">4:9:2</span></code>.</p>
+<p>The final array for the metadata (MD) begins with the number of
+metadata fields requested (<code class="docutils literal notranslate"><span class="pre">r</span></code>) and its identifier string
+<code class="docutils literal notranslate"><span class="pre">metadata</span></code>. The next <code class="docutils literal notranslate"><span class="pre">r</span></code> lines provide the names of
+each metadata field followed by the tags <code class="docutils literal notranslate"><span class="pre">MD_i</span></code>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Several standard-format parameters file examples are shown in
+<a class="reference internal" href="interfaces/mappingexamples.html#interfaces-mappings"><span class="std std-ref">Parameter to Response Mapping Examples</span></a>.</p>
+</div>
+</section>
+<section id="parameters-file-format-aprepro">
+<span id="variables-parameters-aprepro"></span><h3>Parameters file format (APREPRO)<a class="headerlink" href="#parameters-file-format-aprepro" title="Link to this heading"></a></h3>
+<p>For the APREPRO format option, the same data is present in the same
+order as the standard format. The only difference is that values are
+associated with their tags using <code class="docutils literal notranslate"><span class="pre">{</span> <span class="pre">tag</span> <span class="pre">=</span> <span class="pre">value</span> <span class="pre">}</span></code> markup as shown
+in <a class="reference internal" href="#variables-aprepro-params-format"><span class="std std-numref">Listing 15</span></a>. An APREPRO-format
+parameters file example is shown in <a class="reference internal" href="interfaces/mappingexamples.html#interfaces-mappings"><span class="std std-ref">Parameter to Response Mapping Examples</span></a>. The
+APREPRO format allows direct usage of Dakota parameters files by the
+APREPRO utility and Dakota’s DPrePro, which are file pre-processors
+that can significantly simplify model parameterization.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>APREPRO <span id="id4">[<a class="reference internal" href="../../misc/bibliography.html#id265" title="G. D. Sjaardema. APREPRO: an algebraic preprocessor for parameterizing finite element analyses. Technical Report SAND92-2291, Sandia National Laboratories, Albuquerque, NM, 1992.">Sja92</a>]</span> is a Sandia-developed pre-processor that is
+not distributed with Dakota.</p>
+<p>DPrePro is a Python script distributed with Dakota that performs
+many of the same functions as APREPRO, as well as general template
+processing, and is optimized for use with Dakota parameters files
+in either format.</p>
+<p>BPREPRO and JPrePost are Perl and Java tools, respectively, in use
+at other sites.</p>
+</div>
+<p>When a parameters file in APREPRO format is included within a template
+file (using an <code class="docutils literal notranslate"><span class="pre">include</span></code> directive), APREPRO recognizes these
+constructs as variable definitions which can then be used to populate
+targets throughout the template file. DPrePro, conversely, does not
+require the use of includes since it processes the Dakota parameters
+file and template simulation file separately to create a simulation
+input file populated with the variables data.</p>
+<div class="literal-block-wrapper docutils container" id="variables-aprepro-params-format">
+<div class="code-block-caption"><span class="caption-number">Listing 15 </span><span class="caption-text">Parameters file data format - APREPRO option.</span><a class="headerlink" href="#variables-aprepro-params-format" title="Link to this code"></a></div>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>{ DAKOTA_VARS = &lt;int&gt; }
+{ &lt;label_cdv_i = &lt;double&gt; }         (i = 1 to n_cdv)
+{ &lt;label_ddiv_i = &lt;int&gt; }           (i = 1 to n_ddiv)
+{ &lt;label_ddsv_i = &lt;string&gt; }        (i = 1 to n_ddsv)
+{ &lt;label_ddrv_i = &lt;double&gt; }        (i = 1 to n_ddrv)
+{ &lt;label_cauv_i = &lt;double&gt; }        (i = 1 to n_cauv)
+{ &lt;label_dauiv_i = &lt;int&gt; }          (i = 1 to n_dauiv)
+{ &lt;label_dausv_i = &lt;string&gt; }       (i = 1 to n_dausv)
+{ &lt;label_daurv_i = &lt;double&gt; }       (i = 1 to n_daurv)
+{ &lt;label_ceuv_i = &lt;double&gt; }        (i = 1 to n_ceuv)
+{ &lt;label_deuiv_i = &lt;int&gt; }          (i = 1 to n_deuiv)
+{ &lt;label_deusv_i = &lt;string&gt; }       (i = 1 to n_deusv)
+{ &lt;label_deurv_i = &lt;double&gt; }       (i = 1 to n_deurv)
+{ &lt;label_csv_i = &lt;double&gt; }         (i = 1 to n_csv)
+{ &lt;label_dsiv_i = &lt;int&gt; }           (i = 1 to n_dsiv)
+{ &lt;label_dssv_i = &lt;string&gt; }        (i = 1 to n_dssv)
+{ &lt;label_dsrv_i = &lt;double&gt; }        (i = 1 to n_dsrv)
+{ DAKOTA_FNS = &lt;int&gt; }
+{ ASV_i:label_response_i = &lt;int&gt; }              (i = 1 to m)
+{ DAKOTA_DER_VARS = &lt;int&gt; }
+{ DVV_i:label_cdv_i = &lt;int&gt; }                   (i = 1 to p)
+{ DAKOTA_AN_COMPS = &lt;int&gt; }
+{ AC_i:analysis_driver_name_i = &lt;string&gt; }      (i = 1 to q)
+{ DAKOTA_EVAL_ID = &lt;string&gt; }
+{ DAKOTA_METADATA = &lt;int&gt; }
+{ MD_i = &lt;string&gt; }                            (i = 1 to r)
+</pre></div>
+</div>
+</div>
+</section>
+</section>
+<section id="the-active-set-vector">
+<span id="variables-asv"></span><h2>The Active Set Vector<a class="headerlink" href="#the-active-set-vector" title="Link to this heading"></a></h2>
+<p>The active set vector (ASV) specifies the function value or derivative
+response data needed for a particular interface evaluation. Dakota’s
+ASV gets its name from managing the active set, i.e., the set of
+functions that are required by a method on a particular function
+evaluation. However, it also indicates the derivative data needed for
+active functions, so has an extended meaning beyond that typically
+used in the optimization literature.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>By default a simulation interface is expected to parse the ASV and
+only return the requested functions, gradients, and Hessians. To
+alleviate this requirement, see deactivating below.</p>
+</div>
+<p>The active set vector is comprised of vector of integer codes 0–7,
+one per response function. The integer values 0 through 7 denote a
+3-bit binary representation of all possible combinations of value (1),
+gradient (2), and Hessian (4) requests for a particular function, with
+the most significant bit denoting the Hessian, the middle bit denoting
+the gradient, and the least significant bit denoting the value. The
+specific translations are shown in <a class="reference internal" href="#variables-asv-codes"><span class="std std-numref">Table 2</span></a>.</p>
+<table class="docutils align-default" id="variables-asv-codes">
+<caption><span class="caption-number">Table 2 </span><span class="caption-text">Active set vector integer codes.</span><a class="headerlink" href="#variables-asv-codes" title="Link to this table"></a></caption>
+<thead>
+<tr class="row-odd"><th class="head"><p>Integer Code</p></th>
+<th class="head"><p>Binary representation</p></th>
+<th class="head"><p>Meaning</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>7</p></td>
+<td><p>111</p></td>
+<td><p>Get Hessian, gradient, and value</p></td>
+</tr>
+<tr class="row-odd"><td><p>6</p></td>
+<td><p>110</p></td>
+<td><p>Get Hessian and gradient</p></td>
+</tr>
+<tr class="row-even"><td><p>5</p></td>
+<td><p>101</p></td>
+<td><p>Get Hessian and value</p></td>
+</tr>
+<tr class="row-odd"><td><p>4</p></td>
+<td><p>100</p></td>
+<td><p>Get Hessian</p></td>
+</tr>
+<tr class="row-even"><td><p>3</p></td>
+<td><p>011</p></td>
+<td><p>Get gradient and value</p></td>
+</tr>
+<tr class="row-odd"><td><p>2</p></td>
+<td><p>010</p></td>
+<td><p>Get gradient</p></td>
+</tr>
+<tr class="row-even"><td><p>1</p></td>
+<td><p>001</p></td>
+<td><p>Get value</p></td>
+</tr>
+<tr class="row-odd"><td><p>0</p></td>
+<td><p>000</p></td>
+<td><p>No data required, function is inactive</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Disabling the ASV:</strong> Active set vector control may be turned off to
+obviate the need for the interface script to check and respond to its
+contents. When <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/interface-deactivate.html"><span class="pre">deactivate</span></a></code>
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/interface-deactivate-active_set_vector.html"><span class="pre">active_set_vector</span></a></code> is specified, the
+interface is expected to return all function, gradient, and Hessian
+information enabled in the <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/responses.html"><span class="pre">responses</span></a></code> block on every function
+evaluation.</p>
+<p>This option affords a simpler interface implemention, but of course in
+trade for efficiency. Disabling is most appropriate for cases in which
+only a relatively small penalty occurs when computing and returning
+more data than needed on a particular function evaluation.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="model.html" class="btn btn-neutral float-left" title="Models" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="interfaces.html" class="btn btn-neutral float-right" title="Interfaces" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <!--
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Sandia National Laboratories.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+  --> 
+
+</footer>
+        </div>
+      </div>
+	  
+	  <div style="background-color: #0f0f0f;color:#fafafa;padding:20px">
+	    <div>
+		  <h2><em>Exceptional service in the national interest</em></h2>
+		</div>
+		<p>© 2023 National Technology and Engineering Solutions of Sandia, LLC. | <a href="https://www.sandia.gov/contact_us/index.html">Questions &amp; Comments</a> | <a href="https://www.sandia.gov/general/privacy-security/index.html">Privacy &amp; Security</a></p>
+		<p><a href="http://energy.gov" rel="noopener noreferrer" target="_blank"><img alt="U.S. Department of Energy" longdesc="https://energy.gov" src="https://www.sandia.gov/_common/images/doe_logo_white.png" style="height:37px; width:140px"></a> <a href="http://nnsa.energy.gov/" rel="noopener noreferrer" target="_blank"> <img alt="National Nuclear Security Administration" longdesc="http://nnsa.gov" src="https://www.sandia.gov/_common/images/nnsa_logo_white.png" style="height:37px; width:116px"></a></p>
+		<p><a href="https://www.sandia.gov">Sandia National Laboratories</a> is a multimission laboratory managed and operated by National Technology and Engineering Solutions of Sandia, LLC., a wholly owned subsidiary of Honeywell International, Inc., for the U.S. Department of Energy’s National Nuclear Security Administration under contract DE-NA-0003525.</p>
+	  </div>	  	  
+	  
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

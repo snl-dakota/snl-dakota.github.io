@@ -1,0 +1,40 @@
+.. _interface-asynchronous-evaluation_concurrency:
+
+""""""""""""""""""""""
+evaluation_concurrency
+""""""""""""""""""""""
+
+
+Determine how many concurrent evaluations Dakota will schedule
+
+
+
+**Topics**
+
+
+concurrency_and_parallelism
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* INTEGER
+
+- *Default:* local: unlimited concurrency, hybrid: no concurrency
+
+
+**Description**
+
+
+When ``asynchronous`` execution is enabled, the default behavior is to
+launch all available evaluations simultaneously. The ``evaluation_concurrency``
+keyword can be used to limit the number of concurrent evaluations.
+
+

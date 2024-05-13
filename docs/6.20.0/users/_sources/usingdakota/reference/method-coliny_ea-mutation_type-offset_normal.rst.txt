@@ -1,0 +1,50 @@
+.. _method-coliny_ea-mutation_type-offset_normal:
+
+"""""""""""""
+offset_normal
+"""""""""""""
+
+
+Set mutation offset to use a normal distribution
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-coliny_ea-mutation_type-offset_normal-mutation_scale
+   method-coliny_ea-mutation_type-offset_normal-mutation_range
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+--------------------+-----------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword     | Dakota Keyword Description                    |
+|                         | Group              |                    |                                               |
++=========================+====================+====================+===============================================+
+| Optional                                     | `mutation_scale`__ | Scales mutation across range of parameter     |
++----------------------------------------------+--------------------+-----------------------------------------------+
+| Optional                                     | `mutation_range`__ | Set uniform offset control for discrete       |
+|                                              |                    | parameters                                    |
++----------------------------------------------+--------------------+-----------------------------------------------+
+
+.. __: method-coliny_ea-mutation_type-offset_normal-mutation_scale.html
+__ method-coliny_ea-mutation_type-offset_normal-mutation_range.html
+
+
+
+**Description**
+
+
+The ``offset_normal`` type is an "offset" mutation that adds a 0-mean random
+variable with a normal uniform distribution to the existing coordinate value.
+The offset is limited in magnitude by ``mutation_scale``.
+
+

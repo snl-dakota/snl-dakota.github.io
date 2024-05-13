@@ -1,0 +1,41 @@
+.. _method-multilevel_function_train-start_rank_sequence:
+
+"""""""""""""""""""
+start_rank_sequence
+"""""""""""""""""""
+
+
+Sequence of start ranks used in a multi-stage expansion
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+
+
+**Specification**
+
+- *Alias:* rank_sequence 
+
+- *Arguments:* INTEGERLIST
+
+- *Default:* 2
+
+
+**Description**
+
+
+Each level entry of the ``start_rank_sequence`` applies to one
+expansion within a multi-stage expansion.  Current multi-stage
+expansions that support start rank sequences include multilevel
+and multifidelity function train expansions.
+
+If adaptive refinement is active, then this sequence specifies the
+starting point for each level within either an individual or
+integrated refinement approach.
+
+A corresponding scalar specification is documented at, e.g.,
+:dakkw:`method-function_train-start_rank`
+
+

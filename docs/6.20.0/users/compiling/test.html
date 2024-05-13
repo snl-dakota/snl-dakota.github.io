@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Running Dakota Tests &mdash; dakota  documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/dakota_theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/sandiaheaderlite.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="End-to-end Compilation Examples" href="examples.html" />
+    <link rel="prev" title="Build and Install Dakota" href="build.html" /> 
+  
+  <meta name="sandia.approval_type" content="formal"/>
+  <meta property="sandia.approved" content="SAND2023-13392 O"/>
+  <meta name="description" content="The Dakota project delivers both state-of-the-art research and robust, usable software for optimization and UQ."/>
+  <meta name="keywords" content="Dakota, optimization, UQ, uncertainty quantification, parametric analysis, design exploration, model calibration, risk analysis"/>
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> dakota
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../setupdakota.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usingdakota/usingdakota.html">Using Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usingdakotagui/usingdakotagui.html">Using Dakota GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../externaltools/externaltools.html">Using External Tools</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="compiling.html">Compiling Dakota</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="devenv.html">Setup Development Environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="getsource.html">Obtain Source Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configure.html">Configure with CMake</a></li>
+<li class="toctree-l2"><a class="reference internal" href="build.html">Build and Install Dakota</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Running Dakota Tests</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#basic-smoke-tests">Basic Smoke Tests</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#unit-tests">Unit Tests</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#regression-tests">Regression Tests</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html">End-to-end Compilation Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../developingdakota/developingdakota.html">Developing Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../misc/misc.html">Miscellaneous</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">dakota</a>
+      </nav>
+
+	  <!-- SNL Lite header -->
+	  <div class="snlheader-subsite--wrapper-default">
+		<snlheader class="snlheader-subsite" role="snlbanner">
+		  <div class="wrapper">
+			<a href="https://www.sandia.gov/index.html">
+			  <div class="logo-transparent"><p class="logo">Sandia National Laboratories</p></div>
+			</a>
+			<div class="nav-top">
+			  <a class="visuallyhidden" name="mainnav"></a>
+			  <div aria-label="main navigation" class="core-nav-transparent core-nav-transparent--visible" role="navigation">
+				<ul role="navigation" class="secondary-links">
+				  <li id="search-text-link">
+					<a aria-label="Search" href="https://www.sandia.gov/search/">Search Sandia.gov</a>
+				  </li>
+				  <li id="directory-text-link">
+					<a href="https://www.sandia.gov/directory.html" aria-expanded="false" aria-label="Site Directory">All Sandia Websites</a>
+				  </li>
+				</ul>
+			  </div>
+			</div>
+		  </div> 
+		</snlheader>
+	  </div>	  
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="compiling.html">Compiling Dakota</a></li>
+      <li class="breadcrumb-item active">Running Dakota Tests</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/compiling/test.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="running-dakota-tests">
+<span id="test"></span><h1>Running Dakota Tests<a class="headerlink" href="#running-dakota-tests" title="Link to this heading"></a></h1>
+<p>Dakota’s test suite primarily consists of system-level regression tests
+supplemented with a growing number of unit and system-level
+interfacing and workflow tests.</p>
+<section id="basic-smoke-tests">
+<h2>Basic Smoke Tests<a class="headerlink" href="#basic-smoke-tests" title="Link to this heading"></a></h2>
+<p>Verify Dakota executes:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>$DAK_BUILD/src/dakota -version
+
+Dakota version 6.16+ (stable) released Oct 31 2022.
+Repository revision 56f2a6a (2022-10-29) built Oct 31 2022 16:31:22.
+</pre></div>
+</div>
+<p>Run a basic study as described in <a class="reference internal" href="../usingdakota/introduction/helloworld.html#helloworld-main"><span class="std std-ref">Dakota Beginner’s Tutorial</span></a>.</p>
+</section>
+<section id="unit-tests">
+<h2>Unit Tests<a class="headerlink" href="#unit-tests" title="Link to this heading"></a></h2>
+<p>Dakota unit tests should pass on most platforms. To run them:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>cd $DAK_BUILD
+
+ctest -L Unit
+
+<span class="c"># Or for concurrent test execution:</span>
+<span class="c"># ctest -j 4 -L Unit</span>
+</pre></div>
+</div>
+</section>
+<section id="regression-tests">
+<h2>Regression Tests<a class="headerlink" href="#regression-tests" title="Link to this heading"></a></h2>
+<p>Most of Dakota regression tests should pass when run in the
+recommended RHEL 7 development environment. They commonly produce
+numerical differences (reported as DIFF) when run on other platforms.</p>
+<p>Recommended minimal test suite:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>cd $DAK_BUILD
+
+<span class="c"># test suite that should PASS, even for non-development, but supported hosts (e.g. MS Windows)</span>
+ctest -j 4 -L AcceptanceTest
+</pre></div>
+</div>
+<div class="admonition attention">
+<p class="admonition-title">Attention</p>
+<p>Dakota’s ctest reports a test producing a DIFF as a FAILure. To
+avoid executing tests that are known to sporadically DIFF (e.g. a
+test exercising a stochastic algorithm), ctest’s exclude feature
+can be used to avoid the frustration of needing to perform further
+diagnostics to determine whether a test FAIL is indeed genuine.</p>
+</div>
+<p>CTest labels or regular expressions can be used to select subsets of
+tests to run. Here are some examples, which overlap each other:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span><span class="c"># &quot;pre-commit&quot; set of fast-running tests that will PASS on typical developer&#39;s local host</span>
+ctest -j 4 -L FastTest -LE Diff
+
+<span class="c"># run all Dakota tests active in this build (should PASS or DIFF)</span>
+<span class="c"># (can also do at top-level $DAK_BUILD to run all unit and regression tests)</span>
+ctest -j 4
+
+<span class="c"># run all tests excluding those known to DIFF on RHEL 7:</span>
+ctest -j 4 -LE Diff
+
+<span class="c"># Show all available ctest labels</span>
+ctest  --print-labels
+
+<span class="c"># Show all relevant tests but do not run; can be used with various labels (-L) or regular expressions (-R)</span>
+ctest -N -R dakota_
+</pre></div>
+</div>
+<p>Sub-tests: Each Dakota CTest regression test corresponds to a file
+<code class="docutils literal notranslate"><span class="pre">test/dakota_*.in</span></code> and represents a coarse level of testing in that
+it may be comprised of multiple variations of a base test. If any of
+these variations report DIFF or FAIL, the entire CTest test reports a
+FAIL. To obtain more granular test information, a dakota_diffs.out
+summary can be generated via:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span><span class="c"># Unix only: generate difference files dakota_diffs.out, dakota_pdiffs.out</span>
+make dakota-diffs
+</pre></div>
+</div>
+<p>The resulting dakota_[p]diffs.out file can then be inspected to
+ascertain which test variation(s) failed, e.g.:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>dakota_experiment_read.in
+PASS test 0
+PASS test 1
+FAIL test 2 (*** new ***)
+FAIL test 3 (*** new ***)
+</pre></div>
+</div>
+<p>A successful build should include PASS and DIFF, with associated small
+numerical differences.  If these files contain DIFF with large
+aberrations, or FAIL, there may be an issue with the build.</p>
+<p>If any credible test differences are found, a starting point for
+determing the cause of failure involves the following steps:</p>
+<dl>
+<dt># Determine which test variation(s) is (are) failing by invoking</dt><dd><p><code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">dakota-diffs</span></code> from within the test subdirectory.  Examine
+the resulting <code class="file docutils literal notranslate"><span class="pre">dakota_[p]diffs.out</span></code> file to see which failures
+are new.</p>
+</dd>
+<dt># Change into the subdirectory corresponding to the failing test, e.g.,</dt><dd><p><code class="docutils literal notranslate"><span class="pre">cd</span> <span class="pre">dakota_experiment_read</span></code>.</p>
+</dd>
+<dt># Extract the test variation that is failing using the</dt><dd><p>dakota_test.perl utility, e.g. for test #3 of
+<code class="docutils literal notranslate"><span class="pre">dakota_experiment_read</span></code>:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>cd $DAK_BUILD/test/dakota_experiment_read
+../dakota_test.perl --extract --file-extract test3.in dakota_experiment_read.in 3
+</pre></div>
+</div>
+</dd>
+</dl>
+<p># The sub-test will be extracted to <code class="docutils literal notranslate"><span class="pre">test3.in</span></code>. Run this sub-test
+and inspect the console output and/or log files for details explaining
+why the test did not pass.:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>../../src/dakota -input test3.in
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Note that documentation for using the <code class="docutils literal notranslate"><span class="pre">dakota_test.perl</span></code> script can
+be obtained by invoking it with either <code class="docutils literal notranslate"><span class="pre">--help</span></code> (for brief help) or <code class="docutils literal notranslate"><span class="pre">--man</span></code>.</p>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="build.html" class="btn btn-neutral float-left" title="Build and Install Dakota" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="examples.html" class="btn btn-neutral float-right" title="End-to-end Compilation Examples" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <!--
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Sandia National Laboratories.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+  --> 
+
+</footer>
+        </div>
+      </div>
+	  
+	  <div style="background-color: #0f0f0f;color:#fafafa;padding:20px">
+	    <div>
+		  <h2><em>Exceptional service in the national interest</em></h2>
+		</div>
+		<p>© 2023 National Technology and Engineering Solutions of Sandia, LLC. | <a href="https://www.sandia.gov/contact_us/index.html">Questions &amp; Comments</a> | <a href="https://www.sandia.gov/general/privacy-security/index.html">Privacy &amp; Security</a></p>
+		<p><a href="http://energy.gov" rel="noopener noreferrer" target="_blank"><img alt="U.S. Department of Energy" longdesc="https://energy.gov" src="https://www.sandia.gov/_common/images/doe_logo_white.png" style="height:37px; width:140px"></a> <a href="http://nnsa.energy.gov/" rel="noopener noreferrer" target="_blank"> <img alt="National Nuclear Security Administration" longdesc="http://nnsa.gov" src="https://www.sandia.gov/_common/images/nnsa_logo_white.png" style="height:37px; width:116px"></a></p>
+		<p><a href="https://www.sandia.gov">Sandia National Laboratories</a> is a multimission laboratory managed and operated by National Technology and Engineering Solutions of Sandia, LLC., a wholly owned subsidiary of Honeywell International, Inc., for the U.S. Department of Energy’s National Nuclear Security Administration under contract DE-NA-0003525.</p>
+	  </div>	  	  
+	  
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

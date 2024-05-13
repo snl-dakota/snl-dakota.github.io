@@ -1,0 +1,47 @@
+.. _method-pareto_set-method_name:
+
+"""""""""""
+method_name
+"""""""""""
+
+
+Specify sub-method by name
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-pareto_set-method_name-model_pointer
+
+
+**Specification**
+
+- *Alias:* opt_method_name 
+
+- *Arguments:* STRING
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+--------------------+-----------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword     | Dakota Keyword Description                    |
+|                         | Group              |                    |                                               |
++=========================+====================+====================+===============================================+
+| Optional                                     | `model_pointer`__  | Identifier for model block to be used by a    |
+|                                              |                    | method                                        |
++----------------------------------------------+--------------------+-----------------------------------------------+
+
+.. __: method-pareto_set-method_name-model_pointer.html
+
+
+
+**Description**
+
+
+The ``method_name`` keyword is used to specify a sub-method by Dakota method
+name (e.g. 'npsol_sqp') rather than block pointer. The method will be executed
+using its default settings. The optional ``model_pointer`` specification can be
+used to associate a model block with the method.
+
+

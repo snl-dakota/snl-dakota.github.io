@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>New “Lazy” Driver &mdash; dakota  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/dakota_theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/sandiaheaderlite.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Dakota Visual Editor" href="../inputfiles/DakotaVisualEditor.html" />
+    <link rel="prev" title="New Dakota Wrapper Workflow" href="NewDakotaWrapperWorkflow.html" /> 
+  
+  <meta name="sandia.approval_type" content="formal"/>
+  <meta property="sandia.approved" content="SAND2023-13392 O"/>
+  <meta name="description" content="The Dakota project delivers both state-of-the-art research and robust, usable software for optimization and UQ."/>
+  <meta name="keywords" content="Dakota, optimization, UQ, uncertainty quantification, parametric analysis, design exploration, model calibration, risk analysis"/>
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> dakota
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../setupdakota.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../usingdakota/usingdakota.html">Using Dakota</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../usingdakotagui.html">Using Dakota GUI</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#introduction">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#example-search">Example Search</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../usingdakotagui.html#wizards">Wizards</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="NewDakotaProject.html">New Dakota Project</a></li>
+<li class="toctree-l3"><a class="reference internal" href="NewParameterResponseFile.html">New Parameter/Response File</a></li>
+<li class="toctree-l3"><a class="reference internal" href="NewWorkflowDriver.html">New Workflow-Based Driver</a></li>
+<li class="toctree-l3"><a class="reference internal" href="NewDakotaStudy.html">New Dakota Study</a></li>
+<li class="toctree-l3"><a class="reference internal" href="NewDakotaWrapperWorkflow.html">New Dakota Wrapper Workflow</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">New “Lazy” Driver</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#lazy-drivers">Lazy Drivers</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#using-the-wizard">Using the Wizard</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#page-1-lazy-driver-file-creation">Page 1 (Lazy Driver File Creation)</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#page-2-lazy-driver-specification">Page 2 (Lazy Driver Specification)</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#after-finishing-the-wizard">After Finishing the Wizard</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#update-your-interface-block">Update your interface block</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#use-a-run-configuration-to-test-out-your-lazy-driver">Use a run configuration to test out your lazy driver</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#editing-dakota-input-files">Editing Dakota Input Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#running-dakota">Running Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#running-dakota-remotely">Running Dakota Remotely</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#output-from-dakota">Output from Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#gui-tools">GUI Tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#miscellaneous">Miscellaneous</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../externaltools/externaltools.html">Using External Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../compiling/compiling.html">Compiling Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developingdakota/developingdakota.html">Developing Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../misc/misc.html">Miscellaneous</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">dakota</a>
+      </nav>
+
+	  <!-- SNL Lite header -->
+	  <div class="snlheader-subsite--wrapper-default">
+		<snlheader class="snlheader-subsite" role="snlbanner">
+		  <div class="wrapper">
+			<a href="https://www.sandia.gov/index.html">
+			  <div class="logo-transparent"><p class="logo">Sandia National Laboratories</p></div>
+			</a>
+			<div class="nav-top">
+			  <a class="visuallyhidden" name="mainnav"></a>
+			  <div aria-label="main navigation" class="core-nav-transparent core-nav-transparent--visible" role="navigation">
+				<ul role="navigation" class="secondary-links">
+				  <li id="search-text-link">
+					<a aria-label="Search" href="https://www.sandia.gov/search/">Search Sandia.gov</a>
+				  </li>
+				  <li id="directory-text-link">
+					<a href="https://www.sandia.gov/directory.html" aria-expanded="false" aria-label="Site Directory">All Sandia Websites</a>
+				  </li>
+				</ul>
+			  </div>
+			</div>
+		  </div> 
+		</snlheader>
+	  </div>	  
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../usingdakotagui.html">Using Dakota GUI</a></li>
+      <li class="breadcrumb-item active">New “Lazy” Driver</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/usingdakotagui/wizards/NewLazyDriver.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="new-lazy-driver">
+<span id="wizards-newlazydriver-main"></span><h1>New “Lazy” Driver<a class="headerlink" href="#new-lazy-driver" title="Link to this heading"></a></h1>
+<section id="lazy-drivers">
+<h2>Lazy Drivers<a class="headerlink" href="#lazy-drivers" title="Link to this heading"></a></h2>
+<p>The concept behind a lazy driver is to allow Dakota to “set and forget” its individual evaluations.</p>
+<ul class="simple">
+<li><p>A lazy driver performs no calculations of its own, but simply wraps itself around the actual analysis driver which performs all the work.</p></li>
+<li><p>With a lazy driver, once Dakota has spun up separate analysis driver processes for each evaluation, Dakota will exit early, returning NaN values in place
+of the final evaluations. At a later stage, the user is able to re-run Dakota, and, thanks to the logic built in to the
+lazy analysis driver, each previously calculated evaluation will be picked up without re-running the analysis driver calculations required to arrive
+at that value.</p></li>
+<li><p>The most beneficial use case for lazy analysis drivers is for evaluations that take an exceedingly long time to run. Lazy analysis drivers can also
+be used in conjunction with remote job submission, if remote high-performance computers must be used to complete the calculations. The Dakota GUI
+supports lazy analysis drivers written in Python, Bash, or IWF (Next-Gen Workflow) format.</p></li>
+</ul>
+</section>
+<section id="using-the-wizard">
+<h2>Using the Wizard<a class="headerlink" href="#using-the-wizard" title="Link to this heading"></a></h2>
+<p>To launch the wizard, select File &gt; New &gt; Other, and then, in the “Select a wizard” dialog, select Dakota &gt; New Lazy Dakota Driver.</p>
+<section id="page-1-lazy-driver-file-creation">
+<h3>Page 1 (Lazy Driver File Creation)<a class="headerlink" href="#page-1-lazy-driver-file-creation" title="Link to this heading"></a></h3>
+<p>The first page of the wizard is a standard file creation dialog that asks you to select a directory for your new driver, and to provide a name for your new driver.</p>
+</section>
+<section id="page-2-lazy-driver-specification">
+<h3>Page 2 (Lazy Driver Specification)<a class="headerlink" href="#page-2-lazy-driver-specification" title="Link to this heading"></a></h3>
+<img alt="File creation page" src="../../_images/LazyDriver_1.png" />
+<p>In the first section, “Targeted Analysis Driver,” you should provide information about the analysis driver that your lazy driver is going to wrap around. The wizard will
+automatically take care of all the hard work of connecting your existing analysis driver to the new lazy driver that it will eventually create.</p>
+<p>The idea here is to fill the boxes with the equivalent Dakota keyword values that you would find in your study’s interface block. So, for example, if your Dakota study invokes
+an <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/interface-analysis_drivers.html"><span class="pre">analysis_drivers</span></a></code> driver of “rosenbrock.py” with <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/interface-analysis_drivers-fork-parameters_file.html"><span class="pre">parameters_file</span></a></code> “params.in” and
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/interface-analysis_drivers-fork-results_file.html"><span class="pre">results_file</span></a></code> “results.out,” the wizard’s “Targeted Analysis Driver” fields should be filled out like so:</p>
+<img alt="Example analysis driver target" src="../../_images/LazyDriver_2.png" />
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Here, we omitted the quotes that were provided earlier. Quotes are strictly optional - if you do not provide them, then they will be provided for you when the driver is created.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Also, note the “…” button next to the “analysis_drivers” field. This gives you a file browser that allows you to navigate directly to your analysis driver, if it is a file
+that is on your machine. This can be easier than typing the entire path into the field.</p>
+</div>
+<p>The next section, simply called “Lazy Analysis Driver,” has two fields.</p>
+<ul class="simple">
+<li><p><strong>Format</strong> is a dropdown that allows you to specify the format of your lazy driver. This wizard is capable of generating drivers in either Python, Bash, or IWF (Next-Gen Workflow)
+format.</p></li>
+<li><p><strong>Fail Value</strong> is an arbitrary value that indicates that your real analysis driver has not returned any result values yet for a given evaluation, so the lazy driver will return this
+fail value until the real driver provides a real value. We have found in practice that “NaN” is the best default “fail” value, but some drivers provide a return value of “NaN” with
+special meaning. Nevertheless, you are required to select a fail value that will always indicate the driver has not yet returned results.</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>We optimistically phrased the language around fail values in the previous section to indicate that the analysis driver will <em>eventually</em> return a valid evaluation value to the
+lazy driver. However, this may not be the case. If the analysis driver fails to complete for whatever reason, the lazy driver will also use its designated fail value to indicate
+nothing was returned by the analysis driver. However, the GUI has other introspection tools for indicating driver status beyond checking the fail value in the results file.</p>
+</div>
+<p>Finally, the wizard allows you to provide a list of expected input parameters and output results for your lazy driver. This is also optional, but recommended, as it is best practice
+for drivers to declare some sort of manifest of their expected inputs and outputs. For example, the Python lazy driver script template is equipped to perform error-checking if a bad
+list of input parameters are passed in, but ONLY if you tell it what input parameters to expect in the first place.</p>
+<p>Once you have entered everything in, click Finish. The new lazy driver script will be added to the directory you specified on the first page.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Lazy drivers do not automatically pipe stdout and stderr from lower-level drivers that are invoked up to the GUI console, where analysis driver output would be most useful. Therefore,
+it is recommend that the original analysis driver performs as much responsible, self-sufficient logging as possible, so that errors several layers down below the lazy driver level
+are not lost. For example, the driver could send its output to a separate log file instead of simply dumping messaging on the console.</p>
+<p>It is also a good idea to run your Dakota study once without the lazy driver in place to make sure things are running smoothly
+before you replace your original analysis driver with the lazy driver wrapper.</p>
+</div>
+</section>
+</section>
+<section id="after-finishing-the-wizard">
+<h2>After Finishing the Wizard<a class="headerlink" href="#after-finishing-the-wizard" title="Link to this heading"></a></h2>
+<section id="update-your-interface-block">
+<h3>Update your interface block<a class="headerlink" href="#update-your-interface-block" title="Link to this heading"></a></h3>
+<p>Wait!!! Before you run your lazy driver, the interface block needs to be modified:</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Lazy drivers require extremely particular Dakota interface blocks in order to work correctly. Not only do your analysis driver’s working directories need to be tagged and saved,
+but it’s also critically important that all the new lazy driver is linked/copied into the working directory’s list of files, and the
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/interface-analysis_drivers-fork-allow_existing_results.html"><span class="pre">allow_existing_results</span></a></code> must be used as well, to allow the lazy driver to re-run multiple times without blowing away previous evaluations.</p>
+</div>
+<p>This is a lot of bookkeeping to do by hand. To alleviate this problem, we designed an <a class="reference internal" href="../inputfiles/DakotaTextEditor.html#gui-inputfiles-blockrecipes"><span class="std std-ref">interface block recipe</span></a> called “Update interface to use lazy
+driver.” In the Dakota text editor, simply right-click the “interface” keyword, choose “Replace block with recipe,” and then choose “Update interface to use lazy driver.” Provide
+this recipe with your new lazy driver file, and all the correct substitutions will be made for you.</p>
+</section>
+<section id="use-a-run-configuration-to-test-out-your-lazy-driver">
+<h3>Use a run configuration to test out your lazy driver<a class="headerlink" href="#use-a-run-configuration-to-test-out-your-lazy-driver" title="Link to this heading"></a></h3>
+<p>Lazy drivers can be run through the <a class="reference internal" href="../running/DakotaRunConfiguration.html#gui-run-configurations-eclipse-run-configs"><span class="std std-ref">standard Dakota run configurations</span></a>, without any further modification.</p>
+<p>Once your lazy driver has completed its first successful run, there are <a class="reference internal" href="../running/ReRunEvaluations.html#gui-rerun-evals"><span class="std std-ref">several helpful context menu options</span></a> you might want to take advantage of to inspect
+the output of each evaluation directory, so that you can decide when it’s time to run the lazy driver a second time and collect output results back to Dakota.</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="NewDakotaWrapperWorkflow.html" class="btn btn-neutral float-left" title="New Dakota Wrapper Workflow" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../inputfiles/DakotaVisualEditor.html" class="btn btn-neutral float-right" title="Dakota Visual Editor" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <!--
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Sandia National Laboratories.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+  --> 
+
+</footer>
+        </div>
+      </div>
+	  
+	  <div style="background-color: #0f0f0f;color:#fafafa;padding:20px">
+	    <div>
+		  <h2><em>Exceptional service in the national interest</em></h2>
+		</div>
+		<p>© 2023 National Technology and Engineering Solutions of Sandia, LLC. | <a href="https://www.sandia.gov/contact_us/index.html">Questions &amp; Comments</a> | <a href="https://www.sandia.gov/general/privacy-security/index.html">Privacy &amp; Security</a></p>
+		<p><a href="http://energy.gov" rel="noopener noreferrer" target="_blank"><img alt="U.S. Department of Energy" longdesc="https://energy.gov" src="https://www.sandia.gov/_common/images/doe_logo_white.png" style="height:37px; width:140px"></a> <a href="http://nnsa.energy.gov/" rel="noopener noreferrer" target="_blank"> <img alt="National Nuclear Security Administration" longdesc="http://nnsa.gov" src="https://www.sandia.gov/_common/images/nnsa_logo_white.png" style="height:37px; width:116px"></a></p>
+		<p><a href="https://www.sandia.gov">Sandia National Laboratories</a> is a multimission laboratory managed and operated by National Technology and Engineering Solutions of Sandia, LLC., a wholly owned subsidiary of Honeywell International, Inc., for the U.S. Department of Energy’s National Nuclear Security Administration under contract DE-NA-0003525.</p>
+	  </div>	  	  
+	  
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

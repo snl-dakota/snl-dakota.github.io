@@ -1,0 +1,107 @@
+.. _method-bayes_calibration-dream-emulator-mf_sc:
+
+"""""
+mf_sc
+"""""
+
+
+Multifidelity Stochastic Collocation as an emulator model.
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-bayes_calibration-dream-emulator-mf_sc-p_refinement
+   method-bayes_calibration-dream-emulator-mf_sc-h_refinement
+   method-bayes_calibration-dream-emulator-mf_sc-max_refinement_iterations
+   method-bayes_calibration-dream-emulator-mf_sc-allocation_control
+   method-bayes_calibration-dream-emulator-mf_sc-discrepancy_emulation
+   method-bayes_calibration-dream-emulator-mf_sc-quadrature_order_sequence
+   method-bayes_calibration-dream-emulator-mf_sc-sparse_grid_level_sequence
+   method-bayes_calibration-dream-emulator-mf_sc-piecewise
+   method-bayes_calibration-dream-emulator-mf_sc-askey
+   method-bayes_calibration-dream-emulator-mf_sc-wiener
+   method-bayes_calibration-dream-emulator-mf_sc-use_derivatives
+   method-bayes_calibration-dream-emulator-mf_sc-diagonal_covariance
+   method-bayes_calibration-dream-emulator-mf_sc-full_covariance
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+--------------------------------+-----------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword                 | Dakota Keyword Description                    |
+|                         | Group              |                                |                                               |
++=========================+====================+================================+===============================================+
+| Optional (Choose One)   | Automated          | `p_refinement`__               | Automatic polynomial order refinement         |
+|                         | Refinement Type    +--------------------------------+-----------------------------------------------+
+|                         |                    | `h_refinement`__               | Employ h-refinement to refine the grid        |
++-------------------------+--------------------+--------------------------------+-----------------------------------------------+
+| Optional                                     | `max_refinement_iterations`__  | Maximum number of expansion refinement        |
+|                                              |                                | iterations                                    |
++----------------------------------------------+--------------------------------+-----------------------------------------------+
+| Optional                                     | `allocation_control`__         | Sample allocation approach for multifidelity  |
+|                                              |                                | expansions                                    |
++----------------------------------------------+--------------------------------+-----------------------------------------------+
+| Optional                                     | `discrepancy_emulation`__      | Formulation for emulation of model            |
+|                                              |                                | discrepancies.                                |
++-------------------------+--------------------+--------------------------------+-----------------------------------------------+
+| Required (Choose One)   | Interpolation Grid | `quadrature_order_sequence`__  | Sequence of quadrature orders used in a       |
+|                         | Type               |                                | multi-stage expansion                         |
+|                         |                    +--------------------------------+-----------------------------------------------+
+|                         |                    | `sparse_grid_level_sequence`__ | Sequence of sparse grid levels used in a      |
+|                         |                    |                                | multi-stage expansion                         |
++-------------------------+--------------------+--------------------------------+-----------------------------------------------+
+| Optional (Choose One)   | Basis Polynomial   | `piecewise`__                  | Use piecewise local basis functions           |
+|                         | Family             +--------------------------------+-----------------------------------------------+
+|                         |                    | `askey`__                      | Select the standardized random variables (and |
+|                         |                    |                                | associated basis polynomials) from the Askey  |
+|                         |                    |                                | family that best match the user-specified     |
+|                         |                    |                                | random variables.                             |
+|                         |                    +--------------------------------+-----------------------------------------------+
+|                         |                    | `wiener`__                     | Use standard normal random variables (along   |
+|                         |                    |                                | with Hermite orthogonal basis polynomials)    |
+|                         |                    |                                | when transforming to a standardized           |
+|                         |                    |                                | probability space.                            |
++-------------------------+--------------------+--------------------------------+-----------------------------------------------+
+| Optional                                     | `use_derivatives`__            | Use derivative data to construct surrogate    |
+|                                              |                                | models                                        |
++-------------------------+--------------------+--------------------------------+-----------------------------------------------+
+| Optional (Choose One)   | Covariance Type    | `diagonal_covariance`__        | Display only the diagonal terms of the        |
+|                         |                    |                                | covariance matrix                             |
+|                         |                    +--------------------------------+-----------------------------------------------+
+|                         |                    | `full_covariance`__            | Display the full covariance matrix            |
++-------------------------+--------------------+--------------------------------+-----------------------------------------------+
+
+.. __: method-bayes_calibration-dream-emulator-mf_sc-p_refinement.html
+__ method-bayes_calibration-dream-emulator-mf_sc-h_refinement.html
+__ method-bayes_calibration-dream-emulator-mf_sc-max_refinement_iterations.html
+__ method-bayes_calibration-dream-emulator-mf_sc-allocation_control.html
+__ method-bayes_calibration-dream-emulator-mf_sc-discrepancy_emulation.html
+__ method-bayes_calibration-dream-emulator-mf_sc-quadrature_order_sequence.html
+__ method-bayes_calibration-dream-emulator-mf_sc-sparse_grid_level_sequence.html
+__ method-bayes_calibration-dream-emulator-mf_sc-piecewise.html
+__ method-bayes_calibration-dream-emulator-mf_sc-askey.html
+__ method-bayes_calibration-dream-emulator-mf_sc-wiener.html
+__ method-bayes_calibration-dream-emulator-mf_sc-use_derivatives.html
+__ method-bayes_calibration-dream-emulator-mf_sc-diagonal_covariance.html
+__ method-bayes_calibration-dream-emulator-mf_sc-full_covariance.html
+
+
+
+**Description**
+
+
+Selects a multifidelity stochastic collocation (MF SC)
+surrogate model to use in the Bayesian likelihood calculations.  Most
+specification options are carried over for using MF SC as a surrogate
+within the Bayesian framework.
+
+

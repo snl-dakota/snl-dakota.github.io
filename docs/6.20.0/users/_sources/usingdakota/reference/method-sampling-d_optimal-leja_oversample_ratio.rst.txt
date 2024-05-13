@@ -1,0 +1,55 @@
+.. _method-sampling-d_optimal-leja_oversample_ratio:
+
+"""""""""""""""""""""
+leja_oversample_ratio
+"""""""""""""""""""""
+
+
+Oversampling ratio for generating candidate point set
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* REAL
+
+- *Default:* 10.0
+
+
+**Description**
+
+
+When generating a D-Optimal point set of size N, the
+``oversample_ratio`` R controls the number of candidate points R x N from
+which the D-Optimal points are chosen.
+
+*Default Behavior*
+
+The default when not specified is to perform candidate-based sample
+design selection (non-Leja)
+
+
+
+**Examples**
+
+
+
+.. code-block::
+
+    method
+      sampling
+        sample_type random
+        samples = 20
+        d_optimal
+          oversample_ratio = 2.0
+
+
+
+

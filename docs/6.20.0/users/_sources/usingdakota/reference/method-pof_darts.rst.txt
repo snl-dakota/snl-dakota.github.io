@@ -1,0 +1,104 @@
+.. _method-pof_darts:
+
+"""""""""
+pof_darts
+"""""""""
+
+
+Probability-of-Failure (POF) darts is a novel method for estimating the probability of failure based on random sphere-packing.
+
+
+
+**Topics**
+
+
+uncertainty_quantification
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-pof_darts-build_samples
+   method-pof_darts-seed
+   method-pof_darts-lipschitz
+   method-pof_darts-samples_on_emulator
+   method-pof_darts-response_levels
+   method-pof_darts-probability_levels
+   method-pof_darts-gen_reliability_levels
+   method-pof_darts-distribution
+   method-pof_darts-rng
+   method-pof_darts-model_pointer
+
+
+**Specification**
+
+- *Alias:* nond_pof_darts 
+
+- *Arguments:* None
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+----------------------------+-----------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword             | Dakota Keyword Description                    |
+|                         | Group              |                            |                                               |
++=========================+====================+============================+===============================================+
+| Required                                     | `build_samples`__          | Number of initial model evaluations used in   |
+|                                              |                            | build phase                                   |
++----------------------------------------------+----------------------------+-----------------------------------------------+
+| Optional                                     | `seed`__                   | Seed of the random number generator           |
++----------------------------------------------+----------------------------+-----------------------------------------------+
+| Optional                                     | `lipschitz`__              | Select the type of Lipschitz estimation       |
+|                                              |                            | (global or local)                             |
++----------------------------------------------+----------------------------+-----------------------------------------------+
+| Optional                                     | `samples_on_emulator`__    | Number of samples at which to evaluate an     |
+|                                              |                            | emulator (surrogate)                          |
++----------------------------------------------+----------------------------+-----------------------------------------------+
+| Optional                                     | `response_levels`__        | Values at which to estimate desired           |
+|                                              |                            | statistics for each response                  |
++----------------------------------------------+----------------------------+-----------------------------------------------+
+| Optional                                     | `probability_levels`__     | Specify probability levels at which to        |
+|                                              |                            | estimate the corresponding response value     |
++----------------------------------------------+----------------------------+-----------------------------------------------+
+| Optional                                     | `gen_reliability_levels`__ | Specify generalized relability levels at      |
+|                                              |                            | which to estimate the corresponding response  |
+|                                              |                            | value                                         |
++----------------------------------------------+----------------------------+-----------------------------------------------+
+| Optional                                     | `distribution`__           | Selection of cumulative or complementary      |
+|                                              |                            | cumulative functions                          |
++----------------------------------------------+----------------------------+-----------------------------------------------+
+| Optional                                     | `rng`__                    | Selection of a random number generator        |
++----------------------------------------------+----------------------------+-----------------------------------------------+
+| Optional                                     | `model_pointer`__          | Identifier for model block to be used by a    |
+|                                              |                            | method                                        |
++----------------------------------------------+----------------------------+-----------------------------------------------+
+
+.. __: method-pof_darts-build_samples.html
+__ method-pof_darts-seed.html
+__ method-pof_darts-lipschitz.html
+__ method-pof_darts-samples_on_emulator.html
+__ method-pof_darts-response_levels.html
+__ method-pof_darts-probability_levels.html
+__ method-pof_darts-gen_reliability_levels.html
+__ method-pof_darts-distribution.html
+__ method-pof_darts-rng.html
+__ method-pof_darts-model_pointer.html
+
+
+
+**Description**
+
+
+``pof_darts`` is a novel method for estimating the probability of failure based on random sphere-packing.
+Random spheres are sampled from the domain with the constraint that each new sphere center has to be outside prior disks. The radius of each sphere is chosen such that the entire sphere lie either in the failure or the non-failure region. This radius depends of the function evaluation at the disk center, the failure threshold and an estimate of the function gradient at the disk center.
+
+We utilize a global surrogate for evaluating the gradient and hence only one function evaluation is required for each sphere.
+
+After exhausting the sampling budget specified by ``samples``, which is the number of spheres per failure threshold, the domain is decomposed into two regions.  These regions correspond to failure and non-failure, each represented by the union of the spheres of each type. The volume of the union of failure spheres gives a lower bound on the required estimate of the probability of failure, while the volume of the union of the non-failure spheres subtracted from the volume of the domain gives an upper estimate. We currently report the average of both estimates.
+
+``pof_darts`` handles multiple response functions and allows each to have multiple failure thresholds. For each failure threshold, ``pof_darts`` will insert a number of spheres specified by the user-input parameter ``samples``.
+
+However, estimating the probability of failure for each failure threshold would utilize the total number of disks sampled for all failure thresholds. For each failure threshold, the sphere radii changes to generate the right spatial decomposition.
+
+

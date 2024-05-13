@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Version 4.1 (2007/09/21) &mdash; dakota  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/dakota_theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/sandiaheaderlite.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Version 4.0 (2006/05/12)" href="40.html" />
+    <link rel="prev" title="Version 4.2 (2008/11/05)" href="42.html" /> 
+  
+  <meta name="sandia.approval_type" content="formal"/>
+  <meta property="sandia.approved" content="SAND2023-13392 O"/>
+  <meta name="description" content="The Dakota project delivers both state-of-the-art research and robust, usable software for optimization and UQ."/>
+  <meta name="keywords" content="Dakota, optimization, UQ, uncertainty quantification, parametric analysis, design exploration, model calibration, risk analysis"/>
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> dakota
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../setupdakota.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../usingdakota/usingdakota.html">Using Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../usingdakotagui/usingdakotagui.html">Using Dakota GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../externaltools/externaltools.html">Using External Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../compiling/compiling.html">Compiling Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developingdakota/developingdakota.html">Developing Dakota</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../misc.html">Miscellaneous</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../help.html">Help Resources</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../aboutteam.html">About the Team</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../contributing.html">Contributing to Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../contributors.html">Contributors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../license.html">License</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../citing.html">Citing Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../publications.html">Publications</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../releasenotes.html">Release Notes</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="../releasenotes.html#dakota">Dakota</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="620.html">Version 6.20 (2024/05/15)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="619.html">Version 6.19 (2023/11/15)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="618.html">Version 6.18 (2023/05/15)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="617.html">Version 6.17 (2022/11/15)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="616.html">Version 6.16 (2022/05/16)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="615.html">Version 6.15 (2021/11/15)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="614.html">Version 6.14 (2021/05/17)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="613.html">Version 6.13 (2020/11/15)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="612.html">Version 6.12 (2020/06/15)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="611.html">Version 6.11 (2019/11/15)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="610.html">Version 6.10 (2019/05/15)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="69.html">Version 6.9 (2018/11/15)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="68.html">Version 6.8 (2018/05/15)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="67.html">Version 6.7 (2017/11/15)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="66.html">Version 6.6 (2017/05/15)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="65.html">Version 6.5 (2016/11/15)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="64.html">Version 6.4 (2016/05/16)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="63.html">Version 6.3 (2015/11/16)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="62.html">Version 6.2 (2015/05/15)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="61.html">Version 6.1 (2014/11/15)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="60.html">Version 6.0 (2014/05/15)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="54.html">Version 5.4 (2013/11/15)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="531.html">Version 5.3.1 (2013/05/15)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="53.html">Version 5.3 (2013/01/31)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="52.html">Version 5.2 (2011/11/30)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="51.html">Version 5.1 (2010/12/21)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="50.html">Version 5.0 (2009/12/21)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="42.html">Version 4.2 (2008/11/05)</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Version 4.1 (2007/09/21)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="40.html">Version 4.0 (2006/05/12)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="33.html">Version 3.3 (2004/12/23)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="32.html">Version 3.2 (2004/07/21)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="312.html">Version 3.1.2 (2003/07/09)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="311.html">Version 3.1.1 (2003/05/21)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="31.html">Version 3.1 (2003/04/04)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="30.html">Version 3.0 (2002/03/30)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="30beta.html">Version 3.0 beta (2001/11/29)</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../releasenotes.html#dakota-gui">Dakota GUI</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../bibliography.html">Bibliography</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../classictoc.html">I’m Lost!</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">dakota</a>
+      </nav>
+
+	  <!-- SNL Lite header -->
+	  <div class="snlheader-subsite--wrapper-default">
+		<snlheader class="snlheader-subsite" role="snlbanner">
+		  <div class="wrapper">
+			<a href="https://www.sandia.gov/index.html">
+			  <div class="logo-transparent"><p class="logo">Sandia National Laboratories</p></div>
+			</a>
+			<div class="nav-top">
+			  <a class="visuallyhidden" name="mainnav"></a>
+			  <div aria-label="main navigation" class="core-nav-transparent core-nav-transparent--visible" role="navigation">
+				<ul role="navigation" class="secondary-links">
+				  <li id="search-text-link">
+					<a aria-label="Search" href="https://www.sandia.gov/search/">Search Sandia.gov</a>
+				  </li>
+				  <li id="directory-text-link">
+					<a href="https://www.sandia.gov/directory.html" aria-expanded="false" aria-label="Site Directory">All Sandia Websites</a>
+				  </li>
+				</ul>
+			  </div>
+			</div>
+		  </div> 
+		</snlheader>
+	  </div>	  
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../misc.html">Miscellaneous</a></li>
+          <li class="breadcrumb-item"><a href="../releasenotes.html">Release Notes</a></li>
+      <li class="breadcrumb-item active">Version 4.1 (2007/09/21)</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/misc/releasenotes/41.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="version-4-1-2007-09-21">
+<span id="releasenotes-41"></span><h1>Version 4.1 (2007/09/21)<a class="headerlink" href="#version-4-1-2007-09-21" title="Link to this heading"></a></h1>
+<p><strong>Uncertainty Quantification (UQ) Capabilities:</strong></p>
+<ul class="simple">
+<li><p>New method: Wiener-Askey generalized polynomial chaos expansions approximate the functional relationship between response metrics and their underlying random variables. Orthogonal polynomial bases include Hermite, Legendre, Laguerre, Jacobi, and generalized Laguerre. Expansion coefficients are estimated by sampling, tensor-product quadrature, sparse grid cubature (using Clenshaw-Curtis), or linear regression. Additional features include analytic response moments, analytic random variable sensitivities, and analytic design variable sensitivities. Refer to Section 6.4 of the Users Manual for additional information.</p></li>
+<li><p>New method: Efficient Global Reliability Analysis (EGRA) employs mean and variance estimates from Gaussian Process (GP) models to form an expected feasibility function (EFF), which is then maximized using a global optimizer to select points for GP refinement. This process accurately estimates response function contours, for which probabilities are then computed using multimodal adaptive importance sampling. Refer to Section 6.3.3 of the Users Manual for additional information.</p></li>
+<li><p>New method: incremental Latin Hypercube and Monte Carlo sampling. In the incremental mode, one augments an initial LHS/MC sample set of size N with a second sample set of size N. Both samples together (of size 2N) will preserve the stratification and correlation structure of the original sample.</p></li>
+<li><p>New method: importance sampling (standard, adaptive, and multimodal adaptive) added for local and global reliability methods.</p></li>
+<li><p>Second-order integrations corrected (negative reliability indices and Epetra symmetric matrix products) for use within local reliability methods.</p></li>
+<li><p>All UQ methods extended to support generalized reliability indices.</p></li>
+<li><p>Epistemic methods now support final statistics results for use in optimization under uncertainty (OUU). Refer to the Models chapter in the Reference Manual for additional information on epistemic interval results accessible within OUU and to Section 10.6.2 of the Users Manual for initial guidance on formulating epistemic OUU studies.</p></li>
+<li><p>Added compile time switches for Tausworthe and Mersenne twister random number generators for use with LHS/MC. These are not yet the default, as performance testing is ongoing.</p></li>
+<li><p>Variance-based decomposition and Dempster-Shafer theory of evidence now support multiple response functions.</p></li>
+</ul>
+<p><strong>Optimization Capabilities:</strong></p>
+<ul class="simple">
+<li><p>The multilevel hybrid optimization strategy now supports flow of multiple solutions between iterators. Iterators may now accept one or multiple starting point and may output one or multiple final results. The strategy logic maintains a consistent data flow and supports concurrency in multiple iterator instances as required (i.e., multiple data points require multiple instances of an iterator that accepts only a single input).</p></li>
+<li><p>the surrogate-based optimization (sbo) strategy now supports multipoint approximations (i.e., tana-3), approximate subproblem reformulations for nonlinearly-constrained problems (subproblem objective may be the original surrogate objective, a surrogate lagrangian, or a surrogate augmented lagrangian; subproblem constraints may be the original surrogate constraints, linearized surrogate constraints, or no constraints), and constraint relaxation using a heuristic homotopy approach. in addition, previous augmented lagrangian updating approaches have been replaced with the provably-convergent approach of conn, gould, and toint. see section 9.6 of the users manual for formulations and aiaa mao conference paper for computational results.</p></li>
+<li><p>new strategy: a global surrogate-based optimization strategy has been added. rather than being localized using trust-regions, each approximate optimization cycle identifies points for continuing updates to a single global surrogate model. this is most appropriate for use with interpolatory surrogates, such as kriging/gaussian process models.</p></li>
+<li><p>new ouu approach: polynomial chaos-based design optimization (pc-bdo) is now supported in a bi-level formulation employing one of three different design sensitivity approaches: analytic design gradients based on a pce formed over all variables, numerical design gradients based on a pce formed only over the random variables, and numerical design gradients based on a pce formed over all variables. in the cases where the expansion is formed over all variables, only a single pce construction is required for the complete pc-bdo process, whereas the expansions only over the random variables must be recomputed for each change in design variables. refer to section 10.6.2 of the users manual for additional information on design sensitivity analysis formulations.</p></li>
+<li><p>New method: the NCSU implementation of DIRECT by Joerg Gablonsky has been added as a global optimizer, augmenting the existing COLINY implementation of DIRECT. Additional NCSU optimizers, especially implicit filtering, will be added in time.</p></li>
+<li><p>New method: closely related to the new EGRA uncertainty quantification method described above, the Efficient Global Optimization (EGO) method has been added. It employs mean and variance estimates from Gaussian Process (GP) models to form an expected improvement function (EIF), which is then maximized using a global optimizer to select points for GP refinement. This process balances the desires to exploit areas with good solutions and explore areas with limited data, resulting in excellent global search characteristics. This method supports nonlinear constraints through an augmented Lagrangian merit function formulation.</p></li>
+<li><p>New method plug-ins: Support for dynamic optimizer plug-ins has been added. This initially targets SNOPT and NPSOL as shared object libraries, but will in time allow more flexible binding to commercial solvers at run time (currently managed at configure/make time).</p></li>
+<li><p>OPT++ now supports an internal mode override, allowing more effective combination of optimizer evaluation requests, as well as iteration reset functionality, allowing an instance to be instantiated once and reused multiple times.</p></li>
+<li><p>Update to the DAKOTA/AMPL interface to handle algebraic nonlinear constraints using the AMPL specification. This update allows the use of standard AMPL model files without modification of the constraint specification.</p></li>
+</ul>
+<p><strong>Nonlinear Least Squares Capabilities:</strong></p>
+<ul class="simple">
+<li><p>Calculation of residuals can now be simplified through user specification of a least squares data file, which provides the set of data to which a computational model will be calibrated.</p></li>
+</ul>
+<p><strong>DACE Capabilities:</strong></p>
+<ul class="simple">
+<li><p>Initial interface to PSUADE from LLNL, providing access to the Morris One-At-a-Time (MOAT) method.</p></li>
+</ul>
+<p><strong>Framework Enhancements:</strong></p>
+<ul class="simple">
+<li><p>DAKOTA input files no longer require the use of “&quot; for line continuations. All examples have been updated to omit the backslash.</p></li>
+<li><p>Gaussian process surrogate models now support variance estimators for use in expected improvement/expected feasibility functions; constant, linear, or quadratic trend functions; global optimization methods for maximum likelihood estimation; and point filtering.</p></li>
+<li><p>New derived Model class: RecastModel. This is a thin wrapper around a sub-model allowing for linear and nonlinear recasting of its variables and responses. Used by variable and response scaling, random variable transformations, multiobjective optimization, merit functions (see SBO discussion above), and expected improvement/feasibility, as described in Section 10.3 of the Users Manual.</p></li>
+<li><p>Extensions to variables views in surrogate model construction. Global surrogate classes previously assumed a hardwired “All” view (due to the use of this view by DACE methods) and local/multipoint/hierarchical surrogates previously assumed a hardwired “Distinct” view. Now general view support is available in all surrogate types, which allows much broader surrogate deployment than was previously possible. As part of this extension, sampling methods now support additional sampling modes (ACTIVE, ACTIVE_UNIFORM, ALL, ALL_UNIFORM, UNCERTAIN and UNCERTAIN_UNIFORM) and many classes have been extended to support data translations among differing variables set views.</p></li>
+<li><p>Methods may now utilize mixed surrogate/truth models, as identified by a surrogate identifier list. The initial use case is sequential RBDO.</p></li>
+<li><p>More flexible interface to input/output scaling and added support for logarithmic scaling. In addition, numerical derivative estimation is now performed within the scaled space to avoid step size thresholds.</p></li>
+<li><p>Extended instantiate “on-the-fly” support for Iterators, Models, Interfaces, Approximations, and Constraints in to support advanced model recursions in local/global reliability and PCE methods.</p></li>
+<li><p>Support for “NaN” and +/-“Inf” added to the input parser (for use in failure recovery values) and the response file reader. For both cases, mitigation approaches are iterator-specific. Currently, sampling methods will omit samples that are not finite from their summary statistics. See Section 20.4 of the Users Manual for additional information.</p></li>
+<li><p>New interfaces: a new direct interface to Python has been developed and the existing direct interface to Matlab has been refined.</p></li>
+<li><p>Extended surrogate build/update/append functionality within Models, Interfaces, and Approximations.</p></li>
+<li><p>Added representation access function for letter/envelope idiom to reduce proliferation of virtual functions at envelope base classes.</p></li>
+</ul>
+<p><strong>Miscellaneous:</strong></p>
+<ul class="simple">
+<li><p>DAKOTA now supports parallel make for concurrent compilation.</p></li>
+<li><p>Ports to MINGW for Windows are now supported by the autotools harness.</p></li>
+<li><p>Revision control for DAKOTA is now managed by subversion, allowing directory reorganization/renaming, upgrade of our release processes to employ release branches, and upgrade of our TPL processes to employ svn externals.</p></li>
+<li><p>Stable releases have been added as new developmental releases (supplements existing VOTD release mechanisms), and revision numbers are now embedded within all developmental releases for traceability.</p></li>
+<li><p>The nightly test harness now includes coverage of restart capabilities, as required for incremental sampling methods.</p></li>
+<li><p>Bug fixes (Bugzilla record id): reliability methods (#1327, #2799), SBO (#2124, #2829, #2836), RBDO (#2828, #2832), PLplot window advance (#2180), sampling bounds (#2824), COLINY interface (#2250, #2434), JEGA parallelism (#1264), parallel usage of plug-in interfaces (#2826, #2827), parallel usage of instantiate on-the-fly Models (#2834), label propagation through Model recursions (#2831), IEEE special values in iostreams (#2855), derivative estimation in recast models (#2835), library build dependencies (#2158, #2822, #2843), and VOTD distribution process (#2841).</p></li>
+</ul>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="42.html" class="btn btn-neutral float-left" title="Version 4.2 (2008/11/05)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="40.html" class="btn btn-neutral float-right" title="Version 4.0 (2006/05/12)" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <!--
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Sandia National Laboratories.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+  --> 
+
+</footer>
+        </div>
+      </div>
+	  
+	  <div style="background-color: #0f0f0f;color:#fafafa;padding:20px">
+	    <div>
+		  <h2><em>Exceptional service in the national interest</em></h2>
+		</div>
+		<p>© 2023 National Technology and Engineering Solutions of Sandia, LLC. | <a href="https://www.sandia.gov/contact_us/index.html">Questions &amp; Comments</a> | <a href="https://www.sandia.gov/general/privacy-security/index.html">Privacy &amp; Security</a></p>
+		<p><a href="http://energy.gov" rel="noopener noreferrer" target="_blank"><img alt="U.S. Department of Energy" longdesc="https://energy.gov" src="https://www.sandia.gov/_common/images/doe_logo_white.png" style="height:37px; width:140px"></a> <a href="http://nnsa.energy.gov/" rel="noopener noreferrer" target="_blank"> <img alt="National Nuclear Security Administration" longdesc="http://nnsa.gov" src="https://www.sandia.gov/_common/images/nnsa_logo_white.png" style="height:37px; width:116px"></a></p>
+		<p><a href="https://www.sandia.gov">Sandia National Laboratories</a> is a multimission laboratory managed and operated by National Technology and Engineering Solutions of Sandia, LLC., a wholly owned subsidiary of Honeywell International, Inc., for the U.S. Department of Energy’s National Nuclear Security Administration under contract DE-NA-0003525.</p>
+	  </div>	  	  
+	  
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

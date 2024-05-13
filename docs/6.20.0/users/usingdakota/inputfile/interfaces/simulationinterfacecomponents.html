@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Simulation Interface Components &mdash; dakota  documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/dakota_theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/sandiaheaderlite.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Simulation File Management" href="simulationfilemanagement.html" />
+    <link rel="prev" title="Building a Black-Box Interface to a Simulation Code" href="buildingblackboxinterface.html" /> 
+  
+  <meta name="sandia.approval_type" content="formal"/>
+  <meta property="sandia.approved" content="SAND2023-13392 O"/>
+  <meta name="description" content="The Dakota project delivers both state-of-the-art research and robust, usable software for optimization and UQ."/>
+  <meta name="keywords" content="Dakota, optimization, UQ, uncertainty quantification, parametric analysis, design exploration, model calibration, risk analysis"/>
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../index.html" class="icon icon-home"> dakota
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../setupdakota.html">Getting Started</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../usingdakota.html">Using Dakota</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../introduction/aboutdakota.html">About Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../introduction/helloworld.html">Dakota Beginner’s Tutorial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../examples.html">Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../introduction/couplingtosimulations.html">Coupling Dakota to a Simulation</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../inputfile.html">Dakota Input File</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../formatting.html">Input File Formatting</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../model.html">Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../variables.html">Variables</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../interfaces.html">Interfaces</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="simulationinterfaces.html">Simulation Interfaces</a></li>
+<li class="toctree-l4"><a class="reference internal" href="buildingblackboxinterface.html">Building a Black-Box Interface to a Simulation Code</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Simulation Interface Components</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#single-analysis-driver-without-filters">Single analysis driver without filters</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#single-analysis-driver-with-filters">Single analysis driver with filters</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#multiple-analysis-drivers-without-filters">Multiple analysis drivers without filters</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#multiple-analysis-drivers-with-filters">Multiple analysis drivers with filters</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="simulationfilemanagement.html">Simulation File Management</a></li>
+<li class="toctree-l4"><a class="reference internal" href="batchedevaluations.html">Batched Evaluations</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mappingexamples.html">Parameter to Response Mapping Examples</a></li>
+<li class="toctree-l4"><a class="reference internal" href="dakotainterfacing.html">Parameters and Results Using the Python dakota.interfacing module</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../responses.html">Responses</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../inputstodakota.html">Inputs to Dakota</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../inputspec.html">Dakota Input Spec</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../inputfile.html#video-resources">Video Resources</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../running.html">Running Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../output.html">Dakota Output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../studytypes.html">Study Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../topics.html">Topics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../advanced.html">Advanced Topics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../theory.html">Dakota Theory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../reference.html">Keyword Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usingdakotagui/usingdakotagui.html">Using Dakota GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../externaltools/externaltools.html">Using External Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../compiling/compiling.html">Compiling Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../developingdakota/developingdakota.html">Developing Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../misc/misc.html">Miscellaneous</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">dakota</a>
+      </nav>
+
+	  <!-- SNL Lite header -->
+	  <div class="snlheader-subsite--wrapper-default">
+		<snlheader class="snlheader-subsite" role="snlbanner">
+		  <div class="wrapper">
+			<a href="https://www.sandia.gov/index.html">
+			  <div class="logo-transparent"><p class="logo">Sandia National Laboratories</p></div>
+			</a>
+			<div class="nav-top">
+			  <a class="visuallyhidden" name="mainnav"></a>
+			  <div aria-label="main navigation" class="core-nav-transparent core-nav-transparent--visible" role="navigation">
+				<ul role="navigation" class="secondary-links">
+				  <li id="search-text-link">
+					<a aria-label="Search" href="https://www.sandia.gov/search/">Search Sandia.gov</a>
+				  </li>
+				  <li id="directory-text-link">
+					<a href="https://www.sandia.gov/directory.html" aria-expanded="false" aria-label="Site Directory">All Sandia Websites</a>
+				  </li>
+				</ul>
+			  </div>
+			</div>
+		  </div> 
+		</snlheader>
+	  </div>	  
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../usingdakota.html">Using Dakota</a></li>
+          <li class="breadcrumb-item"><a href="../../inputfile.html">Dakota Input File</a></li>
+          <li class="breadcrumb-item"><a href="../interfaces.html">Interfaces</a></li>
+      <li class="breadcrumb-item active">Simulation Interface Components</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../_sources/usingdakota/inputfile/interfaces/simulationinterfacecomponents.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="simulation-interface-components">
+<span id="interfaces-components"></span><h1>Simulation Interface Components<a class="headerlink" href="#simulation-interface-components" title="Link to this heading"></a></h1>
+<p><a class="reference internal" href="#interfaces-bbinterfacecomp"><span class="std std-numref">Fig. 30</span></a> is an extension of
+<a class="reference internal" href="../../introduction/couplingtosimulations.html#coupling-figure01"><span class="std std-numref">Fig. 28</span></a> that adds details of
+the components that make up each of the simulation interfaces (system
+call, fork, and direct). These components include an <code class="docutils literal notranslate"><span class="pre">input_filter</span></code>
+(“IFilter”), one or more <code class="docutils literal notranslate"><span class="pre">analysis_drivers</span></code> (“Analysis Code/Driver”),
+and an <code class="docutils literal notranslate"><span class="pre">output_filter</span></code> (“OFilter”). The input and output filters
+provide optional facilities for managing simulation pre- and
+post-processing, respectively. More specifically, the input filter can
+be used to insert the Dakota parameters into the input files required by
+the simulator program, and the output filter can be used to recover the
+raw data from the simulation results and compute the desired response
+data set. If there is a single analysis code, it is often convenient to
+combine these pre- and post-processing functions into a single
+simulation driver script, and the separate input and output filter
+facilities are rarely used in this case. If there are multiple analysis
+drivers, however, the input and output filter facilities provide a
+convenient means for managing <em>non-repeated</em> portions of the pre- and
+post-processing for multiple analyses. That is, pre- and post-processing
+tasks that must be performed for each analysis can be performed within
+the individual analysis drivers, and shared pre- and post-processing
+tasks that are only performed once for the set of analyses can be
+performed within the input and output filters.</p>
+<figure class="align-center" id="interfaces-bbinterfacecomp">
+<a class="reference internal image-reference" href="../../../_images/dakota_components.png"><img alt="Components of the simulation interface" src="../../../_images/dakota_components.png" style="width: 400px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 30 </span><span class="caption-text">Components of the simulation interface</span><a class="headerlink" href="#interfaces-bbinterfacecomp" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>When spawning function evaluations using system calls or forks, Dakota
+must communicate parameter and response data with the analysis drivers
+and filters through use of the file system. This is accomplished by
+passing the names of the parameters and results files on the command
+line when executing an analysis driver or filter. The input filter or
+analysis driver read data from the parameters file and the output filter
+or analysis driver write the appropriate data to the responses file.
+While not essential when the file names are fixed, the file names must
+be retrieved from the command line when Dakota is changing the file
+names from one function evaluation to the next (i.e., using temporary
+files or root names tagged with numerical identifiers). In the case of a
+UNIX C-shell script, the two command line arguments are retrieved using
+<code class="docutils literal notranslate"><span class="pre">$argv[1]</span></code> and <code class="docutils literal notranslate"><span class="pre">$argv[2]</span></code> (see <span id="id1">[<a class="reference internal" href="../../../misc/bibliography.html#id10" title="G. Anderson and P. Anderson. The UNIX C Shell Field Guide. Prentice-Hall, Englewood Cliffs, NJ, 1986.">AA86</a>]</span>).
+Similarly, Bourne shell scripts retrieve the two command line arguments
+using <code class="docutils literal notranslate"><span class="pre">$1</span></code> and <code class="docutils literal notranslate"><span class="pre">$2</span></code>, and Perl scripts retrieve the two command line
+arguments using <code class="docutils literal notranslate"><span class="pre">&#64;ARGV[0]</span></code> and <code class="docutils literal notranslate"><span class="pre">&#64;ARGV[1]</span></code>. In the case of a C or C++
+program, command line arguments are retrieved using <code class="docutils literal notranslate"><span class="pre">argc</span></code> (argument
+count) and <code class="docutils literal notranslate"><span class="pre">argv</span></code> (argument vector) <span id="id2">[<a class="reference internal" href="../../../misc/bibliography.html#id169" title="B. W. Kernighan and D. M. Ritchie. The C Programming Language. Prentice Hall PTR, Englewood Cliffs, NJ, 2nd edition, 1988.">KR88</a>]</span>, and for
+Fortran 77, the <code class="docutils literal notranslate"><span class="pre">iargc</span></code> function returns the argument count and the
+<code class="docutils literal notranslate"><span class="pre">getarg</span></code> subroutine returns command line arguments.</p>
+<section id="single-analysis-driver-without-filters">
+<span id="interfaces-components-single1"></span><h2>Single analysis driver without filters<a class="headerlink" href="#single-analysis-driver-without-filters" title="Link to this heading"></a></h2>
+<p>If a single <code class="docutils literal notranslate"><span class="pre">analysis_driver</span></code> is selected in the interface
+specification and filters are not needed (as indicated by omission of
+the <code class="docutils literal notranslate"><span class="pre">input_filter</span></code> and <code class="docutils literal notranslate"><span class="pre">output_filter</span></code> specifications), then only
+one process will appear in the execution syntax of the simulation
+interface. An example of this syntax in the system call case is:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>driver params.in results.out
+</pre></div>
+</div>
+<p>where <code class="docutils literal notranslate"><span class="pre">driver</span></code> is the user-specified analysis driver and <code class="docutils literal notranslate"><span class="pre">params.in</span></code> and <code class="docutils literal notranslate"><span class="pre">results.out</span></code> are the names of the
+parameters and results files, respectively, passed on the command line.
+In this case, the user need not retrieve the command line arguments
+since the same file names will be used each time.</p>
+<p>For the same mapping, the fork simulation interface echoes the following
+syntax:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>blocking fork: driver params.in results.out
+</pre></div>
+</div>
+<p>for which only a single blocking fork is needed to perform the
+evaluation.</p>
+<p>Executing the same mapping with the direct simulation interface results
+in an echo of the following syntax:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>Direct function: invoking driver
+</pre></div>
+</div>
+<p>where this analysis driver must be linked as a function within Dakota’s
+direct interface (see the <a class="reference internal" href="../../advanced/advancedsimulationcodeinterfaces.html#advint-direct"><span class="std std-ref">“Developing a Direct Simulation Interface” section</span></a>).
+Note that no parameter or response files are involved, since such values
+are passed directly through the function argument lists.</p>
+<p>Both the system call and fork interfaces support asynchronous
+operations. The asynchronous system call execution syntax involves
+executing the system call in the background:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>driver params.in.1 results.out.1 &amp;
+</pre></div>
+</div>
+<p>and the asynchronous fork execution syntax involves use of a nonblocking
+fork:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>nonblocking fork: driver params.in.1 results.out.1
+</pre></div>
+</div>
+<p>where <a class="reference internal" href="simulationfilemanagement.html#interfaces-file-tagging1"><span class="std std-ref">file tagging</span></a>)
+has been user-specified in both cases to prevent conflicts between
+concurrent analysis drivers. In these cases, the user must retrieve the
+command line arguments since the file names change on each evaluation.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Execution of the direct interface must currently be performed
+synchronously since multithreading is not yet supported. See
+the <a class="reference internal" href="../../advanced/parallelcomputing.html#parallel-slp-local-direct"><span class="std std-ref">section on direct function synchronization</span></a> for more information.</p>
+</div>
+</section>
+<section id="single-analysis-driver-with-filters">
+<span id="interfaces-components-single2"></span><h2>Single analysis driver with filters<a class="headerlink" href="#single-analysis-driver-with-filters" title="Link to this heading"></a></h2>
+<p>When filters are used, the syntax of the system call that Dakota
+performs is:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>ifilter params.in results.out; driver params.in results.out;
+     ofilter params.in results.out
+</pre></div>
+</div>
+<p>in which the input filter (<code class="docutils literal notranslate"><span class="pre">ifilter</span></code>), analysis driver (<code class="docutils literal notranslate"><span class="pre">driver</span></code>), and output filter (<code class="docutils literal notranslate"><span class="pre">ofilter</span></code>)
+processes are combined into a single system call through the use of
+semi-colons (see <span id="id3">[<a class="reference internal" href="../../../misc/bibliography.html#id10" title="G. Anderson and P. Anderson. The UNIX C Shell Field Guide. Prentice-Hall, Englewood Cliffs, NJ, 1986.">AA86</a>]</span>). All three portions are
+passed the names of the parameters and results files on the command
+line.</p>
+<p>For the same mapping, the fork simulation interface echoes the following
+syntax:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>blocking fork: ifilter params.in results.out;
+     driver params.in results.out; ofilter params.in results.out
+</pre></div>
+</div>
+<p>where a series of three blocking forks is used to perform the
+evaluation.</p>
+<p>Executing the same mapping with the direct simulation interface results
+in an echo of the following syntax:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>Direct function: invoking { ifilter driver ofilter }
+</pre></div>
+</div>
+<p>where each of the three components must be linked as a function within
+Dakota’s direct interface. Since asynchronous operations are not yet
+supported, execution simply involves invocation of each of the three
+linked functions in succession. Again, no files are involved since
+parameter and response data are passed directly through the function
+argument lists.</p>
+<p>Asynchronous executions would appear as follows for the system call
+interface:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>(ifilter params.in.1 results.out.1; driver params.in.1 results.out.1;
+     ofilter params.in.1 results.out.1) &amp;
+</pre></div>
+</div>
+<p>and, for the fork interface, as:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>nonblocking fork: ifilter params.in.1 results.out.1;
+     driver params.in.1 results.out.1; ofilter params.in.1 results.out.1
+</pre></div>
+</div>
+<p>where file tagging of evaluations has again been user-specified in both
+cases. For the system call simulation interface, use of parentheses and
+semi-colons to bind the three processes into a single system call
+simplifies asynchronous process management compared to an approach using
+separate system calls. The fork simulation interface, on the other hand,
+does not rely on parentheses and accomplishes asynchronous operations by
+first forking an intermediate process. This intermediate process is then
+reforked for the execution of the input filter, analysis driver, and
+output filter. The intermediate process can be blocking or nonblocking
+(nonblocking in this case), and the second level of forks can be
+blocking or nonblocking (blocking in this case). The fact that forks can
+be reforked multiple times using either blocking or nonblocking
+approaches provides the enhanced flexibility to support <a class="reference internal" href="../../advanced/parallelcomputing.html#parallel"><span class="std std-ref">a variety of
+local parallelism approaches</span></a>.</p>
+</section>
+<section id="multiple-analysis-drivers-without-filters">
+<span id="interfaces-components-multiple1"></span><h2>Multiple analysis drivers without filters<a class="headerlink" href="#multiple-analysis-drivers-without-filters" title="Link to this heading"></a></h2>
+<p>If a list of <code class="docutils literal notranslate"><span class="pre">analysis_drivers</span></code> is specified and filters are not
+needed (i.e., neither <code class="docutils literal notranslate"><span class="pre">input_filter</span></code> nor <code class="docutils literal notranslate"><span class="pre">output_filter</span></code> appears),
+then the system call syntax would appear as:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>driver1 params.in results.out.1; driver2 params.in results.out.2;
+     driver3 params.in results.out.3
+</pre></div>
+</div>
+<p>where <code class="docutils literal notranslate"><span class="pre">driver1</span></code>, <code class="docutils literal notranslate"><span class="pre">driver2</span></code>, and <code class="docutils literal notranslate"><span class="pre">driver3</span></code> are the user-specified analysis
+drivers and <code class="docutils literal notranslate"><span class="pre">params.in</span></code> and <code class="docutils literal notranslate"><span class="pre">results.out</span></code> are the
+user-selected names of the parameters and results files. Note that the
+results files for the different analysis drivers have been automatically
+tagged to prevent overwriting. This <a class="reference internal" href="simulationfilemanagement.html#interfaces-file-tagging2"><span class="std std-ref">automatic tagging of analyses</span></a>
+is a separate operation from <a class="reference internal" href="simulationfilemanagement.html#interfaces-file-tagging1"><span class="std std-ref">user-selected tagging of evaluations</span></a>.</p>
+<p>For the same mapping, the fork simulation interface echoes the following
+syntax:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>blocking fork: driver1 params.in results.out.1;
+     driver2 params.in results.out.2; driver3 params.in results.out.3
+</pre></div>
+</div>
+<p>for which a series of three blocking forks is needed (no reforking of an
+intermediate process is required).</p>
+<p>Executing the same mapping with the direct simulation interface results
+in an echo of the following syntax:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>Direct function: invoking { driver1 driver2 driver3 }
+</pre></div>
+</div>
+<p>where, again, each of these components must be linked within Dakota’s
+direct interface and no files are involved for parameter and response
+data transfer.</p>
+<p>Both the system call and fork interfaces support asynchronous function
+evaluations. The asynchronous system call execution syntax would be
+reported as</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>(driver1 params.in.1 results.out.1.1; driver2 params.in.1 results.out.1.2;
+     driver3 params.in.1 results.out.1.3) &amp;
+</pre></div>
+</div>
+<p>and the nonblocking fork execution syntax would be reported as</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>nonblocking fork: driver1 params.in.1 results.out.1.1;
+     driver2 params.in.1 results.out.1.2; driver3 params.in.1 results.out.1.3
+</pre></div>
+</div>
+<p>where, in both cases, file tagging of evaluations has been
+user-specified to prevent conflicts between concurrent analysis drivers
+and file tagging of the results files for multiple analyses is
+automatically used. In the fork interface case, an intermediate process
+is forked to allow a non-blocking function evaluation, and this
+intermediate process is then reforked for the execution of each of the
+analysis drivers.</p>
+</section>
+<section id="multiple-analysis-drivers-with-filters">
+<span id="interfaces-components-multiple2"></span><h2>Multiple analysis drivers with filters<a class="headerlink" href="#multiple-analysis-drivers-with-filters" title="Link to this heading"></a></h2>
+<p>Finally, when combining filters with multiple <code class="docutils literal notranslate"><span class="pre">analysis_drivers</span></code>, the
+syntax of the system call that Dakota performs is:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>ifilter params.in.1 results.out.1;
+     driver1 params.in.1 results.out.1.1;
+     driver2 params.in.1 results.out.1.2;
+     driver3 params.in.1 results.out.1.3;
+     ofilter params.in.1 results.out.1
+</pre></div>
+</div>
+<p>in which all processes have again been combined into a single system
+call through the use of semi-colons and parentheses. Note that the
+secondary file tagging for the results files is only used for the
+analysis drivers and not for the filters. This is consistent with the
+filters’ defined purpose of managing the non-repeated portions of
+analysis pre- and post-processing (e.g., <a class="reference internal" href="simulationfilemanagement.html#interfaces-file-tagging2"><span class="std std-ref">overlay of response results
+from individual analyses</span></a>).</p>
+<p>For the same mapping, the fork simulation interface echoes the following
+syntax:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>blocking fork: ifilter params.in.1 results.out.1;
+     driver1 params.in.1 results.out.1.1;
+     driver2 params.in.1 results.out.1.2;
+     driver3 params.in.1 results.out.1.3;
+     ofilter params.in.1 results.out.1
+</pre></div>
+</div>
+<p>for which a series of five blocking forks is used (no reforking of an
+intermediate process is required).</p>
+<p>Executing the same mapping with the direct simulation interface results
+in an echo of the following syntax:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>Direct function: invoking { ifilter driver1 driver2 driver3 ofilter }
+</pre></div>
+</div>
+<p>where each of these components must be linked as a function within
+Dakota’s direct interface. Since asynchronous operations are not
+supported, execution simply involves invocation of each of the five
+linked functions in succession. Again, no files are involved for
+parameter and response data transfer since this data is passed directly
+through the function argument lists.</p>
+<p>Asynchronous executions would appear as follows for the system call
+interface:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>(ifilter params.in.1 results.out.1;
+     driver1 params.in.1 results.out.1.1;
+     driver2 params.in.1 results.out.1.2;
+     driver3 params.in.1 results.out.1.3;
+     ofilter params.in.1 results.out.1) &amp;
+</pre></div>
+</div>
+<p>and for the fork interface:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>nonblocking fork: ifilter params.in.1 results.out.1;
+     driver1 params.in.1 results.out.1.1;
+     driver2 params.in.1 results.out.1.2;
+     driver3 params.in.1 results.out.1.3;
+     ofilter params.in.1 results.out.1
+</pre></div>
+</div>
+<p>where, again, user-selected file tagging of evaluations is combined with
+automatic file tagging of analyses. In the fork interface case, an
+intermediate process is forked to allow a non-blocking function
+evaluation, and this intermediate process is then reforked for the
+execution of the input filter, each of the analysis drivers, and the
+output filter.</p>
+<p>A complete example of these filters and multi-part drivers can be found
+in <code class="docutils literal notranslate"><span class="pre">dakota/share/dakota/test/dakota_3pc/dakota_3pc.in</span></code>.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="buildingblackboxinterface.html" class="btn btn-neutral float-left" title="Building a Black-Box Interface to a Simulation Code" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="simulationfilemanagement.html" class="btn btn-neutral float-right" title="Simulation File Management" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <!--
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Sandia National Laboratories.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+  --> 
+
+</footer>
+        </div>
+      </div>
+	  
+	  <div style="background-color: #0f0f0f;color:#fafafa;padding:20px">
+	    <div>
+		  <h2><em>Exceptional service in the national interest</em></h2>
+		</div>
+		<p>© 2023 National Technology and Engineering Solutions of Sandia, LLC. | <a href="https://www.sandia.gov/contact_us/index.html">Questions &amp; Comments</a> | <a href="https://www.sandia.gov/general/privacy-security/index.html">Privacy &amp; Security</a></p>
+		<p><a href="http://energy.gov" rel="noopener noreferrer" target="_blank"><img alt="U.S. Department of Energy" longdesc="https://energy.gov" src="https://www.sandia.gov/_common/images/doe_logo_white.png" style="height:37px; width:140px"></a> <a href="http://nnsa.energy.gov/" rel="noopener noreferrer" target="_blank"> <img alt="National Nuclear Security Administration" longdesc="http://nnsa.gov" src="https://www.sandia.gov/_common/images/nnsa_logo_white.png" style="height:37px; width:116px"></a></p>
+		<p><a href="https://www.sandia.gov">Sandia National Laboratories</a> is a multimission laboratory managed and operated by National Technology and Engineering Solutions of Sandia, LLC., a wholly owned subsidiary of Honeywell International, Inc., for the U.S. Department of Energy’s National Nuclear Security Administration under contract DE-NA-0003525.</p>
+	  </div>	  	  
+	  
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

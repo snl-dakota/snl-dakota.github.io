@@ -1,0 +1,45 @@
+.. _method-pareto_set-iterator_servers:
+
+""""""""""""""""
+iterator_servers
+""""""""""""""""
+
+
+Specify the number of iterator servers when Dakota is run in parallel
+
+
+
+**Topics**
+
+
+concurrency_and_parallelism
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* INTEGER
+
+
+**Description**
+
+
+An important feature for component-based iterators is that execution
+of sub-iterator runs may be performed concurrently. The optional
+``iterator_servers`` specification supports user override
+of the automatic parallel configuration for the number of iterator
+servers. That is, if the automatic configuration is
+undesirable for some reason, the user can enforce a desired number of
+partitions at the iterator parallelism level. Currently, ``hybrid``,
+``multi_start``, and ``pareto_set`` component-based iterators support
+concurrency in their sub-iterators. Refer to ParallelLibrary
+and the :ref:`Parallel Computing section <parallel>` for additional information.
+
+

@@ -1,0 +1,92 @@
+.. _method-local_evidence:
+
+""""""""""""""
+local_evidence
+""""""""""""""
+
+
+Evidence theory with evidence measures computed with local optimization methods
+
+
+
+**Topics**
+
+
+epistemic_uncertainty_quantification_methods, evidence_theory
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-local_evidence-sqp
+   method-local_evidence-nip
+   method-local_evidence-response_levels
+   method-local_evidence-probability_levels
+   method-local_evidence-gen_reliability_levels
+   method-local_evidence-distribution
+   method-local_evidence-model_pointer
+
+
+**Specification**
+
+- *Alias:* nond_local_evidence 
+
+- *Arguments:* None
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+----------------------------+-----------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword             | Dakota Keyword Description                    |
+|                         | Group              |                            |                                               |
++=========================+====================+============================+===============================================+
+| Optional (Choose One)   | Optimization       | `sqp`__                    | Use a sequential quadratic programming method |
+|                         | Solver             |                            | for solving an optimization sub-problem       |
+|                         |                    +----------------------------+-----------------------------------------------+
+|                         |                    | `nip`__                    | Use a nonlinear interior point method for     |
+|                         |                    |                            | solving an optimization sub-problem           |
++-------------------------+--------------------+----------------------------+-----------------------------------------------+
+| Optional                                     | `response_levels`__        | Values at which to estimate desired           |
+|                                              |                            | statistics for each response                  |
++----------------------------------------------+----------------------------+-----------------------------------------------+
+| Optional                                     | `probability_levels`__     | Specify probability levels at which to        |
+|                                              |                            | estimate the corresponding response value     |
++----------------------------------------------+----------------------------+-----------------------------------------------+
+| Optional                                     | `gen_reliability_levels`__ | Specify generalized relability levels at      |
+|                                              |                            | which to estimate the corresponding response  |
+|                                              |                            | value                                         |
++----------------------------------------------+----------------------------+-----------------------------------------------+
+| Optional                                     | `distribution`__           | Selection of cumulative or complementary      |
+|                                              |                            | cumulative functions                          |
++----------------------------------------------+----------------------------+-----------------------------------------------+
+| Optional                                     | `model_pointer`__          | Identifier for model block to be used by a    |
+|                                              |                            | method                                        |
++----------------------------------------------+----------------------------+-----------------------------------------------+
+
+.. __: method-local_evidence-sqp.html
+__ method-local_evidence-nip.html
+__ method-local_evidence-response_levels.html
+__ method-local_evidence-probability_levels.html
+__ method-local_evidence-gen_reliability_levels.html
+__ method-local_evidence-distribution.html
+__ method-local_evidence-model_pointer.html
+
+
+
+**Description**
+
+
+Two local optimization methods
+are available: ``sqp`` (sequential quadratic programming or ``nip``
+(nonlinear interior point method).
+
+*Additional Resources*
+
+See the topic page :ref:`topic-evidence_theory` for important
+background information and usage notes.
+
+Refer to :ref:`topic-variable_support` for information on supported
+variable types.
+
+

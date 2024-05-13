@@ -1,0 +1,92 @@
+.. _method-rkd_darts:
+
+"""""""""
+rkd_darts
+"""""""""
+
+
+Recursive k-d (RKD) Darts: Recursive Hyperplane Sampling for Numerical Integration of High-Dimensional Functions.
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-rkd_darts-build_samples
+   method-rkd_darts-seed
+   method-rkd_darts-lipschitz
+   method-rkd_darts-samples_on_emulator
+   method-rkd_darts-response_levels
+   method-rkd_darts-probability_levels
+   method-rkd_darts-gen_reliability_levels
+   method-rkd_darts-distribution
+   method-rkd_darts-rng
+   method-rkd_darts-model_pointer
+
+
+**Specification**
+
+- *Alias:* nond_rkd_darts 
+
+- *Arguments:* None
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+----------------------------+-----------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword             | Dakota Keyword Description                    |
+|                         | Group              |                            |                                               |
++=========================+====================+============================+===============================================+
+| Required                                     | `build_samples`__          | Number of initial model evaluations used in   |
+|                                              |                            | build phase                                   |
++----------------------------------------------+----------------------------+-----------------------------------------------+
+| Optional                                     | `seed`__                   | Seed of the random number generator           |
++----------------------------------------------+----------------------------+-----------------------------------------------+
+| Optional                                     | `lipschitz`__              | Undocumented: Recursive k-d (RKD) Darts is an |
+|                                              |                            | experimental capability.                      |
++----------------------------------------------+----------------------------+-----------------------------------------------+
+| Optional                                     | `samples_on_emulator`__    | Number of samples at which to evaluate an     |
+|                                              |                            | emulator (surrogate)                          |
++----------------------------------------------+----------------------------+-----------------------------------------------+
+| Optional                                     | `response_levels`__        | Undocumented: Recursive k-d (RKD) Darts is an |
+|                                              |                            | experimental capability.                      |
++----------------------------------------------+----------------------------+-----------------------------------------------+
+| Optional                                     | `probability_levels`__     | Specify probability levels at which to        |
+|                                              |                            | estimate the corresponding response value     |
++----------------------------------------------+----------------------------+-----------------------------------------------+
+| Optional                                     | `gen_reliability_levels`__ | Specify generalized relability levels at      |
+|                                              |                            | which to estimate the corresponding response  |
+|                                              |                            | value                                         |
++----------------------------------------------+----------------------------+-----------------------------------------------+
+| Optional                                     | `distribution`__           | Selection of cumulative or complementary      |
+|                                              |                            | cumulative functions                          |
++----------------------------------------------+----------------------------+-----------------------------------------------+
+| Optional                                     | `rng`__                    | Undocumented: Recursive k-d (RKD) Darts is an |
+|                                              |                            | experimental capability.                      |
++----------------------------------------------+----------------------------+-----------------------------------------------+
+| Optional                                     | `model_pointer`__          | Identifier for model block to be used by a    |
+|                                              |                            | method                                        |
++----------------------------------------------+----------------------------+-----------------------------------------------+
+
+.. __: method-rkd_darts-build_samples.html
+__ method-rkd_darts-seed.html
+__ method-rkd_darts-lipschitz.html
+__ method-rkd_darts-samples_on_emulator.html
+__ method-rkd_darts-response_levels.html
+__ method-rkd_darts-probability_levels.html
+__ method-rkd_darts-gen_reliability_levels.html
+__ method-rkd_darts-distribution.html
+__ method-rkd_darts-rng.html
+__ method-rkd_darts-model_pointer.html
+
+
+
+**Description**
+
+
+*** Disclaimer: The RKD method is currently in development mode, for further experimental verification.
+*** Please contact Dakota team if you have further questions about using this method.
+
+Recursive k-d (RKD) darts is an algorithm to evaluate the integration of a d-dimensional black box function f(x) via recursive sampling over d, using a series of hyperplanes of variable dimensionality k = {d, d-1, …, 0}. Fundamentally, we decompose the d-dimensional integration problem into a series of nested one-dimensional problems. That is, we start at the root level (the whole domain) and start sampling down using hyperplanes of one lower dimension, all the way down to zero (points). A d-dimensional domain is subsampled using (d-1) hyperplanes, a (d-1)-dimensional sub-domain is subsampled using (d-2) hyperplanes, and so on. Every hyperplane, regardless of its dimension, is evaluated using sampled hyperplanes of one lower dimension, as shown in the set of figures above. Each hyperplane has direct information exchange with its parent hyperplane of one higher dimension, and its children of one lower dimension.   In each one-dimensional problem, we construct a piecewise approximation surrogate model, using 1-dimensional Lagrange interpolation. Information is exchanged between different levels, including integration values, as well as interpolation and evaluation errors, in order to a) find the integration value up to that level, b) estimate the associated integration error, and c) guide the placement of future samples.  Topics::        uncertainty_quantification
+
+

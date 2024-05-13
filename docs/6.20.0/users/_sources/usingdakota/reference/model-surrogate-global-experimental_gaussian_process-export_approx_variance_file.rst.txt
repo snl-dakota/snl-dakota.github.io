@@ -1,0 +1,65 @@
+.. _model-surrogate-global-experimental_gaussian_process-export_approx_variance_file:
+
+"""""""""""""""""""""""""""
+export_approx_variance_file
+"""""""""""""""""""""""""""
+
+
+Output file for surrogate model variance evaluations
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   model-surrogate-global-experimental_gaussian_process-export_approx_variance_file-custom_annotated
+   model-surrogate-global-experimental_gaussian_process-export_approx_variance_file-annotated
+   model-surrogate-global-experimental_gaussian_process-export_approx_variance_file-freeform
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* STRING
+
+- *Default:* no variance export to a file
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+----------------------+-----------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword       | Dakota Keyword Description                    |
+|                         | Group              |                      |                                               |
++=========================+====================+======================+===============================================+
+| Optional (Choose One)   | Tabular Format     | `custom_annotated`__ | Selects custom-annotated tabular file format  |
+|                         |                    +----------------------+-----------------------------------------------+
+|                         |                    | `annotated`__        | Selects annotated tabular file format         |
+|                         |                    +----------------------+-----------------------------------------------+
+|                         |                    | `freeform`__         | Selects freeform file format                  |
++-------------------------+--------------------+----------------------+-----------------------------------------------+
+
+.. __: model-surrogate-global-experimental_gaussian_process-export_approx_variance_file-custom_annotated.html
+__ model-surrogate-global-experimental_gaussian_process-export_approx_variance_file-annotated.html
+__ model-surrogate-global-experimental_gaussian_process-export_approx_variance_file-freeform.html
+
+
+
+**Description**
+
+
+Specifies a file in which the points (input variable values) at which
+the surrogate model is evaluated and corresponding response
+*variance* values computed by the surrogate model will be
+written.  The response values are the surrogate's predicted
+approximation to the truth model responses at those points.
+
+*Usage Tips*
+
+Dakota exports tabular data in one of three formats:
+
+- ``annotated`` (default)
+- ``custom_annotated``
+- ``freeform``
+
+

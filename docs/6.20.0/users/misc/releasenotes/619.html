@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Version 6.19 (2023/11/15) &mdash; dakota  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/dakota_theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/sandiaheaderlite.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Version 6.18 (2023/05/15)" href="618.html" />
+    <link rel="prev" title="Version 6.20 (2024/05/15)" href="620.html" /> 
+  
+  <meta name="sandia.approval_type" content="formal"/>
+  <meta property="sandia.approved" content="SAND2023-13392 O"/>
+  <meta name="description" content="The Dakota project delivers both state-of-the-art research and robust, usable software for optimization and UQ."/>
+  <meta name="keywords" content="Dakota, optimization, UQ, uncertainty quantification, parametric analysis, design exploration, model calibration, risk analysis"/>
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> dakota
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../setupdakota.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../usingdakota/usingdakota.html">Using Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../usingdakotagui/usingdakotagui.html">Using Dakota GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../externaltools/externaltools.html">Using External Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../compiling/compiling.html">Compiling Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developingdakota/developingdakota.html">Developing Dakota</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../misc.html">Miscellaneous</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../help.html">Help Resources</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../aboutteam.html">About the Team</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../contributing.html">Contributing to Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../contributors.html">Contributors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../license.html">License</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../citing.html">Citing Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../publications.html">Publications</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../releasenotes.html">Release Notes</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="../releasenotes.html#dakota">Dakota</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="620.html">Version 6.20 (2024/05/15)</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Version 6.19 (2023/11/15)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="618.html">Version 6.18 (2023/05/15)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="617.html">Version 6.17 (2022/11/15)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="616.html">Version 6.16 (2022/05/16)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="615.html">Version 6.15 (2021/11/15)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="614.html">Version 6.14 (2021/05/17)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="613.html">Version 6.13 (2020/11/15)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="612.html">Version 6.12 (2020/06/15)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="611.html">Version 6.11 (2019/11/15)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="610.html">Version 6.10 (2019/05/15)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="69.html">Version 6.9 (2018/11/15)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="68.html">Version 6.8 (2018/05/15)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="67.html">Version 6.7 (2017/11/15)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="66.html">Version 6.6 (2017/05/15)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="65.html">Version 6.5 (2016/11/15)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="64.html">Version 6.4 (2016/05/16)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="63.html">Version 6.3 (2015/11/16)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="62.html">Version 6.2 (2015/05/15)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="61.html">Version 6.1 (2014/11/15)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="60.html">Version 6.0 (2014/05/15)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="54.html">Version 5.4 (2013/11/15)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="531.html">Version 5.3.1 (2013/05/15)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="53.html">Version 5.3 (2013/01/31)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="52.html">Version 5.2 (2011/11/30)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="51.html">Version 5.1 (2010/12/21)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="50.html">Version 5.0 (2009/12/21)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="42.html">Version 4.2 (2008/11/05)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="41.html">Version 4.1 (2007/09/21)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="40.html">Version 4.0 (2006/05/12)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="33.html">Version 3.3 (2004/12/23)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="32.html">Version 3.2 (2004/07/21)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="312.html">Version 3.1.2 (2003/07/09)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="311.html">Version 3.1.1 (2003/05/21)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="31.html">Version 3.1 (2003/04/04)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="30.html">Version 3.0 (2002/03/30)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="30beta.html">Version 3.0 beta (2001/11/29)</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../releasenotes.html#dakota-gui">Dakota GUI</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../bibliography.html">Bibliography</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../classictoc.html">I’m Lost!</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">dakota</a>
+      </nav>
+
+	  <!-- SNL Lite header -->
+	  <div class="snlheader-subsite--wrapper-default">
+		<snlheader class="snlheader-subsite" role="snlbanner">
+		  <div class="wrapper">
+			<a href="https://www.sandia.gov/index.html">
+			  <div class="logo-transparent"><p class="logo">Sandia National Laboratories</p></div>
+			</a>
+			<div class="nav-top">
+			  <a class="visuallyhidden" name="mainnav"></a>
+			  <div aria-label="main navigation" class="core-nav-transparent core-nav-transparent--visible" role="navigation">
+				<ul role="navigation" class="secondary-links">
+				  <li id="search-text-link">
+					<a aria-label="Search" href="https://www.sandia.gov/search/">Search Sandia.gov</a>
+				  </li>
+				  <li id="directory-text-link">
+					<a href="https://www.sandia.gov/directory.html" aria-expanded="false" aria-label="Site Directory">All Sandia Websites</a>
+				  </li>
+				</ul>
+			  </div>
+			</div>
+		  </div> 
+		</snlheader>
+	  </div>	  
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../misc.html">Miscellaneous</a></li>
+          <li class="breadcrumb-item"><a href="../releasenotes.html">Release Notes</a></li>
+      <li class="breadcrumb-item active">Version 6.19 (2023/11/15)</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/misc/releasenotes/619.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="version-6-19-2023-11-15">
+<span id="releasenotes-619"></span><h1>Version 6.19 (2023/11/15)<a class="headerlink" href="#version-6-19-2023-11-15" title="Link to this heading"></a></h1>
+<p><strong>Highlight: New sampling-based method for Sobol’ main effects</strong></p>
+<p>Based on <span id="id1">[<a class="reference internal" href="../bibliography.html#id189" title="Chenzhao Li and Sankaran Mahadevan. An efficient modularized sample-based method to estimate the first-order Sobol׳ index. Reliability Engineering &amp; System Safety, 153:110–121, September 2016. URL: https://www.sciencedirect.com/science/article/pii/S0951832016300266, doi:10.1016/j.ress.2016.04.012.">LM16</a>]</span>, Dakota can now obtain estimates
+of first order Sobol’ indices (main effects) from <code class="docutils literal notranslate"><span class="pre">sampling</span></code>
+studies. Previous versions of Dakota could estimate
+main and total effects using a “pick and freeze” sampling strategy
+<span id="id2">[<a class="reference internal" href="../bibliography.html#id257" title="A. Saltelli, S. Tarantola, F. Campolongo, and M. Ratto. Sensitivity Analysis in Practice: A Guide to Assessing Scientific Models. John Wiley &amp; Sons, 2004.">STCR04</a>]</span>, which typically required a very large number of samples
+(hundreds or thousands per variable) that had to be carefully structured. While
+the new method produces only main effects, the requirement on
+sample design has been lifted, and typically far fewer samples are
+needed for convergence.</p>
+<p><em>Enabling / Accessing:</em></p>
+<p>The <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-sampling-variance_based_decomp.html"><span class="pre">variance_based_decomp</span></a></code> keyword now has
+suboptions. The <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-sampling-variance_based_decomp-vbd_sampling_method-pick_and_freeze.html"><span class="pre">vbd_sampling_method</span> <span class="pre">pick_and_freeze</span></a></code>
+option is the default, and causes Dakota to use the method that has long been available
+to compute main and total effects. The
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-sampling-variance_based_decomp-vbd_sampling_method-binned.html"><span class="pre">vbd_sampling_method</span> <span class="pre">binned</span></a></code>
+option causes the new method to be used.</p>
+<p><em>Documentation:</em></p>
+<p>Keyword reference for the <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-sampling-variance_based_decomp-vbd_sampling_method-binned.html"><span class="pre">binned</span></a></code>
+VBD method.</p>
+<p><strong>Highlight: Low-discrepancy (quasi-Monte Carlo) sampling</strong></p>
+<p>Two new strategies for choosing low-discrepancy points in sampling
+studies are available in this release. These include lattice rules
+and digital nets. The well-known Sobol sequence is an example of a
+digital net. Just as in Latin hypercube sampling, these strategies
+choose points that cover the parameter space more uniformly than ordinary
+Monte Carlo, leading to faster convergence of UQ results.</p>
+<p><em>Enabling / Accessing:</em></p>
+<p>In a <code class="docutils literal notranslate"><span class="pre">sampling</span></code> study, choose
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-sampling-sample_type-low_discrepancy.html"><span class="pre">sample_type</span> <span class="pre">low_discrepancy</span></a></code>.</p>
+<p><em>Documentation:</em></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-sampling-sample_type-low_discrepancy.html"><span class="pre">low_discrepancy</span></a></code> keyword.</p></li>
+<li><p>Discussion of <a class="reference internal" href="../../usingdakota/studytypes/uq.html#uq-sampling"><span class="std std-ref">low-disrepancy methods</span></a>.</p></li>
+</ul>
+<p><strong>Highlight: Model selection in multifidelity sampling methods</strong></p>
+<p>MFMC, ACV, and generalized ACV now support selection of the most
+performant subset of model approximations, as determined through
+enumeration by the estimator accuracy versus equivalent cost trade-off.</p>
+<p><em>Enabling / Accessing:</em></p>
+<p>In a <code class="docutils literal notranslate"><span class="pre">multifidelity_sampling</span></code> or <code class="docutils literal notranslate"><span class="pre">approximate_control_variate</span></code> study,
+choose <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-approximate_control_variate-search_model_graphs-model_selection.html"><span class="pre">search_model_graphs</span> <span class="pre">model_selection</span></a></code>.</p>
+<p><em>Documentation:</em></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-approximate_control_variate-search_model_graphs-model_selection.html"><span class="pre">model_selection</span></a></code> keyword.</p></li>
+</ul>
+<p><strong>Improvements by Category</strong></p>
+<p><em>Interfaces, Input/Output</em></p>
+<ul class="simple">
+<li><p>Copying of <a class="reference internal" href="../../usingdakota/inputfile/interfaces/dakotainterfacing.html#interfaces-dakota-interfacing"><span class="std std-ref">dakota.interfacing</span></a> objects was improved by adding <code class="docutils literal notranslate"><span class="pre">__deepcopy__</span></code> implementations</p></li>
+<li><p>New examples:</p>
+<ul>
+<li><p>Demonstrating use of Dakota’s direct <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/interface-analysis_drivers-python.html"><span class="pre">python</span></a></code> interface with a
+<a class="reference external" href="https://github.com/snl-dakota/dakota-examples/tree/master/official/drivers/Python/linked_di/tensorflow">pre-built tensorflow model</a>.</p></li>
+<li><p>Demonstrating use of <code class="docutils literal notranslate"><span class="pre">dakota.interfacing.dprepro</span></code> in a black-box interface.
+(For <a class="reference external" href="https://github.com/snl-dakota/dakota-examples/tree/master/official/drivers/black-box_simulation_windows">Windows</a>
+and <a class="reference external" href="https://github.com/snl-dakota/dakota-examples/tree/master/official/drivers/black-box_simulation">Linux/macOS</a>)</p></li>
+</ul>
+</li>
+</ul>
+<p><em>UQ Methods</em></p>
+<ul class="simple">
+<li><p>Improved support for Bayesian calibration methods provided by the MIT Uncertainty Quantification Library (MUQ);
+although MUQ is not enabled in our pre-built downloads, it is now buildable within Dakota by a wider variety of toolchains.</p></li>
+<li><p>Low discrepancy sampling strategies (see highlight)</p></li>
+</ul>
+<p><em>MLMF Sampling</em></p>
+<ul class="simple">
+<li><p>Support for selection of the most performant approximation subset, as highlighted above.</p></li>
+<li><p>New options for more robust numerical solution of optimal sample allocations, including <code class="docutils literal notranslate"><span class="pre">global_local</span></code> and <code class="docutils literal notranslate"><span class="pre">competed_local</span></code> solution strategies.  The former is now the default for numerical solutions in MFMC, ACV, and generalized ACV.</p></li>
+</ul>
+<p><em>Sensitivity Analysis</em></p>
+<ul class="simple">
+<li><p>Binned method for sampling-based variance-based decomposition (see highlight)</p></li>
+<li><p>New examples explaining use of
+<a class="reference external" href="https://github.com/snl-dakota/dakota-examples/tree/master/official/global_sensitivity/correlations">correlation coefficients</a>
+for global sensitivity analysis.</p></li>
+</ul>
+<p><strong>Miscellaneous Enhancements and Bugfixes</strong></p>
+<ul class="simple">
+<li><p>Enh: Documentation of Dakota’s regression test system expanded.</p></li>
+<li><p>Bug fix: The <code class="docutils literal notranslate"><span class="pre">&#64;python_interface</span></code> decorator in the <code class="docutils literal notranslate"><span class="pre">dakota.interfacing</span></code> module now propertly
+interprets the dvv list provided by Dakota’s direct <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/interface-analysis_drivers-python.html"><span class="pre">python</span></a></code> interface.</p></li>
+<li><p>Bug fix: RPATH handling on Linux-based platforms improved.</p></li>
+<li><p>Enh: <a class="reference internal" href="../../externaltools/dpreproandpyprepro.html#interfaces-dprepro-and-pyprepro"><span class="std std-ref">pyprepro</span></a> gained a new function, <code class="docutils literal notranslate"><span class="pre">json_dumps()</span></code>, which
+returns all variables (and their values) formatted as a JSON string. See the
+<a class="reference external" href="https://github.com/snl-dakota/dakota/blob/devel/scripts/pyprepro/manual.md#json-dumps">pyprepro manual</a>
+for more information.</p></li>
+</ul>
+<p><strong>Compatibility</strong></p>
+<ul class="simple">
+<li><p>Support for building Dakota with C++17 has been greatly expanded and is expected to work for
+GCC, Intel, and Clang compilers. Support for Microsoft Visual Studio in progress.</p></li>
+</ul>
+<p><strong>Known Issues</strong></p>
+<ul class="simple">
+<li><p>Plotting in the Dakota GUI on RHEL8 may fail with the error “Unhandled event loop exception. No more handles
+because there is no underlying browser available.” There currently is no known workaround or resolution.</p></li>
+</ul>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="620.html" class="btn btn-neutral float-left" title="Version 6.20 (2024/05/15)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="618.html" class="btn btn-neutral float-right" title="Version 6.18 (2023/05/15)" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <!--
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Sandia National Laboratories.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+  --> 
+
+</footer>
+        </div>
+      </div>
+	  
+	  <div style="background-color: #0f0f0f;color:#fafafa;padding:20px">
+	    <div>
+		  <h2><em>Exceptional service in the national interest</em></h2>
+		</div>
+		<p>© 2023 National Technology and Engineering Solutions of Sandia, LLC. | <a href="https://www.sandia.gov/contact_us/index.html">Questions &amp; Comments</a> | <a href="https://www.sandia.gov/general/privacy-security/index.html">Privacy &amp; Security</a></p>
+		<p><a href="http://energy.gov" rel="noopener noreferrer" target="_blank"><img alt="U.S. Department of Energy" longdesc="https://energy.gov" src="https://www.sandia.gov/_common/images/doe_logo_white.png" style="height:37px; width:140px"></a> <a href="http://nnsa.energy.gov/" rel="noopener noreferrer" target="_blank"> <img alt="National Nuclear Security Administration" longdesc="http://nnsa.gov" src="https://www.sandia.gov/_common/images/nnsa_logo_white.png" style="height:37px; width:116px"></a></p>
+		<p><a href="https://www.sandia.gov">Sandia National Laboratories</a> is a multimission laboratory managed and operated by National Technology and Engineering Solutions of Sandia, LLC., a wholly owned subsidiary of Honeywell International, Inc., for the U.S. Department of Energy’s National Nuclear Security Administration under contract DE-NA-0003525.</p>
+	  </div>	  	  
+	  
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
