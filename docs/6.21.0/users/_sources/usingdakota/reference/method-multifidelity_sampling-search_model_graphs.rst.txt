@@ -1,0 +1,76 @@
+.. _method-multifidelity_sampling-search_model_graphs:
+
+"""""""""""""""""""
+search_model_graphs
+"""""""""""""""""""
+
+
+Perform a search over admissible model relationships for a given model ensemble
+
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-multifidelity_sampling-search_model_graphs-model_selection
+   method-multifidelity_sampling-search_model_graphs-no_recursion
+   method-multifidelity_sampling-search_model_graphs-full_recursion
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+- *Default:* NO_GRAPH_RECURSION
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+---------------------+-----------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword      | Dakota Keyword Description                    |
+|                         | Group              |                     |                                               |
++=========================+====================+=====================+===============================================+
+| Optional                                     | `model_selection`__ | Perform a recursion of admissible model       |
+|                                              |                     | subsets for a given model ensemble            |
++-------------------------+--------------------+---------------------+-----------------------------------------------+
+| Required (Choose One)   | DAG Ensemble       | `no_recursion`__    | Do not recur over admissible DAGs for a given |
+|                         | Generation Option  |                     | model ensemble                                |
+|                         |                    +---------------------+-----------------------------------------------+
+|                         |                    | `full_recursion`__  | Perform a full recursion of all admissible    |
+|                         |                    |                     | DAGs for a given model ensemble               |
++-------------------------+--------------------+---------------------+-----------------------------------------------+
+
+.. __: method-multifidelity_sampling-search_model_graphs-model_selection.html
+__ method-multifidelity_sampling-search_model_graphs-no_recursion.html
+__ method-multifidelity_sampling-search_model_graphs-full_recursion.html
+
+
+
+**Description**
+
+
+Referring to generalized ACV
+(:dakkw:`method-approximate_control_variate-search_model_graphs` and
+:cite:p:`Bomarito2022`), MFMC is a special case of generalized ACV-MF
+(:dakkw:`method-approximate_control_variate-acv_multifidelity`) where a
+hierarchical DAG is employed across the model approximations.  As such,
+a MFMC method specification that includes graph search forwards to the
+generalized ACV solver, but with fixing the DAG to be hierarchical
+(each approximation node points to the next approximation of higher
+fidelity/resolution, ending with the truth model at the root node) and
+fixing the sampling scheme to be ACV-MF.
+
+While the use of a hierarchical DAG is required, the approximation
+selections and orderings within this DAG can be varied, so generalized
+ACV capabilities for model graph search (see
+:dakkw:`method-multifidelity_sampling-search_model_graphs-full_recursion`)
+and model selection (see
+:dakkw:`method-multifidelity_sampling-search_model_graphs-model_selection`)
+are available.
+
+
+
+

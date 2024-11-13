@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Plot Trace Creator &mdash; dakota  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/dakota_theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/sandiaheaderlite.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Editing Plot Files" href="EditingPlotFiles.html" />
+    <link rel="prev" title="Chartreuse" href="Chartreuse.html" /> 
+  
+  <meta name="sandia.approval_type" content="formal"/>
+  <meta property="sandia.approved" content="SAND2023-13392 O"/>
+  <meta name="description" content="The Dakota project delivers both state-of-the-art research and robust, usable software for optimization and UQ."/>
+  <meta name="keywords" content="Dakota, optimization, UQ, uncertainty quantification, parametric analysis, design exploration, model calibration, risk analysis"/>
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> dakota
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../setupdakota.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../usingdakota/usingdakota.html">Using Dakota</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../usingdakotagui.html">Using Dakota GUI</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#introduction">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#example-search">Example Search</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#wizards">Wizards</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#editing-dakota-input-files">Editing Dakota Input Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#running-dakota">Running Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#running-dakota-remotely">Running Dakota Remotely</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#output-from-dakota">Output from Dakota</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../usingdakotagui.html#gui-tools">GUI Tools</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="Chartreuse.html">Chartreuse</a><ul class="current">
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Plot Trace Creator</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#getting-plot-data">Getting Plot Data</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#getting-plot-data-from-a-csv-file">Getting Plot Data from a CSV File</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#getting-plot-data-from-a-dakota-tabular-data-file">Getting Plot Data from a Dakota Tabular Data File</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#getting-plot-data-from-a-dakota-hdf5-database-file">Getting Plot Data from a Dakota HDF5 Database File</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#getting-plot-data-from-a-general-hdf5-database-file">Getting Plot Data from a General HDF5 Database File</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#bar-charts">Bar Charts</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#bar-charts-categorical-data">Bar Charts (Categorical Data)</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#box-plots">Box Plots</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#contour-plots">Contour Plots</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#heat-maps">Heat Maps</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#heat-maps-categorical-axes">Heat Maps (Categorical Axes)</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#histograms">Histograms</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#parallel-coordinates-plots">Parallel Coordinates Plots</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#scatter-plots">Scatter Plots</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#scatter-plots-categorical-axes">Scatter Plots (Categorical Axes)</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#scatter-3d-plot">Scatter 3D Plot</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#surface-3d-plot">Surface 3D Plot</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="EditingPlotFiles.html">Editing Plot Files</a></li>
+<li class="toctree-l4"><a class="reference internal" href="PlotManager.html">Plot Manager:  Managing Multiple Traces and Canvases</a></li>
+<li class="toctree-l4"><a class="reference internal" href="PlotTemplates.html">Plot Templates</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ChartreuseSandbox.html">Chartreuse Sandbox View</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ChartreuseWorkflow.html">Chartreuse in Next-Gen Workflow</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ColorScales.html">Using Color Scales in Plot Traces</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../ngw/NextGenWorkflow.html">Next-Gen Workflow</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../qoi/QOI.html">QOI</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#miscellaneous">Miscellaneous</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../externaltools/externaltools.html">Using External Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../compiling/compiling.html">Compiling Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developingdakota/developingdakota.html">Developing Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../misc/misc.html">Miscellaneous</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">dakota</a>
+      </nav>
+
+	  <!-- SNL Lite header -->
+	  <div class="snlheader-subsite--wrapper-default">
+		<snlheader class="snlheader-subsite" role="snlbanner">
+		  <div class="wrapper">
+			<a href="https://www.sandia.gov/index.html">
+			  <div class="logo-transparent"><p class="logo">Sandia National Laboratories</p></div>
+			</a>
+			<div class="nav-top">
+			  <a class="visuallyhidden" name="mainnav"></a>
+			  <div aria-label="main navigation" class="core-nav-transparent core-nav-transparent--visible" role="navigation">
+				<ul role="navigation" class="secondary-links">
+				  <li id="search-text-link">
+					<a aria-label="Search" href="https://www.sandia.gov/search/">Search Sandia.gov</a>
+				  </li>
+				  <li id="directory-text-link">
+					<a href="https://www.sandia.gov/directory.html" aria-expanded="false" aria-label="Site Directory">All Sandia Websites</a>
+				  </li>
+				</ul>
+			  </div>
+			</div>
+		  </div> 
+		</snlheader>
+	  </div>	  
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../usingdakotagui.html">Using Dakota GUI</a></li>
+          <li class="breadcrumb-item"><a href="Chartreuse.html">Chartreuse</a></li>
+      <li class="breadcrumb-item active">Plot Trace Creator</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/usingdakotagui/chartreuse/PlotTraceCreator.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="plot-trace-creator">
+<span id="chartreuse-plot-trace"></span><h1>Plot Trace Creator<a class="headerlink" href="#plot-trace-creator" title="Link to this heading"></a></h1>
+<p>If you want to plot a single trace quickly and easily, use the Plot Trace Creator.  You can access it by selecting a file with plottable data.  Chartreuse recognizes the following file formats as sources of plottable data:</p>
+<ul class="simple">
+<li><p>CSV files</p></li>
+<li><p>Dakota tabular data files (with some caveats)</p></li>
+<li><p>HDF5 files</p></li>
+</ul>
+<p>Right-click the chosen file in the Project Explorer view and select New &gt; Plot trace from this file to access the Plot Trace Creator dialog.</p>
+<img alt="Plot Trace Creator" src="../../_images/Plotting_TheBasics_2.png" />
+<p>Let’s talk about the Plot Window Settings options group (the bottom half of this dialog).  These are options global to your entire plot window:</p>
+<ul class="simple">
+<li><p><strong>Plot Title</strong> The title displayed at the top of your plot.</p></li>
+<li><p><strong>Font</strong> The font used by your graph.</p></li>
+<li><p><strong>Plot Size</strong> The size of your plot in pixels.  This  is useful to customize if you are interested in exporting your plot at a large size (for instance, for a publication), or if the default view of your data is too crowded.  By default, the plotting library will scale your plot to fit within the size of the editor in your perspective.</p></li>
+</ul>
+<section id="getting-plot-data">
+<span id="chartreuse-plot-trace-getting-data"></span><h2>Getting Plot Data<a class="headerlink" href="#getting-plot-data" title="Link to this heading"></a></h2>
+<p>Along the top of this dialog is the Plot Data group.  There is a single button in this group (the file-and-folder icon button, hereafter referred
+to as the “Get Data” button) that allows you to select different data sets from the Dakota GUI for the purpose of plotting.</p>
+<section id="getting-plot-data-from-a-csv-file">
+<span id="chartreuse-getting-data-from-csv"></span><h3>Getting Plot Data from a CSV File<a class="headerlink" href="#getting-plot-data-from-a-csv-file" title="Link to this heading"></a></h3>
+<p>Chartreuse supports CSV files as a possible data source.  When you select the Get Data button from the Plot Trace Creator dialog, you will be presented with the following dialog:</p>
+<img alt="CSV options" src="../../_images/Plotting_TheBasics_17.png" />
+<p>This dialog allows you to choose a different CSV file if you wish (it will be default populated with the CSV file you used earlier when you selected
+“Plot trace from this file” from the Chartreuse context menu).  You can also choose whether to interpret the first row of the CSV file as a header row or not.</p>
+</section>
+<section id="getting-plot-data-from-a-dakota-tabular-data-file">
+<span id="chartreuse-getting-data-from-dakota-tabular"></span><h3>Getting Plot Data from a Dakota Tabular Data File<a class="headerlink" href="#getting-plot-data-from-a-dakota-tabular-data-file" title="Link to this heading"></a></h3>
+<p>Dakota’s tabular data output file is another possible provider of plottable data.  However, it is not sufficient to create a Chartreuse plot, because Dakota tabular
+data does not designate which columns belong to variables, and which columns belong to responses.  Therefore, when creating a Chartreuse plot from Dakota tabular data,
+we also need to provide the original Dakota input file, which <em>does</em> have variable and response information in it.</p>
+<p>When you select the Get Data button from the Plot Trace Creator dialog, the following dialog will display:</p>
+<img alt="Choose a Dakota input file and tabular data file" src="../../_images/Plotting_TheBasics_8.png" />
+<p>You must satisfy this two-file requirement by selecting the original Dakota input file in the left tree view, and the tabular data file in the right tree view.</p>
+<img alt="Select both the original Dakota input file and the tabular data file." src="../../_images/Plotting_TheBasics_9.png" />
+<p>In addition, tabular data files can contain more than one set of tabular data, so you will need to expand the tabular data file by clicking on the
+little arrow to its left, and choosing the proper tabular data set contained within.</p>
+<img alt="The dialog will allow you to finish once both files are selected." src="../../_images/Plotting_TheBasics_10.png" />
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you accidentally select the wrong Dakota input file or the wrong tabular data file, this dialog will warn you of a mismatch between the variable and response lists.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Before you opened the Plot Trace Creator dialog, if you selected a Dakota tabular data file, right-clicked, and chose “Chartreuse &gt; New plot trace from this file,”
+AND you only have one Dakota study in your project, the Select Plot Data dialog will automatically deduce the connection between the tabular data file and your
+original Dakota study for you.</p>
+</div>
+<p>Click OK to return to the Plot Trace Creator.  Note that the tabular data set we selected in the previous dialog, “Tabular Data Set 1”, is now in the Plot Data group.</p>
+<img alt="The Plot Trace Creator dialog looks like this with selected plot data." src="../../_images/Plotting_TheBasics_5.png" />
+</section>
+<section id="getting-plot-data-from-a-dakota-hdf5-database-file">
+<span id="chartreuse-getting-data-from-dakota-hdf5"></span><h3>Getting Plot Data from a Dakota HDF5 Database File<a class="headerlink" href="#getting-plot-data-from-a-dakota-hdf5-database-file" title="Link to this heading"></a></h3>
+<p>This section discusses how to plot data from a <strong>Dakota-generated HDF5 file</strong>.  For plotting data out of a general HDF5 file, see the next section.</p>
+<p>Selecting a plottable dataset from a Dakota HDF5 database file requires some rudimentary knowledge of Dakota’s HDF5 layout.  It is recommended that you refer to these reference manual sections first:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="../../usingdakota/output/hdf.html#hdf5-output"><span class="std std-ref">General information about Dakota’s HDF5 Output</span></a></p></li>
+<li><p><a class="reference internal" href="../output/HDF.html#gui-hdf-main"><span class="std std-ref">Accessing HDF5 Data in the Dakota GUI</span></a></p></li>
+</ul>
+<p>Suppose you have right-clicked a .h5 file created by Dakota, and then selected “Chartreuse &gt; New plot trace from this file.”  If you click on the Get Data
+button from the Plot Trace Creator dialog, you will be presented with the following data selection dialog:</p>
+<img alt="An example data selection dialog for Dakota-formatted HDF5 data." src="../../_images/Plotting_TheBasics_11.png" />
+<ul class="simple" id="dakota-hdf-discrete-state-set-name">
+<li><p><strong>H5 File</strong> This file selection control allows you to choose the .h5 file you want to search.  If you right-clicked on an .h5 file before entering the Plot
+Trace Creator dialog, this field will already be populated for you.</p></li>
+<li><p><strong>HDF5 Dataset Tree</strong> The tree on the right displays the hierarchical data contained within your selected HDF5 file.  You can use this tree to manually locate the dataset you want to plot.</p></li>
+<li><p><strong>HDF5 Search Group</strong> If you don’t want to manually locate the dataset, use the controls in this group to automatically locate specific datasets.</p>
+<ul>
+<li><p><strong>Method</strong> This dropdown provides a list of method IDs contained in the .h5 file.  If your Dakota study only had one method block / one method ID, you can ignore this dropdown.</p></li>
+<li><p><strong>Model</strong> This dropdown provides a list of model IDs contained in the .h5 file.  If your Dakota study only had one model block / one model ID, you can ignore this dropdown.</p></li>
+<li><p><strong>HDF5 Target Object</strong> Perhaps the most useful dropdown in the search group, this dropdown provides you with a list of <em>known, plottable Dakota HDF5 datasets.</em>
+There are only a handful of specific HDF5 datasets that are recognized by Dakota GUI today.  But with each release, we are working to support more and more of these datasets.</p></li>
+<li><p><strong>Discrete State Set Variable</strong> The only time you would fill this field out is if you are creating
+a plot <a class="reference internal" href="#chartreuse-plot-trace-barchart-categorical"><span class="std std-ref">with categorical axes</span></a>.  Categorical axes on a scatter plot imply data that comes from a Dakota discrete state set.
+Therefore, you would put the name of the discrete state set containing the categorical axes in this field.</p></li>
+</ul>
+</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you select a dataset that doesn’t exist, or is not plottable, this dialog will provide a warning.</p>
+</div>
+<img alt="An example of data selected from a Dakota-formatted HDF5 database." src="../../_images/Plotting_TheBasics_12.png" />
+</section>
+<section id="getting-plot-data-from-a-general-hdf5-database-file">
+<span id="chartreuse-getting-data-from-hdf5"></span><h3>Getting Plot Data from a General HDF5 Database File<a class="headerlink" href="#getting-plot-data-from-a-general-hdf5-database-file" title="Link to this heading"></a></h3>
+<p>The previous section describes a plot data dialog that is highly tailored to Dakota-specific concepts and datasets.  If you have imported a non-Dakota .h5
+file into your workspace, you can still create plots from it using Chartreuse.</p>
+<p>First, go to the <a class="reference internal" href="../miscgui/Preferences.html#gui-preferences-chartreuse"><span class="std std-ref">Chartreuse section of the Preferences window</span></a> and change the Default Plot Data Provider
+to “HDF5 Plot Data Provider”, not “Dakota/HDF5 Plot Data Provider.”</p>
+<p>Right-click your .h5 file and choose “Chartreuse &gt; New plot trace from this file.”</p>
+<p>Click on the Get Data button, and you’ll be presented with this dialog.</p>
+<img alt="Plain HDF5 dataset browsing" src="../../_images/Plotting_TheBasics_13.png" />
+<p>You are responsible for traversing the HDF5 database and locating the dataset you want to plot.</p>
+<img alt="An individually selected dataset" src="../../_images/Plotting_TheBasics_14.png" />
+<p>You also must tell Chartreuse <a class="reference internal" href="Chartreuse.html#chartreuse-plot-dataset-terminology"><span class="std std-ref">how you want the dataset to be interpreted</span></a>.</p>
+<img alt="You must choose between one-dimensional data and two-dimensional data." src="../../_images/Plotting_TheBasics_15.png" />
+<p>Click OK when you are done.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>HDF5 dimension scales are not currently supported for plain, non-Dakota HDF5 database files.  Therefore, if your database contains column
+labels, they will not be displayed - instead, you must refer to your data in the Plot Trace Creator dialog by index (i.e. “Column 0”, “Column 1”, etc.)</p>
+</div>
+</section>
+</section>
+<section id="bar-charts">
+<span id="chartreuse-plot-trace-barchart"></span><h2>Bar Charts<a class="headerlink" href="#bar-charts" title="Link to this heading"></a></h2>
+<figure class="align-center" id="chartreuse-trace-creator-figure12">
+<a class="reference internal image-reference" href="../../_images/Plotting_Trace_BarChart.png"><img alt="Bar chart options" src="../../_images/Plotting_Trace_BarChart.png" style="width: 400px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 109 </span><span class="caption-text">Bar chart options</span><a class="headerlink" href="#chartreuse-trace-creator-figure12" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Bar charts require <a class="reference internal" href="Chartreuse.html#chartreuse-plot-dataset-terminology"><span class="std std-ref">two-dimensional plot datasets</span></a>.</p>
+</div>
+<p>Use this option to create standard bar charts.</p>
+<ul class="simple">
+<li><p><strong>Data</strong> The data element to use as the <em>dependent variable</em> for your bar chart.  <em>Independent variables</em> are gathered from the opposite side of the two-dimensional dataset.</p></li>
+<li><p><strong>Orientation</strong> Determines whether the bars are oriented vertically or horizontally.</p></li>
+<li><p><strong>Bar Color</strong> The color of each bar.</p></li>
+</ul>
+</section>
+<section id="bar-charts-categorical-data">
+<span id="chartreuse-plot-trace-barchart-categorical"></span><h2>Bar Charts (Categorical Data)<a class="headerlink" href="#bar-charts-categorical-data" title="Link to this heading"></a></h2>
+<figure class="align-center" id="chartreuse-trace-creator-figure13">
+<a class="reference internal image-reference" href="../../_images/Plotting_Trace_BarChartCategorical.png"><img alt="Options for bar charts with categorical data" src="../../_images/Plotting_Trace_BarChartCategorical.png" style="width: 400px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 110 </span><span class="caption-text">Options for bar charts with categorical data</span><a class="headerlink" href="#chartreuse-trace-creator-figure13" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Bar charts require <a class="reference internal" href="Chartreuse.html#chartreuse-plot-dataset-terminology"><span class="std std-ref">two-dimensional plot datasets</span></a>.</p>
+</div>
+<p>Use this option if you want the independent axis of your bar chart to come from a categorical dataset with discrete state entries.
+This type of plot is best used in conjunction with <a class="reference internal" href="#dakota-hdf-discrete-state-set-name"><span class="std std-ref">Dakota-generated HDF5 files, with the source of the discrete state set provided.</span></a></p>
+<ul class="simple">
+<li><p><strong>Data</strong> The data element to use as the <em>dependent variable</em> for your bar chart.  <em>Independent variables</em> are gathered from the specified discrete data set.</p></li>
+<li><p><strong>Orientation</strong> Determines whether the bars are oriented vertically or horizontally.</p></li>
+<li><p><strong>Bar Color</strong> The color of each bar.</p></li>
+</ul>
+</section>
+<section id="box-plots">
+<span id="chartreuse-plot-trace-box"></span><h2>Box Plots<a class="headerlink" href="#box-plots" title="Link to this heading"></a></h2>
+<figure class="align-center" id="chartreuse-trace-creator-figure14">
+<a class="reference internal image-reference" href="../../_images/Plotting_Trace_BoxPlot.png"><img alt="Box plot options" src="../../_images/Plotting_Trace_BoxPlot.png" style="width: 400px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 111 </span><span class="caption-text">Box plot options</span><a class="headerlink" href="#chartreuse-trace-creator-figure14" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>Use this option to create a standard <a class="reference external" href="https://en.wikipedia.org/wiki/Box_plot">box-and-whisker plot</a>.</p>
+<ul class="simple">
+<li><p><strong>Data</strong> The data element to use for your box plot.  Box plots are one-dimensional, so only one Dakota variable or response needs to be provided.</p></li>
+<li><p><strong>Trace Name</strong> A custom label for your data trace.  The trace label does not get displayed as part of the final plot, but it’s a good idea to give your traces memorable names in case you need to find them again later.</p></li>
+<li><p><strong>Orientation</strong> Determines whether the box plot is oriented vertically or horizontally.</p></li>
+<li><p><strong>Trace Color</strong> The color of the box plot.</p></li>
+</ul>
+</section>
+<section id="contour-plots">
+<span id="chartreuse-plot-trace-contour"></span><h2>Contour Plots<a class="headerlink" href="#contour-plots" title="Link to this heading"></a></h2>
+<figure class="align-center" id="chartreuse-trace-creator-figure15">
+<a class="reference internal image-reference" href="../../_images/Plotting_Trace_ContourPlot.png"><img alt="Contour plot options" src="../../_images/Plotting_Trace_ContourPlot.png" style="width: 400px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 112 </span><span class="caption-text">Contour plot options</span><a class="headerlink" href="#chartreuse-trace-creator-figure15" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>Use this option to create a standard <a class="reference external" href="https://www.statisticshowto.com/contour-plots/">contour plot</a>.</p>
+<ul class="simple">
+<li><p><strong>X/Y/Z</strong> Data for the X, Y, and Z dimensions of the contour plot.  You can choose any combination of Dakota parameters and responses.</p></li>
+<li><p><strong>Trace Name</strong> A custom label for your data trace.  The trace label does not get displayed as part of the final plot, but it’s a good idea to give your traces memorable names in case you need to find them again later.</p></li>
+<li><p><strong>Contour Lower Edge</strong> The starting contour value.  No contours will be drawn below this value.</p></li>
+<li><p><strong>Contour Upper Edge</strong> The ending contour value.  No contours will be drawn above this value.</p></li>
+<li><p><strong>Contour Division Range</strong> The step size between contours.</p></li>
+<li><p><strong>Contour Coloring Style</strong> The style of coloring for the contour plot.</p>
+<ul>
+<li><p><strong>Fill</strong> Coloring is done evenly between each contour level.</p></li>
+<li><p><strong>Heatmap</strong> A heatmap gradient coloring is applied between each contour level.</p></li>
+<li><p><strong>Lines</strong> Coloring is done on the contour lines.</p></li>
+<li><p><strong>None</strong> No coloring is applied on this trace.</p></li>
+</ul>
+</li>
+<li><p><strong>Color Scale Settings</strong> Specify a <a class="reference internal" href="ColorScales.html#chartreuse-color-scales"><span class="std std-ref">color scale</span></a> for your contour plot.  Use the wizard icon to choose from a library of recommended color scales.</p></li>
+<li><p><strong>Show Color Scale Legend</strong> Determines whether or not a color scale legend is displayed on the right-hand side of your plot.</p></li>
+</ul>
+</section>
+<section id="heat-maps">
+<span id="chartreuse-plot-trace-heatmap"></span><h2>Heat Maps<a class="headerlink" href="#heat-maps" title="Link to this heading"></a></h2>
+<figure class="align-center" id="chartreuse-trace-creator-figure16">
+<a class="reference internal image-reference" href="../../_images/Plotting_Trace_Heatmap.png"><img alt="Heatmap options" src="../../_images/Plotting_Trace_Heatmap.png" style="width: 400px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 113 </span><span class="caption-text">Heatmap options</span><a class="headerlink" href="#chartreuse-trace-creator-figure16" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>Use this option to create a standard <a class="reference external" href="https://en.wikipedia.org/wiki/Heat_map">heatmap</a>.</p>
+<ul class="simple">
+<li><p><strong>X/Y/Z</strong> Data for the X, Y, and Z dimensions of the contour plot.  You can choose any combination of Dakota parameters and responses.</p></li>
+<li><p><strong>Trace Name</strong> A custom label for your data trace.  The trace label does not get displayed as part of the final plot, but it’s a good idea to give your traces memorable names in case you need to find them again later.</p></li>
+<li><p><strong>Color Scale Settings</strong> Specify a <a class="reference internal" href="ColorScales.html#chartreuse-color-scales"><span class="std std-ref">color scale</span></a> for your heatmap.  Use the wizard icon to choose from a library of recommended color scales.</p></li>
+<li><p><strong>Show Color Scale Legend</strong> Determines whether or not a color scale legend is displayed on the right-hand side of your plot.</p></li>
+<li><p><strong>Show Value Labels in Table</strong> If selected, the value corresponding to each square of the heatmap will be displayed in the center of that square.</p></li>
+<li><p><strong>Displayed Decimal Precision</strong> If values are being displayed in each square of the heatmap, you can also specify an integer value that will determine the number of decimal places to display for each value.</p></li>
+</ul>
+</section>
+<section id="heat-maps-categorical-axes">
+<span id="chartreuse-plot-trace-heatmap-categorical"></span><h2>Heat Maps (Categorical Axes)<a class="headerlink" href="#heat-maps-categorical-axes" title="Link to this heading"></a></h2>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Heatmaps with categorical axes require plot datasets that have <strong>two</strong> data label axes - one for each side of the heatmap.</p>
+</div>
+<p>Use this option to create a <a class="reference external" href="https://en.wikipedia.org/wiki/Heat_map">heatmap</a> that has categorical axes rather than numerical axes.</p>
+<ul class="simple">
+<li><p><strong>Orientation</strong> Choose the orientation for your heat map.  You can place variables on the horizontal axis and responses on the vertical
+axis (“Variable-Response”), or vice versa (“Response-Variable”).  You can also mirror variables against themselves (“Variable-Variable”), responses
+against themselves (“Response-Response”), or all variables and responses against themselves (“All-All”).</p></li>
+<li><p><strong>Color Scale Settings</strong> Specify a <a class="reference internal" href="ColorScales.html#chartreuse-color-scales"><span class="std std-ref">color scale</span></a> for your heatmap.  Use the wizard icon to choose from a library of recommended color scales.</p></li>
+<li><p><strong>Show Color Scale Legend</strong> Determines whether or not a color scale legend is displayed on the right-hand side of your plot.</p></li>
+<li><p><strong>Show Value Labels in Table</strong> If selected, the value corresponding to each square of the heatmap will be displayed in the center of that square.</p></li>
+<li><p><strong>Displayed Decimal Precision</strong> If values are being displayed in each square of the heatmap, you can also specify an integer value that will determine the number of decimal places to display for each value.</p></li>
+<li><p><strong>Parameter and Response Filters</strong> Filter which parameters and responses will be shown on the final heatmap.</p></li>
+</ul>
+</section>
+<section id="histograms">
+<span id="chartreuse-plot-trace-histogram"></span><h2>Histograms<a class="headerlink" href="#histograms" title="Link to this heading"></a></h2>
+<figure class="align-center" id="chartreuse-trace-creator-figure17">
+<a class="reference internal image-reference" href="../../_images/Plotting_Trace_Histogram.png"><img alt="Histogram options" src="../../_images/Plotting_Trace_Histogram.png" style="width: 400px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 114 </span><span class="caption-text">Histogram options</span><a class="headerlink" href="#chartreuse-trace-creator-figure17" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>Use this option to create a <a class="reference external" href="https://en.wikipedia.org/wiki/Histogram">histogram</a>.</p>
+<ul class="simple">
+<li><p><strong>Data</strong> The data element to use for your histogram.  Histograms are one-dimensional, so only one Dakota variable or response needs to be provided.</p></li>
+<li><p><strong>Trace Name</strong> A custom label for your data trace.  The trace label does not get displayed as part of the final plot, but it’s a good idea to give your traces memorable names in case you need to find them again later.</p></li>
+<li><p><strong>Number of Bins</strong> Specify a <em>recommended</em> number of bins for your histogram.  Most underlying plotting libraries use a smart binning algorithm based on the data, so this value is just a guideline.</p></li>
+<li><p><strong>Histogram Type</strong> The type of your histogram.</p>
+<ul>
+<li><p><strong>Count</strong> The span of each bar corresponds to the number of occurrences (i.e. the number of data points lying inside the bins).</p></li>
+<li><p><strong>Percent</strong> The span of each bar corresponds to the percentage / fraction of occurrences with respect to the total number of sample points (here, the sum of all bin HEIGHTS equals 100% / 1).</p></li>
+<li><p><strong>Probability</strong> The span of each bar corresponds to the percentage / fraction of occurrences with respect to the total number of sample points (here, the sum of all bin HEIGHTS equals 100% / 1).</p></li>
+<li><p><strong>Density</strong> The span of each bar corresponds to the number of occurrences in a bin divided by the size of the bin interval (here, the sum of all bin AREAS equals the total number of sample points).</p></li>
+<li><p><strong>Probability Density</strong> The area of each bar corresponds to the probability that an event will fall into the corresponding bin (here, the sum of all bin AREAS equals 1).</p></li>
+</ul>
+</li>
+<li><p><strong>Display as Cumulative</strong> This option will enable a cumulative histogram, where values are added as the histogram proceeds.</p></li>
+<li><p><strong>Orientation</strong> Whether the histogram is oriented vertically (histogram bars are pointing up and down) or horizontally (histogram bars are pointing left and right)</p></li>
+<li><p><strong>Bar Color</strong> The color of the histogram bars.</p></li>
+</ul>
+</section>
+<section id="parallel-coordinates-plots">
+<span id="chartreuse-plot-trace-parallelcoords"></span><h2>Parallel Coordinates Plots<a class="headerlink" href="#parallel-coordinates-plots" title="Link to this heading"></a></h2>
+<figure class="align-center" id="chartreuse-trace-creator-figure18">
+<a class="reference internal image-reference" href="../../_images/Plotting_Trace_ParallelCoordinates.png"><img alt="Parallel coordinates options" src="../../_images/Plotting_Trace_ParallelCoordinates.png" style="width: 400px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 115 </span><span class="caption-text">Parallel coordinates options</span><a class="headerlink" href="#chartreuse-trace-creator-figure18" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>Use this option to create a <a class="reference external" href="https://en.wikipedia.org/wiki/Parallel_coordinates">parallel coordinates plot</a>.</p>
+<ul class="simple">
+<li><p><strong>Trace Name</strong> A custom label for your data trace.  The trace label does not get displayed as part of the final plot, but it’s a good idea to give your traces memorable names in case you need to find them again later.</p></li>
+<li><p><strong>Parameter and Response Filters</strong> By default, all data in your dataset is used in the parallel coordinates plot, but you can manually filter which parameters and responses will be shown on the final plot.</p></li>
+<li><p><strong>Color Scale Settings</strong> As the dialog text says, use the <a class="reference internal" href="ColorScales.html#chartreuse-color-scales"><span class="std std-ref">color scale</span></a> to specify colors for different ranges of iterations.  For example, in a Dakota
+centered parameter study, you may specify a different color for each variable during the range of iterations in which it was being individually varied.</p></li>
+<li><p><strong>Show Color Scale Legend</strong> Determines whether or not a color scale legend is displayed on the right-hand side of your plot.</p></li>
+</ul>
+</section>
+<section id="scatter-plots">
+<span id="chartreuse-plot-trace-scatter-2d"></span><h2>Scatter Plots<a class="headerlink" href="#scatter-plots" title="Link to this heading"></a></h2>
+<figure class="align-center" id="chartreuse-trace-creator-figure19">
+<a class="reference internal image-reference" href="../../_images/Plotting_SingleTrace_ScatterPlotTutorial_1.png"><img alt="Scatter plot options" src="../../_images/Plotting_SingleTrace_ScatterPlotTutorial_1.png" style="width: 400px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 116 </span><span class="caption-text">Scatter plot options</span><a class="headerlink" href="#chartreuse-trace-creator-figure19" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>Use this option to create a standard 2D scatter plot.</p>
+<ul>
+<li><p><strong>X/Y</strong> Data for the X and Y dimensions of your scatter plot.  You can choose any combination of Dakota parameters and responses.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>“Time [Time]” is a special option in the X/Y dropdowns which allows you to plot using monotonically increasing timesteps.</p>
+</div>
+</li>
+<li><p><strong>Trace Name</strong> A custom label for your data trace.  The trace label does not get displayed as part of the final plot, but it’s a good idea to give your traces memorable names in case you need to find them again later.</p></li>
+<li><p><strong>Trace Color</strong> The color of your plot points.</p></li>
+<li><p><strong>Dot Type</strong>  The shape of your plot points.  The default plotting library (plotly.js) provides dozens of shapes you can use.</p></li>
+<li><p><strong>Connect Dots</strong>  Select this checkbox to connect the points of your trace with a line.</p></li>
+<li><p><strong>Linear Regression</strong> Select this checkbox to draw a linear regression line through your data set.</p></li>
+<li><p><strong>Trim No Change</strong> Omits areas of your data where nothing changed (either along the X or Y axis).  This is a useful feature if you want your trace to only show areas of change.</p></li>
+<li><p><strong>Normalize Data</strong> Scale your data to fit between 0 and 1 (either along the X or Y axis)</p></li>
+</ul>
+</section>
+<section id="scatter-plots-categorical-axes">
+<span id="chartreuse-plot-trace-scatter-2d-categorical"></span><h2>Scatter Plots (Categorical Axes)<a class="headerlink" href="#scatter-plots-categorical-axes" title="Link to this heading"></a></h2>
+<figure class="align-center" id="chartreuse-trace-creator-figure20">
+<a class="reference internal image-reference" href="../../_images/Plotting_Trace_ScatterPlotCategorical.png"><img alt="Options for scatter plots with categorical axes" src="../../_images/Plotting_Trace_ScatterPlotCategorical.png" style="width: 400px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 117 </span><span class="caption-text">Options for scatter plots with categorical axes</span><a class="headerlink" href="#chartreuse-trace-creator-figure20" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Scatter plots with categorical data require plot datasets that have <strong>two</strong> data label axes.</p>
+</div>
+<p>Use this option if you want the independent axis of your scatter plot to come from a categorical dataset with discrete state entries.
+This type of plot is best used in conjunction with <a class="reference internal" href="#dakota-hdf-discrete-state-set-name"><span class="std std-ref">Dakota-generated HDF5 files, with the source of the discrete state set provided.</span></a></p>
+<ul class="simple">
+<li><p><strong>Data</strong> The data element to use as the <em>dependent variable</em> for your bar chart. <em>Independent variables</em> are gathered from the specified discrete data set.</p></li>
+<li><p><strong>Orientation</strong> Determines whether the discrete state set is oriented along the vertical or horizontal axis.</p></li>
+<li><p><strong>Connect Dots</strong> Whether or not the discrete states of your scatter plot should appear as a connected line.  Depending on what you are trying to
+convey with the scatter plot, a connecting line could be misleading, since there may be no interpolated data between the discrete states.</p></li>
+<li><p><strong>Trace Color</strong> The color of your scatter plot.</p></li>
+</ul>
+</section>
+<section id="scatter-3d-plot">
+<span id="chartreuse-plot-trace-scatter-3d"></span><h2>Scatter 3D Plot<a class="headerlink" href="#scatter-3d-plot" title="Link to this heading"></a></h2>
+<figure class="align-center" id="chartreuse-trace-creator-figure21">
+<a class="reference internal image-reference" href="../../_images/Plotting_Trace_ScatterPlot3D.png"><img alt="Scatter plot 3D options" src="../../_images/Plotting_Trace_ScatterPlot3D.png" style="width: 400px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 118 </span><span class="caption-text">Scatter plot 3D options</span><a class="headerlink" href="#chartreuse-trace-creator-figure21" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>Use this option to create a standard 3D scatter plot.</p>
+<ul>
+<li><p><strong>X/Y/Z</strong> Data for the X, Y, and Z dimensions of your scatter plot.  You can choose any combination of Dakota parameters and responses.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>“Time Step [Time Step]” is a special option in the X/Y dropdowns which allows you to plot using monotonically increasing timesteps.</p>
+</div>
+</li>
+<li><p><strong>Trace Name</strong> A custom label for your data trace.  The trace label does not get displayed as part of the final plot, but it’s a good idea to give your traces memorable names in case you need to find them again later.</p></li>
+<li><p><strong>Dot Type</strong>  The shape of your plot points.  The default plotting library (plotly.js) provides dozens of shapes you can use.</p></li>
+<li><p><strong>Connect Dots</strong>  Select this checkbox to connect the points of your trace with a line.</p></li>
+<li><p><strong>Color Scale Settings</strong> Specify a <a class="reference internal" href="ColorScales.html#chartreuse-color-scales"><span class="std std-ref">color scale</span></a> for your surface plot.  Use the wizard icon to choose from a library of recommended color scales.</p>
+<ul class="simple">
+<li><p>3D scatter plots have an extra “Color Axis” field that dictates which dimension of data the color scale should be applied to.  Typically, the color scale
+is associated with the Z axis for 3D plots (in order to better indicate a sense of depth), but you may reassign the color scale to a different axis.  For
+example, assigning Color Axis to “Time Step [Time Step]” will present a plot where the color scale indicates the temporal order in which the points were evaluated.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="surface-3d-plot">
+<span id="chartreuse-plot-trace-surface-3d"></span><h2>Surface 3D Plot<a class="headerlink" href="#surface-3d-plot" title="Link to this heading"></a></h2>
+<figure class="align-center" id="chartreuse-trace-creator-figure22">
+<a class="reference internal image-reference" href="../../_images/Plotting_Trace_SurfacePlot3D.png"><img alt="Surface plot 3D options" src="../../_images/Plotting_Trace_SurfacePlot3D.png" style="width: 400px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 119 </span><span class="caption-text">Surface plot 3D options</span><a class="headerlink" href="#chartreuse-trace-creator-figure22" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>Use this option to create a 3D surface plot.</p>
+<ul class="simple">
+<li><p><strong>X/Y/Z</strong> Data for the X, Y, and Z dimensions of your surface curve.  You can choose any combination of Dakota parameters and responses, but there
+must be enough data to create the curve.  For instance, Dakota multidimensional parameter studies are ideal for creating surface curves, but not all
+Dakota studies provide enough data to determine the shape of the curve.</p></li>
+<li><p><strong>Trace Name</strong> A custom label for your data trace.  The trace label does not get displayed as part of the final plot, but it’s a good idea to give your traces memorable names in case you need to find them again later.</p></li>
+<li><p><strong>Color Scale Settings</strong> Specify a <a class="reference internal" href="ColorScales.html#chartreuse-color-scales"><span class="std std-ref">color scale</span></a> for your surface plot.  Use the wizard icon to choose from a library of recommended color scales.</p></li>
+<li><p><strong>Show Color Scale Legend</strong> Determines whether or not a color scale legend is displayed on the right-hand side of your plot.</p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="Chartreuse.html" class="btn btn-neutral float-left" title="Chartreuse" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="EditingPlotFiles.html" class="btn btn-neutral float-right" title="Editing Plot Files" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <!--
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Sandia National Laboratories.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+  --> 
+
+</footer>
+        </div>
+      </div>
+	  
+	  <div style="background-color: #0f0f0f;color:#fafafa;padding:20px">
+	    <div>
+		  <h2><em>Exceptional service in the national interest</em></h2>
+		</div>
+		<p>© 2023 National Technology and Engineering Solutions of Sandia, LLC. | <a href="https://www.sandia.gov/contact_us/index.html">Questions &amp; Comments</a> | <a href="https://www.sandia.gov/general/privacy-security/index.html">Privacy &amp; Security</a></p>
+		<p><a href="http://energy.gov" rel="noopener noreferrer" target="_blank"><img alt="U.S. Department of Energy" longdesc="https://energy.gov" src="https://www.sandia.gov/_common/images/doe_logo_white.png" style="height:37px; width:140px"></a> <a href="http://nnsa.energy.gov/" rel="noopener noreferrer" target="_blank"> <img alt="National Nuclear Security Administration" longdesc="http://nnsa.gov" src="https://www.sandia.gov/_common/images/nnsa_logo_white.png" style="height:37px; width:116px"></a></p>
+		<p><a href="https://www.sandia.gov">Sandia National Laboratories</a> is a multimission laboratory managed and operated by National Technology and Engineering Solutions of Sandia, LLC., a wholly owned subsidiary of Honeywell International, Inc., for the U.S. Department of Energy’s National Nuclear Security Administration under contract DE-NA-0003525.</p>
+	  </div>	  	  
+	  
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

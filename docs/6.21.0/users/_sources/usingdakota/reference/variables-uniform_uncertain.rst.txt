@@ -1,0 +1,88 @@
+.. _variables-uniform_uncertain:
+
+"""""""""""""""""
+uniform_uncertain
+"""""""""""""""""
+
+
+Aleatory uncertain variable - uniform
+
+
+
+
+**Topics**
+
+
+continuous_variables, aleatory_uncertain_variables
+
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   variables-uniform_uncertain-lower_bounds
+   variables-uniform_uncertain-upper_bounds
+   variables-uniform_uncertain-initial_point
+   variables-uniform_uncertain-descriptors
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* INTEGER
+
+- *Default:* no uniform uncertain variables
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+--------------------+-----------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword     | Dakota Keyword Description                    |
+|                         | Group              |                    |                                               |
++=========================+====================+====================+===============================================+
+| Required                                     | `lower_bounds`__   | Specify minimum values                        |
++----------------------------------------------+--------------------+-----------------------------------------------+
+| Required                                     | `upper_bounds`__   | Specify maximium values                       |
++----------------------------------------------+--------------------+-----------------------------------------------+
+| Optional                                     | `initial_point`__  | Initial values for variables                  |
++----------------------------------------------+--------------------+-----------------------------------------------+
+| Optional                                     | `descriptors`__    | Labels for the variables                      |
++----------------------------------------------+--------------------+-----------------------------------------------+
+
+.. __: variables-uniform_uncertain-lower_bounds.html
+__ variables-uniform_uncertain-upper_bounds.html
+__ variables-uniform_uncertain-initial_point.html
+__ variables-uniform_uncertain-descriptors.html
+
+
+
+**Description**
+
+
+The number of uniform uncertain variables and their distribution lower and upper
+bounds are required specifications, while variable descriptors is an optional specification.
+The uniform distribution has the density function:
+
+.. math:: f(x) = \frac{1}{U-L},
+
+where
+
+:math:`U`  and :math:`L` are the upper and lower bounds of the uniform distribution, respectively. The mean of the uniform distribution is :math:`\frac{U+L}{2}` 
+and the variance is :math:`\frac{(U-L)^2}{12}` .
+
+
+
+
+**Theory**
+
+
+This distribution is a special case of the more general beta distribution.
+
+For some methods, including vector and centered parameter studies, an
+initial point is needed for the uncertain variables. When not given
+explicitly, these variables are initialized to their means.
+
+
+

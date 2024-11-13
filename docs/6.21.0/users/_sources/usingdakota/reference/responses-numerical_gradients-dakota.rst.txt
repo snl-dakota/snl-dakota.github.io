@@ -1,0 +1,69 @@
+.. _responses-numerical_gradients-dakota:
+
+""""""
+dakota
+""""""
+
+
+(Default) Use internal Dakota finite differences algorithm
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   responses-numerical_gradients-dakota-ignore_bounds
+   responses-numerical_gradients-dakota-relative
+   responses-numerical_gradients-dakota-absolute
+   responses-numerical_gradients-dakota-bounds
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+- *Default:* relative
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+--------------------+-----------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword     | Dakota Keyword Description                    |
+|                         | Group              |                    |                                               |
++=========================+====================+====================+===============================================+
+| Optional                                     | `ignore_bounds`__  | Do not respect bounds when computing          |
+|                                              |                    | gradients or Hessians                         |
++-------------------------+--------------------+--------------------+-----------------------------------------------+
+| Optional (Choose One)   | Step Scaling       | `relative`__       | (Default) Scale step size by the parameter    |
+|                         |                    |                    | value                                         |
+|                         |                    +--------------------+-----------------------------------------------+
+|                         |                    | `absolute`__       | Do not scale step-size                        |
+|                         |                    +--------------------+-----------------------------------------------+
+|                         |                    | `bounds`__         | Scale step-size by the domain of the          |
+|                         |                    |                    | parameter                                     |
++-------------------------+--------------------+--------------------+-----------------------------------------------+
+
+.. __: responses-numerical_gradients-dakota-ignore_bounds.html
+__ responses-numerical_gradients-dakota-relative.html
+__ responses-numerical_gradients-dakota-absolute.html
+__ responses-numerical_gradients-dakota-bounds.html
+
+
+
+**Description**
+
+
+The ``dakota`` routine is the default since it can execute
+in parallel and exploit the concurrency in finite difference
+evaluations (see the discussion on :ref:`exploiting parallelism <parallel:overview:cat>`).
+
+When the ``method_source`` is ``dakota``, the user may also specify the
+type of scaling desired when determining the finite difference step
+size. The choices are ``absolute``, ``bounds``, and ``relative``. For
+``absolute``, the step size will be applied as is. For ``bounds``, it
+will be scaled by the range of each parameter. For ``relative``, it
+will be scaled by the parameter value.
+
+

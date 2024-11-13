@@ -1,0 +1,39 @@
+.. _model-active_subspace-dimension:
+
+"""""""""
+dimension
+"""""""""
+
+
+Explicitly specify the desired subspace size
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* INTEGER
+
+
+**Description**
+
+
+This control explicitly indicates the number of basis vectors to retain.
+The subspace model will include exactly ``dimension`` variables.
+
+*Default Behavior*
+
+Active for adapted basis.  Not active for active subspace (the number of basis vectors will be chosen by one of the truncation methods).
+
+*Usage Tips*
+
+This control can be helpful when \a a \a priori studies give insight to the appropriate
+subspace size.
+
+

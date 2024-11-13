@@ -1,0 +1,92 @@
+.. _method-dot_slp:
+
+"""""""
+dot_slp
+"""""""
+
+
+DOT Sequential Linear Program
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-dot_slp-max_iterations
+   method-dot_slp-convergence_tolerance
+   method-dot_slp-constraint_tolerance
+   method-dot_slp-speculative
+   method-dot_slp-max_function_evaluations
+   method-dot_slp-scaling
+   method-dot_slp-model_pointer
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+------------------------------+-----------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword               | Dakota Keyword Description                    |
+|                         | Group              |                              |                                               |
++=========================+====================+==============================+===============================================+
+| Optional                                     | `max_iterations`__           | Number of iterations allowed for optimizers   |
+|                                              |                              | and adaptive UQ methods                       |
++----------------------------------------------+------------------------------+-----------------------------------------------+
+| Optional                                     | `convergence_tolerance`__    | Stopping criterion based on objective         |
+|                                              |                              | function or statistics convergence            |
++----------------------------------------------+------------------------------+-----------------------------------------------+
+| Optional                                     | `constraint_tolerance`__     | Maximum allowable constraint violation still  |
+|                                              |                              | considered feasible                           |
++----------------------------------------------+------------------------------+-----------------------------------------------+
+| Optional                                     | `speculative`__              | Compute speculative gradients                 |
++----------------------------------------------+------------------------------+-----------------------------------------------+
+| Optional                                     | `max_function_evaluations`__ | Number of function evaluations allowed for    |
+|                                              |                              | optimizers                                    |
++----------------------------------------------+------------------------------+-----------------------------------------------+
+| Optional                                     | `scaling`__                  | Turn on scaling for variables, responses, and |
+|                                              |                              | constraints                                   |
++----------------------------------------------+------------------------------+-----------------------------------------------+
+| Optional                                     | `model_pointer`__            | Identifier for model block to be used by a    |
+|                                              |                              | method                                        |
++----------------------------------------------+------------------------------+-----------------------------------------------+
+
+.. __: method-dot_slp-max_iterations.html
+__ method-dot_slp-convergence_tolerance.html
+__ method-dot_slp-constraint_tolerance.html
+__ method-dot_slp-speculative.html
+__ method-dot_slp-max_function_evaluations.html
+__ method-dot_slp-scaling.html
+__ method-dot_slp-model_pointer.html
+
+
+
+**Description**
+
+
+DOT library :cite:p:`Van95` implementation of sequential linear
+programming for constrained optimizaiton.
+
+See :ref:`topic-package_dot` for information common to all ``DOT`` methods.
+
+*DOT requires a separate software license and therefore may not
+be available in all versions of Dakota.  CONMIN or OPT++ methods may
+be suitable alternatives.*
+
+*Expected HDF5 Output*
+
+If Dakota was built with HDF5 support and run with the
+:dakkw:`environment-results_output-hdf5` keyword, this method
+writes the following results to HDF5:
+
+
+- :ref:`hdf5_results-best_params`
+- :ref:`hdf5_results-best_obj_fncs` (when :dakkw:`responses-objective_functions`) are specified)
+- :ref:`hdf5_results-best_constraints`
+- :ref:`hdf5_results-calibration` (when :dakkw:`responses-calibration_terms` are specified)
+
+

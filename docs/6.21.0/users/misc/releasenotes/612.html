@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Version 6.12 (2020/06/15) &mdash; dakota  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/dakota_theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/sandiaheaderlite.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Version 6.11 (2019/11/15)" href="611.html" />
+    <link rel="prev" title="Version 6.13 (2020/11/15)" href="613.html" /> 
+  
+  <meta name="sandia.approval_type" content="formal"/>
+  <meta property="sandia.approved" content="SAND2023-13392 O"/>
+  <meta name="description" content="The Dakota project delivers both state-of-the-art research and robust, usable software for optimization and UQ."/>
+  <meta name="keywords" content="Dakota, optimization, UQ, uncertainty quantification, parametric analysis, design exploration, model calibration, risk analysis"/>
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> dakota
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../setupdakota.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../usingdakota/usingdakota.html">Using Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../usingdakotagui/usingdakotagui.html">Using Dakota GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../externaltools/externaltools.html">Using External Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../compiling/compiling.html">Compiling Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developingdakota/developingdakota.html">Developing Dakota</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../misc.html">Miscellaneous</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../help.html">Help Resources</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../aboutteam.html">About the Team</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../contributing.html">Contributing to Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../contributors.html">Contributors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../license.html">License</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../citing.html">Citing Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../publications.html">Publications</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../releasenotes.html">Release Notes</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="../releasenotes.html#dakota">Dakota</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="621.html">Version 6.21 (2024/11/14)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="620.html">Version 6.20 (2024/05/15)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="619.html">Version 6.19 (2023/11/15)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="618.html">Version 6.18 (2023/05/15)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="617.html">Version 6.17 (2022/11/15)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="616.html">Version 6.16 (2022/05/16)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="615.html">Version 6.15 (2021/11/15)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="614.html">Version 6.14 (2021/05/17)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="613.html">Version 6.13 (2020/11/15)</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Version 6.12 (2020/06/15)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="611.html">Version 6.11 (2019/11/15)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="610.html">Version 6.10 (2019/05/15)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="69.html">Version 6.9 (2018/11/15)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="68.html">Version 6.8 (2018/05/15)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="67.html">Version 6.7 (2017/11/15)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="66.html">Version 6.6 (2017/05/15)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="65.html">Version 6.5 (2016/11/15)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="64.html">Version 6.4 (2016/05/16)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="63.html">Version 6.3 (2015/11/16)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="62.html">Version 6.2 (2015/05/15)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="61.html">Version 6.1 (2014/11/15)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="60.html">Version 6.0 (2014/05/15)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="54.html">Version 5.4 (2013/11/15)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="531.html">Version 5.3.1 (2013/05/15)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="53.html">Version 5.3 (2013/01/31)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="52.html">Version 5.2 (2011/11/30)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="51.html">Version 5.1 (2010/12/21)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="50.html">Version 5.0 (2009/12/21)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="42.html">Version 4.2 (2008/11/05)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="41.html">Version 4.1 (2007/09/21)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="40.html">Version 4.0 (2006/05/12)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="33.html">Version 3.3 (2004/12/23)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="32.html">Version 3.2 (2004/07/21)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="312.html">Version 3.1.2 (2003/07/09)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="311.html">Version 3.1.1 (2003/05/21)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="31.html">Version 3.1 (2003/04/04)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="30.html">Version 3.0 (2002/03/30)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="30beta.html">Version 3.0 beta (2001/11/29)</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../releasenotes.html#dakota-gui">Dakota GUI</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../bibliography.html">Bibliography</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../classictoc.html">I’m Lost!</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">dakota</a>
+      </nav>
+
+	  <!-- SNL Lite header -->
+	  <div class="snlheader-subsite--wrapper-default">
+		<snlheader class="snlheader-subsite" role="snlbanner">
+		  <div class="wrapper">
+			<a href="https://www.sandia.gov/index.html">
+			  <div class="logo-transparent"><p class="logo">Sandia National Laboratories</p></div>
+			</a>
+			<div class="nav-top">
+			  <a class="visuallyhidden" name="mainnav"></a>
+			  <div aria-label="main navigation" class="core-nav-transparent core-nav-transparent--visible" role="navigation">
+				<ul role="navigation" class="secondary-links">
+				  <li id="search-text-link">
+					<a aria-label="Search" href="https://www.sandia.gov/search/">Search Sandia.gov</a>
+				  </li>
+				  <li id="directory-text-link">
+					<a href="https://www.sandia.gov/directory.html" aria-expanded="false" aria-label="Site Directory">All Sandia Websites</a>
+				  </li>
+				</ul>
+			  </div>
+			</div>
+		  </div> 
+		</snlheader>
+	  </div>	  
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../misc.html">Miscellaneous</a></li>
+          <li class="breadcrumb-item"><a href="../releasenotes.html">Release Notes</a></li>
+      <li class="breadcrumb-item active">Version 6.12 (2020/06/15)</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/misc/releasenotes/612.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="version-6-12-2020-06-15">
+<span id="releasenotes-612"></span><h1>Version 6.12 (2020/06/15)<a class="headerlink" href="#version-6-12-2020-06-15" title="Link to this heading"></a></h1>
+<p>As a forward-looking release, Dakota 6.12 highlights several nascent algorithm capabilities that will lead to improved method concurrency, advanced surrogate-based optimization and UQ, including Bayesian inference, and more flexible use of surrogates in meta-methods and workflows. These new features labeled experimental are lightly tested and available to early adopters to use with care. The 6.12 release also features a number of bug fixes and enhancements, notably improved batch parallel operations, new plotting and other features in the graphical user interface, and more flexible specification of specialized surrogates as models vs. methods.</p>
+<p><strong>Highlight: EGO Parallelism</strong></p>
+<p>The efficient_global method for optimization and least squares now supports concurrent refinement (adding multiple points). Previously, Dakota updated the underlying Gaussian process one point at a time. Concurrent refinement exposes greater available concurrency, enabling users to take greater advantage of parallel computing resources.</p>
+<p>Refinement candidates are generated for concurrent evaluation using a liar-based approach (refinement candidate evaluations by the truth model are temporarily replaced with approximate GP predictions to allow for look-aheads that complete the set of refinement points within a batch).</p>
+<p><em>Enabling/Acccessing:</em> Use batch_size keyword to select the number of additional points to add each iteration.</p>
+<p><em>Documentation:</em> Refer to Reference Manual documentation for “efficient_global” in combination with the “batch_size” keyword.</p>
+<p><strong>Highlight: MUQ for Bayesian Inference</strong></p>
+<p>(Experimental) The MIT Uncertainty Quantification (MUQ) MUQ2 library (Parno, Davis, Marzouk, et al.) enhances Dakota’s Bayesian inference capability with new Markov Chain Monte Carlo (MCMC) sampling methods. MCMC samplers available in Dakota (under method &gt; bayes_calibration &gt; muq) include Metropolis-Hastings and Adaptive Metropolis. Future work will activate MUQ’s more advanced samplers, including surrogate-based and derivative-enhanced sampling, as well as delayed rejection schemes.</p>
+<p><em>Enabling / Accessing:</em> This experimental capability is new and evolving. It is off by default, so needs to be activated with the Dakota CMake option HAVE_MUQ:BOOL=TRUE, and requires Boost 1.58 or newer. The MUQ2 MCMC samplers will then be active in your Dakota binary.</p>
+<p><em>Documentation:</em> Refer to Reference Manual documentation for “bayes_calibration” in combination with the “muq” keywords.</p>
+<p><strong>Highlight: Multilevel / Multifidelity Function Train</strong></p>
+<p>(Experimental) Dakota 6.12 extends functional tensor train (FTT) surrogate models from the C3 library (Gorodetsky, University of Michigan) to support building FTT approximations across a sequence of model fidelities (multifidelity FTT) or model resolutions (multilevel FTT). As with related multilevel / multifidelity polynomial chaos and stochastic collocation, multifidelity FTT supports either individual refinement (no allocation_control) or integrated greedy refinement (allocation_control greedy), and multilevel FTT supports sample allocation based on assumed estimator variance rates (allocation_control estimator_variance) or over-sampling the regression size resulting from a recovered set of ranks (allocation_control rank_sampling).</p>
+<p><em>Enabling / Accessing:</em> This experimental capability is new and evolving. It is off by default, so needs to be activated with the Dakota CMake option HAVE_C3:BOOL=TRUE. Then single-level, multilevel, and multifidelity FTT are available with the different allocation control options described above.</p>
+<p><em>Documentation:</em> Refer to Reference Manual documentation for function_train, multilevel_function_train, and multifidelity_function_train.</p>
+<p><strong>Improvements by Category</strong></p>
+<p><em>Interfaces, Input/Output</em></p>
+<ul class="simple">
+<li><p>Mulitlevel Sampling Output: The multilevel_sampling method writes moments to the HDF5 results file. All ML/MF methods record the equivalent number of high fidelity evaluations in the ‘equiv_hf_evals’ attribute on their execution groups.</p></li>
+<li><p>Batch Evaluations in dakota.interfacing: Reading a batch parameters file in batch mode creates BatchParameters and BatchResults objects, which can be accessed by index or iterated to retrieve Parameters and Results objects for individual evaluations in the batch.</p></li>
+<li><p>Parallel tiling arguments: The dakota.interfacing parallel tiling methods tile_run_static() and tile_run_dynamic() forward unrecognized keyword arguments to the Popen constructor that invokes mpirun. This change enables users to provide Popen with their own stdout or stderr streams, or to specify a different current working directory, for example.</p></li>
+</ul>
+<p><em>Surrogate Models</em></p>
+<ul class="simple">
+<li><p>(Experimental) New Gaussian Process Surrogate: An experimental Gaussian process model is one of the inaugural members of a new surrogates module, which is default enabled in Dakota builds, and aims to unify Dakota, Pecos, and Surfpack surrogates. Like Dakota’s exisiting Gaussian process surrogates it supports the use of a polynomial trend function. Distinct features of this implementation include:</p>
+<ul>
+<li><p>Gradient-based optimization with restarts is employed for simultaneous estimation of hyperparameters and trend function coefficients using analytical expressions for the components of the gradient instead of finite difference approximations.</p></li>
+<li><p>The “nugget” may optionally be treated as a hyperparameter and determined through maximum likelihood estimation.</p></li>
+<li><p>Linear algebra support is provided by the Eigen TPL, which is now distributed with Dakota and enabled by default.</p></li>
+</ul>
+</li>
+</ul>
+<p><em>Optimization Methods</em></p>
+<ul class="simple">
+<li><p>Calibration Bug Fixes:</p>
+<ul>
+<li><p>Specifying experiment data now works in conjunction with constraints and/or field responses</p></li>
+<li><p>Scaling and weighting have been improved to work meaningfully with scalar and/or field responses, and tighter error checking added for scaling specifications. See the Reference Manual for updated documentation.</p></li>
+</ul>
+</li>
+<li><p>Scaling: The “none” option for scaling has been removed. To omit some elements from being scaled, use a value = 1.0. Calibration terms no longer admit a scale_type keyword as the only valid scaling type is “value”.</p></li>
+</ul>
+<p><em>UQ Methods</em></p>
+<ul class="simple">
+<li><p>Multilevel Monte Carlo (MLMC) Sample Allocation: MLMC can now optimally allocate samples on each model level to target a prescribed variance for the variance estimator. Multiple QoIs can be managed using either the sum or the max (worst case) of the estimator variance. Requiring accurate resolution of higher-order moments (potentially for the worst-case) results in a more challenging resource allocation problem, requiring either computation of a numerical solution to a nonlinear optimization problem or use of an approximate analytical solution that reduces computational cost. This is joint work with the Technical University of Munich.</p></li>
+<li><p>Adapted Basis for Dimension Reduction: A new experimental adapted basis approach uses a polynomial-chaos expansion (PCE) to compute a basis rotation. Once the PCE model is created, it can be rotated and employed for further UQ analysis. Methods for exploiting this strategy for dimension reduction, based on an effective truncation of the rotation matrix, are under current development, to enable more effective UQ with larger dimensional parameter spaces. This is joint work with the University of Southern California.</p></li>
+<li><p>Function Train Method: The function_train method can now be specified directly using only a simulation model, analogous to the traditional specification of polynomial_chaos and stoch_collocation (where the surrogate model creation is hidden). Specifying function_train as a global surrogate model remains an option, as introduced in the v6.11 release, and can now be exercised using the generic UQ method surrogate_based_uq.</p></li>
+<li><p>ML/MF Random Seed Sequencing: In multilevel / multifidelity methods, multiple sample sets are generated and were previously controlled by a single seed specification. For sample sets beyond the first, this involved continuation of a random sequence that could be challenging to reproduce in other contexts.  In order to simplify restart and allow better sharing of data among multilevel / multifidelity and single-fidelity studies, a new seed_sequence specification has been implemented, allowing a finer grain of control in random sample set generation.</p></li>
+</ul>
+<p><em>Architecture/Developer Features</em></p>
+<ul class="simple">
+<li><p>Eigen Linear Algebra: Dakota’s new surrogates module uses Eigen and provides mappings to/from Teuchos SerialDense containers used in core Dakota. Eigen is included with Dakota source and enabled by default, so no external TPL is required.</p></li>
+<li><p>CMake Options: Top-level CMake options have largely been consolidated into source/cmake/DakotaOptions.cmake and some helper files in source/cmake for more convenient viewing of the typical options.</p></li>
+<li><p>Refactor model keys: In support of multi-fidelity/multi-level hierarchical Models, new model keys distinguish raw, synthetic, and aggregated data sets using a generalized tuple design for model indices, facilitating the consolidation of approximation data into a single database per QoI and the consolidation of distinct and recursive discrepancy approaches based on synthetic data sets.</p></li>
+</ul>
+<p><strong>Miscellaneous Enhancements and Bugfixes</strong></p>
+<ul class="simple">
+<li><p>Enhancement/Bug fix: Make initial points consistent in Bayesian inference, across MAP pre-solves and Markov chains, and for cases with and without variable transformation.</p></li>
+<li><p>Bug fix: Fix bug with repeated updating of distribution parameters for parameterized polynomials such as Jacobi, generalized Laguerre, and numerically generated.</p></li>
+<li><p>Enhancement: Cache sets of collocation points/weights computed for orthogonal polynomials to enhance efficiency.</p></li>
+<li><p>Enhancement: Dakota Git submodules are now specified with relative paths, permitting more seamless checkout with SSH vs. HTTPS. A git submodule update should suffice, but it may be necessary for some users to remove and re-checkout Dakota’s submodules under packages: external, pecos, and surfpack.</p></li>
+</ul>
+<p><strong>Deprecated and Changed</strong></p>
+<ul class="simple">
+<li><p>Modified options for multilevel and multifidelity surrogate methods, consolidating individual and integrated greedy refinement options within the multifidelity specifications. This reserves multilevel specifications to approaches that explicitly estimate an optimal sample profile.</p></li>
+<li><p>Scaling keywords have been updated (see calibraiton note above).</p></li>
+</ul>
+<p><strong>Compatibility</strong></p>
+<ul class="simple">
+<li><p>No mandatory changes to required compilers or third-party libraries.</p></li>
+<li><p>Compiling with the MUQ Bayesian inference methods requires Boost 1.58 or newer.</p></li>
+<li><p>Dakota has been smoke tested on newer gcc-7.x, gcc-8.x, and Clang compilers, but not fully tested. Dakota should work with newer C++ standards than its required C++11, and has been manually tested with C++14.</p></li>
+</ul>
+<p><strong>Other Notes and Known Issues</strong></p>
+<ul class="simple">
+<li><p>Dakota 6.12 will not compile with Cray Fortran compiler with default package selections. Patches to Dakota’s CMake files are available on request to <a class="reference external" href="mailto:dakota-users&#37;&#52;&#48;software&#46;sandia&#46;gov">dakota-users<span>&#64;</span>software<span>&#46;</span>sandia<span>&#46;</span>gov</a>, or it’s potentially possible (untested) to turn off DAKOTA_F90:BOOL=FALSE, HAVE_LHS:BOOL=FALSE in your CMake configuration.</p></li>
+<li><p>Dakota’s new surrogates and util modules will not work properly with the master branch of the external Trilinos project (github.com:/trilinos/Trilinos), nor when Dakota is configured under the Trilinos TriKota package. A hotfix is being developed as of May 2020.</p></li>
+</ul>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="613.html" class="btn btn-neutral float-left" title="Version 6.13 (2020/11/15)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="611.html" class="btn btn-neutral float-right" title="Version 6.11 (2019/11/15)" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <!--
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Sandia National Laboratories.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+  --> 
+
+</footer>
+        </div>
+      </div>
+	  
+	  <div style="background-color: #0f0f0f;color:#fafafa;padding:20px">
+	    <div>
+		  <h2><em>Exceptional service in the national interest</em></h2>
+		</div>
+		<p>© 2023 National Technology and Engineering Solutions of Sandia, LLC. | <a href="https://www.sandia.gov/contact_us/index.html">Questions &amp; Comments</a> | <a href="https://www.sandia.gov/general/privacy-security/index.html">Privacy &amp; Security</a></p>
+		<p><a href="http://energy.gov" rel="noopener noreferrer" target="_blank"><img alt="U.S. Department of Energy" longdesc="https://energy.gov" src="https://www.sandia.gov/_common/images/doe_logo_white.png" style="height:37px; width:140px"></a> <a href="http://nnsa.energy.gov/" rel="noopener noreferrer" target="_blank"> <img alt="National Nuclear Security Administration" longdesc="http://nnsa.gov" src="https://www.sandia.gov/_common/images/nnsa_logo_white.png" style="height:37px; width:116px"></a></p>
+		<p><a href="https://www.sandia.gov">Sandia National Laboratories</a> is a multimission laboratory managed and operated by National Technology and Engineering Solutions of Sandia, LLC., a wholly owned subsidiary of Honeywell International, Inc., for the U.S. Department of Energy’s National Nuclear Security Administration under contract DE-NA-0003525.</p>
+	  </div>	  	  
+	  
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>mesh_adaptive_search &mdash; dakota  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/dakota_theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/sandiaheaderlite.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="initial_delta" href="method-mesh_adaptive_search-initial_delta.html" />
+    <link rel="prev" title="model_pointer" href="method-asynch_pattern_search-model_pointer.html" /> 
+  
+  <meta name="sandia.approval_type" content="formal"/>
+  <meta property="sandia.approved" content="SAND2023-13392 O"/>
+  <meta name="description" content="The Dakota project delivers both state-of-the-art research and robust, usable software for optimization and UQ."/>
+  <meta name="keywords" content="Dakota, optimization, UQ, uncertainty quantification, parametric analysis, design exploration, model calibration, risk analysis"/>
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> dakota
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../setupdakota.html">Getting Started</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../usingdakota.html">Using Dakota</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../introduction/aboutdakota.html">About Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../introduction/helloworld.html">Dakota Beginner’s Tutorial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples.html">Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../introduction/couplingtosimulations.html">Coupling Dakota to a Simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../inputfile.html">Dakota Input File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../running.html">Running Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../output.html">Dakota Output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../studytypes.html">Study Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../topics.html">Topics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../advanced.html">Advanced Topics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../theory.html">Dakota Theory</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../reference.html">Keyword Reference</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="environment.html">environment</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="method.html">method</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="method-id_method.html">id_method</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-output.html">output</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-final_solutions.html">final_solutions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-hybrid.html">hybrid</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-multi_start.html">multi_start</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-pareto_set.html">pareto_set</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-branch_and_bound.html">branch_and_bound</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-surrogate_based_local.html">surrogate_based_local</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-surrogate_based_global.html">surrogate_based_global</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-dot_frcg.html">dot_frcg</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-dot_mmfd.html">dot_mmfd</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-dot_bfgs.html">dot_bfgs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-dot_slp.html">dot_slp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-dot_sqp.html">dot_sqp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-conmin_frcg.html">conmin_frcg</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-conmin_mfd.html">conmin_mfd</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-dl_solver.html">dl_solver</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-npsol_sqp.html">npsol_sqp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-nlssol_sqp.html">nlssol_sqp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-nlpql_sqp.html">nlpql_sqp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-optpp_cg.html">optpp_cg</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-optpp_q_newton.html">optpp_q_newton</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-optpp_fd_newton.html">optpp_fd_newton</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-optpp_g_newton.html">optpp_g_newton</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-optpp_newton.html">optpp_newton</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-optpp_pds.html">optpp_pds</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-demo_tpl.html">demo_tpl</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-rol.html">rol</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-asynch_pattern_search.html">asynch_pattern_search</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">mesh_adaptive_search</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="method-mesh_adaptive_search-initial_delta.html">initial_delta</a></li>
+<li class="toctree-l5"><a class="reference internal" href="method-mesh_adaptive_search-variable_tolerance.html">variable_tolerance</a></li>
+<li class="toctree-l5"><a class="reference internal" href="method-mesh_adaptive_search-function_precision.html">function_precision</a></li>
+<li class="toctree-l5"><a class="reference internal" href="method-mesh_adaptive_search-seed.html">seed</a></li>
+<li class="toctree-l5"><a class="reference internal" href="method-mesh_adaptive_search-history_file.html">history_file</a></li>
+<li class="toctree-l5"><a class="reference internal" href="method-mesh_adaptive_search-display_format.html">display_format</a></li>
+<li class="toctree-l5"><a class="reference internal" href="method-mesh_adaptive_search-variable_neighborhood_search.html">variable_neighborhood_search</a></li>
+<li class="toctree-l5"><a class="reference internal" href="method-mesh_adaptive_search-neighbor_order.html">neighbor_order</a></li>
+<li class="toctree-l5"><a class="reference internal" href="method-mesh_adaptive_search-display_all_evaluations.html">display_all_evaluations</a></li>
+<li class="toctree-l5"><a class="reference internal" href="method-mesh_adaptive_search-use_surrogate.html">use_surrogate</a></li>
+<li class="toctree-l5"><a class="reference internal" href="method-mesh_adaptive_search-max_iterations.html">max_iterations</a></li>
+<li class="toctree-l5"><a class="reference internal" href="method-mesh_adaptive_search-max_function_evaluations.html">max_function_evaluations</a></li>
+<li class="toctree-l5"><a class="reference internal" href="method-mesh_adaptive_search-scaling.html">scaling</a></li>
+<li class="toctree-l5"><a class="reference internal" href="method-mesh_adaptive_search-model_pointer.html">model_pointer</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="method-nowpac.html">nowpac</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-snowpac.html">snowpac</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-moga.html">moga</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-soga.html">soga</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-coliny_pattern_search.html">coliny_pattern_search</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-coliny_solis_wets.html">coliny_solis_wets</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-coliny_cobyla.html">coliny_cobyla</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-coliny_direct.html">coliny_direct</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-coliny_ea.html">coliny_ea</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-coliny_beta.html">coliny_beta</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-nl2sol.html">nl2sol</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-nonlinear_cg.html">nonlinear_cg</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-ncsu_direct.html">ncsu_direct</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-genie_opt_darts.html">genie_opt_darts</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-genie_direct.html">genie_direct</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-efficient_global.html">efficient_global</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-surrogate_based_uq.html">surrogate_based_uq</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-function_train.html">function_train</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-multifidelity_function_train.html">multifidelity_function_train</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-multilevel_function_train.html">multilevel_function_train</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-polynomial_chaos.html">polynomial_chaos</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-multifidelity_polynomial_chaos.html">multifidelity_polynomial_chaos</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-multilevel_polynomial_chaos.html">multilevel_polynomial_chaos</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-stoch_collocation.html">stoch_collocation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-multifidelity_stoch_collocation.html">multifidelity_stoch_collocation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-sampling.html">sampling</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-multilevel_sampling.html">multilevel_sampling</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-multifidelity_sampling.html">multifidelity_sampling</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-multilevel_multifidelity_sampling.html">multilevel_multifidelity_sampling</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-approximate_control_variate.html">approximate_control_variate</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-multilevel_blue.html">multilevel_blue</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-importance_sampling.html">importance_sampling</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-gpais.html">gpais</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-adaptive_sampling.html">adaptive_sampling</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-pof_darts.html">pof_darts</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-rkd_darts.html">rkd_darts</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-global_evidence.html">global_evidence</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-global_interval_est.html">global_interval_est</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-bayes_calibration.html">bayes_calibration</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-dace.html">dace</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-fsu_cvt.html">fsu_cvt</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-psuade_moat.html">psuade_moat</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-local_evidence.html">local_evidence</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-local_interval_est.html">local_interval_est</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-local_reliability.html">local_reliability</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-global_reliability.html">global_reliability</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-fsu_quasi_mc.html">fsu_quasi_mc</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-vector_parameter_study.html">vector_parameter_study</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-list_parameter_study.html">list_parameter_study</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-centered_parameter_study.html">centered_parameter_study</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-multidim_parameter_study.html">multidim_parameter_study</a></li>
+<li class="toctree-l4"><a class="reference internal" href="method-richardson_extrap.html">richardson_extrap</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="model.html">model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="variables.html">variables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="interface.html">interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="responses.html">responses</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../usingdakotagui/usingdakotagui.html">Using Dakota GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../externaltools/externaltools.html">Using External Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../compiling/compiling.html">Compiling Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developingdakota/developingdakota.html">Developing Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../misc/misc.html">Miscellaneous</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">dakota</a>
+      </nav>
+
+	  <!-- SNL Lite header -->
+	  <div class="snlheader-subsite--wrapper-default">
+		<snlheader class="snlheader-subsite" role="snlbanner">
+		  <div class="wrapper">
+			<a href="https://www.sandia.gov/index.html">
+			  <div class="logo-transparent"><p class="logo">Sandia National Laboratories</p></div>
+			</a>
+			<div class="nav-top">
+			  <a class="visuallyhidden" name="mainnav"></a>
+			  <div aria-label="main navigation" class="core-nav-transparent core-nav-transparent--visible" role="navigation">
+				<ul role="navigation" class="secondary-links">
+				  <li id="search-text-link">
+					<a aria-label="Search" href="https://www.sandia.gov/search/">Search Sandia.gov</a>
+				  </li>
+				  <li id="directory-text-link">
+					<a href="https://www.sandia.gov/directory.html" aria-expanded="false" aria-label="Site Directory">All Sandia Websites</a>
+				  </li>
+				</ul>
+			  </div>
+			</div>
+		  </div> 
+		</snlheader>
+	  </div>	  
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../usingdakota.html">Using Dakota</a></li>
+          <li class="breadcrumb-item"><a href="../reference.html">Keyword Reference</a></li>
+          <li class="breadcrumb-item"><a href="method.html">method</a></li>
+      <li class="breadcrumb-item active">mesh_adaptive_search</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/usingdakota/reference/method-mesh_adaptive_search.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="mesh-adaptive-search">
+<span id="method-mesh-adaptive-search"></span><h1>mesh_adaptive_search<a class="headerlink" href="#mesh-adaptive-search" title="Link to this heading"></a></h1>
+<p>Finds optimal variable values using adaptive mesh-based search</p>
+<div class="toctree-wrapper compound">
+</div>
+<p><strong>Specification</strong></p>
+<ul class="simple">
+<li><p><em>Alias:</em> None</p></li>
+<li><p><em>Arguments:</em> None</p></li>
+</ul>
+<p><strong>Child Keywords:</strong></p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Required/Optional</p></th>
+<th class="head"><p>Description of
+Group</p></th>
+<th class="head"><p>Dakota Keyword</p></th>
+<th class="head"><p>Dakota Keyword Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td colspan="2"><p>Optional</p></td>
+<td><p><a class="reference external" href="method-mesh_adaptive_search-initial_delta.html">initial_delta</a></p></td>
+<td><p>Initial step size for derivative-free
+optimizers</p></td>
+</tr>
+<tr class="row-odd"><td colspan="2"><p>Optional</p></td>
+<td><p><a class="reference external" href="method-mesh_adaptive_search-variable_tolerance.html">variable_tolerance</a></p></td>
+<td><p>Step length-based stopping criteria for
+derivative-free optimizers</p></td>
+</tr>
+<tr class="row-even"><td colspan="2"><p>Optional</p></td>
+<td><p><a class="reference external" href="method-mesh_adaptive_search-function_precision.html">function_precision</a></p></td>
+<td><p>Specify the maximum precision of the analysis
+code responses</p></td>
+</tr>
+<tr class="row-odd"><td colspan="2"><p>Optional</p></td>
+<td><p><a class="reference external" href="method-mesh_adaptive_search-seed.html">seed</a></p></td>
+<td><p>Seed of the random number generator</p></td>
+</tr>
+<tr class="row-even"><td colspan="2"><p>Optional</p></td>
+<td><p><a class="reference external" href="method-mesh_adaptive_search-history_file.html">history_file</a></p></td>
+<td><p>Name of file where mesh adaptive search
+records all evaluation points.</p></td>
+</tr>
+<tr class="row-odd"><td colspan="2"><p>Optional</p></td>
+<td><p><a class="reference external" href="method-mesh_adaptive_search-display_format.html">display_format</a></p></td>
+<td><p>Information to be reported from mesh adaptive
+search’s internal records.</p></td>
+</tr>
+<tr class="row-even"><td colspan="2"><p>Optional</p></td>
+<td><p><a class="reference external" href="method-mesh_adaptive_search-variable_neighborhood_search.html">variable_neighborhood_search</a></p></td>
+<td><p>Percentage of evaluations to do to escape
+local minima.</p></td>
+</tr>
+<tr class="row-odd"><td colspan="2"><p>Optional</p></td>
+<td><p><a class="reference external" href="method-mesh_adaptive_search-neighbor_order.html">neighbor_order</a></p></td>
+<td><p>Number of dimensions in which to perturb
+categorical variables.</p></td>
+</tr>
+<tr class="row-even"><td colspan="2"><p>Optional</p></td>
+<td><p><a class="reference external" href="method-mesh_adaptive_search-display_all_evaluations.html">display_all_evaluations</a></p></td>
+<td><p>Shows mesh adaptive search’s internally held
+list of all evaluations</p></td>
+</tr>
+<tr class="row-odd"><td colspan="2"><p>Optional</p></td>
+<td><p><a class="reference external" href="method-mesh_adaptive_search-use_surrogate.html">use_surrogate</a></p></td>
+<td><p>Surrogate model usage mode for mesh adaptive
+search</p></td>
+</tr>
+<tr class="row-even"><td colspan="2"><p>Optional</p></td>
+<td><p><a class="reference external" href="method-mesh_adaptive_search-max_iterations.html">max_iterations</a></p></td>
+<td><p>Number of iterations allowed for optimizers
+and adaptive UQ methods</p></td>
+</tr>
+<tr class="row-odd"><td colspan="2"><p>Optional</p></td>
+<td><p><a class="reference external" href="method-mesh_adaptive_search-max_function_evaluations.html">max_function_evaluations</a></p></td>
+<td><p>Number of function evaluations allowed for
+optimizers</p></td>
+</tr>
+<tr class="row-even"><td colspan="2"><p>Optional</p></td>
+<td><p><a class="reference external" href="method-mesh_adaptive_search-scaling.html">scaling</a></p></td>
+<td><p>Turn on scaling for variables, responses, and
+constraints</p></td>
+</tr>
+<tr class="row-odd"><td colspan="2"><p>Optional</p></td>
+<td><p><a class="reference external" href="method-mesh_adaptive_search-model_pointer.html">model_pointer</a></p></td>
+<td><p>Identifier for model block to be used by a
+method</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Description</strong></p>
+<p>The mesh adaptive direct search algorithm <span id="id15">[<a class="reference internal" href="../../misc/bibliography.html#id15" title="C. Audet, S. Le Digabel, and C. Tribes. NOMAD user guide. Technical Report G-2009-37, Les cahiers du GERAD, 2009. URL: http://www.gerad.ca/NOMAD/Downloads/user_guide.pdf.">ALeDigabelT09</a>]</span>
+is a derivative-free generalized pattern
+search in which the set of points evaluated becomes increasingly
+dense, leading to good convergence properties.  It can handle
+unconstrained problems as well as those with bound constraints and
+general nonlinear constraints. Furthermore, it can handle continuous,
+discrete, and categorical variables.</p>
+<p><em>Default Behavior</em></p>
+<p>By default, <code class="docutils literal notranslate"><span class="pre">mesh_adaptive_search</span></code> operates on design variables.  The
+types of variables can be expanded through the use of the <code class="docutils literal notranslate"><span class="pre">active</span></code>
+keyword in the <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/variables.html"><span class="pre">variables</span></a></code> block in the Dakota input file.
+Categorical variables, however, must be limited to design variables.</p>
+<p><em>Expected Outputs</em></p>
+<p>The best objective function value achieved and associated parameter
+and constraint values can be found at the end of the Dakota output.
+The method’s internally summarized iteration history will appear in
+the screen output by default, with the option to control the method’s
+output through Dakota’s output level.  It also generates a history
+file containing a list of all function evaluations done.</p>
+<p><em>Expected HDF5 Output</em></p>
+<p>If Dakota was built with HDF5 support and run with the
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/environment-results_output-hdf5.html"><span class="pre">hdf5</span></a></code> keyword, this method
+writes the following results to HDF5:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="../output/hdf/organizationofresults.html#hdf5-results-best-params"><span class="std std-ref">Best Parameters</span></a></p></li>
+<li><p><a class="reference internal" href="../output/hdf/organizationofresults.html#hdf5-results-best-obj-fncs"><span class="std std-ref">Best Objective Functions</span></a> (when <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/responses-objective_functions.html"><span class="pre">objective_functions</span></a></code>) are specified)</p></li>
+<li><p><a class="reference internal" href="../output/hdf/organizationofresults.html#hdf5-results-best-constraints"><span class="std std-ref">Best Nonlinear Constraints</span></a></p></li>
+<li><p><a class="reference internal" href="../output/hdf/organizationofresults.html#hdf5-results-calibration"><span class="std std-ref">Calibration</span></a> (when <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/responses-calibration_terms.html"><span class="pre">calibration_terms</span></a></code> are specified)</p></li>
+</ul>
+<p><em>Additional Discussion</em></p>
+<p>The mesh adaptive direct search method is made available in Dakota
+through the NOMAD software <span id="id16">[<a class="reference internal" href="../../misc/bibliography.html#id5" title="M.A. Abramson, C. Audet, G. Couture, J.E. Dennis, Jr., S. Le Digabel, and C. Tribes. The NOMAD project. Software available at http://www.gerad.ca/nomad. URL: http://www.gerad.ca/nomad.">AAC+</a>]</span>,
+available to the public under the
+GNU LGPL from <a class="reference external" href="http://www.gerad.ca/nomad">http://www.gerad.ca/nomad</a>.</p>
+<p><strong>Examples</strong></p>
+<p>The following is an example of a Dakota input file that makes use of
+<code class="docutils literal notranslate"><span class="pre">mesh_adaptive_search</span></code> to optimize the textbook function.</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span><span class="k">method</span>,
+        mesh_adaptive_search
+        seed = 1234
+
+<span class="k">variables</span>,
+        continuous_design = 3
+          initial_point   -1.0    1.5   2.0
+          upper_bounds    10.0   10.0  10.0
+          lower_bounds   -10.0  -10.0 -10.0
+          descriptors      &#39;x1&#39;  &#39;x2&#39;  &#39;x3&#39;
+
+<span class="k">interface</span>,
+       direct
+          analysis_driver = &#39;text_book&#39;
+
+<span class="k">responses</span>,
+        objective_functions = 1
+        no_gradients
+        no_hessians
+</pre></div>
+</div>
+<p>The best function value and associated parameters are found at the end
+of the Dakota output.</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>&lt;&lt;&lt;&lt;&lt; Function evaluation summary: 674 total (674 new, 0 duplicate)
+&lt;&lt;&lt;&lt;&lt; Best parameters          =
+                      1.0000000000e+00 x1
+                      1.0000000000e+00 x2
+                      1.0000000000e+00 x3
+&lt;&lt;&lt;&lt;&lt; Best objective function  =
+                      1.0735377280e-52
+&lt;&lt;&lt;&lt;&lt; Best evaluation ID: 658
+</pre></div>
+</div>
+<p>A NOMAD-generated iteration summary is also printed to the screen.</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>MADS run {
+
+ BBE OBJ
+
+    1 17.0625000000
+    2 1.0625000000
+   13 0.0625000000
+   24 0.0002441406
+   41 0.0000314713
+   43 0.0000028610
+   54 0.0000000037
+   83 0.0000000000
+  105 0.0000000000
+  112 0.0000000000
+  114 0.0000000000
+  135 0.0000000000
+  142 0.0000000000
+  153 0.0000000000
+  159 0.0000000000
+  171 0.0000000000
+  193 0.0000000000
+  200 0.0000000000
+  207 0.0000000000
+  223 0.0000000000
+  229 0.0000000000
+  250 0.0000000000
+  266 0.0000000000
+  282 0.0000000000
+  288 0.0000000000
+  314 0.0000000000
+  320 0.0000000000
+  321 0.0000000000
+  327 0.0000000000
+  354 0.0000000000
+  361 0.0000000000
+  372 0.0000000000
+  373 0.0000000000
+  389 0.0000000000
+  400 0.0000000000
+  417 0.0000000000
+  444 0.0000000000
+  459 0.0000000000
+  461 0.0000000000
+  488 0.0000000000
+  492 0.0000000000
+  494 0.0000000000
+  501 0.0000000000
+  518 0.0000000000
+  530 0.0000000000
+  537 0.0000000000
+  564 0.0000000000
+  566 0.0000000000
+  583 0.0000000000
+  590 0.0000000000
+  592 0.0000000000
+  604 0.0000000000
+  606 0.0000000000
+  629 0.0000000000
+  636 0.0000000000
+  658 0.0000000000
+  674 0.0000000000
+
+} end of run (mesh size reached NOMAD precision)
+
+blackbox evaluations                     : 674
+best feasible solution                   : ( 1 1 1 ) h=0 f=1.073537728e-52
+</pre></div>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="method-asynch_pattern_search-model_pointer.html" class="btn btn-neutral float-left" title="model_pointer" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="method-mesh_adaptive_search-initial_delta.html" class="btn btn-neutral float-right" title="initial_delta" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <!--
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Sandia National Laboratories.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+  --> 
+
+</footer>
+        </div>
+      </div>
+	  
+	  <div style="background-color: #0f0f0f;color:#fafafa;padding:20px">
+	    <div>
+		  <h2><em>Exceptional service in the national interest</em></h2>
+		</div>
+		<p>© 2023 National Technology and Engineering Solutions of Sandia, LLC. | <a href="https://www.sandia.gov/contact_us/index.html">Questions &amp; Comments</a> | <a href="https://www.sandia.gov/general/privacy-security/index.html">Privacy &amp; Security</a></p>
+		<p><a href="http://energy.gov" rel="noopener noreferrer" target="_blank"><img alt="U.S. Department of Energy" longdesc="https://energy.gov" src="https://www.sandia.gov/_common/images/doe_logo_white.png" style="height:37px; width:140px"></a> <a href="http://nnsa.energy.gov/" rel="noopener noreferrer" target="_blank"> <img alt="National Nuclear Security Administration" longdesc="http://nnsa.gov" src="https://www.sandia.gov/_common/images/nnsa_logo_white.png" style="height:37px; width:116px"></a></p>
+		<p><a href="https://www.sandia.gov">Sandia National Laboratories</a> is a multimission laboratory managed and operated by National Technology and Engineering Solutions of Sandia, LLC., a wholly owned subsidiary of Honeywell International, Inc., for the U.S. Department of Energy’s National Nuclear Security Administration under contract DE-NA-0003525.</p>
+	  </div>	  	  
+	  
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

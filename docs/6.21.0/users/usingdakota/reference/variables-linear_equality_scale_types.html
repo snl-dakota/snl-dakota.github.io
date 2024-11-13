@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>linear_equality_scale_types &mdash; dakota  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/dakota_theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/sandiaheaderlite.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="linear_equality_scales" href="variables-linear_equality_scales.html" />
+    <link rel="prev" title="linear_equality_targets" href="variables-linear_equality_targets.html" /> 
+  
+  <meta name="sandia.approval_type" content="formal"/>
+  <meta property="sandia.approved" content="SAND2023-13392 O"/>
+  <meta name="description" content="The Dakota project delivers both state-of-the-art research and robust, usable software for optimization and UQ."/>
+  <meta name="keywords" content="Dakota, optimization, UQ, uncertainty quantification, parametric analysis, design exploration, model calibration, risk analysis"/>
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> dakota
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../setupdakota.html">Getting Started</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../usingdakota.html">Using Dakota</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../introduction/aboutdakota.html">About Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../introduction/helloworld.html">Dakota Beginner’s Tutorial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples.html">Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../introduction/couplingtosimulations.html">Coupling Dakota to a Simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../inputfile.html">Dakota Input File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../running.html">Running Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../output.html">Dakota Output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../studytypes.html">Study Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../topics.html">Topics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../advanced.html">Advanced Topics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../theory.html">Dakota Theory</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../reference.html">Keyword Reference</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="environment.html">environment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="method.html">method</a></li>
+<li class="toctree-l3"><a class="reference internal" href="model.html">model</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="variables.html">variables</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="variables-id_variables.html">id_variables</a></li>
+<li class="toctree-l4"><a class="reference internal" href="variables-active.html">active</a></li>
+<li class="toctree-l4"><a class="reference internal" href="variables-mixed.html">mixed</a></li>
+<li class="toctree-l4"><a class="reference internal" href="variables-relaxed.html">relaxed</a></li>
+<li class="toctree-l4"><a class="reference internal" href="variables-continuous_design.html">continuous_design</a></li>
+<li class="toctree-l4"><a class="reference internal" href="variables-discrete_design_range.html">discrete_design_range</a></li>
+<li class="toctree-l4"><a class="reference internal" href="variables-discrete_design_set.html">discrete_design_set</a></li>
+<li class="toctree-l4"><a class="reference internal" href="variables-normal_uncertain.html">normal_uncertain</a></li>
+<li class="toctree-l4"><a class="reference internal" href="variables-lognormal_uncertain.html">lognormal_uncertain</a></li>
+<li class="toctree-l4"><a class="reference internal" href="variables-uniform_uncertain.html">uniform_uncertain</a></li>
+<li class="toctree-l4"><a class="reference internal" href="variables-loguniform_uncertain.html">loguniform_uncertain</a></li>
+<li class="toctree-l4"><a class="reference internal" href="variables-triangular_uncertain.html">triangular_uncertain</a></li>
+<li class="toctree-l4"><a class="reference internal" href="variables-exponential_uncertain.html">exponential_uncertain</a></li>
+<li class="toctree-l4"><a class="reference internal" href="variables-beta_uncertain.html">beta_uncertain</a></li>
+<li class="toctree-l4"><a class="reference internal" href="variables-gamma_uncertain.html">gamma_uncertain</a></li>
+<li class="toctree-l4"><a class="reference internal" href="variables-gumbel_uncertain.html">gumbel_uncertain</a></li>
+<li class="toctree-l4"><a class="reference internal" href="variables-frechet_uncertain.html">frechet_uncertain</a></li>
+<li class="toctree-l4"><a class="reference internal" href="variables-weibull_uncertain.html">weibull_uncertain</a></li>
+<li class="toctree-l4"><a class="reference internal" href="variables-histogram_bin_uncertain.html">histogram_bin_uncertain</a></li>
+<li class="toctree-l4"><a class="reference internal" href="variables-poisson_uncertain.html">poisson_uncertain</a></li>
+<li class="toctree-l4"><a class="reference internal" href="variables-binomial_uncertain.html">binomial_uncertain</a></li>
+<li class="toctree-l4"><a class="reference internal" href="variables-negative_binomial_uncertain.html">negative_binomial_uncertain</a></li>
+<li class="toctree-l4"><a class="reference internal" href="variables-geometric_uncertain.html">geometric_uncertain</a></li>
+<li class="toctree-l4"><a class="reference internal" href="variables-hypergeometric_uncertain.html">hypergeometric_uncertain</a></li>
+<li class="toctree-l4"><a class="reference internal" href="variables-histogram_point_uncertain.html">histogram_point_uncertain</a></li>
+<li class="toctree-l4"><a class="reference internal" href="variables-uncertain_correlation_matrix.html">uncertain_correlation_matrix</a></li>
+<li class="toctree-l4"><a class="reference internal" href="variables-continuous_interval_uncertain.html">continuous_interval_uncertain</a></li>
+<li class="toctree-l4"><a class="reference internal" href="variables-discrete_interval_uncertain.html">discrete_interval_uncertain</a></li>
+<li class="toctree-l4"><a class="reference internal" href="variables-discrete_uncertain_set.html">discrete_uncertain_set</a></li>
+<li class="toctree-l4"><a class="reference internal" href="variables-continuous_state.html">continuous_state</a></li>
+<li class="toctree-l4"><a class="reference internal" href="variables-discrete_state_range.html">discrete_state_range</a></li>
+<li class="toctree-l4"><a class="reference internal" href="variables-discrete_state_set.html">discrete_state_set</a></li>
+<li class="toctree-l4"><a class="reference internal" href="variables-linear_inequality_constraint_matrix.html">linear_inequality_constraint_matrix</a></li>
+<li class="toctree-l4"><a class="reference internal" href="variables-linear_inequality_lower_bounds.html">linear_inequality_lower_bounds</a></li>
+<li class="toctree-l4"><a class="reference internal" href="variables-linear_inequality_upper_bounds.html">linear_inequality_upper_bounds</a></li>
+<li class="toctree-l4"><a class="reference internal" href="variables-linear_inequality_scale_types.html">linear_inequality_scale_types</a></li>
+<li class="toctree-l4"><a class="reference internal" href="variables-linear_inequality_scales.html">linear_inequality_scales</a></li>
+<li class="toctree-l4"><a class="reference internal" href="variables-linear_equality_constraint_matrix.html">linear_equality_constraint_matrix</a></li>
+<li class="toctree-l4"><a class="reference internal" href="variables-linear_equality_targets.html">linear_equality_targets</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">linear_equality_scale_types</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="variables-linear_equality_scales.html">linear_equality_scales</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="interface.html">interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="responses.html">responses</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../usingdakotagui/usingdakotagui.html">Using Dakota GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../externaltools/externaltools.html">Using External Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../compiling/compiling.html">Compiling Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developingdakota/developingdakota.html">Developing Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../misc/misc.html">Miscellaneous</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">dakota</a>
+      </nav>
+
+	  <!-- SNL Lite header -->
+	  <div class="snlheader-subsite--wrapper-default">
+		<snlheader class="snlheader-subsite" role="snlbanner">
+		  <div class="wrapper">
+			<a href="https://www.sandia.gov/index.html">
+			  <div class="logo-transparent"><p class="logo">Sandia National Laboratories</p></div>
+			</a>
+			<div class="nav-top">
+			  <a class="visuallyhidden" name="mainnav"></a>
+			  <div aria-label="main navigation" class="core-nav-transparent core-nav-transparent--visible" role="navigation">
+				<ul role="navigation" class="secondary-links">
+				  <li id="search-text-link">
+					<a aria-label="Search" href="https://www.sandia.gov/search/">Search Sandia.gov</a>
+				  </li>
+				  <li id="directory-text-link">
+					<a href="https://www.sandia.gov/directory.html" aria-expanded="false" aria-label="Site Directory">All Sandia Websites</a>
+				  </li>
+				</ul>
+			  </div>
+			</div>
+		  </div> 
+		</snlheader>
+	  </div>	  
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../usingdakota.html">Using Dakota</a></li>
+          <li class="breadcrumb-item"><a href="../reference.html">Keyword Reference</a></li>
+          <li class="breadcrumb-item"><a href="variables.html">variables</a></li>
+      <li class="breadcrumb-item active">linear_equality_scale_types</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/usingdakota/reference/variables-linear_equality_scale_types.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="linear-equality-scale-types">
+<span id="variables-linear-equality-scale-types"></span><h1>linear_equality_scale_types<a class="headerlink" href="#linear-equality-scale-types" title="Link to this heading"></a></h1>
+<p>How to scale each linear equality constraint</p>
+<p><strong>Topics</strong></p>
+<p>linear_constraints</p>
+<div class="toctree-wrapper compound">
+</div>
+<p><strong>Specification</strong></p>
+<ul class="simple">
+<li><p><em>Alias:</em> None</p></li>
+<li><p><em>Arguments:</em> STRINGLIST</p></li>
+<li><p><em>Default:</em> vector values = “none”</p></li>
+</ul>
+<p><strong>Description</strong></p>
+<p>Each string in <code class="docutils literal notranslate"><span class="pre">linear_equality_scale_types</span></code> indicates the scaling
+type for each linear equality constraint. They only have effect when
+the associated method specifies <code class="docutils literal notranslate"><span class="pre">scaling</span></code>.</p>
+<p>The options are:</p>
+<ul class="simple">
+<li><p>‘value’ - characteristic value. If this is chosen, then  <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/variables-linear_equality_scales.html"><span class="pre">linear_equality_scales</span></a></code> must be specified; ‘value’ is assumed if scales are given without a <code class="docutils literal notranslate"><span class="pre">scale_types</span></code></p></li>
+<li><p>‘auto’ - automatic scaling.</p></li>
+</ul>
+<p>If a single string is specified it will apply to all linear equality
+constraints. Otherwise the number of strings specified should be equal
+to the number of linear equalities.</p>
+<p>Scaling for linear constraints is applied <em>after</em> any continuous variable scaling.</p>
+<p>For example, for variable scaling on continuous design variables x:</p>
+<div class="math notranslate nohighlight">
+\[\tilde{x}^j =
+\frac{x^j - x^j_O}{x^j_M}\]</div>
+<p>we have the following system for linear equality constraints</p>
+<div class="math notranslate nohighlight">
+\[a_L \leq A_i x \leq a_U\]</div>
+<div class="math notranslate nohighlight">
+\[a_L \leq
+A_i \left( \mathrm{diag}(x_M) \tilde{x} + x_O \right) \leq a_U\]</div>
+<div class="math notranslate nohighlight">
+\[a_L - A_i x_O \leq A_i \mathrm{diag}(x_M) \tilde{x} \leq a_U - A_i x_O\]</div>
+<div class="math notranslate nohighlight">
+\[\tilde{a}_L \leq \tilde{A}_i \tilde{x} \leq \tilde{a}_U\]</div>
+<p>and user-specified or automatically computed scaling multipliers are
+appplied to this final transformed system, which accounts for
+continuous design variable scaling. When automatic scaling is in use
+for linear constraints they are linearly scaled by a computed
+characteristic value, but not affinely to [0,1].</p>
+<p>See the scaling information under specific methods, e.g., <code class="docutils literal notranslate"><span class="pre">method-*-scaling</span></code> for details on how to use this keyword.</p>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="variables-linear_equality_targets.html" class="btn btn-neutral float-left" title="linear_equality_targets" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="variables-linear_equality_scales.html" class="btn btn-neutral float-right" title="linear_equality_scales" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <!--
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Sandia National Laboratories.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+  --> 
+
+</footer>
+        </div>
+      </div>
+	  
+	  <div style="background-color: #0f0f0f;color:#fafafa;padding:20px">
+	    <div>
+		  <h2><em>Exceptional service in the national interest</em></h2>
+		</div>
+		<p>© 2023 National Technology and Engineering Solutions of Sandia, LLC. | <a href="https://www.sandia.gov/contact_us/index.html">Questions &amp; Comments</a> | <a href="https://www.sandia.gov/general/privacy-security/index.html">Privacy &amp; Security</a></p>
+		<p><a href="http://energy.gov" rel="noopener noreferrer" target="_blank"><img alt="U.S. Department of Energy" longdesc="https://energy.gov" src="https://www.sandia.gov/_common/images/doe_logo_white.png" style="height:37px; width:140px"></a> <a href="http://nnsa.energy.gov/" rel="noopener noreferrer" target="_blank"> <img alt="National Nuclear Security Administration" longdesc="http://nnsa.gov" src="https://www.sandia.gov/_common/images/nnsa_logo_white.png" style="height:37px; width:116px"></a></p>
+		<p><a href="https://www.sandia.gov">Sandia National Laboratories</a> is a multimission laboratory managed and operated by National Technology and Engineering Solutions of Sandia, LLC., a wholly owned subsidiary of Honeywell International, Inc., for the U.S. Department of Energy’s National Nuclear Security Administration under contract DE-NA-0003525.</p>
+	  </div>	  	  
+	  
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

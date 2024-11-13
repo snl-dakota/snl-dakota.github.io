@@ -1,0 +1,58 @@
+.. _method-bayes_calibration-dream-emulator-mf_pce-p_refinement-dimension_adaptive:
+
+""""""""""""""""""
+dimension_adaptive
+""""""""""""""""""
+
+
+Perform anisotropic expansion refinement by preferentially adapting in dimensions that are detected to have higher "importance".
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-bayes_calibration-dream-emulator-mf_pce-p_refinement-dimension_adaptive-sobol
+   method-bayes_calibration-dream-emulator-mf_pce-p_refinement-dimension_adaptive-decay
+   method-bayes_calibration-dream-emulator-mf_pce-p_refinement-dimension_adaptive-generalized
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+--------------------+-----------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword     | Dakota Keyword Description                    |
+|                         | Group              |                    |                                               |
++=========================+====================+====================+===============================================+
+| Required (Choose One)   | Dimension          | `sobol`__          | Estimate dimension preference for automated   |
+|                         | Adaptivity         |                    | refinement of stochastic expansion using      |
+|                         | Estimation         |                    | total Sobol' sensitivity indices.             |
+|                         | Approach           +--------------------+-----------------------------------------------+
+|                         |                    | `decay`__          | Estimate spectral coefficient decay rates to  |
+|                         |                    |                    | guide dimension-adaptive refinement.          |
+|                         |                    +--------------------+-----------------------------------------------+
+|                         |                    | `generalized`__    | Use the generalized sparse grid dimension     |
+|                         |                    |                    | adaptive algorithm to refine a sparse grid    |
+|                         |                    |                    | approximation of stochastic expansion.        |
++-------------------------+--------------------+--------------------+-----------------------------------------------+
+
+.. __: method-bayes_calibration-dream-emulator-mf_pce-p_refinement-dimension_adaptive-sobol.html
+__ method-bayes_calibration-dream-emulator-mf_pce-p_refinement-dimension_adaptive-decay.html
+__ method-bayes_calibration-dream-emulator-mf_pce-p_refinement-dimension_adaptive-generalized.html
+
+
+
+**Description**
+
+
+Perform anisotropic expansion refinement by preferentially adapting in dimensions that are detected to hold higher "importance" in resolving statistical quantities of interest.
+
+Dimension importance must be estimated as part of the refinement process.  Techniques include either sobol or generalized for stochastic collocation and either sobol, decay, or generalized for polynomial chaos. Each of these automated refinement approaches makes use of the max_iterations and convergence_tolerance iteration controls.
+
+

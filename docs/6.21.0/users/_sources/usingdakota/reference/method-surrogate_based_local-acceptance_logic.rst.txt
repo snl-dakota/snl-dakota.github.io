@@ -1,0 +1,59 @@
+.. _method-surrogate_based_local-acceptance_logic:
+
+""""""""""""""""
+acceptance_logic
+""""""""""""""""
+
+
+Set criteria for trusted surrogate
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-surrogate_based_local-acceptance_logic-tr_ratio
+   method-surrogate_based_local-acceptance_logic-filter
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+- *Default:* filter
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+--------------------+-----------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword     | Dakota Keyword Description                    |
+|                         | Group              |                    |                                               |
++=========================+====================+====================+===============================================+
+| Required (Choose One)   | Acceptance Logic   | `tr_ratio`__       | Surrogate-Based Local iterate acceptance      |
+|                         |                    |                    | logic                                         |
+|                         |                    +--------------------+-----------------------------------------------+
+|                         |                    | `filter`__         | Surrogate-Based Local iterate acceptance      |
+|                         |                    |                    | logic                                         |
++-------------------------+--------------------+--------------------+-----------------------------------------------+
+
+.. __: method-surrogate_based_local-acceptance_logic-tr_ratio.html
+__ method-surrogate_based_local-acceptance_logic-filter.html
+
+
+
+**Description**
+
+
+Following calculation of the merit function for the new iterate, the
+iterate is accepted or rejected and the trust region size is adjusted
+for the next surrogate_based_local iteration. Iterate acceptance is
+governed either by a trust region ratio ( ``tr_ratio``) formed from the
+merit function values or by a filter method ( ``filter``); however,
+trust region resizing logic is currently based only on the trust
+region ratio. For infeasible iterates, constraint relaxation can be
+used for balancing constraint satisfaction and progress made toward an
+optimum.
+
+

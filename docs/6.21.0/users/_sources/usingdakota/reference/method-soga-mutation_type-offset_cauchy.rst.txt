@@ -1,0 +1,45 @@
+.. _method-soga-mutation_type-offset_cauchy:
+
+"""""""""""""
+offset_cauchy
+"""""""""""""
+
+
+Use a Cauchy distribution for the mutation offset
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-soga-mutation_type-offset_cauchy-mutation_scale
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+--------------------+-----------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword     | Dakota Keyword Description                    |
+|                         | Group              |                    |                                               |
++=========================+====================+====================+===============================================+
+| Optional                                     | `mutation_scale`__ | Scales mutation across range of parameter     |
++----------------------------------------------+--------------------+-----------------------------------------------+
+
+.. __: method-soga-mutation_type-offset_cauchy-mutation_scale.html
+
+
+
+**Description**
+
+
+The ``offset_cauchy`` mutator introduces random variation by adding a Cauchy
+random amount to a variable value. The random amount has a standard deviation
+dependent on the ``mutation_scale``.
+
+

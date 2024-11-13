@@ -1,0 +1,34 @@
+.. _method-bayes_calibration-wasabi-emulator-mf_pce-diagonal_covariance:
+
+"""""""""""""""""""
+diagonal_covariance
+"""""""""""""""""""
+
+
+Display only the diagonal terms of the covariance matrix
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+- *Default:* diagonal_covariance for response vector > 10; else full_covariance
+
+
+**Description**
+
+
+With a large number of responses, the covariance matrix can
+be very large. ``diagonal_covariance`` is used to
+suppress the off-diagonal covariance terms (to save compute and
+memory resources and reduce output volume).
+
+

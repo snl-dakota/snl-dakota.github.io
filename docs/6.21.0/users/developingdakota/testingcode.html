@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Testing Dakota Code &mdash; dakota  documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/dakota_theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/sandiaheaderlite.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Documenting Dakota" href="documenting.html" />
+    <link rel="prev" title="Demo TPL" href="writingcode/developmentpractices/demotpl.html" /> 
+  
+  <meta name="sandia.approval_type" content="formal"/>
+  <meta property="sandia.approved" content="SAND2023-13392 O"/>
+  <meta name="description" content="The Dakota project delivers both state-of-the-art research and robust, usable software for optimization and UQ."/>
+  <meta name="keywords" content="Dakota, optimization, UQ, uncertainty quantification, parametric analysis, design exploration, model calibration, risk analysis"/>
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> dakota
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../setupdakota.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usingdakota/usingdakota.html">Using Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usingdakotagui/usingdakotagui.html">Using Dakota GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../externaltools/externaltools.html">Using External Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../compiling/compiling.html">Compiling Dakota</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="developingdakota.html">Developing Dakota</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="devenvironment.html">Setup Your Development Environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gitforversioncontrol.html">Git for Version Control</a></li>
+<li class="toctree-l2"><a class="reference internal" href="writingcode.html">Writing Dakota Code</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Testing Dakota Code</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#unit-tests">Unit Tests</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#regression-tests">Regression Tests</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#running-regression-tests">Running Regression Tests</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#creating-a-new-regression-test">Creating a New Regression Test</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#writing-subtests">Writing Subtests</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#test-directives">Test Directives</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#example-test-file">Example Test file</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#unit-test-driven-system-tests">Unit Test-driven System Tests</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#test-environment-definition">Test environment definition</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#executing-the-environment">Executing the environment</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#extracting-results-and-test-assertions">Extracting results and test assertions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#unit-test-macros">Unit test macros</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="documenting.html">Documenting Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="writingdocs.html">Dakota Documentation Mechanics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tpls.html">Dakota’s Third-Party Libraries</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../misc/misc.html">Miscellaneous</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">dakota</a>
+      </nav>
+
+	  <!-- SNL Lite header -->
+	  <div class="snlheader-subsite--wrapper-default">
+		<snlheader class="snlheader-subsite" role="snlbanner">
+		  <div class="wrapper">
+			<a href="https://www.sandia.gov/index.html">
+			  <div class="logo-transparent"><p class="logo">Sandia National Laboratories</p></div>
+			</a>
+			<div class="nav-top">
+			  <a class="visuallyhidden" name="mainnav"></a>
+			  <div aria-label="main navigation" class="core-nav-transparent core-nav-transparent--visible" role="navigation">
+				<ul role="navigation" class="secondary-links">
+				  <li id="search-text-link">
+					<a aria-label="Search" href="https://www.sandia.gov/search/">Search Sandia.gov</a>
+				  </li>
+				  <li id="directory-text-link">
+					<a href="https://www.sandia.gov/directory.html" aria-expanded="false" aria-label="Site Directory">All Sandia Websites</a>
+				  </li>
+				</ul>
+			  </div>
+			</div>
+		  </div> 
+		</snlheader>
+	  </div>	  
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="developingdakota.html">Developing Dakota</a></li>
+      <li class="breadcrumb-item active">Testing Dakota Code</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/developingdakota/testingcode.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="testing-dakota-code">
+<span id="testingcode-main"></span><h1>Testing Dakota Code<a class="headerlink" href="#testing-dakota-code" title="Link to this heading"></a></h1>
+<section id="unit-tests">
+<h2>Unit Tests<a class="headerlink" href="#unit-tests" title="Link to this heading"></a></h2>
+<p>Unit tests are intended for testing specific units, classes and functions
+when they can be readily constructed (and/or provided mocks) as needed.
+Unit testing also serves as a mechanism for Test Driven Development
+(TDD) which represents a best practice for implementing new capability.
+Just a few of the benefits of TDD include the following:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Enforces (and measures) modularity of code and functionality</p></li>
+<li><p>Encourages incrementally correct development</p></li>
+<li><p>Ensures correct behavior</p></li>
+<li><p>Documents API and software contract</p></li>
+<li><p>Promotes code coverage and other Software Quality Assurance (SQA) metrics</p></li>
+</ul>
+</div></blockquote>
+<p>Historically, Dakota has used both Boost.Test and Teuchos Unit Test
+features but has recently officially adopted the former.  For a minimal
+example for unit testing see:</p>
+<ul class="simple">
+<li><p><code class="file docutils literal notranslate"><span class="pre">src/unit/min_unit_test.cpp</span></code> (Boost.Test unit_test.hpp)</p></li>
+<li><p><code class="file docutils literal notranslate"><span class="pre">src/unit/leja_sampling.cpp</span></code> (Boost.Test minimal.hpp)</p></li>
+</ul>
+<p>Some more recent / modern examples include:</p>
+<ul class="simple">
+<li><p><code class="file docutils literal notranslate"><span class="pre">src/util/unit/MathToolsTest.cpp</span></code></p></li>
+<li><p><code class="file docutils literal notranslate"><span class="pre">src/util/unit/LinearSolverTest.cpp</span></code></p></li>
+<li><p><code class="file docutils literal notranslate"><span class="pre">src/surrogates/unit/PolynomialRegressionTest.cpp</span></code></p></li>
+</ul>
+<p>To add a test with a TDD mindset:</p>
+<ol class="arabic simple">
+<li><p>Call out the new unit test source file, e.g. <code class="docutils literal notranslate"><span class="pre">my_test.cpp</span></code>, in
+<code class="docutils literal notranslate"><span class="pre">CMakeLists.txt</span></code>,e.g. <code class="file docutils literal notranslate"><span class="pre">src/surrogate/unit/CMakeLists.txt</span></code>.
+See helper functions: dakota_add_unit_test (adds test, links libraries,
+registers with ctest), dakota_copy_test_file (copies with dependency).
+The build will fail because the file does not yet exist.</p></li>
+<li><p>Add a new file <code class="docutils literal notranslate"><span class="pre">my_test.cpp</span></code> with a failing test macro,
+e.g. <code class="docutils literal notranslate"><span class="pre">BOOST_CHECK(false)</span></code> to verify it builds but the test fails.
+Name files and associated data directories in a helpful and consistent
+manner.</p></li>
+<li><p>Use Boost utilities/macros to assess individual test conditions PASS /
+FAIL as needed.</p></li>
+<li><p>Compile and run with <code class="docutils literal notranslate"><span class="pre">ctest</span> <span class="pre">–L</span> <span class="pre">UnitTest</span></code> or <code class="docutils literal notranslate"><span class="pre">ctest</span> <span class="pre">–R</span> <span class="pre">my_test</span></code>.</p></li>
+<li><p>Iteratively add and refine tests and modify Dakota core source code
+as the capability evolves.</p></li>
+</ol>
+<p>To run all unit tests:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>cd dakota/build/
+
+<span class="c"># Run all unit tests:</span>
+ctest -L (--label-regex) UnitTest
+
+<span class="c"># With detailed output at top-level:</span>
+ctest -L (--label-regex) UnitTest -VV (--extra-verbose)
+
+<span class="c"># To run a single test, via regular expression:</span>
+ctest -L UnitTest -R surrogate_unit_tests
+</pre></div>
+</div>
+<p>A failing CTest unit test can be diagnosed using the following as a
+starting point:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>cd build/src/unit (or other directory containing the test executable)
+
+<span class="c"># First, manually run the failing test to see what information is provided related to the failure(s):</span>
+./surrogate_unit_tests
+
+<span class="c"># To see available Boost Test options:</span>
+./surrogate_unit_tests --help
+
+<span class="c"># To get detailed debugging info from a unit test:</span>
+./surrogate_unit_tests --log_level all
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>A google search can also provide current best practices with
+Boost.Test and specifics related to the details of the test
+failure(s)</p>
+</div>
+</section>
+<section id="regression-tests">
+<h2>Regression Tests<a class="headerlink" href="#regression-tests" title="Link to this heading"></a></h2>
+<p>Regression tests compare the output of complete Dakota studies against
+baseline behavior to ensure that changes to the code do not cause unexpected
+changes to output. Ideally they are fast running and use models
+with known behavior such as polynomials or other canonical problems.</p>
+<p>The following are a few key concepts in Dakota’s regression test system:</p>
+<ul class="simple">
+<li><p>In the source tree, most important test-related content is located
+in the test/ directory. Test files are named dakota_*.in. Each test file
+has a baseline file named dakota_*.base. Some tests have other
+associated data files and drivers.</p></li>
+<li><p>Configuring Dakota causes test files and associated content to be copied
+to subfolders within the test/ folder of the build tree. This is where
+they will be run.</p></li>
+<li><p>A single test file can contain multiple numbered serial and parallel subtests. Each
+subtest, after extraction from the test file, is a valid Dakota input file.</p></li>
+<li><p>Tests usually should be run using the <code class="docutils literal notranslate"><span class="pre">ctest</span></code> commmand. CTest uses the
+script dakota_test.perl, which is located in the test directory, to do most
+of the heavy lifting. This script can be run from the command line, as well.
+Run it with the argument <code class="docutils literal notranslate"><span class="pre">--man</span></code> for documentation of its options.</p></li>
+<li><p>Subtests can be categorized and described using CTest labels. (use
+<code class="docutils literal notranslate"><span class="pre">ctest</span> <span class="pre">--print-labels</span></code> in a build tree to view labels of existing tests).
+One purpose of labels is to state whether an optional component of Dakota
+is needed to run the test.</p></li>
+</ul>
+<section id="running-regression-tests">
+<h3>Running Regression Tests<a class="headerlink" href="#running-regression-tests" title="Link to this heading"></a></h3>
+<p>Dakota’s full regression test suite contains approxiately 300 test files
+and more than a thousand subtests. It typically takes between several tens of
+minutes to a few hours to complete, depending on available computing resouces.
+The test system executes Dakota for each subtest, collects the output, and
+compares it to a baseline. There are three possible results for a subtest:</p>
+<ul class="simple">
+<li><p><strong>PASS</strong>: Dakota output matched the baseline to within a numerical tolerance</p></li>
+<li><p><strong>DIFF</strong>: Dakota ran to completion, but its output did not match the baseline</p></li>
+<li><p><strong>FAIL</strong>: Dakota did not run to completion (it failed to run altogether or returned nonzero)</p></li>
+</ul>
+<p>In a Dakota build tree, the <code class="docutils literal notranslate"><span class="pre">ctest</span></code> command is the best way to run Dakota
+tests, including regression tests. Running the command with no options runs all the tests
+sequentially. A few helpful options:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">-j</span> <span class="pre">N</span></code>: Run N tests concurrently. Be aware that some of Dakota’s
+regression tests may make use of local or MPI parallelism and may
+use multiple cores.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-L</span> <span class="pre">&lt;label&gt;</span></code>: Run only those tests whose label matches the regex &lt;label&gt;.
+To run only regression tests (and not, e.g. unit tests), use the label <code class="docutils literal notranslate"><span class="pre">Regression</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-R</span> <span class="pre">&lt;name&gt;</span></code>: Run only those tests whose name matches the regrex &lt;name&gt;. The</p></li>
+</ul>
+<p>It currently is not possible to run specific subtests; all subtests of a test
+selected by label or name will be run.</p>
+<p>During configuration, test files, baselines, and auxilliary content is copied
+from the source tree to the build tree, where tests will be run. For each test
+file, a subdirectory is created in the test/ directory. The subdirectories have the
+names of their test files, minus the <code class="docutils literal notranslate"><span class="pre">.in</span></code> extension. If Dakota was built with parallel
+support, an additional subfolder is created for any parallel subtests in a test file.
+Its name is the test name with the letter <code class="docutils literal notranslate"><span class="pre">p</span></code> prepended.</p>
+<p>The results of each test are located in their subfolders. For serial subtests, the results
+are in the file <code class="docutils literal notranslate"><span class="pre">dakota_diffs.out</span></code>. For parallel subtests, the results file is <code class="docutils literal notranslate"><span class="pre">dakota_pdiffs.out</span></code>.
+These files state whether each subtest PASSed, DIFFed, or FAILed. If the test DIFFed, a diff
+of the Dakota console output and baseline is listed.</p>
+<p>The make target <code class="docutils literal notranslate"><span class="pre">dakota-diffs</span></code> causes all the <code class="docutils literal notranslate"><span class="pre">dakota_diffs.out</span></code> files from individual tests
+to be concatenated into a one <code class="docutils literal notranslate"><span class="pre">dakota_diffs.out</span></code> in the test/ directory, and similarly for the
+<code class="docutils literal notranslate"><span class="pre">dakota_pdiffs.out</span></code> files.</p>
+<p>Subsequent runs of <code class="docutils literal notranslate"><span class="pre">ctest</span></code> will cause test results to be appended to existing <code class="docutils literal notranslate"><span class="pre">dakota_diffs.out</span></code>
+files. The make target <code class="docutils literal notranslate"><span class="pre">dakota-diffs-clean</span></code> freshens the test/ folder.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>While Dakota’s test system has three possible test results (PASS, DIFF, FAIL), CTest has only
+two (PASS or FAIL) and reports Dakota DIFFs as failures. Quite often tests that CTest reports
+as failing are exhibiting only minor numerical differences from baseline and are no cause for
+concern. Check dakota_diffs.out/dakota_pdiffs.out for “failing” tests before concluding that there’s
+a problem with your Dakota build.</p>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">ctest</span></code> command uses the script <code class="docutils literal notranslate"><span class="pre">dakota_test.perl</span></code> and its helper <code class="docutils literal notranslate"><span class="pre">dakota_diff.perl</span></code>
+to extract subtests, run Dakota to produce test output, and diff the results against
+the baseline. It is possible to run <code class="docutils literal notranslate"><span class="pre">dakota_test.perl</span></code> from the command line. Use the argument
+<code class="docutils literal notranslate"><span class="pre">--man</span></code> to see its options. (The <code class="docutils literal notranslate"><span class="pre">-e</span></code> option to extract a subtest is particularly useful.)</p>
+<p>If a regression test fails, steps to diagnose the failure include the
+following which are performed in the Dakota build directory:</p>
+<ol class="arabic simple">
+<li><p>Remove previous test artifacts related to detailed differences and
+failures via <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">dakota-diffs-clean</span></code>.</p></li>
+<li><p>By default, <code class="docutils literal notranslate"><span class="pre">dakota_test.perl</span></code> overwrites Dakota output after each subtest. Set the
+<code class="docutils literal notranslate"><span class="pre">DAKOTA_TEST_SAVE_OUTPUT</span></code> environment variable to 1 to save it.</p></li>
+<li><p>Rerun the failing CTest: <code class="docutils literal notranslate"><span class="pre">ctest</span> <span class="pre">-R</span> <span class="pre">test_name</span></code>. (This regex will catch both the serial and parallel
+subtests. Add a carat (<code class="docutils literal notranslate"><span class="pre">^</span></code>) at the beginning of the pattern to exclude the parallel subtests.)</p></li>
+<li><p>Generate details for how the test differs from the corresponding
+baseline: <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">dakota-diffs</span></code>.</p></li>
+<li><p>Go into the specific regression test directory and examine the
+<code class="docutils literal notranslate"><span class="pre">dakota_diffs.out</span></code> file to see which subtest(s) failed.</p></li>
+<li><p>Compare the <code class="docutils literal notranslate"><span class="pre">.tst</span></code> file contents with the <code class="docutils literal notranslate"><span class="pre">.base</span></code> file contents
+to determine which values have changed, if there was a catastrophic
+failure of the executable, etc.</p></li>
+</ol>
+</section>
+<section id="creating-a-new-regression-test">
+<h3>Creating a New Regression Test<a class="headerlink" href="#creating-a-new-regression-test" title="Link to this heading"></a></h3>
+<p>A complete regression test includes a test file, which can contain multiple
+subtests, a baseline, and any auxilliary files (such as data files or
+drivers) needed by the subtests.</p>
+<section id="writing-subtests">
+<h4>Writing Subtests<a class="headerlink" href="#writing-subtests" title="Link to this heading"></a></h4>
+<p>Including multiple subtests within a single test file reduces maintenance
+burden by allowing related test cases to share Dakota specifications that
+they have in common.</p>
+<p>A test file is just a Dakota input file that has been annotated to indicate
+the lines that belong to each subtest. Subtests are numbered, beginning with 0,
+and serial and parallel subtests have independent numbering. The rules for
+annotating the lines of a test file are:</p>
+<ul class="simple">
+<li><p>Lines required for all test cases should be left uncommented.</p></li>
+<li><p>A line that should only be activated for specific subtests should be commented
+out, and the label <code class="docutils literal notranslate"><span class="pre">#sN</span></code> or <code class="docutils literal notranslate"><span class="pre">#pN</span></code> for serial and parallel tests, respectively,
+should be added to the end. <code class="docutils literal notranslate"><span class="pre">N</span></code> is the integer associated with a subtest.
+When <code class="docutils literal notranslate"><span class="pre">dakota_test.perl</span></code> extracts a subtest from the test file, it will keep all
+uncommented lines and also lines that end with a the corresponding subtest tag.</p></li>
+<li><p>The tag <code class="docutils literal notranslate"><span class="pre">#s0</span></code> has a special meaning. Serial subtest 0 is considered to include
+all uncommented lines in the original test input file. Lines with the <code class="docutils literal notranslate"><span class="pre">#s0</span></code> tag should
+not be commented out. They will not be extracted for other subtests. This convention allows
+the 0th serial subtest to be runnable without extraction.</p></li>
+<li><p>If a line in the input file is used in multiple subtests (but not all), the tags should
+appear in a comma-separated list. For example, if a line in the input file belongs to
+serial subtests 1 and 2, the line should end in <code class="docutils literal notranslate"><span class="pre">#s1,#s2</span></code>.</p></li>
+</ul>
+</section>
+<section id="test-directives">
+<h4>Test Directives<a class="headerlink" href="#test-directives" title="Link to this heading"></a></h4>
+<p>The test creator can (and in some cases must) provide additional
+information to Dakota’s test system through the use of directives.
+Directives must appear at the top of the file, but can be in any
+order. They have the format:</p>
+<p><code class="docutils literal notranslate"><span class="pre">#&#64;</span> <span class="pre">&lt;subtest</span> <span class="pre">specifier&gt;</span> <span class="pre">=</span> <span class="pre">&lt;directive&gt;</span></code></p>
+<p>The subtest specifier indicates which of the subtests the directive applies to.
+Its format is similar to the subtest tag:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">sN</span></code> or <code class="docutils literal notranslate"><span class="pre">pN</span></code>, without a pound sign.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">N</span></code> can be a subtest number or, if the directive applies to all serial or parallel
+subtests in teh file, <code class="docutils literal notranslate"><span class="pre">*</span></code>.</p></li>
+</ul>
+<table class="docutils align-default" id="id1">
+<caption><span class="caption-number">Table 28 </span><span class="caption-text">Regression Test Directives</span><a class="headerlink" href="#id1" title="Link to this table"></a></caption>
+<thead>
+<tr class="row-odd"><th class="head"><p>Directive</p></th>
+<th class="head"><p>Meaning</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Label=FastTest</p></td>
+<td><p>A quick-running test.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Label=Experimental</p></td>
+<td><p>Experimental capability. For information only.</p></td>
+</tr>
+<tr class="row-even"><td><p>Label=AcceptanceTest</p></td>
+<td><p>Acceptance tests rarely diff on any platform</p></td>
+</tr>
+<tr class="row-odd"><td><p>DakotaConfig=FLAG</p></td>
+<td><p>Only run this test if the CMake variable FLAG is true.</p></td>
+</tr>
+<tr class="row-even"><td><p>MPIProcs=N</p></td>
+<td><p>Execute Dakota in parallel with N MPI tasks</p></td>
+</tr>
+<tr class="row-odd"><td><p>TimeoutDelay=N</p></td>
+<td><p>Terminate Dakota if console output is unchanged for N seconds (default is 60s)</p></td>
+</tr>
+<tr class="row-even"><td><p>TimeoutAbsolute=N</p></td>
+<td><p>Terminate Dakota if the subtest takes longer than N seconds (default is 1200 s)</p></td>
+</tr>
+<tr class="row-odd"><td><p>CheckOutput=’FILENAME’</p></td>
+<td><p>Dakota output for the test will appear in FILENAME instead of the default</p></td>
+</tr>
+<tr class="row-even"><td><p>Restart=read</p></td>
+<td><p>Read the restart file written by the last subtest. Implies Restart=write.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Restart=write</p></td>
+<td><p>Write a restart file (usually to be used by a future subtest)</p></td>
+</tr>
+<tr class="row-even"><td><p>Restart=none</p></td>
+<td><p>No restart option</p></td>
+</tr>
+<tr class="row-odd"><td><p>DependsOn=N</p></td>
+<td><p>This subtest depends on another. Currently for information only.</p></td>
+</tr>
+<tr class="row-even"><td><p>ExecCmd=’CMD’</p></td>
+<td><p>Instead of ‘dakota’, run this command.</p></td>
+</tr>
+<tr class="row-odd"><td><p>ExecArgs=’ARGS’</p></td>
+<td><p>Arguments passed to command</p></td>
+</tr>
+<tr class="row-even"><td><p>InputFile=’INPUT’</p></td>
+<td><p>Specify an input file instead of the extracted one.</p></td>
+</tr>
+<tr class="row-odd"><td><p>UserMan=’FILENAME’</p></td>
+<td><p>Extract subtest to FILENAME for use in the User’s Manual</p></td>
+</tr>
+</tbody>
+</table>
+<p>A few notes on directives:</p>
+<ul class="simple">
+<li><p>Labels can be used to filter tests using the <code class="docutils literal notranslate"><span class="pre">-L</span></code> option to <code class="docutils literal notranslate"><span class="pre">ctest</span></code> or the <code class="docutils literal notranslate"><span class="pre">--label-regex</span></code> option
+to <code class="docutils literal notranslate"><span class="pre">dakota_test.perl</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">MPIProcs</span></code> is required for parallel tests.</p></li>
+</ul>
+</section>
+<section id="example-test-file">
+<h4>Example Test file<a class="headerlink" href="#example-test-file" title="Link to this heading"></a></h4>
+<p>An example input test file demonstrating a few of these features is below.</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span><span class="c">#@ s*: Label=FastTest</span>
+<span class="c">#@ s0: DakotaConfig=HAVE_QUESO</span>
+
+<span class="k">method</span>
+  bayes_calibration queso #s0
+    chain_samples = 100 seed = 100 #s0
+<span class="c">#  sampling #s1,#s2</span>
+<span class="c">#    sample_type lhs #s1</span>
+<span class="c">#   sample_type random #s2</span>
+<span class="c">#    samples = 100 #s1,#s2</span>
+<span class="c">#   seed = 17 #s1,#s2</span>
+
+<span class="k">variables</span>
+  uniform_uncertain 2
+    lower_bounds -2. -2.
+        upper_bounds  2.  2.
+
+<span class="k">interface</span>
+ analysis_driver = &#39;rosenbrock&#39;
+  direct
+
+<span class="k">responses</span>
+ objective_functions = 1
+ no_gradients
+ no_hessians
+</pre></div>
+</div>
+<p>This input file has three test cases: the first (s0) is Bayesian
+calibration using QUESO, the second (s1) is LHS sampling, and the
+third (s2) is random sampling. All the input file lines that are
+shared between the test cases are uncommented. Note that the
+lines specific to Subtest s0 that should not appear in the
+input files for Test Cases 1 and 2 have <code class="docutils literal notranslate"><span class="pre">#s0</span></code> appended to
+them.</p>
+<p>The test has the label <code class="docutils literal notranslate"><span class="pre">FastTest</span></code> and will only be run when
+Dakota is built with the optional QUESO component.</p>
+<p>To create a new baseline dakota_*.base file for serial
+regression tests, call</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>dakota_test.perl --base name_of_new_input_file.in
+</pre></div>
+</div>
+<p>This will create a file with extension .base.new with the same
+basename as the input file. Check the results, then change
+the extension to .base to incorporate it into the test suite.</p>
+<p>More advanced options for generating baseline
+files (e.g., for parallel tests) and more details about creating
+baselines are available in <code class="docutils literal notranslate"><span class="pre">dakota_test.perl</span> <span class="pre">--man</span></code>.</p>
+</section>
+</section>
+</section>
+<section id="unit-test-driven-system-tests">
+<h2>Unit Test-driven System Tests<a class="headerlink" href="#unit-test-driven-system-tests" title="Link to this heading"></a></h2>
+<p>These hybrid tests can be useful when it’s difficult to mock up all
+the objects needed for testing, e.g., Dakota Model, Variables, Interface,
+Responses, and yet finer-grained control over results verification is
+desired compared with that of regression tests.  One way to view these
+types of unit tests are those that construct most of a complete Dakota
+study as a mock and which then do fine-grained testing of selected
+functionality from the instantiated objects.  In brief, these tests:</p>
+<ul class="simple">
+<li><p>Are registered as unit tests</p></li>
+<li><p>Operate at the level of constructing a Dakota Environment from an
+input file and running a whole study to populate needed class data</p></li>
+<li><p>Test criteria that are more fine-grained and controllable than
+regression tests</p></li>
+</ul>
+<p>An illustrative example is described next and in
+<code class="file docutils literal notranslate"><span class="pre">src/unit_test/opt_tpl_rol_test_textbook.cpp</span></code>.</p>
+<p>The following provides a walkthrough for developers who wish to add a
+Test-driven System unit test that includes an end-to-end Dakota
+analysis. The procedure relies on setting up a problem description
+database using a Dakota input string and subsequently executing the
+environment. The last step involves extracting the quantities of
+interest (results) to be tested using unit test macros.</p>
+<section id="test-environment-definition">
+<h3>Test environment definition<a class="headerlink" href="#test-environment-definition" title="Link to this heading"></a></h3>
+<p>The developer defines a testing environment by constructing a problem
+description database from a Dakota input string, e.g.</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>// Dakota input string for serial case (cyl_head):
+static const char dakota_input[] =
+  &quot; method,&quot;
+  &quot;   output silent&quot;
+  &quot;   max_function_evaluations 300&quot;
+  &quot;   mesh_adaptive_search&quot;
+  &quot;     threshold_delta = 1.e-10&quot;
+  &quot; variables,&quot;
+  &quot;   continuous_design = 2&quot;
+  &quot;     initial_point    1.51         0.01&quot;
+  &quot;     upper_bounds     2.164        4.0&quot;
+  &quot;     lower_bounds     1.5          0.0&quot;
+  &quot;     descriptors      &#39;intake_dia&#39; &#39;flatness&#39;&quot;
+  &quot; interface,&quot;
+  &quot;   direct&quot;
+  &quot;     analysis_driver = &#39;cyl_head&#39;&quot;
+  &quot; responses,&quot;
+  &quot;   num_objective_functions = 1&quot;
+  &quot;   nonlinear_inequality_constraints = 3&quot;
+  &quot;   no_gradients&quot;
+  &quot;   no_hessians&quot;;
+</pre></div>
+</div>
+<p>The input string is then used to create a Dakota environment:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// No input file set --&gt; no parsing:</span>
+<span class="n">Dakota</span><span class="o">::</span><span class="n">ProgramOptions</span><span class="w"> </span><span class="n">opts</span><span class="p">;</span>
+<span class="n">opts</span><span class="p">.</span><span class="n">echo_input</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
+
+<span class="n">opts</span><span class="p">.</span><span class="n">input_string</span><span class="p">(</span><span class="n">dakota_input</span><span class="p">);</span>
+
+<span class="c1">// delay validation/sync of the Dakota database and iterator</span>
+<span class="c1">// construction to allow update after all data is populated</span>
+<span class="kt">bool</span><span class="w"> </span><span class="n">check_bcast_construct</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span>
+
+<span class="c1">// set up a Dakota instance</span>
+<span class="n">Dakota</span><span class="o">::</span><span class="n">LibraryEnvironment</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">p_env</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Dakota</span><span class="o">::</span><span class="n">LibraryEnvironment</span><span class="p">(</span><span class="n">MPI_COMM_WORLD</span><span class="p">,</span><span class="w"> </span><span class="n">opts</span><span class="p">,</span><span class="w"> </span><span class="n">check_bcast_construct</span><span class="p">);</span>
+<span class="n">Dakota</span><span class="o">::</span><span class="n">LibraryEnvironment</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">env</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">*</span><span class="n">p_env</span><span class="p">;</span>
+<span class="n">Dakota</span><span class="o">::</span><span class="n">ParallelLibrary</span><span class="o">&amp;</span><span class="w"> </span><span class="n">parallel_lib</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">env</span><span class="p">.</span><span class="n">parallel_library</span><span class="p">();</span>
+
+<span class="c1">// configure Dakota to throw a std::runtime_error instead of calling exit</span>
+<span class="n">env</span><span class="p">.</span><span class="n">exit_mode</span><span class="p">(</span><span class="s">&quot;throw&quot;</span><span class="p">);</span>
+
+<span class="c1">// once done with changes: check database, broadcast, and construct iterators</span>
+<span class="n">env</span><span class="p">.</span><span class="n">done_modifying_db</span><span class="p">();</span>
+</pre></div>
+</div>
+</section>
+<section id="executing-the-environment">
+<h3>Executing the environment<a class="headerlink" href="#executing-the-environment" title="Link to this heading"></a></h3>
+<p>Once an environment is defined, instantiation of Dakota objects and
+population of class data is achieved by executing the study:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Execute the environment</span>
+<span class="n">env</span><span class="p">.</span><span class="n">execute</span><span class="p">();</span>
+</pre></div>
+</div>
+</section>
+<section id="extracting-results-and-test-assertions">
+<h3>Extracting results and test assertions<a class="headerlink" href="#extracting-results-and-test-assertions" title="Link to this heading"></a></h3>
+<p>Following execution, the pertinent results are extracted and used to
+test correctness criteria. This is performed using the Boost unit test
+capabilities, e.g.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// retrieve the final parameter values</span>
+<span class="k">const</span><span class="w"> </span><span class="n">Variables</span><span class="o">&amp;</span><span class="w"> </span><span class="n">vars</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">env</span><span class="p">.</span><span class="n">variables_results</span><span class="p">();</span>
+
+<span class="c1">// retrieve the final response values</span>
+<span class="k">const</span><span class="w"> </span><span class="n">Response</span><span class="o">&amp;</span><span class="w"> </span><span class="n">resp</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">env</span><span class="p">.</span><span class="n">response_results</span><span class="p">();</span>
+
+<span class="c1">// Convergence test: check that first continuous variable</span>
+<span class="c1">// has reached optimal value within given tolerance</span>
+<span class="kt">double</span><span class="w"> </span><span class="n">target</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">2.1224215765</span><span class="p">;</span>
+<span class="kt">double</span><span class="w"> </span><span class="n">max_tol</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.</span><span class="n">e</span><span class="mi">-5</span><span class="p">;</span>
+<span class="kt">double</span><span class="w"> </span><span class="n">rel_err</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fabs</span><span class="p">((</span><span class="n">vars</span><span class="p">.</span><span class="n">continuous_variable</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">target</span><span class="p">)</span><span class="o">/</span><span class="n">target</span><span class="p">);</span>
+<span class="n">BOOST_CHECK</span><span class="p">(</span><span class="n">rel_err</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">max_tol</span><span class="p">);</span>
+
+<span class="c1">// Convergence test: check that second continuous variable</span>
+<span class="c1">// has reached optimal value within given tolerance</span>
+<span class="n">target</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.7659069377</span><span class="p">;</span>
+<span class="n">max_tol</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.</span><span class="n">e</span><span class="mi">-2</span><span class="p">;</span>
+<span class="n">rel_err</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fabs</span><span class="p">((</span><span class="n">vars</span><span class="p">.</span><span class="n">continuous_variable</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">target</span><span class="p">)</span><span class="o">/</span><span class="n">target</span><span class="p">);</span>
+<span class="n">BOOST_CHECK</span><span class="p">(</span><span class="n">rel_err</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">max_tol</span><span class="p">);</span>
+
+<span class="c1">// Convergence test: check that the final response value</span>
+<span class="c1">// has reached the corresponding minimum within given tolerance</span>
+<span class="n">target</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">-2.4614299775</span><span class="p">;</span>
+<span class="n">max_tol</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.</span><span class="n">e</span><span class="mi">-3</span><span class="p">;</span>
+<span class="n">rel_err</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fabs</span><span class="p">((</span><span class="n">resp</span><span class="p">.</span><span class="n">function_value</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">target</span><span class="p">)</span><span class="o">/</span><span class="n">target</span><span class="p">);</span>
+<span class="n">BOOST_CHECK</span><span class="p">(</span><span class="n">rel_err</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">max_tol</span><span class="p">);</span>
+</pre></div>
+</div>
+</section>
+<section id="unit-test-macros">
+<h3>Unit test macros<a class="headerlink" href="#unit-test-macros" title="Link to this heading"></a></h3>
+<p>There are several unit test macros to support
+various comparisons, assertions, exceptions, etc.  See
+<a class="reference external" href="https://www.boost.org/doc/libs/1_69_0/libs/test/doc/html/boost_test/utf_reference/testing_tool_ref.html">https://www.boost.org/doc/libs/1_69_0/libs/test/doc/html/boost_test/utf_reference/testing_tool_ref.html</a>
+for details and exmaples.</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="writingcode/developmentpractices/demotpl.html" class="btn btn-neutral float-left" title="Demo TPL" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="documenting.html" class="btn btn-neutral float-right" title="Documenting Dakota" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <!--
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Sandia National Laboratories.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+  --> 
+
+</footer>
+        </div>
+      </div>
+	  
+	  <div style="background-color: #0f0f0f;color:#fafafa;padding:20px">
+	    <div>
+		  <h2><em>Exceptional service in the national interest</em></h2>
+		</div>
+		<p>© 2023 National Technology and Engineering Solutions of Sandia, LLC. | <a href="https://www.sandia.gov/contact_us/index.html">Questions &amp; Comments</a> | <a href="https://www.sandia.gov/general/privacy-security/index.html">Privacy &amp; Security</a></p>
+		<p><a href="http://energy.gov" rel="noopener noreferrer" target="_blank"><img alt="U.S. Department of Energy" longdesc="https://energy.gov" src="https://www.sandia.gov/_common/images/doe_logo_white.png" style="height:37px; width:140px"></a> <a href="http://nnsa.energy.gov/" rel="noopener noreferrer" target="_blank"> <img alt="National Nuclear Security Administration" longdesc="http://nnsa.gov" src="https://www.sandia.gov/_common/images/nnsa_logo_white.png" style="height:37px; width:116px"></a></p>
+		<p><a href="https://www.sandia.gov">Sandia National Laboratories</a> is a multimission laboratory managed and operated by National Technology and Engineering Solutions of Sandia, LLC., a wholly owned subsidiary of Honeywell International, Inc., for the U.S. Department of Energy’s National Nuclear Security Administration under contract DE-NA-0003525.</p>
+	  </div>	  	  
+	  
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

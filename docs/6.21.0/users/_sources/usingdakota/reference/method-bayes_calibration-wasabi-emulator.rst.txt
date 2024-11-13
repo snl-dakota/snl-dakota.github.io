@@ -1,0 +1,69 @@
+.. _method-bayes_calibration-wasabi-emulator:
+
+""""""""
+emulator
+""""""""
+
+
+Use an emulator or surrogate model to evaluate the likelihood function
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-bayes_calibration-wasabi-emulator-gaussian_process
+   method-bayes_calibration-wasabi-emulator-pce
+   method-bayes_calibration-wasabi-emulator-ml_pce
+   method-bayes_calibration-wasabi-emulator-mf_pce
+   method-bayes_calibration-wasabi-emulator-sc
+   method-bayes_calibration-wasabi-emulator-mf_sc
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+----------------------+-----------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword       | Dakota Keyword Description                    |
+|                         | Group              |                      |                                               |
++=========================+====================+======================+===============================================+
+| Required (Choose One)   | Emulator Type      | `gaussian_process`__ | Gaussian Process surrogate model              |
+|                         |                    +----------------------+-----------------------------------------------+
+|                         |                    | `pce`__              | Polynomial Chaos Expansion surrogate model    |
+|                         |                    +----------------------+-----------------------------------------------+
+|                         |                    | `ml_pce`__           | Multilevel Polynomial Chaos Expansion as an   |
+|                         |                    |                      | emulator model.                               |
+|                         |                    +----------------------+-----------------------------------------------+
+|                         |                    | `mf_pce`__           | Multifidelity Polynomial Chaos Expansion as   |
+|                         |                    |                      | an emulator model.                            |
+|                         |                    +----------------------+-----------------------------------------------+
+|                         |                    | `sc`__               | Stochastic Collocation as an emulator model.  |
+|                         |                    +----------------------+-----------------------------------------------+
+|                         |                    | `mf_sc`__            | Multifidelity Stochastic Collocation as an    |
+|                         |                    |                      | emulator model.                               |
++-------------------------+--------------------+----------------------+-----------------------------------------------+
+
+.. __: method-bayes_calibration-wasabi-emulator-gaussian_process.html
+__ method-bayes_calibration-wasabi-emulator-pce.html
+__ method-bayes_calibration-wasabi-emulator-ml_pce.html
+__ method-bayes_calibration-wasabi-emulator-mf_pce.html
+__ method-bayes_calibration-wasabi-emulator-sc.html
+__ method-bayes_calibration-wasabi-emulator-mf_sc.html
+
+
+
+**Description**
+
+
+This keyword describes the type of emulator used when calculating the
+likelihood function for the Bayesian calibration. The emulator can be
+a Gaussian process, polynomial chaos expansion, or stochastic
+collocation.
+
+

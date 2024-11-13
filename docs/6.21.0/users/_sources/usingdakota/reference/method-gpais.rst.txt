@@ -1,0 +1,120 @@
+.. _method-gpais:
+
+"""""
+gpais
+"""""
+
+
+Gaussian Process Adaptive Importance Sampling
+
+
+
+**Topics**
+
+
+uncertainty_quantification
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-gpais-build_samples
+   method-gpais-seed
+   method-gpais-samples_on_emulator
+   method-gpais-import_build_points_file
+   method-gpais-export_approx_points_file
+   method-gpais-max_iterations
+   method-gpais-response_levels
+   method-gpais-probability_levels
+   method-gpais-gen_reliability_levels
+   method-gpais-distribution
+   method-gpais-rng
+   method-gpais-model_pointer
+
+
+**Specification**
+
+- *Alias:* gaussian_process_adaptive_importance_sampling 
+
+- *Arguments:* None
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+-------------------------------+-----------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword                | Dakota Keyword Description                    |
+|                         | Group              |                               |                                               |
++=========================+====================+===============================+===============================================+
+| Optional                                     | `build_samples`__             | Number of initial model evaluations used in   |
+|                                              |                               | build phase                                   |
++----------------------------------------------+-------------------------------+-----------------------------------------------+
+| Optional                                     | `seed`__                      | Seed of the random number generator           |
++----------------------------------------------+-------------------------------+-----------------------------------------------+
+| Optional                                     | `samples_on_emulator`__       | Number of samples at which to evaluate an     |
+|                                              |                               | emulator (surrogate)                          |
++----------------------------------------------+-------------------------------+-----------------------------------------------+
+| Optional                                     | `import_build_points_file`__  | File containing points you wish to use to     |
+|                                              |                               | build a surrogate                             |
++----------------------------------------------+-------------------------------+-----------------------------------------------+
+| Optional                                     | `export_approx_points_file`__ | Output file for surrogate model value         |
+|                                              |                               | evaluations                                   |
++----------------------------------------------+-------------------------------+-----------------------------------------------+
+| Optional                                     | `max_iterations`__            | Number of iterations allowed for optimizers   |
+|                                              |                               | and adaptive UQ methods                       |
++----------------------------------------------+-------------------------------+-----------------------------------------------+
+| Optional                                     | `response_levels`__           | Values at which to estimate desired           |
+|                                              |                               | statistics for each response                  |
++----------------------------------------------+-------------------------------+-----------------------------------------------+
+| Optional                                     | `probability_levels`__        | Specify probability levels at which to        |
+|                                              |                               | estimate the corresponding response value     |
++----------------------------------------------+-------------------------------+-----------------------------------------------+
+| Optional                                     | `gen_reliability_levels`__    | Specify generalized relability levels at      |
+|                                              |                               | which to estimate the corresponding response  |
+|                                              |                               | value                                         |
++----------------------------------------------+-------------------------------+-----------------------------------------------+
+| Optional                                     | `distribution`__              | Selection of cumulative or complementary      |
+|                                              |                               | cumulative functions                          |
++----------------------------------------------+-------------------------------+-----------------------------------------------+
+| Optional                                     | `rng`__                       | Selection of a random number generator        |
++----------------------------------------------+-------------------------------+-----------------------------------------------+
+| Optional                                     | `model_pointer`__             | Identifier for model block to be used by a    |
+|                                              |                               | method                                        |
++----------------------------------------------+-------------------------------+-----------------------------------------------+
+
+.. __: method-gpais-build_samples.html
+__ method-gpais-seed.html
+__ method-gpais-samples_on_emulator.html
+__ method-gpais-import_build_points_file.html
+__ method-gpais-export_approx_points_file.html
+__ method-gpais-max_iterations.html
+__ method-gpais-response_levels.html
+__ method-gpais-probability_levels.html
+__ method-gpais-gen_reliability_levels.html
+__ method-gpais-distribution.html
+__ method-gpais-rng.html
+__ method-gpais-model_pointer.html
+
+
+
+**Description**
+
+
+``gpais`` is recommended for problems that have a relatively small
+number of input variables (e.g. less than 10-20). This method, Gaussian
+Process Adaptive Importance Sampling,
+is outlined in the paper :cite:p:`Dalbey2014`.
+
+This method starts with an initial set of LHS samples and adds samples
+one at a time, with the goal of adaptively improving the estimate of
+the ideal importance density during the process. The approach uses a
+mixture of component densities. An iterative process is used
+to construct the sequence of improving component densities. At each
+iteration, a Gaussian process (GP) surrogate is used to help identify areas
+in the space where failure is likely to occur. The GPs are not used to
+directly calculate the failure probability; they are only used to approximate
+the importance density. Thus, the Gaussian process adaptive importance
+sampling algorithm overcomes limitations involving using a potentially
+inaccurate surrogate model directly in importance sampling calculations.
+
+

@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Coding Style Guidelines and Conventions &mdash; dakota  documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/dakota_theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/sandiaheaderlite.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Instructions for Modifying Dakota’s Input Specification" href="modifyingdakotainput.html" />
+    <link rel="prev" title="Development Practices and Guidance" href="../developmentpractices.html" /> 
+  
+  <meta name="sandia.approval_type" content="formal"/>
+  <meta property="sandia.approved" content="SAND2023-13392 O"/>
+  <meta name="description" content="The Dakota project delivers both state-of-the-art research and robust, usable software for optimization and UQ."/>
+  <meta name="keywords" content="Dakota, optimization, UQ, uncertainty quantification, parametric analysis, design exploration, model calibration, risk analysis"/>
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../index.html" class="icon icon-home"> dakota
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../setupdakota.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usingdakota/usingdakota.html">Using Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usingdakotagui/usingdakotagui.html">Using Dakota GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../externaltools/externaltools.html">Using External Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../compiling/compiling.html">Compiling Dakota</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../developingdakota.html">Developing Dakota</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../devenvironment.html">Setup Your Development Environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../gitforversioncontrol.html">Git for Version Control</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../writingcode.html">Writing Dakota Code</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../overview.html">Overview of Dakota</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../services.html">Services</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../developmentpractices.html">Development Practices and Guidance</a><ul class="current">
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Coding Style Guidelines and Conventions</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#introduction">Introduction</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#c-c-style-guidelines">C++/C Style Guidelines</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#class-and-variable-styles">Class and variable styles</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#function-styles">Function styles</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#miscellaneous">Miscellaneous</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#file-naming-conventions">File Naming Conventions</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#class-documentation-conventions">Class Documentation Conventions</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#cmake-style-guidelines">CMake Style Guidelines</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#cmake-code-formatting">CMake Code Formatting</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#cmake-variable-naming-conventions">CMake Variable Naming Conventions</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="modifyingdakotainput.html">Instructions for Modifying Dakota’s Input Specification</a></li>
+<li class="toctree-l4"><a class="reference internal" href="interfacinglibrary.html">Interfacing with Dakota as a Library</a></li>
+<li class="toctree-l4"><a class="reference internal" href="iteratorflow.html">Understanding Iterator Flow</a></li>
+<li class="toctree-l4"><a class="reference internal" href="performingfunctionevaluations.html">Performing Function Evaluations</a></li>
+<li class="toctree-l4"><a class="reference internal" href="workingwithvariablecontainers.html">Working with Variable Containers and Views</a></li>
+<li class="toctree-l4"><a class="reference internal" href="demotpl.html">Demo TPL</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../testingcode.html">Testing Dakota Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../documenting.html">Documenting Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../writingdocs.html">Dakota Documentation Mechanics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../tpls.html">Dakota’s Third-Party Libraries</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../misc/misc.html">Miscellaneous</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">dakota</a>
+      </nav>
+
+	  <!-- SNL Lite header -->
+	  <div class="snlheader-subsite--wrapper-default">
+		<snlheader class="snlheader-subsite" role="snlbanner">
+		  <div class="wrapper">
+			<a href="https://www.sandia.gov/index.html">
+			  <div class="logo-transparent"><p class="logo">Sandia National Laboratories</p></div>
+			</a>
+			<div class="nav-top">
+			  <a class="visuallyhidden" name="mainnav"></a>
+			  <div aria-label="main navigation" class="core-nav-transparent core-nav-transparent--visible" role="navigation">
+				<ul role="navigation" class="secondary-links">
+				  <li id="search-text-link">
+					<a aria-label="Search" href="https://www.sandia.gov/search/">Search Sandia.gov</a>
+				  </li>
+				  <li id="directory-text-link">
+					<a href="https://www.sandia.gov/directory.html" aria-expanded="false" aria-label="Site Directory">All Sandia Websites</a>
+				  </li>
+				</ul>
+			  </div>
+			</div>
+		  </div> 
+		</snlheader>
+	  </div>	  
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../developingdakota.html">Developing Dakota</a></li>
+          <li class="breadcrumb-item"><a href="../../writingcode.html">Writing Dakota Code</a></li>
+          <li class="breadcrumb-item"><a href="../developmentpractices.html">Development Practices and Guidance</a></li>
+      <li class="breadcrumb-item active">Coding Style Guidelines and Conventions</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../_sources/developingdakota/writingcode/developmentpractices/codingstyle.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="coding-style-guidelines-and-conventions">
+<h1>Coding Style Guidelines and Conventions<a class="headerlink" href="#coding-style-guidelines-and-conventions" title="Link to this heading"></a></h1>
+<section id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Link to this heading"></a></h2>
+<p>Common code development practices can be extremely useful in multiple developer environments. Particular styles for code components lead to improved readability of the code and can provide important visual cues to other developers. Much of this recommended practices document is borrowed from the CUBIT mesh generation project, which in turn borrows its recommended practices from other projects, yielding some consistency across Sandia projects. While not strict requirements, these guidelines suggest a best-practices starting point for coding in Dakota.</p>
+</section>
+<section id="c-c-style-guidelines">
+<h2>C++/C Style Guidelines<a class="headerlink" href="#c-c-style-guidelines" title="Link to this heading"></a></h2>
+<p>Style guidelines involve the ability to discern at a glance the type and scope of a variable or function.</p>
+<section id="class-and-variable-styles">
+<h3>Class and variable styles<a class="headerlink" href="#class-and-variable-styles" title="Link to this heading"></a></h3>
+<p>Class names should be composed of two or more descriptive words, with the first character of each word capitalized, e.g.:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">ClassName</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Class member variables should be composed of two or more descriptive words, with the first character of the second and succeeding words capitalized, e.g.:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">double</span><span class="w"> </span><span class="n">classMemberVariable</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Temporary (i.e. local) variables are lower case, with underscores separating words in a multiple word temporary variable, e.g.:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span><span class="w"> </span><span class="n">temporary_variable</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Constants (i.e. parameters) and enumeration values are upper case, with underscores separating words, e.g.:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">const</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">CONSTANT_VALUE</span><span class="p">;</span>
+</pre></div>
+</div>
+</section>
+<section id="function-styles">
+<h3>Function styles<a class="headerlink" href="#function-styles" title="Link to this heading"></a></h3>
+<p>Function names are lower case, with underscores separating words, e.g.:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span><span class="w"> </span><span class="nf">function_name</span><span class="p">();</span>
+</pre></div>
+</div>
+<p>There is no need to distinguish between member and non-member functions by style, as this distinction is usually clear by context. This style convention allows member function names which set and return the value of a similarly-named private member variable, e.g.:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span><span class="w"> </span><span class="n">memberVariable</span><span class="p">;</span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">member_variable</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">a</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="c1">// set</span>
+<span class="w">  </span><span class="n">memberVariable</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="kt">int</span><span class="w"> </span><span class="nf">member_variable</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="c1">// get</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="n">memberVariable</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>In cases where the data to be set or returned is more than a few bytes, it is highly desirable to employ const references to avoid unnecessary copying, e.g.:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">continuous_variables</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">RealVector</span><span class="o">&amp;</span><span class="w"> </span><span class="n">c_vars</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="c1">// set</span>
+<span class="w">  </span><span class="n">continuousVariables</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">c_vars</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="k">const</span><span class="w"> </span><span class="n">RealVector</span><span class="o">&amp;</span><span class="w"> </span><span class="nf">continuous_variables</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="p">{</span><span class="w">      </span><span class="c1">// get</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="n">continuousVariables</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Note that it is not necessary to always accept the returned data as a const reference. If it is desired to be able change this data, then accepting the result as a new variable will generate a copy, e.g.:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// reference to continuousVariables cannot be changed</span>
+<span class="k">const</span><span class="w"> </span><span class="n">RealVector</span><span class="o">&amp;</span><span class="w"> </span><span class="n">c_vars</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">model</span><span class="p">.</span><span class="n">continuous_variables</span><span class="p">();</span>
+<span class="c1">// local copy of continuousVariables can be changed</span>
+<span class="n">RealVector</span><span class="w"> </span><span class="n">c_vars</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">model</span><span class="p">.</span><span class="n">continuous_variables</span><span class="p">();</span>
+</pre></div>
+</div>
+</section>
+<section id="miscellaneous">
+<h3>Miscellaneous<a class="headerlink" href="#miscellaneous" title="Link to this heading"></a></h3>
+<p>Appearance of typedefs to redefine or alias basic types is isolated to a few header files (<code class="docutils literal notranslate"><span class="pre">data_types.h</span></code>, <code class="docutils literal notranslate"><span class="pre">template_defs.h</span></code>), so that issues like program precision can be changed by changing a few lines of typedefs rather than many lines of code, e.g.:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">Real</span><span class="p">;</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">xemacs</span></code> is the preferred source code editor, as it has C++ modes for enhancing readability through color (turn on “Syntax highlighting”). Other helpful features include “Paren highlighting” for matching parentheses and the “New Frame” utility to have more than one window operating on the same set of files (note that this is still the same edit session, so all windows are synchronized with each other). Window width should be set to 80 internal columns, which can be accomplished by manual resizing, or preferably, using the following alias in your shell resource file (e.g., .cshrc):</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>alias xemacs &quot;xemacs -g 81x63&quot;
+</pre></div>
+</div>
+<p>where an external width of 81 gives 80 columns internal to the window and the desired height of the window will vary depending on monitor size. This window width imposes a coding standard since you should avoid line wrapping by continuing anything over 80 columns onto the next line.</p>
+<p>Indenting increments are 2 spaces per indent and comments are aligned with the code they describe, e.g.:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">abort_handler</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">code</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">initialized</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">  </span><span class="n">MPI_Initialized</span><span class="p">(</span><span class="o">&amp;</span><span class="n">initialized</span><span class="p">);</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">initialized</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// comment aligned to block it describes</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">size</span><span class="p">;</span>
+<span class="w">    </span><span class="n">MPI_Comm_size</span><span class="p">(</span><span class="n">MPI_COMM_WORLD</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">size</span><span class="p">);</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">size</span><span class="o">&gt;</span><span class="mi">1</span><span class="p">)</span>
+<span class="w">      </span><span class="n">MPI_Abort</span><span class="p">(</span><span class="n">MPI_COMM_WORLD</span><span class="p">,</span><span class="w"> </span><span class="n">code</span><span class="p">);</span>
+<span class="w">    </span><span class="k">else</span>
+<span class="w">      </span><span class="n">exit</span><span class="p">(</span><span class="n">code</span><span class="p">);</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="w">  </span><span class="k">else</span>
+<span class="w">    </span><span class="n">exit</span><span class="p">(</span><span class="n">code</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Also, the continuation of a long command is indented 2 spaces, e.g.:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">const</span><span class="w"> </span><span class="n">String</span><span class="o">&amp;</span><span class="w"> </span><span class="n">iterator_scheduling</span>
+<span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">problem_db</span><span class="p">.</span><span class="n">get_string</span><span class="p">(</span><span class="s">&quot;strategy.iterator_scheduling&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>and similar lines are aligned for readability, e.g.:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Numerical gradients using &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">finiteDiffStepSize</span><span class="o">*</span><span class="mf">100.</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;%&quot;</span>
+<span class="w">     </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">finiteDiffType</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; differences</span><span class="se">\n</span><span class="s">to be calculated by the &quot;</span>
+<span class="w">     </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">methodSource</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; finite difference routine.&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">endl</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Lastly, #ifdef’s are not indented (to make use of syntax highlighting in xemacs).</p>
+</section>
+</section>
+<section id="file-naming-conventions">
+<h2>File Naming Conventions<a class="headerlink" href="#file-naming-conventions" title="Link to this heading"></a></h2>
+<p>In addition to the style outlined above, the following file naming conventions have been established for the Dakota project.</p>
+<p>File names for C++ classes should, in general, use the same name as the class defined by the file. Exceptions include:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>with the introduction of the Dakota namespace, base classes which previously utilized prepended Dakota identifiers can now safely omit the identifiers. However, since file names do not have namespace protection from name collisions, they retain the prepended Dakota identifier. For example, a class previously named DakotaModel which resided in DakotaModel.cpp/hpp, is now Dakota::Model (class Model in namespace Dakota) residing in the same filenames. The retention of the previous filenames reduces the possibility of multiple instances of a Model.hpp causing problems. Derived classes (e.g., NestedModel) do not require a prepended Dakota identifier for either the class or file names.</p></li>
+<li><p>in a few cases, it is convenient to maintain several closely related classes in a single file, in which case the file name may reflect the top level class or some generalization of the set of classes (e.g., DakotaResponse.[CH] files contain Dakota::Response and Dakota::ResponseRep classes, and DakotaBinStream.[CH] files contain the Dakota::BiStream and Dakota::BoStream classes).</p></li>
+</ul>
+</div></blockquote>
+<p>The type of file is determined by one of the four file name extensions listed below:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>.hpp</strong> A class header file ends in the suffix .hpp. The header file provides the class declaration. This file does not contain code for implementing the methods, except for the case of inline functions. Inline functions are to be placed at the bottom of the file with the keyword inline preceding the function name.</p></li>
+<li><p><strong>.cpp</strong> A class implementation file ends in the suffix .cpp. An implementation file contains the definitions of the members of the class.</p></li>
+<li><p><strong>.h</strong> A header file ends in the suffix .h. The header file contains information usually associated with procedures. Defined constants, data structures and function prototypes are typical elements of this file.</p></li>
+<li><p><strong>.c</strong> A procedure file ends in the suffix .c. The procedure file contains the actual procedures.</p></li>
+</ul>
+</div></blockquote>
+</section>
+<section id="class-documentation-conventions">
+<h2>Class Documentation Conventions<a class="headerlink" href="#class-documentation-conventions" title="Link to this heading"></a></h2>
+<p>Class documentation uses the doxygen tool available from <a class="reference external" href="http://www.doxygen.org">http://www.doxygen.org</a> and employs the JAVA-doc comment style. Brief comments appear in header files next to the attribute or function declaration. Detailed descriptions for functions should appear alongside their implementations (i.e., in the .cpp files for non-inlined, or in the headers next to the function definition for inlined). Detailed comments for a class or a class attribute must go in the header file as this is the only option.</p>
+<p>NOTE: Previous class documentation utilities (class2frame and class2html) used the “//-” comment style and comment blocks such as this:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>//- Class:       Model
+//- Description: The model to be iterated by the Iterator.
+//-              Contains Variables, Interface, and Response objects.
+//- Owner:       Mike Eldred
+//- Version: $Id: Dev_Recomm_Pract.dox 4549 2007-09-20 18:25:03Z mseldre $
+</pre></div>
+</div>
+<p>These tools are no longer used, so remaining comment blocks of this type are informational only and will not appear in the documentation generated by doxygen.</p>
+</section>
+<section id="cmake-style-guidelines">
+<h2>CMake Style Guidelines<a class="headerlink" href="#cmake-style-guidelines" title="Link to this heading"></a></h2>
+<p>Dakota conventions for CMake files, such as CMakeLists.txt, FooConfig.cmake, etc., follow. Our goal is ease of reading, maintenance, and support, similar to the C++ code itself. Current CMake versions and build hints are maintained at the Developer Portal <a class="reference external" href="http://dakota.sandia.gov/developer/">http://dakota.sandia.gov/developer/</a>.</p>
+<section id="cmake-code-formatting">
+<h3>CMake Code Formatting<a class="headerlink" href="#cmake-code-formatting" title="Link to this heading"></a></h3>
+<blockquote>
+<div><ul class="simple">
+<li><p>Indentation is 2 spaces, consistent with Dakota C++ style.</p></li>
+<li><p>Lines should be kept to less than 80 chars per line where possible.</p></li>
+<li><p>Wrapped lines may be indented two spaces or aligned with prior lines.</p></li>
+<li><p>For ease of viewing and correctness checking in Emacs, a customization file is available: <a class="reference external" href="http://www.cmake.org/CMakeDocs/cmake-mode.el">http://www.cmake.org/CMakeDocs/cmake-mode.el</a></p></li>
+</ul>
+</div></blockquote>
+</section>
+<section id="cmake-variable-naming-conventions">
+<h3>CMake Variable Naming Conventions<a class="headerlink" href="#cmake-variable-naming-conventions" title="Link to this heading"></a></h3>
+<p>These variable naming conventions are especially important for those that ultimately become preprocessor defines and affect compilation of source files.</p>
+<ul class="simple">
+<li><p>Classic/core elements of the CMake language are set in lower_case, e.g., option, set, if, find_library.</p></li>
+<li><p>Static arguments to CMake functions and macros are set in UPPER_CASE, e.g. REQUIRED, NO_MODULE, QUIET.</p></li>
+<li><p>Minimize “global” variables, i.e., don’t use 2 variables with the same meaning when one will do the job.</p></li>
+<li><p>Feature toggling: when possible, use the “HAVE_&lt;pkg/feature&gt;” convention already in use by many CMake-enabled TPLs, e.g.,</p></li>
+</ul>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>$ grep HAVE_SYSTEM Dakota/src/CMakeLists.txt
+check_function_exists(system HAVE_SYSTEM)
+if(HAVE_SYSTEM)
+  add_definitions(&quot;-DHAVE_SYSTEM&quot;)
+endif(HAVE_SYSTEM)
+$ grep HAVE_CONMIN Dakota/src/CMakeLists.txt Dakota/packages/CMakeLists.txt
+Dakota/src/CMakeLists.txt:if(HAVE_CONMIN)
+Dakota/src/CMakeLists.txt:endif(HAVE_CONMIN)
+Dakota/packages/CMakeLists.txt:option(HAVE_CONMIN &quot;Build the CONMIN package.&quot; ON)
+Dakota/packages/CMakeLists.txt:if(HAVE_CONMIN)
+Dakota/packages/CMakeLists.txt:endif(HAVE_CONMIN)
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>When a variable/preprocessor macro could result in name clashes beyond Dakota scope, e.g., for library_mode users, consider prefixing the “HAVE_&lt;pkg&gt;” name with DAKOTA_, e.g. DAKOTA_HAVE_MPI. Currently, MPI is the only use case for such a variable in Dakota, but many examples can be found in the CMake Modules source, e.g.</p></li>
+</ul>
+<blockquote>
+<div><div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>grep _HAVE_ &lt;cmake_prefix_dir&gt;/share/cmake-2.8/Modules/*
+</pre></div>
+</div>
+</div></blockquote>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../developmentpractices.html" class="btn btn-neutral float-left" title="Development Practices and Guidance" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="modifyingdakotainput.html" class="btn btn-neutral float-right" title="Instructions for Modifying Dakota’s Input Specification" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <!--
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Sandia National Laboratories.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+  --> 
+
+</footer>
+        </div>
+      </div>
+	  
+	  <div style="background-color: #0f0f0f;color:#fafafa;padding:20px">
+	    <div>
+		  <h2><em>Exceptional service in the national interest</em></h2>
+		</div>
+		<p>© 2023 National Technology and Engineering Solutions of Sandia, LLC. | <a href="https://www.sandia.gov/contact_us/index.html">Questions &amp; Comments</a> | <a href="https://www.sandia.gov/general/privacy-security/index.html">Privacy &amp; Security</a></p>
+		<p><a href="http://energy.gov" rel="noopener noreferrer" target="_blank"><img alt="U.S. Department of Energy" longdesc="https://energy.gov" src="https://www.sandia.gov/_common/images/doe_logo_white.png" style="height:37px; width:140px"></a> <a href="http://nnsa.energy.gov/" rel="noopener noreferrer" target="_blank"> <img alt="National Nuclear Security Administration" longdesc="http://nnsa.gov" src="https://www.sandia.gov/_common/images/nnsa_logo_white.png" style="height:37px; width:116px"></a></p>
+		<p><a href="https://www.sandia.gov">Sandia National Laboratories</a> is a multimission laboratory managed and operated by National Technology and Engineering Solutions of Sandia, LLC., a wholly owned subsidiary of Honeywell International, Inc., for the U.S. Department of Energy’s National Nuclear Security Administration under contract DE-NA-0003525.</p>
+	  </div>	  	  
+	  
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

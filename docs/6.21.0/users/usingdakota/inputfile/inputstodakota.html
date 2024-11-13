@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Inputs to Dakota &mdash; dakota  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/dakota_theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/sandiaheaderlite.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Dakota Input Spec" href="inputspec.html" />
+    <link rel="prev" title="Responses" href="responses.html" /> 
+  
+  <meta name="sandia.approval_type" content="formal"/>
+  <meta property="sandia.approved" content="SAND2023-13392 O"/>
+  <meta name="description" content="The Dakota project delivers both state-of-the-art research and robust, usable software for optimization and UQ."/>
+  <meta name="keywords" content="Dakota, optimization, UQ, uncertainty quantification, parametric analysis, design exploration, model calibration, risk analysis"/>
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> dakota
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../setupdakota.html">Getting Started</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../usingdakota.html">Using Dakota</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../introduction/aboutdakota.html">About Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../introduction/helloworld.html">Dakota Beginner’s Tutorial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples.html">Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../introduction/couplingtosimulations.html">Coupling Dakota to a Simulation</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../inputfile.html">Dakota Input File</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="formatting.html">Input File Formatting</a></li>
+<li class="toctree-l3"><a class="reference internal" href="model.html">Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="variables.html">Variables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="interfaces.html">Interfaces</a></li>
+<li class="toctree-l3"><a class="reference internal" href="responses.html">Responses</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Inputs to Dakota</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#overview-of-inputs">Overview of Inputs</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#tabular-data-formats">Tabular Data Formats</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#data-imports">Data Imports</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#ampl-algebraic-mappings">AMPL algebraic mappings</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#genetic-algorithm-population-import">Genetic algorithm population import</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#calibration-data-import">Calibration data import</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#pce-coefficient-import">PCE coefficient import</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#surrogate-model-imports">Surrogate Model Imports</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#variables-responses-import-to-post-run">Variables/responses import to post-run</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="inputspec.html">Dakota Input Spec</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../inputfile.html#video-resources">Video Resources</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../running.html">Running Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../output.html">Dakota Output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../studytypes.html">Study Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../topics.html">Topics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../advanced.html">Advanced Topics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../theory.html">Dakota Theory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference.html">Keyword Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../usingdakotagui/usingdakotagui.html">Using Dakota GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../externaltools/externaltools.html">Using External Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../compiling/compiling.html">Compiling Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developingdakota/developingdakota.html">Developing Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../misc/misc.html">Miscellaneous</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">dakota</a>
+      </nav>
+
+	  <!-- SNL Lite header -->
+	  <div class="snlheader-subsite--wrapper-default">
+		<snlheader class="snlheader-subsite" role="snlbanner">
+		  <div class="wrapper">
+			<a href="https://www.sandia.gov/index.html">
+			  <div class="logo-transparent"><p class="logo">Sandia National Laboratories</p></div>
+			</a>
+			<div class="nav-top">
+			  <a class="visuallyhidden" name="mainnav"></a>
+			  <div aria-label="main navigation" class="core-nav-transparent core-nav-transparent--visible" role="navigation">
+				<ul role="navigation" class="secondary-links">
+				  <li id="search-text-link">
+					<a aria-label="Search" href="https://www.sandia.gov/search/">Search Sandia.gov</a>
+				  </li>
+				  <li id="directory-text-link">
+					<a href="https://www.sandia.gov/directory.html" aria-expanded="false" aria-label="Site Directory">All Sandia Websites</a>
+				  </li>
+				</ul>
+			  </div>
+			</div>
+		  </div> 
+		</snlheader>
+	  </div>	  
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../usingdakota.html">Using Dakota</a></li>
+          <li class="breadcrumb-item"><a href="../inputfile.html">Dakota Input File</a></li>
+      <li class="breadcrumb-item active">Inputs to Dakota</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/usingdakota/inputfile/inputstodakota.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="inputs-to-dakota">
+<span id="input"></span><h1>Inputs to Dakota<a class="headerlink" href="#inputs-to-dakota" title="Link to this heading"></a></h1>
+<section id="overview-of-inputs">
+<span id="input-overview"></span><h2>Overview of Inputs<a class="headerlink" href="#overview-of-inputs" title="Link to this heading"></a></h2>
+<p>Dakota supports a number of command-line arguments, as described in
+<a class="reference internal" href="../running/commandline.html#command-line-main"><span class="std std-ref">Command-Line Options</span></a>.  Among these are specifications
+for the Dakota input file and, optionally, a restart file. Dakota
+input file syntax is described in the adjoining sections in
+<a class="reference internal" href="../inputfile.html#inputfile-main"><span class="std std-ref">Dakota Input File</span></a>, with detailed keyword syntax in
+<a class="reference internal" href="../reference.html#keyword-reference-area"><span class="std std-ref">Keyword Reference</span></a>. The restart file is described in
+<a class="reference internal" href="../running/restart.html#dakota-restart"><span class="std std-ref">Restarting Dakota</span></a>.</p>
+<p>A Dakota input file may be prepared with a text editor such as Emacs,
+Vi, or WordPad, or with the Dakota graphical user interface. The
+Dakota GUI is built on the Java-based Eclipse Framework
+<span id="id1">[<a class="reference internal" href="../../misc/bibliography.html#id68" title="Eclipse.org home. http://www.eclipse.org/. Last accessed: July 6, 2009.">Ecl</a>]</span> and presents the Dakota input specification options
+in either a text editor view or a graphical view. It further includes
+templates and wizards for helping create Dakota studies and can invoke
+Dakota to run an analysis. Dakota GUI downloads for Linux, Windows,
+and Mac, are available from the Dakota website
+<a class="reference external" href="http://dakota.sandia.gov/">http://dakota.sandia.gov/</a>, along with licensing information and
+installation tips. See <a class="reference internal" href="../../usingdakotagui/usingdakotagui.html#dakota-gui-main"><span class="std std-ref">Using Dakota GUI</span></a> for more documentation.</p>
+<section id="tabular-data-formats">
+<span id="input-tabularformat"></span><h3>Tabular Data Formats<a class="headerlink" href="#tabular-data-formats" title="Link to this heading"></a></h3>
+<p>The Dakota input file and/or command line may identify additional text
+files for tabular data import in contexts described in
+<a class="reference internal" href="#input-import"><span class="std std-ref">Data Imports</span></a>. Examples include data from which to
+build a surrogate, points at which to run a list parameter study,
+post-run input data, and least squares and Bayesian calibration data.
+Dakota writes and reads tabular data with C++ stream
+operators/conversions, so most integer and floating point formats are
+acceptable for imported numeric data. Dakota supports the following
+tabular formats:</p>
+<ul>
+<li><p><strong>Annotated:</strong> In most contexts, Dakota tabular data defaults to
+“annotated” tabular format. An annotated tabular file is a
+whitespace-separated text file with one leading header row of
+comments/column labels. In most imports/exports, each subsequent row
+contains an evaluation ID and interface ID, followed by data for
+variables, or variables followed by responses, depending on context.
+This example shows 5 variables, followed by the 1 text_book
+response:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>%eval_id interface     TF1ln     TF1ln    hpu_r1    hpu_r2 ModelForm      text_book
+1               I1   0.97399    1.0476        12     4.133         3     14753
+2               I1   0.94468    1.0636     4.133        12         3     14753
+3               I1    1.0279    1.0035        12     4.133         3     14753
+</pre></div>
+</div>
+<p>Another example is shown in <a class="reference internal" href="../output/tabulardata.html#output-tabcont"><span class="std std-numref">Listing 31</span></a>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Dakota 6.1 and newer include a column for the interface ID. See the
+discussion of custom-annotated format below for importing/exporting
+Dakota 6.0 format files.</p>
+</div>
+<p>For scalar experiment data files, each subsequent row contains an
+experiment ID, followed by data for configuration variables,
+observations, and/or observation errors, depending on context. This
+example shows 3 data points for each of two experiments.</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>%experiment d1 d2 d3
+1   82  15.5    2.02
+2   82.2    15.45   2
+</pre></div>
+</div>
+</li>
+<li><p><strong>Free-form:</strong> When optionally specifying <code class="docutils literal notranslate"><span class="pre">freeform</span></code> for a given
+tabular import, the data file must be provided in a free-form
+format, omitting the leading header row and ID column(s). The raw
+num_rows x num_cols numeric data entries may appear separated with
+any whitespace including arbitrary spaces, tabs, and newlines. In
+this format, vectors may therefore appear as a single row or single
+column (or mixture; entries will populate the vector in order). This
+example shows the free-form version of the annotated data above:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>0.97399    1.0476        12     4.133         3     14753
+0.94468    1.0636     4.133        12         3     14753
+ 1.0279    1.0035        12     4.133         3     14753
+</pre></div>
+</div>
+</li>
+<li><p><strong>Custom-annotated:</strong> In Dakota 6.2 and newer, a custom-annotated
+format is supported, to allow backward-compatibility with Dakota 6.0
+tabular formats, which had a header and evaluation ID, but no
+interface ID. This can be specified, for example, with</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span><span class="k">method</span>
+  list_parameter_study
+    import_points_file = &#39;dakota_pstudy.3.dat&#39;
+      custom_annotated header eval_id
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">custom_annotated</span></code> keyword has options to control <code class="docutils literal notranslate"><span class="pre">header</span></code>
+row, <code class="docutils literal notranslate"><span class="pre">eval_id</span></code> column, and <code class="docutils literal notranslate"><span class="pre">interface_id</span></code> column.</p>
+</li>
+</ul>
+<p>In tabular files, variables appear in input specification order as
+documented in the reference manual. As of Dakota 6.1, tabular I/O has
+columns for all of the variables (active and inactive), not only the
+active variables as in previous versions. To import data corresponding
+only to the active variables, use the keyword <code class="docutils literal notranslate"><span class="pre">active_only</span></code> when specifying the import file.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Prior to October 2011, samples, calibration, and surrogate data
+files were free-form format. They now default to annotated format,
+though there are <code class="docutils literal notranslate"><span class="pre">freeform</span></code> and <code class="docutils literal notranslate"><span class="pre">custom_annotated</span></code> options. For
+both formats, a warning will be generated if a specific number of
+data are expected, but extra is found and an error generated when
+there is insufficient data.  Some TPLs like SCOLIB and JEGA manage
+their own file I/O and only support the free-form option.</p>
+</div>
+</section>
+</section>
+<section id="data-imports">
+<span id="input-import"></span><h2>Data Imports<a class="headerlink" href="#data-imports" title="Link to this heading"></a></h2>
+<p>The Dakota input file and/or command line may identify additional files
+used to import data into Dakota.</p>
+<section id="ampl-algebraic-mappings">
+<h3>AMPL algebraic mappings<a class="headerlink" href="#ampl-algebraic-mappings" title="Link to this heading"></a></h3>
+<p>As described in <a class="reference internal" href="../advanced/advancedsimulationcodeinterfaces.html#advint-algebraic"><span class="std std-ref">Algebraic Mappings</span></a>, an AMPL specification of
+algebraic input-to-output relationships may be imported into Dakota
+and used to define or augment the mappings of a particular
+interface. The files <code class="file docutils literal notranslate"><span class="pre">stub.nl</span></code>, <code class="file docutils literal notranslate"><span class="pre">stub.row</span></code>, and
+<code class="file docutils literal notranslate"><span class="pre">stub.col</span></code> define the mapping.</p>
+</section>
+<section id="genetic-algorithm-population-import">
+<h3>Genetic algorithm population import<a class="headerlink" href="#genetic-algorithm-population-import" title="Link to this heading"></a></h3>
+<p>Genetic algorithms (GAs) from the JEGA and SCOLIB packages support a
+population import feature using the keywords <code class="docutils literal notranslate"><span class="pre">initialization_type</span>
+<span class="pre">flat_file</span> <span class="pre">=</span> <span class="pre">STRING</span></code>. This is useful for warm starting GAs from
+available data or previous runs. Refer to the <code class="docutils literal notranslate"><span class="pre">flat_file</span></code> keywords
+in the <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method.html"><span class="pre">method</span></a></code> reference. The flat file must be in free-form
+format.</p>
+</section>
+<section id="calibration-data-import">
+<span id="input-calib-data"></span><h3>Calibration data import<a class="headerlink" href="#calibration-data-import" title="Link to this heading"></a></h3>
+<p>Calibration methods (deterministic least squares and Bayesian) require
+residuals, or differences between model predictions
+<span class="math notranslate nohighlight">\(\mathbf{q}(\mathbf{\theta})\)</span> and data <span class="math notranslate nohighlight">\(\mathbf{d}\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\mathbf{r}(\mathbf{\theta}) =
+  \mathbf{q}(\mathbf{\theta}) - \mathbf{d},\]</div>
+<p>By default, if a Dakota input file specifies
+<a class="reference internal" href="../reference/responses-calibration_terms.html#responses-calibration-terms"><span class="std std-ref">responses-calibration_terms</span></a>, the
+simulation interface is required to return a vector of residuals
+<span class="math notranslate nohighlight">\(\mathbf{r}\)</span> to Dakota. If in addition the input file includes
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/responses-calibration_terms-calibration_data.html"><span class="pre">calibration_data</span></a></code> or
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/responses-calibration_terms-calibration_data_file.html"><span class="pre">calibration_data_file</span></a></code>, Dakota
+assumes the interface will return the model predictions
+<span class="math notranslate nohighlight">\(\mathbf{q}(\mathbf{\theta})\)</span> themselves and Dakota will compute
+residuals by differencing with the provided data.</p>
+<p>There are two calibration data import mechanisms:</p>
+<ol class="arabic simple">
+<li><p>Scalar responses only with
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/responses-calibration_terms-calibration_data_file.html"><span class="pre">calibration_data_file</span></a></code>: This
+uses a single tabular text file to import data values and
+(optionally) experiment numbers, configurations, and observation
+variances. Each row of the data file expresses this information for
+a single experiment.</p></li>
+<li><p>Field and/or scalar responses with
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/responses-calibration_terms-calibration_data.html"><span class="pre">calibration_data</span></a></code>: In order to
+accommodate the richer structure of field-valued responses, this
+specification requires separate data files per response group
+(descriptor) <code class="docutils literal notranslate"><span class="pre">DESC</span></code>, per experiment <code class="docutils literal notranslate"><span class="pre">NUM</span></code>. The files are named
+<code class="docutils literal notranslate"><span class="pre">DESC.NUM.*</span></code> and must each be in a tabular text format.</p></li>
+</ol>
+<p>The tabular data files may be specified to be <code class="docutils literal notranslate"><span class="pre">annotated</span></code> (default),
+<code class="docutils literal notranslate"><span class="pre">custom_annotated</span></code>, or <code class="docutils literal notranslate"><span class="pre">freeform</span></code> format.</p>
+<p>Calibration data imports include the following information:</p>
+<ul>
+<li><p><strong>Configuration variables (optional):</strong> state variable values
+indicating the configuration at which this experiment was conducted;
+length must agree with the number of state variables active in the
+study.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>In versions of Dakota prior to 6.14, string-valued configuration
+variables were specified in data files with 0-based indices into
+the admissible values. As of Dakota 6.14, strings must be
+specified by value. For example a string-valued configuration
+variable for an experimental condition might appear in the file
+as <code class="docutils literal notranslate"><span class="pre">low_pressure</span></code> vs. <code class="docutils literal notranslate"><span class="pre">high_pressure</span></code>.</p>
+</div>
+</li>
+<li><p><strong>Experimental observations (required):</strong> experimental data values to
+difference with model responses; length equal to the total response
+length (number of scalars + sum(field lengths)).</p></li>
+<li><p><strong>Experimental variances (optional):</strong> measurement errors
+(variances/covariances) associated with the experimental observations</p></li>
+</ul>
+<p>For more on specifying calibration data imports, see <a class="reference internal" href="../studytypes/nonlinearleastsquares.html#nls-examples"><span class="std std-ref">the
+nonlinear least squares examples</span></a> and the reference
+documentation for <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/responses-calibration_terms.html"><span class="pre">calibration_terms</span></a></code>.</p>
+<p><strong>Note on variance:</strong> Field responses may optionally have scalar,
+diagonal, or matrix-valued error covariance information. As an
+example, <a class="reference internal" href="#fig-input-obs-err-cov"><span class="std std-numref">Fig. 31</span></a> shows an observation vector
+with 5 responses; 2 scalar + 3 field (each field of length &gt;1). The
+corresponding covariance matrix has scalar variances
+<span class="math notranslate nohighlight">\(\sigma_1^2, \sigma_2^2\)</span> for each of the scalars <span class="math notranslate nohighlight">\(s1, s2\)</span>,
+diagonal covariance <span class="math notranslate nohighlight">\(D_3\)</span> for field <span class="math notranslate nohighlight">\(f3\)</span>, scalar
+covariance <span class="math notranslate nohighlight">\(\sigma_4^2\)</span> for field <span class="math notranslate nohighlight">\(f4\)</span>, and full matrix
+covariance <span class="math notranslate nohighlight">\(C_5\)</span> for field <span class="math notranslate nohighlight">\(f5\)</span>. In total, Dakota supports
+block diagonal covariance <span class="math notranslate nohighlight">\(\Sigma\)</span> across the responses, with
+blocks <span class="math notranslate nohighlight">\(\Sigma_i\)</span>, which could be fully dense within a given
+field response group. Covariance across the highest-level responses
+(off-diagonal blocks) is not supported, nor is covariance between
+experiments.</p>
+<figure class="align-default" id="fig-input-obs-err-cov">
+<img alt="An example of scalar and field response data, with associated block-diagonal observation error covariance." src="../../_images/ObsErrorCovariance.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 31 </span><span class="caption-text">An example of scalar and field response data, with associated
+block-diagonal observation error covariance.</span><a class="headerlink" href="#fig-input-obs-err-cov" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+</section>
+<section id="pce-coefficient-import">
+<h3>PCE coefficient import<a class="headerlink" href="#pce-coefficient-import" title="Link to this heading"></a></h3>
+<p>Polynomial chaos expansion (PCE) methods compute coefficients for
+response expansions which employ a basis of multivariate orthogonal
+polynomials. Normally, the <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-polynomial_chaos.html"><span class="pre">polynomial_chaos</span></a></code> method
+calculates these coefficients based either on a spectral projection or
+a linear regression (see <a class="reference internal" href="../studytypes/uq.html#uq-expansion"><span class="std std-ref">Stochastic Expansion Methods</span></a>). However, Dakota also
+supports the option of importing a set of response PCE coefficients
+from a file specified with <code class="docutils literal notranslate"><span class="pre">import_expansion_file</span> <span class="pre">=</span> <span class="pre">STRING</span></code>. Each
+row of the free-form formatted file must be comprised of a coefficient
+followed by its associated multi-index (the same format used for
+output described in <a class="reference internal" href="../output/otheroutput.html#other-output-pce"><span class="std std-ref">Stochastic expansion exports</span></a>). This file import can be
+used to evaluate moments analytically or compute probabilities
+numerically from a known response expansion. Refer to
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-polynomial_chaos-import_expansion_file.html"><span class="pre">import_expansion_file</span></a></code> for additional
+information on this specification.</p>
+</section>
+<section id="surrogate-model-imports">
+<h3>Surrogate Model Imports<a class="headerlink" href="#surrogate-model-imports" title="Link to this heading"></a></h3>
+<p>Global data fit surrogates, including some stochastic expansions, may
+be constructed from a variety of data sources. One of these sources is
+an auxiliary data file, as specified by the keyword <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/model-surrogate-global-import_build_points_file.html"><span class="pre">import_build_points_file</span></a></code>. The file may be
+in annotated (default), custom-annotated, or free-form format with
+columns corresponding to variables and responses. For global
+surrogates specified directly via keywords <code class="docutils literal notranslate"><span class="pre">model</span> <span class="pre">surrogate</span> <span class="pre">global</span></code>,
+the keyword <code class="docutils literal notranslate"><span class="pre">use_variable_labels</span></code> will trigger validation and potential reordering of
+imported variable columns based on labels provided in the tabular
+header. Surfpack global surrogate models may also be evaluated at a
+user-provided file containing challenge (test) points. Refer to the
+<a class="reference internal" href="../reference/model-surrogate-global.html#model-surrogate-global"><span class="std std-ref">global</span></a> keywords for additional information on
+these specifications.</p>
+<p>Previously exported surfpack and experimental global surrogate models
+can be re-imported when used directly in the global surrogate model
+context. Importing from binary or text archive instead of building
+from data can sometimes result in significant time savings with models
+such as Gaussian processes. See the <code class="docutils literal notranslate"><span class="pre">export_model</span></code> and
+<code class="docutils literal notranslate"><span class="pre">import_model</span></code> keywords in <a class="reference internal" href="../reference.html#keyword-reference-area"><span class="std std-ref">Keyword Reference</span></a> for
+important caveats on its use.</p>
+</section>
+<section id="variables-responses-import-to-post-run">
+<h3>Variables/responses import to post-run<a class="headerlink" href="#variables-responses-import-to-post-run" title="Link to this heading"></a></h3>
+<p>The post-run mode (supported only for sampling, parameter study, and
+DACE methods) requires specification of a file containing parameter and
+response data. Annotated is the default format (see <a class="reference internal" href="#input-tabularformat"><span class="std std-ref">Tabular Data Formats</span></a>), where leading columns for evaluation
+and interface IDs are followed by columns for variables (active and
+inactive by default), then those for responses, with an ignored header
+row of labels and then one row per evaluation. Typically this file would
+be generated by executing</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>dakota -i dakota.in -pre_run ::variables.dat
+</pre></div>
+</div>
+<p>and then separate from daktoa adding columns of response data to
+<code class="file docutils literal notranslate"><span class="pre">variables.dat</span></code> to make <code class="file docutils literal notranslate"><span class="pre">varsresponses.dat</span></code>. The file is
+specified at the command line with:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>dakota -i dakota.in -post_run varsresponses.dat::
+</pre></div>
+</div>
+<p>To import post-run data in other formats, specify
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/environment-post_run.html"><span class="pre">post_run</span></a></code> in the input file instead of on the
+command-line, and provide a format option.</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="responses.html" class="btn btn-neutral float-left" title="Responses" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="inputspec.html" class="btn btn-neutral float-right" title="Dakota Input Spec" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <!--
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Sandia National Laboratories.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+  --> 
+
+</footer>
+        </div>
+      </div>
+	  
+	  <div style="background-color: #0f0f0f;color:#fafafa;padding:20px">
+	    <div>
+		  <h2><em>Exceptional service in the national interest</em></h2>
+		</div>
+		<p>© 2023 National Technology and Engineering Solutions of Sandia, LLC. | <a href="https://www.sandia.gov/contact_us/index.html">Questions &amp; Comments</a> | <a href="https://www.sandia.gov/general/privacy-security/index.html">Privacy &amp; Security</a></p>
+		<p><a href="http://energy.gov" rel="noopener noreferrer" target="_blank"><img alt="U.S. Department of Energy" longdesc="https://energy.gov" src="https://www.sandia.gov/_common/images/doe_logo_white.png" style="height:37px; width:140px"></a> <a href="http://nnsa.energy.gov/" rel="noopener noreferrer" target="_blank"> <img alt="National Nuclear Security Administration" longdesc="http://nnsa.gov" src="https://www.sandia.gov/_common/images/nnsa_logo_white.png" style="height:37px; width:116px"></a></p>
+		<p><a href="https://www.sandia.gov">Sandia National Laboratories</a> is a multimission laboratory managed and operated by National Technology and Engineering Solutions of Sandia, LLC., a wholly owned subsidiary of Honeywell International, Inc., for the U.S. Department of Energy’s National Nuclear Security Administration under contract DE-NA-0003525.</p>
+	  </div>	  	  
+	  
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,84 @@
+.. _method-approximate_control_variate-search_model_graphs:
+
+"""""""""""""""""""
+search_model_graphs
+"""""""""""""""""""
+
+
+Perform a recursion of admissible DAGs for a given model ensemble
+
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-approximate_control_variate-search_model_graphs-model_selection
+   method-approximate_control_variate-search_model_graphs-no_recursion
+   method-approximate_control_variate-search_model_graphs-kl_recursion
+   method-approximate_control_variate-search_model_graphs-partial_recursion
+   method-approximate_control_variate-search_model_graphs-full_recursion
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+- *Default:* NO_GRAPH_RECURSION
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+-----------------------+-----------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword        | Dakota Keyword Description                    |
+|                         | Group              |                       |                                               |
++=========================+====================+=======================+===============================================+
+| Optional                                     | `model_selection`__   | Perform a recursion of admissible model       |
+|                                              |                       | subsets for a given model ensemble            |
++-------------------------+--------------------+-----------------------+-----------------------------------------------+
+| Required (Choose One)   | DAG Ensemble       | `no_recursion`__      | Do not recur over admissible DAGs for a given |
+|                         | Generation Option  |                       | model ensemble                                |
+|                         |                    +-----------------------+-----------------------------------------------+
+|                         |                    | `kl_recursion`__      | Model graph enumeration that follows the      |
+|                         |                    |                       | ACV-KL partitioning scheme                    |
+|                         |                    +-----------------------+-----------------------------------------------+
+|                         |                    | `partial_recursion`__ | Perform a partial recursion of admissible     |
+|                         |                    |                       | DAGs                                          |
+|                         |                    +-----------------------+-----------------------------------------------+
+|                         |                    | `full_recursion`__    | Perform a full recursion of all admissible    |
+|                         |                    |                       | DAGs for a given model ensemble               |
++-------------------------+--------------------+-----------------------+-----------------------------------------------+
+
+.. __: method-approximate_control_variate-search_model_graphs-model_selection.html
+__ method-approximate_control_variate-search_model_graphs-no_recursion.html
+__ method-approximate_control_variate-search_model_graphs-kl_recursion.html
+__ method-approximate_control_variate-search_model_graphs-partial_recursion.html
+__ method-approximate_control_variate-search_model_graphs-full_recursion.html
+
+
+
+**Description**
+
+
+Within the context of generalized ACV (:cite:p:`Bomarito2022`),
+search over a set of admissible directed acyclic graphs (DAGs) for a
+given model ensemble.  The DAG with the best performance (lowest
+estimator variance for a prescribed budget or lowest cost for a
+prescribed accuracy) is selected for final post-processing.
+
+In order of increasing numbers of DAGs to enumate, options include
+``kl_recursion``, ``partial_recursion`` with a ``depth_limit``, and
+``full_recursion``.
+
+
+
+
+**Theory**
+
+
+Refer to :cite:p:`Bomarito2022` for additional details on generalized ACV recursion.
+
+
+

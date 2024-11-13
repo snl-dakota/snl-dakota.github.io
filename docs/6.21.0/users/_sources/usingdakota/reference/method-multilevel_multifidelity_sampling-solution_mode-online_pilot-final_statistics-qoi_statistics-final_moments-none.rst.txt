@@ -1,0 +1,45 @@
+.. _method-multilevel_multifidelity_sampling-solution_mode-online_pilot-final_statistics-qoi_statistics-final_moments-none:
+
+""""
+none
+""""
+
+
+Omit moments from the set of final statistics.
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+
+**Description**
+
+
+The omission of moment results from the final statistics can allow for a more compact definition of primary and/or secondary response mappings within a nested model specification.
+
+
+
+**Examples**
+
+
+
+.. code-block::
+
+    method,
+      sampling
+        samples = 50 seed = 1234
+        response_levels = 3.6e+11 1.2e+05 3.5e+05
+        final_moments none
+
+
+
+

@@ -1,0 +1,64 @@
+.. _method-multifidelity_function_train-p_refinement-uniform:
+
+"""""""
+uniform
+"""""""
+
+
+Refine an expansion uniformly in all dimensions.
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-multifidelity_function_train-p_refinement-uniform-increment_start_rank
+   method-multifidelity_function_train-p_refinement-uniform-increment_start_order
+   method-multifidelity_function_train-p_refinement-uniform-increment_max_rank
+   method-multifidelity_function_train-p_refinement-uniform-increment_max_order
+   method-multifidelity_function_train-p_refinement-uniform-increment_max_rank_order
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+------------------------------+-----------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword               | Dakota Keyword Description                    |
+|                         | Group              |                              |                                               |
++=========================+====================+==============================+===============================================+
+| Required (Choose One)   | Uniform Refinement | `increment_start_rank`__     | candidate generation by advancement of        |
+|                         | Approach           |                              | starting rank                                 |
+|                         |                    +------------------------------+-----------------------------------------------+
+|                         |                    | `increment_start_order`__    | candidate generation by advancement of        |
+|                         |                    |                              | starting basis order                          |
+|                         |                    +------------------------------+-----------------------------------------------+
+|                         |                    | `increment_max_rank`__       | candidate generation by advancement of        |
+|                         |                    |                              | maximum rank                                  |
+|                         |                    +------------------------------+-----------------------------------------------+
+|                         |                    | `increment_max_order`__      | candidate generation by advancement of        |
+|                         |                    |                              | maximum basis order                           |
+|                         |                    +------------------------------+-----------------------------------------------+
+|                         |                    | `increment_max_rank_order`__ | candidate generation by advancement of        |
+|                         |                    |                              | maximum rank and maximum basis order          |
++-------------------------+--------------------+------------------------------+-----------------------------------------------+
+
+.. __: method-multifidelity_function_train-p_refinement-uniform-increment_start_rank.html
+__ method-multifidelity_function_train-p_refinement-uniform-increment_start_order.html
+__ method-multifidelity_function_train-p_refinement-uniform-increment_max_rank.html
+__ method-multifidelity_function_train-p_refinement-uniform-increment_max_order.html
+__ method-multifidelity_function_train-p_refinement-uniform-increment_max_rank_order.html
+
+
+
+**Description**
+
+
+The quadrature_order or sparse_grid_level are ramped by one on each refinement iteration until either of the two convergence controls is satisfied. For the uniform refinement case with regression approaches, the expansion_order is ramped by one on each iteration while the oversampling ratio (either defined by collocation_ratio or inferred from collocation_points based on the initial expansion) is held fixed.
+
+

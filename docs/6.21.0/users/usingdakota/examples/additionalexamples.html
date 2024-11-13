@@ -1,0 +1,1921 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Additional Examples &mdash; dakota  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/dakota_theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/sandiaheaderlite.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Coupling Dakota to a Simulation" href="../introduction/couplingtosimulations.html" />
+    <link rel="prev" title="Offline Examples" href="offlineexamples.html" /> 
+  
+  <meta name="sandia.approval_type" content="formal"/>
+  <meta property="sandia.approved" content="SAND2023-13392 O"/>
+  <meta name="description" content="The Dakota project delivers both state-of-the-art research and robust, usable software for optimization and UQ."/>
+  <meta name="keywords" content="Dakota, optimization, UQ, uncertainty quantification, parametric analysis, design exploration, model calibration, risk analysis"/>
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> dakota
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../setupdakota.html">Getting Started</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../usingdakota.html">Using Dakota</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../introduction/aboutdakota.html">About Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../introduction/helloworld.html">Dakota Beginner’s Tutorial</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../examples.html">Examples</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="gettingstarted.html">&quot;Getting Started&quot; Examples</a></li>
+<li class="toctree-l3"><a class="reference internal" href="onlinerepo.html">Online Examples Library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="offlineexamples.html">Offline Examples</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Additional Examples</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#textbook">Textbook</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#gradient-based-constrained-optimization">Gradient-based Constrained Optimization</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#least-squares-optimization">Least Squares Optimization</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#rosenbrock">Rosenbrock</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#additional-rosenbrock-examples-lsq">Least-Squares Optimization</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#method-comparison">Method Comparison</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#herbie-smooth-herbie-and-shubert">Herbie, Smooth Herbie, and Shubert</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#efficient-global-optimization">Efficient Global Optimization</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#sobol-and-ishigami-functions">Sobol and Ishigami Functions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#cylinder-head">Cylinder Head</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#constrained-gradient-based-optimization">Constrained Gradient Based Optimization</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#container">Container</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#constrained-gradient-based-optimization-1">Constrained Gradient Based Optimization</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#cantilever">Cantilever</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#constrained-gradient-based-optimization-2">Constrained Gradient Based Optimization</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#optimization-under-uncertainty">Optimization Under Uncertainty</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#multiobjective-test-problems">Multiobjective Test Problems</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#multiobjective-test-problem-2">Multiobjective Test Problem 2</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#multiobjective-test-problem-3">Multiobjective Test Problem 3</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#morris">Morris</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#morris-one-at-a-time-sensitivity-study">Morris One-at-a-Time Sensitivity Study</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#test-problems-for-reliability-analyses">Test Problems for Reliability Analyses</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#log-ratio">Log Ratio</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#steel-section">Steel Section</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#portal-frame">Portal Frame</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#short-column">Short Column</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#steel-column">Steel Column</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#test-problems-for-forward-uq">Test Problems for Forward UQ</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#genz-functions">Genz functions</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#elliptic-partial-differential-equation-with-uncertain-coefficients">Elliptic Partial differential equation with uncertain coefficients</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#damped-oscillator">Damped Oscillator</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#non-linear-coupled-system-of-odes">Non-linear coupled system of ODEs</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#test-problems-for-inverse-uq">Test Problems for Inverse UQ</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#experimental-design">Experimental Design</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#bayes-linear">Bayes linear</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../introduction/couplingtosimulations.html">Coupling Dakota to a Simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../inputfile.html">Dakota Input File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../running.html">Running Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../output.html">Dakota Output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../studytypes.html">Study Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../topics.html">Topics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../advanced.html">Advanced Topics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../theory.html">Dakota Theory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference.html">Keyword Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../usingdakotagui/usingdakotagui.html">Using Dakota GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../externaltools/externaltools.html">Using External Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../compiling/compiling.html">Compiling Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developingdakota/developingdakota.html">Developing Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../misc/misc.html">Miscellaneous</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">dakota</a>
+      </nav>
+
+	  <!-- SNL Lite header -->
+	  <div class="snlheader-subsite--wrapper-default">
+		<snlheader class="snlheader-subsite" role="snlbanner">
+		  <div class="wrapper">
+			<a href="https://www.sandia.gov/index.html">
+			  <div class="logo-transparent"><p class="logo">Sandia National Laboratories</p></div>
+			</a>
+			<div class="nav-top">
+			  <a class="visuallyhidden" name="mainnav"></a>
+			  <div aria-label="main navigation" class="core-nav-transparent core-nav-transparent--visible" role="navigation">
+				<ul role="navigation" class="secondary-links">
+				  <li id="search-text-link">
+					<a aria-label="Search" href="https://www.sandia.gov/search/">Search Sandia.gov</a>
+				  </li>
+				  <li id="directory-text-link">
+					<a href="https://www.sandia.gov/directory.html" aria-expanded="false" aria-label="Site Directory">All Sandia Websites</a>
+				  </li>
+				</ul>
+			  </div>
+			</div>
+		  </div> 
+		</snlheader>
+	  </div>	  
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../usingdakota.html">Using Dakota</a></li>
+          <li class="breadcrumb-item"><a href="../examples.html">Examples</a></li>
+      <li class="breadcrumb-item active">Additional Examples</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/usingdakota/examples/additionalexamples.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="additional-examples">
+<span id="additional"></span><h1>Additional Examples<a class="headerlink" href="#additional-examples" title="Link to this heading"></a></h1>
+<p>This chapter contains additional examples of available methods being
+applied to several test problems. The examples are organized by the
+test problem being used. Many of these examples are also used as code
+verification tests. The examples are run periodically and the results
+are checked against known solutions. This ensures that the algorithms
+are correctly implemented.</p>
+<section id="textbook">
+<span id="additional-textbook"></span><h2>Textbook<a class="headerlink" href="#textbook" title="Link to this heading"></a></h2>
+<p>The two-variable version of the “textbook” test problem provides a
+nonlinearly constrained optimization test case. It is formulated as:</p>
+<div class="math notranslate nohighlight" id="equation-additional-textbook-f">
+<span class="eqno">(1)<a class="headerlink" href="#equation-additional-textbook-f" title="Link to this equation"></a></span>\[\begin{split}\texttt{minimize } &amp; f = (x_1-1)^{4}+(x_2-1)^{4} \\
+\texttt{subject to } &amp; g_1 = x_1^2-\frac{x_2}{2} \le 0 \\
+&amp; g_2 = x_2^2-\frac{x_1}{2} \le 0 \\
+&amp;  0.5 \le x_1 \le 5.8 \\
+&amp; -2.9 \le x_2 \le 2.9\end{split}\]</div>
+<p>Contours of this test problem are illustrated in
+<a class="reference internal" href="#additional-textbook-contours"><span class="std std-numref">Fig. 7</span></a>, with a close-up view of the
+feasible region given in <a class="reference internal" href="#additional-textbook-closeup"><span class="std std-numref">Fig. 8</span></a>.</p>
+<figure class="align-center" id="additional-textbook-contours">
+<a class="reference internal image-reference" href="../../_images/textbook_contours.png"><img alt="../../_images/textbook_contours.png" src="../../_images/textbook_contours.png" style="width: 25%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 7 </span><span class="caption-text">Contours of the textbook problem on the <span class="math notranslate nohighlight">\([-3,4] \times
+[-3,4]\)</span> domain with the constrained optimum point <span class="math notranslate nohighlight">\((x_1,x_2)
+= (0.5,0.5)\)</span>. The feasible region lies at the intersection of the
+two constraints <span class="math notranslate nohighlight">\(g_1\)</span> (solid) and <span class="math notranslate nohighlight">\(g_2\)</span> (dashed).</span><a class="headerlink" href="#additional-textbook-contours" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<figure class="align-center" id="additional-textbook-closeup">
+<a class="reference internal image-reference" href="../../_images/textbook_closeup.png"><img alt="../../_images/textbook_closeup.png" src="../../_images/textbook_closeup.png" style="width: 25%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 8 </span><span class="caption-text">Contours of the textbook problem zoomed into an area containing the
+constrained optimum point <span class="math notranslate nohighlight">\((x_1,x_2) = (0.5,0.5)\)</span>. The
+feasible region lies at the intersection of the two constraints
+<span class="math notranslate nohighlight">\(g_1\)</span> (solid) and <span class="math notranslate nohighlight">\(g_2\)</span> (dashed).</span><a class="headerlink" href="#additional-textbook-closeup" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>For the textbook test problem, the unconstrained minimum occurs at
+<span class="math notranslate nohighlight">\((x_1,x_2) = (1,1)\)</span>. However, the inclusion of the constraints
+moves the minimum to <span class="math notranslate nohighlight">\((x_1,x_2) = (0.5,0.5)\)</span>.  Equation
+<a class="reference internal" href="#equation-additional-textbook-f">(1)</a> presents the 2-dimensional form of the
+textbook problem. An extended formulation is given by</p>
+<div class="math notranslate nohighlight" id="equation-additional-tbe">
+<span class="eqno">(2)<a class="headerlink" href="#equation-additional-tbe" title="Link to this equation"></a></span>\[\begin{split}\texttt{minimize }   &amp; f = \sum_{i=1}^{n}(x_i-1)^4 \\
+\texttt{subject to } &amp; g_1 = x_1^2-\frac{x_2}{2} \leq 0 \\
+&amp; g_2=x_2^2-\frac{x_1}{2} \leq 0 \\
+&amp; 0.5 \leq x_1 \leq 5.8 \\
+&amp; -2.9 \leq x_2 \leq 2.9 \\\end{split}\]</div>
+<p>where <span class="math notranslate nohighlight">\(n\)</span> is the number of design variables. The objective
+function is designed to accommodate an arbitrary number of design
+variables in order to allow flexible testing of a variety of data sets.
+Contour plots for the <span class="math notranslate nohighlight">\(n=2\)</span> case have been shown previously in
+<a class="reference internal" href="#additional-textbook-contours"><span class="std std-numref">Fig. 7</span></a>.</p>
+<p>For the optimization problem given in Equation <a class="reference internal" href="#equation-additional-tbe">(2)</a>,
+the unconstrained solution <code class="docutils literal notranslate"><span class="pre">num_nonlinear_inequality_constraints</span> <span class="pre">=</span>
+<span class="pre">0</span></code> for two design variables is:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}x_1 &amp;= 1.0 \\
+x_2 &amp;= 1.0\end{split}\]</div>
+<p>with</p>
+<div class="math notranslate nohighlight">
+\[f^{\ast} = 0.0\]</div>
+<p>The solution for the optimization problem constrained by <span class="math notranslate nohighlight">\(g_1\)</span>
+(<code class="docutils literal notranslate"><span class="pre">num_nonlinear_inequality_constraints</span> <span class="pre">=</span> <span class="pre">1</span></code>) is:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}x_1 &amp;= 0.763 \\
+x_2 &amp;= 1.16\end{split}\]</div>
+<p>with</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}f^{\ast} &amp;= 0.00388 \\
+g_1^{\ast} &amp;= 0.0 ~~\mathrm{(active)}\end{split}\]</div>
+<p>The solution for the optimization problem constrained by <span class="math notranslate nohighlight">\(g_1\)</span>
+and <span class="math notranslate nohighlight">\(g_2\)</span> (<code class="docutils literal notranslate"><span class="pre">num_nonlinear_inequality_constraints</span> <span class="pre">=</span> <span class="pre">2</span></code>) is:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}x_1 &amp;= 0.500 \\
+x_2 &amp;= 0.500\end{split}\]</div>
+<p>with</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}f^{\ast} &amp;= 0.125 \\
+g_1^{\ast} &amp;= 0.0 ~~\mathrm{(active)}
+g_2^{\ast} &amp;= 0.0 ~~\mathrm{(active)}\end{split}\]</div>
+<p>Note that as constraints are added, the design freedom is restricted
+(the additional constraints are active at the solution) and an increase
+in the optimal objective function is observed.</p>
+<section id="gradient-based-constrained-optimization">
+<span id="additional-textbook-examples-gradient2"></span><h3>Gradient-based Constrained Optimization<a class="headerlink" href="#gradient-based-constrained-optimization" title="Link to this heading"></a></h3>
+<p>This example demonstrates the use of a gradient-based optimization
+algorithm on a nonlinearly constrained problem. The Dakota input file
+for this example is shown in
+<a class="reference internal" href="#additional-textbook-grad-constr"><span class="std std-numref">Listing 4</span></a>.  This input file is similar
+to the input file for the unconstrained gradient-based optimization
+example involving the Rosenbrock function, seen in
+<a class="reference internal" href="gettingstarted.html#examples-gettingstarted-optimization"><span class="std std-ref">Optimization</span></a> Note the addition of
+commands in the responses block of the input file that identify the
+number and type of constraints, along with the upper bounds on these
+constraints. The commands <code class="docutils literal notranslate"><span class="pre">direct</span></code> and <code class="docutils literal notranslate"><span class="pre">analysis_driver</span> <span class="pre">=</span>
+<span class="pre">’text_book’</span></code> specify that Dakota will use its internal version of the
+textbook problem.</p>
+<div class="literal-block-wrapper docutils container" id="additional-textbook-grad-constr">
+<div class="code-block-caption"><span class="caption-number">Listing 4 </span><span class="caption-text">Textbook gradient-based constrained optimization example:
+the Dakota input file – see
+<code class="docutils literal notranslate"><span class="pre">dakota/share/dakota/examples/users/textbook_opt_conmin.in</span></code></span><a class="headerlink" href="#additional-textbook-grad-constr" title="Link to this code"></a></div>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span><span class="c"># Dakota Input File: textbook_opt_conmin.in</span>
+
+<span class="k">environment</span>
+  tabular_data
+    tabular_data_file = &#39;textbook_opt_conmin.dat&#39;
+
+<span class="k">method</span>
+<span class="c"># dot_mmfd #DOT performs better but may not be available</span>
+  conmin_mfd
+    max_iterations = 50
+    convergence_tolerance = 1e-4
+
+<span class="k">variables</span>
+  continuous_design = 2
+    initial_point    0.9    1.1
+    upper_bounds     5.8    2.9
+    lower_bounds     0.5   -2.9
+    descriptors      &#39;x1&#39;   &#39;x2&#39;
+
+<span class="k">interface</span>
+  analysis_drivers =       &#39;text_book&#39;
+    direct
+
+<span class="k">responses</span>
+  objective_functions = 1
+  nonlinear_inequality_constraints = 2
+  descriptors &#39;f&#39; &#39;c1&#39; &#39;c2&#39;
+  numerical_gradients
+    method_source dakota
+    interval_type central
+    fd_step_size = 1.e-4
+  no_hessians
+</pre></div>
+</div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">conmin_mfd</span></code> keyword in
+<a class="reference internal" href="#additional-textbook-grad-constr"><span class="std std-numref">Listing 4</span></a> tells Dakota to use the
+CONMIN package’s implementation of the Method of Feasible Directions
+(see <a class="reference internal" href="../studytypes/optimization.html#opt-methods-gradient-constrained"><span class="std std-ref">Methods for Constrained Problems</span></a> for more details). A
+significantly faster alternative is the DOT package’s Modified Method
+of Feasible Directions, i.e. <code class="docutils literal notranslate"><span class="pre">dot_mmfd</span></code> (see
+<a class="reference internal" href="../studytypes/optimization.html#opt-methods-gradient-constrained"><span class="std std-ref">Methods for Constrained Problems</span></a> for more details). However,
+DOT is licensed software that may not be available on a particular
+system. If it is installed on your system and Dakota has been
+configured and compiled with <code class="docutils literal notranslate"><span class="pre">HAVE_DOT:BOOL=ON</span></code> flag, you may use it
+by commenting out the line with <code class="docutils literal notranslate"><span class="pre">conmin_mfd</span></code> and uncommenting the
+line with <code class="docutils literal notranslate"><span class="pre">dot_mmfd</span></code>.</p>
+<p>The results of the optimization example are listed at the end of the
+output file (see discussion in <a class="reference internal" href="../introduction/helloworld.html#helloworld-results"><span class="std std-ref">What should happen</span></a>).  This
+information shows that the optimizer stopped at the point
+<span class="math notranslate nohighlight">\((x_1,x_2) = (0.5,0.5)\)</span>, where both constraints are
+approximately satisfied, and where the objective function value is
+<span class="math notranslate nohighlight">\(0.128\)</span>. The progress of the optimization algorithm is shown in
+<a class="reference internal" href="#additional-textbook-grad-constr-graphics-iterhist"><span class="std std-numref">Fig. 9</span></a> where the
+dots correspond to the end points of each iteration in the
+algorithm. The starting point is <span class="math notranslate nohighlight">\((x_1,x_2) = (0.9,1.1)\)</span>, where
+both constraints are violated. The optimizer takes a sequence of steps
+to minimize the objective function while reducing the infeasibility of
+the constraints. Dakota’s legacy X Windows-based graphics for the
+optimization are also shown in
+<a class="reference internal" href="#additional-textbook-grad-constr-graphics-obj"><span class="std std-numref">Fig. 10</span></a>.</p>
+<figure class="align-center" id="additional-textbook-grad-constr-graphics-iterhist">
+<a class="reference internal image-reference" href="../../_images/textbook_history.png"><img alt="../../_images/textbook_history.png" src="../../_images/textbook_history.png" style="width: 40%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 9 </span><span class="caption-text">Textbook gradient-based constrained optimization example: iteration
+history (iterations marked by solid dots).</span><a class="headerlink" href="#additional-textbook-grad-constr-graphics-iterhist" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<figure class="align-center" id="additional-textbook-grad-constr-graphics-obj">
+<a class="reference internal image-reference" href="../../_images/textbook_opt_hist.png"><img alt="../../_images/textbook_opt_hist.png" src="../../_images/textbook_opt_hist.png" style="width: 60%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 10 </span><span class="caption-text">Textbook gradient-based constrained optimization example:
+screen capture of the legacy Dakota X Windows-based graphics
+shows how the objective function was reduced during the search for
+a feasible design point</span><a class="headerlink" href="#additional-textbook-grad-constr-graphics-obj" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+</section>
+<section id="least-squares-optimization">
+<span id="additional-textbook-least"></span><h3>Least Squares Optimization<a class="headerlink" href="#least-squares-optimization" title="Link to this heading"></a></h3>
+<p>This test problem may also be used to exercise least squares
+solution methods by modifying the problem formulation to:</p>
+<div class="math notranslate nohighlight" id="equation-additional-tbls">
+<span class="eqno">(3)<a class="headerlink" href="#equation-additional-tbls" title="Link to this equation"></a></span>\[\texttt{minimize } (f)^2+(g_1)^2+(g_2)^2\]</div>
+<p>This modification is performed by simply changing the responses
+specification for the three functions from <code class="docutils literal notranslate"><span class="pre">num_objective_functions</span> <span class="pre">=</span>
+<span class="pre">1</span></code> and <code class="docutils literal notranslate"><span class="pre">num_nonlinear_inequality_constraints</span> <span class="pre">=</span> <span class="pre">2</span></code> to
+<code class="docutils literal notranslate"><span class="pre">num_least_squares_terms</span> <span class="pre">=</span> <span class="pre">3</span></code>. Note that the two problem
+formulations are not equivalent and have different solutions.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Another way to exercise the least squares methods which would be
+equivalent to the optimization formulation would be to select the
+residual functions to be <span class="math notranslate nohighlight">\((x_{i}-1)^2\)</span>. However, this formulation
+requires modification to <code class="file docutils literal notranslate"><span class="pre">dakota_source/test/text_book.cpp</span></code> and will
+not be presented here. Equation <a class="reference internal" href="#equation-additional-tbls">(3)</a>, on the other
+hand, can use the existing <code class="docutils literal notranslate"><span class="pre">text_book</span></code> without modification.</p>
+</div>
+<p>Refer to <a class="reference internal" href="#additional-rosenbrock"><span class="std std-ref">Rosenbrock</span></a> for an example of
+minimizing the same objective function using both optimization and
+least squares approaches.</p>
+<p>The solution for the least squares problem given in
+<a class="reference internal" href="#equation-additional-tbls">(3)</a> is:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}x_1 &amp;= 0.566 \\
+x_2 &amp;= 0.566\end{split}\]</div>
+<p>with the residual functions equal to</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}f^{\ast} &amp;= 0.0713 \\
+g_1^{\ast} &amp;= 0.0371 \\
+g_2^{\ast} &amp;= 0.0371\end{split}\]</div>
+<p>and therefore a sum of squares equal to 0.00783.</p>
+<p>This study requires selection of <code class="docutils literal notranslate"><span class="pre">num_least_squares_terms</span> <span class="pre">=</span> <span class="pre">3</span></code> in
+the responses specification and selection of either
+<code class="docutils literal notranslate"><span class="pre">optpp_g_newton</span></code>, <code class="docutils literal notranslate"><span class="pre">nlssol_sqp</span></code>, or <code class="docutils literal notranslate"><span class="pre">nl2sol</span></code> in the method
+specification.</p>
+</section>
+</section>
+<section id="rosenbrock">
+<span id="additional-rosenbrock"></span><h2>Rosenbrock<a class="headerlink" href="#rosenbrock" title="Link to this heading"></a></h2>
+<p>The Rosenbrock function <span id="id1">[<a class="reference internal" href="../../misc/bibliography.html#id111" title="P. E. Gill, W. Murray, and M. H. Wright. Practical Optimization. Academic Press, San Diego, CA, 1981.">GMW81</a>]</span> is a well known test problem
+for optimization algorithms. The standard formulation includes two
+design variables, and computes a single objective function, while
+generalizations can support arbitrary many design variables. This
+problem can also be posed as a least-squares optimization problem with
+two residuals to be minimized because the objective function is
+comprised of a sum of squared terms.</p>
+<p><strong>Standard Formulation:</strong> The standard two-dimensional formulation is</p>
+<div class="math notranslate nohighlight" id="equation-additional-rosenstd">
+<span class="eqno">(4)<a class="headerlink" href="#equation-additional-rosenstd" title="Link to this equation"></a></span>\[\texttt{minimize } f(x) = 100(x_2-x_1^2)^2+(1-x_1)^2\]</div>
+<p>Surface and contour plots for this function can be seen in
+<a class="reference internal" href="gettingstarted.html#examples-gettingstarted-rosenbrock"><span class="std std-ref">Rosenbrock Test Problem</span></a>. The optimal solution is:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}x_1 &amp;= 1.0 \\
+x_2 &amp;= 1.0\end{split}\]</div>
+<p>with</p>
+<div class="math notranslate nohighlight">
+\[f^{\ast} = 0.0\]</div>
+<p>A discussion of gradient based optimization to minimize this function is
+in <a class="reference internal" href="gettingstarted.html#examples-gettingstarted-optimization"><span class="std std-ref">Optimization</span></a></p>
+<p><strong>“Extended” Formulation:</strong> The formulation in <span id="id2">[<a class="reference internal" href="../../misc/bibliography.html#id219" title="J. Nocedal and Wright S. J. Numerical Optimization. Springer Series in Operations Research. Springer, New York, 1999.">NJ99</a>]</span>, called
+the “extended Rosenbrock”, is defined by:</p>
+<div class="math notranslate nohighlight" id="equation-additional-rosenexd">
+<span class="eqno">(5)<a class="headerlink" href="#equation-additional-rosenexd" title="Link to this equation"></a></span>\[f = \sum_{i=1}^{n/2} \left[ \alpha (x_{2i}-x_{2i-1}^2)^2+(1-x_{2i-1})^2 \right]\]</div>
+<p><strong>“Generalized” Formulation:</strong> Another n-dimensional formulation was
+propsed in <span id="id3">[<a class="reference internal" href="../../misc/bibliography.html#id258" title="K. Schittkowski. More Test Examples for Nonlinear Programming, Lecture Notes in Economics and Mathematical Systems, Vol. 282. Springer-Verlag, Berlin, 1987.">Sch87</a>]</span>:</p>
+<div class="math notranslate nohighlight" id="equation-additional-rosengen">
+<span class="eqno">(6)<a class="headerlink" href="#equation-additional-rosengen" title="Link to this equation"></a></span>\[f = \sum_{i=1}^{n-1} \left[ 100 (x_{i+1}-x_i^2)^2+(1-x_i)^2 \right]\]</div>
+<p><strong>A Least-Squares Optimization Formulation:</strong> This test problem may
+also be used to exercise least-squares solution methods by recasting
+the standard problem formulation into:</p>
+<div class="math notranslate nohighlight" id="equation-additional-rosenls">
+<span class="eqno">(7)<a class="headerlink" href="#equation-additional-rosenls" title="Link to this equation"></a></span>\[\texttt{minimize } f(x) = (f_1)^2+(f_2)^2\]</div>
+<p>where</p>
+<div class="math notranslate nohighlight" id="equation-additional-rosenr1">
+<span class="eqno">(8)<a class="headerlink" href="#equation-additional-rosenr1" title="Link to this equation"></a></span>\[ f_1 = 10 (x_2 - x_1^2)\]</div>
+<p>and</p>
+<div class="math notranslate nohighlight" id="equation-additional-rosenr2">
+<span class="eqno">(9)<a class="headerlink" href="#equation-additional-rosenr2" title="Link to this equation"></a></span>\[f_2 = 1 - x_1\]</div>
+<p>are residual terms.</p>
+<p>The included analysis driver can handle both formulations. In the
+<code class="docutils literal notranslate"><span class="pre">dakota/share/dakota/test</span></code> directory, the <code class="docutils literal notranslate"><span class="pre">rosenbrock</span></code> executable
+(compiled from <code class="docutils literal notranslate"><span class="pre">dakota_source/test/rosenbrock.cpp</span></code>) checks the
+number of response functions passed in the parameters file and returns
+either an objective function (as computed from
+<a class="reference internal" href="#equation-additional-rosenstd">(4)</a>) for use with optimization methods or two
+least squares terms (as computed from <a class="reference internal" href="#equation-additional-rosenr1">(8)</a> and
+<a class="reference internal" href="#equation-additional-rosenr2">(9)</a>) for use with least squares methods. Both
+cases support analytic gradients of the function set with respect to
+the design variables. See <a class="reference internal" href="gettingstarted.html#tutorial-rosenbrock-grad"><span class="std std-numref">Listing 1</span></a> (standard
+formulation) and <a class="reference internal" href="#additional-rosenbrock-nls"><span class="std std-numref">Listing 5</span></a> (least squares
+formulation) for usage examples.</p>
+<section id="additional-rosenbrock-examples-lsq">
+<span id="id4"></span><h3>Least-Squares Optimization<a class="headerlink" href="#additional-rosenbrock-examples-lsq" title="Link to this heading"></a></h3>
+<p>Least squares methods are often used for calibration or parameter
+estimation, that is, to seek parameters maximizing agreement of models
+with experimental data. The least-squares formulation was described in
+the previous section.</p>
+<p>When using a least-squares approach to minimize a function, each of
+the least-squares terms <span class="math notranslate nohighlight">\(f_1, f_2,\ldots\)</span> is driven toward
+zero. This formulation permits the use of specialized algorithms that
+can be more efficient than general purpose optimization
+algorithms. See <a class="reference internal" href="../studytypes/nonlinearleastsquares.html#nls"><span class="std std-ref">Nonlinear Least Squares</span></a> for more detail on the algorithms used for
+least-squares minimization, as well as a discussion on the types of
+engineering design problems (e.g., parameter estimation) that can make
+use of the least-squares approach.</p>
+<p><a class="reference internal" href="#additional-rosenbrock-nls"><span class="std std-numref">Listing 5</span></a> is a listing of the Dakota input
+file <code class="docutils literal notranslate"><span class="pre">rosen_opt_nls.in</span></code>.  This differs from the input file shown in
+<a class="reference internal" href="gettingstarted.html#tutorial-rosenbrock-grad"><span class="std std-ref">Rosenbrock gradient-based unconstrained optimization example: the Dakota input file.</span></a> in several key areas. The responses
+block of the input file uses the keyword <code class="docutils literal notranslate"><span class="pre">calibration_terms</span> <span class="pre">=</span> <span class="pre">2</span></code>
+instead of <code class="docutils literal notranslate"><span class="pre">objective_functions</span> <span class="pre">=</span> <span class="pre">1</span></code>. The method block of the input
+file shows that the NL2SOL algorithm <span id="id5">[<a class="reference internal" href="../../misc/bibliography.html#id51" title="J. E. Dennis, D. M. Gay, and R. E. Welsch. ALGORITHM 573: NL2SOL–an adaptive nonlinear least-squares algorithm. ACM Trans. Math. Software, 7:369–383, 1981.">DGW81</a>]</span> (<code class="docutils literal notranslate"><span class="pre">nl2sol</span></code>) is
+used in this example. (The Gauss-Newton, NL2SOL, and NLSSOL SQP
+algorithms are currently available for exploiting the special
+mathematical structure of least squares minimization problems).</p>
+<div class="literal-block-wrapper docutils container" id="additional-rosenbrock-nls">
+<div class="code-block-caption"><span class="caption-number">Listing 5 </span><span class="caption-text">Rosenbrock nonlinear least squares example: the Dakota
+input file – see
+<code class="docutils literal notranslate"><span class="pre">dakota/share/dakota/examples/users/rosen_opt_nls.in</span></code></span><a class="headerlink" href="#additional-rosenbrock-nls" title="Link to this code"></a></div>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span><span class="c"># Dakota Input File: rosen_opt_nls.in</span>
+
+<span class="k">environment</span>
+  tabular_data
+    tabular_data_file = &#39;rosen_opt_nls.dat&#39;
+
+<span class="k">method</span>
+  nl2sol
+    convergence_tolerance = 1e-4
+    max_iterations = 100
+
+<span class="k">model</span>
+  single
+
+<span class="k">variables</span>
+  continuous_design = 2
+    initial_point    -1.2      1.0
+    lower_bounds     -2.0     -2.0
+    upper_bounds      2.0      2.0
+    descriptors       &#39;x1&#39;     &quot;x2&quot;
+
+<span class="k">interface</span>
+  analysis_drivers = &#39;rosenbrock&#39;
+    direct
+
+<span class="k">responses</span>
+  calibration_terms = 2
+  analytic_gradients
+  no_hessians
+</pre></div>
+</div>
+</div>
+<p>The results at the end of the output file show that the least squares
+minimization approach has found the same optimum design point,
+<span class="math notranslate nohighlight">\((x1,x2) = (1.0,1.0)\)</span>, as was found using the conventional
+gradient-based optimization approach. The iteration history of the
+least squares minimization is shown in
+<a class="reference internal" href="#additional-rosenbrock-nls-graphics"><span class="std std-numref">Fig. 11</span></a>, and shows that 14
+function evaluations were needed for convergence. In this example the
+least squares approach required about half the number of function
+evaluations as did conventional gradient-based optimization. In many
+cases a good least squares algorithm will converge more rapidly in the
+vicinity of the solution.</p>
+<figure class="align-center" id="additional-rosenbrock-nls-graphics">
+<a class="reference internal image-reference" href="../../_images/nonlin_paramest_hist.png"><img alt="Rosenbrock nonlinear least squares example: iteration history for least squares terms :math:`f_1` and :math:`f_2`." src="../../_images/nonlin_paramest_hist.png" style="width: 30%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 11 </span><span class="caption-text">Rosenbrock nonlinear least squares example: iteration history for
+least squares terms <span class="math notranslate nohighlight">\(f_1\)</span> and <span class="math notranslate nohighlight">\(f_2\)</span>.</span><a class="headerlink" href="#additional-rosenbrock-nls-graphics" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+</section>
+<section id="method-comparison">
+<h3>Method Comparison<a class="headerlink" href="#method-comparison" title="Link to this heading"></a></h3>
+<p>In comparing the two approaches, one would expect the Gauss-Newton
+approach to be more efficient since it exploits the special-structure
+of a least squares objective function and, in this problem, the
+Gauss-Newton Hessian is a good approximation since the least squares
+residuals are zero at the solution. From a good initial guess, this
+expected behavior is clearly demonstrated. Starting from
+<code class="docutils literal notranslate"><span class="pre">cdv_initial_point</span> <span class="pre">=</span> <span class="pre">0.8,</span> <span class="pre">0.7</span></code>, the <code class="docutils literal notranslate"><span class="pre">optpp_g_newton</span></code> method
+converges in only 3 function and gradient evaluations while the
+<code class="docutils literal notranslate"><span class="pre">optpp_q_newton</span></code> method requires 27 function and gradient
+evaluations to achieve similar accuracy. Starting from a poorer
+initial guess (e.g., <code class="docutils literal notranslate"><span class="pre">cdv_initial_point</span> <span class="pre">=</span> <span class="pre">-1.2,</span> <span class="pre">1.0</span></code>), the trend is
+less obvious since both methods spend several evaluations finding the
+vicinity of the minimum (total function and gradient evaluations = 45
+for <code class="docutils literal notranslate"><span class="pre">optpp_q_newton</span></code> and 29 for <code class="docutils literal notranslate"><span class="pre">optpp_g_newton</span></code>). However, once
+the vicinity is located and the Hessian approximation becomes
+accurate, convergence is much more rapid with the Gauss-Newton
+approach.</p>
+<p>Shown below is the complete Dakota output for the <code class="docutils literal notranslate"><span class="pre">optpp_g_newton</span></code>
+method starting from <code class="docutils literal notranslate"><span class="pre">cdv_initial_point</span> <span class="pre">=</span> <span class="pre">0.8,</span> <span class="pre">0.7</span></code>:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>Running MPI executable in serial mode.
+Dakota version 6.0 release.
+Subversion revision xxxx built May ...
+Writing new restart file dakota.rst
+gradientType = analytic
+hessianType = none
+
+&gt;&gt;&gt;&gt;&gt; Executing environment.
+
+&gt;&gt;&gt;&gt;&gt; Running optpp_g_newton iterator.
+
+------------------------------
+Begin Function Evaluation    1
+------------------------------
+Parameters for function evaluation 1:
+                      8.0000000000e-01 x1
+                      7.0000000000e-01 x2
+
+rosenbrock /tmp/file4t29aW /tmp/filezGeFpF
+
+Active response data for function evaluation 1:
+Active set vector = { 3 3 } Deriv vars vector = { 1 2 }
+                      6.0000000000e-01 least_sq_term_1
+                      2.0000000000e-01 least_sq_term_2
+ [ -1.6000000000e+01  1.0000000000e+01 ] least_sq_term_1 gradient
+ [ -1.0000000000e+00  0.0000000000e+00 ] least_sq_term_2 gradient
+
+
+
+
+------------------------------
+Begin Function Evaluation    2
+------------------------------
+Parameters for function evaluation 2:
+                      9.9999528206e-01 x1
+                      9.5999243139e-01 x2
+
+rosenbrock /tmp/fileSaxQHo /tmp/fileHnU1Z7
+
+Active response data for function evaluation 2:
+Active set vector = { 3 3 } Deriv vars vector = { 1 2 }
+                     -3.9998132761e-01 least_sq_term_1
+                      4.7179363810e-06 least_sq_term_2
+ [ -1.9999905641e+01  1.0000000000e+01 ] least_sq_term_1 gradient
+ [ -1.0000000000e+00  0.0000000000e+00 ] least_sq_term_2 gradient
+
+
+
+
+------------------------------
+Begin Function Evaluation    3
+------------------------------
+Parameters for function evaluation 3:
+                      9.9999904377e-01 x1
+                      9.9999808276e-01 x2
+
+rosenbrock /tmp/filedtRtlR /tmp/file3kUVGA
+
+Active response data for function evaluation 3:
+Active set vector = { 3 3 } Deriv vars vector = { 1 2 }
+                     -4.7950734494e-08 least_sq_term_1
+                      9.5622502239e-07 least_sq_term_2
+ [ -1.9999980875e+01  1.0000000000e+01 ] least_sq_term_1 gradient
+ [ -1.0000000000e+00  0.0000000000e+00 ] least_sq_term_2 gradient
+
+
+
+
+------------------------------
+Begin Function Evaluation    4
+------------------------------
+Parameters for function evaluation 4:
+                      9.9999904377e-01 x1
+                      9.9999808276e-01 x2
+
+Duplication detected: analysis_drivers not invoked.
+
+Active response data retrieved from database:
+Active set vector = { 2 2 } Deriv vars vector = { 1 2 }
+ [ -1.9999980875e+01  1.0000000000e+01 ] least_sq_term_1 gradient
+ [ -1.0000000000e+00  0.0000000000e+00 ] least_sq_term_2 gradient
+
+
+&lt;&lt;&lt;&lt;&lt; Function evaluation summary: 4 total (3 new, 1 duplicate)
+&lt;&lt;&lt;&lt;&lt; Best parameters          =
+                      9.9999904377e-01 x1
+                      9.9999808276e-01 x2
+&lt;&lt;&lt;&lt;&lt; Best residual norm =  9.5742653315e-07; 0.5 * norm^2 =  4.5833278319e-13
+&lt;&lt;&lt;&lt;&lt; Best residual terms      =
+                     -4.7950734494e-08
+                      9.5622502239e-07
+&lt;&lt;&lt;&lt;&lt; Best evaluation ID: 3
+Confidence Interval for x1 is [  9.9998687852e-01,  1.0000112090e+00 ]
+Confidence Interval for x2 is [  9.9997372187e-01,  1.0000224436e+00 ]
+
+&lt;&lt;&lt;&lt;&lt; Iterator optpp_g_newton completed.
+&lt;&lt;&lt;&lt;&lt; Environment execution completed.
+Dakota execution time in seconds:
+  Total CPU        =       0.01 [parent =   0.017997, child =  -0.007997]
+  Total wall clock =  0.0672231
+</pre></div>
+</div>
+</section>
+</section>
+<section id="herbie-smooth-herbie-and-shubert">
+<h2>Herbie, Smooth Herbie, and Shubert<a class="headerlink" href="#herbie-smooth-herbie-and-shubert" title="Link to this heading"></a></h2>
+<p>Lee, et al. <span id="id6">[<a class="reference internal" href="../../misc/bibliography.html#id185" title="H. Lee, R. Gramacy, C. Linkletter, and G. Gray. Optimization Subject to Hidden Constraints via Statistical Emulation. Pacific Journal of Optimization, 7(3):467–478, 2011.">LGLG11</a>]</span> developed the Herbie function
+as a 2D test problem for surrogate-based optimization. However, since it
+is separable and each dimension is identical it is easily generalized to
+an arbitrary number of dimensions. The generalized (to <span class="math notranslate nohighlight">\(M\)</span>
+dimensions) Herbie function is</p>
+<div class="math notranslate nohighlight">
+\[{\rm herb}(x)=-\prod_{k=1}^M w_{herb}\left(x_k\right)\]</div>
+<p>where</p>
+<div class="math notranslate nohighlight">
+\[w_{herb}\left(x_k\right)=\exp(-(x_k-1)^2)+\exp(-0.8(x_k+1)^2)-0.05\sin\left(8\left(x_k+0.1\right)\right).\]</div>
+<p>The Herbie function’s high frequency sine component creates a large
+number of local minima and maxima, making it a significantly more
+challenging test problem. However, when testing a method’s ability to
+exploit smoothness in the true response, it is desirable to have a less
+oscillatory function. For this reason, the “smooth Herbie” test function
+omits the high frequency sine term but is otherwise identical to the
+Herbie function. The formula for smooth Herbie is</p>
+<div class="math notranslate nohighlight">
+\[{\rm herb_{sm}}(x)=-\prod_{k=1}^M w_{sm}\left(x_k\right)\]</div>
+<p>where</p>
+<div class="math notranslate nohighlight">
+\[w_{sm}\left(x_k\right)=\exp(-(x_k-1)^2)+\exp(-0.8(x_k+1)^2).\]</div>
+<p>Two dimensional versions of the <code class="docutils literal notranslate"><span class="pre">herbie</span></code> and <code class="docutils literal notranslate"><span class="pre">smooth_herbie</span></code> test
+functions are plotted in <a class="reference internal" href="#fig-2d-herbie-smooth-herbie"><span class="std std-numref">Fig. 12</span></a>.</p>
+<figure class="align-center" id="fig-2d-herbie-smooth-herbie">
+<a class="reference internal image-reference" href="../../_images/DAK5pt2_2D__herbie__smooth_herbie.png"><img alt="Plots of the ``herbie`` (left) and ``smooth_herbie`` (right) test functions in 2 dimensions. They can accept an arbitrary number of inputs. The direction of the z-axis has been reversed (negative is up) to better view the functions’ minima." src="../../_images/DAK5pt2_2D__herbie__smooth_herbie.png" style="width: 60%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 12 </span><span class="caption-text">Plots of the <code class="docutils literal notranslate"><span class="pre">herbie</span></code> (left) and <code class="docutils literal notranslate"><span class="pre">smooth_herbie</span></code> (right) test
+functions in 2 dimensions. They can accept an arbitrary number of
+inputs. The direction of the z-axis has been reversed (negative is
+up) to better view the functions’ minima.</span><a class="headerlink" href="#fig-2d-herbie-smooth-herbie" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>Shubert is another separable (and therefore arbitrary dimensional) test
+function. Its analytical formula is</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}{\rm shu}(x) &amp;= \prod_{k=1}^M w_{shu}\left(x_k\right) \\
+w_{shu}\left(x_k\right) &amp;= \sum_{i=1}^5 i\cos((i+1)x_k+i)\end{split}\]</div>
+<p>The 2D version of the <code class="docutils literal notranslate"><span class="pre">shubert</span></code> function is shown in
+<a class="reference internal" href="#fig-2d-shubert"><span class="std std-numref">Fig. 13</span></a>.</p>
+<figure class="align-center" id="fig-2d-shubert">
+<a class="reference internal image-reference" href="../../_images/DAK5pt2_2D_shubert.png"><img alt="Plot of the ``shubert`` test function in 2 dimensions. It can accept an arbitrary number of inputs." src="../../_images/DAK5pt2_2D_shubert.png" style="width: 40%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 13 </span><span class="caption-text">Plot of the <code class="docutils literal notranslate"><span class="pre">shubert</span></code> test function in 2 dimensions. It can accept
+an arbitrary number of inputs.</span><a class="headerlink" href="#fig-2d-shubert" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<section id="efficient-global-optimization">
+<h3>Efficient Global Optimization<a class="headerlink" href="#efficient-global-optimization" title="Link to this heading"></a></h3>
+<p>The Dakota input file <code class="docutils literal notranslate"><span class="pre">herbie_shubert_opt_ego.in</span></code>
+shows how to use efficient global optimization
+(EGO) to minimize the 5D version of any of these 3 separable functions.
+The input file is shown in
+<a class="reference internal" href="#additional-herbie-shubert-ego"><span class="std std-numref">Listing 6</span></a>.
+Note that in the variables section the <code class="docutils literal notranslate"><span class="pre">5*</span></code> preceding the values -2.0
+and 2.0 for the <code class="docutils literal notranslate"><span class="pre">lower_bounds</span></code> and <code class="docutils literal notranslate"><span class="pre">upper_bounds</span></code>, respectively,
+tells Dakota to repeat them 5 times. The “interesting” region for each
+of these functions is <span class="math notranslate nohighlight">\(-2\le x_k \le 2\)</span> for all dimensions.</p>
+<div class="literal-block-wrapper docutils container" id="additional-herbie-shubert-ego">
+<div class="code-block-caption"><span class="caption-number">Listing 6 </span><span class="caption-text">Herbie/Shubert examples: the Dakota input file – see
+<code class="docutils literal notranslate"><span class="pre">dakota/share/dakota/examples/users/herbie_shubert_opt_ego.in</span></code></span><a class="headerlink" href="#additional-herbie-shubert-ego" title="Link to this code"></a></div>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span><span class="c"># Dakota Input File: herbie_shubert_opt_ego.in</span>
+<span class="c"># Example of using EGO to find the minumum of the 5 dimensional version</span>
+<span class="c"># of the abitrary-dimensional/separable &#39;herbie&#39; OR &#39;smooth_herbie&#39; OR</span>
+<span class="c"># &#39;shubert&#39; test functions</span>
+<span class="k">environment</span>
+  tabular_data
+    tabular_data_file = &#39;herbie_shubert_opt_ego.dat&#39;
+
+<span class="k">method</span>
+  efficient_global      # EGO Efficient Global Optimization
+    initial_samples 50
+    seed = 123456
+
+<span class="k">variables</span>
+  continuous_design = 5       # 5 dimensions
+    lower_bounds      5*-2.0  # use 5 copies of -2.0 for bound
+    upper_bounds      5*2.0   # use 5 copies of 2.0 for bound
+
+<span class="k">interface</span>
+<span class="c">#  analysis_drivers = &#39;herbie&#39;       # use this for herbie</span>
+  analysis_drivers = &#39;smooth_herbie&#39; # use this for smooth_herbie
+<span class="c">#  analysis_drivers = &#39;shubert&#39;      # use this for shubert</span>
+    direct
+
+<span class="k">responses</span>
+  objective_functions = 1
+  no_gradients
+  no_hessians
+</pre></div>
+</div>
+</div>
+</section>
+</section>
+<section id="sobol-and-ishigami-functions">
+<h2>Sobol and Ishigami Functions<a class="headerlink" href="#sobol-and-ishigami-functions" title="Link to this heading"></a></h2>
+<p>These functions, documented in <span id="id7">[<a class="reference internal" href="../../misc/bibliography.html#id327" title="C. B. Storlie, L. P. Swiler, J. C. Helton, and C. J. Sallaberry. Implementation and evaluation of nonparametric regression procedures for s ensitivity analysis of computationally demanding models. Reliability Engineering and System Safety, 94:1735–1763, 2009.">SSHS09</a>]</span>, are often used to
+test sensitivity analysis methods.  The Sobol rational function is
+given by the equation:</p>
+<div class="math notranslate nohighlight">
+\[f({\bf x})=\frac{(x_2+0.5)^4}{(x_1+0.5)^2}\]</div>
+<p>This function is monotonic across each of the inputs. However, there
+is substantial interaction between <span class="math notranslate nohighlight">\(x_1\)</span> and <span class="math notranslate nohighlight">\(x_2\)</span> which
+makes sensitivity analysis difficult. This function in shown in
+<a class="reference internal" href="#fig-sobol-rational"><span class="std std-numref">Fig. 14</span></a>.</p>
+<figure class="align-center" id="fig-sobol-rational">
+<a class="reference internal image-reference" href="../../_images/sobol_rational.png"><img alt="Plot of the ``sobol_rational`` test function in 2 dimensions." src="../../_images/sobol_rational.png" style="width: 50%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 14 </span><span class="caption-text">Plot of the <code class="docutils literal notranslate"><span class="pre">sobol_rational</span></code> test function in 2 dimensions.</span><a class="headerlink" href="#fig-sobol-rational" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>The Ishigami test problem is a smooth <span class="math notranslate nohighlight">\(C^{\infty}\)</span> function:</p>
+<div class="math notranslate nohighlight">
+\[f({\bf x}) = \sin(2 \pi x_1 - \pi) + 7 \sin^2(2 \pi x_2 - \pi)
++ 0.1(2 \pi x_3 - \pi)^4 \sin(2 \pi x_1 - \pi)\]</div>
+<p>where the distributions for <span class="math notranslate nohighlight">\(x_1\)</span>, <span class="math notranslate nohighlight">\(x_2\)</span>, and <span class="math notranslate nohighlight">\(x_3\)</span>
+are <em>iid</em> uniform on [0,1]. This function was created as a test for
+global sensitivity analysis methods, but is challenging for any method
+based on low-order structured grids (e.g., due to term cancellation at
+midpoints and bounds). This function in shown in
+<a class="reference internal" href="#fig-sobol-ishigami"><span class="std std-numref">Fig. 15</span></a>.</p>
+<figure class="align-center" id="fig-sobol-ishigami">
+<a class="reference internal image-reference" href="../../_images/sobol_ishigami.png"><img alt="Plot of the ``sobol_ishigami`` test function as a function of x1 and x3." src="../../_images/sobol_ishigami.png" style="width: 50%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 15 </span><span class="caption-text">Plot of the <code class="docutils literal notranslate"><span class="pre">sobol_ishigami</span></code> test function as a function of x1 and
+x3.</span><a class="headerlink" href="#fig-sobol-ishigami" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>At the opposite end of the smoothness spectrum, Sobol’s g-function is
+<span class="math notranslate nohighlight">\(C^0\)</span> with the absolute value contributing a slope discontinuity
+at the center of the domain:</p>
+<div class="math notranslate nohighlight">
+\[f({\bf x}) = 2 \prod_{j=1}^5 \frac{|4x_j - 2| + a_j}{1+a_j};
+~~~a = [0, 1, 2, 4, 8]\]</div>
+<p>The distributions for <span class="math notranslate nohighlight">\(x_j\)</span> for <span class="math notranslate nohighlight">\(j=1,2,3,4,5\)</span> are <em>iid</em>
+uniform on [0,1]. This function in shown in
+<a class="reference internal" href="#fig-sobol-g-function"><span class="std std-numref">Fig. 16</span></a>.</p>
+<figure class="align-center" id="fig-sobol-g-function">
+<a class="reference internal image-reference" href="../../_images/sobol_g_function.png"><img alt="Plot of the ``sobol_g_function`` test function." src="../../_images/sobol_g_function.png" style="width: 50%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 16 </span><span class="caption-text">Plot of the <code class="docutils literal notranslate"><span class="pre">sobol_g_function</span></code> test function.</span><a class="headerlink" href="#fig-sobol-g-function" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+</section>
+<section id="cylinder-head">
+<span id="additional-cylinder"></span><h2>Cylinder Head<a class="headerlink" href="#cylinder-head" title="Link to this heading"></a></h2>
+<p>The cylinder head test problem is stated as:</p>
+<div class="math notranslate nohighlight" id="equation-additional-cylhead">
+<span class="eqno">(10)<a class="headerlink" href="#equation-additional-cylhead" title="Link to this equation"></a></span>\[\begin{split}\texttt{minimize } &amp; f=-1\bigg(\frac{\mathtt{horsepower}}{250}+
+\frac{\mathtt{warranty}}{100000}\bigg) \\
+\texttt{subject to } &amp; \sigma_{max} \leq 0.5 \sigma_{yield} \\
+                     &amp; \mathtt{warranty} \geq 100000 \\
+                     &amp; \mathtt{time_{cycle}} \leq 60 \\
+                     &amp; 1.5 \leq \mathtt{d_{intake}} \leq 2.164 \\
+                     &amp; 0.0 \leq \mathtt{flatness} \leq 4.0\end{split}\]</div>
+<p>This formulation seeks to simultaneously maximize normalized engine
+horsepower and engine warranty over variables of valve intake diameter
+(<span class="math notranslate nohighlight">\(\mathtt{d_{intake}}\)</span>) in inches and overall head flatness
+(<span class="math notranslate nohighlight">\(\mathtt{flatness}\)</span>) in thousandths of an inch subject to
+inequality constraints that the maximum stress cannot exceed half of
+yield, that warranty must be at least 100000 miles, and that
+manufacturing cycle time must be less than 60 seconds. Since the
+constraints involve different scales, they should be
+nondimensionalized (note: the nonlinear constraint scaling described
+in <a class="reference internal" href="../studytypes/optimization.html#opt-additional-scaling"><span class="std std-ref">Optimization with User-specified or Automatic Scaling</span></a> can now do this automatically). In
+addition, they can be converted to the standard 1-sided form
+<span class="math notranslate nohighlight">\(g(\mathbf{x}) \leq 0\)</span> as follows:</p>
+<div class="math notranslate nohighlight" id="equation-additional-cylheadaltg">
+<span class="eqno">(11)<a class="headerlink" href="#equation-additional-cylheadaltg" title="Link to this equation"></a></span>\[\begin{split}&amp; &amp; g_1=\frac{2\sigma_{\mathtt{max}}}{\sigma_{\mathtt{yield}}}-1 \leq 0 \\
+&amp; &amp; g_2=1-\frac{\mathtt{warranty}}{100000} \leq 0 \\
+&amp; &amp; g_3=\frac{\mathtt{time_{cycle}}}{60}-1 \leq 0\end{split}\]</div>
+<p>The objective function and constraints are related analytically to the
+design variables according to the following simple expressions:</p>
+<div class="math notranslate nohighlight" id="equation-additional-cylheadexp">
+<span class="eqno">(12)<a class="headerlink" href="#equation-additional-cylheadexp" title="Link to this equation"></a></span>\[\begin{split}\mathtt{warranty}     &amp;= 100000+15000(4-\mathtt{flatness}) \\
+\mathtt{time_{cycle}} &amp;= 45+4.5(4-\mathtt{flatness})^{1.5} \\
+\mathtt{horsepower}   &amp;= 250+200\bigg(\frac{\mathtt{d_{intake}}}{1.833}-1\bigg) \\
+\sigma_{\mathtt{max}} &amp;= 750+\frac{1}{(\mathtt{t_{wall}})^{2.5}} \\
+\mathtt{t_{wall}}     &amp;= \mathtt{offset_{intake}-offset_{exhaust}}-
+  \frac{(\mathtt{d_{intake}+d_{exhaust}})}{2}\end{split}\]</div>
+<p>where the constants in <a class="reference internal" href="#equation-additional-cylheadaltg">(11)</a> and
+<a class="reference internal" href="#equation-additional-cylheadexp">(12)</a> assume the following values:
+<span class="math notranslate nohighlight">\(\sigma_{\mathtt{yield}}=3000\)</span>,
+<span class="math notranslate nohighlight">\(\mathtt{offset_{intake}}=3.25\)</span>,
+<span class="math notranslate nohighlight">\(\mathtt{offset_{exhaust}}=1.34\)</span>, and
+<span class="math notranslate nohighlight">\(\mathtt{d_{exhaust}}=1.556\)</span>.</p>
+<section id="constrained-gradient-based-optimization">
+<h3>Constrained Gradient Based Optimization<a class="headerlink" href="#constrained-gradient-based-optimization" title="Link to this heading"></a></h3>
+<p>An example using the cylinder head test problem is shown below:</p>
+<div class="literal-block-wrapper docutils container" id="additional-cylinder-head">
+<div class="code-block-caption"><span class="caption-number">Listing 7 </span><span class="caption-text">Cylinder Head Example: the Dakota input file – see
+<code class="docutils literal notranslate"><span class="pre">dakota/share/dakota/examples/users/cylhead_opt_npsol.in</span></code></span><a class="headerlink" href="#additional-cylinder-head" title="Link to this code"></a></div>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span><span class="c"># Dakota Input File: cylhead_opt_npsol.in</span>
+
+<span class="k">method</span>
+<span class="c"># (NPSOL requires a software license; if not available, try</span>
+<span class="c"># conmin_mfd or optpp_q_newton instead)</span>
+  npsol_sqp
+    convergence_tolerance = 1.e-8
+
+<span class="k">variables</span>
+  continuous_design = 2
+    initial_point  1.8   1.0
+    upper_bounds   2.164 4.0
+    lower_bounds   1.5   0.0
+    descriptors &#39;intake_dia&#39; &#39;flatness&#39;
+
+<span class="k">interface</span>
+  analysis_drivers = &#39;cyl_head&#39;
+    fork asynchronous
+
+<span class="k">responses</span>
+  objective_functions = 1
+  nonlinear_inequality_constraints = 3
+  numerical_gradients
+    method_source dakota
+    interval_type central
+    fd_step_size = 1.e-4
+  no_hessians
+</pre></div>
+</div>
+</div>
+<p>The interface keyword specifies use of the <code class="docutils literal notranslate"><span class="pre">cyl_head</span></code> executable
+(compiled from <code class="docutils literal notranslate"><span class="pre">dakota_source/test/cyl_head.cpp</span></code>)
+as the simulator. The variables and responses keywords
+specify the data sets to be used in the iteration by providing the
+initial point, descriptors, and upper and lower bounds for two
+continuous design variables and by specifying the use of one objective
+function, three inequality constraints, and numerical gradients in the
+problem. The method keyword specifies the use of the <code class="docutils literal notranslate"><span class="pre">npsol_sqp</span></code>
+method to solve this constrained optimization problem. No environment
+keyword is specified, so the default <code class="docutils literal notranslate"><span class="pre">single_method</span></code> approach is used.</p>
+<p>The solution for the constrained optimization problem is:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\mathrm{intake\_dia} &amp;= 2.122 \\
+\mathrm{flatness}    &amp;= 1.769\end{split}\]</div>
+<p>with</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}f^{\ast} &amp;= -2.461 \\
+g_1^{\ast} &amp;=  0.0    ~~\mathrm{(active)} \\
+g_2^{\ast} &amp;= -0.3347 ~~\mathrm{(inactive)} \\
+g_3^{\ast} &amp;=  0.0    ~~\mathrm{(active)}\end{split}\]</div>
+<p>which corresponds to the following optimal response quantities:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\mathrm{warranty}        &amp;= 133472 \\
+\mathrm{cycle\_time}     &amp;= 60 \\
+\mathrm{wall\_thickness} &amp;= 0.0707906 \\
+\mathrm{horse\_power}    &amp;= 281.579 \\
+\mathrm{max\_stress}     &amp;= 1500\end{split}\]</div>
+<p>The final report from the Dakota output is as follows:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>&lt;&lt;&lt;&lt;&lt; Iterator npsol_sqp completed.
+&lt;&lt;&lt;&lt;&lt; Function evaluation summary: 55 total (55 new, 0 duplicate)
+&lt;&lt;&lt;&lt;&lt; Best parameters          =
+                      2.1224188322e+00 intake_dia
+                      1.7685568331e+00 flatness
+&lt;&lt;&lt;&lt;&lt; Best objective function  =
+                     -2.4610312954e+00
+&lt;&lt;&lt;&lt;&lt; Best constraint values   =
+                      1.8407497748e-13
+                     -3.3471647504e-01
+                      0.0000000000e+00
+&lt;&lt;&lt;&lt;&lt; Best evaluation ID: 51
+&lt;&lt;&lt;&lt;&lt; Environment execution completed.
+Dakota execution time in seconds:
+  Total CPU        =       0.04 [parent =   0.031995, child =   0.008005]
+  Total wall clock =   0.232134
+</pre></div>
+</div>
+</section>
+</section>
+<section id="container">
+<span id="additional-container"></span><h2>Container<a class="headerlink" href="#container" title="Link to this heading"></a></h2>
+<p>For this example, suppose that a high-volume manufacturer of light
+weight steel containers wants to minimize the amount of raw sheet
+material that must be used to manufacture a 1.1 quart cylindrical-shaped
+can, including waste material. Material for the container walls and end
+caps is stamped from stock sheet material of constant thickness. The
+seal between the end caps and container wall is manufactured by a press
+forming operation on the end caps. The end caps can then be attached to
+the container wall forming a seal through a crimping operation.</p>
+<figure class="align-center" id="additional-figure01">
+<a class="reference internal image-reference" href="../../_images/end_cap.png"><img alt="Container wall-to-end-cap seal" src="../../_images/end_cap.png" style="width: 30%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 17 </span><span class="caption-text">Container wall-to-end-cap seal</span><a class="headerlink" href="#additional-figure01" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>For preliminary design purposes, the extra material that would normally
+go into the container end cap seals is approximated by increasing the
+cut dimensions of the end cap diameters by 12% and the height of the
+container wall by 5%, and waste associated with stamping the end caps in
+a specialized pattern from sheet stock is estimated as 15% of the cap
+area. The equation for the area of the container materials including
+waste is</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}A=2 \times \left(\begin{array}{c}
+    \mathtt{end\hbox{ }cap}\\
+    \mathtt{waste}\\
+    \mathtt{material}\\
+    \mathtt{factor}
+  \end{array} \right)
+\times \left(\begin{array}{c}
+    \mathtt{end\hbox{ }cap}\\
+    \mathtt{seal}\\
+    \mathtt{material}\\
+    \mathtt{factor}
+  \end{array} \right)
+\times \left(\begin{array}{c}
+    \mathtt{nominal}\\
+    \mathtt{end\hbox{ }cap}\\
+    \mathtt{area}
+  \end{array} \right)
++ \left(\begin{array}{c}
+    \mathtt{container}\\
+    \mathtt{wall\hbox{ }seal}\\
+    \mathtt{material}\\
+    \mathtt{factor}
+  \end{array} \right)
+\times \left(\begin{array}{c}
+    \mathtt{nominal}\\
+    \mathtt{container}\\
+    \mathtt{wall\hbox{ }area}
+  \end{array} \right)\end{split}\]</div>
+<p>or</p>
+<div class="math notranslate nohighlight" id="equation-additional-conta">
+<span class="eqno">(13)<a class="headerlink" href="#equation-additional-conta" title="Link to this equation"></a></span>\[A = 2(1.15)(1.12)\pi\frac{D^2}{4}+(1.05)\pi DH\]</div>
+<p>where <span class="math notranslate nohighlight">\(D\)</span> and <span class="math notranslate nohighlight">\(H\)</span> are the diameter and height of the
+finished product in units of inches, respectively. The volume of the
+finished product is specified to be</p>
+<div class="math notranslate nohighlight" id="equation-additional-contv">
+<span class="eqno">(14)<a class="headerlink" href="#equation-additional-contv" title="Link to this equation"></a></span>\[V=\pi\frac{D^2H}{4}=(1.1\mathtt{qt})(57.75 \mathtt{in}^3/\mathtt{qt})\]</div>
+<p>The equation for area is the objective function for this problem; it is
+to be minimized. The equation for volume is an equality constraint; it
+must be satisfied at the conclusion of the optimization problem. Any
+combination of <span class="math notranslate nohighlight">\(D\)</span> and <span class="math notranslate nohighlight">\(H\)</span> that satisfies the volume
+constraint is a <strong>feasible</strong> solution (although not necessarily the
+optimal solution) to the area minimization problem, and any combination
+that does not satisfy the volume constraint is an <strong>infeasible</strong>
+solution. The area that is a minimum subject to the volume constraint is
+the <strong>optimal</strong> area, and the corresponding values for the parameters
+<span class="math notranslate nohighlight">\(D\)</span> and <span class="math notranslate nohighlight">\(H\)</span> are the optimal parameter values.</p>
+<p>It is important that the equations supplied to a numerical optimization
+code be limited to generating only physically realizable values, since
+an optimizer will not have the capability to differentiate between
+meaningful and nonphysical parameter values. It is often up to the
+engineer to supply these limits, usually in the form of parameter bound
+constraints. For example, by observing the equations for the area
+objective function and the volume constraint, it can be seen that by
+allowing the diameter, <span class="math notranslate nohighlight">\(D\)</span>, to become negative, it is
+algebraically possible to generate relatively small values for the area
+that also satisfy the volume constraint. Negative values for <span class="math notranslate nohighlight">\(D\)</span>
+are of course physically meaningless. Therefore, to ensure that the
+numerically-solved optimization problem remains meaningful, a bound
+constraint of <span class="math notranslate nohighlight">\(-D \leq 0\)</span> must be included in the optimization
+problem statement. A positive value for <span class="math notranslate nohighlight">\(H\)</span> is implied since the
+volume constraint could never be satisfied if <span class="math notranslate nohighlight">\(H\)</span> were negative.
+However, a bound constraint of <span class="math notranslate nohighlight">\(-H \leq 0\)</span> can be added to the
+optimization problem if desired. The optimization problem can then be
+stated in a standardized form as</p>
+<div class="math notranslate nohighlight" id="equation-additional-contfh">
+<span class="eqno">(15)<a class="headerlink" href="#equation-additional-contfh" title="Link to this equation"></a></span>\[\begin{split}\texttt{minimize }   &amp; 2(1.15)(1.12)\pi\frac{D^2}{4}+(1.05)^2\pi DH \\
+\texttt{subject to } &amp; \pi\frac{D^2H}{4}=
+(1.1\mathtt{qt})(57.75 \mathtt{in}^3/\mathtt{qt}) \\
+                    &amp; -D \leq 0\hbox{, }-H \leq 0\end{split}\]</div>
+<p>A graphical view of the container optimization test problem appears in
+<a class="reference internal" href="#additional-figure02"><span class="std std-numref">Fig. 18</span></a>. The 3-D surface defines the area,
+<span class="math notranslate nohighlight">\(A\)</span>, as a function of diameter and height. The curved line that
+extends across the surface defines the areas that satisfy the volume
+equality constraint, <span class="math notranslate nohighlight">\(V\)</span>. Graphically, the container
+optimization problem can be viewed as one of finding the point along
+the constraint line with the smallest 3-D surface height in
+<a class="reference internal" href="#additional-figure02"><span class="std std-numref">Fig. 18</span></a>. This point corresponds to the optimal
+values for diameter and height of the final product.</p>
+<figure class="align-center" id="additional-figure02">
+<a class="reference internal image-reference" href="../../_images/graphical_container_opt.png"><img alt="A graphical representation of the container optimization problem." src="../../_images/graphical_container_opt.png" style="width: 40%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 18 </span><span class="caption-text">A graphical representation of the container optimization problem.</span><a class="headerlink" href="#additional-figure02" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<section id="constrained-gradient-based-optimization-1">
+<span id="id8"></span><h3>Constrained Gradient Based Optimization<a class="headerlink" href="#constrained-gradient-based-optimization-1" title="Link to this heading"></a></h3>
+<p>The input file for this example is named <code class="docutils literal notranslate"><span class="pre">container_opt_npsol.in</span></code>.
+The solution to this example
+problem is <span class="math notranslate nohighlight">\((H,D)=(4.99,4.03)\)</span>, with a minimum area of 98.43
+<span class="math notranslate nohighlight">\(\mathtt{in}^2\)</span> .</p>
+<p>The final report from the Dakota output is as follows:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>&lt;&lt;&lt;&lt;&lt; Iterator npsol_sqp completed.
+&lt;&lt;&lt;&lt;&lt; Function evaluation summary: 40 total (40 new, 0 duplicate)
+&lt;&lt;&lt;&lt;&lt; Best parameters          =
+                      4.9873894231e+00 H
+                      4.0270846274e+00 D
+&lt;&lt;&lt;&lt;&lt; Best objective function  =
+                      9.8432498116e+01
+&lt;&lt;&lt;&lt;&lt; Best constraint values   =
+                     -9.6301439045e-12
+&lt;&lt;&lt;&lt;&lt; Best evaluation ID: 36
+&lt;&lt;&lt;&lt;&lt; Environment execution completed.
+Dakota execution time in seconds:
+  Total CPU        =      0.18 [parent =      0.18, child =         0]
+  Total wall clock =  0.809126
+</pre></div>
+</div>
+</section>
+</section>
+<section id="cantilever">
+<span id="additional-cantilever"></span><h2>Cantilever<a class="headerlink" href="#cantilever" title="Link to this heading"></a></h2>
+<p>This test problem is adapted from the reliability-based design
+optimization literature:cite:p:<cite>Sue01</cite>, <span id="id9">[<a class="reference internal" href="../../misc/bibliography.html#id307" title="Y.-T. Wu, Y. Shin, R. Sues, and M. Cesare. Safety-factor based approach for probability-based design optimization. In Proc. 42nd AIAA/ASME/ASCE/AHS/ASC Structures, Structural Dynamics, and Materials Conference, number AIAA-2001-1522. Seattle, WA, April 16–19 2001.">WSSC01</a>]</span> and involves a
+simple uniform cantilever beam as shown in
+<a class="reference internal" href="#additional-figure03"><span class="std std-numref">Fig. 19</span></a>.</p>
+<figure class="align-center" id="additional-figure03">
+<a class="reference internal image-reference" href="../../_images/cantilever_beam.png"><img alt="Cantilever beam test problem." src="../../_images/cantilever_beam.png" style="width: 50%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 19 </span><span class="caption-text">Cantilever beam test problem.</span><a class="headerlink" href="#additional-figure03" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>The design problem is to minimize the weight (or, equivalently, the
+cross-sectional area) of the beam subject to a displacement constraint
+and a stress constraint. Random variables in the problem include the
+yield stress <span class="math notranslate nohighlight">\(R\)</span> of the beam material, the Young’s modulus
+<span class="math notranslate nohighlight">\(E\)</span> of the material, and the horizontal and vertical loads,
+<span class="math notranslate nohighlight">\(X\)</span> and <span class="math notranslate nohighlight">\(Y\)</span>, which are modeled with normal distributions
+using <span class="math notranslate nohighlight">\(N(40000, 2000)\)</span>, <span class="math notranslate nohighlight">\(N(2.9E7, 1.45E6)\)</span>,
+<span class="math notranslate nohighlight">\(N(500, 100)\)</span>, and <span class="math notranslate nohighlight">\(N(1000, 100)\)</span>, respectively. Problem
+constants include <span class="math notranslate nohighlight">\(L = 100\mathtt{in}\)</span> and <span class="math notranslate nohighlight">\(D_{0} = 2.2535
+\mathtt{in}\)</span>. The constraints have the following analytic form:</p>
+<div class="math notranslate nohighlight" id="equation-additional-cant">
+<span class="eqno">(16)<a class="headerlink" href="#equation-additional-cant" title="Link to this equation"></a></span>\[\begin{split}\mathtt{stress} &amp;= \frac{600}{w t^2}Y+\frac{600}{w^2t}X \leq R \\
+\mathtt{displacement} &amp;= \frac{4L^3}{E w t}
+  \sqrt{\bigg(\frac{Y}{t^2}\bigg)^2+\bigg(\frac{X}{w^2}\bigg)^2}
+  \leq D_{0}\end{split}\]</div>
+<p>or when scaled:</p>
+<div class="math notranslate nohighlight" id="equation-additional-cantscale">
+<span class="eqno">(17)<a class="headerlink" href="#equation-additional-cantscale" title="Link to this equation"></a></span>\[\begin{split}g_{S} &amp;=\frac{\mathtt{stress}}{R}-1 \leq 0 \\
+g_{D} &amp;=\frac{\mathtt{displacement}}{D_{0}}-1 \leq 0\end{split}\]</div>
+<p><strong>Deterministic Formulation:</strong> If the random variables <span class="math notranslate nohighlight">\(E\)</span>,
+<span class="math notranslate nohighlight">\(R\)</span>, <span class="math notranslate nohighlight">\(X\)</span>, and <span class="math notranslate nohighlight">\(Y\)</span> are fixed at their means, the
+resulting deterministic design problem can be formulated as</p>
+<div class="math notranslate nohighlight" id="equation-additional-cantopt">
+<span class="eqno">(18)<a class="headerlink" href="#equation-additional-cantopt" title="Link to this equation"></a></span>\[\begin{split}\texttt{minimize }   &amp; f = w t            \\
+\texttt{subject to } &amp; g_{S} \leq 0       \\
+                     &amp; g_{D} \leq 0       \\
+                     &amp; 1.0 \leq w \leq 4.0 \\
+                     &amp; 1.0 \leq t \leq 4.0\end{split}\]</div>
+<p><strong>Stochastic Formulation:</strong> If the normal distributions for the random
+variables <span class="math notranslate nohighlight">\(E\)</span>, <span class="math notranslate nohighlight">\(R\)</span>, <span class="math notranslate nohighlight">\(X\)</span>, and <span class="math notranslate nohighlight">\(Y\)</span> are included,
+a stochastic design problem can be formulated as</p>
+<div class="math notranslate nohighlight" id="equation-additional-cantouu">
+<span class="eqno">(19)<a class="headerlink" href="#equation-additional-cantouu" title="Link to this equation"></a></span>\[\begin{split}\texttt{minimize }   &amp; f = w t            \\
+\texttt{subject to } &amp; \beta_{D} \geq 3   \\
+                     &amp; \beta_{S} \geq 3   \\
+                     &amp; 1.0 \leq w \leq 4.0 \\
+                     &amp; 1.0 \leq t \leq 4.0\end{split}\]</div>
+<p>where a 3-sigma reliability level (probability of failure = 0.00135 if
+responses are normally-distributed) is being sought on the scaled
+constraints.</p>
+<section id="constrained-gradient-based-optimization-2">
+<span id="id10"></span><h3>Constrained Gradient Based Optimization<a class="headerlink" href="#constrained-gradient-based-optimization-2" title="Link to this heading"></a></h3>
+<p>Here, the Cantilever test problem is solved using
+<code class="docutils literal notranslate"><span class="pre">cantilever_opt_npsol.in</span></code>:</p>
+<div class="literal-block-wrapper docutils container" id="additional-cant-opt-npsol">
+<div class="code-block-caption"><span class="caption-number">Listing 8 </span><span class="caption-text">Cantilever Example: the Dakota input file – see
+<code class="docutils literal notranslate"><span class="pre">dakota/share/dakota/examples/users/cantilever_opt_npsol.in</span></code></span><a class="headerlink" href="#additional-cant-opt-npsol" title="Link to this code"></a></div>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span><span class="c"># Dakota Input File: cantilever_opt_npsol.in</span>
+
+<span class="k">method</span>
+<span class="c"># (NPSOL requires a software license; if not available, try</span>
+<span class="c"># conmin_mfd or optpp_q_newton instead)</span>
+  npsol_sqp
+    convergence_tolerance = 1.e-8
+
+<span class="k">variables</span>
+  continuous_design = 2
+    initial_point  4.0   4.0
+    upper_bounds  10.0  10.0
+    lower_bounds   1.0   1.0
+    descriptors    &#39;w&#39;   &#39;t&#39;
+  continuous_state = 4
+    initial_state  40000. 29.E+6 500. 1000.
+    descriptors      &#39;R&#39;   &#39;E&#39;   &#39;X&#39;   &#39;Y&#39;
+
+<span class="k">interface</span>
+  analysis_drivers = &#39;cantilever&#39;
+    fork
+  asynchronous evaluation_concurrency = 2
+
+<span class="k">responses</span>
+  objective_functions = 1
+  nonlinear_inequality_constraints = 2
+  numerical_gradients
+    method_source dakota
+    interval_type forward
+    fd_step_size = 1.e-4
+  no_hessians
+</pre></div>
+</div>
+</div>
+<p>The deterministic solution is <span class="math notranslate nohighlight">\((w,t)=(2.35,3.33)\)</span> with an
+objective function of <span class="math notranslate nohighlight">\(7.82\)</span>. The final report from the Dakota
+output is as follows:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>&lt;&lt;&lt;&lt;&lt; Iterator npsol_sqp completed.
+&lt;&lt;&lt;&lt;&lt; Function evaluation summary: 33 total (33 new, 0 duplicate)
+&lt;&lt;&lt;&lt;&lt; Best parameters          =
+                      2.3520341271e+00 beam_width
+                      3.3262784077e+00 beam_thickness
+                      4.0000000000e+04 R
+                      2.9000000000e+07 E
+                      5.0000000000e+02 X
+                      1.0000000000e+03 Y
+&lt;&lt;&lt;&lt;&lt; Best objective function  =
+                      7.8235203313e+00
+&lt;&lt;&lt;&lt;&lt; Best constraint values   =
+                     -1.6009000260e-02
+                     -3.7083558446e-11
+&lt;&lt;&lt;&lt;&lt; Best evaluation ID: 31
+&lt;&lt;&lt;&lt;&lt; Environment execution completed.
+Dakota execution time in seconds:
+  Total CPU        =       0.03 [parent =   0.027995, child =   0.002005]
+  Total wall clock =   0.281375
+</pre></div>
+</div>
+</section>
+<section id="optimization-under-uncertainty">
+<h3>Optimization Under Uncertainty<a class="headerlink" href="#optimization-under-uncertainty" title="Link to this heading"></a></h3>
+<p>Optimization under uncertainty solutions to the stochastic problem are
+described in <span id="id11">[<a class="reference internal" href="../../misc/bibliography.html#id84" title="M. S. Eldred, H. Agarwal, V. M. Perez, S. F. Wojtkiewicz, Jr., and J. E. Renaud. Investigation of reliability method formulations in DAKOTA/UQ. Structure &amp; Infrastructure Engineering: Maintenance, Management, Life-Cycle Design &amp; Performance, 3(3):199–213, 2007.">EAP+07</a>, <a class="reference internal" href="../../misc/bibliography.html#id81" title="M. S. Eldred and B. J. Bichon. Second-order reliability formulations in DAKOTA/UQ. In Proceedings of the 47th AIAA/ASME/ASCE/AHS/ASC Structures, Structural Dynamics and Materials Conference, number AIAA-2006-1828. Newport, RI, May 1–4 2006.">EB06</a>, <a class="reference internal" href="../../misc/bibliography.html#id78" title="M. S. Eldred, A. A. Giunta, S. F. Wojtkiewicz, Jr., and T. G. Trucano. Formulations for surrogate-based optimization under uncertainty. In Proc. 9th AIAA/ISSMO Symposium on Multidisciplinary Analysis and Optimization, number AIAA-2002-5585. Atlanta, GA, September 4–6, 2002.">EGWojtkiewiczJrT02</a>]</span>, for which the solution is
+<span class="math notranslate nohighlight">\((w,t)=(2.45,3.88)\)</span> with an objective function of
+<span class="math notranslate nohighlight">\(9.52\)</span>. This demonstrates that a more conservative design is
+needed to satisfy the probabilistic constraints.</p>
+</section>
+</section>
+<section id="multiobjective-test-problems">
+<span id="additional-multiobjective"></span><h2>Multiobjective Test Problems<a class="headerlink" href="#multiobjective-test-problems" title="Link to this heading"></a></h2>
+<p>Multiobjective optimization means that there are two or more objective
+functions that you wish to optimize simultaneously. Often these are
+conflicting objectives, such as cost and performance. The answer to a
+multi-objective problem is usually not a single point. Rather, it is a
+set of points called the Pareto front. Each point on the Pareto front
+satisfies the Pareto optimality criterion, i.e., locally there exists no
+other feasible vector that would improve some objective without causing
+a simultaneous worsening in at least one other objective. Thus a
+feasible point <span class="math notranslate nohighlight">\(X^\prime\)</span> from which small moves improve one or
+more objectives without worsening any others is not Pareto optimal: it
+is said to be “dominated” and the points along the Pareto front are said
+to be “non-dominated”.</p>
+<p>Often multi-objective problems are addressed by simply assigning weights
+to the individual objectives, summing the weighted objectives, and
+turning the problem into a single-objective one which can be solved with
+a variety of optimization techniques. While this approach provides a
+useful “first cut” analysis (and is supported within Dakota – see
+<a class="reference internal" href="../studytypes/optimization.html#opt-additional-multiobjective"><span class="std std-ref">Multiobjective Optimization</span></a>),
+this approach has many limitations. The major limitation is that a local
+solver with a weighted sum objective will only find one point on the
+Pareto front; if one wants to understand the effects of changing
+weights, this method can be computationally expensive. Since each
+optimization of a single weighted objective will find only one point on
+the Pareto front, many optimizations must be performed to get a good
+parametric understanding of the influence of the weights and to achieve
+a good sampling of the entire Pareto frontier.</p>
+<p>There are three examples that are taken from a multiobjective
+evolutionary algorithm (MOEA) test suite described by Van Veldhuizen
+et.  al. in <span id="id12">[<a class="reference internal" href="../../misc/bibliography.html#id39" title="C. A. Coello, D. A. Van Veldhuizen, and G. B. Lamont. Evolutionary Algorithms for Solving Multi-Objective Problems. Kluwer Academic/Plenum Publishers, New York, 2002.">CVVL02</a>]</span>. These three examples illustrate the
+different forms that the Pareto set may take. For each problem, we
+describe the Dakota input and show a graph of the Pareto front. These
+problems are all solved with the <code class="docutils literal notranslate"><span class="pre">moga</span></code> method. The first example is
+discussed in <a class="reference internal" href="../studytypes/optimization.html#opt-additional-multiobjective"><span class="std std-ref">Multiobjective Optimization</span></a>, which also provides
+more information on multiobjective optimization. The other two are
+described below.</p>
+<section id="multiobjective-test-problem-2">
+<span id="additional-multiobjective-problem2"></span><h3>Multiobjective Test Problem 2<a class="headerlink" href="#multiobjective-test-problem-2" title="Link to this heading"></a></h3>
+<p>The second test problem is a case where both <span class="math notranslate nohighlight">\(\mathtt{P_{true}}\)</span>
+and <span class="math notranslate nohighlight">\(\mathtt{PF_{true}}\)</span> are disconnected.
+<span class="math notranslate nohighlight">\(\mathtt{PF_{true}}\)</span> has four separate Pareto curves. The problem
+is to simultaneously optimize <span class="math notranslate nohighlight">\(f_1\)</span> and <span class="math notranslate nohighlight">\(f_2\)</span> given two
+input variables, <span class="math notranslate nohighlight">\(x_1\)</span> and <span class="math notranslate nohighlight">\(x_2\)</span>, where the inputs are
+bounded by <span class="math notranslate nohighlight">\(0 \leq x_{i} \leq 1\)</span>, and:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}f_1(x) &amp;= x_1 \\
+f_2(x) &amp;= (1+10x_2) \times \left[1-\bigg(\frac{x_1}{1+10x_2}\bigg)^2-
+\frac{x_1}{1+10x_2}\sin(8\pi x_1)\right]\end{split}\]</div>
+<p>The input file for this example is shown in
+<a class="reference internal" href="#additional-moga2inp"><span class="std std-numref">Listing 9</span></a>, which references the <code class="docutils literal notranslate"><span class="pre">mogatest2</span></code>
+executable (compiled from <code class="file docutils literal notranslate"><span class="pre">dakota_source/test/mogatest2.cpp</span></code>) as
+the simulator. The Pareto front is shown in
+<a class="reference internal" href="#additional-moga2front"><span class="std std-numref">Fig. 20</span></a>. Note the discontinuous nature of the
+front in this example.</p>
+<div class="literal-block-wrapper docutils container" id="additional-moga2inp">
+<div class="code-block-caption"><span class="caption-number">Listing 9 </span><span class="caption-text">Dakota input file specifying the use of MOGA on mogatest2
+– see <code class="docutils literal notranslate"><span class="pre">dakota/share/dakota/examples/users/mogatest2.in</span></code></span><a class="headerlink" href="#additional-moga2inp" title="Link to this code"></a></div>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span><span class="c"># Dakota Input File: mogatest2.in</span>
+
+<span class="k">environment</span>
+  tabular_data
+    tabular_data_file = &#39;mogatest2.dat&#39;
+
+<span class="k">method</span>
+  moga
+    seed = 10983
+  max_function_evaluations = 3000
+  initialization_type unique_random
+  crossover_type
+    multi_point_parameterized_binary = 2
+    crossover_rate = 0.8
+  mutation_type replace_uniform
+    mutation_rate = 0.1
+  fitness_type domination_count
+  replacement_type below_limit = 6
+    shrinkage_fraction = 0.9
+  convergence_type metric_tracker
+    percent_change = 0.05 num_generations = 10
+  final_solutions = 3
+  output silent
+
+<span class="k">variables</span>
+  continuous_design = 2
+    initial_point    0.5      0.5
+    upper_bounds     1         1
+    lower_bounds     0         0
+    descriptors      &#39;x1&#39;   &#39;x2&#39;
+
+<span class="k">interface</span>
+  analysis_drivers = &#39;mogatest2&#39;
+    direct
+
+<span class="k">responses</span>
+  objective_functions = 2
+  no_gradients
+  no_hessians
+</pre></div>
+</div>
+</div>
+<figure class="align-center" id="additional-moga2front">
+<a class="reference internal image-reference" href="../../_images/dakota_mogatest2_pareto_front.png"><img alt="Pareto Front showing Tradeoffs between Function F1 and Function F2 for mogatest2" src="../../_images/dakota_mogatest2_pareto_front.png" style="width: 50%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 20 </span><span class="caption-text">Pareto Front showing Tradeoffs between Function F1 and Function F2
+for mogatest2</span><a class="headerlink" href="#additional-moga2front" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+</section>
+<section id="multiobjective-test-problem-3">
+<span id="additional-multiobjective-problem3"></span><h3>Multiobjective Test Problem 3<a class="headerlink" href="#multiobjective-test-problem-3" title="Link to this heading"></a></h3>
+<p>The third test problem is a case where <span class="math notranslate nohighlight">\(\mathtt{P_{true}}\)</span> is
+disconnected but <span class="math notranslate nohighlight">\(\mathtt{PF_{true}}\)</span> is connected. This problem
+also has two nonlinear constraints. The problem is to simultaneously
+optimize <span class="math notranslate nohighlight">\(f_1\)</span> and <span class="math notranslate nohighlight">\(f_2\)</span> given two input variables,
+<span class="math notranslate nohighlight">\(x_1\)</span> and <span class="math notranslate nohighlight">\(x_2\)</span>, where the inputs are bounded by
+<span class="math notranslate nohighlight">\(-20 \leq x_{i} \leq 20\)</span>, and:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}f_1(x) &amp;= (x_1-2)^2+(x_2-1)^2+2 \\
+f_2(x) &amp;= 9x_1-(x_2-1)^2\end{split}\]</div>
+<p>The constraints are:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}0 &amp;\leq x_1^2+x_2^2-225 \\
+0 &amp;\leq x_1-3x_2+10\end{split}\]</div>
+<p>The input file for this example is shown in
+<a class="reference internal" href="#additional-moga3inp"><span class="std std-numref">Listing 10</span></a>. It differs from
+<a class="reference internal" href="#additional-moga2inp"><span class="std std-numref">Listing 9</span></a> in the variables and responses
+specifications, in the use of the <code class="docutils literal notranslate"><span class="pre">mogatest3</span></code> executable (compiled
+from <code class="docutils literal notranslate"><span class="pre">dakota_source/test/mogatest3.cpp</span></code>) as the simulator, and in
+the <code class="docutils literal notranslate"><span class="pre">max_function_evaluations</span></code> and <code class="docutils literal notranslate"><span class="pre">mutation_type</span></code> MOGA
+controls. The Pareto set is shown in
+<a class="reference internal" href="#additional-moga3set"><span class="std std-numref">Fig. 21</span></a>. Note the discontinuous nature of the
+Pareto set (in the design space) in this example. The Pareto front is
+shown in <a class="reference internal" href="#additional-moga3front"><span class="std std-numref">Fig. 22</span></a>.</p>
+<div class="literal-block-wrapper docutils container" id="additional-moga3inp">
+<div class="code-block-caption"><span class="caption-number">Listing 10 </span><span class="caption-text">Dakota input file specifying the use of MOGA on mogatest3
+– see <code class="docutils literal notranslate"><span class="pre">dakota/share/dakota/examples/users/mogatest3.in</span></code></span><a class="headerlink" href="#additional-moga3inp" title="Link to this code"></a></div>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span><span class="c"># Dakota Input File: mogatest3.in</span>
+
+<span class="k">environment</span>
+  tabular_data
+    tabular_data_file = &#39;mogatest3.dat&#39;
+
+<span class="k">method</span>
+  moga
+    seed = 10983
+  max_function_evaluations = 2000
+  initialization_type unique_random
+  crossover_type
+    multi_point_parameterized_binary = 2
+    crossover_rate = 0.8
+  mutation_type offset_normal
+    mutation_scale = 0.1
+  fitness_type domination_count
+  replacement_type below_limit = 6
+    shrinkage_fraction = 0.9
+  convergence_type metric_tracker
+    percent_change = 0.05 num_generations = 10
+  final_solutions = 3
+  output silent
+
+<span class="k">variables</span>
+  continuous_design = 2
+    descriptors      &#39;x1&#39;   &#39;x2&#39;
+    initial_point      0     0
+    upper_bounds      20    20
+    lower_bounds     -20   -20
+
+<span class="k">interface</span>
+  analysis_drivers = &#39;mogatest3&#39;
+    direct
+
+<span class="k">responses</span>
+  objective_functions = 2
+  nonlinear_inequality_constraints = 2
+    upper_bounds = 0.0 0.0
+  no_gradients
+  no_hessians
+</pre></div>
+</div>
+</div>
+<figure class="align-center" id="additional-moga3set">
+<a class="reference internal image-reference" href="../../_images/dakota_mogatest3_pareto_set.png"><img alt="Pareto Set of Design Variables corresponding to the Pareto front for mogatest3" src="../../_images/dakota_mogatest3_pareto_set.png" style="width: 50%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 21 </span><span class="caption-text">Pareto Set of Design Variables corresponding to the Pareto front for
+mogatest3</span><a class="headerlink" href="#additional-moga3set" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<figure class="align-center" id="additional-moga3front">
+<a class="reference internal image-reference" href="../../_images/dakota_mogatest3_pareto_front.png"><img alt="Pareto Front showing Tradeoffs between Function F1 and Function F2 for mogatest3" src="../../_images/dakota_mogatest3_pareto_front.png" style="width: 50%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 22 </span><span class="caption-text">Pareto Front showing Tradeoffs between Function F1 and Function F2
+for mogatest3</span><a class="headerlink" href="#additional-moga3front" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+</section>
+</section>
+<section id="morris">
+<span id="additional-morris"></span><h2>Morris<a class="headerlink" href="#morris" title="Link to this heading"></a></h2>
+<p>Morris <span id="id13">[<a class="reference internal" href="../../misc/bibliography.html#id204" title="M. D. Morris. Factorial sampling plans for preliminary computational experiments. Technometrics, 33(2):161–174, 1991.">Mor91</a>]</span> includes a screening design test
+problem with a single-output analytical test function. The output
+depends on 20 inputs with first- through fourth-order interaction terms,
+some having large fixed coefficients and others small random
+coefficients. Thus the function values generated depend on the random
+number generator employed in the function evaluator. The computational
+model is:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}y = &amp;\;\beta_0 + \sum_{i=1}^{20}{\beta_i w_i} + \sum_{i&lt;j}^{20}{\beta_{i,j} w_i w_j} + \sum_{i&lt;j&lt;l}^{20}{\beta_{i,j,l} w_i w_j w_l} \\
+    &amp;+  \sum_{i&lt;j&lt;l&lt;s}^{20}{\beta_{i,j,l,s} w_i w_j w_l w_s},\end{split}\]</div>
+<p>where <span class="math notranslate nohighlight">\(w_i = 2(x_i-0.5)\)</span> except for
+<span class="math notranslate nohighlight">\(i=3, 5, \mbox{ and } 7\)</span>, where
+<span class="math notranslate nohighlight">\(w_i=2(1.1x_i/(x_i+0.1) - 0.5)\)</span>. Large-valued coefficients are
+assigned as</p>
+<div class="math notranslate nohighlight">
+\begin{aligned}
+\beta_i = +20 &amp; &amp;i=1,\ldots,10; \;&amp;\beta_{i,j} = -15&amp; &amp;i,j = 1, \ldots, 6; \\
+\beta_{i,j,l} = -10&amp; &amp;i,j,l=1,\ldots,5; \;&amp;\beta_{i,j,l,s} = +5&amp; &amp;i,j,l,s = 1, \ldots, 4.
+\end{aligned}</div><p>The remaining first- and second-order coefficients <span class="math notranslate nohighlight">\(\beta_i\)</span> and
+<span class="math notranslate nohighlight">\(\beta_{i,j}\)</span>, respectively, are independently generated from a
+standard normal distribution (zero mean and unit standard deviation);
+the remaining third- and fourth-order coefficients are set to zero.</p>
+<p>Examination of the test function reveals that one should be able to
+conclude the following (stated and verified computationally
+in <span id="id14">[<a class="reference internal" href="../../misc/bibliography.html#id257" title="A. Saltelli, S. Tarantola, F. Campolongo, and M. Ratto. Sensitivity Analysis in Practice: A Guide to Assessing Scientific Models. John Wiley &amp; Sons, 2004.">STCR04</a>]</span>) for this test problem:</p>
+<ol class="arabic simple">
+<li><p>the first ten factors are important;</p></li>
+<li><p>of these, the first seven have significant effects involving either
+interactions or curvatures; and</p></li>
+<li><p>the other three are important mainly because of their first-order
+effect.</p></li>
+</ol>
+<section id="morris-one-at-a-time-sensitivity-study">
+<h3>Morris One-at-a-Time Sensitivity Study<a class="headerlink" href="#morris-one-at-a-time-sensitivity-study" title="Link to this heading"></a></h3>
+<p>The dakota input <code class="docutils literal notranslate"><span class="pre">morris_ps_moat.in</span></code> exercises the MOAT algorithm
+described in <a class="reference internal" href="../studytypes/designofexperiments.html#dace-psuade"><span class="std std-ref">PSUADE MOAT</span></a> on the Morris problem. The Dakota
+output obtained is shown in <a class="reference internal" href="#fig-moat-out-preamble"><span class="std std-numref">Listing 11</span></a> and
+<a class="reference internal" href="#fig-moat-out-results"><span class="std std-numref">Listing 12</span></a>.</p>
+<div class="literal-block-wrapper docutils container" id="fig-moat-out-preamble">
+<div class="code-block-caption"><span class="caption-number">Listing 11 </span><span class="caption-text">Dakota MOAT output: preamble.</span><a class="headerlink" href="#fig-moat-out-preamble" title="Link to this code"></a></div>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>Running MPI executable in serial mode.
+Dakota version 6.0 release.
+Subversion revision xxxx built May ...
+Writing new restart file dakota.rst
+gradientType = none
+hessianType = none
+
+&gt;&gt;&gt;&gt;&gt; Executing environment.
+
+&gt;&gt;&gt;&gt;&gt; Running psuade_moat iterator.
+
+PSUADE DACE method = psuade_moat Samples = 84 Seed (user-specified) = 500
+            Partitions = 3 (Levels = 4)
+</pre></div>
+</div>
+</div>
+<div class="literal-block-wrapper docutils container" id="fig-moat-out-results">
+<div class="code-block-caption"><span class="caption-number">Listing 12 </span><span class="caption-text">Dakota MOAT output: final results.</span><a class="headerlink" href="#fig-moat-out-results" title="Link to this code"></a></div>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>&gt;&gt;&gt;&gt;&gt;&gt; PSUADE MOAT output for function 0:
+
+*************************************************************
+*********************** MOAT Analysis ***********************
+-------------------------------------------------------------
+Input   1 (mod. mean &amp; std) =   9.5329e+01   9.0823e+01
+Input   2 (mod. mean &amp; std) =   6.7297e+01   9.5242e+01
+Input   3 (mod. mean &amp; std) =   1.0648e+02   1.5479e+02
+Input   4 (mod. mean &amp; std) =   6.6231e+01   7.5895e+01
+Input   5 (mod. mean &amp; std) =   9.5717e+01   1.2733e+02
+Input   6 (mod. mean &amp; std) =   8.0394e+01   9.9959e+01
+Input   7 (mod. mean &amp; std) =   3.2722e+01   2.7947e+01
+Input   8 (mod. mean &amp; std) =   4.2013e+01   7.6090e+00
+Input   9 (mod. mean &amp; std) =   4.1965e+01   7.8535e+00
+Input  10 (mod. mean &amp; std) =   3.6809e+01   3.6151e+00
+Input  11 (mod. mean &amp; std) =   8.2655e+00   1.0311e+01
+Input  12 (mod. mean &amp; std) =   4.9299e+00   7.0591e+00
+Input  13 (mod. mean &amp; std) =   3.5455e+00   4.4025e+00
+Input  14 (mod. mean &amp; std) =   3.4151e+00   2.4905e+00
+Input  15 (mod. mean &amp; std) =   2.5143e+00   5.5168e-01
+Input  16 (mod. mean &amp; std) =   9.0344e+00   1.0115e+01
+Input  17 (mod. mean &amp; std) =   6.4357e+00   8.3820e+00
+Input  18 (mod. mean &amp; std) =   9.1886e+00   2.5373e+00
+Input  19 (mod. mean &amp; std) =   2.4105e+00   3.1102e+00
+Input  20 (mod. mean &amp; std) =   5.8234e+00   7.2403e+00
+&lt;&lt;&lt;&lt;&lt; Function evaluation summary: 84 total (84 new, 0 duplicate)
+</pre></div>
+</div>
+</div>
+<p>The MOAT analysis output reveals that each of the desired observations
+can be made for the test problem. These are also reflected in
+<a class="reference internal" href="#fig-mustar-sigma"><span class="std std-numref">Fig. 23</span></a>. The modified mean (based on
+averaging absolute values of elementary effects) shows a clear
+difference in inputs 1–10 as compared to inputs 11–20. The standard
+deviation of the (signed) elementary effects indicates correctly that
+inputs 1–7 have substantial interaction-based or nonlinear effect on the
+output, while the others have less. While some of inputs 11–20 have
+nontrivial values of <span class="math notranslate nohighlight">\(\sigma\)</span>, their relatively small modified
+means <span class="math notranslate nohighlight">\(\mu^*\)</span> indicate they have little overall influence.</p>
+<figure class="align-center" id="fig-mustar-sigma">
+<a class="reference internal image-reference" href="../../_images/moat_mustar_sigma.png"><img alt="Standard deviation of elementary effects plotted against modified mean for Morris for each of 20 inputs. Red circles 1–7 correspond to inputs having interactions or nonlinear effects, blue squares 8–10 indicate those with mainly linear effects, and black Xs denote insignificant inputs." src="../../_images/moat_mustar_sigma.png" style="width: 60%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 23 </span><span class="caption-text">Standard deviation of elementary effects plotted against modified
+mean for Morris for each of 20 inputs. Red circles 1–7 correspond
+to inputs having interactions or nonlinear effects, blue squares
+8–10 indicate those with mainly linear effects, and black Xs denote
+insignificant inputs.</span><a class="headerlink" href="#fig-mustar-sigma" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+</section>
+</section>
+<section id="test-problems-for-reliability-analyses">
+<span id="additional-reliabilityproblems"></span><h2>Test Problems for Reliability Analyses<a class="headerlink" href="#test-problems-for-reliability-analyses" title="Link to this heading"></a></h2>
+<p>This section includes several test problems and examples related to
+reliability analyses.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>These are included in the
+<code class="file docutils literal notranslate"><span class="pre">dakota/share/dakota/examples/users</span></code> directory, rather are in
+the <code class="file docutils literal notranslate"><span class="pre">dakota/share/dakota/test</span></code> directory.</p>
+</div>
+<section id="log-ratio">
+<span id="additional-logratio"></span><h3>Log Ratio<a class="headerlink" href="#log-ratio" title="Link to this heading"></a></h3>
+<p>This test problem, mentioned previously in <a class="reference internal" href="../studytypes/uq.html#uq-reliability-ex"><span class="std std-ref">Uncertainty Quantification Examples using Reliability Analysis</span></a>,
+has a limit state function defined by the ratio of two
+lognormally-distributed random variables.</p>
+<div class="math notranslate nohighlight">
+\[g({\bf x}) = \frac{x_1}{x_2}\]</div>
+<p>The distributions for both <span class="math notranslate nohighlight">\(x_1\)</span> and <span class="math notranslate nohighlight">\(x_2\)</span> are Lognormal(1,
+0.5) with a correlation coefficient between the two variables of 0.3.</p>
+<p><strong>Reliability Analyses</strong></p>
+<p>First-order and second-order reliability analysis (FORM and SORM) are
+performed in
+<code class="file docutils literal notranslate"><span class="pre">dakota/share/dakota/examples/users/logratio_uq_reliability.in</span></code>
+and <code class="file docutils literal notranslate"><span class="pre">dakota/share/dakota/test/dakota_logratio_taylor2.in</span></code>.</p>
+<p>For the reliability index approach (RIA), 24 response levels (.4, .5,
+.55, .6, .65, .7, .75, .8, .85, .9, 1, 1.05, 1.15, 1.2, 1.25, 1.3,
+1.35, 1.4, 1.5, 1.55, 1.6, 1.65, 1.7, and 1.75) are mapped into the
+corresponding cumulative probability levels. For performance measure
+approach (PMA), these 24 probability levels (the fully converged
+results from RIA FORM) are mapped back into the original response
+levels.  <a class="reference internal" href="#fig-log-ratio-cdf-ria"><span class="std std-numref">Fig. 24</span></a> and
+<a class="reference internal" href="#fig-log-ratio-cdf-pma"><span class="std std-numref">Fig. 25</span></a> overlay the computed CDF values for a
+number of first-order reliability method variants as well as a Latin
+Hypercube reference solution of <span class="math notranslate nohighlight">\(10^6\)</span> samples.</p>
+<figure class="align-center" id="fig-log-ratio-cdf-ria">
+<a class="reference internal image-reference" href="../../_images/log_ratio_cdf_ria.png"><img alt="../../_images/log_ratio_cdf_ria.png" src="../../_images/log_ratio_cdf_ria.png" style="width: 50%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 24 </span><span class="caption-text">Lognormal ratio cumulative distribution function, RIA method.</span><a class="headerlink" href="#fig-log-ratio-cdf-ria" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<figure class="align-center" id="fig-log-ratio-cdf-pma">
+<a class="reference internal image-reference" href="../../_images/log_ratio_cdf_pma.png"><img alt="../../_images/log_ratio_cdf_pma.png" src="../../_images/log_ratio_cdf_pma.png" style="width: 50%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 25 </span><span class="caption-text">Lognormal ratio cumulative distribution function, PMA method.</span><a class="headerlink" href="#fig-log-ratio-cdf-pma" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+</section>
+<section id="steel-section">
+<span id="additional-steel-section"></span><h3>Steel Section<a class="headerlink" href="#steel-section" title="Link to this heading"></a></h3>
+<p>This test problem is used extensively in <span id="id15">[<a class="reference internal" href="../../misc/bibliography.html#id139" title="A. Haldar and S. Mahadevan. Probability, Reliability, and Statistical Methods in Engineering Design. Wiley, New York, 2000.">HM00</a>]</span>. It
+involves a W16x31 steel block of A36 steel that must carry an applied
+deterministic bending moment of 1140 kip-in. For Dakota, it has been
+used as a code verification test for second-order integrations in
+reliability methods. The limit state function is defined as:</p>
+<div class="math notranslate nohighlight">
+\[g({\bf x}) = F_y Z - 1140\]</div>
+<p>where <span class="math notranslate nohighlight">\(F_y\)</span> is Lognormal(38., 3.8), <span class="math notranslate nohighlight">\(Z\)</span> is Normal(54., 2.7),
+and the variables are uncorrelated.</p>
+<p>The <code class="file docutils literal notranslate"><span class="pre">dakota/share/dakota/test/dakota_steel_section.in</span></code> input
+file computes a first-order CDF probability of <span class="math notranslate nohighlight">\(p(g \leq 0.) =
+1.297e-07\)</span> and a second-order CDF probability of <span class="math notranslate nohighlight">\(p(g \leq 0.) =
+1.375e-07\)</span>. This second-order result differs from that reported in
+<span id="id16">[<a class="reference internal" href="../../misc/bibliography.html#id139" title="A. Haldar and S. Mahadevan. Probability, Reliability, and Statistical Methods in Engineering Design. Wiley, New York, 2000.">HM00</a>]</span>, since Dakota uses the Nataf nonlinear transformation
+to u-space (see <a class="reference internal" href="../theory/reliability.html#theory-uq-reliability-local-mpp"><span class="std std-ref">MPP Search Methods</span></a> for the
+formulation, while <span id="id17">[<a class="reference internal" href="../../misc/bibliography.html#id139" title="A. Haldar and S. Mahadevan. Probability, Reliability, and Statistical Methods in Engineering Design. Wiley, New York, 2000.">HM00</a>]</span> uses a linearized transformation.</p>
+</section>
+<section id="portal-frame">
+<span id="additional-portal-frame"></span><h3>Portal Frame<a class="headerlink" href="#portal-frame" title="Link to this heading"></a></h3>
+<p>This test problem is taken from <span id="id18">[<a class="reference internal" href="../../misc/bibliography.html#id156" title="H.P. Hong. Simple approximations for improving second-order reliability estimates. J. Eng. Mech., ASCE, 125(5):592–595, 1999.">Hon99</a>, <a class="reference internal" href="../../misc/bibliography.html#id287" title="L. Tvedt. Distribution of quadratic forms in normal space – applications to structural reliability. J. Eng. Mech., ASCE, 116(6):1183–1197, 1990.">Tve90</a>]</span>. It
+involves a plastic collapse mechanism of a simple portal frame. It also
+has been used as a verification test for second-order integrations in
+reliability methods. The limit state function is defined as:</p>
+<div class="math notranslate nohighlight">
+\[g({\bf x}) = x_1 + 2 x_2 + 2 x_3 + x_4 - 5 x_5 - 5 x_6\]</div>
+<p>where <span class="math notranslate nohighlight">\(x_1 - x_4\)</span> are Lognormal(120., 12.), <span class="math notranslate nohighlight">\(x_5\)</span> is
+Lognormal(50., 15.), <span class="math notranslate nohighlight">\(x_6\)</span> is Lognormal(40., 12.), and the
+variables are uncorrelated.</p>
+<p>While the limit state is linear in x-space, the nonlinear
+transformation of lognormals to u-space induces curvature. The input
+file <code class="file docutils literal notranslate"><span class="pre">dakota/share/dakota/test/dakota_portal_frame.in</span></code> computes
+a first-order CDF probability of <span class="math notranslate nohighlight">\(p(g \leq 0.) = 9.433e-03\)</span> and a
+second-order CDF probability of <span class="math notranslate nohighlight">\(p(g \leq 0.) =
+1.201e-02\)</span>. These results agree with the published results from the
+literature.</p>
+</section>
+<section id="short-column">
+<span id="additional-short-column"></span><h3>Short Column<a class="headerlink" href="#short-column" title="Link to this heading"></a></h3>
+<p>This test problem involves the plastic analysis and design of a short
+column with rectangular cross section (width <span class="math notranslate nohighlight">\(b\)</span> and depth
+<span class="math notranslate nohighlight">\(h\)</span>) having uncertain material properties (yield stress <span class="math notranslate nohighlight">\(Y\)</span>)
+and subject to uncertain loads (bending moment <span class="math notranslate nohighlight">\(M\)</span> and axial force
+<span class="math notranslate nohighlight">\(P\)</span>) <span id="id19">[<a class="reference internal" href="../../misc/bibliography.html#id177" title="N. Kuschel and R. Rackwitz. Two basic problems in reliability-based structural optimization. Math. Method Oper. Res., 46:309–333, 1997.">KR97</a>]</span>. The limit state function is
+defined as:</p>
+<div class="math notranslate nohighlight">
+\[g({\bf x}) = 1 - \frac{4M}{b h^2 Y} - \frac{P^2}{b^2 h^2 Y^2}\]</div>
+<p>The distributions for <span class="math notranslate nohighlight">\(P\)</span>, <span class="math notranslate nohighlight">\(M\)</span>, and <span class="math notranslate nohighlight">\(Y\)</span> are
+Normal(500, 100), Normal(2000, 400), and Lognormal(5, 0.5),
+respectively, with a correlation coefficient of 0.5 between <span class="math notranslate nohighlight">\(P\)</span>
+and <span class="math notranslate nohighlight">\(M\)</span> (uncorrelated otherwise). The nominal values for <span class="math notranslate nohighlight">\(b\)</span>
+and <span class="math notranslate nohighlight">\(h\)</span> are 5 and 15, respectively.</p>
+<p><strong>Reliability Analyses</strong></p>
+<p>First-order and second-order reliability analysis are performed in the
+<code class="file docutils literal notranslate"><span class="pre">dakota_short_column.in</span></code> and
+<code class="file docutils literal notranslate"><span class="pre">dakota_short_column_taylor2.in</span></code> input files in
+<code class="file docutils literal notranslate"><span class="pre">dakota/share/dakota/test</span></code>.  For RIA, 43 response levels (-9.0,
+-8.75, -8.5, -8.0, -7.75, -7.5, -7.25, -7.0, -6.5, -6.0, -5.5, -5.0,
+-4.5, -4.0, -3.5, -3.0, -2.5, -2.0, -1.9, -1.8, -1.7, -1.6, -1.5,
+-1.4, -1.3, -1.2, -1.1, -1.0, -0.9, -0.8, -0.7, -0.6, -0.5, -0.4,
+-0.3, -0.2, -0.1, 0.0, 0.05, 0.1, 0.15, 0.2, 0.25) are mapped into the
+corresponding cumulative probability levels. For PMA, these 43
+probability levels (the fully converged results from RIA FORM) are
+mapped back into the original response
+levels. <a class="reference internal" href="#fig-short-col-cdf-ria"><span class="std std-numref">Fig. 26</span></a> and
+<a class="reference internal" href="#fig-short-col-cdf-pma"><span class="std std-numref">Fig. 27</span></a> overlay the computed CDF values for
+several first-order reliability method variants as well as a Latin
+Hypercube reference solution of <span class="math notranslate nohighlight">\(10^6\)</span> samples.</p>
+<figure class="align-center" id="fig-short-col-cdf-ria">
+<a class="reference internal image-reference" href="../../_images/short_col_cdf_ria.png"><img alt="../../_images/short_col_cdf_ria.png" src="../../_images/short_col_cdf_ria.png" style="width: 50%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 26 </span><span class="caption-text">Short column cumulative distribution function, RIA method.</span><a class="headerlink" href="#fig-short-col-cdf-ria" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<figure class="align-center" id="fig-short-col-cdf-pma">
+<a class="reference internal image-reference" href="../../_images/short_col_cdf_pma.png"><img alt="../../_images/short_col_cdf_pma.png" src="../../_images/short_col_cdf_pma.png" style="width: 50%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 27 </span><span class="caption-text">Short column cumulative distribution function, PMA method.</span><a class="headerlink" href="#fig-short-col-cdf-pma" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p><strong>Reliability-Based Design Optimization</strong></p>
+<p>The short column test problem is also amenable to Reliability-Based
+Design Optimization (RBDO). An objective function of cross-sectional
+area and a target reliability index of 2.5 (cumulative failure
+probability <span class="math notranslate nohighlight">\(p(g \le 0) \le 0.00621\)</span>) are used in the design
+problem:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\min       \  &amp; bh \\
+\text{s.t.}\  &amp; \beta \geq 2.5 \\
+              &amp;  5.0 \leq b \leq 15.0 \\
+              &amp; 15.0 \leq h \leq 25.0\end{split}\]</div>
+<p>As is evident from the UQ results shown in
+<a class="reference internal" href="#fig-short-col-cdf-ria"><span class="std std-numref">Fig. 26</span></a> or <a class="reference internal" href="#fig-short-col-cdf-pma"><span class="std std-numref">Fig. 27</span></a>,
+the initial design of <span class="math notranslate nohighlight">\((b, h) = (5, 15)\)</span> is infeasible and the
+optimization must add material to obtain the target reliability at the
+optimal design <span class="math notranslate nohighlight">\((b, h) = (8.68, 25.0)\)</span>. Simple bi-level, fully
+analytic bi-level, and sequential RBDO methods are explored in input
+files <code class="file docutils literal notranslate"><span class="pre">dakota_rbdo_short_column.in</span></code>,
+<code class="file docutils literal notranslate"><span class="pre">dakota_rbdo_short_column_analytic.in</span></code>, and
+<code class="file docutils literal notranslate"><span class="pre">dakota_rbdo_short_column_trsb.in</span></code>, with results as described in
+<span id="id20">[<a class="reference internal" href="../../misc/bibliography.html#id84" title="M. S. Eldred, H. Agarwal, V. M. Perez, S. F. Wojtkiewicz, Jr., and J. E. Renaud. Investigation of reliability method formulations in DAKOTA/UQ. Structure &amp; Infrastructure Engineering: Maintenance, Management, Life-Cycle Design &amp; Performance, 3(3):199–213, 2007.">EAP+07</a>, <a class="reference internal" href="../../misc/bibliography.html#id81" title="M. S. Eldred and B. J. Bichon. Second-order reliability formulations in DAKOTA/UQ. In Proceedings of the 47th AIAA/ASME/ASCE/AHS/ASC Structures, Structural Dynamics and Materials Conference, number AIAA-2006-1828. Newport, RI, May 1–4 2006.">EB06</a>]</span>.  These files are located in
+<code class="file docutils literal notranslate"><span class="pre">dakota/share/dakota/test</span></code>.</p>
+</section>
+<section id="steel-column">
+<span id="additional-steel-column"></span><h3>Steel Column<a class="headerlink" href="#steel-column" title="Link to this heading"></a></h3>
+<p>This test problem involves the trade-off between cost and reliability
+for a steel column <span id="id21">[<a class="reference internal" href="../../misc/bibliography.html#id177" title="N. Kuschel and R. Rackwitz. Two basic problems in reliability-based structural optimization. Math. Method Oper. Res., 46:309–333, 1997.">KR97</a>]</span>. The cost is defined as</p>
+<div class="math notranslate nohighlight">
+\[Cost = b d + 5 h\]</div>
+<p>where <span class="math notranslate nohighlight">\(b\)</span>, <span class="math notranslate nohighlight">\(d\)</span>, and <span class="math notranslate nohighlight">\(h\)</span> are the means of the flange
+breadth, flange thickness, and profile height, respectively. Nine
+uncorrelated random variables are used in the problem to define the
+yield stress <span class="math notranslate nohighlight">\(F_s\)</span> (lognormal with <span class="math notranslate nohighlight">\(\mu/\sigma\)</span> = 400/35
+MPa), dead weight load <span class="math notranslate nohighlight">\(P_1\)</span> (normal with <span class="math notranslate nohighlight">\(\mu/\sigma\)</span> =
+500000/50000 N), variable load <span class="math notranslate nohighlight">\(P_2\)</span> (gumbel with
+<span class="math notranslate nohighlight">\(\mu/\sigma\)</span> = 600000/90000 N), variable load <span class="math notranslate nohighlight">\(P_3\)</span> (gumbel
+with <span class="math notranslate nohighlight">\(\mu/\sigma\)</span> = 600000/90000 N), flange breadth <span class="math notranslate nohighlight">\(B\)</span>
+(lognormal with <span class="math notranslate nohighlight">\(\mu/\sigma\)</span> = <span class="math notranslate nohighlight">\(b\)</span>/3 mm), flange thickness
+<span class="math notranslate nohighlight">\(D\)</span> (lognormal with <span class="math notranslate nohighlight">\(\mu/\sigma\)</span> = <span class="math notranslate nohighlight">\(d\)</span>/2 mm), profile
+height <span class="math notranslate nohighlight">\(H\)</span> (lognormal with <span class="math notranslate nohighlight">\(\mu/\sigma\)</span> = <span class="math notranslate nohighlight">\(h\)</span>/5 mm),
+initial deflection <span class="math notranslate nohighlight">\(F_0\)</span> (normal with <span class="math notranslate nohighlight">\(\mu/\sigma\)</span> = 30/10
+mm), and Young’s modulus <span class="math notranslate nohighlight">\(E\)</span> (Weibull with <span class="math notranslate nohighlight">\(\mu/\sigma\)</span> =
+21000/4200 MPa). The limit state has the following analytic form:</p>
+<div class="math notranslate nohighlight">
+\[g = F_s - P \left( \frac{1}{2 B D} +
+\frac{F_0}{B D H} \frac{E_b}{E_b - P} \right)\]</div>
+<p>where</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}P   &amp;=  P_1 + P_2 + P_3 \\
+E_b &amp;=  \frac{\pi^2 E B D H^2}{2 L^2}\end{split}\]</div>
+<p>and the column length <span class="math notranslate nohighlight">\(L\)</span> is 7500 mm.</p>
+<p>This design problem (<code class="file docutils literal notranslate"><span class="pre">dakota_rbdo_steel_column.in</span></code> in
+<code class="file docutils literal notranslate"><span class="pre">dakota/share/dakota/test</span></code>) demonstrates design variable insertion into
+random variable distribution parameters through the design of the mean
+flange breadth, flange thickness, and profile height. The RBDO
+formulation maximizes the reliability subject to a cost constraint:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\text{maximize }   &amp; \beta                   \\
+\text{subject to } &amp; Cost  \leq 4000.        \\
+                   &amp; 200.0 \leq b \leq 400.0 \\
+                   &amp;  10.0 \leq d \leq  30.0 \\
+                   &amp; 100.0 \leq h \leq 500.0\end{split}\]</div>
+<p>which has the solution <span class="math notranslate nohighlight">\((b, d, h) = (200.0, 17.50, 100.0)\)</span> with
+a maximal reliability of 3.132.</p>
+</section>
+</section>
+<section id="test-problems-for-forward-uq">
+<span id="additional-fwd-uq"></span><h2>Test Problems for Forward UQ<a class="headerlink" href="#test-problems-for-forward-uq" title="Link to this heading"></a></h2>
+<p>This section includes several test problems and examples related to
+forward uncertainty quantification.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>These are not included in the
+<code class="file docutils literal notranslate"><span class="pre">dakota/share/dakota/examples/users</span></code> directory, rather are in
+the <code class="file docutils literal notranslate"><span class="pre">dakota/share/dakota/test</span></code> directory.</p>
+</div>
+<section id="genz-functions">
+<h3>Genz functions<a class="headerlink" href="#genz-functions" title="Link to this heading"></a></h3>
+<p>The Genz functions have traditionally been used to test quadrature
+methods, however more recently they have also been used to test forward
+UQ methdos. Here we consider the oscilatory and corner-peak test
+functions, respectively given by</p>
+<div class="math notranslate nohighlight">
+\[f_{\mathrm{OS}}(\boldsymbol{\xi})=\cos\left(-\sum_{i=1}^d c_i\, \xi_i \right),\quad \boldsymbol{\xi}\in[0,1]^d\]</div>
+<div class="math notranslate nohighlight">
+\[f_{\mathrm{CP}}(\boldsymbol{\xi})=\left(1+\sum_{i=1}^d c_i\, \xi_i \right)^{-(d+1)},\quad \boldsymbol{\xi}\in[0,1]^d\]</div>
+<p>The coefficients <span class="math notranslate nohighlight">\(c_k\)</span> can be used to control the effective
+dimensionality and the variability of these functions. In dakota we
+support three choices of <span class="math notranslate nohighlight">\(\boldsymbol = (c_1,\ldots,c_d)^T\)</span>,
+specifically</p>
+<div class="math notranslate nohighlight">
+\[c^{(1)}_k=\frac{k-\frac{1}{2}}{d},\quad c_k^{(2)}=\frac{1}{k^2}\quad \text{and}
+\quad c_k^{(3)} = \exp\left(\frac{k\log(10^{-8})}{d}\right), \quad k=1,\ldots,d\]</div>
+<p>normalizing such that for the oscillatory function <span class="math notranslate nohighlight">\(\sum_{k=1}^d
+c_k = 4.5\)</span> and for the corner peak function <span class="math notranslate nohighlight">\(\sum_{k=1}^d c_k =
+0.25\)</span>.  The different decay rates of the coefficients represent
+increasing levels of anisotropy and decreasing effective
+dimensionality. Anisotropy refers to the dependence of the function
+variability.</p>
+<p>In Dakota the genz function can be set by specifying
+<code class="docutils literal notranslate"><span class="pre">analysis_driver=’genz’</span></code>. The type of coefficients decay can be set by
+specifying <code class="docutils literal notranslate"><span class="pre">os1,</span> <span class="pre">cp1</span></code> which uses <span class="math notranslate nohighlight">\(\mathbf{c}^{(1)}\)</span>,
+<code class="docutils literal notranslate"><span class="pre">os2,</span> <span class="pre">cp2</span></code> which uses <span class="math notranslate nohighlight">\(\mathbf{c}^{(2)}\)</span>, and <code class="docutils literal notranslate"><span class="pre">os3,</span> <span class="pre">cp3</span></code> which
+uses <span class="math notranslate nohighlight">\(\mathbf{c}^{(3)}\)</span>, where <code class="docutils literal notranslate"><span class="pre">os</span></code> is to be used with the
+oscillatory function and <code class="docutils literal notranslate"><span class="pre">cp</span></code> for the corner peak function.</p>
+</section>
+<section id="elliptic-partial-differential-equation-with-uncertain-coefficients">
+<h3>Elliptic Partial differential equation with uncertain coefficients<a class="headerlink" href="#elliptic-partial-differential-equation-with-uncertain-coefficients" title="Link to this heading"></a></h3>
+<p>Consider the following problem with <span class="math notranslate nohighlight">\(d \ge 1\)</span> random dimensions:</p>
+<div class="math notranslate nohighlight" id="equation-eq-hetrogeneous-diffusion">
+<span class="eqno">(20)<a class="headerlink" href="#equation-eq-hetrogeneous-diffusion" title="Link to this equation"></a></span>\[-\frac{d}{dx}\left[a(x,\boldsymbol{\xi})\frac{du}{dx}(x,\boldsymbol{\xi})\right] = 10,\quad
+(x,\boldsymbol{\xi})\in(0,1)\times I_{\boldsymbol{\xi}}\]</div>
+<p>subject to the physical boundary conditions</p>
+<div class="math notranslate nohighlight">
+\[u(0,\boldsymbol{\xi})=0,\quad u(1,\boldsymbol{\xi})=0.\]</div>
+<p>We are interested in quantifying the uncertainty in the solution
+<span class="math notranslate nohighlight">\(u\)</span> at a number of locations <span class="math notranslate nohighlight">\(x\in[0,1]\)</span> which can be
+specified by the user. This function can be run using dakota by
+specifying <code class="docutils literal notranslate"><span class="pre">analysis_driver='steady_state_diffusion_1d'</span></code>.</p>
+<p>We represent the random diffusivity field <span class="math notranslate nohighlight">\(a\)</span> using two types of
+expansions. The first option is to use represent the <em>logarithm</em> of the
+diffusivity field as Karhunen Loéve expansion</p>
+<div class="math notranslate nohighlight" id="equation-eq-diffusivityz">
+<span class="eqno">(21)<a class="headerlink" href="#equation-eq-diffusivityz" title="Link to this equation"></a></span>\[\log(a(x,\boldsymbol{\xi}))=\bar{a}+\sigma_a\sum_{k=1}^d\sqrt{\lambda_k}\phi_k(x)\xi_k\]</div>
+<p>where <span class="math notranslate nohighlight">\(\{\lambda_k\}_{k=1}^d\)</span> and <span class="math notranslate nohighlight">\(\{\phi_k(x)\}_{k=1}^d\)</span>
+are, respectively, the eigenvalues and eigenfunctions of the covariance
+kernel</p>
+<div class="math notranslate nohighlight" id="equation-eq-heat-eq-qoi">
+<span class="eqno">(22)<a class="headerlink" href="#equation-eq-heat-eq-qoi" title="Link to this equation"></a></span>\[C_a(x_1,x_2) = \exp\left[-\frac{(x_1-x_2)^p}{l_c}\right].\]</div>
+<p>for some power <span class="math notranslate nohighlight">\(p=1,2\)</span>. The variability of the diffusivity
+field <a class="reference internal" href="#equation-eq-diffusivityz">(21)</a> is controlled by
+<span class="math notranslate nohighlight">\(\sigma_a\)</span> and the correlation length <span class="math notranslate nohighlight">\(l_c\)</span> which determines
+the decay of the eigenvalues <span class="math notranslate nohighlight">\(\lambda_k\)</span>. Dakota sets
+<span class="math notranslate nohighlight">\(\sigma_a=1.\)</span> but allows the number of random variables <span class="math notranslate nohighlight">\(d\)</span>,
+the order of the kernel <span class="math notranslate nohighlight">\(p\)</span> and the correlation length <span class="math notranslate nohighlight">\(l_c\)</span>
+to vary. The random variables can be bounded or unbounded.</p>
+<p>The second expansion option is to represent the diffusivity by</p>
+<div class="math notranslate nohighlight" id="equation-diffusivityz">
+<span class="eqno">(23)<a class="headerlink" href="#equation-diffusivityz" title="Link to this equation"></a></span>\[a(x,\boldsymbol{\xi})=1+\sigma\sum_{k=1}^d\frac{1}{k^2\pi^2}\cos(2\pi kx)\boldsymbol{\xi}_k\]</div>
+<p>where <span class="math notranslate nohighlight">\(\boldsymbol{\xi}_k\in[-1,1]\)</span>, <span class="math notranslate nohighlight">\(k=1,\ldots,d\)</span> are
+bounded random variables. The form of <a class="reference internal" href="#equation-diffusivityz">(23)</a>
+is similar to that obtained from a Karhunen-Loève expansion. If the
+variables are i.i.d. uniform in [-1,1] the the diffusivity satisfies
+satisfies the auxiliary properties</p>
+<div class="math notranslate nohighlight">
+\[\mathbb{E}[a(x,\boldsymbol{\xi})]=1\quad\text{and}\quad 1-\frac{\sigma}{6}&lt;a(x,\boldsymbol{\xi})&lt;1+\frac{\sigma}{6}.\]</div>
+<p>This is the same test case used in <span id="id22">[<a class="reference internal" href="../../misc/bibliography.html#id311" title="D. Xiu and J.S. Hesthaven. High-order collocation methods for differential equations with random inputs. SIAM J. Sci. Comput., 27(3):1118–1139 (electronic), 2005.">XH05</a>]</span>.</p>
+</section>
+<section id="damped-oscillator">
+<h3>Damped Oscillator<a class="headerlink" href="#damped-oscillator" title="Link to this heading"></a></h3>
+<p>Consider a damped linear oscillator subject to external forcing with six
+unknown parameters <span class="math notranslate nohighlight">\(\boldsymbol{\xi}=(\gamma,k,f,\omega,x_0,x_1)\)</span></p>
+<div class="math notranslate nohighlight" id="equation-eq-oscillator-ode">
+<span class="eqno">(24)<a class="headerlink" href="#equation-eq-oscillator-ode" title="Link to this equation"></a></span>\[\frac{d^2x}{dt^2}(t,\boldsymbol{\xi})+\gamma\frac{dx}{dt}+k x=f\cos(\omega t),\]</div>
+<p>subject to the initial conditions</p>
+<div class="math notranslate nohighlight">
+\[x(0)=x_0,\quad \dot{x}(0)=x_1.\]</div>
+<p>Here we assume the damping coefficient <span class="math notranslate nohighlight">\(\gamma\)</span>, spring constant
+<span class="math notranslate nohighlight">\(k\)</span>, forcing amplitude <span class="math notranslate nohighlight">\(f\)</span> and frequency <span class="math notranslate nohighlight">\(\omega\)</span>, and
+the initial conditions <span class="math notranslate nohighlight">\(x_0\)</span> and <span class="math notranslate nohighlight">\(x_1\)</span> are all uncertain.</p>
+<p>This test function can be specified with
+<code class="docutils literal notranslate"><span class="pre">analysis_driver='damped_oscillator'</span></code>. This function only works with
+the uncertain variables defined over certain ranges. These ranges are</p>
+<div class="math notranslate nohighlight">
+\[\gamma_k\in[0.08,0.12],k\in[0.03,0.04],f\in[0.08,0.12],\omega\in[0.8,1.2],x_0\in[0.45,0.55],x_1\in[-0.05,0.05].\]</div>
+<p>Do not use this function with unbounded variables, however any bounded
+variables such as Beta and trucated Normal variables that satisfy the
+aforementioned variable bounds are fine.</p>
+</section>
+<section id="non-linear-coupled-system-of-odes">
+<span id="sec-predator-prey"></span><h3>Non-linear coupled system of ODEs<a class="headerlink" href="#non-linear-coupled-system-of-odes" title="Link to this heading"></a></h3>
+<p>Consider the non-linear system of ordinary differential equations
+governing a competitive Lotka–Volterra model of the population dynamics
+of species competing for some common resource. The model is given by</p>
+<div class="math notranslate nohighlight" id="equation-eq-predprey">
+<span class="eqno">(25)<a class="headerlink" href="#equation-eq-predprey" title="Link to this equation"></a></span>\[\begin{split}\begin{cases}
+\frac{du_i}{dt} = r_iu_i\left(1-\sum_{j=1}^3\alpha_{ij}u_j\right), &amp; \quad t\in (0,10],\\
+u_i(0) = u_{i,0},
+\end{cases}\end{split}\]</div>
+<p>for <span class="math notranslate nohighlight">\(i = 1,2,3\)</span>. The initial condition, <span class="math notranslate nohighlight">\(u_{i,0}\)</span>, and the
+self-interacting terms, <span class="math notranslate nohighlight">\(\alpha_{ii}\)</span>, are given, but the
+remaining interaction parameters, <span class="math notranslate nohighlight">\(\alpha_{ij}\)</span> with
+<span class="math notranslate nohighlight">\(i\neq j\)</span> as well as the re-productivity parameters,
+<span class="math notranslate nohighlight">\(r_i\)</span>, are unknown. We approximate the solution to
+<a class="reference internal" href="#equation-eq-predprey">(25)</a> in time using a Backward Euler method. This test
+function can be specified with <code class="docutils literal notranslate"><span class="pre">analysis_driver='predator_prey'</span></code>.</p>
+<p>We assume that these parameters are bounded. We have tested this model
+with all 9 parameters <span class="math notranslate nohighlight">\(\xi_i\in[0.3,0.7]\)</span>. However larger bounds
+are probably valid. When using the aforemetioned ranges and <span class="math notranslate nohighlight">\(1000\)</span>
+time steps with <span class="math notranslate nohighlight">\(\Delta t = 0.01\)</span> the average (over the random
+parameters) deterministic error is approximately
+<span class="math notranslate nohighlight">\(1.00\times10^{-4}\)</span>.</p>
+<p>Dakota returns the population of each species <span class="math notranslate nohighlight">\(u_i(T)\)</span> at the
+final time <span class="math notranslate nohighlight">\(T\)</span>. The final time and the number of time-steps can be
+changed.</p>
+</section>
+</section>
+<section id="test-problems-for-inverse-uq">
+<h2>Test Problems for Inverse UQ<a class="headerlink" href="#test-problems-for-inverse-uq" title="Link to this heading"></a></h2>
+<section id="experimental-design">
+<h3>Experimental Design<a class="headerlink" href="#experimental-design" title="Link to this heading"></a></h3>
+<p>This example tests the Bayesian experimental design algorithm described
+in <a class="reference internal" href="../studytypes/uq.html#sec-bayes-expdesign"><span class="std std-ref">Bayesian Experimental Design</span></a>, in which a
+low-fidelity model is calibrated to optimally-selected data points of a
+high-fidelity model. The <code class="docutils literal notranslate"><span class="pre">analysis_driver</span></code> for the the low and
+high-fidelity models implement the steady state heat example given
+in <span id="id23">[<a class="reference internal" href="../../misc/bibliography.html#id188" title="Allison Lewis, Ralph Smith, Brian Williams, and Victor Figueroa. An information theoretic approach to use high-fidelity codes to calibrate low-fidelity codes. Journal of Computational Physics, 324:24 - 43, 2016.">LSWF16</a>]</span>. The high-fidelity model is the analytic
+solution to the example described therein,</p>
+<div class="math notranslate nohighlight">
+\[T(x) = c_{1} \exp(-\gamma x) + c_{2} \exp(\gamma x) + T_{amb},\]</div>
+<p>where</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}c_{1} &amp;= - \frac{\Phi}{K \gamma} \left[ \frac{ \exp(\gamma L) (h + K \gamma) }
+{\exp(-\gamma L) (h-K\gamma) + \exp(\gamma L) (h+K\gamma)} \right], \\
+c_{2} &amp;= \frac{\Phi}{K\gamma} + c_{1}, \\
+\gamma &amp;= \sqrt{ \frac{ 2(a+b)h }{ abK } }.\end{split}\]</div>
+<p>The ambient room temperature <span class="math notranslate nohighlight">\(T_{amb}\)</span>, thermal conductivity
+coefficient <span class="math notranslate nohighlight">\(K\)</span>, convective heat transfer coefficient <span class="math notranslate nohighlight">\(h\)</span>,
+source heat flux <span class="math notranslate nohighlight">\(\Phi\)</span>, and system dimenions <span class="math notranslate nohighlight">\(a\)</span>,
+<span class="math notranslate nohighlight">\(b\)</span>, and <span class="math notranslate nohighlight">\(L\)</span> are all set to constant values. The
+experimental design variable <span class="math notranslate nohighlight">\(x \in [10,70]\)</span>, is called a
+configuration variable in Dakota and is the only variable that also
+appears in the low-fidelity model,</p>
+<div class="math notranslate nohighlight">
+\[y = A x^2 + B x + C.\]</div>
+<p>The goal of this example is to calibrate the low-fidelity model
+parameters <span class="math notranslate nohighlight">\(A, B\)</span>, and <span class="math notranslate nohighlight">\(C\)</span> with the Bayesian experimental
+design algorithm. Refer to <a class="reference internal" href="../studytypes/uq.html#sec-bayes-expdesign"><span class="std std-ref">Bayesian Experimental Design</span></a> for further
+details regarding the Dakota implementation of this example.</p>
+</section>
+<section id="bayes-linear">
+<span id="sec-bayes-linear"></span><h3>Bayes linear<a class="headerlink" href="#bayes-linear" title="Link to this heading"></a></h3>
+<p>This is a simple model that is only available by using the <code class="docutils literal notranslate"><span class="pre">direct</span></code>
+interface with <code class="docutils literal notranslate"><span class="pre">’bayes_linear’</span></code>. The model is discussed extensively in
+<span id="id24">[<a class="reference internal" href="../../misc/bibliography.html#id325" title="B. M. Adams, R. W. Hooper, A. Lewis, J. A. McMahan, R. C. Smith, L. P. Swiler, and B. J. Williams. User guidelines and best practices for casl vuq analysis using dakota. Technical Report CASL-U-2014-0038-000, Consortium for the Advanced Simulation of LWRs, 2014.">AHL+14</a>]</span> both on pages 93–102 and in Appendix A.
+The model is simply the sum of the d input parameters:</p>
+<div class="math notranslate nohighlight">
+\[y = \sum\limits_{i=1}^d x_i\]</div>
+<p>where the input varaibles <span class="math notranslate nohighlight">\(x_i\)</span> can be any uncertain variable type
+but are typically considered as uniform or normal uncertain inputs.</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="offlineexamples.html" class="btn btn-neutral float-left" title="Offline Examples" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../introduction/couplingtosimulations.html" class="btn btn-neutral float-right" title="Coupling Dakota to a Simulation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <!--
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Sandia National Laboratories.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+  --> 
+
+</footer>
+        </div>
+      </div>
+	  
+	  <div style="background-color: #0f0f0f;color:#fafafa;padding:20px">
+	    <div>
+		  <h2><em>Exceptional service in the national interest</em></h2>
+		</div>
+		<p>© 2023 National Technology and Engineering Solutions of Sandia, LLC. | <a href="https://www.sandia.gov/contact_us/index.html">Questions &amp; Comments</a> | <a href="https://www.sandia.gov/general/privacy-security/index.html">Privacy &amp; Security</a></p>
+		<p><a href="http://energy.gov" rel="noopener noreferrer" target="_blank"><img alt="U.S. Department of Energy" longdesc="https://energy.gov" src="https://www.sandia.gov/_common/images/doe_logo_white.png" style="height:37px; width:140px"></a> <a href="http://nnsa.energy.gov/" rel="noopener noreferrer" target="_blank"> <img alt="National Nuclear Security Administration" longdesc="http://nnsa.gov" src="https://www.sandia.gov/_common/images/nnsa_logo_white.png" style="height:37px; width:116px"></a></p>
+		<p><a href="https://www.sandia.gov">Sandia National Laboratories</a> is a multimission laboratory managed and operated by National Technology and Engineering Solutions of Sandia, LLC., a wholly owned subsidiary of Honeywell International, Inc., for the U.S. Department of Energy’s National Nuclear Security Administration under contract DE-NA-0003525.</p>
+	  </div>	  	  
+	  
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

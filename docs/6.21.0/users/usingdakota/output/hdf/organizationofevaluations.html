@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Organization of Evaluations &mdash; dakota  documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/dakota_theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/sandiaheaderlite.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Distribution Parameters" href="distributionparameters.html" />
+    <link rel="prev" title="Organization of Results" href="organizationofresults.html" /> 
+  
+  <meta name="sandia.approval_type" content="formal"/>
+  <meta property="sandia.approved" content="SAND2023-13392 O"/>
+  <meta name="description" content="The Dakota project delivers both state-of-the-art research and robust, usable software for optimization and UQ."/>
+  <meta name="keywords" content="Dakota, optimization, UQ, uncertainty quantification, parametric analysis, design exploration, model calibration, risk analysis"/>
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../index.html" class="icon icon-home"> dakota
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../setupdakota.html">Getting Started</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../usingdakota.html">Using Dakota</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../introduction/aboutdakota.html">About Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../introduction/helloworld.html">Dakota Beginner’s Tutorial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../examples.html">Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../introduction/couplingtosimulations.html">Coupling Dakota to a Simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../inputfile.html">Dakota Input File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../running.html">Running Dakota</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../output.html">Dakota Output</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../standardoutput.html">Standard Output</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../standarderror.html">Error Messages Output</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tabulardata.html">Tabular Output Data</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../hdf.html">HDF5 Output</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="concepts.html">HDF5 Concepts</a></li>
+<li class="toctree-l4"><a class="reference internal" href="accessingresults.html">Accessing Results</a></li>
+<li class="toctree-l4"><a class="reference internal" href="organizationofresults.html">Organization of Results</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Organization of Evaluations</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#sources-of-evaluation-data">Sources of Evaluation Data</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#high-level-organization-of-evaluation-data">High-level Organization of Evaluation Data</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#low-level-organization-of-evaluation-data">Low-Level Organization of Evaluation Data</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#selecting-models-and-interfaces-to-store">Selecting Models and Interfaces to Store</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="distributionparameters.html">Distribution Parameters</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../graphicslegacy.html">Legacy Graphics Output</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../otheroutput.html">Other Dakota Outputs</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../studytypes.html">Study Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../topics.html">Topics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../advanced.html">Advanced Topics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../theory.html">Dakota Theory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../reference.html">Keyword Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usingdakotagui/usingdakotagui.html">Using Dakota GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../externaltools/externaltools.html">Using External Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../compiling/compiling.html">Compiling Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../developingdakota/developingdakota.html">Developing Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../misc/misc.html">Miscellaneous</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">dakota</a>
+      </nav>
+
+	  <!-- SNL Lite header -->
+	  <div class="snlheader-subsite--wrapper-default">
+		<snlheader class="snlheader-subsite" role="snlbanner">
+		  <div class="wrapper">
+			<a href="https://www.sandia.gov/index.html">
+			  <div class="logo-transparent"><p class="logo">Sandia National Laboratories</p></div>
+			</a>
+			<div class="nav-top">
+			  <a class="visuallyhidden" name="mainnav"></a>
+			  <div aria-label="main navigation" class="core-nav-transparent core-nav-transparent--visible" role="navigation">
+				<ul role="navigation" class="secondary-links">
+				  <li id="search-text-link">
+					<a aria-label="Search" href="https://www.sandia.gov/search/">Search Sandia.gov</a>
+				  </li>
+				  <li id="directory-text-link">
+					<a href="https://www.sandia.gov/directory.html" aria-expanded="false" aria-label="Site Directory">All Sandia Websites</a>
+				  </li>
+				</ul>
+			  </div>
+			</div>
+		  </div> 
+		</snlheader>
+	  </div>	  
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../usingdakota.html">Using Dakota</a></li>
+          <li class="breadcrumb-item"><a href="../../output.html">Dakota Output</a></li>
+          <li class="breadcrumb-item"><a href="../hdf.html">HDF5 Output</a></li>
+      <li class="breadcrumb-item active">Organization of Evaluations</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../_sources/usingdakota/output/hdf/organizationofevaluations.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="organization-of-evaluations">
+<span id="hdf-organization-of-evaluations"></span><h1>Organization of Evaluations<a class="headerlink" href="#organization-of-evaluations" title="Link to this heading"></a></h1>
+<p>An evaluation is a mapping from variables to responses performed by a Dakota model or interface. Beginning with release 6.10, Dakota has the ability to report evaluation history in HDF5 format. The HDF5 format offers many advantages over existing console output and <a class="reference internal" href="../../reference/environment-tabular_data.html#environment-tabular-data"><span class="std std-ref">tabular output</span></a>. Requring no “scraping”, it is more convenient for most users than the former, and being unrestricted to a two-dimensional, tabular arragnment of information, it is far richer than the latter.</p>
+<p>This section begins by describing the Dakota components that can generate evaluation data. It then documents the high-level organization of the data from those components. Detailed documentation of the individual datasets (the “low-level” organization) where data are stored follows. Finally, information is provided concerning input keywords that control which components report evaluations.</p>
+<section id="sources-of-evaluation-data">
+<span id="hdf5-evaluations-hdf5-eval-sources"></span><h2>Sources of Evaluation Data<a class="headerlink" href="#sources-of-evaluation-data" title="Link to this heading"></a></h2>
+<p>Evaluation data are produced by only two kinds of components in Dakota: <strong>models</strong> and <strong>interfaces</strong>. The purpose of this subsection is to provide a basic description of models and interfaces for the purpose of equipping users to manage and understand HDF5-format evaluation data.</p>
+<p>Because interfaces and models must be specified in even simple Dakota studies, most novice users of Dakota will have some familiarity with these concepts. However, the exact nature of the relationship between methods, models, and interfaces may be unclear. Moreover, the models and interfaces present in a Dakota study are not always limited to those specified by the user. Some input keywords or combinations of components cause Dakota to create new models or interfaces “behind the scenes” and without the user’s direct knowledge. Not only can user-specified models and interfaces write evaluation data to HDF5, but also these auto-generated components. Accordingly, it may be helpful for consumers of Dakota’s evaluation data to have a basic understanding of how Dakota creates and employs models and interfaces.</p>
+<p>Consider first the input file shown here.</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span><span class="k">environment</span>
+  tabular_data
+  results_output
+    hdf5
+
+<span class="k">method</span>
+  id_method &#39;sampling&#39;
+  sampling
+    samples 20
+  model_pointer &#39;sim&#39;
+
+<span class="k">model</span>
+  id_model &#39;sim&#39;
+  single
+  interface_pointer &#39;tb&#39;
+
+<span class="k">variables</span>
+  uniform_uncertain 2
+    descriptors &#39;x1&#39; &#39;x2&#39;
+    lower_bounds 0.0 0.0
+    upper_bounds 1.0 1.0
+
+<span class="k">responses</span>
+  response_functions 1
+    descriptors &#39;f&#39;
+  no_gradients
+  no_hessians
+
+<span class="k">interface</span>
+  id_interface &#39;tb&#39;
+  fork
+    analysis_drivers &#39;text_book&#39;
+</pre></div>
+</div>
+<p>This simple input file specifies a single method of type <a class="reference internal" href="../../reference/method-sampling.html#method-sampling"><span class="std std-ref">sampling</span></a>, which also has the Id ‘sampling’. The ‘sampling’ method possesses a <a class="reference internal" href="../../reference/model.html#model"><span class="std std-ref">model</span></a> of type <a class="reference internal" href="../../reference/model-single.html#model-single"><span class="std std-ref">single</span></a> (alias simulation) named ‘sim’, which it uses to perform evaluations. (Dakota would have automatically generated a single model had one not been specified.) That is to say, for each variables-to-response mapping required by the method, it provides variables to the model and receives back responses from it.</p>
+<p>Single/simulation models like ‘sim’ perform evaluations by means of an interface, typically an interface to an external simulation. In this case, the interface is ‘tb’. The model passes the variables to ‘tb’, which executes the text_book driver, and receives back responses.</p>
+<p>It is clear that two components produce evaluation data in this study. The first is the single model ‘sim’, which receives and fulfills evaluation requests from the method ‘sampling’, and the second is the interface ‘tb’, which similarly receives requests from ‘sim’ and fulfills them by running the text_book driver.</p>
+<p>Because <a class="reference internal" href="../../reference/environment-tabular_data.html#environment-tabular-data"><span class="std std-ref">tabular data</span></a> was requested in the environment block, a record of the model’s evaluations will be reported to a tabular file. The interface’s evaluations could be dumped from the restart file using dakota_restart_util.</p>
+<p>If we compared these evaluation histories from ‘sim’ and ‘tb’, we would see that they are identical to one another. The model ‘sim’ is a mere “middle man” whose only responsibility is passing variables from the method down to the interface, executing the interface, and passing responses back up to the method. However, this is not always the case.</p>
+<p>For example, if this study were converted to a gradient-based optimzation using <a class="reference internal" href="../../reference/method-optpp_q_newton.html#method-optpp-q-newton"><span class="std std-ref">optpp_q_newton</span></a>, and the user specified <a class="reference internal" href="../../reference/responses-numerical_gradients.html#responses-numerical-gradients"><span class="std std-ref">numerical_gradients</span></a>:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span><span class="c"># model and interface same as above. Replace the method, variables, and responses with:</span>
+
+<span class="k">method</span>
+  id_method &#39;opt&#39;
+  optpp_q_newton
+
+<span class="k">variables</span>
+  continuous_design 2
+    descriptors &#39;x1&#39; &#39;x2&#39;
+    lower_bounds 0.0 0.0
+    upper_bounds 1.0 1.0
+
+<span class="k">responses</span>
+   objective_functions 1
+    descriptors &#39;f&#39;
+  numerical_gradients
+  no_hessians
+</pre></div>
+</div>
+<p>Then the model would have the responsibility of performing finite differencing to estimate gradients of the response ‘f’ requested by the method. Multiple function evaluations of ‘tb’ would map to a single gradient evaluation at the model level, and the evaluation histories of ‘sim’ and ‘tb’ would contain different information.</p>
+<p>Note that because it is unwieldy to report gradients (or Hessians) in a tabular format, they are not written to the tabular file, and historically were avialable only in the console output. The HDF5 format provides convenient access to both the “raw” evaluations performed by the interface and higher level model evaluations that include estimated gradients.</p>
+<p>This pair of examples hopefully provides a basic understanding of the flow of evaluation data between a method, model, and interface, and explains why models and interfaces are producers of evaluation data.</p>
+<p>Next consider a somewhat more complex study that includes a Dakota model of type <a class="reference internal" href="../../reference/model-surrogate.html#model-surrogate"><span class="std std-ref">surrogate</span></a>. A surrogate model performs evaluations requested by a method by executing a special kind of interface called an approximation interface, which Dakota implicitly creates without the direct knowledge of the user. Approximation interfaces are a generic container for the various kinds of surrogates Dakota can use, such as <a class="reference internal" href="../../reference/model-surrogate-global-gaussian_process.html#model-surrogate-global-gaussian-process"><span class="std std-ref">gaussian processes</span></a>.</p>
+<p>A Dakota model of type global surrogate may use a user-specified <a class="reference internal" href="../../reference/model-surrogate-global-dace_method_pointer.html#model-surrogate-global-dace-method-pointer"><span class="std std-ref">dace method</span></a> to construct the actual underlying model(s) that it evaluates via its approximation interface. The dace method will have its own model (typically of type single/simulation), which will have a user-specified interface.</p>
+<p>In this more complicated case there are at least four components that produce evaluation data: (1) the surrogate model and (2) its approximation interface, and (3) the dace method’s model and (4) its interface. Although only components (1), (3), and (4) are user-specified, evaluation data produced by (2) may be written to HDF5, as well. (<a class="reference internal" href="#hdf5-evaluations-selection"><span class="std std-ref">As explained below</span></a>, only evaluations performed by the surrogate model and the dace interface will be recorded by default. This can be overriden using <a class="reference internal" href="../../reference/environment-results_output-hdf5.html#environment-results-output-hdf5"><span class="std std-ref">hdf5</span></a> sub-keywords.) This is an example where “extra” and potentially confusing data appears in Dakota’s output due to an auto-generated component.</p>
+<p>An important family of implicitly-created models is the recast models, which have the responsibility of transforming variables and responses. One type of recast called a data transform model is responsible for computing residuals when a user provides <a class="reference internal" href="../../reference/responses-calibration_terms-calibration_data.html#responses-calibration-terms-calibration-data"><span class="std std-ref">experimental data</span></a> in a calibration study. Scaling recast models are employed when scaling is requested by the user for variables and/or responses.</p>
+<p>Recast models work on the principle of function composition, and “wrap” a submodel, which may itself also be a recast model. The innermost model in the recursion often will be the simulation or surrogate model specified by the user in the input file. Dakota is capable of recording evaluation data at each level of recast.</p>
+</section>
+<section id="high-level-organization-of-evaluation-data">
+<span id="hdf5-evaluations-high-level"></span><h2>High-level Organization of Evaluation Data<a class="headerlink" href="#high-level-organization-of-evaluation-data" title="Link to this heading"></a></h2>
+<p>This subsection describes how evaluation data produced by models and interfaces are organized at high level. A detailed description of the datasets and subgroups that contain evaluation data for a specific model or interface is given in the <a class="reference internal" href="#hdf5-evaluations-low-level"><span class="std std-ref">next subsection</span></a>.</p>
+<p>Two top level groups contain evaluation data, <code class="docutils literal notranslate"><span class="pre">/interfaces</span></code> and <code class="docutils literal notranslate"><span class="pre">/models</span></code>.</p>
+<p><strong>Interfaces</strong></p>
+<p>Because interfaces can be executed by more than one model, interface evaluations are more precisely thought of as evaluations of an interface/model combination. Consequently, interface evaluations are grouped not only by interface Id (‘tb’ in the example above), but also the Id of the model that requested them (‘sim’).</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>/interfaces/&lt;interface Id&gt;/&lt;model Id&gt;/
+</pre></div>
+</div>
+<p>If the user does not provide an Id for an interface that he specifies, Dakota assigns it the Id NO_ID. Approximation interfaces receive the Id <code class="docutils literal notranslate"><span class="pre">APPROX_INTERFACE_&lt;N&gt;</span></code>, where N is an incrementing integer beginning at 1. Other kinds of automatically generated interfaces are named <code class="docutils literal notranslate"><span class="pre">NOSPEC_INTERFACE_ID_&lt;N&gt;</span></code>.</p>
+<p><strong>Models</strong></p>
+<p>The top-level group for model evaluations is /models. Within this group, model evaluations are grouped by type: <code class="docutils literal notranslate"><span class="pre">simulation</span></code>, <code class="docutils literal notranslate"><span class="pre">surrogate</span></code>, <code class="docutils literal notranslate"><span class="pre">nested</span></code>, or <code class="docutils literal notranslate"><span class="pre">recast</span></code>, and then by model Id. That is:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>/models/&lt;type&gt;/&lt;model Id&gt;/
+</pre></div>
+</div>
+<p>Similar to interfaces, user-specified models that lack an Id are given one by Dakota. A single model is named <code class="docutils literal notranslate"><span class="pre">NO_MODEL_ID</span></code>. Some automatically generated models receive the name <code class="docutils literal notranslate"><span class="pre">NOSPEC_MODEL_ID</span></code>.</p>
+<p>Recast models are a special case and receive the name <code class="docutils literal notranslate"><span class="pre">RECAST_&lt;WRAPPED-MODEL&gt;_&lt;TYPE&gt;_&lt;N&gt;</span></code>. In this string:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>WRAPPED-MODEL is the Id of the innermost wrapped model, typically a user-specified model</p></li>
+<li><p>TYPE is the specific kind of recast. The three most common recasts are:
+- RECAST: several generic responsibilities, including summing objective functions to present to a single-objective optimizer
+- DATA_TRANSFORM: Compute residuals in a calibration
+- SCALING: scale variables and responses</p></li>
+<li><p>N is an incrementing integer that begins with 1. It is employed to distinguish recasts of the same type that wrap the same underlying model.</p></li>
+</ul>
+</div></blockquote>
+<p>The model’s evaluations may be the result of combining information from multiple sources. A simulation/single model will receive all the information it requires from its interface, but more complicated model types may use information not only from interfaces, but also other models and the results of method executions. Nested models, for instance, receive information from a submethod (the mean of a response from a sampling study, for instance) and potentially also an <a class="reference internal" href="../../reference/model-nested-optional_interface_pointer.html#model-nested-optional-interface-pointer"><span class="std std-ref">optional interface</span></a>.</p>
+<p>The sources of a model’s evaluations may be roughly identified by examining the contents of that models’ <code class="docutils literal notranslate"><span class="pre">sources</span></code> group. The <code class="docutils literal notranslate"><span class="pre">sources</span></code> group contains softlinks (note: softlinks are an HDF5 feature analogous to soft or symbolic links on many file systems) to groups for the interfaces, models, or methods that the model used to produce its evaluation data. (At this time, Dakota does not report the specific interface or model evaluations or method executions that were used to produce a specific model evaluation, but this is a planned feature.)</p>
+<p>Method results likewise have a <code class="docutils literal notranslate"><span class="pre">sources</span></code> group that identifies the models or methods employed by that method. By following the softlinks contained in a method’s or model’s sources group, it is possible to “drill down” from a method to its ultimate sources of information. In the sampling example above, interface evaluations performed via the ‘sim’ model at the request of the ‘sampling’ method could be obtained at the HDF5 path: <code class="docutils literal notranslate"><span class="pre">/methods/sampling/sources/sim/sources/tb/</span></code></p>
+</section>
+<section id="low-level-organization-of-evaluation-data">
+<span id="hdf5-evaluations-low-level"></span><h2>Low-Level Organization of Evaluation Data<a class="headerlink" href="#low-level-organization-of-evaluation-data" title="Link to this heading"></a></h2>
+<p>Within each model and interface’s “high-level” group, evaluation data are stored according to a “low-level” schema. This section desribes the “low-level” schema.</p>
+<p>Data are divided first of all into variables, responses, and properties groups. In addition, if a a user specifies metadata responses in his Dakota input, a metadata dataset will be present.</p>
+<p><strong>Variables</strong></p>
+<p>The variables group contains datasets that store the variables information for each evaluation. Four datasets may be present, one for each “domain”: <code class="docutils literal notranslate"><span class="pre">continuous</span></code>, <code class="docutils literal notranslate"><span class="pre">discrete_integer</span></code>, <code class="docutils literal notranslate"><span class="pre">discrete_string</span></code>, and <code class="docutils literal notranslate"><span class="pre">discrete_real</span></code>. These datasets are two-dimensional, with a row (0th dimension) for each evaluation and a column (1st dimension) for each variable. The 0th dimension has one dimension scale for the integer-valued evaluation Id. The 1st dimension has two scales. The 0th scale contains descriptors of the variables, and the 1st contains their variable Ids. In this context, the Ids are a 1-to-N ranking of the variables in Dakota “input spec” order.</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"></th>
+<th class="head"><p>Variables</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Description</p></td>
+<td><p>Values of variables in evaluations</p></td>
+</tr>
+<tr class="row-odd"><td><p>Location</p></td>
+<td><p>variables/{continuous, discrete_integer, discrete_string, discrete_real}</p></td>
+</tr>
+<tr class="row-even"><td><p>Shape</p></td>
+<td><p>2-dimensional: number of evaluations by number of variables</p></td>
+</tr>
+<tr class="row-odd"><td><p>Type</p></td>
+<td><p>Real, String, or Integer, as applicable</p></td>
+</tr>
+<tr class="row-even"><td><p>Scales</p></td>
+<td><table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Dimension</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Label</p></th>
+<th class="head"><p>Contents</p></th>
+<th class="head"><p>Notes</p></th>
+<th class="head"><p>Literal_contents</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>Integer</p></td>
+<td><p>evaluation_ids</p></td>
+<td><p>Evaluation Ids</p></td>
+<td><p>false</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>String</p></td>
+<td><p>variables</p></td>
+<td><p>Variable descriptors</p></td>
+<td><p>false</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>1</p></td>
+<td><p>Integer</p></td>
+<td><p>variables</p></td>
+<td><p>Variable Ids</p></td>
+<td><p>1-to-N rank of the variable in Dakota input spec order</p></td>
+<td><p>false</p></td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>String</p></td>
+<td><p>types</p></td>
+<td><p>Variable types</p></td>
+<td><p>Type of each variable, e.g. CONTINUOUS_DESIGN, DISCRETE_DESIGN_SET_INT</p></td>
+<td><p>false</p></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Responses</strong></p>
+<p>The responses group contains datasets for functions and, when available, gradients and Hessians.</p>
+<p><em>Functions:</em> The <code class="docutils literal notranslate"><span class="pre">functions</span></code> dataset is two-dimensional and contains function values for all responses. Like the variables datasets, evaluations are stored along the 0th dimension, and responses are stored along the 1st. The evaluation Ids and response descriptors are attached as scales to these axes, respectively.</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"></th>
+<th class="head"><p>Variables</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Description</p></td>
+<td><p>Values of functions in evaluations</p></td>
+</tr>
+<tr class="row-odd"><td><p>Location</p></td>
+<td><p>responses/functions</p></td>
+</tr>
+<tr class="row-even"><td><p>Shape</p></td>
+<td><p>2-dimensional: number of evaluations by number of responses</p></td>
+</tr>
+<tr class="row-odd"><td><p>Type</p></td>
+<td><p>Real</p></td>
+</tr>
+<tr class="row-even"><td><p>Scales</p></td>
+<td><table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Dimension</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Label</p></th>
+<th class="head"><p>Contents</p></th>
+<th class="head"><p>Literal_contents</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>Integer</p></td>
+<td><p>evaluation_ids</p></td>
+<td><p>Evaluation Ids</p></td>
+<td><p>false</p></td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>String</p></td>
+<td><p>responses</p></td>
+<td><p>Response descriptors</p></td>
+<td><p>false</p></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+<p><em>Gradients:</em> The gradients dataset is three-dimensional. It has the shape <span class="math notranslate nohighlight">\(evaluations \times responses \times variables\)</span>. Dakota supports a specification of <a class="reference internal" href="../../reference/responses-mixed_gradients.html#responses-mixed-gradients"><span class="std std-ref">mixed_gradients</span></a>, and the gradients dataset is sized and organized such that only those responses for which gradients are available are stored. When <code class="docutils literal notranslate"><span class="pre">mixed_gradients</span></code> are employed, a response will not necessarily have the same index in the functions and gradients datasets.</p>
+<p>Because it is possible that the gradient could be computed with respect to any of the continuous variables, active or inactive, that belong to the associated model, the <code class="docutils literal notranslate"><span class="pre">gradients</span></code> dataset is sized to accomodate gradients taken with respect to all continuous variables. Components that were not included in a particular evaluation will be set to NaN (not a number), and the <code class="docutils literal notranslate"><span class="pre">derivative_variables_vector</span></code> (in the matadata group) for that evaluation can be examined as well.</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"></th>
+<th class="head"><p>Gradients</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Description</p></td>
+<td><p>Values of gradients in evaluations</p></td>
+</tr>
+<tr class="row-odd"><td><p>Location</p></td>
+<td><p>responses/gradients</p></td>
+</tr>
+<tr class="row-even"><td><p>Shape</p></td>
+<td><p>3-dimensional: number of evaluations by number of responses by number of variables</p></td>
+</tr>
+<tr class="row-odd"><td><p>Type</p></td>
+<td><p>Real</p></td>
+</tr>
+<tr class="row-even"><td><p>Scales</p></td>
+<td><table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Dimension</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Label</p></th>
+<th class="head"><p>Contents</p></th>
+<th class="head"><p>Literal_contents</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>Integer</p></td>
+<td><p>evaluation_ids</p></td>
+<td><p>Evaluation Ids</p></td>
+<td><p>false</p></td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>String</p></td>
+<td><p>responses</p></td>
+<td><p>Response descriptors</p></td>
+<td><p>false</p></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+<p><em>Hessians:</em> Hessians are stored in a four-dimensional dataset, <span class="math notranslate nohighlight">\(evaluations \times responses \times \times variables \times variables\)</span>. The <code class="docutils literal notranslate"><span class="pre">hessians</span></code> dataset shares many of the characteristics with the <code class="docutils literal notranslate"><span class="pre">gradients</span></code>: in the mixed_hessians case, it will be smaller in the response dimension than the <code class="docutils literal notranslate"><span class="pre">functions</span></code> dataset, and unrequested components are set to NaN.</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"></th>
+<th class="head"><p>Hessians</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Description</p></td>
+<td><p>Values of Hessians in evaluations</p></td>
+</tr>
+<tr class="row-odd"><td><p>Location</p></td>
+<td><p>responses/hessians</p></td>
+</tr>
+<tr class="row-even"><td><p>Shape</p></td>
+<td><p>4-dimensional: number of evaluations by number of responses by number of variables
+by number of variables</p></td>
+</tr>
+<tr class="row-odd"><td><p>Type</p></td>
+<td><p>Real</p></td>
+</tr>
+<tr class="row-even"><td><p>Scales</p></td>
+<td><table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Dimension</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Label</p></th>
+<th class="head"><p>Contents</p></th>
+<th class="head"><p>Literal_contents</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>Integer</p></td>
+<td><p>evaluation_ids</p></td>
+<td><p>Evaluation Ids</p></td>
+<td><p>false</p></td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>String</p></td>
+<td><p>responses</p></td>
+<td><p>Response descriptors</p></td>
+<td><p>false</p></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Properties</strong></p>
+<p>The properties group contains up to four members.</p>
+<p><em>Active Set Vector:</em> The first is the <code class="docutils literal notranslate"><span class="pre">active_set_vector</span></code> dataset. It is two dimensional, with rows corresponding to evaluations and columns corresponding to responses. Each element contains an integer in the range 0-7, which indicates the request (function, gradient, Hessian) for the corresponding response for that evaluation. The 0th dimension has the evaluations Ids scale, and the 1st dimension has two scales: the response descriptors and the “default” or “maximal” ASV, an integer 0-7 for each response that indicates the information (function, gradient, Hessian) that possibly could have been requested during the study.</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"></th>
+<th class="head"><p>Active Set Vector</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Description</p></td>
+<td><p>Values of the active set vector in evaluations</p></td>
+</tr>
+<tr class="row-odd"><td><p>Location</p></td>
+<td><p>metadata/active_set_vector</p></td>
+</tr>
+<tr class="row-even"><td><p>Shape</p></td>
+<td><p>2-dimensional: number of evaluations by number of responses</p></td>
+</tr>
+<tr class="row-odd"><td><p>Type</p></td>
+<td><p>Integer</p></td>
+</tr>
+<tr class="row-even"><td><p>Scales</p></td>
+<td><table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Dimension</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Label</p></th>
+<th class="head"><p>Contents</p></th>
+<th class="head"><p>Literal_contents</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>Integer</p></td>
+<td><p>evaluation_ids</p></td>
+<td><p>Evaluation Ids</p></td>
+<td><p>false</p></td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>String</p></td>
+<td><p>responses</p></td>
+<td><p>Response descriptors</p></td>
+<td><p>false</p></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+<p><em>Derivative Variables Vector:</em> The second item in the properties group is the <code class="docutils literal notranslate"><span class="pre">derivative_variables_vector</span></code> dataset. It is included only when gradients or Hessians are available. Like the ASV, it is two-dimensional. Each column of the DVV dataset corresponds to a continuous variable and contains a 0 or 1, indicating whether gradients and Hessians were computed with respect to that variaable for the evaluation. The 0th dimension has the evaluation Ids as a scale, and the 1st dimension has two scales. The 0th is the descriptors of the continuous variables. The 1st contains the variable Ids of the continuous variables.</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"></th>
+<th class="head"><p>Derivative Variables Vector</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Description</p></td>
+<td><p>Values of the derivative variables vector in evaluations</p></td>
+</tr>
+<tr class="row-odd"><td><p>Location</p></td>
+<td><p>metadata/derivative_variables_vector</p></td>
+</tr>
+<tr class="row-even"><td><p>Shape</p></td>
+<td><p>2-dimensional: number of evaluations by number of continuous variables</p></td>
+</tr>
+<tr class="row-odd"><td><p>Type</p></td>
+<td><p>Integer</p></td>
+</tr>
+<tr class="row-even"><td><p>Scales</p></td>
+<td><table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Dimension</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Label</p></th>
+<th class="head"><p>Contents</p></th>
+<th class="head"><p>Literal_contents</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>Integer</p></td>
+<td><p>evaluation_ids</p></td>
+<td><p>Evaluation Ids</p></td>
+<td><p>false</p></td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>String</p></td>
+<td><p>variables</p></td>
+<td><p>Variable descriptors</p></td>
+<td><p>false</p></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+<p><em>Analysis Components:</em> The third member of the properties group is the <code class="docutils literal notranslate"><span class="pre">analysis_components</span></code> dataset. It is a 1D dataset that is present only when the user specified analysis components, and it contains those components as strings.</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"></th>
+<th class="head"><p>Analysis Components</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Description</p></td>
+<td><p>Values of the analysis components in evaluations</p></td>
+</tr>
+<tr class="row-odd"><td><p>Location</p></td>
+<td><p>metadata/analysis_components</p></td>
+</tr>
+<tr class="row-even"><td><p>Shape</p></td>
+<td><p>1-dimensional: number of analysis components</p></td>
+</tr>
+<tr class="row-odd"><td><p>Type</p></td>
+<td><p>String</p></td>
+</tr>
+</tbody>
+</table>
+<p>The final possible member of the properties group is the <code class="docutils literal notranslate"><span class="pre">variable_parameters</span></code> group. It is included only for models, which possess variables, and is described in a separate section below.</p>
+<p><strong>Metadata</strong></p>
+<p>Beginning with release 6.16, Dakota supports response <a class="reference internal" href="../../reference/responses-metadata.html#responses-metadata"><span class="std std-ref">metadata</span></a>. If configured, metadata values are stored in the <code class="docutils literal notranslate"><span class="pre">metadata</span></code> dataset.</p>
+<p>TODO</p>
+</section>
+<section id="selecting-models-and-interfaces-to-store">
+<span id="hdf5-evaluations-selection"></span><h2>Selecting Models and Interfaces to Store<a class="headerlink" href="#selecting-models-and-interfaces-to-store" title="Link to this heading"></a></h2>
+<p>When HDF5 output is enabled (by including the <a class="reference internal" href="../../reference/environment-results_output-hdf5.html#environment-results-output-hdf5"><span class="std std-ref">hdf5</span></a> keyword), then by default evaluation data for the following components will be stored:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>The model that belongs to the top-level method. (Currently, if the top-level method is a metaiterator such as method-hybrid, no model evaluation data will be stored.)</p></li>
+<li><p>All simulation interfaces. (interfaces of type <a class="reference internal" href="../../reference/interface-analysis_drivers-fork.html#interface-analysis-drivers-fork"><span class="std std-ref">fork</span></a>, <a class="reference internal" href="../../reference/interface-analysis_drivers-system.html#interface-analysis-drivers-system"><span class="std std-ref">system</span></a>, <a class="reference internal" href="../../reference/interface-analysis_drivers-direct.html#interface-analysis-drivers-direct"><span class="std std-ref">direct</span></a>, etc).</p></li>
+</ul>
+</div></blockquote>
+<p>The user can override these defaults using the keywords <a class="reference internal" href="../../reference/environment-results_output-hdf5-model_selection.html#environment-results-output-hdf5-model-selection"><span class="std std-ref">model_selection</span></a> and <a class="reference internal" href="../../reference/environment-results_output-hdf5-interface_selection.html#environment-results-output-hdf5-interface-selection"><span class="std std-ref">interface_selection</span></a>.</p>
+<p>The choices for <code class="docutils literal notranslate"><span class="pre">model_selection</span></code> are:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><a class="reference internal" href="../../reference/environment-results_output-hdf5-model_selection-top_method.html#environment-results-output-hdf5-model-selection-top-method"><span class="std std-ref">top_method</span></a> : (default) Store evaluation data for the top method’s model only.</p></li>
+<li><p><a class="reference internal" href="../../reference/environment-results_output-hdf5-model_selection-all_methods.html#environment-results-output-hdf5-model-selection-all-methods"><span class="std std-ref">all_methods</span></a> : Store evaluation data for all models that belong directly to a method. Note that a these models may be recasts of user-specified models, not the user-specified models themselves.</p></li>
+<li><p><a class="reference internal" href="../../reference/environment-results_output-hdf5-model_selection-all.html#environment-results-output-hdf5-model-selection-all"><span class="std std-ref">all</span></a> : Store evaluation data for all models.</p></li>
+<li><p><a class="reference internal" href="../../reference/environment-results_output-hdf5-model_selection-none.html#environment-results-output-hdf5-model-selection-none"><span class="std std-ref">none</span></a> : Store evaluation data for no models.</p></li>
+</ul>
+</div></blockquote>
+<p>The choices for interface_selection are:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><a class="reference internal" href="../../reference/environment-results_output-hdf5-interface_selection-simulation.html#environment-results-output-hdf5-interface-selection-simulation"><span class="std std-ref">simulation</span></a> : (default) Store evaluation data for simulation interfaces.</p></li>
+<li><p><a class="reference internal" href="../../reference/environment-results_output-hdf5-interface_selection-all.html#environment-results-output-hdf5-interface-selection-all"><span class="std std-ref">all</span></a> : Store evaluation data for all interfaces.</p></li>
+<li><p><a class="reference internal" href="../../reference/environment-results_output-hdf5-interface_selection-none.html#environment-results-output-hdf5-interface-selection-none"><span class="std std-ref">none</span></a> : Store evaluation data for no interfaces.</p></li>
+</ul>
+</div></blockquote>
+<p>If a model or interface is excluded from storage by these selections, then they cannot appear in the sources group for methods or models.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="organizationofresults.html" class="btn btn-neutral float-left" title="Organization of Results" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="distributionparameters.html" class="btn btn-neutral float-right" title="Distribution Parameters" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <!--
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Sandia National Laboratories.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+  --> 
+
+</footer>
+        </div>
+      </div>
+	  
+	  <div style="background-color: #0f0f0f;color:#fafafa;padding:20px">
+	    <div>
+		  <h2><em>Exceptional service in the national interest</em></h2>
+		</div>
+		<p>© 2023 National Technology and Engineering Solutions of Sandia, LLC. | <a href="https://www.sandia.gov/contact_us/index.html">Questions &amp; Comments</a> | <a href="https://www.sandia.gov/general/privacy-security/index.html">Privacy &amp; Security</a></p>
+		<p><a href="http://energy.gov" rel="noopener noreferrer" target="_blank"><img alt="U.S. Department of Energy" longdesc="https://energy.gov" src="https://www.sandia.gov/_common/images/doe_logo_white.png" style="height:37px; width:140px"></a> <a href="http://nnsa.energy.gov/" rel="noopener noreferrer" target="_blank"> <img alt="National Nuclear Security Administration" longdesc="http://nnsa.gov" src="https://www.sandia.gov/_common/images/nnsa_logo_white.png" style="height:37px; width:116px"></a></p>
+		<p><a href="https://www.sandia.gov">Sandia National Laboratories</a> is a multimission laboratory managed and operated by National Technology and Engineering Solutions of Sandia, LLC., a wholly owned subsidiary of Honeywell International, Inc., for the U.S. Department of Energy’s National Nuclear Security Administration under contract DE-NA-0003525.</p>
+	  </div>	  	  
+	  
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

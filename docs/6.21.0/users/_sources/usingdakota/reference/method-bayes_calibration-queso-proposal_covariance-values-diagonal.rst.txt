@@ -1,0 +1,49 @@
+.. _method-bayes_calibration-queso-proposal_covariance-values-diagonal:
+
+""""""""
+diagonal
+""""""""
+
+
+Specifies the diagonal matrix format when specifying a
+user-specified proposal covariance.
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+
+**Description**
+
+
+When specifying the MCMC proposal covariance in an input file, this
+keyword declares the use of a diagonal matrix format, i.e., the user
+only provides the (positive) values along the diagonal.
+
+
+
+**Examples**
+
+
+
+.. code-block::
+
+    method,
+            bayes_calibration queso
+             samples = 1000 seed = 348
+              dram
+              proposal_covariance
+                diagonal values 1.0e6 1.0e-1
+
+
+
+

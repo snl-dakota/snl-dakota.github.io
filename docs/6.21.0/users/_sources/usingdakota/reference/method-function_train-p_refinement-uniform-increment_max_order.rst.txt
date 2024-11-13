@@ -1,0 +1,35 @@
+.. _method-function_train-p_refinement-uniform-increment_max_order:
+
+"""""""""""""""""""
+increment_max_order
+"""""""""""""""""""
+
+
+candidate generation by advancement of maximum basis order
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+
+**Description**
+
+
+Within adaptive refinement processes, this specification selects the
+advancement of ``max_order`` to create new refinement candidates.  This
+option requires the use of ``adapt_order``, for which this advancement
+creates an expanded range for the cross validation (CV) process.  Once
+the CV process saturates (the best order is less than the max), then
+no further advancement can occur and the refinement process (for a
+particular model level/fidelity) halts.
+
+

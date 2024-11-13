@@ -1,0 +1,57 @@
+.. _method-bayes_calibration-muq-mala:
+
+""""
+mala
+""""
+
+
+Metropolis-adjusted Langevin algorithm
+
+
+
+
+**Topics**
+
+
+bayesian_calibration
+
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-bayes_calibration-muq-mala-step_size
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+- *Default:* dram
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+--------------------+-----------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword     | Dakota Keyword Description                    |
+|                         | Group              |                    |                                               |
++=========================+====================+====================+===============================================+
+| Optional                                     | `step_size`__      | Parameter for the MALA MCMC algorithm in MUQ  |
++----------------------------------------------+--------------------+-----------------------------------------------+
+
+.. __: method-bayes_calibration-muq-mala-step_size.html
+
+
+
+**Description**
+
+
+When the user selects 'bayesian_calibration muq' in the Dakota input file,
+the occurrence of the 'mala' keyword will cause Dakota to use the MALA
+algorithm (:cite:p:`RobTwe96`) from the MUQ library.
+
+
+
