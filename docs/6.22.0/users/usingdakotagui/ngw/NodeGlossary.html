@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Next-Gen Workflow Node Glossary &mdash; dakota  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/dakota_theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/sandiaheaderlite.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="dataFilter" href="nodes/dataFilter.html" />
+    <link rel="prev" title="Tutorial: Create an NGW Analysis Driver for Dakota" href="NextGenWorkflowTutorial.html" /> 
+  
+  <meta name="sandia.approval_type" content="formal"/>
+  <meta property="sandia.approved" content="SAND2025-05563O"/>
+  <meta name="description" content="The Dakota project delivers both state-of-the-art research and robust, usable software for optimization and UQ."/>
+  <meta name="keywords" content="Dakota, optimization, UQ, uncertainty quantification, parametric analysis, design exploration, model calibration, risk analysis"/>
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> dakota
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../setupdakota.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../usingdakota/usingdakota.html">Using Dakota</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../usingdakotagui.html">Using Dakota GUI</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#introduction">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#example-search">Example Search</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#wizards">Wizards</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#editing-dakota-input-files">Editing Dakota Input Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#running-dakota">Running Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#running-dakota-remotely">Running Dakota Remotely</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#output-from-dakota">Output from Dakota</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../usingdakotagui.html#gui-tools">GUI Tools</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../chartreuse/Chartreuse.html">Chartreuse</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="NextGenWorkflow.html">Next-Gen Workflow</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="NextGenWorkflowBasics.html">Next-Gen Workflow Basics</a></li>
+<li class="toctree-l4"><a class="reference internal" href="NextGenWorkflowAnalysisDrivers.html">Using Next-Gen Workflow as a Dakota Analysis Driver</a></li>
+<li class="toctree-l4"><a class="reference internal" href="NextGenWorkflowTutorial.html">Tutorial: Create an NGW Analysis Driver for Dakota</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Next-Gen Workflow Node Glossary</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#blackbox">Blackbox</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="nodes/dataFilter.html">dataFilter</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#dakota">Dakota</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="nodes/dakota.html">dakota</a></li>
+<li class="toctree-l6"><a class="reference internal" href="nodes/dakotaParametersMap.html">dakotaParametersMap</a></li>
+<li class="toctree-l6"><a class="reference internal" href="nodes/dakotaQueueSubmit.html">dakotaQueueSubmit</a></li>
+<li class="toctree-l6"><a class="reference internal" href="nodes/dakotaResultsFile.html">dakotaResultsFile</a></li>
+<li class="toctree-l6"><a class="reference internal" href="nodes/dakotaWorkflowDriver.html">dakotaWorkflowDriver</a></li>
+<li class="toctree-l6"><a class="reference internal" href="nodes/dispatchAndCollect.html">dispatchAndCollect</a></li>
+<li class="toctree-l6"><a class="reference internal" href="nodes/dprepro.html">dprepro</a></li>
+<li class="toctree-l6"><a class="reference internal" href="nodes/localDispatchAndCollect.html">localDispatchAndCollect</a></li>
+<li class="toctree-l6"><a class="reference internal" href="nodes/posPrePro.html">posPrePro</a></li>
+<li class="toctree-l6"><a class="reference internal" href="nodes/pyprepro.html">pyprepro</a></li>
+<li class="toctree-l6"><a class="reference internal" href="nodes/qoiExtractor.html">qoiExtractor</a></li>
+<li class="toctree-l6"><a class="reference internal" href="nodes/surrogate.html">surrogate</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#data-visualization-chartreuse">“Data Visualization (Chartreuse)”</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="nodes/displayPlot.html">displayPlot</a></li>
+<li class="toctree-l6"><a class="reference internal" href="nodes/plotCanvas.html">plotCanvas</a></li>
+<li class="toctree-l6"><a class="reference internal" href="nodes/plotInputGather.html">plotInputGather</a></li>
+<li class="toctree-l6"><a class="reference internal" href="nodes/plotWindow.html">plotWindow</a></li>
+<li class="toctree-l6"><a class="reference internal" href="nodes/screenshot.html">screenshot</a></li>
+<li class="toctree-l6"><a class="reference internal" href="nodes/toPlotlyJS.html">toPlotlyJS</a></li>
+<li class="toctree-l6"><a class="reference internal" href="nodes/traceBoxPlot.html">traceBoxPlot</a></li>
+<li class="toctree-l6"><a class="reference internal" href="nodes/traceContour.html">traceContour</a></li>
+<li class="toctree-l6"><a class="reference internal" href="nodes/traceHeatMap.html">traceHeatMap</a></li>
+<li class="toctree-l6"><a class="reference internal" href="nodes/traceHistogram.html">traceHistogram</a></li>
+<li class="toctree-l6"><a class="reference internal" href="nodes/traceScatterPlot2d.html">traceScatterPlot2d</a></li>
+<li class="toctree-l6"><a class="reference internal" href="nodes/traceScatterPlot3d.html">traceScatterPlot3d</a></li>
+<li class="toctree-l6"><a class="reference internal" href="nodes/traceSurfacePlot3d.html">traceSurfacePlot3d</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#data-visualization-dakota-chartreuse-simple-plots">“Data Visualization (Dakota/Chartreuse Simple Plots)”</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="nodes/hdfTraceBarChartPartialCorrelation.html">hdfTraceBarChartPartialCorrelation</a></li>
+<li class="toctree-l6"><a class="reference internal" href="nodes/hdfTraceBarChartPartialRankCorrelation.html">hdfTraceBarChartPartialRankCorrelation</a></li>
+<li class="toctree-l6"><a class="reference internal" href="nodes/hdfTraceBarChartSimpleCorrelation.html">hdfTraceBarChartSimpleCorrelation</a></li>
+<li class="toctree-l6"><a class="reference internal" href="nodes/hdfTraceBarChartSimpleRankCorrelation.html">hdfTraceBarChartSimpleRankCorrelation</a></li>
+<li class="toctree-l6"><a class="reference internal" href="nodes/hdfTraceBoxPlot.html">hdfTraceBoxPlot</a></li>
+<li class="toctree-l6"><a class="reference internal" href="nodes/hdfTraceContour.html">hdfTraceContour</a></li>
+<li class="toctree-l6"><a class="reference internal" href="nodes/hdfTraceHeatMap.html">hdfTraceHeatMap</a></li>
+<li class="toctree-l6"><a class="reference internal" href="nodes/hdfTraceHeatMapPartialCorrelation.html">hdfTraceHeatMapPartialCorrelation</a></li>
+<li class="toctree-l6"><a class="reference internal" href="nodes/hdfTraceHeatMapPartialRankCorrelation.html">hdfTraceHeatMapPartialRankCorrelation</a></li>
+<li class="toctree-l6"><a class="reference internal" href="nodes/hdfTraceHeatMapSimpleCorrelation.html">hdfTraceHeatMapSimpleCorrelation</a></li>
+<li class="toctree-l6"><a class="reference internal" href="nodes/hdfTraceHeatMapSimpleRankCorrelation.html">hdfTraceHeatMapSimpleRankCorrelation</a></li>
+<li class="toctree-l6"><a class="reference internal" href="nodes/hdfTraceHistogram.html">hdfTraceHistogram</a></li>
+<li class="toctree-l6"><a class="reference internal" href="nodes/hdfTraceScatterPlot2d.html">hdfTraceScatterPlot2d</a></li>
+<li class="toctree-l6"><a class="reference internal" href="nodes/hdfTraceScatterPlot3d.html">hdfTraceScatterPlot3d</a></li>
+<li class="toctree-l6"><a class="reference internal" href="nodes/hdfTraceSurfacePlot3d.html">hdfTraceSurfacePlot3d</a></li>
+<li class="toctree-l6"><a class="reference internal" href="nodes/scatterPlotMatrix.html">scatterPlotMatrix</a></li>
+<li class="toctree-l6"><a class="reference internal" href="nodes/sobolIndices.html">sobolIndices</a></li>
+<li class="toctree-l6"><a class="reference internal" href="nodes/variablePdfVisualizer.html">variablePdfVisualizer</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#data-visualization-dakota-chartreuse-megaplotters">“Data Visualization (Dakota/Chartreuse Megaplotters)”</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="nodes/calibrationHistory.html">calibrationHistory</a></li>
+<li class="toctree-l6"><a class="reference internal" href="nodes/categoricalBarCharts.html">categoricalBarCharts</a></li>
+<li class="toctree-l6"><a class="reference internal" href="nodes/categoricalScatterPlots.html">categoricalScatterPlots</a></li>
+<li class="toctree-l6"><a class="reference internal" href="nodes/incrementalLHS.html">incrementalLHS</a></li>
+<li class="toctree-l6"><a class="reference internal" href="nodes/LHS.html">LHS</a></li>
+<li class="toctree-l6"><a class="reference internal" href="nodes/optimization.html">optimization</a></li>
+<li class="toctree-l6"><a class="reference internal" href="nodes/responseCompare.html">responseCompare</a></li>
+<li class="toctree-l6"><a class="reference internal" href="nodes/scatterPlotSuite.html">scatterPlotSuite</a></li>
+<li class="toctree-l6"><a class="reference internal" href="nodes/variablePdfVisualizerComposite.html">variablePdfVisualizerComposite</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#hdf">HDF</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="nodes/hdfExtractColumn.html">hdfExtractColumn</a></li>
+<li class="toctree-l6"><a class="reference internal" href="nodes/hdfExtractRow.html">hdfExtractRow</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#remote-operations">Remote Operations</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="nodes/remoteNestedWorkflow.html">remoteNestedWorkflow</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="QueueSubmitScripts.html">Next-Gen Workflow Queue Submit Scripts</a></li>
+<li class="toctree-l4"><a class="reference internal" href="NextGenWorkflow.html#highlighted-node-topics">Highlighted Node Topics</a></li>
+<li class="toctree-l4"><a class="reference internal" href="NextGenWorkflow.html#further-reading">Further Reading</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../qoi/QOI.html">QOI</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#miscellaneous">Miscellaneous</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../externaltools/externaltools.html">Using External Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../compiling/compiling.html">Compiling Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developingdakota/developingdakota.html">Developing Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../misc/misc.html">Miscellaneous</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">dakota</a>
+      </nav>
+
+	  <!-- SNL Lite header -->
+	  <div class="snlheader-subsite--wrapper-default">
+		<snlheader class="snlheader-subsite" role="snlbanner">
+		  <div class="wrapper">
+			<a href="https://www.sandia.gov/index.html">
+			  <div class="logo-transparent"><p class="logo">Sandia National Laboratories</p></div>
+			</a>
+			<div class="nav-top">
+			  <a class="visuallyhidden" name="mainnav"></a>
+			  <div aria-label="main navigation" class="core-nav-transparent core-nav-transparent--visible" role="navigation">
+				<ul role="navigation" class="secondary-links">
+				  <li id="search-text-link">
+					<a aria-label="Search" href="https://www.sandia.gov/search/">Search Sandia.gov</a>
+				  </li>
+				  <li id="directory-text-link">
+					<a href="https://www.sandia.gov/directory.html" aria-expanded="false" aria-label="Site Directory">All Sandia Websites</a>
+				  </li>
+				</ul>
+			  </div>
+			</div>
+		  </div> 
+		</snlheader>
+	  </div>	  
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../usingdakotagui.html">Using Dakota GUI</a></li>
+          <li class="breadcrumb-item"><a href="NextGenWorkflow.html">Next-Gen Workflow</a></li>
+      <li class="breadcrumb-item active">Next-Gen Workflow Node Glossary</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/usingdakotagui/ngw/NodeGlossary.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="next-gen-workflow-node-glossary">
+<span id="ngw-node-glossary"></span><h1>Next-Gen Workflow Node Glossary<a class="headerlink" href="#next-gen-workflow-node-glossary" title="Link to this heading"></a></h1>
+<p id="ngw-node-help">For any node not listed in the glossary below, you can open that node’s documentation by opening the Settings editor view for that node,
+and then clicking on the small “?” button to the right of the Settings editor banner:</p>
+<img alt="Documentation for individual workflow nodes is available by clicking the small blue ? in the top-right corner of the dialog." src="../../_images/Plotting_HDF_3.png" />
+<section id="blackbox">
+<h2>Blackbox<a class="headerlink" href="#blackbox" title="Link to this heading"></a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="nodes/dataFilter.html">dataFilter</a></li>
+</ul>
+</div>
+</section>
+<section id="dakota">
+<h2>Dakota<a class="headerlink" href="#dakota" title="Link to this heading"></a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="nodes/dakota.html">dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nodes/dakotaParametersMap.html">dakotaParametersMap</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nodes/dakotaQueueSubmit.html">dakotaQueueSubmit</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nodes/dakotaResultsFile.html">dakotaResultsFile</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nodes/dakotaWorkflowDriver.html">dakotaWorkflowDriver</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nodes/dispatchAndCollect.html">dispatchAndCollect</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nodes/dprepro.html">dprepro</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nodes/localDispatchAndCollect.html">localDispatchAndCollect</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nodes/posPrePro.html">posPrePro</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nodes/pyprepro.html">pyprepro</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nodes/qoiExtractor.html">qoiExtractor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nodes/surrogate.html">surrogate</a></li>
+</ul>
+</div>
+</section>
+<section id="data-visualization-chartreuse">
+<h2>“Data Visualization (Chartreuse)”<a class="headerlink" href="#data-visualization-chartreuse" title="Link to this heading"></a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="nodes/displayPlot.html">displayPlot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nodes/plotCanvas.html">plotCanvas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nodes/plotInputGather.html">plotInputGather</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nodes/plotWindow.html">plotWindow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nodes/screenshot.html">screenshot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nodes/toPlotlyJS.html">toPlotlyJS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nodes/traceBoxPlot.html">traceBoxPlot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nodes/traceContour.html">traceContour</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nodes/traceHeatMap.html">traceHeatMap</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nodes/traceHistogram.html">traceHistogram</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nodes/traceScatterPlot2d.html">traceScatterPlot2d</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nodes/traceScatterPlot3d.html">traceScatterPlot3d</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nodes/traceSurfacePlot3d.html">traceSurfacePlot3d</a></li>
+</ul>
+</div>
+</section>
+<section id="data-visualization-dakota-chartreuse-simple-plots">
+<h2>“Data Visualization (Dakota/Chartreuse Simple Plots)”<a class="headerlink" href="#data-visualization-dakota-chartreuse-simple-plots" title="Link to this heading"></a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="nodes/hdfTraceBarChartPartialCorrelation.html">hdfTraceBarChartPartialCorrelation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nodes/hdfTraceBarChartPartialRankCorrelation.html">hdfTraceBarChartPartialRankCorrelation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nodes/hdfTraceBarChartSimpleCorrelation.html">hdfTraceBarChartSimpleCorrelation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nodes/hdfTraceBarChartSimpleRankCorrelation.html">hdfTraceBarChartSimpleRankCorrelation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nodes/hdfTraceBoxPlot.html">hdfTraceBoxPlot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nodes/hdfTraceContour.html">hdfTraceContour</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nodes/hdfTraceHeatMap.html">hdfTraceHeatMap</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nodes/hdfTraceHeatMapPartialCorrelation.html">hdfTraceHeatMapPartialCorrelation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nodes/hdfTraceHeatMapPartialRankCorrelation.html">hdfTraceHeatMapPartialRankCorrelation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nodes/hdfTraceHeatMapSimpleCorrelation.html">hdfTraceHeatMapSimpleCorrelation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nodes/hdfTraceHeatMapSimpleRankCorrelation.html">hdfTraceHeatMapSimpleRankCorrelation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nodes/hdfTraceHistogram.html">hdfTraceHistogram</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nodes/hdfTraceScatterPlot2d.html">hdfTraceScatterPlot2d</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nodes/hdfTraceScatterPlot3d.html">hdfTraceScatterPlot3d</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nodes/hdfTraceSurfacePlot3d.html">hdfTraceSurfacePlot3d</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nodes/scatterPlotMatrix.html">scatterPlotMatrix</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nodes/sobolIndices.html">sobolIndices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nodes/variablePdfVisualizer.html">variablePdfVisualizer</a></li>
+</ul>
+</div>
+</section>
+<section id="data-visualization-dakota-chartreuse-megaplotters">
+<h2>“Data Visualization (Dakota/Chartreuse Megaplotters)”<a class="headerlink" href="#data-visualization-dakota-chartreuse-megaplotters" title="Link to this heading"></a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="nodes/calibrationHistory.html">calibrationHistory</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nodes/categoricalBarCharts.html">categoricalBarCharts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nodes/categoricalScatterPlots.html">categoricalScatterPlots</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nodes/incrementalLHS.html">incrementalLHS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nodes/LHS.html">LHS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nodes/optimization.html">optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nodes/responseCompare.html">responseCompare</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nodes/scatterPlotSuite.html">scatterPlotSuite</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nodes/variablePdfVisualizerComposite.html">variablePdfVisualizerComposite</a></li>
+</ul>
+</div>
+</section>
+<section id="hdf">
+<h2>HDF<a class="headerlink" href="#hdf" title="Link to this heading"></a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="nodes/hdfExtractColumn.html">hdfExtractColumn</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nodes/hdfExtractRow.html">hdfExtractRow</a></li>
+</ul>
+</div>
+</section>
+<section id="remote-operations">
+<h2>Remote Operations<a class="headerlink" href="#remote-operations" title="Link to this heading"></a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="nodes/remoteNestedWorkflow.html">remoteNestedWorkflow</a></li>
+</ul>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="NextGenWorkflowTutorial.html" class="btn btn-neutral float-left" title="Tutorial: Create an NGW Analysis Driver for Dakota" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="nodes/dataFilter.html" class="btn btn-neutral float-right" title="dataFilter" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <!--
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Sandia National Laboratories.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+  --> 
+
+</footer>
+        </div>
+      </div>
+	  
+	  <div style="background-color: #0f0f0f;color:#fafafa;padding:20px">
+	    <div>
+		  <h2><em>Exceptional service in the national interest</em></h2>
+		</div>
+		<p>© 2023 National Technology and Engineering Solutions of Sandia, LLC. | <a href="https://www.sandia.gov/contact_us/index.html">Questions &amp; Comments</a> | <a href="https://www.sandia.gov/general/privacy-security/index.html">Privacy &amp; Security</a></p>
+		<p><a href="http://energy.gov" rel="noopener noreferrer" target="_blank"><img alt="U.S. Department of Energy" longdesc="https://energy.gov" src="https://www.sandia.gov/_common/images/doe_logo_white.png" style="height:37px; width:140px"></a> <a href="http://nnsa.energy.gov/" rel="noopener noreferrer" target="_blank"> <img alt="National Nuclear Security Administration" longdesc="http://nnsa.gov" src="https://www.sandia.gov/_common/images/nnsa_logo_white.png" style="height:37px; width:116px"></a></p>
+		<p><a href="https://www.sandia.gov">Sandia National Laboratories</a> is a multimission laboratory managed and operated by National Technology and Engineering Solutions of Sandia, LLC., a wholly owned subsidiary of Honeywell International, Inc., for the U.S. Department of Energy’s National Nuclear Security Administration under contract DE-NA-0003525.</p>
+	  </div>	  	  
+	  
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

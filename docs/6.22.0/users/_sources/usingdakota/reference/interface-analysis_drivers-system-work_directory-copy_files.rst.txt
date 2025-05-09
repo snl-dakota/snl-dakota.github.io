@@ -1,0 +1,53 @@
+.. _interface-analysis_drivers-system-work_directory-copy_files:
+
+""""""""""
+copy_files
+""""""""""
+
+
+Files and directories to be copied into each working directory
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* STRINGLIST
+
+- *Default:* no copied files
+
+
+**Description**
+
+
+Specifies the files or directories that will be recursively copied
+into each working directory.  Wildcards using * and ? are permitted.
+
+
+
+**Examples**
+
+
+Specifying
+
+.. code-block::
+
+      copy_files = 'siminput*.in' '/path/to/simdir1' 'simdir2/*'
+
+will create copies
+
+.. code-block::
+
+      workdir/siminput*.in  # files rundir/siminput*.in copied
+      workdir/simdir1/      # whole directory simdir1 recursively copied
+      workdir/*  # contents of directory simdir2 recursively copied
+
+where rundir is the directory in which Dakota was started.
+
+

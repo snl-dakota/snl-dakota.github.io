@@ -1,0 +1,290 @@
+.. _method-function_train:
+
+""""""""""""""
+function_train
+""""""""""""""
+
+
+UQ method leveraging a functional tensor train surrogate model.
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-function_train-p_refinement
+   method-function_train-max_refinement_iterations
+   method-function_train-convergence_tolerance
+   method-function_train-metric_scale
+   method-function_train-refinement_metric
+   method-function_train-regression_type
+   method-function_train-max_solver_iterations
+   method-function_train-max_cross_iterations
+   method-function_train-solver_tolerance
+   method-function_train-response_scaling
+   method-function_train-tensor_grid
+   method-function_train-collocation_points
+   method-function_train-collocation_ratio
+   method-function_train-rounding_tolerance
+   method-function_train-arithmetic_tolerance
+   method-function_train-start_order
+   method-function_train-adapt_order
+   method-function_train-kick_order
+   method-function_train-max_order
+   method-function_train-max_cv_order_candidates
+   method-function_train-start_rank
+   method-function_train-adapt_rank
+   method-function_train-kick_rank
+   method-function_train-max_rank
+   method-function_train-max_cv_rank_candidates
+   method-function_train-samples_on_emulator
+   method-function_train-sample_type
+   method-function_train-rng
+   method-function_train-probability_refinement
+   method-function_train-final_moments
+   method-function_train-response_levels
+   method-function_train-probability_levels
+   method-function_train-reliability_levels
+   method-function_train-gen_reliability_levels
+   method-function_train-distribution
+   method-function_train-variance_based_decomp
+   method-function_train-diagonal_covariance
+   method-function_train-full_covariance
+   method-function_train-import_approx_points_file
+   method-function_train-export_approx_points_file
+   method-function_train-seed
+   method-function_train-fixed_seed
+   method-function_train-model_pointer
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+-------------------------------+-----------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword                | Dakota Keyword Description                    |
+|                         | Group              |                               |                                               |
++=========================+====================+===============================+===============================================+
+| Optional                                     | `p_refinement`__              | Automatic polynomial order refinement         |
++----------------------------------------------+-------------------------------+-----------------------------------------------+
+| Optional                                     | `max_refinement_iterations`__ | Maximum number of expansion refinement        |
+|                                              |                               | iterations                                    |
++----------------------------------------------+-------------------------------+-----------------------------------------------+
+| Optional                                     | `convergence_tolerance`__     | Stopping criterion based on objective         |
+|                                              |                               | function or statistics convergence            |
++----------------------------------------------+-------------------------------+-----------------------------------------------+
+| Optional                                     | `metric_scale`__              | define scaling of statistical metrics when    |
+|                                              |                               | adapting UQ surrogates                        |
++----------------------------------------------+-------------------------------+-----------------------------------------------+
+| Optional                                     | `refinement_metric`__         | Metric used for guiding adaptive refinement   |
+|                                              |                               | during UQ.                                    |
++----------------------------------------------+-------------------------------+-----------------------------------------------+
+| Optional                                     | `regression_type`__           | Type of solver for forming function train     |
+|                                              |                               | approximations by regression                  |
++----------------------------------------------+-------------------------------+-----------------------------------------------+
+| Optional                                     | `max_solver_iterations`__     | Maximum iterations in determining polynomial  |
+|                                              |                               | coefficients                                  |
++----------------------------------------------+-------------------------------+-----------------------------------------------+
+| Optional                                     | `max_cross_iterations`__      | Maximum number of iterations for              |
+|                                              |                               | cross-approximation during a rank adaptation. |
++----------------------------------------------+-------------------------------+-----------------------------------------------+
+| Optional                                     | `solver_tolerance`__          | Convergence tolerance for the optimizer used  |
+|                                              |                               | during the regression solve.                  |
++----------------------------------------------+-------------------------------+-----------------------------------------------+
+| Optional                                     | `response_scaling`__          | Perform bounds-scaling on response values     |
+|                                              |                               | prior to surrogate emulation                  |
++----------------------------------------------+-------------------------------+-----------------------------------------------+
+| Optional                                     | `tensor_grid`__               | Use sub-sampled tensor-product quadrature     |
+|                                              |                               | points to build a polynomial chaos expansion. |
++-------------------------+--------------------+-------------------------------+-----------------------------------------------+
+| Required (Choose One)   | Collocation        | `collocation_points`__        | Number of collocation points used to estimate |
+|                         | Control            |                               | expansion coefficients                        |
+|                         |                    +-------------------------------+-----------------------------------------------+
+|                         |                    | `collocation_ratio`__         | Set the number of points used to build a PCE  |
+|                         |                    |                               | via regression to be proportional to the      |
+|                         |                    |                               | number of terms in the expansion.             |
++-------------------------+--------------------+-------------------------------+-----------------------------------------------+
+| Optional                                     | `rounding_tolerance`__        | An accuracy tolerance that is used to guide   |
+|                                              |                               | rounding during rank adaptation.              |
++----------------------------------------------+-------------------------------+-----------------------------------------------+
+| Optional                                     | `arithmetic_tolerance`__      | A secondary rounding tolerance used for       |
+|                                              |                               | post-processing                               |
++----------------------------------------------+-------------------------------+-----------------------------------------------+
+| Optional                                     | `start_order`__               | (Initial) polynomial order of each univariate |
+|                                              |                               | function within the functional tensor train.  |
++----------------------------------------------+-------------------------------+-----------------------------------------------+
+| Optional                                     | `adapt_order`__               | Activate adaptive procedure for determining   |
+|                                              |                               | the best basis order                          |
++----------------------------------------------+-------------------------------+-----------------------------------------------+
+| Optional                                     | `kick_order`__                | increment used when adapting the basis order  |
+|                                              |                               | in function train methods                     |
++----------------------------------------------+-------------------------------+-----------------------------------------------+
+| Optional                                     | `max_order`__                 | Maximum polynomial order of each univariate   |
+|                                              |                               | function within the functional tensor train.  |
++----------------------------------------------+-------------------------------+-----------------------------------------------+
+| Optional                                     | `max_cv_order_candidates`__   | Limit the number of cross-validation          |
+|                                              |                               | candidates for basis order                    |
++----------------------------------------------+-------------------------------+-----------------------------------------------+
+| Optional                                     | `start_rank`__                | The initial rank used for the starting point  |
+|                                              |                               | during a rank adaptation.                     |
++----------------------------------------------+-------------------------------+-----------------------------------------------+
+| Optional                                     | `adapt_rank`__                | Activate adaptive procedure for determining   |
+|                                              |                               | best rank representation                      |
++----------------------------------------------+-------------------------------+-----------------------------------------------+
+| Optional                                     | `kick_rank`__                 | The increment in rank employed during each    |
+|                                              |                               | iteration of the rank adaptation.             |
++----------------------------------------------+-------------------------------+-----------------------------------------------+
+| Optional                                     | `max_rank`__                  | Limits the maximum rank that is explored      |
+|                                              |                               | during a rank adaptation.                     |
++----------------------------------------------+-------------------------------+-----------------------------------------------+
+| Optional                                     | `max_cv_rank_candidates`__    | Limit the number of cross-validation          |
+|                                              |                               | candidates for rank                           |
++----------------------------------------------+-------------------------------+-----------------------------------------------+
+| Optional                                     | `samples_on_emulator`__       | Number of samples at which to evaluate an     |
+|                                              |                               | emulator (surrogate)                          |
++----------------------------------------------+-------------------------------+-----------------------------------------------+
+| Optional                                     | `sample_type`__               | Selection of sampling strategy                |
++----------------------------------------------+-------------------------------+-----------------------------------------------+
+| Optional                                     | `rng`__                       | Selection of a random number generator        |
++----------------------------------------------+-------------------------------+-----------------------------------------------+
+| Optional                                     | `probability_refinement`__    | Allow refinement of probability and           |
+|                                              |                               | generalized reliability results using         |
+|                                              |                               | importance sampling                           |
++----------------------------------------------+-------------------------------+-----------------------------------------------+
+| Optional                                     | `final_moments`__             | Output moments of the specified type and      |
+|                                              |                               | include them within the set of final          |
+|                                              |                               | statistics.                                   |
++----------------------------------------------+-------------------------------+-----------------------------------------------+
+| Optional                                     | `response_levels`__           | Values at which to estimate desired           |
+|                                              |                               | statistics for each response                  |
++----------------------------------------------+-------------------------------+-----------------------------------------------+
+| Optional                                     | `probability_levels`__        | Specify probability levels at which to        |
+|                                              |                               | estimate the corresponding response value     |
++----------------------------------------------+-------------------------------+-----------------------------------------------+
+| Optional                                     | `reliability_levels`__        | Specify reliability levels at which the       |
+|                                              |                               | response values will be estimated             |
++----------------------------------------------+-------------------------------+-----------------------------------------------+
+| Optional                                     | `gen_reliability_levels`__    | Specify generalized relability levels at      |
+|                                              |                               | which to estimate the corresponding response  |
+|                                              |                               | value                                         |
++----------------------------------------------+-------------------------------+-----------------------------------------------+
+| Optional                                     | `distribution`__              | Selection of cumulative or complementary      |
+|                                              |                               | cumulative functions                          |
++----------------------------------------------+-------------------------------+-----------------------------------------------+
+| Optional                                     | `variance_based_decomp`__     | Activates global sensitivity analysis based   |
+|                                              |                               | on decomposition of response variance into    |
+|                                              |                               | main, interaction, and total effects          |
++-------------------------+--------------------+-------------------------------+-----------------------------------------------+
+| Optional (Choose One)   | Covariance Type    | `diagonal_covariance`__       | Display only the diagonal terms of the        |
+|                         |                    |                               | covariance matrix                             |
+|                         |                    +-------------------------------+-----------------------------------------------+
+|                         |                    | `full_covariance`__           | Display the full covariance matrix            |
++-------------------------+--------------------+-------------------------------+-----------------------------------------------+
+| Optional                                     | `import_approx_points_file`__ | Filename for points at which to evaluate the  |
+|                                              |                               | PCE/SC surrogate                              |
++----------------------------------------------+-------------------------------+-----------------------------------------------+
+| Optional                                     | `export_approx_points_file`__ | Output file for surrogate model value         |
+|                                              |                               | evaluations                                   |
++----------------------------------------------+-------------------------------+-----------------------------------------------+
+| Optional                                     | `seed`__                      | Seed of the random number generator           |
++----------------------------------------------+-------------------------------+-----------------------------------------------+
+| Optional                                     | `fixed_seed`__                | Reuses the same seed value for multiple       |
+|                                              |                               | random sampling sets                          |
++----------------------------------------------+-------------------------------+-----------------------------------------------+
+| Optional                                     | `model_pointer`__             | Identifier for model block to be used by a    |
+|                                              |                               | method                                        |
++----------------------------------------------+-------------------------------+-----------------------------------------------+
+
+.. __: method-function_train-p_refinement.html
+__ method-function_train-max_refinement_iterations.html
+__ method-function_train-convergence_tolerance.html
+__ method-function_train-metric_scale.html
+__ method-function_train-refinement_metric.html
+__ method-function_train-regression_type.html
+__ method-function_train-max_solver_iterations.html
+__ method-function_train-max_cross_iterations.html
+__ method-function_train-solver_tolerance.html
+__ method-function_train-response_scaling.html
+__ method-function_train-tensor_grid.html
+__ method-function_train-collocation_points.html
+__ method-function_train-collocation_ratio.html
+__ method-function_train-rounding_tolerance.html
+__ method-function_train-arithmetic_tolerance.html
+__ method-function_train-start_order.html
+__ method-function_train-adapt_order.html
+__ method-function_train-kick_order.html
+__ method-function_train-max_order.html
+__ method-function_train-max_cv_order_candidates.html
+__ method-function_train-start_rank.html
+__ method-function_train-adapt_rank.html
+__ method-function_train-kick_rank.html
+__ method-function_train-max_rank.html
+__ method-function_train-max_cv_rank_candidates.html
+__ method-function_train-samples_on_emulator.html
+__ method-function_train-sample_type.html
+__ method-function_train-rng.html
+__ method-function_train-probability_refinement.html
+__ method-function_train-final_moments.html
+__ method-function_train-response_levels.html
+__ method-function_train-probability_levels.html
+__ method-function_train-reliability_levels.html
+__ method-function_train-gen_reliability_levels.html
+__ method-function_train-distribution.html
+__ method-function_train-variance_based_decomp.html
+__ method-function_train-diagonal_covariance.html
+__ method-function_train-full_covariance.html
+__ method-function_train-import_approx_points_file.html
+__ method-function_train-export_approx_points_file.html
+__ method-function_train-seed.html
+__ method-function_train-fixed_seed.html
+__ method-function_train-model_pointer.html
+
+
+
+**Description**
+
+
+Tensor train decompositions are approximations that exploit low rank structure
+in an input-output mapping.  Refer to the :dakkw:`model-surrogate-global-function_train`
+surrogate model for additional details.
+
+*Usage Tips*
+
+This method is a self-contained method alternative to the
+:dakkw:`model-surrogate-global-function_train` surrogate model specification, similar
+to current method specifications for polynomial chaos and stochastic collocation.
+In particular, this ``function_train`` method specification directly couples with a
+simulation model (optionally identified with a ``model_pointer``) and an additional
+``function`` train surrogate model specification is not required as these options
+have been embedded within the method specification.
+
+
+
+**Examples**
+
+
+
+.. code-block::
+
+    method,
+     function_train
+       start_order = 2
+       start_rank = 2  kick_rank = 2  max_rank = 10
+       adapt_rank
+       solver_tolerance    = 1e-12
+       rounding_tolerance  = 1e-12
+       convergence_tol     = 1e-6
+       collocation_points  = 100
+       samples_on_emulator = 100000
+       seed = 531
+       response_levels = .1 1. 50. 100. 500. 1000.
+       variance_based_decomp
+
+
+
+

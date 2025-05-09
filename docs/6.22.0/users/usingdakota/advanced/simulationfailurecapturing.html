@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Simulation Failure Capturing &mdash; dakota  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/dakota_theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/sandiaheaderlite.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../../_static/copybutton.js?v=f281be69"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Active Subspace Models" href="activesubspace.html" />
+    <link rel="prev" title="Parallel Computing" href="parallelcomputing.html" /> 
+  
+  <meta name="sandia.approval_type" content="formal"/>
+  <meta property="sandia.approved" content="SAND2025-05563O"/>
+  <meta name="description" content="The Dakota project delivers both state-of-the-art research and robust, usable software for optimization and UQ."/>
+  <meta name="keywords" content="Dakota, optimization, UQ, uncertainty quantification, parametric analysis, design exploration, model calibration, risk analysis"/>
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> dakota
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../setupdakota.html">Getting Started</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../usingdakota.html">Using Dakota</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../introduction/aboutdakota.html">About Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../introduction/helloworld.html">Dakota Beginner’s Tutorial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples.html">Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../introduction/couplingtosimulations.html">Coupling Dakota to a Simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../inputfile.html">Dakota Input File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../running.html">Running Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../output.html">Dakota Output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../studytypes.html">Study Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../topics.html">Topics</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../advanced.html">Advanced Topics</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="advancedmethods.html">Advanced Methods</a></li>
+<li class="toctree-l3"><a class="reference internal" href="advancedmodelrecursions.html">Advanced Model Recursions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="advancedsimulationcodeinterfaces.html">Advanced Simulation Code Interfaces</a></li>
+<li class="toctree-l3"><a class="reference internal" href="parallelcomputing.html">Parallel Computing</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Simulation Failure Capturing</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#failure-detection">Failure detection</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#failure-communication">Failure communication</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#failure-mitigation">Failure mitigation</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#abort-default">Abort (default)</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#retry">Retry</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#recover">Recover</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#continuation">Continuation</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#special-values">Special values</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="activesubspace.html">Active Subspace Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="basisadaptation.html">Basis Adaptation Models</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../theory.html">Dakota Theory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference.html">Keyword Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../usingdakotagui/usingdakotagui.html">Using Dakota GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../externaltools/externaltools.html">Using External Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../compiling/compiling.html">Compiling Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developingdakota/developingdakota.html">Developing Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../misc/misc.html">Miscellaneous</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">dakota</a>
+      </nav>
+
+	  <!-- SNL Lite header -->
+	  <div class="snlheader-subsite--wrapper-default">
+		<snlheader class="snlheader-subsite" role="snlbanner">
+		  <div class="wrapper">
+			<a href="https://www.sandia.gov/index.html">
+			  <div class="logo-transparent"><p class="logo">Sandia National Laboratories</p></div>
+			</a>
+			<div class="nav-top">
+			  <a class="visuallyhidden" name="mainnav"></a>
+			  <div aria-label="main navigation" class="core-nav-transparent core-nav-transparent--visible" role="navigation">
+				<ul role="navigation" class="secondary-links">
+				  <li id="search-text-link">
+					<a aria-label="Search" href="https://www.sandia.gov/search/">Search Sandia.gov</a>
+				  </li>
+				  <li id="directory-text-link">
+					<a href="https://www.sandia.gov/directory.html" aria-expanded="false" aria-label="Site Directory">All Sandia Websites</a>
+				  </li>
+				</ul>
+			  </div>
+			</div>
+		  </div> 
+		</snlheader>
+	  </div>	  
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../usingdakota.html">Using Dakota</a></li>
+          <li class="breadcrumb-item"><a href="../advanced.html">Advanced Topics</a></li>
+      <li class="breadcrumb-item active">Simulation Failure Capturing</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/usingdakota/advanced/simulationfailurecapturing.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="simulation-failure-capturing">
+<span id="failure"></span><h1>Simulation Failure Capturing<a class="headerlink" href="#simulation-failure-capturing" title="Link to this heading"></a></h1>
+<p>Dakota provides the capability to manage failures in simulation codes
+within its system call, fork, and direct simulation interfaces (see
+<a class="reference internal" href="../inputfile/interfaces/simulationinterfaces.html#interfaces-sim"><span class="std std-ref">Simulation Interfaces</span></a> for simulation interface
+descriptions). Failure capturing consists of three operations: failure
+detection, failure communication, and failure mitigation.</p>
+<section id="failure-detection">
+<span id="id1"></span><h2>Failure detection<a class="headerlink" href="#failure-detection" title="Link to this heading"></a></h2>
+<p>Since the symptoms of a simulation failure are highly code and
+application dependent, it is the user’s responsibility to detect
+failures within their <code class="docutils literal notranslate"><span class="pre">analysis_driver</span></code>, <code class="docutils literal notranslate"><span class="pre">input_filter</span></code>, or
+<code class="docutils literal notranslate"><span class="pre">output_filter</span></code>. One popular example of simulation monitoring is to
+rely on a simulation’s internal detection of errors. In this case, the
+UNIX <code class="docutils literal notranslate"><span class="pre">grep</span></code> utility can be used within a user’s driver/filter script
+to detect strings in output files which indicate analysis failure. For
+example, the following simple C shell script excerpt</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>grep ERROR analysis.out &gt; /dev/null
+if ( $status == 0 )
+  echo &quot;FAIL&quot; &gt; results.out
+endif
+</pre></div>
+</div>
+<p>will pass the <code class="docutils literal notranslate"><span class="pre">if</span></code> test and communicate simulation failure to Dakota
+if the <code class="docutils literal notranslate"><span class="pre">grep</span></code> command finds the string <code class="docutils literal notranslate"><span class="pre">ERROR</span></code> anywhere in the
+<code class="docutils literal notranslate"><span class="pre">analysis.out</span></code> file.  The <code class="docutils literal notranslate"><span class="pre">/dev/null</span></code> device file is called the
+“bit bucket” and the <code class="docutils literal notranslate"><span class="pre">grep</span></code> command
+output is discarded by redirecting it to this destination. The
+<code class="docutils literal notranslate"><span class="pre">$status</span></code> shell variable contains the exit status of the last command
+executed <span id="id2">[<a class="reference internal" href="../../misc/bibliography.html#id10" title="G. Anderson and P. Anderson. The UNIX C Shell Field Guide. Prentice-Hall, Englewood Cliffs, NJ, 1986.">AA86</a>]</span>, which is the exit status of <code class="docutils literal notranslate"><span class="pre">grep</span></code>
+in this case (0 if successful in finding the error string, nonzero
+otherwise). For Bourne shells <span id="id3">[<a class="reference internal" href="../../misc/bibliography.html#id27" title="B. Blinn. Portable Shell Programming: An Extensive Collection of Bourne Shell Examples. Prentice Hall PTR, New Jersey, 1996.">Bli96</a>]</span>, the <code class="docutils literal notranslate"><span class="pre">$?</span></code>
+shell variable serves the same purpose as <code class="docutils literal notranslate"><span class="pre">$status</span></code> for C shells. In a
+related approach, if the return code from a simulation can be used
+directly for failure detection purposes, then <code class="docutils literal notranslate"><span class="pre">$status</span></code> or <code class="docutils literal notranslate"><span class="pre">$?</span></code>
+could be queried immediately following the simulation execution using an
+<code class="docutils literal notranslate"><span class="pre">if</span></code> test like that shown above.</p>
+<p>If the simulation code is not returning error codes or providing direct
+error diagnostic information, then failure detection may require
+monitoring of simulation results for sanity (e.g., is the mesh
+distorting excessively?) or potentially monitoring for continued process
+existence to detect a simulation segmentation fault or core dump. While
+this can get complicated, the flexibility of Dakota’s interfaces allows
+for a wide variety of user-defined monitoring approaches.</p>
+</section>
+<section id="failure-communication">
+<span id="id4"></span><h2>Failure communication<a class="headerlink" href="#failure-communication" title="Link to this heading"></a></h2>
+<p>Once a failure is detected, it must be communicated so that Dakota can
+take the appropriate corrective action. The form of this communication
+depends on the type of simulation interface in use.</p>
+<p>In the system call and fork simulation interfaces, a detected simulation
+failure is communicated to Dakota through the results file. When using
+the <a class="reference internal" href="../inputfile/responses.html#responses-results-standard"><span class="std std-ref">standard</span></a> results file format,
+the string “<code class="docutils literal notranslate"><span class="pre">fail</span></code>” should appear at the beginning of the results file.
+Any data appearing after the fail string will be ignored. Also, Dakota’s
+detection of this string is case insensitive, so “<code class="docutils literal notranslate"><span class="pre">FAIL</span></code>”, “<code class="docutils literal notranslate"><span class="pre">Fail</span></code>”,
+etc., are equally valid. For <a class="reference internal" href="../inputfile/responses.html#responses-results-json"><span class="std std-ref">JSON</span></a>, failure
+is communicated to Dakota by including the name:value pair <code class="docutils literal notranslate"><span class="pre">&quot;fail&quot;:</span> <span class="pre">&quot;true&quot;</span></code>
+in the evaluation object. Both the name and value must be lowercase.</p>
+<p>In the direct simulation interface case, a detected simulation failure
+is communicated to Dakota through the return code provided by the user’s
+<code class="docutils literal notranslate"><span class="pre">analysis_driver</span></code>, <code class="docutils literal notranslate"><span class="pre">input_filter</span></code>, or <code class="docutils literal notranslate"><span class="pre">output_filter</span></code>. As shown in
+<a class="reference internal" href="advancedsimulationcodeinterfaces.html#advint-direct-extension"><span class="std std-ref">Extension</span></a>, the
+prototype for simulations linked within the direct interface includes an
+integer return code. This code has the following meanings: zero (false)
+indicates that all is normal and nonzero (true) indicates an exception
+(i.e., a simulation failure).</p>
+</section>
+<section id="failure-mitigation">
+<span id="id5"></span><h2>Failure mitigation<a class="headerlink" href="#failure-mitigation" title="Link to this heading"></a></h2>
+<p>Once the analysis failure has been communicated, Dakota will attempt to
+recover from the failure using one of the following four mechanisms, as
+governed by the <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/interface.html"><span class="pre">interface</span></a></code> specification in the user’s input file.</p>
+<section id="abort-default">
+<span id="failure-mitigation-abort"></span><h3>Abort (default)<a class="headerlink" href="#abort-default" title="Link to this heading"></a></h3>
+<p>If the <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/interface-failure_capture-abort.html"><span class="pre">abort</span></a></code> option is active (the default), then Dakota will
+terminate upon detecting a failure. Note that if the problem causing the
+failure can be corrected, Dakota’s restart capability (see
+<a class="reference internal" href="../../externaltools/restartutility.html#dakota-restart-utility"><span class="std std-ref">The Dakota Restart Utility</span></a>) can be used to continue the study.</p>
+</section>
+<section id="retry">
+<span id="failure-mitigation-retry"></span><h3>Retry<a class="headerlink" href="#retry" title="Link to this heading"></a></h3>
+<p>If the <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/interface-failure_capture-retry.html"><span class="pre">retry</span></a></code> option is specified, then Dakota will re-invoke the
+failed simulation up to the specified number of retries. If the
+simulation continues to fail on each of these retries, Dakota will
+terminate. The retry option is appropriate for those cases in which
+simulation failures may be resulting from transient computing
+environment issues, such as shared disk space, software license access,
+or networking problems.</p>
+</section>
+<section id="recover">
+<span id="failure-mitigation-recover"></span><h3>Recover<a class="headerlink" href="#recover" title="Link to this heading"></a></h3>
+<p>If the <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/interface-failure_capture-recover.html"><span class="pre">recover</span></a></code> option is specified, then Dakota will not attempt the
+failed simulation again. Rather, it will return a “dummy” set of
+function values as the results of the function evaluation. The dummy
+function values to be returned are specified by the user. Any gradient
+or Hessian data requested in the active set vector will be zero. This
+option is appropriate for those cases in which a failed simulation may
+indicate a region of the design space to be avoided and the dummy values
+can be used to return a large objective function or constraint violation
+which will discourage an optimizer from further investigating the
+region.</p>
+</section>
+<section id="continuation">
+<span id="failure-mitigation-continuation"></span><h3>Continuation<a class="headerlink" href="#continuation" title="Link to this heading"></a></h3>
+<p>If the <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/interface-failure_capture-continuation.html"><span class="pre">continuation</span></a></code> option is specified, then Dakota will attempt to
+step towards the failing “target” simulation from a nearby “source”
+simulation through the use of a continuation algorithm. This option is
+appropriate for those cases in which a failed simulation may be caused
+by an inadequate initial guess. If the “distance” between the source and
+target can be divided into smaller steps in which information from one
+step provides an adequate initial guess for the next step, then the
+continuation method can step towards the target in increments
+sufficiently small to allow for convergence of the simulations.</p>
+<p>When the failure occurs, the interval between the last successful
+evaluation (the source point) and the current target point is halved and
+the evaluation is retried. This halving is repeated until a successful
+evaluation occurs. The algorithm then marches towards the target point
+using the last interval as a step size. If a failure occurs while
+marching forward, the interval will be halved again. Each invocation of
+the continuation algorithm is allowed a total of ten failures (ten
+halvings result in up to 1024 evaluations from source to target) prior
+to aborting the Dakota process.</p>
+<p>While Dakota manages the interval halving and function evaluation
+invocations, the user is responsible for managing the initial guess for
+the simulation program. For example, in a GOMA input
+file <span id="id6">[<a class="reference internal" href="../../misc/bibliography.html#id260" title="P. R. Schunk, P. A. Sackinger, R. R. Rao, K. S. Chen, and R. A. Cairncross. GOMA – a full-newton finite element program for free and moving boundary problems with coupled fluid/solid momentum, energy, mass, and chemical species transport: user's guide. Technical Report SAND95-2937, Sandia National Laboratories, Albuquerque, NM, 1995.">SSR+95</a>]</span>, the user specifies the files to be used
+for reading initial guess data and writing solution data. When using the
+last successful evaluation in the continuation algorithm, the
+translation of initial guess data can be accomplished by simply copying
+the solution data file leftover from the last evaluation to the initial
+guess file for the current evaluation (and in fact this is useful for
+all evaluations, not just continuation). However, a more general
+approach would use the <em>closest</em> successful evaluation (rather than the
+<em>last</em> successful evaluation) as the source point in the continuation
+algorithm. This will be especially important for nonlocal methods (e.g.,
+genetic algorithms) in which the last successful evaluation may not
+necessarily be in the vicinity of the current evaluation. This approach
+will require the user to save and manipulate previous solutions (likely
+tagged with evaluation number) so that the results from a particular
+simulation (specified by Dakota after internal identification of the
+closest point) can be used as the current simulation’s initial guess.
+This more general approach is not yet supported in Dakota.</p>
+</section>
+</section>
+<section id="special-values">
+<span id="failure-special"></span><h2>Special values<a class="headerlink" href="#special-values" title="Link to this heading"></a></h2>
+<p>In IEEE arithmetic, “NaN” indicates “not a number” and
+<span class="math notranslate nohighlight">\(\pm\)</span>“Inf” or <span class="math notranslate nohighlight">\(\pm\)</span>“Infinity” indicates positive or
+negative infinity. These special values may be returned directly in
+function evaluation results from a simulation interface or they may be
+specified in a user’s input file within the <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/interface-failure_capture-recover.html"><span class="pre">recover</span></a></code> specification
+described in <a class="reference internal" href="#failure-mitigation-recover"><span class="std std-ref">Recover</span></a>. There is a
+key difference between these two cases. In the former case of direct
+simulation return, failure mitigation can be managed on a per response
+function basis. When using <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/interface-failure_capture-recover.html"><span class="pre">recover</span></a></code>, however, the failure applies to
+the complete set of simulation results.</p>
+<p>In both of these cases, the handling of NaN or Inf is managed using
+iterator-specific approaches. Currently, nondeterministic sampling
+methods (see <a class="reference internal" href="../studytypes/uq.html#uq-sampling"><span class="std std-ref">Sampling Methods</span></a>), polynomial chaos
+expansions using either regression approaches or spectral projection
+with random sampling (see <a class="reference internal" href="../studytypes/uq.html#uq-expansion"><span class="std std-ref">Stochastic Expansion Methods</span></a>),
+and the NL2SOL method for nonlinear least squares (see
+<a class="reference internal" href="../studytypes/nonlinearleastsquares.html#nls-solution-nl2sol"><span class="std std-ref">NL2SOL</span></a>) are the only
+methods with special numerical exception handling: the sampling methods
+simply omit any samples that are not finite from the statistics
+generation, the polynomial chaos methods omit any samples that are not
+finite from the coefficient estimation, and NL2SOL treats NaN or
+Infinity in a residual vector (i.e., values in a results file for a
+function evaluation) computed for a trial step as an indication that the
+trial step was too long and violates an unstated constraint; NL2SOL
+responds by trying a shorter step.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="parallelcomputing.html" class="btn btn-neutral float-left" title="Parallel Computing" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="activesubspace.html" class="btn btn-neutral float-right" title="Active Subspace Models" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <!--
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Sandia National Laboratories.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+  --> 
+
+</footer>
+        </div>
+      </div>
+	  
+	  <div style="background-color: #0f0f0f;color:#fafafa;padding:20px">
+	    <div>
+		  <h2><em>Exceptional service in the national interest</em></h2>
+		</div>
+		<p>© 2023 National Technology and Engineering Solutions of Sandia, LLC. | <a href="https://www.sandia.gov/contact_us/index.html">Questions &amp; Comments</a> | <a href="https://www.sandia.gov/general/privacy-security/index.html">Privacy &amp; Security</a></p>
+		<p><a href="http://energy.gov" rel="noopener noreferrer" target="_blank"><img alt="U.S. Department of Energy" longdesc="https://energy.gov" src="https://www.sandia.gov/_common/images/doe_logo_white.png" style="height:37px; width:140px"></a> <a href="http://nnsa.energy.gov/" rel="noopener noreferrer" target="_blank"> <img alt="National Nuclear Security Administration" longdesc="http://nnsa.gov" src="https://www.sandia.gov/_common/images/nnsa_logo_white.png" style="height:37px; width:116px"></a></p>
+		<p><a href="https://www.sandia.gov">Sandia National Laboratories</a> is a multimission laboratory managed and operated by National Technology and Engineering Solutions of Sandia, LLC., a wholly owned subsidiary of Honeywell International, Inc., for the U.S. Department of Energy’s National Nuclear Security Administration under contract DE-NA-0003525.</p>
+	  </div>	  	  
+	  
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

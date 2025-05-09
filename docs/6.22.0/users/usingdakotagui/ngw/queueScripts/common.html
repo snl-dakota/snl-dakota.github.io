@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Common Job Submission Scripts &mdash; dakota  documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/dakota_theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/sandiaheaderlite.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="dakotaQueueSubmit Job Submission Scripts" href="dakotaQueueSubmit.html" />
+    <link rel="prev" title="Next-Gen Workflow Queue Submit Scripts" href="../QueueSubmitScripts.html" /> 
+  
+  <meta name="sandia.approval_type" content="formal"/>
+  <meta property="sandia.approved" content="SAND2025-05563O"/>
+  <meta name="description" content="The Dakota project delivers both state-of-the-art research and robust, usable software for optimization and UQ."/>
+  <meta name="keywords" content="Dakota, optimization, UQ, uncertainty quantification, parametric analysis, design exploration, model calibration, risk analysis"/>
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../index.html" class="icon icon-home"> dakota
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../setupdakota.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usingdakota/usingdakota.html">Using Dakota</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../usingdakotagui.html">Using Dakota GUI</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../usingdakotagui.html#introduction">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../usingdakotagui.html#example-search">Example Search</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../usingdakotagui.html#wizards">Wizards</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../usingdakotagui.html#editing-dakota-input-files">Editing Dakota Input Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../usingdakotagui.html#running-dakota">Running Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../usingdakotagui.html#running-dakota-remotely">Running Dakota Remotely</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../usingdakotagui.html#output-from-dakota">Output from Dakota</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../usingdakotagui.html#gui-tools">GUI Tools</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../../chartreuse/Chartreuse.html">Chartreuse</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../NextGenWorkflow.html">Next-Gen Workflow</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="../NextGenWorkflowBasics.html">Next-Gen Workflow Basics</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../NextGenWorkflowAnalysisDrivers.html">Using Next-Gen Workflow as a Dakota Analysis Driver</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../NextGenWorkflowTutorial.html">Tutorial: Create an NGW Analysis Driver for Dakota</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../NodeGlossary.html">Next-Gen Workflow Node Glossary</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="../QueueSubmitScripts.html">Next-Gen Workflow Queue Submit Scripts</a><ul class="current">
+<li class="toctree-l5 current"><a class="current reference internal" href="#">Common Job Submission Scripts</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#checkjob-sh">checkjob.sh</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#status-sh">status.sh</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#cancel-sh">cancel.sh</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="dakotaQueueSubmit.html">dakotaQueueSubmit Job Submission Scripts</a></li>
+<li class="toctree-l5"><a class="reference internal" href="dispatchAndCollect.html">dispatchAndCollect Job Submission Scripts</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="../NextGenWorkflow.html#highlighted-node-topics">Highlighted Node Topics</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../NextGenWorkflow.html#further-reading">Further Reading</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../qoi/QOI.html">QOI</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../usingdakotagui.html#miscellaneous">Miscellaneous</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../externaltools/externaltools.html">Using External Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../compiling/compiling.html">Compiling Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../developingdakota/developingdakota.html">Developing Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../misc/misc.html">Miscellaneous</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">dakota</a>
+      </nav>
+
+	  <!-- SNL Lite header -->
+	  <div class="snlheader-subsite--wrapper-default">
+		<snlheader class="snlheader-subsite" role="snlbanner">
+		  <div class="wrapper">
+			<a href="https://www.sandia.gov/index.html">
+			  <div class="logo-transparent"><p class="logo">Sandia National Laboratories</p></div>
+			</a>
+			<div class="nav-top">
+			  <a class="visuallyhidden" name="mainnav"></a>
+			  <div aria-label="main navigation" class="core-nav-transparent core-nav-transparent--visible" role="navigation">
+				<ul role="navigation" class="secondary-links">
+				  <li id="search-text-link">
+					<a aria-label="Search" href="https://www.sandia.gov/search/">Search Sandia.gov</a>
+				  </li>
+				  <li id="directory-text-link">
+					<a href="https://www.sandia.gov/directory.html" aria-expanded="false" aria-label="Site Directory">All Sandia Websites</a>
+				  </li>
+				</ul>
+			  </div>
+			</div>
+		  </div> 
+		</snlheader>
+	  </div>	  
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../usingdakotagui.html">Using Dakota GUI</a></li>
+          <li class="breadcrumb-item"><a href="../NextGenWorkflow.html">Next-Gen Workflow</a></li>
+          <li class="breadcrumb-item"><a href="../QueueSubmitScripts.html">Next-Gen Workflow Queue Submit Scripts</a></li>
+      <li class="breadcrumb-item active">Common Job Submission Scripts</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../_sources/usingdakotagui/ngw/queueScripts/common.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="common-job-submission-scripts">
+<span id="ngw-queue-scripts-common"></span><h1>Common Job Submission Scripts<a class="headerlink" href="#common-job-submission-scripts" title="Link to this heading"></a></h1>
+<section id="checkjob-sh">
+<span id="gui-job-submission-workflow-common-scripts-checkjob"></span><h2>checkjob.sh<a class="headerlink" href="#checkjob-sh" title="Link to this heading"></a></h2>
+<p>The “checkjob.sh” script is responsible for checking the status of the job in the queue.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1">#</span>
+<span class="c1"># This script attempts to find the state of a specified job. There</span>
+<span class="c1"># are a number of parameters that could be passed, but this script</span>
+<span class="c1"># uses:</span>
+<span class="c1">#    job.id : the id of the job</span>
+<span class="c1">#    remote.dir : the remote directory where the job was running</span>
+<span class="c1">#    job.id.filename : the filename that includes the job id</span>
+<span class="c1">#</span>
+<span class="c1"># It will return an exit status:</span>
+<span class="c1">#   0  : script will echo:</span>
+<span class="c1">#        * The found state from the sacct command</span>
+<span class="c1">#        * &quot;COMPLETED&quot;, under the assmption that the job wasn&#39;t found and</span>
+<span class="c1">#           &gt; 5 minutes since the job submission has elapsed</span>
+<span class="c1">#        * &quot;&quot; (empty String) : unable to find any information, so</span>
+<span class="c1">#          implying carry on</span>
+<span class="c1">#</span>
+<span class="c1">#  sacct doesn&#39;t return any results if pass in a bad job id, such</span>
+<span class="c1">#    as one that doesn&#39;t exist</span>
+
+<span class="c1"># outputs the msg from $1 to stdout and stderr without a newline</span>
+<span class="k">function</span><span class="w"> </span>err<span class="o">()</span><span class="w"> </span><span class="o">{</span>
+<span class="w">  </span><span class="nb">local</span><span class="w"> </span><span class="nv">msg</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$1</span><span class="s2">&quot;</span>
+<span class="w">  </span><span class="nb">printf</span><span class="w"> </span><span class="s2">&quot;%s&quot;</span><span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">msg</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="w">  </span><span class="nb">printf</span><span class="w"> </span><span class="s2">&quot;%s&quot;</span><span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">msg</span><span class="si">}</span><span class="s2">&quot;</span><span class="w"> </span>&gt;<span class="p">&amp;</span><span class="m">2</span>
+<span class="o">}</span>
+
+<span class="c1">#outputs the msg from $1 to stdout without a newline</span>
+<span class="k">function</span><span class="w"> </span>msg<span class="o">()</span><span class="w"> </span><span class="o">{</span>
+<span class="w">  </span><span class="nb">local</span><span class="w"> </span><span class="nv">msg</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$1</span><span class="s2">&quot;</span>
+<span class="w">  </span><span class="nb">printf</span><span class="w"> </span><span class="s2">&quot;%s&quot;</span><span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">msg</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="o">}</span>
+
+<span class="c1"># checks to see if the file is not present or is &gt; 5 minutes old; return</span>
+<span class="c1">#  1 if either is true, and therefore assume completed,</span>
+<span class="c1">#  0 otherwise</span>
+<span class="c1">#</span>
+<span class="k">function</span><span class="w"> </span>should_assume_completed<span class="o">()</span><span class="w"> </span><span class="o">{</span>
+<span class="w">  </span><span class="nb">local</span><span class="w"> </span><span class="nv">FL</span><span class="o">=</span><span class="s2">&quot;dart.id&quot;</span>
+
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="o">[[</span><span class="w"> </span>!<span class="o">(</span>-f<span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">FL</span><span class="si">}</span><span class="s2">&quot;</span><span class="o">)</span><span class="w"> </span><span class="o">||</span><span class="w"> </span>-n<span class="w"> </span><span class="k">$(</span>find<span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">FL</span><span class="si">}</span><span class="s2">&quot;</span><span class="w"> </span>-mmin<span class="w"> </span>+5<span class="k">)</span><span class="w"> </span><span class="o">]]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="m">1</span>
+<span class="w">  </span><span class="k">else</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="m">0</span>
+<span class="w">  </span><span class="k">fi</span>
+<span class="o">}</span>
+
+<span class="c1">#</span>
+<span class="c1"># try to get the current status using squeue</span>
+<span class="c1">#</span>
+<span class="k">function</span><span class="w"> </span>set_output_via_squeue<span class="w"> </span><span class="o">{</span>
+<span class="w">  </span><span class="nb">local</span><span class="w"> </span>res
+<span class="w">  </span><span class="nb">local</span><span class="w"> </span>ec
+
+<span class="w">  </span><span class="nv">res</span><span class="o">=</span><span class="k">$(</span>squeue<span class="w"> </span>--noheader<span class="w"> </span>--jobs<span class="o">=</span><span class="nv">$jobid</span><span class="w"> </span>--format<span class="o">=</span><span class="s2">&quot;%.30T&quot;</span><span class="w"> </span><span class="m">2</span>&gt;<span class="p">&amp;</span><span class="m">1</span><span class="k">)</span>
+<span class="w">  </span><span class="nv">ec</span><span class="o">=</span><span class="nv">$?</span>
+
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="o">[[</span><span class="w"> </span><span class="nv">$ec</span><span class="w"> </span>-eq<span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="o">]]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">    </span><span class="nv">OUTPUT</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$res</span><span class="s2">&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>head<span class="w"> </span>-1<span class="w"> </span><span class="p">|</span><span class="w"> </span>sed<span class="w"> </span>-e<span class="w"> </span><span class="s1">&#39;s/^[[:space:]]*//&#39;</span><span class="k">)</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="m">0</span><span class="p">;</span>
+<span class="w">  </span><span class="k">fi</span>
+
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="nv">$ec</span><span class="p">;</span>
+<span class="o">}</span>
+
+<span class="c1">#</span>
+<span class="c1"># b/c sacct has so many issues, also make sure even on a non-zero</span>
+<span class="c1">#  return that it doesn&#39;t indicate an error. NOTE: this might</span>
+<span class="c1">#  not be very locale adjusted; OTOH, sacct might not be either</span>
+<span class="c1">#</span>
+<span class="k">function</span><span class="w"> </span>ensure_sacct_doesnt_say_error<span class="w"> </span><span class="o">{</span>
+<span class="w">  </span><span class="nb">local</span><span class="w"> </span><span class="nv">inp</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$1</span><span class="s2">&quot;</span>
+
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="o">[[</span><span class="w"> </span><span class="nv">$inp</span><span class="w"> </span><span class="o">=</span>~<span class="w"> </span><span class="s2">&quot;error:&quot;</span><span class="w"> </span><span class="o">]]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">    </span><span class="nv">SACCT_IS_BEHAVING</span><span class="o">=</span><span class="m">1</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="m">1</span>
+<span class="w">  </span><span class="k">fi</span>
+
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="m">0</span>
+<span class="o">}</span>
+
+<span class="c1">#</span>
+<span class="c1"># if squeue no longer has information about the job, see if</span>
+<span class="c1">#  sacct knows anything</span>
+<span class="c1">#</span>
+<span class="k">function</span><span class="w"> </span>set_output_via_sacct<span class="w"> </span><span class="o">{</span>
+<span class="w">  </span><span class="nb">local</span><span class="w"> </span>res
+<span class="w">  </span><span class="nb">local</span><span class="w"> </span>ec
+
+<span class="w">  </span><span class="nv">res</span><span class="o">=</span><span class="k">$(</span>sacct<span class="w"> </span>--noheader<span class="w"> </span>--jobs<span class="o">=</span><span class="nv">$jobid</span><span class="w"> </span>--format<span class="o">=</span><span class="s2">&quot;state%30&quot;</span><span class="w"> </span><span class="m">2</span>&gt;<span class="p">&amp;</span><span class="m">1</span><span class="k">)</span>
+<span class="w">  </span><span class="nv">ec</span><span class="o">=</span><span class="nv">$?</span>
+
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="o">[[</span><span class="w"> </span><span class="nv">$ec</span><span class="w"> </span>-ne<span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="o">]]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">    </span><span class="nv">SACCT_IS_BEHAVING</span><span class="o">=</span><span class="m">1</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nv">$ec</span>
+<span class="w">  </span><span class="k">fi</span>
+
+<span class="w">  </span>ensure_sacct_doesnt_say_error<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$res</span><span class="s2">&quot;</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="o">[[</span><span class="w"> </span><span class="nv">$SACCT_IS_BEHAVING</span><span class="w"> </span>-ne<span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="o">]]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="m">1</span>
+<span class="w">  </span><span class="k">fi</span>
+
+<span class="w">  </span><span class="c1"># we had a good return from sacct, and it didn&#39;t say error</span>
+<span class="w">  </span><span class="nv">OUTPUT</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$res</span><span class="s2">&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>head<span class="w"> </span>-1<span class="w"> </span><span class="p">|</span><span class="w"> </span>sed<span class="w"> </span>-e<span class="w"> </span><span class="s1">&#39;s/^[[:space:]]*//&#39;</span><span class="k">)</span>
+
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="m">0</span>
+<span class="o">}</span>
+
+<span class="c1">######################################################################</span>
+<span class="c1">#</span>
+<span class="c1">######################################################################</span>
+<span class="nv">OUTPUT</span><span class="o">=</span><span class="s2">&quot;&quot;</span>
+<span class="nv">SACCT_IS_BEHAVING</span><span class="o">=</span><span class="m">0</span>
+
+<span class="k">if</span><span class="w"> </span><span class="o">[[</span><span class="w"> </span>-z<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$jobid</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">]]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">  </span><span class="nv">jobid</span><span class="o">=</span><span class="k">$(</span>cat<span class="w"> </span>dart.id<span class="k">)</span>
+<span class="k">fi</span>
+
+<span class="c1">#</span>
+<span class="c1"># gather the information on the job</span>
+<span class="c1">#   if squeue returns non-zero, then didn&#39;t know about the job</span>
+<span class="c1">#</span>
+set_output_via_squeue
+<span class="k">if</span><span class="w"> </span><span class="o">[[</span><span class="w"> </span><span class="nv">$?</span><span class="w"> </span>-ne<span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="o">]]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">  </span>set_output_via_sacct
+<span class="k">fi</span>
+
+<span class="c1">#</span>
+<span class="c1"># if we know sacct has failed us, then we will want to try back</span>
+<span class="c1">#  in the future</span>
+<span class="c1">#</span>
+<span class="k">if</span><span class="w"> </span><span class="o">[[</span><span class="w"> </span><span class="nv">$SACCT_IS_BEHAVING</span><span class="w"> </span>-ne<span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="o">]]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">  </span>msg<span class="w"> </span><span class="s2">&quot;SACCT_FAILED&quot;</span>
+<span class="w">  </span><span class="nv">EXITSTATUS</span><span class="o">=</span><span class="m">0</span>
+<span class="w">  </span><span class="nb">exit</span><span class="w"> </span><span class="m">0</span>
+<span class="k">fi</span>
+
+<span class="c1">#</span>
+<span class="c1"># if we didn&#39;t get anything back, then the system does not have any</span>
+<span class="c1"># information about the job. There may be two reasons for this:</span>
+<span class="c1">#   1. This call has come before the job has had time to be added to the queue</span>
+<span class="c1">#   2. The job is no longer in the history</span>
+<span class="c1">#</span>
+<span class="k">if</span><span class="w"> </span><span class="o">[[</span><span class="w"> </span>-z<span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">OUTPUT</span><span class="si">}</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">]]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">  </span>should_assume_completed
+<span class="w">  </span><span class="nv">ac</span><span class="o">=</span><span class="nv">$?</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="o">[[</span><span class="w"> </span><span class="nv">$ac</span><span class="w"> </span>-eq<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="o">]]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">    </span>msg<span class="w"> </span><span class="s2">&quot;COMPLETED&quot;</span>
+<span class="w">  </span><span class="k">else</span>
+<span class="w">    </span>msg<span class="w"> </span><span class="s2">&quot;UNKNOWN&quot;</span>
+<span class="w">  </span><span class="k">fi</span>
+
+<span class="w">  </span><span class="nv">EXITSTATUS</span><span class="o">=</span><span class="m">0</span>
+<span class="k">else</span>
+<span class="w">  </span>msg<span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">OUTPUT</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="k">fi</span>
+</pre></div>
+</div>
+</section>
+<section id="status-sh">
+<span id="gui-job-submission-workflow-common-scripts-status"></span><span id="gui-job-submission-workflow-dakotaqueuesubmit-scripts-cancel"></span><h2>status.sh<a class="headerlink" href="#status-sh" title="Link to this heading"></a></h2>
+<p>The “status.sh” script is responsible for checking whether the job, once finished, has completed successfully or not. This is distinct from the role
+of “checkjob.sh,” which checks the status of the job while it is still in the job queue. The “status.sh” script can be thought of as more of a post-mortem
+script that inspects one or more output files for clues that everything completed correctly.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
+
+<span class="k">if</span><span class="w"> </span><span class="o">[[</span><span class="w"> </span>-z<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$jobid</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">]]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">  </span><span class="nv">jobid</span><span class="o">=</span><span class="k">$(</span>cat<span class="w"> </span>dart.id<span class="k">)</span>
+<span class="k">fi</span>
+
+<span class="nv">checkFilename</span><span class="o">=</span>slurm-<span class="nv">$jobid</span>.out
+<span class="nv">resultFilename</span><span class="o">=</span><span class="s2">&quot;job.props&quot;</span>
+
+<span class="k">function</span><span class="w"> </span>printResult<span class="o">(){</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span><span class="nv">$#</span><span class="w"> </span>-eq<span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="o">]</span><span class="w"> </span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">        </span><span class="k">return</span>
+<span class="w">    </span><span class="k">fi</span>
+
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span>-e<span class="w"> </span><span class="nv">$resultFilename</span><span class="w"> </span><span class="o">]</span><span class="w"> </span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">        </span>rm<span class="w"> </span><span class="nv">$resultFilename</span>
+<span class="w">    </span><span class="k">fi</span>
+
+<span class="w">    </span><span class="nv">line</span><span class="o">=</span><span class="s2">&quot;job.results.status=</span><span class="nv">$1</span><span class="s2">&quot;</span>
+<span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$line</span><span class="s2">&quot;</span><span class="w"> </span>&gt;<span class="w"> </span><span class="nv">$resultFilename</span>
+<span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="nv">$1</span>
+<span class="o">}</span>
+
+<span class="nv">successString</span><span class="o">=</span><span class="s2">&quot;DAKOTA execution time in seconds:&quot;</span>
+<span class="nv">failedString</span><span class="o">=</span><span class="s2">&quot;ERROR&quot;</span>
+
+<span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span>-e<span class="w"> </span><span class="nv">$checkFilename</span><span class="w"> </span><span class="o">]</span><span class="w"> </span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="o">(</span>grep<span class="w"> </span>-q<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$successString</span><span class="s2">&quot;</span><span class="w"> </span><span class="nv">$checkFilename</span><span class="o">)</span><span class="w"> </span><span class="k">then</span>
+<span class="w">        </span>printResult<span class="w"> </span><span class="s2">&quot;Successful&quot;</span>
+<span class="w">    </span><span class="k">else</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="o">(</span>grep<span class="w"> </span>-q<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$failedString</span><span class="s2">&quot;</span><span class="w"> </span><span class="nv">$checkFilename</span><span class="o">)</span><span class="w"> </span><span class="k">then</span>
+<span class="w">            </span>printResult<span class="w"> </span><span class="s2">&quot;Failed&quot;</span>
+<span class="w">        </span><span class="k">else</span>
+<span class="w">            </span>printResult<span class="w"> </span><span class="s2">&quot;Undefined&quot;</span>
+<span class="w">        </span><span class="k">fi</span>
+<span class="w">    </span><span class="k">fi</span>
+<span class="k">else</span>
+<span class="w">    </span>printResult<span class="w"> </span><span class="s2">&quot;Undefined&quot;</span>
+<span class="k">fi</span>
+</pre></div>
+</div>
+</section>
+<section id="cancel-sh">
+<h2>cancel.sh<a class="headerlink" href="#cancel-sh" title="Link to this heading"></a></h2>
+<p>The “cancel.sh” script is responsible for stopping the job in the queue if the user stops Next-Gen Workflow.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="k">if</span><span class="w"> </span><span class="o">[[</span><span class="w"> </span>-z<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$jobid</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">]]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">  </span><span class="nv">jobid</span><span class="o">=</span><span class="k">$(</span>cat<span class="w"> </span>dart.id<span class="k">)</span>
+<span class="k">fi</span>
+
+scancel<span class="w"> </span><span class="nv">$jobid</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../QueueSubmitScripts.html" class="btn btn-neutral float-left" title="Next-Gen Workflow Queue Submit Scripts" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="dakotaQueueSubmit.html" class="btn btn-neutral float-right" title="dakotaQueueSubmit Job Submission Scripts" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <!--
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Sandia National Laboratories.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+  --> 
+
+</footer>
+        </div>
+      </div>
+	  
+	  <div style="background-color: #0f0f0f;color:#fafafa;padding:20px">
+	    <div>
+		  <h2><em>Exceptional service in the national interest</em></h2>
+		</div>
+		<p>© 2023 National Technology and Engineering Solutions of Sandia, LLC. | <a href="https://www.sandia.gov/contact_us/index.html">Questions &amp; Comments</a> | <a href="https://www.sandia.gov/general/privacy-security/index.html">Privacy &amp; Security</a></p>
+		<p><a href="http://energy.gov" rel="noopener noreferrer" target="_blank"><img alt="U.S. Department of Energy" longdesc="https://energy.gov" src="https://www.sandia.gov/_common/images/doe_logo_white.png" style="height:37px; width:140px"></a> <a href="http://nnsa.energy.gov/" rel="noopener noreferrer" target="_blank"> <img alt="National Nuclear Security Administration" longdesc="http://nnsa.gov" src="https://www.sandia.gov/_common/images/nnsa_logo_white.png" style="height:37px; width:116px"></a></p>
+		<p><a href="https://www.sandia.gov">Sandia National Laboratories</a> is a multimission laboratory managed and operated by National Technology and Engineering Solutions of Sandia, LLC., a wholly owned subsidiary of Honeywell International, Inc., for the U.S. Department of Energy’s National Nuclear Security Administration under contract DE-NA-0003525.</p>
+	  </div>	  	  
+	  
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

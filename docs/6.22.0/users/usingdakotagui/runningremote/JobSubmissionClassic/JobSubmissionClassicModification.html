@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Modifying an Execution Template &mdash; dakota  documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/dakota_theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/sandiaheaderlite.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Create your own Codes, Machines, and Execution Templates" href="JobSubmissionClassicCreation.html" />
+    <link rel="prev" title="Using the Job Submission Tools" href="JobSubmissionClassicUsage.html" /> 
+  
+  <meta name="sandia.approval_type" content="formal"/>
+  <meta property="sandia.approved" content="SAND2025-05563O"/>
+  <meta name="description" content="The Dakota project delivers both state-of-the-art research and robust, usable software for optimization and UQ."/>
+  <meta name="keywords" content="Dakota, optimization, UQ, uncertainty quantification, parametric analysis, design exploration, model calibration, risk analysis"/>
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../index.html" class="icon icon-home"> dakota
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../setupdakota.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usingdakota/usingdakota.html">Using Dakota</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../usingdakotagui.html">Using Dakota GUI</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../usingdakotagui.html#introduction">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../usingdakotagui.html#example-search">Example Search</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../usingdakotagui.html#wizards">Wizards</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../usingdakotagui.html#editing-dakota-input-files">Editing Dakota Input Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../usingdakotagui.html#running-dakota">Running Dakota</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../usingdakotagui.html#running-dakota-remotely">Running Dakota Remotely</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../JobSubmissionOverview.html">Job Submission Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../JobSubmissionDosAndDonts.html">Job Submission Do’s and Don’ts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../JobSubmissionWorkflow.html">Job Submission (Using Next-Gen Workflow)</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="JobSubmissionClassicMain.html">Job Submission (Classic Job Management Tools)</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="JobSubmissionClassicUsage.html">Using the Job Submission Tools</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Modifying an Execution Template</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#modifying-an-execution-template-from-the-job-submission-dialog">Modifying an Execution Template from the Job Submission Dialog</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#modifying-an-execution-template-from-the-system-preferences">Modifying an Execution Template from the System Preferences</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#using-variables-in-execution-templates">Using Variables in Execution Templates</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#restoring-defaults-of-predefined-codes-machines-and-execution-templates">Restoring Defaults of Predefined Codes, Machines, and Execution Templates</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="JobSubmissionClassicCreation.html">Create your own Codes, Machines, and Execution Templates</a></li>
+<li class="toctree-l4"><a class="reference internal" href="JobSubmissionClassicExamples.html">Dakota Job Submission Examples</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../usingdakotagui.html#output-from-dakota">Output from Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../usingdakotagui.html#gui-tools">GUI Tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../usingdakotagui.html#miscellaneous">Miscellaneous</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../externaltools/externaltools.html">Using External Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../compiling/compiling.html">Compiling Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../developingdakota/developingdakota.html">Developing Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../misc/misc.html">Miscellaneous</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">dakota</a>
+      </nav>
+
+	  <!-- SNL Lite header -->
+	  <div class="snlheader-subsite--wrapper-default">
+		<snlheader class="snlheader-subsite" role="snlbanner">
+		  <div class="wrapper">
+			<a href="https://www.sandia.gov/index.html">
+			  <div class="logo-transparent"><p class="logo">Sandia National Laboratories</p></div>
+			</a>
+			<div class="nav-top">
+			  <a class="visuallyhidden" name="mainnav"></a>
+			  <div aria-label="main navigation" class="core-nav-transparent core-nav-transparent--visible" role="navigation">
+				<ul role="navigation" class="secondary-links">
+				  <li id="search-text-link">
+					<a aria-label="Search" href="https://www.sandia.gov/search/">Search Sandia.gov</a>
+				  </li>
+				  <li id="directory-text-link">
+					<a href="https://www.sandia.gov/directory.html" aria-expanded="false" aria-label="Site Directory">All Sandia Websites</a>
+				  </li>
+				</ul>
+			  </div>
+			</div>
+		  </div> 
+		</snlheader>
+	  </div>	  
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../usingdakotagui.html">Using Dakota GUI</a></li>
+          <li class="breadcrumb-item"><a href="JobSubmissionClassicMain.html">Job Submission (Classic Job Management Tools)</a></li>
+      <li class="breadcrumb-item active">Modifying an Execution Template</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../_sources/usingdakotagui/runningremote/JobSubmissionClassic/JobSubmissionClassicModification.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="modifying-an-execution-template">
+<span id="gui-job-submission-classic-modification"></span><h1>Modifying an Execution Template<a class="headerlink" href="#modifying-an-execution-template" title="Link to this heading"></a></h1>
+<p>An execution template is a set of instructions for processing particular job workflows.  The execution template determines:</p>
+<ul class="simple">
+<li><p>The machine that the job will run on.</p></li>
+<li><p>The execution instructions to be run, including interactive commands and batch script contents.</p></li>
+<li><p>The files (or file pattern) to be returned at the end of the job.</p></li>
+</ul>
+<p>An execution template can be modified by the user to customize it to their needs. For example, the user can alter the execution template to bring back a different set of
+results files, or they can change the template’s core execution script to point to a different executable of the target code.</p>
+<p>There are two ways to modify an execution template:</p>
+<ul class="simple">
+<li><p>Modify the template <a class="reference internal" href="#gui-job-submission-classic-modification-jobsubmissiondialog"><span class="std std-ref">from the job submission dialog</span></a>. This method should be used if you are only making <em>ad hoc</em> changes for a particular job.</p></li>
+<li><p>Modify the template <a class="reference internal" href="#gui-job-submission-classic-modification-sysprefs"><span class="std std-ref">from the system preferences</span></a>.  This method should be used if you want to change the default behaviors of a
+template for all subsequent job submissions using that template.</p></li>
+</ul>
+<section id="modifying-an-execution-template-from-the-job-submission-dialog">
+<span id="gui-job-submission-classic-modification-jobsubmissiondialog"></span><h2>Modifying an Execution Template from the Job Submission Dialog<a class="headerlink" href="#modifying-an-execution-template-from-the-job-submission-dialog" title="Link to this heading"></a></h2>
+<p>When modifying an execution template from within the job submission dialog, you can override the default settings of an execution template for a given job instance.
+For example, you can change the template script to point to a different executable. This does not permanently alter the execution template - only the job instance.
+All subsequent submissions using the template will revert to the default settings of the template.</p>
+<p>To override an execution template in the job submission dialog:</p>
+<ol class="arabic">
+<li><p>Right-click an input file and select “Submit Job &gt; Code”, where “Code” will be the corresponding simulation code.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If there is no corresponding code, the only option will be “Submit Job &gt; other”.</p>
+</div>
+</li>
+<li><p>Select an execution template from the list box (this is to the right of the Machine and Code list boxes).  This will load an execution template, setting the other fields
+such as Output Files, Machine, Queue, Number of Processors, the Execution Commands, and Execution Script.</p></li>
+<li><p>Making changes to any of the job submission fields will override the default settings of this execution template.  You can make changes to the following:</p>
+<ol class="loweralpha">
+<li><p><em>Resources Tab:</em></p>
+<ol class="lowerroman simple">
+<li><p><em>Output Files.</em> These are the names (or name paterns such as *.e) of files that will be returned when the job is complete.</p></li>
+</ol>
+</li>
+<li><p><em>Machine Tab:</em></p>
+<ol class="lowerroman">
+<li><p><em>Queue.</em> If the selected machine has multiple queues, you select the desired queue here.</p></li>
+<li><p><em>Remote directory.</em> By default, the remote directory mirrors the path in your workspace to your input deck prepended by the base directory defined for the specified machine.
+If the “Run in subdirectory” option is enabled, the <code class="docutils literal notranslate"><span class="pre">${subdir.name}</span></code> variable is appended to the remote path.</p></li>
+<li><p><em>Clear remote directory.</em> This option is selected if you want the remote directory to be clearedbefore the job is started.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you do not check this option, only files that have been changed will be moved to the remote working directory.</p>
+</div>
+</li>
+<li><p><em>Number of processors.</em></p></li>
+<li><p><em>Job time.</em> Job time is specified in hours, minutes and seconds.</p></li>
+<li><p><em>Account.</em> If the selected machine is defined to require account information, you will beprompted to enter it with a message at the top of the dialog. All previously entered
+accounts will be available in the drop down selector, and the most recently used account will be selected by default.</p></li>
+</ol>
+<figure class="align-center" id="jmtmodify-figure01">
+<img alt="The Machine Tab of the Job Submission Dialog" src="../../../_images/submitDialogMachine.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 100 </span><span class="caption-text">The Machine Tab of the Job Submission Dialog</span><a class="headerlink" href="#jmtmodify-figure01" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+</li>
+<li><p><em>Execution Instructions Tab</em></p>
+<ol class="lowerroman">
+<li><p><em>Commands to execute.</em> These are the commands you would type in an interactive terminal window to submit a job. If you are overriding these commands, or creating your own template,
+in order to monitor job status in the Job Status View, and have the post-processing commands run and have files returned when the job is complete, you must capture the job ID returned by the
+queueing system from the submit call. This ID must be just the number. The ID must be writen in a file named with the <code class="docutils literal notranslate"><span class="pre">${job.id.filename}</span></code> variable inside the remote working directory. Examples
+of how to do this can be found in any of the built-in execution templates.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You’ll note that the examples use the <code class="docutils literal notranslate"><span class="pre">tee</span></code> command in order to allow the console output from the submit command to still come through the console that gets displayed in the Dakota GUI’s console
+when running a job.</p>
+</div>
+</li>
+<li><p><em>Script Name.</em> Most jobs are submitted to the remote host’s queueing systems (such as Slurm). This is the name of the script that will be created and submitted in the “Commands to Execute” field.</p></li>
+<li><p><em>Script contents.</em> The contents of the script that will be submitted by the job submission system.</p></li>
+<li><p><em>Post job commands.</em> The commands that should be executed when the job is completed. This may include steps such as concatenating results files, or running a post-processing tool (e.g. matlab)
+to generate another results file. These commands are executed within a shell script.</p></li>
+</ol>
+<figure class="align-center" id="jmtmodify-figure02">
+<img alt="Execution Tab of the Job Submission Dialog" src="../../../_images/submitDialogExecute.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 101 </span><span class="caption-text">Execution Tab of the Job Submission Dialog</span><a class="headerlink" href="#jmtmodify-figure02" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+</li>
+</ol>
+</li>
+</ol>
+</section>
+<section id="modifying-an-execution-template-from-the-system-preferences">
+<span id="gui-job-submission-classic-modification-sysprefs"></span><h2>Modifying an Execution Template from the System Preferences<a class="headerlink" href="#modifying-an-execution-template-from-the-system-preferences" title="Link to this heading"></a></h2>
+<p>Modifying the execution template in the Preferences dialog will change the template for all subsequent job submissions. To do so:</p>
+<ol class="arabic">
+<li><p>Select “Window &gt; Preferences” (on Mac, select “Dakota GUI &gt; Preferences”).</p></li>
+<li><p>Expand and select “Job Submission &gt; Execution Templates” to see a list of execution templates.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Templates in bold are the built-in execution templates.  Those not in bold are your custom templates that are only available to you.</p>
+</div>
+<figure class="align-center" id="jmtmodify-figure03">
+<img alt="Job Submission Execution Template Preferences Page" src="../../../_images/ExecPrefs.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 102 </span><span class="caption-text">Job Submission Execution Template Preferences Page</span><a class="headerlink" href="#jmtmodify-figure03" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+</li>
+<li><p>Select the template you would like to edit and select the Edit button.  This will open the execution template edit dialog (shown below).</p>
+<figure class="align-center" id="jmtmodify-figure04">
+<img alt="Edit Execution Template Dialog" src="../../../_images/ExecEdit.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 103 </span><span class="caption-text">Edit Execution Template Dialog</span><a class="headerlink" href="#jmtmodify-figure04" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+</li>
+<li><p>Changes can be made to the following:</p>
+<ol class="loweralpha simple">
+<li><p><em>Code.</em>  The code is usually not changed, unless you are creating a new execution template.</p></li>
+<li><p><em>Machine.</em>  The machine is usually not changed, unless you are creating a new execution template.</p></li>
+<li><p><em>Execution Tab:</em></p>
+<ol class="lowerroman simple">
+<li><p><em>Commands to execute.</em> These are the commands you would type in an interactive terminal window to submit a job. If you are overriding these commands, or creating your own template, in order to monitor job
+status in the Job Status View, and have the post-processing commands run and have files returned when the job is complete, you must capture the job ID returned by the queueing system from the submit call. This
+ID must be just the number. The ID must be writen in a file named with the <code class="docutils literal notranslate"><span class="pre">${job.id.filename}</span></code> variable inside the remote working directory. Examples of how do do this can be found in any of the built-in
+execution templates. You’ll note that the examples use the <code class="docutils literal notranslate"><span class="pre">tee</span></code> command in order to allow the console output from the submit command to still come through the console that gets displayed in Dakota GUI when running a job.</p></li>
+<li><p><em>Script Name.</em> Most jobs are submitted to the remote host’s queueing systems (such as Slurm). This is the name of the script that will be created and submitted in the “Commands to Execute” field.</p></li>
+<li><p><em>Script contents.</em> The contents of the script that will be submitted by the job submission system.</p></li>
+<li><p><em>Post job commands.</em> The commands that should be executed when the job is completed. This may include steps such as concatenating results files, or running a post-processing tool (e.g. matlab)
+to generate another results file. These commands are executed within a shell script.</p></li>
+</ol>
+</li>
+<li><p><em>Initial Values:</em></p>
+<ol class="lowerroman simple">
+<li><p><em>Output files.</em> You can specify the file names or patterns (e.g. *.e) to be returned when the job is complete.</p></li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+</section>
+<section id="using-variables-in-execution-templates">
+<h2>Using Variables in Execution Templates<a class="headerlink" href="#using-variables-in-execution-templates" title="Link to this heading"></a></h2>
+<p>Execution templates may contain a number of variables expressed with the syntax <code class="docutils literal notranslate"><span class="pre">${variable_name}</span></code>, where variable_name is the name of the variable. When creating or modifying templates,
+you have several variables available to you to add to the script.</p>
+<p>If variables may be used in a text field, you will see a Variables button to the right of that field.  To use a variable, select the Variables button and you will be presented with a list.
+Selecting a variable will provide a description of what the variable is.  Select the OK button to use that variable in the corresponding text field.  Alternatively, if you know the name of the
+variable you want to use you can simply type it in the text field.</p>
+<figure class="align-center" id="jmtmodify-figure05">
+<img alt="Variables Dialog" src="../../../_images/variableChooser.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 104 </span><span class="caption-text">Variables Dialog</span><a class="headerlink" href="#jmtmodify-figure05" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+</section>
+<section id="restoring-defaults-of-predefined-codes-machines-and-execution-templates">
+<h2>Restoring Defaults of Predefined Codes, Machines, and Execution Templates<a class="headerlink" href="#restoring-defaults-of-predefined-codes-machines-and-execution-templates" title="Link to this heading"></a></h2>
+<p>If you have modified one of the predefined codes, machines, or execution templates, the item will have a * suffix appended to it.</p>
+<p>To restore the template to the default values, select it and then select the Restore Defaults button.  The * suffix will be removed.</p>
+<figure class="align-center" id="jmtmodify-figure06">
+<img alt="Execution Templates List Showing a Modified Template" src="../../../_images/restoreDefaults.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 105 </span><span class="caption-text">Execution Templates List Showing a Modified Template</span><a class="headerlink" href="#jmtmodify-figure06" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="JobSubmissionClassicUsage.html" class="btn btn-neutral float-left" title="Using the Job Submission Tools" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="JobSubmissionClassicCreation.html" class="btn btn-neutral float-right" title="Create your own Codes, Machines, and Execution Templates" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <!--
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Sandia National Laboratories.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+  --> 
+
+</footer>
+        </div>
+      </div>
+	  
+	  <div style="background-color: #0f0f0f;color:#fafafa;padding:20px">
+	    <div>
+		  <h2><em>Exceptional service in the national interest</em></h2>
+		</div>
+		<p>© 2023 National Technology and Engineering Solutions of Sandia, LLC. | <a href="https://www.sandia.gov/contact_us/index.html">Questions &amp; Comments</a> | <a href="https://www.sandia.gov/general/privacy-security/index.html">Privacy &amp; Security</a></p>
+		<p><a href="http://energy.gov" rel="noopener noreferrer" target="_blank"><img alt="U.S. Department of Energy" longdesc="https://energy.gov" src="https://www.sandia.gov/_common/images/doe_logo_white.png" style="height:37px; width:140px"></a> <a href="http://nnsa.energy.gov/" rel="noopener noreferrer" target="_blank"> <img alt="National Nuclear Security Administration" longdesc="http://nnsa.gov" src="https://www.sandia.gov/_common/images/nnsa_logo_white.png" style="height:37px; width:116px"></a></p>
+		<p><a href="https://www.sandia.gov">Sandia National Laboratories</a> is a multimission laboratory managed and operated by National Technology and Engineering Solutions of Sandia, LLC., a wholly owned subsidiary of Honeywell International, Inc., for the U.S. Department of Energy’s National Nuclear Security Administration under contract DE-NA-0003525.</p>
+	  </div>	  	  
+	  
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

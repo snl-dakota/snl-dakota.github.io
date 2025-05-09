@@ -1,0 +1,56 @@
+.. _method-asynch_pattern_search-synchronization:
+
+"""""""""""""""
+synchronization
+"""""""""""""""
+
+
+Select how Dakota schedules a batch of concurrent function evaluations in a parallel algorithm
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-asynch_pattern_search-synchronization-blocking
+   method-asynch_pattern_search-synchronization-nonblocking
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+- *Default:* method specific
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+--------------------+-----------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword     | Dakota Keyword Description                    |
+|                         | Group              |                    |                                               |
++=========================+====================+====================+===============================================+
+| Required (Choose One)   | Synchronization    | `blocking`__       | Complete concurrent evaluation of all         |
+|                         |                    |                    | evaluations within a batch                    |
+|                         |                    +--------------------+-----------------------------------------------+
+|                         |                    | `nonblocking`__    | A batch of concurrent evaluations are queried |
+|                         |                    |                    | for completions and a partial set is returned |
+|                         |                    |                    | to the algorithm                              |
++-------------------------+--------------------+--------------------+-----------------------------------------------+
+
+.. __: method-asynch_pattern_search-synchronization-blocking.html
+__ method-asynch_pattern_search-synchronization-nonblocking.html
+
+
+
+**Description**
+
+
+The ``synchronization`` specification can be used to specify
+the use of either ``blocking`` or ``nonblocking`` schedulers, where the
+former must block until all evaluations are completed and the latter
+does not block, returning only the partial set that has been completed
+for a particular call to the scheduler.
+
+

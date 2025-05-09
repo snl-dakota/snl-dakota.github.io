@@ -1,0 +1,2453 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Parallel Computing &mdash; dakota  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/dakota_theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/sandiaheaderlite.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../../_static/copybutton.js?v=f281be69"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Simulation Failure Capturing" href="simulationfailurecapturing.html" />
+    <link rel="prev" title="Advanced Simulation Code Interfaces" href="advancedsimulationcodeinterfaces.html" /> 
+  
+  <meta name="sandia.approval_type" content="formal"/>
+  <meta property="sandia.approved" content="SAND2025-05563O"/>
+  <meta name="description" content="The Dakota project delivers both state-of-the-art research and robust, usable software for optimization and UQ."/>
+  <meta name="keywords" content="Dakota, optimization, UQ, uncertainty quantification, parametric analysis, design exploration, model calibration, risk analysis"/>
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> dakota
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../setupdakota.html">Getting Started</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../usingdakota.html">Using Dakota</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../introduction/aboutdakota.html">About Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../introduction/helloworld.html">Dakota Beginner’s Tutorial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples.html">Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../introduction/couplingtosimulations.html">Coupling Dakota to a Simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../inputfile.html">Dakota Input File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../running.html">Running Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../output.html">Dakota Output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../studytypes.html">Study Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../topics.html">Topics</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../advanced.html">Advanced Topics</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="advancedmethods.html">Advanced Methods</a></li>
+<li class="toctree-l3"><a class="reference internal" href="advancedmodelrecursions.html">Advanced Model Recursions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="advancedsimulationcodeinterfaces.html">Advanced Simulation Code Interfaces</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Parallel Computing</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#overview">Overview</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#categorization-of-parallelism">Categorization of parallelism</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#parallel-dakota-algorithms">Parallel Dakota algorithms</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#parallel-iterators">Parallel iterators</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#advanced-methods">Advanced methods</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#parallel-models">Parallel models</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#single-level-parallelism">Single-level parallelism</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#asynchronous-local-parallelism">Asynchronous Local Parallelism</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#direct-function-synchronization">Direct function synchronization</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#system-call-synchronization">System call synchronization</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#fork-synchronization">Fork synchronization</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#asynchronous-local-example">Asynchronous Local Example</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#local-evaluation-scheduling-options">Local evaluation scheduling options</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#message-passing-parallelism">Message Passing Parallelism</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#partitioning">Partitioning</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#scheduling">Scheduling</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#message-passing-example">Message Passing Example</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#hybrid-parallelism">Hybrid Parallelism</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#hybrid-example">Hybrid Example</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#multilevel-parallelism">Multilevel parallelism</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#parallel-mlp-local">Asynchronous Local Parallelism</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#parallel-mlp-message">Message Passing Parallelism</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#partitioning-of-levels">Partitioning of levels</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#scheduling-within-levels">Scheduling within levels</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#parallel-mlp-hybrid">Hybrid Parallelism</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#capability-summary">Capability Summary</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#running-a-parallel-dakota-job">Running a Parallel Dakota Job</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#single-processor-execution">Single-processor execution</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#multiprocessor-execution">Multiprocessor execution</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#specifying-parallelism">Specifying Parallelism</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#the-interface-specification">The interface specification</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#the-meta-iterator-and-nested-model-specifications">The meta-iterator and nested model specifications</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#single-processor-dakota-specification">Single-processor Dakota specification</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#example-1">Example 1</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#example-2">Example 2</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#multiprocessor-dakota-specification">Multiprocessor Dakota specification</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#example-3">Example 3</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#example-4">Example 4</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#example-5">Example 5</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#application-parallelism-use-cases">Application Parallelism Use Cases</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#case-1-massively-serial-multiple-serial-analysis-jobs">Case 1: Massively Serial — Multiple serial analysis jobs</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#case-2-sequential-parallel-one-parallel-analysis-job-at-a-time">Case 2: Sequential Parallel — One parallel analysis job at a time</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#case-3-evaluation-tiling-multiple-simultaneous-parallel-analysis-jobs">Case 3: Evaluation Tiling — Multiple simultaneous parallel analysis jobs</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#mpiexec-server-mode">Mpiexec server mode</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#relative-node-scheduling">Relative node scheduling</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#machinefile-management">Machinefile management</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#case-4-evaluation-submission-parallel-analysis-jobs-submitted-to-a-queue">Case 4: Evaluation Submission — Parallel analysis jobs submitted to a queue</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="simulationfailurecapturing.html">Simulation Failure Capturing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="activesubspace.html">Active Subspace Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="basisadaptation.html">Basis Adaptation Models</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../theory.html">Dakota Theory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference.html">Keyword Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../usingdakotagui/usingdakotagui.html">Using Dakota GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../externaltools/externaltools.html">Using External Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../compiling/compiling.html">Compiling Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developingdakota/developingdakota.html">Developing Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../misc/misc.html">Miscellaneous</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">dakota</a>
+      </nav>
+
+	  <!-- SNL Lite header -->
+	  <div class="snlheader-subsite--wrapper-default">
+		<snlheader class="snlheader-subsite" role="snlbanner">
+		  <div class="wrapper">
+			<a href="https://www.sandia.gov/index.html">
+			  <div class="logo-transparent"><p class="logo">Sandia National Laboratories</p></div>
+			</a>
+			<div class="nav-top">
+			  <a class="visuallyhidden" name="mainnav"></a>
+			  <div aria-label="main navigation" class="core-nav-transparent core-nav-transparent--visible" role="navigation">
+				<ul role="navigation" class="secondary-links">
+				  <li id="search-text-link">
+					<a aria-label="Search" href="https://www.sandia.gov/search/">Search Sandia.gov</a>
+				  </li>
+				  <li id="directory-text-link">
+					<a href="https://www.sandia.gov/directory.html" aria-expanded="false" aria-label="Site Directory">All Sandia Websites</a>
+				  </li>
+				</ul>
+			  </div>
+			</div>
+		  </div> 
+		</snlheader>
+	  </div>	  
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../usingdakota.html">Using Dakota</a></li>
+          <li class="breadcrumb-item"><a href="../advanced.html">Advanced Topics</a></li>
+      <li class="breadcrumb-item active">Parallel Computing</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/usingdakota/advanced/parallelcomputing.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="parallel-computing">
+<span id="parallel"></span><h1>Parallel Computing<a class="headerlink" href="#parallel-computing" title="Link to this heading"></a></h1>
+<section id="overview">
+<span id="parallel-overview"></span><h2>Overview<a class="headerlink" href="#overview" title="Link to this heading"></a></h2>
+<p>This chapter describes the various parallel computing capabilities
+provided by Dakota. We begin with a high-level summary.</p>
+<p>Dakota has been designed to exploit a wide range of parallel computing
+resources such as those found in a desktop multiprocessor workstation, a
+network of workstations, or a massively parallel computing platform.
+This parallel computing capability is a critical technology for
+rendering real-world engineering design problems computationally
+tractable. Dakota employs the concept of <em>multilevel parallelism</em>, which
+takes simultaneous advantage of opportunities for parallel execution
+from multiple sources:</p>
+<p><strong>Parallel Simulation Codes</strong>: Dakota works equally well with both
+serial and parallel simulation codes.</p>
+<p><strong>Concurrent Execution of Analyses within a Function Evaluation</strong>: Some
+engineering design applications call for the use of multiple simulation
+code executions (different disciplinary codes, the same code for
+different load cases or environments, etc.) in order to evaluate a
+single response data set (e.g., objective functions and
+constraints) for a single set of parameters. If these simulation code
+executions are independent (or if coupling is enforced at a higher
+level), Dakota can perform them concurrently.</p>
+<p><strong>Concurrent Execution of Function Evaluations within an Iterator</strong>:
+Many Dakota methods provide opportunities for
+the concurrent evaluation of response data sets for different parameter
+sets. Whenever there exists a set of function evaluations that are
+independent, Dakota can perform them in parallel.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The term <em>function evaluation</em> is used broadly to mean any individual
+data request from an iterative algorithm</p>
+</div>
+<p><strong>Concurrent Execution of Sub-Iterators within a Meta-iterator or Nested
+Model</strong>: The advanced methods described on the <a class="reference internal" href="advancedmethods.html#adv-meth"><span class="std std-ref">Advanced Methods</span></a>
+page are examples of meta-iterators, and
+the advanced model recursions described on the <a class="reference internal" href="advancedmodelrecursions.html#adv-models"><span class="std std-ref">Advanced Models</span></a>
+page all utilize nested models. Both of these cases generate sets of iterator
+subproblems that can be executed concurrently. For example, the
+<a class="reference internal" href="advancedmethods.html#adv-meth-pareto"><span class="std std-ref">Pareto-set</span></a> and <a class="reference internal" href="advancedmethods.html#adv-meth-multistart"><span class="std std-ref">multi-start</span></a>
+strategies generate sets of optimization subproblems. Similarly,
+<a class="reference internal" href="advancedmodelrecursions.html#adv-models-ouu"><span class="std std-ref">optimization under uncertainty</span></a>
+generates sets of uncertainty
+quantification subproblems. Whenever these subproblems are independent,
+Dakota can perform them in parallel.</p>
+<p>It is important to recognize that these four parallelism sources can be
+combined recursively. For example, a meta-iterator can schedule and
+manage concurrent iterators, each of which may manage concurrent
+function evaluations, each of which may manage concurrent analyses, each
+of which may execute on multiple processors. Moreover, more than one
+source of sub-iteration concurrency can be exploited when combining
+meta-iteration and nested model sources. In an extreme example, defining
+the Pareto frontier for mixed-integer nonlinear programming under mixed
+aleatory-epistemic uncertainty might exploit up to four levels of nested
+sub-iterator concurrency in addition to available levels from function
+evaluation concurrency, analysis concurrency, and simulation
+parallelism. The majority of application scenarios, however, will employ
+one to two levels of parallelism.</p>
+<p>Navigating the body of this chapter: The range of capabilities is
+extensive and can be daunting at first; therefore, this chapter takes an
+incremental approach in first describing the simplest
+<a class="reference internal" href="#parallel-slp"><span class="std std-ref">single-level parallel</span></a> computing models using
+asynchronous local, message passing, and hybrid approaches. More
+advanced uses of Dakota can build on this foundation to exploit
+<a class="reference internal" href="#parallel-mlp"><span class="std std-ref">multiple levels of parallelism</span></a>.</p>
+<p>The chapter concludes with a discussion of using Dakota with
+applications that run as independent MPI processes (parallel application
+tiling, for example on a large compute cluster). This last section is a
+good quick start for interfacing Dakota to your parallel (or serial)
+application on a cluster.</p>
+<section id="categorization-of-parallelism">
+<span id="parallel-overview-cat"></span><h3>Categorization of parallelism<a class="headerlink" href="#categorization-of-parallelism" title="Link to this heading"></a></h3>
+<p>To understand the parallel computing possibilities, it is instructive to
+first categorize the opportunities for exploiting parallelism into four
+main areas <span id="id1">[<a class="reference internal" href="../../misc/bibliography.html#id74" title="M. S. Eldred and W. E. Hart. Design and implementation of multilevel parallel optimization on the Intel TeraFLOPS. In Proc. 7th AIAA/USAF/NASA/ISSMO Symposium on Multidisciplinary Analysis and Optimization, number AIAA-98-4707, 44–54. St. Louis, MO, September 2–4 1998.">EH98</a>]</span>, consisting of coarse-grained and
+fine-grained parallelism opportunities within algorithms and their
+function evaluations:</p>
+<ol class="arabic simple">
+<li><p><em>Algorithmic coarse-grained parallelism</em>: This parallelism involves
+the concurrent execution of independent function evaluations, where a
+“function evaluation” is defined as a data request from an algorithm
+(which may involve value, gradient, and Hessian data from multiple
+objective and constraint functions). This concept can also be
+extended to the concurrent execution of multiple “iterators” within a
+“meta-iterator.” Examples of algorithms containing coarse-grained
+parallelism include:</p>
+<ul class="simple">
+<li><p><em>Gradient-based algorithms</em>: finite difference gradient
+evaluations, speculative optimization, parallel line search.</p></li>
+<li><p><em>Nongradient-based algorithms</em>: genetic algorithms (GAs), pattern
+search (PS), Monte Carlo sampling.</p></li>
+<li><p><em>Approximate methods</em>: design of computer experiments for building
+surrogate models.</p></li>
+<li><p><em>Concurrent sub-iteration</em>: optimization under uncertainty, branch
+and bound, multi-start local search, Pareto set optimization,
+island-model GAs.</p></li>
+</ul>
+</li>
+<li><p><em>Algorithmic fine-grained parallelism</em>: This involves computing the
+basic computational steps of an optimization algorithm (i.e., the
+internal linear algebra) in parallel. This is primarily of interest
+in large-scale optimization problems and simultaneous analysis and
+design (SAND).</p></li>
+<li><p><em>Function evaluation coarse-grained parallelism</em>: This involves
+concurrent computation of separable parts of a single function
+evaluation. This parallelism can be exploited when the evaluation of
+the response data set requires multiple independent simulations (e.g.
+multiple loading cases or operational environments) or multiple
+dependent analyses where the coupling is applied at the optimizer
+level (e.g., multiple disciplines in the individual discipline
+feasible formulation <span id="id2">[<a class="reference internal" href="../../misc/bibliography.html#id52" title="J. E. Dennis and R. M. Lewis. Problem formulations and other optimization issues in multidisciplinary optimization. In Proc. AIAA Symposium on Fluid Dynamics, number AIAA-94-2196. Colorado Springs, Colordao, June 1994.">DL94</a>]</span>).</p></li>
+<li><p><em>Function evaluation fine-grained parallelism</em>: This involves
+parallelization of the solution steps within a single analysis code.
+Support for massively parallel simulation continues to grow in areas
+of nonlinear mechanics, structural dynamics, heat transfer,
+computational fluid dynamics, shock physics, and many others.</p></li>
+</ol>
+<p>By definition, coarse-grained parallelism requires very little
+inter-processor communication and is therefore “embarrassingly
+parallel,” meaning that there is little loss in parallel efficiency due
+to communication as the number of processors increases. However, it is
+often the case that there are not enough separable computations on each
+algorithm cycle to utilize the thousands of processors available on
+massively parallel machines. For example, a thermal safety
+application <span id="id3">[<a class="reference internal" href="../../misc/bibliography.html#id72" title="M. S. Eldred, W. E. Hart, W. J. Bohnhoff, V. J. Romero, S. A. Hutchinson, and A. G. Salinger. Utilizing object-oriented design to build advanced optimization strategies with generic implementation. In Proc. 6th AIAA/USAF/NASA/ISSMO Symposium on Multidisciplinary Analysis and Optimization, number AIAA-96-4164, 1568–1582. Bellevue, WA, September 4–6 1996.">EHB+96</a>]</span> demonstrated this limitation with
+a pattern search optimization in which the maximum speedup exploiting
+<em>only</em> coarse-grained algorithmic parallelism was shown to be limited by
+the size of the design problem (coordinate pattern search has at most
+<span class="math notranslate nohighlight">\(2n\)</span> independent evaluations per cycle for <span class="math notranslate nohighlight">\(n\)</span> design
+variables).</p>
+<p>Fine-grained parallelism, on the other hand, involves much more
+communication among processors and care must be taken to avoid the case
+of inefficient machine utilization in which the communication demands
+among processors outstrip the amount of actual computational work to be
+performed. For example, a chemically-reacting flow
+application <span id="id4">[<a class="reference internal" href="../../misc/bibliography.html#id74" title="M. S. Eldred and W. E. Hart. Design and implementation of multilevel parallel optimization on the Intel TeraFLOPS. In Proc. 7th AIAA/USAF/NASA/ISSMO Symposium on Multidisciplinary Analysis and Optimization, number AIAA-98-4707, 44–54. St. Louis, MO, September 2–4 1998.">EH98</a>]</span> illustrated this limitation for a
+simulation of fixed size in which it was shown that, while simulation
+run time did monotonically decrease with increasing number of
+processors, the relative parallel efficiency <span class="math notranslate nohighlight">\(\hat{E}\)</span> of the
+computation for fixed model size decreased rapidly (from
+<span class="math notranslate nohighlight">\(\hat{E} \approx 0.8\)</span> at 64 processors to
+<span class="math notranslate nohighlight">\(\hat{E} \approx 0.4\)</span> at 512 processors). This was due to the fact
+that the total amount of computation was approximately fixed, whereas
+the communication demands were increasing rapidly with increasing
+numbers of processors. Therefore, there is a practical limit on the
+number of processors that can be employed for fine-grained parallel
+simulation of a particular model size, and only for extreme model sizes
+can thousands of processors be efficiently utilized in studies
+exploiting fine-grained parallelism alone.</p>
+<p>These limitations point us to the exploitation of multiple levels of
+parallelism, in particular the combination of coarse-grained and
+fine-grained approaches. This will allow us to execute fine-grained
+parallel simulations on sets of processors where they are most efficient
+and then replicate this efficiency with many coarse-grained instances
+involving one or more levels of nested job scheduling.</p>
+</section>
+<section id="parallel-dakota-algorithms">
+<span id="parallel-algorithms"></span><h3>Parallel Dakota algorithms<a class="headerlink" href="#parallel-dakota-algorithms" title="Link to this heading"></a></h3>
+<p>In Dakota, the following parallel algorithms, comprised of iterators and
+meta-iterators, provide support for coarse-grained algorithmic
+parallelism. Note that, even if a particular algorithm is serial in
+terms of its data request concurrency, other concurrency sources (e.g.,
+function evaluation coarse-grained and fine-grained parallelism) may
+still be available.</p>
+<section id="parallel-iterators">
+<span id="parallel-algorithms-iterators"></span><h4>Parallel iterators<a class="headerlink" href="#parallel-iterators" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p>Gradient-based optimizers: CONMIN, DOT, NLPQL, NPSOL, and OPT++ can
+all exploit parallelism through the use of Dakota’s native finite
+differencing routine (selected with in the responses specification),
+which will perform concurrent evaluations for each of the parameter
+offsets. For <span class="math notranslate nohighlight">\(n\)</span> variables, forward differences result in an
+<span class="math notranslate nohighlight">\(n+1\)</span> concurrency and central differences result in a
+<span class="math notranslate nohighlight">\(2n+1\)</span> concurrency. In addition, CONMIN, DOT, and OPT++ can use
+speculative gradient techniques <span id="id5">[<a class="reference internal" href="../../misc/bibliography.html#id34" title="R. H. Byrd, R. B. Schnabel, and G. A. Schultz. Parallel quasi-newton methods for unconstrained optimization. Mathematical Programming, 42:273–306, 1988.">BSS88</a>]</span> to obtain
+better parallel load balancing. By speculating that the gradient
+information associated with a given line search point will be used
+later and computing the gradient information in parallel at the same
+time as the function values, the concurrency during the gradient
+evaluation and line search phases can be balanced. NPSOL does not use
+speculative gradients since this approach is superseded by NPSOL’s
+gradient-based line search in user-supplied derivative mode. NLPQL
+also supports a distributed line search capability for generating
+concurrency <span id="id6">[<a class="reference internal" href="../../misc/bibliography.html#id259" title="K. Schittkowski. NLPQLP: a fortran implementation of a sequential quadratic programming algorithm with distributed and non-monotone line search – user's guide. Technical Report, Department of Mathematics, University of Bayreuth, Bayreuth, Germany, 2004.">Sch04</a>]</span>. Finally, finite-difference
+Newton algorithms can exploit additional concurrency in numerically
+evaluating Hessian matrices.</p></li>
+</ul>
+<ul class="simple">
+<li><p>Nongradient-based optimizers: HOPSPACK, JEGA methods, and most SCOLIB
+methods support parallelism. HOPSPACK and SCOLIB methods exploit
+parallelism through the use of Dakota’s concurrent function
+evaluations; however, there are some limitations on the levels of
+concurrency and asynchrony that can be exploited. These are detailed
+in the Dakota Reference Manual. Serial SCOLIB methods include
+Solis-Wets (<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-coliny_solis_wets.html"><span class="pre">coliny_solis_wets</span></a></code>) and certain
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-coliny_pattern_search-exploratory_moves.html"><span class="pre">exploratory_moves</span></a></code>
+options (<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-coliny_pattern_search-exploratory_moves-adaptive_pattern.html"><span class="pre">adaptive_pattern</span></a></code>
+and <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-coliny_pattern_search-exploratory_moves-multi_step.html"><span class="pre">multi_step</span></a></code>)
+in pattern search (<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-coliny_pattern_search.html"><span class="pre">coliny_pattern_search</span></a></code>).
+<a class="reference internal" href="../reference/method-optpp_pds.html#method-optpp-pds"><span class="std std-ref">OPT++ PDS</span></a> and <a class="reference internal" href="../reference/method-ncsu_direct.html#method-ncsu-direct"><span class="std std-ref">NCSU DIRECT</span></a>
+are also currently serial due to
+incompatibilities in Dakota and OPT++/NCSU parallelism models.
+Finally, and support dynamic job queues managed with nonblocking
+synchronization.</p></li>
+<li><p>Least squares methods: in an identical manner to the gradient-based
+optimizers, NL2SOL, NLSSOL, and Gauss-Newton can exploit parallelism
+through the use of Dakota’s native finite differencing routine. In
+addition, NL2SOL and Gauss-Newton can use speculative gradient
+techniques to obtain better parallel load balancing. NLSSOL does not
+use speculative gradients since this approach is superseded by
+NLSSOL’s gradient-based line search in user-supplied derivative mode.</p></li>
+<li><p>Surrogate-based minimizers: <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-surrogate_based_local.html"><span class="pre">surrogate_based_local</span></a></code>,
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-surrogate_based_global.html"><span class="pre">surrogate_based_global</span></a></code>, and <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-efficient_global.html"><span class="pre">efficient_global</span></a></code>
+all support parallelism in the initial surrogate construction, but
+subsequent concurrency varies. In the case of <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-efficient_global.html"><span class="pre">efficient_global</span></a></code>,
+available concurrency depends on <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-efficient_global-batch_size.html"><span class="pre">batch_size</span></a></code>.
+In the case of <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-surrogate_based_local.html"><span class="pre">surrogate_based_local</span></a></code>, only a
+single point is generated per subsequent cycle, but derivative
+concurrency for numerical gradient or Hessian evaluations may be
+available. And in the case of <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-surrogate_based_global.html"><span class="pre">surrogate_based_global</span></a></code>,
+multiple points may be generated on
+each subsequent cycle, depending on the multipoint return
+capability of specific minimizers.</p></li>
+<li><p>Parameter studies: all parameter study methods (<a class="reference internal" href="../reference/method-vector_parameter_study.html#method-vector-parameter-study"><span class="std std-ref">vector</span></a>,
+<a class="reference internal" href="../reference/method-list_parameter_study.html#method-list-parameter-study"><span class="std std-ref">list</span></a>, <a class="reference internal" href="../reference/method-centered_parameter_study.html#method-centered-parameter-study"><span class="std std-ref">centered</span></a>,
+and <a class="reference internal" href="../reference/method-multidim_parameter_study.html#method-multidim-parameter-study"><span class="std std-ref">multidim</span></a>) support
+parallelism. These methods avoid internal synchronization points, so
+all evaluations are available for concurrent execution.</p></li>
+<li><p>Design of experiments: all <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-dace.html"><span class="pre">dace</span></a></code>  (<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-dace-grid.html"><span class="pre">grid</span></a></code>,
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-dace-random.html"><span class="pre">random</span></a></code>, <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-dace-oas.html"><span class="pre">oas</span></a></code>, <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-dace-lhs.html"><span class="pre">lhs</span></a></code>,
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-dace-oa_lhs.html"><span class="pre">oa_lhs</span></a></code>, <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-dace-box_behnken.html"><span class="pre">box_behnken</span></a></code>, and
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-dace-central_composite.html"><span class="pre">central_composite</span></a></code>), <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-fsu_quasi_mc.html"><span class="pre">fsu_quasi_mc</span></a></code>
+(<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-fsu_quasi_mc-halton.html"><span class="pre">halton</span></a></code> and <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-fsu_quasi_mc-hammersley.html"><span class="pre">hammersley</span></a></code>),
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-fsu_cvt.html"><span class="pre">fsu_cvt</span></a></code>, and <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-psuade_moat.html"><span class="pre">psuade_moat</span></a></code> methods
+support parallelism.</p></li>
+<li><p>Uncertainty quantification: all nondeterministic methods (<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-sampling.html"><span class="pre">sampling</span></a></code>,
+reliability, stochastic expansion, and epistemic) support
+parallelism. In the case of gradient-based methods (<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-local_reliability.html"><span class="pre">local_reliability</span></a></code>,
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-local_interval_est.html"><span class="pre">local_interval_est</span></a></code>) parallelism can be exploited
+through the use of Dakota’s native finite differencing routine for
+computing gradients. In the case of many global methods (e.g.,
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-global_reliability.html"><span class="pre">global_reliability</span></a></code>, <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-global_interval_est.html"><span class="pre">global_interval_est</span></a></code>,
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-polynomial_chaos.html"><span class="pre">polynomial_chaos</span></a></code>) initial
+surrogate construction is highly parallel, but any subsequent
+(adaptive) refinement may have greater concurrency restrictions
+(including a single point per refinement cycle in some cases).</p></li>
+</ul>
+</section>
+<section id="advanced-methods">
+<span id="parallel-algorithms-adv-meth"></span><h4>Advanced methods<a class="headerlink" href="#advanced-methods" title="Link to this heading"></a></h4>
+<p>Certain advanced methods support concurrency in multiple iterator
+executions. Currently, the methods which can exploit this level of
+parallelism are:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="advancedmethods.html#adv-meth-hybrid"><span class="std std-ref">Hybrid minimization</span></a>: when the sequential
+hybrid transfers multiple
+solution points between methods, single-point minimizers will be
+executed concurrently using each of the transferred solution points.</p></li>
+<li><p><a class="reference internal" href="advancedmethods.html#adv-meth-pareto"><span class="std std-ref">Pareto-set optimization</span></a>: a meta-iterator
+for multiobjective optimization using the simple weighted-sum approach
+for computing sets of points on the Pareto front of nondominated solutions.</p></li>
+<li><p><a class="reference internal" href="advancedmethods.html#adv-meth-multistart"><span class="std std-ref">Multi-start iteration</span></a>: a meta-iterator
+for executing multiple instances of an iterator from different starting points.</p></li>
+</ul>
+<p>The hybrid minimization case will display varying levels of iterator
+concurrency based on differing support of multipoint solution
+input/output between iterators; however, the use of multiple parallel
+configurations among the iterator sequence should prevent parallel
+inefficiencies. On the other hand, pareto-set and multi-start have a
+fixed set of jobs to perform and should exhibit good load balancing.</p>
+</section>
+<section id="parallel-models">
+<span id="parallel-algorithms-models"></span><h4>Parallel models<a class="headerlink" href="#parallel-models" title="Link to this heading"></a></h4>
+<p>Parallelism support in <a class="reference internal" href="../inputfile/model.html#models-main"><span class="std std-ref">model</span></a> is an important issue for
+advanced model recursions such as surrogate-based minimization, optimization under
+uncertainty, and mixed aleatory-epistemic UQ (see
+the <a class="reference internal" href="advancedmethods.html#adv-meth"><span class="std std-ref">Advanced Method</span></a> and <a class="reference internal" href="advancedmodelrecursions.html#adv-models"><span class="std std-ref">Advanced Model</span></a> pages).
+Support is as follows:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="../inputfile/model.html#models-single"><span class="std std-ref">Single model</span></a>: parallelism is managed as specified
+in the model’s associated <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/interface.html"><span class="pre">interface</span></a></code> instance.</p></li>
+<li><p><a class="reference internal" href="../inputfile/model.html#models-recast"><span class="std std-ref">Recast model</span></a>: most parallelism is forwarded on to the
+sub-model. An exception to this is finite differencing in the presence of variable
+scaling. Since it is desirable to perform offsets in the scaled space
+(and avoid minimum step size tolerances), this parallelism is not
+forwarded to the sub-model, instead being enacted at the recast
+level.</p></li>
+<li><p><a class="reference internal" href="../inputfile/model.html#models-surrogate-datafit"><span class="std std-ref">Data fit surrogate model</span></a>: parallelism is
+supported in the
+construction of global surrogate models via the concurrent evaluation
+of points generated by design of experiments methods. Local and
+multipoint approximations evaluate only a single point at a time, so
+concurrency is available only from any numerical differencing
+required for gradient and Hessian data. Since the top-level iterator
+is interfaced only with the (inexpensive) surrogate, no parallelism
+is exploited there. Load balancing can be an important issue when
+performing evaluations to (adaptively) update existing surrogate
+models.</p></li>
+<li><p>Hierarchical surrogate model: parallelism is supported for the low or
+the high fidelity models, and in some contexts, for both models at
+the same time. In the multifidelity optimization context, the
+optimizer is interfaced only with the low-fidelity model, and the
+high-fidelity model is used only for verifications and correction
+updating. For this case, the algorithmic coarse-grained parallelism
+supported by the optimizer is enacted on the low fidelity model and
+the only parallelism available for high fidelity executions arises
+from any numerical differencing required for high-fidelity gradient
+and Hessian data. In contexts that compute model discrepancies, such
+as multifidelity UQ, the algorithmic concurrency involves evaluation
+of both low and high fidelity models, so parallel schedulers can
+exploit simultaneous concurrency for both models.</p></li>
+<li><p><a class="reference internal" href="../inputfile/model.html#models-nested"><span class="std std-ref">Nested model</span></a>: concurrent executions of the optional interface and
+concurrent executions of the sub-iterator are supported and are
+synchronized in succession. Currently, synchronization is blocking
+(all concurrent evaluations are completed before new batches are
+scheduled); nonblocking schedulers (see <a class="reference internal" href="#parallel-slp"><span class="std std-ref">Single-level parallelism</span></a>)
+may
+be supported in time. Nested model concurrency and meta-iterator
+concurrency (<a class="reference internal" href="#parallel-algorithms-adv-meth"><span class="std std-ref">Advanced methods</span></a>) may
+be combined within an arbitrary number of levels of recursion.
+Primary clients for this capability include optimization under
+uncertainty and mixed aleatory-epistemic UQ.</p></li>
+</ul>
+</section>
+</section>
+</section>
+<section id="single-level-parallelism">
+<span id="parallel-slp"></span><h2>Single-level parallelism<a class="headerlink" href="#single-level-parallelism" title="Link to this heading"></a></h2>
+<p>Dakota’s parallel facilities support a broad range of computing
+hardware, from custom massively parallel supercomputers on the high end,
+to clusters and networks of workstations in the middle range, to desktop
+multiprocessors on the low end. Given the reduced scale in the middle to
+low ranges, it is more common to exploit only one of the levels of
+parallelism; however, this can still be quite effective in reducing the
+time to obtain a solution. Three single-level parallelism models will be
+discussed, and are depicted in <a class="reference internal" href="#parallel-figure03"><span class="std std-numref">Fig. 59</span></a>:</p>
+<figure class="align-center" id="parallel-figure03">
+<a class="reference internal image-reference" href="../../_images/ex_in_hy_job_management.png"><img alt="External, internal, and hybrid job management." src="../../_images/ex_in_hy_job_management.png" style="width: 50%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 59 </span><span class="caption-text">External, internal, and hybrid job management.</span><a class="headerlink" href="#parallel-figure03" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<ul class="simple">
+<li><p><em>asynchronous local</em>: Dakota executes on a single processor, but
+launches multiple jobs concurrently using asynchronous job launching
+techniques.</p></li>
+<li><p><em>message passing</em>: Dakota executes in parallel using message passing
+to communicate between processors. A single job is launched per
+processor using synchronous job launching techniques.</p></li>
+<li><p><em>hybrid</em>: a combination of message passing and asynchronous local.
+Dakota executes in parallel across multiple processors and launches
+concurrent jobs on each processor.</p></li>
+</ul>
+<p>In each of these cases, jobs are executing concurrently and must be
+collected in some manner for return to an algorithm. Blocking and
+nonblocking approaches are provided for this, where the blocking
+approach is used in most cases:</p>
+<ul class="simple">
+<li><p><em>blocking synchronization</em>: all jobs in the queue are completed
+before exiting the scheduler and returning the set of results to the
+algorithm. The job queue fills and then empties completely, which
+provides a synchronization point for the algorithm.</p></li>
+<li><p><em>nonblocking synchronization</em>: the job queue is dynamic, with jobs
+entering and leaving continuously. There are no defined
+synchronization points for the algorithm, which requires specialized
+algorithm logic. Sometimes referred to as “fully asynchronous” algorithms,
+these currently include <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-coliny_pattern_search.html"><span class="pre">coliny_pattern_search</span></a></code>,
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-asynch_pattern_search.html"><span class="pre">asynch_pattern_search</span></a></code>, and <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-efficient_global.html"><span class="pre">efficient_global</span></a></code> with
+the <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-efficient_global-batch_size-synchronization-nonblocking.html"><span class="pre">nonblocking</span></a></code> option.</p></li>
+</ul>
+<p>Given these job management capabilities, it is worth noting that the
+popular term “asynchronous” can be ambiguous when used in isolation. In
+particular, it can be important to qualify whether one is referring to
+“asynchronous job launch” (synonymous with any of the three concurrent
+job launch approaches described above) or “asynchronous job recovery”
+(synonymous with the latter nonblocking job synchronization approach).</p>
+<section id="asynchronous-local-parallelism">
+<span id="parallel-slp-local"></span><h3>Asynchronous Local Parallelism<a class="headerlink" href="#asynchronous-local-parallelism" title="Link to this heading"></a></h3>
+<p>This section describes software components which manage simulation
+invocations local to a processor. These invocations may be either
+synchronous (i.e., blocking) or asynchronous (i.e., nonblocking).
+Synchronous evaluations proceed one at a time with the evaluation
+running to completion before control is returned to Dakota. Asynchronous
+evaluations are initiated such that control is returned to Dakota
+immediately, prior to evaluation completion, thereby allowing the
+initiation of additional evaluations which will execute concurrently.</p>
+<p>The synchronous local invocation capabilities are used in two contexts:
+(1) by themselves to provide serial execution on a single processor, and
+(2) in combination with Dakota’s message-passing schedulers to provide
+function evaluations local to each processor. Similarly, the
+asynchronous local invocation capabilities are used in two contexts: (1)
+by themselves to launch concurrent jobs from a single processor that
+rely on external means (e.g., operating system, job queues) for
+assignment to other processors, and (2) in combination with Dakota’s
+message-passing schedulers to provide a <a class="reference internal" href="#parallel-slp-hybrid"><span class="std std-ref">hybrid parallelism</span></a>.
+Thus, Dakota supports any of the four combinations of synchronous or asynchronous
+local combined with message passing or without.</p>
+<p>Asynchronous local schedulers may be used for managing concurrent
+function evaluations requested by an iterator or for managing concurrent
+analyses within each function evaluation. The former iterator/evaluation
+concurrency supports either blocking (all jobs in the queue must be
+completed by the scheduler) or nonblocking (dynamic job queue may shrink
+or expand) synchronization, where blocking synchronization is used by
+most iterators and nonblocking synchronization is used by fully
+asynchronous algorithms such as <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-asynch_pattern_search.html"><span class="pre">asynch_pattern_search</span></a></code>,
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-coliny_pattern_search.html"><span class="pre">coliny_pattern_search</span></a></code>, and <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-efficient_global.html"><span class="pre">efficient_global</span></a></code>
+with the <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-efficient_global-batch_size-synchronization-nonblocking.html"><span class="pre">nonblocking</span></a></code> option.
+The latter evaluation/analysis concurrency is
+restricted to blocking synchronization. The “Asynchronous Local” column
+in <a class="reference internal" href="#parallel-table01"><span class="std std-numref">Table 17</span></a> summarizes these capabilities.</p>
+<p>Dakota supports three local simulation invocation approaches based on
+the direct function, system call, and fork simulation interfaces. For
+each of these cases, an input filter, one or more analysis drivers, and
+an output filter make up the interface, as described in
+<a class="reference internal" href="../inputfile/interfaces/simulationinterfacecomponents.html#interfaces-components"><span class="std std-ref">Simulation Interface Components</span></a>.</p>
+<section id="direct-function-synchronization">
+<span id="parallel-slp-local-direct"></span><h4>Direct function synchronization<a class="headerlink" href="#direct-function-synchronization" title="Link to this heading"></a></h4>
+<p>The direct function capability may be used synchronously. Synchronous
+operation of the direct function simulation interface involves a
+standard procedure call to the input filter, if present, followed by
+calls to one or more simulations, followed by a call to the output
+filter, if present (refer to
+<a class="reference internal" href="../inputfile/interfaces/simulationinterfacecomponents.html#interfaces-components"><span class="std std-ref">Simulation Interface Components</span></a>
+for additional details and examples). Each of these components must be
+linked as functions within Dakota. Control does not return to the
+calling code until the evaluation is completed and the response object
+has been populated.</p>
+<p>Asynchronous operation will be supported in the future and will involve
+the use of multithreading (e.g., POSIX threads) to accomplish multiple
+simultaneous simulations. When spawning a thread (e.g., using
+<code class="docutils literal notranslate"><span class="pre">pthread_create</span></code>), control returns to the calling code after the
+simulation is initiated. In this way, multiple threads can be created
+simultaneously. An array of responses corresponding to the multiple
+threads of execution would then be recovered in a synchronize operation
+(e.g., using <code class="docutils literal notranslate"><span class="pre">pthread_join</span></code>).</p>
+</section>
+<section id="system-call-synchronization">
+<span id="parallel-slp-local-system"></span><h4>System call synchronization<a class="headerlink" href="#system-call-synchronization" title="Link to this heading"></a></h4>
+<p>The system call capability may be used synchronously or asynchronously.
+In both cases, the <code class="docutils literal notranslate"><span class="pre">system</span></code> utility from the standard C library is
+used. Synchronous operation of the system call simulation interface
+involves spawning the system call (containing the filters and analysis
+drivers bound together with parentheses and semi-colons) in the
+foreground. Control does not return to the calling code until the
+simulation is completed and the response file has been written. In this
+case, the possibility of a race condition (see below) does not exist and
+any errors during response recovery will cause an immediate abort of the
+Dakota process.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Detection of the string “fail” is not a response
+recovery error; see <a class="reference internal" href="simulationfailurecapturing.html#failure"><span class="std std-ref">Simulation Failure Capturing</span></a>.</p>
+</div>
+<p>Asynchronous operation involves spawning the system call in the
+background, continuing with other tasks (e.g., spawning other system
+calls), periodically checking for process completion, and finally
+retrieving the results. An array of responses corresponding to the
+multiple system calls is recovered in a synchronize operation.</p>
+<p>In this synchronize operation, completion of a function evaluation is
+detected by testing for the existence of the evaluation’s results file
+using the <code class="docutils literal notranslate"><span class="pre">stat</span></code> utility <span id="id7">[<a class="reference internal" href="../../misc/bibliography.html#id169" title="B. W. Kernighan and D. M. Ritchie. The C Programming Language. Prentice Hall PTR, Englewood Cliffs, NJ, 2nd edition, 1988.">KR88</a>]</span>. Care must be taken
+when using asynchronous system calls since they are prone to the race
+condition in which the results file passes the existence test but the
+recording of the function evaluation results in the file is incomplete.
+In this case, the read operation performed by Dakota will result in an
+error due to an incomplete data set. In order to address this problem,
+Dakota contains exception handling which allows for a fixed number of
+response read failures per asynchronous system call evaluation. The
+number of allowed failures must have a limit, so that an actual response
+format error (unrelated to the race condition) will eventually abort the
+system. Therefore, to reduce the possibility of exceeding the limit on
+allowable read failures, <em>the user’s interface should minimize the
+amount of time an incomplete results file exists in the directory where
+its status is being tested</em>. This can be accomplished through two
+approaches: (1) delay the creation of the results file until the
+simulation computations are complete and all of the response data is
+ready to be written to the results file, or (2) perform the simulation
+computations in a subdirectory, and as a last step, move the completed
+results file into the main working directory where its existence is
+being queried.</p>
+<p>If concurrent simulations are executing in a shared disk space, then
+care must be taken to maintain independence of the simulations. In
+particular, the parameters and results files used to communicate between
+Dakota and the simulation, as well as any other files used by this
+simulation, must be protected from other files of the same name used by
+the other concurrent simulations. With respect to the parameters and
+results files, these files may be made unique through the use of the
+<code class="docutils literal notranslate"><span class="pre">file_tag</span></code> option (e.g., <code class="docutils literal notranslate"><span class="pre">params.in.1</span></code>, <code class="docutils literal notranslate"><span class="pre">results.out.1</span></code>)
+or the default temporary file option (e.g.,
+<code class="docutils literal notranslate"><span class="pre">/var/tmp/aaa0b2Mfv</span></code>). However, if additional simulation files must
+be protected (e.g., <code class="docutils literal notranslate"><span class="pre">model.i</span></code>, <code class="docutils literal notranslate"><span class="pre">model.o</span></code>, <code class="docutils literal notranslate"><span class="pre">model.g</span></code>,
+<code class="docutils literal notranslate"><span class="pre">model.e</span></code>), then an effective approach is to create
+a tagged working subdirectory for each simulation instance.
+The <a class="reference internal" href="../inputfile/interfaces/buildingblackboxinterface.html#interfaces-building"><span class="std std-ref">Interfaces</span></a> page provides an
+example system call interface that demonstrates both the use of tagged
+working directories and the relocation of completed results files to
+avoid the race condition.</p>
+</section>
+<section id="fork-synchronization">
+<span id="parallel-slp-local-fork"></span><h4>Fork synchronization<a class="headerlink" href="#fork-synchronization" title="Link to this heading"></a></h4>
+<p>The fork capability is quite similar to the system call; however, it has
+the advantage that asynchronous fork invocations can avoid the results
+file race condition that may occur with asynchronous system calls (See
+the <a class="reference internal" href="../inputfile/interfaces/simulationinterfaces.html#interfaces-which"><span class="std std-ref">Interfaces</span></a> page discussion on choosing
+between <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/interface-analysis_drivers-fork.html"><span class="pre">fork</span></a></code> and
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/interface-analysis_drivers-system.html"><span class="pre">system</span></a></code>). The fork interface
+invokes the filters and analysis drivers using the <code class="docutils literal notranslate"><span class="pre">fork</span></code> and <code class="docutils literal notranslate"><span class="pre">exec</span></code>
+family of functions, and completion of these processes is detected using
+the <code class="docutils literal notranslate"><span class="pre">wait</span></code> family of functions. Since <code class="docutils literal notranslate"><span class="pre">wait</span></code> is based on a process
+id handle rather than a file existence test, an incomplete results file
+is not an issue.</p>
+<p>Depending on the platform, the fork simulation interface executes either
+a <code class="docutils literal notranslate"><span class="pre">vfork</span></code> or a <code class="docutils literal notranslate"><span class="pre">fork</span></code> call. These calls generate a new child process
+with its own UNIX process identification number, which functions as a
+copy of the parent process (dakota). The <code class="docutils literal notranslate"><span class="pre">execvp</span></code> function is then
+called by the child process, causing it to be replaced by the analysis
+driver or filter. For synchronous operation, the parent dakota process
+then awaits completion of the forked child process through a blocking
+call to <code class="docutils literal notranslate"><span class="pre">waitpid</span></code>. On most platforms, the <code class="docutils literal notranslate"><span class="pre">fork/exec</span></code> procedure is
+efficient since it operates in a copy-on-write mode, and no copy of the
+parent is actually created. Instead, the parents address space is
+borrowed until the <code class="docutils literal notranslate"><span class="pre">exec</span></code> function is called.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">fork/exec</span></code> behavior for asynchronous operation is similar to that
+for synchronous operation, the only difference being that dakota invokes
+multiple simulations through the <code class="docutils literal notranslate"><span class="pre">fork/exec</span></code> procedure prior to
+recovering response results for these jobs using the <code class="docutils literal notranslate"><span class="pre">wait</span></code> function.
+The combined use of <code class="docutils literal notranslate"><span class="pre">fork/exec</span></code> and <code class="docutils literal notranslate"><span class="pre">wait</span></code> functions in asynchronous
+mode allows the scheduling of a specified number of concurrent function
+evaluations and/or concurrent analyses.</p>
+</section>
+<section id="asynchronous-local-example">
+<span id="parallel-slp-local-ex"></span><h4>Asynchronous Local Example<a class="headerlink" href="#asynchronous-local-example" title="Link to this heading"></a></h4>
+<p>The test file <code class="docutils literal notranslate"><span class="pre">dakota/share/dakota/test/dakota_dace.in</span></code>
+computes 49 orthogonal array samples, which may be
+evaluated concurrently using parallel computing. When executing Dakota
+with this input file on a single processor, the following execution
+syntax may be used:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>dakota -i dakota_dace.in
+</pre></div>
+</div>
+<p>For serial execution (the default), the interface specification within
+<code class="docutils literal notranslate"><span class="pre">dakota_dace.in</span></code> would appear similar to</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span><span class="k">interface</span>,
+        system
+          analysis_driver = &#39;text_book&#39;
+</pre></div>
+</div>
+<p>which results in function evaluation output similar to the following
+(for <code class="docutils literal notranslate"><span class="pre">output</span></code> set to <code class="docutils literal notranslate"><span class="pre">quiet</span></code> mode):</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>&gt;&gt;&gt;&gt;&gt; Running dace iterator.
+
+DACE method = 12 Samples = 49 Symbols = 7 Seed (user-specified) = 5
+
+------------------------------
+Begin       I1 Evaluation    1
+------------------------------
+text_book /tmp/fileia6gVb /tmp/filedDo5MH
+
+------------------------------
+Begin       I1 Evaluation    2
+------------------------------
+text_book /tmp/fileyfkQGd /tmp/fileAbmBAJ
+
+&lt;snip&gt;
+
+&lt;&lt;&lt;&lt;&lt; Iterator dace completed.
+</pre></div>
+</div>
+<p>where it is evident that each function evaluation is being performed
+sequentially.</p>
+<p>For parallel execution using asynchronous local approaches, the Dakota
+execution syntax is unchanged as Dakota is still launched on a single
+processor. However, the interface specification is augmented to
+include the <code class="docutils literal notranslate"><span class="pre">asynchronous</span></code> keyword with optional concurrency limiter
+to indicate that multiple <code class="docutils literal notranslate"><span class="pre">analysis_driver</span></code> instances will be
+executed concurrently:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span><span class="k">interface</span>,
+        system asynchronous evaluation_concurrency = 4
+          analysis_driver = &#39;text_book&#39;
+</pre></div>
+</div>
+<p>which results in output excerpts similar to the following:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>&gt;&gt;&gt;&gt;&gt; Running dace iterator.
+
+DACE method = 12 Samples = 49 Symbols = 7 Seed (user-specified) = 5
+
+------------------------------
+Begin       I1 Evaluation    1
+------------------------------
+(Asynchronous job 1 added to I1 queue)
+
+------------------------------
+Begin       I1 Evaluation    2
+------------------------------
+(Asynchronous job 2 added to I1 queue)
+
+&lt;snip&gt;
+
+------------------------------
+Begin       I1 Evaluation   49
+------------------------------
+(Asynchronous job 49 added to I1 queue)
+
+Blocking synchronize of 49 asynchronous evaluations
+First pass: initiating 4 local asynchronous jobs
+Initiating I1 evaluation 1
+text_book /tmp/fileuLcfBp /tmp/file6XIhpm &amp;
+Initiating I1 evaluation 2
+text_book /tmp/fileeC29dj /tmp/fileIdA22f &amp;
+Initiating I1 evaluation 3
+text_book /tmp/fileuhCESc /tmp/fileajLgI9 &amp;
+Initiating I1 evaluation 4
+text_book /tmp/filevJHMy6 /tmp/fileHFKip3 &amp;
+Second pass: scheduling 45 remaining local asynchronous jobs
+Waiting on completed jobs
+I1 evaluation 1 has completed
+I1 evaluation 2 has completed
+I1 evaluation 3 has completed
+Initiating I1 evaluation 5
+text_book /tmp/fileISsjh0 /tmp/fileSaek9W &amp;
+Initiating I1 evaluation 6
+text_book /tmp/filefN271T /tmp/fileSNYVUQ &amp;
+Initiating I1 evaluation 7
+text_book /tmp/filebAQaON /tmp/fileaMPpHK &amp;
+I1 evaluation 49 has completed
+
+&lt;snip&gt;
+
+&lt;&lt;&lt;&lt;&lt; Iterator dace completed.
+</pre></div>
+</div>
+<p>where it is evident that each of the 49 jobs is first queued and then a
+blocking synchronization is performed. This synchronization uses a
+simple scheduler that initiates 4 jobs and then replaces completing jobs
+with new ones until all 49 are complete.</p>
+<p>The default job concurrency for asynchronous local parallelism is all
+that is available from the algorithm (49 in this case), which could be
+too many for the computational resources or their usage policies. The
+concurrency level specification (4 in this case) instructs the scheduler
+to keep 4 jobs running concurrently, which would be appropriate for,
+e.g., a dual-processor dual-core workstation. In this case, it is the
+operating system’s responsibility to assign the concurrent <code class="docutils literal notranslate"><span class="pre">text_book</span></code>
+jobs to available processors/cores. Specifying greater concurrency than
+that supported by the hardware will result in additional context
+switching within a multitasking operating system and will generally
+degrade performance. Note however that, in this example, there are a
+total of 5 processes running, one for Dakota and four for the concurrent
+function evaluations. Since the Dakota process checks periodically for
+job completion and sleeps in between checks, it is relatively
+lightweight and does not require a dedicated processor.</p>
+</section>
+<section id="local-evaluation-scheduling-options">
+<span id="parallel-slp-local-sched"></span><h4>Local evaluation scheduling options<a class="headerlink" href="#local-evaluation-scheduling-options" title="Link to this heading"></a></h4>
+<p>The default behavior for asynchronous local parallelism is for Dakota to
+dispatch the next evaluation the local queue when one completes (and can
+optionally be specified by
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/interface-asynchronous-local_evaluation_scheduling-dynamic.html"><span class="pre">local_evaluation_scheduling</span> <span class="pre">dynamic</span></a></code>.
+In some cases, the simulation code interface benefits from knowing which
+job number will replace a completed job. This includes some modes of
+application tiling with certain MPI implementations, where sending a job
+to the correct subset of available processors is done with relative node
+scheduling. The keywords
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/interface-asynchronous-local_evaluation_scheduling-static.html"><span class="pre">local_evaluation_scheduling</span> <span class="pre">static</span></a></code>
+forces this behavior, so a completed evaluation will be replaced with one
+congruent modulo the evaluation concurrency. For example, with 6
+concurrent jobs, eval number 2 will be replaced with eval number 8.
+Examples of this usage can be seen in
+<code class="docutils literal notranslate"><span class="pre">dakota/share/dakota/examples/parallelism</span></code>.</p>
+</section>
+</section>
+<section id="message-passing-parallelism">
+<span id="parallel-slp-message"></span><h3>Message Passing Parallelism<a class="headerlink" href="#message-passing-parallelism" title="Link to this heading"></a></h3>
+<p>Dakota uses a “single program-multiple data” (SPMD) parallel programming
+model. It uses message-passing routines from the Message Passing
+Interface (MPI)
+standard <span id="id8">[<a class="reference internal" href="../../misc/bibliography.html#id133" title="W. Gropp, E. Lusk, and A. Skjellum. Using MPI, Portable Parallel Programing with the Message-Passing Interface. The MIT Press, Cambridge, MA, 1994.">GLS94</a>]</span>, <span id="id9">[<a class="reference internal" href="../../misc/bibliography.html#id270" title="M. Snir, S. Otto, S. Huss-Lederman, D. Walker, and J. Dongarra. MPI: The Complete Reference. MIT Press, Cambridge, MA, 1996.">SOHL+96</a>]</span> to
+communicate data between processors. The SPMD designation simply denotes
+that the same Dakota executable is loaded on all processors during the
+parallel invocation. This differs from the MPMD model (“multiple
+program-multiple data”) which would have the Dakota executable on one or
+more processors communicating directly with simulator executables on
+other processors. The MPMD model has some advantages, but heterogeneous
+executable loads are not supported by all parallel environments.
+Moreover, the MPMD model requires simulation code intrusion on the same
+order as conversion to a subroutine, so subroutine conversion (see
+<a class="reference internal" href="advancedsimulationcodeinterfaces.html#advint-direct"><span class="std std-ref">Developing a Direct Simulation Interface</span></a>)
+in a direct-linked SPMD model is preferred.</p>
+<section id="partitioning">
+<span id="parallel-slp-message-part"></span><h4>Partitioning<a class="headerlink" href="#partitioning" title="Link to this heading"></a></h4>
+<p>A level of message passing parallelism can use either of two processor
+partitioning models:</p>
+<ul class="simple">
+<li><p><em>Dedicated scheduler</em>: a single processor is dedicated to scheduling
+operations and the remaining processors are split into server
+partitions.</p></li>
+<li><p><em>Peer partition</em>: all processors are allocated to server partitions
+and the loss of a processor to scheduling is avoided.</p></li>
+</ul>
+<p>These models are depicted in <a class="reference internal" href="#parallel-figure01"><span class="std std-numref">Fig. 60</span></a>. The
+peer partition is desirable since it utilizes all processors for
+computation; however, it requires either the use of sophisticated
+mechanisms for distributed scheduling or a problem for which static
+scheduling of concurrent work performs well (see <a class="reference internal" href="#parallel-slp-message-sched"><span class="std std-ref">Scheduling</span></a>
+below). If neither of these characteristics is present, then use of the dedicated
+partition supports a dynamic scheduling which assures that server
+idleness is minimized.</p>
+<figure class="align-center" id="parallel-figure01">
+<a class="reference internal image-reference" href="../../_images/comm_partitioning.png"><img alt="Communicator partitioning models." src="../../_images/comm_partitioning.png" style="width: 50%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 60 </span><span class="caption-text">Communicator partitioning models.</span><a class="headerlink" href="#parallel-figure01" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+</section>
+<section id="scheduling">
+<span id="parallel-slp-message-sched"></span><h4>Scheduling<a class="headerlink" href="#scheduling" title="Link to this heading"></a></h4>
+<p>The following scheduling approaches are available within a level of
+message passing parallelism:</p>
+<ul class="simple">
+<li><p><em>Dynamic scheduling</em>: in the dedicated scheduling model, the dedicated
+processor manages a single processing queue and maintains a
+prescribed number of jobs (usually one) active on each server. Once a
+server has completed a job and returned its results, the scheduler
+assigns the next job to this server. Thus, the job assignment on the
+scheduler adapts to the job completion speed on the servers. This
+provides a simple dynamic scheduler in that heterogeneous processor
+speeds and/or job durations are naturally handled, provided there are
+sufficient instances scheduled through the servers to balance the
+variation. In the case of a peer partition, dynamic schedulers can
+also be employed, provided that peer 1 can employ nonblocking
+synchronization of its local evaluations. This allows it to balance
+its local work with servicing job assignments and returns from the
+other peers.</p></li>
+<li><p><em>Static scheduling</em>: if scheduling is statically determined at
+start-up, then no scheduling processor is needed to direct traffic and a
+peer partitioning approach is applicable. If the static schedule is a
+good one (ideal conditions), then this approach will have superior
+performance. However, heterogeneity, when not known <em>a priori</em>, can
+very quickly degrade performance since there is no mechanism to
+adapt.</p></li>
+</ul>
+<p>Message passing schedulers may be used for managing concurrent
+sub-iterator executions within a meta-iterator, concurrent evaluations
+within an iterator, or concurrent analyses within an evaluation. In the
+former and latter cases, the message passing scheduler is currently
+restricted to blocking synchronization, in that all jobs in the queue
+are completed before exiting the scheduler and returning the set of
+results to the algorithm. Nonblocking message-passing scheduling is
+supported for the iterator–evaluation concurrency level in support of
+fully asynchronous algorithms (e.g., <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-asynch_pattern_search.html"><span class="pre">asynch_pattern_search</span></a></code>,
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-coliny_pattern_search.html"><span class="pre">coliny_pattern_search</span></a></code>, and <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-efficient_global.html"><span class="pre">efficient_global</span></a></code>)
+that avoid synchronization points that can harm scaling.</p>
+<p>Message passing is also used within a fine-grained parallel simulation
+code, although this is separate from Dakota’s capabilities (Dakota may,
+at most, pass a communicator partition to the simulation). The “Message
+Passing” column in <a class="reference internal" href="#parallel-table01"><span class="std std-numref">Table 17</span></a> summarizes these
+capabilities.</p>
+</section>
+<section id="message-passing-example">
+<span id="parallel-slp-message-ex"></span><h4>Message Passing Example<a class="headerlink" href="#message-passing-example" title="Link to this heading"></a></h4>
+<p>Revisiting the test file <code class="docutils literal notranslate"><span class="pre">dakota_dace.in</span></code>,
+Dakota will now compute the 49 orthogonal
+array samples using a message passing approach. In this case, a parallel
+launch utility is used to execute Dakota across multiple processors
+using syntax similar to the following:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>mpirun -np 5 -machinefile machines dakota -i dakota_dace.in
+</pre></div>
+</div>
+<p>Since the asynchronous local parallelism will not be used, the
+interface specification does not include the
+<code class="docutils literal notranslate"><span class="pre">asynchronous</span></code> keyword and would appear similar to:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span><span class="k">interface</span>,
+        system
+          analysis_driver = &#39;text_book&#39;
+</pre></div>
+</div>
+<p>The relevant excerpts from the Dakota output for a dedicated scheduler
+partition and dynamic schedule, the default when the maximum concurrency
+(49) exceeds the available capacity (5), would appear similar to the
+following:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>Running MPI Dakota executable in parallel on 5 processors.
+-----------------------------------------------------------------------------
+DAKOTA parallel configuration:
+
+Level                       num_servers    procs_per_server    partition
+-----                       -----------    ----------------    ---------
+concurrent evaluations           5                1            peer
+concurrent analyses              1                1            peer
+multiprocessor analysis          1               N/A           N/A
+
+Total parallelism levels =   1 (1 dakota, 0 analysis)
+-----------------------------------------------------------------------------
+&gt;&gt;&gt;&gt;&gt; Executing environment.
+
+&gt;&gt;&gt;&gt;&gt; Running dace iterator.
+
+DACE method = 12 Samples = 49 Symbols = 7 Seed (user-specified) = 5
+
+------------------------------
+Begin       I1 Evaluation    1
+------------------------------
+(Asynchronous job 1 added to I1 queue)
+
+------------------------------
+Begin       I1 Evaluation    2
+------------------------------
+(Asynchronous job 2 added to I1 queue)
+
+&lt;snip&gt;
+
+------------------------------
+Begin       I1 Evaluation   49
+------------------------------
+(Asynchronous job 49 added to I1 queue)
+
+Blocking synchronize of 49 asynchronous evaluations
+Peer dynamic schedule: first pass assigning 4 jobs among 4 remote peers
+Peer 1 assigning I1 evaluation 1 to peer 2
+Peer 1 assigning I1 evaluation 2 to peer 3
+Peer 1 assigning I1 evaluation 3 to peer 4
+Peer 1 assigning I1 evaluation 4 to peer 5
+Peer dynamic schedule: first pass launching 1 local jobs
+Initiating I1 evaluation 5
+text_book /tmp/file5LRsBu /tmp/fileT2mS65 &amp;
+Peer dynamic schedule: second pass scheduling 44 remaining jobs
+Initiating I1 evaluation 5
+text_book /tmp/file5LRsBu /tmp/fileT2mS65 &amp;
+Peer dynamic schedule: second pass scheduling 44 remaining jobs
+I1 evaluation 5 has completed
+Initiating I1 evaluation 6
+text_book /tmp/fileZJaODH /tmp/filewoUJaj &amp;
+I1 evaluation 2 has returned from peer server 3
+Peer 1 assigning I1 evaluation 7 to peer 3
+I1 evaluation 4 has returned from peer server 5
+
+&lt;snip&gt;
+
+I1 evaluation 46 has returned from peer server 2
+I1 evaluation 49 has returned from peer server 5
+&lt;&lt;&lt;&lt;&lt; Function evaluation summary (I1): 49 total (49 new, 0 duplicate)
+
+&lt;&lt;&lt;&lt;&lt; Iterator dace completed.
+</pre></div>
+</div>
+<p>where it is evident that each of the 49 jobs is first queued and then a
+blocking synchronization is performed. This synchronization uses a
+dynamic scheduler that initiates five jobs, one on each of five
+evaluation servers, and then replaces completing jobs with new ones
+until all 49 are complete. It is important to note that job execution
+local to each of the four servers is synchronous.</p>
+</section>
+</section>
+<section id="hybrid-parallelism">
+<span id="parallel-slp-hybrid"></span><h3>Hybrid Parallelism<a class="headerlink" href="#hybrid-parallelism" title="Link to this heading"></a></h3>
+<p>The asynchronous local approaches described in
+the <a class="reference internal" href="#parallel-slp-local"><span class="std std-ref">Asynchronous Local Parallelism</span></a> section
+can be considered to rely on <em>external</em> scheduling mechanisms, since it
+is generally the operating system or some external queue/load sharing
+software that allocates jobs to processors. Conversely, the message-passing
+approaches described in <a class="reference internal" href="#parallel-slp-message"><span class="std std-ref">Message Passing Parallelism</span></a>
+rely on <em>internal</em> scheduling mechanisms to distribute work among processors.
+These two approaches provide building blocks which can be combined in a
+variety of ways to manage parallelism at multiple levels. At one extreme,
+Dakota can execute on a single processor and rely completely on external
+means to map all jobs to processors (i.e., using asynchronous local approaches).
+At the other extreme, Dakota can execute on many processors and manage
+all levels of parallelism, including the parallel simulations, using
+completely internal approaches (i.e., using message passing at all
+levels as in <a class="reference internal" href="#parallel-figure02"><span class="std std-numref">Fig. 63</span></a>). While all-internal or
+all-external approaches are common cases, many additional approaches
+exist between the two extremes in which some parallelism is managed
+internally and some is managed externally.</p>
+<p>These combined approaches are referred to as <em>hybrid</em> parallelism, since
+the internal distribution of work based on message-passing is being
+combined with external allocation using asynchronous local
+approaches.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The term “hybrid parallelism” is often used to describe the
+combination of MPI message passing and OpenMP shared memory
+parallelism models. This can be considered to be a special case of
+the meaning here, as OpenMP is based on threads, which is analagous
+to asynchronous local usage of the direct simulation interface.</p>
+</div>
+<p><a class="reference internal" href="#parallel-figure03"><span class="std std-numref">Fig. 59</span></a> depicts the
+asynchronous local, message-passing, and hybrid approaches for a
+dedicated-scheduler partition. Approaches (b) and (c) both use MPI
+message-passing to distribute work from the scheduler to the server, and
+approaches (a) and (c) both manage asynchronous jobs local to a
+processor. The hybrid approach (c) can be seen to be a combination of
+(a) and (b) since jobs are being internally distributed to servers
+through message-passing and each server is managing multiple
+concurrent jobs using an asynchronous local approach. From a different
+perspective, one could consider (a) and (b) to be special cases within
+the range of configurations supported by (c). The hybrid approach is
+useful for supercomputers that maintain a service/compute node
+distinction and for supercomputers or networks of workstations that
+involve clusters of symmetric multiprocessors (SMPs). In the
+service/compute node case, concurrent multiprocessor simulations are
+launched into the compute nodes from the service node partition. While
+an asynchronous local approach from a single service node would be
+sufficient, spreading the application load by running Dakota in parallel
+across multiple service nodes results in better
+performance <span id="id10">[<a class="reference internal" href="../../misc/bibliography.html#id77" title="M. S. Eldred, W. E. Hart, B. D. Schimel, and B. G. van Bloemen Waanders. Multilevel parallelism for optimization on MP computers: theory and experiment. In Proc. 8th AIAA/USAF/NASA/ISSMO Symposium on Multidisciplinary Analysis and Optimization, number AIAA-2000-4818. Long Beach, CA, 2000.">EHSvanBWaanders00</a>]</span>. If the number of concurrent jobs
+to be managed in the compute partition exceeds the number of available
+service nodes, then hybrid parallelism is the preferred approach. In the
+case of a cluster of SMPs (or network of multiprocessor workstations),
+message-passing can be used to communicate between SMPs, and
+asynchronous local approaches can be used within an SMP. Hybrid
+parallelism can again result in improved performance, since the total
+number of Dakota MPI processes is reduced in comparison to a pure
+message-passing approach over all processors.</p>
+<p>Hybrid schedulers may be used for managing concurrent evaluations within
+an iterator or concurrent analyses within an evaluation. In the former
+case, blocking or nonblocking synchronization can be used, whereas the
+latter case is restricted to blocking synchronization. The “Hybrid”
+column in <a class="reference internal" href="#parallel-table01"><span class="std std-numref">Table 17</span></a> summarizes these
+capabilities.</p>
+<section id="hybrid-example">
+<span id="parallel-slp-hybrid-ex"></span><h4>Hybrid Example<a class="headerlink" href="#hybrid-example" title="Link to this heading"></a></h4>
+<p>Revisiting the test file <code class="docutils literal notranslate"><span class="pre">dakota_dace.in</span></code>,
+Dakota will now compute the 49 orthogonal
+array samples using a hybrid approach. As for the message passing case,
+a parallel launch utility is used to execute Dakota across multiple
+processors:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>mpirun -np 5 -machinefile machines dakota -i dakota_dace.in
+</pre></div>
+</div>
+<p>Since the asynchronous local parallelism will also be used, the
+interface specification includes the <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/interface-asynchronous.html"><span class="pre">asynchronous</span></a></code>
+keyword and appears similar to</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span><span class="k">interface</span>,
+        system asynchronous evaluation_concurrency = 2
+          analysis_driver = &#39;text_book&#39;
+</pre></div>
+</div>
+<p>In the hybrid case, the specification of the desired concurrency level
+must be included, since the default is no longer all available (as it is
+for asynchronous local parallelism). Rather the default is to employ
+message passing parallelism, and hybrid parallelism is only available
+through the specification of asynchronous concurrency greater than one.</p>
+<p>The relevant excerpts of the Dakota output for a peer partition and
+dynamic schedule , the default when the maximum concurrency (49) exceeds
+the maximum available capacity (10), would appear similar to the
+following:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>Running MPI Dakota executable in parallel on 5 processors.
+
+-----------------------------------------------------------------------------
+DAKOTA parallel configuration:
+
+Level           num_servers    procs_per_server    partition
+-----           -----------    ----------------    ---------
+concurrent evaluations           5                1            peer
+concurrent analyses              1                1            peer
+multiprocessor analysis          1               N/A           N/A
+
+Total parallelism levels =   1 (1 dakota, 0 analysis)
+-----------------------------------------------------------------------------
+
+&gt;&gt;&gt;&gt;&gt; Executing environment.
+
+&gt;&gt;&gt;&gt;&gt; Running dace iterator.
+
+DACE method = 12 Samples = 49 Symbols = 7 Seed (user-specified) = 5
+
+------------------------------
+Begin       I1 Evaluation    1
+------------------------------
+(Asynchronous job 1 added to I1 queue)
+
+------------------------------
+Begin       I1 Evaluation    2
+------------------------------
+(Asynchronous job 2 added to I1 queue)
+
+&lt;snip&gt;
+
+Blocking synchronize of 49 asynchronous evaluations
+Peer dynamic schedule: first pass assigning 8 jobs among 4 remote peers
+Peer 1 assigning I1 evaluation 1 to peer 2
+Peer 1 assigning I1 evaluation 2 to peer 3
+Peer 1 assigning I1 evaluation 3 to peer 4
+Peer 1 assigning I1 evaluation 4 to peer 5
+Peer 1 assigning I1 evaluation 6 to peer 2
+Peer 1 assigning I1 evaluation 7 to peer 3
+Peer 1 assigning I1 evaluation 8 to peer 4
+Peer 1 assigning I1 evaluation 9 to peer 5
+Peer dynamic schedule: first pass launching 2 local jobs
+Initiating I1 evaluation 5
+text_book /tmp/fileJU1Ez2 /tmp/fileVGZzEX &amp;
+Initiating I1 evaluation 10
+text_book /tmp/fileKfUgKS /tmp/fileMgZXPN &amp;
+Peer dynamic schedule: second pass scheduling 39 remaining jobs
+
+&lt;snip&gt;
+
+I1 evaluation 49 has completed
+I1 evaluation 43 has returned from peer server 2
+I1 evaluation 44 has returned from peer server 3
+I1 evaluation 48 has returned from peer server 4
+I1 evaluation 47 has returned from peer server 2
+I1 evaluation 45 has returned from peer server 3
+&lt;&lt;&lt;&lt;&lt; Function evaluation summary (I1): 49 total (49 new, 0 duplicate)
+
+&lt;&lt;&lt;&lt;&lt; Iterator dace completed.
+</pre></div>
+</div>
+<p>where it is evident that each of the 49 jobs is first queued and then a
+blocking synchronization is performed. This synchronization uses a
+dynamic scheduler that initiates ten jobs, two on each of five
+evaluation servers, and then replaces completing jobs with new ones
+until all 49 are complete. It is important to note that job execution
+local to each of the four servers is asynchronous.</p>
+</section>
+</section>
+</section>
+<section id="multilevel-parallelism">
+<span id="parallel-mlp"></span><h2>Multilevel parallelism<a class="headerlink" href="#multilevel-parallelism" title="Link to this heading"></a></h2>
+<p>Parallel computing resources within the Department of Energy national
+laboratories continue to rapidly grow. In order to harness the power
+of these machines for performing design, uncertainty
+quantification, and other systems analyses, parallel algorithms are
+needed which are scalable to thousands of processors.</p>
+<p>Dakota supports an open-ended number of levels of nested parallelism
+which, as described in the <a class="reference internal" href="#parallel-overview"><span class="std std-ref">Overview</span></a> above, can be
+categorized into three types of concurrent job scheduling and four types
+of parallelism: (a) concurrent iterators within a meta-iterator
+(scheduled by Dakota), (b) concurrent function evaluations within each
+iterator (scheduled by Dakota), (c) concurrent analyses within each
+function evaluation (scheduled by Dakota), and (d) multiprocessor
+analyses (work distributed by a parallel analysis code). In combination,
+these parallelism levels can minimize efficiency losses and achieve near
+linear scaling on MP computers. Types (a) and (b) are classified as
+algorithmic coarse-grained parallelism, type (c) is function evaluation
+coarse-grained parallelism, and type (d) is function evaluation
+fine-grained parallelism (see <a class="reference internal" href="#parallel-overview-cat"><span class="std std-ref">Categorization of parallelism</span></a>).
+Algorithmic fine-grained parallelism is not currently supported in Dakota,
+although this picture is rapidly evolving.</p>
+<p>A particular application may support one or more of these parallelism
+types, and Dakota provides for convenient selection and combination of
+multiple levels. If multiple types of parallelism can be exploited, then
+the question may arise as to how the amount of parallelism at each level
+should be selected so as to maximize the overall parallel efficiency of
+the study. For performance analysis of multilevel parallelism
+formulations and detailed discussion of these issues, refer
+to <span id="id11">[<a class="reference internal" href="../../misc/bibliography.html#id77" title="M. S. Eldred, W. E. Hart, B. D. Schimel, and B. G. van Bloemen Waanders. Multilevel parallelism for optimization on MP computers: theory and experiment. In Proc. 8th AIAA/USAF/NASA/ISSMO Symposium on Multidisciplinary Analysis and Optimization, number AIAA-2000-4818. Long Beach, CA, 2000.">EHSvanBWaanders00</a>]</span>. In many cases, <em>the user may simply employ
+Dakota’s automatic parallelism configuration facilities,</em> which
+implement the recommendations from the aforementioned paper.</p>
+<p><a class="reference internal" href="#parallel-fig-mlp-scaling-speedup"><span class="std std-numref">Fig. 61</span></a> and
+<a class="reference internal" href="#parallel-fig-mlp-scaling-efficiency"><span class="std std-numref">Fig. 62</span></a> show typical fixed-size
+scaling performance using a modified version of the extended
+<a class="reference internal" href="../examples/additionalexamples.html#additional-textbook"><span class="std std-ref">textbook</span></a> problem. Three levels
+of parallelism (concurrent evaluations within an iterator, concurrent
+analyses within each evaluation, and multiprocessor analyses) are
+exercised within a modest partition of processors (circa year 2000).
+Despite the use of a fixed problem size and the presence of some
+idleness within the scheduling at multiple levels, the efficiency is
+still reasonably high. Greater efficiencies are obtainable for
+scaled speedup studies (or for larger problems in fixed-size studies)
+and for problems optimized for minimal scheduler idleness (by, e.g.,
+managing all concurrency in as few scheduling levels as possible). Note
+that speedup and efficiency are measured relative to the case of a
+single instance of a multiprocessor analysis, since it was desired to
+investigate the effectiveness of the Dakota schedulers independent from
+the efficiency of the parallel analysis.</p>
+<figure class="align-center" id="parallel-fig-mlp-scaling-speedup">
+<a class="reference internal image-reference" href="../../_images/mss_rel_speedup_3lev_determ.png"><img alt="Relative speedup for Dakota utilizing three levels of parallelism" src="../../_images/mss_rel_speedup_3lev_determ.png" style="width: 50%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 61 </span><span class="caption-text">Relative speedup for Dakota utilizing three levels of parallelism</span><a class="headerlink" href="#parallel-fig-mlp-scaling-speedup" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<figure class="align-center" id="parallel-fig-mlp-scaling-efficiency">
+<a class="reference internal image-reference" href="../../_images/mss_rel_eff_3lev_determ.png"><img alt="Relative efficiency for Dakota utilizing three levels of parallelism" src="../../_images/mss_rel_eff_3lev_determ.png" style="width: 50%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 62 </span><span class="caption-text">Relative efficiency for Dakota utilizing three levels of parallelism</span><a class="headerlink" href="#parallel-fig-mlp-scaling-efficiency" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<section id="parallel-mlp-local">
+<span id="id12"></span><h3>Asynchronous Local Parallelism<a class="headerlink" href="#parallel-mlp-local" title="Link to this heading"></a></h3>
+<p>In most cases, the use of asynchronous local parallelism is the
+termination point for multilevel parallelism, in that any level of
+parallelism lower than an asynchronous local level will be serialized
+(see discussion in the following section <a class="reference internal" href="#parallel-mlp-hybrid"><span class="std std-ref">Hybrid Parallelism</span></a>).
+The exception to this rule is reforking of forked processes for concurrent
+analyses within forked evaluations. In this case, a new process is
+created using fork for one of several concurrent evaluations; however,
+the new process is not replaced immediately using exec. Rather, the new
+process is reforked to create additional child processes for executing
+concurrent analyses within each concurrent evaluation process. This
+capability is not supported by system calls and provides one of the key
+advantages to using <a class="reference internal" href="../inputfile/interfaces/simulationinterfaces.html#interfaces-which"><span class="std std-ref">fork over system</span></a>.</p>
+</section>
+<section id="parallel-mlp-message">
+<span id="id13"></span><h3>Message Passing Parallelism<a class="headerlink" href="#parallel-mlp-message" title="Link to this heading"></a></h3>
+<section id="partitioning-of-levels">
+<span id="parallel-mlp-message-partitioning"></span><h4>Partitioning of levels<a class="headerlink" href="#partitioning-of-levels" title="Link to this heading"></a></h4>
+<p>Dakota uses MPI communicators to identify groups of processors. The
+global <code class="docutils literal notranslate"><span class="pre">MPI_COMM_WORLD</span></code> communicator provides the total set of
+processors allocated to the Dakota run. <code class="docutils literal notranslate"><span class="pre">MPI_COMM_WORLD</span></code> can be
+partitioned into new intra-communicators which each define a set of
+processors to be used for a multiprocessor server. Each of these servers
+may be further partitioned to nest one level of parallelism within the
+next. At the lowest parallelism level, these intra-communicators can be
+passed into a simulation for use as the simulation’s computational
+context, provided that the simulation has been designed, or can be
+modified, to be modular on a communicator (i.e., it does not assume
+ownership of <code class="docutils literal notranslate"><span class="pre">MPI_COMM_WORLD</span></code>). New intra-communicators are created
+with the <code class="docutils literal notranslate"><span class="pre">MPI_Comm_split</span></code> routine, and in order to send messages
+between these intra-communicators, new inter-communicators are created
+with calls to <code class="docutils literal notranslate"><span class="pre">MPI_Intercomm_create</span></code>.</p>
+<p>Multiple parallel configurations
+(containing a set of communicator partitions) are allocated for use in
+studies with multiple iterators and models (e.g., 16 servers of 64
+processors each could be used for iteration on a lower fidelity model,
+followed by two servers of 512 processors each for subsequent iteration
+on a higher fidelity model), and can be alternated at run time. Each of
+the parallel configurations are allocated at object construction time
+and are reported at the beginning of the Dakota output.</p>
+<p>Each tier within Dakota’s nested parallelism hierarchy can use the
+dedicated scheduler and peer partition approaches described above in the
+<a class="reference internal" href="#parallel-slp-message-part"><span class="std std-ref">Partitioning</span></a> section. To recursively
+partition the subcommunicators of <a class="reference internal" href="#parallel-figure01"><span class="std std-numref">Fig. 60</span></a>,
+<code class="docutils literal notranslate"><span class="pre">COMM1/2/3</span></code> in the dedicated scheduler or peer partition case would be
+further subdivided using the appropriate partitioning model for the next
+lower level of parallelism.</p>
+</section>
+<section id="scheduling-within-levels">
+<span id="parallel-mlp-message-scheduling"></span><h4>Scheduling within levels<a class="headerlink" href="#scheduling-within-levels" title="Link to this heading"></a></h4>
+<figure class="align-center" id="parallel-figure02">
+<a class="reference internal image-reference" href="../../_images/recursive_partitioning.png"><img alt="Recursive partitioning for nested parallelism." src="../../_images/recursive_partitioning.png" style="width: 50%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 63 </span><span class="caption-text">Recursive partitioning for nested parallelism.</span><a class="headerlink" href="#parallel-figure02" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>Dakota is designed to allow the freedom to configure each parallelism
+level with either the dedicated scheduler partition/dynamic scheduling
+combination or the peer partition/static scheduling combination. In
+addition, the iterator-evaluation level supports a peer
+partition/dynamic scheduling option, and certain external libraries may
+provide custom options.</p>
+<p>As an example, <a class="reference internal" href="#parallel-figure02"><span class="std std-numref">Fig. 63</span></a> shows a case in which a branch and
+bound meta-iterator employs peer partition/distributed scheduling at
+level 1, each optimizer partition employs concurrent function
+evaluations in a dedicated scheduler partition/dynamic scheduling model at
+level 2, and each function evaluation partition employs concurrent
+multiprocessor analyses in a peer partition/static scheduling model at
+level 3. In this case, <code class="docutils literal notranslate"><span class="pre">MPI_COMM_WORLD</span></code> is subdivided into
+<span class="math notranslate nohighlight">\(optCOMM1/2/3/.../\tau_{1}\)</span>, each <span class="math notranslate nohighlight">\(optCOMM\)</span> is further subdivided
+into <span class="math notranslate nohighlight">\(evalCOMM0\)</span> (scheduler) and <span class="math notranslate nohighlight">\(evalCOMM1/2/3/.../\tau_{2}\)</span> (servers),
+and each server <span class="math notranslate nohighlight">\(evalCOMM\)</span> is further subdivided into
+<span class="math notranslate nohighlight">\(analysisCOMM1/2/3/.../\tau_{3}\)</span>. Logic for selecting the <span class="math notranslate nohighlight">\(\tau_i\)</span>
+that maximize overall efficiency is discussed
+in <span id="id14">[<a class="reference internal" href="../../misc/bibliography.html#id77" title="M. S. Eldred, W. E. Hart, B. D. Schimel, and B. G. van Bloemen Waanders. Multilevel parallelism for optimization on MP computers: theory and experiment. In Proc. 8th AIAA/USAF/NASA/ISSMO Symposium on Multidisciplinary Analysis and Optimization, number AIAA-2000-4818. Long Beach, CA, 2000.">EHSvanBWaanders00</a>]</span>.</p>
+</section>
+</section>
+<section id="parallel-mlp-hybrid">
+<span id="id15"></span><h3>Hybrid Parallelism<a class="headerlink" href="#parallel-mlp-hybrid" title="Link to this heading"></a></h3>
+<p>Hybrid parallelism approaches can take several forms when used in the
+multilevel parallel context. A conceptual boundary can be considered to
+exist for which all parallelism above the boundary is managed internally
+using message-passing and all parallelism below the boundary is managed
+externally using asynchronous local approaches. Hybrid parallelism
+approaches can then be categorized based on whether this boundary
+between internal and external management occurs within a parallelism
+level (<em>intra-level</em>) or between two parallelism levels (<em>inter-level</em>).
+In the intra-level case, the jobs for the parallelism level containing
+the boundary are scheduled using a hybrid scheduler, in which a capacity
+multiplier is used for the number of jobs to assign to each server. Each
+server is then responsible for concurrently executing its capacity of
+jobs using an asynchronous local approach. In the inter-level case, one
+level of parallelism manages its parallelism internally using a
+message-passing approach and the next lower level of parallelism manages
+its parallelism externally using an asynchronous local approach. That
+is, the jobs for the higher level of parallelism are scheduled using a
+standard message-passing scheduler, in which a single job is assigned to
+each server. However, each of these jobs has multiple components, as
+managed by the next lower level of parallelism, and each server is
+responsible for executing these sub-components concurrently using an
+asynchronous local approach.</p>
+<p>For example, consider a multiprocessor Dakota run which involves an
+iterator scheduling a set of concurrent function evaluations across a
+cluster of SMPs. A hybrid parallelism approach will be applied in which
+message-passing parallelism is used between SMPs and asynchronous local
+parallelism is used within each SMP. In the hybrid intra-level case,
+multiple function evaluations would be scheduled to each SMP, as
+dictated by the capacity of the SMPs, and each SMP would manage its own
+set of concurrent function evaluations using an asynchronous local
+approach. Any lower levels of parallelism would be serialized. In the
+hybrid inter-level case, the function evaluations would be scheduled one
+per SMP, and the analysis components within each of these evaluations
+would be executed concurrently using asynchronous local approaches
+within the SMP. Thus, the distinction can be viewed as whether the
+concurrent jobs on each server in <a class="reference internal" href="#parallel-figure03"><span class="std std-numref">Fig. 59</span></a>
+reflect the same level of parallelism as that being scheduled by the
+scheduler (intra-level) or one level of parallelism below that being
+scheduled by the scheduler (inter-level).</p>
+</section>
+</section>
+<section id="capability-summary">
+<span id="parallel-summary"></span><h2>Capability Summary<a class="headerlink" href="#capability-summary" title="Link to this heading"></a></h2>
+<p><a class="reference internal" href="#parallel-table01"><span class="std std-numref">Table 17</span></a> shows a matrix of the supported job
+management approaches for each of the parallelism levels, with supported
+simulation interfaces and synchronization approaches shown in
+parentheses. The concurrent iterator and multiprocessor analysis
+parallelism levels can only be managed with message-passing approaches.
+In the former case, this is due to the fact that a separate process or
+thread for an iterator is not currently supported. The latter case
+reflects a finer point on the definition of external parallelism
+management. While a multiprocessor analysis can most certainly be
+launched (e.g., using <code class="docutils literal notranslate"><span class="pre">mpirun</span></code>/<code class="docutils literal notranslate"><span class="pre">yod</span></code>) from one of Dakota’s analysis
+drivers, resulting in a parallel analysis external to Dakota (which is
+consistent with asynchronous local and hybrid approaches), this
+parallelism is not visible to Dakota and therefore does not qualify as
+parallelism that Dakota manages (and therefore is not included in
+<a class="reference internal" href="#parallel-table01"><span class="std std-numref">Table 17</span></a>). The concurrent evaluation and
+analysis levels can be managed either with message-passing, asynchronous
+local, or hybrid techniques, with the exceptions that the direct
+interface does not support asynchronous operations (asynchronous local
+or hybrid) at either of these levels and the system call interface does
+not support asynchronous operations (asynchronous local or hybrid) at
+the concurrent analysis level. The direct interface restrictions are
+present since multithreading in not yet supported and the system call
+interface restrictions result from the inability to manage concurrent
+analyses within a nonblocking function evaluation system call. Finally,
+nonblocking synchronization is only supported at the concurrent function
+evaluation level, although it spans asynchronous local, message passing,
+and hybrid parallelism options.</p>
+<table class="docutils align-center" id="parallel-table01">
+<caption><span class="caption-number">Table 17 </span><span class="caption-text"><em>Support of job management approaches within parallelism levels. Shown in parentheses are supported simulation interfaces and supported synchronization approaches.</em></span><a class="headerlink" href="#parallel-table01" title="Link to this table"></a></caption>
+<thead>
+<tr class="row-odd"><th class="head"><p><strong>Parallelism
+Level</strong></p></th>
+<th class="head"><p><strong>Asynchronous
+Local</strong></p></th>
+<th class="head"><p><strong>Message
+Passing</strong></p></th>
+<th class="head"><p><strong>Hybrid</strong></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>concurrent
+iterators
+within a
+meta-iterator
+or nested
+model</p></td>
+<td></td>
+<td><p><strong>X</strong></p>
+<p>(blocking
+synch)</p>
+</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>concurrent
+function
+evaluations
+within an
+iterator</p></td>
+<td><p><strong>X</strong></p>
+<p>(system, fork)</p>
+<p>(blocking,
+nonblocking)</p>
+</td>
+<td><p><strong>X</strong></p>
+<p>(system, fork,
+direct)
+(blocking,
+nonblocking)</p>
+</td>
+<td><p><strong>X</strong></p>
+<p>(system, fork)</p>
+<p>(blocking,
+nonblocking)</p>
+</td>
+</tr>
+<tr class="row-even"><td><p>concurrent
+analyses
+within a
+function
+evaluation</p></td>
+<td><p><strong>X</strong></p>
+<p>(fork only)</p>
+<p>(blocking
+synch)</p>
+</td>
+<td><p><strong>X</strong></p>
+<p>(system, fork,
+direct)</p>
+<p>(blocking
+synch)</p>
+</td>
+<td><p><strong>X</strong></p>
+<p>(fork only)</p>
+<p>(blocking
+synch)</p>
+</td>
+</tr>
+<tr class="row-odd"><td><p>fine-grained
+parallel
+analysis</p></td>
+<td></td>
+<td><p><strong>X</strong></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="running-a-parallel-dakota-job">
+<span id="parallel-running"></span><h2>Running a Parallel Dakota Job<a class="headerlink" href="#running-a-parallel-dakota-job" title="Link to this heading"></a></h2>
+<p><a class="reference internal" href="#parallel-slp"><span class="std std-ref">Single-level parallelism</span></a> provides a few examples of serial and
+parallel execution of Dakota using asynchronous local, message passing,
+and hybrid approaches to single-level parallelism. The following
+sections provides a more complete discussion of the parallel execution
+syntax and available specification controls.</p>
+<section id="single-processor-execution">
+<span id="parallel-running-single"></span><h3>Single-processor execution<a class="headerlink" href="#single-processor-execution" title="Link to this heading"></a></h3>
+<p>The command for running Dakota on a single-processor and exploiting
+asynchronous local parallelism is the same as for running Dakota on a
+single-processor for a serial study, e.g.:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>dakota -i dakota.in &gt; dakota.out
+</pre></div>
+</div>
+<p>See <a class="reference internal" href="../introduction/helloworld.html#helloworld-main"><span class="std std-ref">Dakota Beginner’s tutorial</span></a> for additional
+information on single-processor command syntax.</p>
+</section>
+<section id="multiprocessor-execution">
+<span id="parallel-running-multiprocessor"></span><h3>Multiprocessor execution<a class="headerlink" href="#multiprocessor-execution" title="Link to this heading"></a></h3>
+<p>Running a Dakota job on multiple processors requires the use of an
+executable loading facility such as <code class="docutils literal notranslate"><span class="pre">mpirun</span></code>, <code class="docutils literal notranslate"><span class="pre">mpiexec</span></code>, <code class="docutils literal notranslate"><span class="pre">poe</span></code>, or
+<code class="docutils literal notranslate"><span class="pre">yod</span></code>. On a network of workstations, the <code class="docutils literal notranslate"><span class="pre">mpirun</span></code> script is commonly
+used to initiate a parallel Dakota job, e.g.:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>mpirun -np 12 dakota -i dakota.in &gt; dakota.out
+mpirun -machinefile machines -np 12 dakota -i dakota.in &gt; dakota.out
+</pre></div>
+</div>
+<p>where both examples specify the use of 12 processors, the former
+selecting them from a default system resources file and the latter
+specifying particular machines in a machine file
+(see <span id="id16">[<a class="reference internal" href="../../misc/bibliography.html#id134" title="W. Gropp and E. Lusk. User's guide for mpich, a portable implementation of MPI. Technical Report ANL/MCS-TM-ANL-96/6, Argonne National Laboratory, Mathematics and Computer Science Division, 1996.">GL96</a>]</span> for details).</p>
+<p>On a massively parallel computer, the familiar mpirun/mpiexec options
+may be replaced with other launch scripts as dictated by the particular
+software stack, e.g.:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>yod -sz 512 dakota -i dakota.in &gt; dakota.out
+</pre></div>
+</div>
+<p>In each of these cases, MPI command line arguments are used by MPI
+(extracted first in the call to <code class="docutils literal notranslate"><span class="pre">MPI_Init</span></code>) and Dakota command line
+arguments are used by Dakota (extracted second by Dakota’s command line
+handler).</p>
+<p>Finally, when running on computer resources that employ NQS/PBS batch
+schedulers, the single-processor <code class="docutils literal notranslate"><span class="pre">dakota</span></code> command syntax or the
+multiprocessor <code class="docutils literal notranslate"><span class="pre">mpirun</span></code> command syntax might be contained within an
+executable script file which is submitted to the batch queue. For
+example, a command</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>qsub -l size=512 run_dakota
+</pre></div>
+</div>
+<p>could be submitted to a PBS queue for execution. The NQS syntax is
+similar:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>qsub -q snl -lP 512 -lT 6:00:00 run_dakota
+</pre></div>
+</div>
+<p>These commands allocate 512 compute nodes for the study, and execute the
+<code class="docutils literal notranslate"><span class="pre">run_dakota</span></code>
+script on a service node. If this script contains a single-processor
+<code class="docutils literal notranslate"><span class="pre">dakota</span></code> command, then Dakota will execute on a single service node
+from which it can launch parallel simulations into the compute nodes
+using analysis drivers that contain <code class="docutils literal notranslate"><span class="pre">yod</span></code> commands (any <code class="docutils literal notranslate"><span class="pre">yod</span></code>
+executions occurring at any level underneath the <code class="docutils literal notranslate"><span class="pre">run_dakota</span></code>
+script are mapped to
+the 512 compute node allocation). If the script submitted to <code class="docutils literal notranslate"><span class="pre">qsub</span></code>
+contains a multiprocessor <code class="docutils literal notranslate"><span class="pre">mpirun</span></code> command, then Dakota will execute
+across multiple service nodes so that it can spread the application load
+in either a message-passing or hybrid parallelism approach. Again,
+analysis drivers containing <code class="docutils literal notranslate"><span class="pre">yod</span></code> commands would be responsible for
+utilizing the 512 compute nodes. And, finally, if the script submitted
+to <code class="docutils literal notranslate"><span class="pre">qsub</span></code> contains a <code class="docutils literal notranslate"><span class="pre">yod</span></code> of the <code class="docutils literal notranslate"><span class="pre">dakota</span></code> executable, then Dakota
+will execute directly on the compute nodes and manage all of the
+parallelism internally (note that a <code class="docutils literal notranslate"><span class="pre">yod</span></code> of this type without a
+<code class="docutils literal notranslate"><span class="pre">qsub</span></code> would be mapped to the interactive partition, rather than to
+the batch partition).</p>
+<p>Not all supercomputers employ the same model for service/compute
+partitions or provide the same support for tiling of concurrent
+multiprocessor simulations within a single NQS/PBS allocation. For this
+reason, templates for parallel job configuration are being catalogued
+within <code class="docutils literal notranslate"><span class="pre">dakota/share/dakota/examples/parallelism</span></code>
+(in the software distributions) that are intended to provide
+guidance for individual machine idiosyncrasies.</p>
+<p>Dakota relies on hints from the runtime environment and command line
+arguments to detect when it has been launched in parallel. Due to the
+large number of HPC vendors and MPI implementations, parallel launch is
+not always detected properly. A parallel launch is indicated by the
+status message</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>Running MPI Dakota executable in parallel on N processors.
+</pre></div>
+</div>
+<p>which is written to the console near the beginning of the Dakota run.</p>
+<p>Beginning with release 6.5, if Dakota incorrectly detects a parallel
+launch, automatic detection can be overriden by setting the environment
+variable <code class="docutils literal notranslate"><span class="pre">DAKOTA_RUN_PARALLEL</span></code>. If the first character is set to
+<code class="docutils literal notranslate"><span class="pre">1</span></code>, <code class="docutils literal notranslate"><span class="pre">t</span></code>, or <code class="docutils literal notranslate"><span class="pre">T</span></code>, Dakota will configure itself to run in parallel.
+If the variable exists but is set to anything else, Dakota will
+configure itself to run in serial mode.</p>
+</section>
+</section>
+<section id="specifying-parallelism">
+<span id="parallel-spec"></span><h2>Specifying Parallelism<a class="headerlink" href="#specifying-parallelism" title="Link to this heading"></a></h2>
+<p>Given an allotment of processors, Dakota contains logic based on the
+theoretical work in <span id="id17">[<a class="reference internal" href="../../misc/bibliography.html#id77" title="M. S. Eldred, W. E. Hart, B. D. Schimel, and B. G. van Bloemen Waanders. Multilevel parallelism for optimization on MP computers: theory and experiment. In Proc. 8th AIAA/USAF/NASA/ISSMO Symposium on Multidisciplinary Analysis and Optimization, number AIAA-2000-4818. Long Beach, CA, 2000.">EHSvanBWaanders00</a>]</span> to automatically determine
+an efficient parallel configuration, consisting of partitioning and
+scheduling selections for each of the parallelism levels. This logic
+accounts for problem size, the concurrency supported by particular
+iterative algorithms, and any user inputs or overrides.</p>
+<p>Concurrency is pushed up for most parallelism levels. That is, available
+processors will be assigned to concurrency at the higher parallelism
+levels first as we partition from the top down. If more processors are
+available than needed for concurrency at a level, then the server size
+is increased to support concurrency in the next lower level of
+parallelism. This process is continued until all available processors
+have been assigned. These assignments can be overridden by the user by
+specifying a number of servers, processors per server, or both, for the
+concurrent iterator, evaluation, and analysis parallelism levels. For
+example, if it is desired to parallelize concurrent analyses within each
+function evaluation, then an <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/evaluation_servers = 1 &lt;interface-evaluation_servers.html"><span class="pre">evaluation_servers</span></a></code>
+override would serialize the concurrent function evaluations level and
+ensure processor availability for concurrent analyses.</p>
+<p>The exception to this push up of concurrency occurs for
+concurrent-iterator parallelism levels, since iterator executions tend
+to have high variability in duration whenever they utilize feedback of
+results. For these levels, concurrency is pushed down since it is
+generally best to serialize the levels with the highest job variation
+and exploit concurrency elsewhere.</p>
+<p>Partition type (dedicated or peer) may also be specified for each level,
+and peer scheduling type (dynamic or static) may be specified at the
+level of evaluation concurrency. However, these selections may be
+overridden by Dakota if they are inconsistent with the number of
+user-requested servers, processors per server, and available processors.</p>
+<p>In the following sections, the user inputs and overrides are described,
+followed by specification examples for single and multi-processor Dakota
+executions.</p>
+<section id="the-interface-specification">
+<span id="parallel-spec-interface"></span><h3>The interface specification<a class="headerlink" href="#the-interface-specification" title="Link to this heading"></a></h3>
+<p>Specifying parallelism within an interface can involve the use of the
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/interface-asynchronous.html"><span class="pre">asynchronous</span></a></code>, <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/interface-asynchronous-evaluation_concurrency.html"><span class="pre">evaluation_concurrency</span></a></code>,
+and <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/interface-asynchronous.html"><span class="pre">asynchronous</span></a></code>, <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/interface-asynchronous-analysis_concurrency.html"><span class="pre">analysis_concurrency</span></a></code>
+keywords to specify concurrency local to a processor (i.e., asynchronous
+local parallelism). This specification has dual uses:</p>
+<ul class="simple">
+<li><p>When running Dakota on a single-processor, the <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/interface-asynchronous.html"><span class="pre">asynchronous</span></a></code>
+keyword specifies the use of asynchronous invocations local to the
+processor (these jobs then rely on external means to be allocated to
+other processors). The default behavior is to simultaneously launch
+all function evaluations available from the iterator as well as all
+available analyses within each function evaluation. In some cases,
+the default behavior can overload a machine or violate a usage
+policy, resulting in the need to limit the number of concurrent jobs
+using the <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/interface-asynchronous-evaluation_concurrency.html"><span class="pre">evaluation_concurrency</span></a></code>
+and <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/interface-asynchronous-analysis_concurrency.html"><span class="pre">analysis_concurrency</span></a></code>
+specifications.</p></li>
+<li><p>When executing Dakota across multiple processors and managing jobs
+with a message-passing scheduler, the <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/interface-asynchronous.html"><span class="pre">asynchronous</span></a></code>
+keyword specifies the use of asynchronous invocations local to each server
+processor, resulting in a <a class="reference internal" href="#parallel-slp-hybrid"><span class="std std-ref">hybrid parallelism</span></a>
+approach. In this case, the default behavior is one job per server, which
+must be overridden with an <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/interface-asynchronous-evaluation_concurrency.html"><span class="pre">evaluation_concurrency</span></a></code>
+specification and/or an <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/interface-asynchronous-analysis_concurrency.html"><span class="pre">analysis_concurrency</span></a></code>
+specification. When a hybrid parallelism
+approach is specified, the capacity of the servers (used in the
+automatic configuration logic) is defined as the number of servers
+times the number of asynchronous jobs per server.</p></li>
+</ul>
+<p>In both cases, the scheduling of local evaluations is dynamic by
+default, but may be explicitly selected or overriden using
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/interface-asynchronous-local_evaluation_scheduling-dynamic.html"><span class="pre">local_evaluation_scheduling</span> <span class="pre">dynamic</span></a></code>
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/interface-asynchronous-local_evaluation_scheduling-static.html"><span class="pre">static</span></a></code></p>
+<p>In addition, <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/interface-evaluation_servers.html"><span class="pre">evaluation_servers</span></a></code>, <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/interface-processors_per_evaluation.html"><span class="pre">processors_per_evaluation</span></a></code>,
+and <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/interface-evaluation_scheduling.html"><span class="pre">evaluation_scheduling</span></a></code> keywords can be used to
+override the automatic parallel configuration for concurrent function
+evaluations. Evaluation scheduling may be selected to be
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/interface-evaluation_scheduling-dedicated.html"><span class="pre">dedicated</span></a></code> or <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/interface-evaluation_scheduling-peer.html"><span class="pre">peer</span></a></code>,
+where the latter must be further specified to be
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/interface-evaluation_scheduling-peer-dynamic.html"><span class="pre">dynamic</span></a></code> or <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/interface-evaluation_scheduling-peer-static.html"><span class="pre">static</span></a></code>.</p>
+<p>To override the automatic parallelism configuration for concurrent
+analyses, the <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/interface-analysis_servers.html"><span class="pre">analysis_servers</span></a></code> and
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/interface-analysis_scheduling.html"><span class="pre">analysis_scheduling</span></a></code> keywords
+may be specified, and the <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/interface-analysis_drivers-direct-processors_per_analysis.html"><span class="pre">processors_per_analysis</span></a></code>
+keyword can be used to override the automatic parallelism configuration
+for the size of multiprocessor analyses used in a direct function simulation
+interface. Scheduling options for this level include
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/interface-analysis_scheduling-dedicated.html"><span class="pre">dedicated</span></a></code> or
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/interface-analysis_scheduling-peer.html"><span class="pre">peer</span></a></code>, where
+the latter is static (no dynamic peer option supported).</p>
+</section>
+<section id="the-meta-iterator-and-nested-model-specifications">
+<span id="parallel-spec-meta"></span><h3>The meta-iterator and nested model specifications<a class="headerlink" href="#the-meta-iterator-and-nested-model-specifications" title="Link to this heading"></a></h3>
+<p>To specify concurrency in sub-iterator executions within meta-iterators
+(such as <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-hybrid-sequential.html"><span class="pre">sequential</span></a></code>) and nested models (such as
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/model-nested-sub_method_pointer.html"><span class="pre">sub_method_pointer</span></a></code>), the <code class="docutils literal notranslate"><span class="pre">iterator_servers</span></code>,
+<code class="docutils literal notranslate"><span class="pre">processors_per_iterator</span></code>, and <code class="docutils literal notranslate"><span class="pre">iterator_scheduling</span></code> keywords are used to
+override the automatic parallelism configuration. For this level, the available
+scheduling options are <code class="docutils literal notranslate"><span class="pre">dedicated</span></code> or <code class="docutils literal notranslate"><span class="pre">peer</span></code>, where the latter is static
+(no dynamic peer option supported). See the method and model commands specification
+in the <a class="reference internal" href="../reference.html#keyword-reference-area"><span class="std std-ref">Keyword Reference</span></a> for additional
+details.</p>
+</section>
+<section id="single-processor-dakota-specification">
+<span id="parallel-spec-single"></span><h3>Single-processor Dakota specification<a class="headerlink" href="#single-processor-dakota-specification" title="Link to this heading"></a></h3>
+<p>Specifying a single-processor Dakota job that exploits parallelism
+through asynchronous local approaches (see
+<a class="reference internal" href="#parallel-figure03"><span class="std std-numref">Fig. 59a</span></a>) requires inclusion of the
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/interface-asynchronous.html"><span class="pre">asynchronous</span></a></code> keyword in the interface specification.
+Once the input file is defined, single-processor Dakota jobs are executed
+using the command syntax described previously in
+<a class="reference internal" href="#parallel-running-single"><span class="std std-ref">Single-processor execution</span></a>.</p>
+<section id="example-1">
+<span id="parallel-spec-single-example1"></span><h4>Example 1<a class="headerlink" href="#example-1" title="Link to this heading"></a></h4>
+<p>For example, the following specification runs an NPSOL optimization
+which will perform asynchronous finite differencing:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span><span class="k">method</span>,
+        npsol_sqp
+
+<span class="k">variables</span>,
+        continuous_design = 5
+          initial_point  0.2  0.05 0.08 0.2  0.2
+          lower_bounds   0.15 0.02 0.05 0.1  0.1
+          upper_bounds   2.0  2.0  2.0  2.0  2.0
+
+<span class="k">interface</span>,
+        system,
+          asynchronous
+          analysis_drivers = &#39;text_book&#39;
+
+<span class="k">responses</span>,
+        num_objective_functions = 1
+        num_nonlinear_inequality_constraints = 2
+        numerical_gradients
+          interval_type central
+          method_source dakota
+          fd_gradient_step_size = 1.e-4
+        no_hessians
+</pre></div>
+</div>
+<p>Note that <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/responses-numerical_gradient-method_source-dakota.html"><span class="pre">method_source</span> <span class="pre">dakota</span></a></code>
+selects Dakota’s internal finite differencing routine so that the
+concurrency in finite difference offsets can be exploited. In this case,
+central differencing has been selected and 11 function evaluations (one
+at the current point plus two offsets in each of five variables) can be
+performed simultaneously for each NPSOL response request. These 11
+evaluations will be launched with system calls in the background and
+presumably assigned to additional processors through the operating system of
+a multiprocessor compute server or other comparable method. The concurrency
+specification may be included if it is necessary to limit the maximum number
+of simultaneous evaluations. For example, if a maximum of six compute processors
+were available, the command</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>evaluation_concurrency = 6
+</pre></div>
+</div>
+<p>could be added to the <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/interface-asynchronous.html"><span class="pre">asynchronous</span></a></code> specification within the
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/interface.html"><span class="pre">interface</span></a></code> keyword from the preceding example.</p>
+</section>
+<section id="example-2">
+<span id="parallel-spec-single-example2"></span><h4>Example 2<a class="headerlink" href="#example-2" title="Link to this heading"></a></h4>
+<p>If, in addition, multiple analyses can be executed concurrently within a
+function evaluation (e.g., from multiple load cases or disciplinary
+analyses that must be evaluated to compute the response data set), then
+an input specification similar to the following could be used:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span><span class="k">method</span>,
+        npsol_sqp
+
+<span class="k">variables</span>,
+        continuous_design = 5
+          initial_point  0.2  0.05 0.08 0.2  0.2
+          lower_bounds   0.15 0.02 0.05 0.1  0.1
+          upper_bounds   2.0  2.0  2.0  2.0  2.0
+
+<span class="k">interface</span>,
+        fork
+          asynchronous
+            evaluation_concurrency = 6
+            analysis_concurrency = 3
+          analysis_drivers = &#39;text_book1&#39; &#39;text_book2&#39; &#39;text_book3&#39;
+
+<span class="k">responses</span>,
+        num_objective_functions = 1
+        num_nonlinear_inequality_constraints = 2
+        numerical_gradients
+          method_source dakota
+          interval_type central
+          fd_gradient_step_size = 1.e-4
+        no_hessians
+</pre></div>
+</div>
+<p>In this case, the default concurrency with just an <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/asynchronous.html"><span class="pre">asynchronous</span></a></code>
+specification would be all 11 function evaluations and all 3 analyses,
+which can be limited by the and specifications. The input file above
+limits the function evaluation concurrency, but not the analysis
+concurrency (a specification of 3 is the default in this case and could
+be omitted). Changing the input to
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/interface-asychronous-evaluation_concurrency.html"><span class="pre">evaluation_concurrency</span> <span class="pre">=</span> <span class="pre">1</span></a></code>
+would serialize the function evaluations, and changing the input to
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/evaluation_concurrency = 1 &lt;interface-asychronous-analysis_concurrency.html"><span class="pre">analysis_concurrency</span> <span class="pre">=</span> <span class="pre">1</span></a></code>
+would serialize the analyses.</p>
+</section>
+</section>
+<section id="multiprocessor-dakota-specification">
+<span id="parallel-spec-multi"></span><h3>Multiprocessor Dakota specification<a class="headerlink" href="#multiprocessor-dakota-specification" title="Link to this heading"></a></h3>
+<p>In multiprocessor executions, server evaluations are synchronous
+(<a class="reference internal" href="#parallel-figure03"><span class="std std-numref">Fig. 59a</span></a>) by default and the
+<code class="docutils literal notranslate"><span class="pre">asynchronous</span></code> keyword is only used if a hybrid parallelism approach
+(<a class="reference internal" href="#parallel-figure03"><span class="std std-numref">Fig. 59c</span></a>) is desired. Multiprocessor
+Dakota jobs are executed using the command syntax described previously
+in <a class="reference internal" href="#parallel-running-multiprocessor"><span class="std std-ref">Multiprocessor execution</span></a></p>
+<section id="example-3">
+<span id="parallel-spec-multi-example3"></span><h4>Example 3<a class="headerlink" href="#example-3" title="Link to this heading"></a></h4>
+<p>To run Example 1 using a message-passing approach, the <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/interface-asynchronous.html"><span class="pre">asynchronous</span></a></code>
+keyword would be removed (since the servers will execute their
+evaluations synchronously), resulting in the following interface
+specification:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span><span class="k">interface</span>,
+        system,
+          analysis_drivers = &#39;text_book&#39;
+</pre></div>
+</div>
+<p>Running Dakota on 4 processors (syntax:
+<code class="docutils literal notranslate"><span class="pre">mpirun</span> <span class="pre">-np</span> <span class="pre">4</span> <span class="pre">dakota</span> <span class="pre">-i</span> <span class="pre">dakota.in</span></code>) would result in the following
+parallel configuration report from the Dakota output:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>-----------------------------------------------------------------------------
+Dakota parallel configuration:
+
+Level                   num_servers    procs_per_server    partition
+-----                   -----------    ----------------    ---------
+concurrent evaluations       4                1            peer
+concurrent analyses          1                1            peer
+multiprocessor analysis      1               N/A           N/A
+
+Total parallelism levels =   1 (1 dakota, 0 analysis)
+-----------------------------------------------------------------------------
+</pre></div>
+</div>
+<p>In this case, a peer partition and dynamic scheduling algorithm are
+automatically selected for the concurrent evaluations. If a dedicated
+scheduler is desired instead, then this logic could be overriden by adding:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span><span class="k">interface</span>,
+        system,
+          evaluation_scheduling dedicated
+          analysis_drivers = &#39;text_book&#39;
+</pre></div>
+</div>
+<p>Running Dakota again on 4 processors (syntax:
+<code class="docutils literal notranslate"><span class="pre">mpirun</span> <span class="pre">-np</span> <span class="pre">4</span> <span class="pre">dakota</span> <span class="pre">-i</span> <span class="pre">dakota.in</span></code>) would now result in this parallel
+configuration report:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>-----------------------------------------------------------------------------
+Dakota parallel configuration:
+
+Level                   num_servers    procs_per_server    partition
+-----                   -----------    ----------------    ---------
+concurrent evaluations       3                1            ded. sched
+concurrent analyses          1                1            peer
+multiprocessor analysis      1               N/A           N/A
+
+Total parallelism levels =   1 (1 dakota, 0 analysis)
+-----------------------------------------------------------------------------
+</pre></div>
+</div>
+<p>Now the 11 jobs will be dynamically distributed among 3 servers,
+under the control of 1 dedicated scheduler.</p>
+<p>As a related example, consider the case where each of the workstations
+used in the parallel execution has multiple processors. In this case, a
+hybrid parallelism approach which combines message-passing parallelism
+with asynchronous local parallelism (see
+<a class="reference internal" href="#parallel-figure03"><span class="std std-numref">Fig. 59c</span></a>) would be a good choice. To
+specify hybrid parallelism, one uses the same <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/interface-asynchronous.html"><span class="pre">asynchronous</span></a></code>
+specification as was used for the single-processor examples, e.g.:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span><span class="k">interface</span>,
+         system
+           asynchronous evaluation_concurrency = 3
+           analysis_drivers = `text_book&#39;
+</pre></div>
+</div>
+<p>With 3 function evaluations concurrent on each server, the capacity of a
+4 processor Dakota execution (syntax:
+<code class="docutils literal notranslate"><span class="pre">mpirun</span> <span class="pre">-np</span> <span class="pre">4</span> <span class="pre">dakota</span> <span class="pre">-i</span> <span class="pre">dakota.in</span></code>) has increased to 12 evaluations.
+Since all 11 jobs can now be scheduled in a single pass, a peer static
+scheduler is sufficient.</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>-----------------------------------------------------------------------------
+Dakota parallel configuration:
+
+Level                   num_servers    procs_per_server    partition
+-----                   -----------    ----------------    ---------
+concurrent evaluations       4                1            peer
+concurrent analyses          1                1            peer
+multiprocessor analysis      1               N/A           N/A
+
+Total parallelism levels =   1
+-----------------------------------------------------------------------------
+</pre></div>
+</div>
+</section>
+<section id="example-4">
+<span id="parallel-spec-multi-example4"></span><h4>Example 4<a class="headerlink" href="#example-4" title="Link to this heading"></a></h4>
+<p>To run Example 2 using a message-passing approach, the <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/interface-asynchronous.html"><span class="pre">asynchronous</span></a></code>
+specification is again removed:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span><span class="k">interface</span>,
+         fork
+           analysis_drivers = `text_book1&#39; `text_book2&#39; `text_book3&#39;
+</pre></div>
+</div>
+<p>Running this example on 6 processors (syntax:
+<code class="docutils literal notranslate"><span class="pre">mpirun</span> <span class="pre">-np</span> <span class="pre">6</span> <span class="pre">dakota</span> <span class="pre">-i</span> <span class="pre">dakota.in</span></code>) would result in the following
+parallel configuration report:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>-----------------------------------------------------------------------------
+Dakota parallel configuration:
+
+Level                   num_servers    procs_per_server    partition
+-----                   -----------    ----------------    ---------
+concurrent evaluations       6                1            peer
+concurrent analyses          1                1            peer
+multiprocessor analysis      1               N/A           N/A
+
+Total parallelism levels =   1
+-----------------------------------------------------------------------------
+</pre></div>
+</div>
+<p>in which all of the processors have been assigned to support evaluation
+concurrency due to the “push up” automatic configuration logic. To
+assign some of the available processors to the concurrent analysis
+level, the following input could be used:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span><span class="k">interface</span>,
+         fork
+           analysis_drivers = `text_book1&#39; `text_book2&#39; `text_book3&#39;
+           evaluation_scheduling peer static
+           evaluation_servers = 2
+</pre></div>
+</div>
+<p>which results in the following 2-level parallel configuration:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>-----------------------------------------------------------------------------
+Dakota parallel configuration:
+
+Level                   num_servers    procs_per_server    partition
+-----                   -----------    ----------------    ---------
+concurrent evaluations       2                3            peer
+concurrent analyses          3                1            peer
+multiprocessor analysis      1               N/A           N/A
+
+Total parallelism levels =   2
+-----------------------------------------------------------------------------
+</pre></div>
+</div>
+<p>The six processors available have been split into two evaluation servers
+of three processors each, where the three processors in each evaluation
+server manage the three analyses, one per processor. Note that without
+the scheduling override, a dedicated partition at the evaluation
+level would have been chosen automatically, dividing the six available
+processors into one evaluation server with three processors and another
+with two.</p>
+<p>Next, consider the following 3-level parallel case, in which
+<code class="docutils literal notranslate"><span class="pre">text_book1</span></code>, <code class="docutils literal notranslate"><span class="pre">text_book2</span></code>, and <code class="docutils literal notranslate"><span class="pre">text_book3</span></code>
+from the previous examples now execute on two processors each. In this
+case, the <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/interface-analysis_drivers-direct-processors_per_analysis.html"><span class="pre">processors_per_analysis</span></a></code>
+keyword is added and the <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/interface-analysis_drivers-fork.html"><span class="pre">fork</span></a></code> interface
+is changed to a <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/interface-analysis_drivers-direct.html"><span class="pre">direct</span></a></code> interface since the fine-grained
+parallelism of the three simulations is managed internally:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span><span class="k">interface</span>,
+         direct
+           analysis_drivers = `text_book1&#39; `text_book2&#39; `text_book3&#39;
+           evaluation_scheduling peer static
+           evaluation_servers = 2
+           processors_per_analysis = 2
+</pre></div>
+</div>
+<p>This results in the following parallel configuration for a 12
+processor Dakota run (syntax: <code class="docutils literal notranslate"><span class="pre">mpirun</span> <span class="pre">-np</span> <span class="pre">12</span> <span class="pre">dakota</span> <span class="pre">-i</span> <span class="pre">dakota.in</span></code>):</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>-----------------------------------------------------------------------------
+Dakota parallel configuration:
+
+Level                   num_servers    procs_per_server    partition
+-----                   -----------    ----------------    ---------
+concurrent evaluations       2                6            peer
+concurrent analyses          3                2            peer
+multiprocessor analysis      2               N/A           N/A
+
+Total parallelism levels =   3 (2 dakota, 1 analysis)
+-----------------------------------------------------------------------------
+</pre></div>
+</div>
+<p>An important point to recognize is that, since each of the parallel
+configuration inputs has been tied to the interface specification up to
+this point, these parallel configurations can be reallocated for each
+interface in a multi-iterator/multi-model study. For example, a Dakota
+execution on 40 processors might involve the following two interface
+specifications:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span><span class="k">interface</span>,
+        direct,
+          id_interface = &#39;COARSE&#39;
+          analysis_driver = &#39;sim1&#39;
+          evaluation_scheduling peer dynamic
+          processors_per_analysis = 5
+
+<span class="k">interface</span>,
+        direct,
+          id_interface = &#39;FINE&#39;
+          analysis_driver = &#39;sim2&#39;
+          evaluation_scheduling peer dynamic
+          processors_per_analysis = 10
+</pre></div>
+</div>
+<p>for which the coarse model would employ 8 evaluation servers of 5
+processors each and the fine model would employ 4 evaluation servers of
+10 processors each.</p>
+<p>Next, consider the following 4-level parallel case that employs the
+Pareto set optimization meta-iterator. In this case,
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-pareto_set-iterator_servers.html"><span class="pre">iterator_servers</span></a></code> and
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-pareto_set-iterator_scheduling-peer.html"><span class="pre">iterator_scheduling</span> <span class="pre">peer</span></a></code>
+requests are included in the method specification:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span><span class="k">method</span>,
+         pareto_set
+           iterator_servers = 2
+           iterator_scheduling peer
+           opt_method_pointer = &#39;NLP&#39;
+           random_weight_sets = 4
+</pre></div>
+</div>
+<p>Adding this <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/methodd-pareto_set.html"><span class="pre">pareto_set</span></a></code> method specification to the input file from
+the previous 12 processor example results in the following parallel
+configuration for a 24 processor Dakota run
+(syntax: <code class="docutils literal notranslate"><span class="pre">mpirun</span> <span class="pre">-np</span> <span class="pre">24</span> <span class="pre">dakota</span> <span class="pre">-i</span> <span class="pre">dakota.in</span></code>):</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>-----------------------------------------------------------------------------
+Dakota parallel configuration:
+
+Level                   num_servers    procs_per_server    partition
+-----                   -----------    ----------------    ---------
+concurrent iterators         2               12            peer
+concurrent evaluations       2                6            peer
+concurrent analyses          3                2            peer
+multiprocessor analysis      2               N/A           N/A
+
+Total parallelism levels =   4 (3 dakota, 1 analysis)
+-----------------------------------------------------------------------------
+</pre></div>
+</div>
+<p>Note that for this example, the parallel configuration is written to the
+file <code class="docutils literal notranslate"><span class="pre">dakota.out.1</span></code> because of the use of concurrent iterators.</p>
+</section>
+<section id="example-5">
+<span id="parallel-spec-multi-example5"></span><h4>Example 5<a class="headerlink" href="#example-5" title="Link to this heading"></a></h4>
+<p>As a final example, consider a multi-start optimization conducted on 384
+processors. A job of this size must be submitted to the batch queue,
+using syntax similar to:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>qsub -q snl -lP 384 -lT 6:00:00 run_dakota
+</pre></div>
+</div>
+<p>where the <code class="docutils literal notranslate"><span class="pre">run_dakota</span></code> script appears as</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span><span class="c">#!/bin/sh</span>
+cd /scratch/&lt;some_workdir&gt;
+yod -sz 384 dakota -i dakota.in &gt; dakota.out
+</pre></div>
+</div>
+<p>the interface specifications from the <code class="docutils literal notranslate"><span class="pre">dakota.in</span></code> input file appears as</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span><span class="k">interface</span>,
+        direct,
+          analysis_drivers = &#39;text_book1&#39; &#39;text_book2&#39; &#39;text_book3&#39;
+          evaluation_servers = 8
+          evaluation_scheduling peer dynamic
+          processors_per_analysis = 2
+</pre></div>
+</div>
+<p>and finally, an additional method section is added</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span><span class="k">method</span>,
+        multi_start
+          method_pointer = &#39;CPS&#39;
+          iterator_servers = 8
+          random_starts = 8
+</pre></div>
+</div>
+<p>The resulting parallel configuration is reported as</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>-----------------------------------------------------------------------------
+Dakota parallel configuration:
+
+Level                   num_servers    procs_per_server    partition
+-----                   -----------    ----------------    ---------
+concurrent iterators         8               48            peer
+concurrent evaluations       8                6            peer
+concurrent analyses          3                2            peer
+multiprocessor analysis      2               N/A           N/A
+
+Total parallelism levels =   4 (3 dakota, 1 analysis)
+-----------------------------------------------------------------------------
+</pre></div>
+</div>
+<p>Since the concurrency at each of the nested levels has a multiplicative
+effect on the number of processors that can be utilized, it is easy to
+see how large numbers of processors can be put to effective use in
+reducing the time to reach a solution, even when, as in this example,
+the concurrency per level is relatively low.</p>
+</section>
+</section>
+</section>
+<section id="application-parallelism-use-cases">
+<span id="parallel-application"></span><h2>Application Parallelism Use Cases<a class="headerlink" href="#application-parallelism-use-cases" title="Link to this heading"></a></h2>
+<p>This section describes several common use cases for running Dakota on
+parallel computing clusters with various combinations of Dakota and
+application parallelism. In three of the four cases addressed, the
+application launched by Dakota is assumed MPI-enabled and run as an
+independent parallel process.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">examples/parallelism/</span></code> folder in the Dakota installation
+includes examples of the use cases. In all four, Dakota performs a
+vector parameter on the <a class="reference internal" href="../examples/additionalexamples.html#additional-textbook"><span class="std std-ref">textbook</span></a> test
+function. The application executed for serial demonstration is the <code class="docutils literal notranslate"><span class="pre">text_book</span></code>
+example driver, and for parallel execution, a modified version named
+<code class="docutils literal notranslate"><span class="pre">text_book_simple_par</span></code>. Both are located in Dakota’s <code class="docutils literal notranslate"><span class="pre">share/dakota/test/</span></code>
+folder. Dakota uses its fork interface to launch interface scripts
+written either in Bash or Python, which include mock pre-processing to
+prepare application input, application execution in serial or
+parallel, and post-processing of application results to return to
+Dakota.</p>
+<p>The combinations of Dakota and application parallelism are summarized in
+<a class="reference internal" href="#parallel-application-table01"><span class="std std-numref">Table 18</span></a>. In each case, <span class="math notranslate nohighlight">\(M\)</span> denotes
+the total number of processors (or MPI tasks) allocated and <span class="math notranslate nohighlight">\(N\)</span>
+denotes the number of processors used by a single application analysis.
+For most scenarios, Cases 1–3, where
+Dakota and the application jobs run within a single cluster processor
+allocation (queued job), are preferred. However for particularly
+long-running or large jobs, or platforms that not supporting the first
+scheduling modes, Case 4 may be most appropriate.</p>
+<table class="docutils align-default" id="parallel-application-table01">
+<caption><span class="caption-number">Table 18 </span><span class="caption-text">Application Parallelism Use Cases</span><a class="headerlink" href="#parallel-application-table01" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 8.0%" />
+<col style="width: 18.0%" />
+<col style="width: 12.0%" />
+<col style="width: 12.0%" />
+<col style="width: 50.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Case</p></th>
+<th class="head"><p>Name</p></th>
+<th class="head"><p>Dakota</p></th>
+<th class="head"><p>Application</p></th>
+<th class="head"><p>Notes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>1</p></td>
+<td><p>Massively Serial</p></td>
+<td><p>parallel</p></td>
+<td><p>serial</p></td>
+<td><p><span class="math notranslate nohighlight">\(M\)</span> simultaneous application instances, each <span class="math notranslate nohighlight">\(N=1\)</span> processor</p></td>
+</tr>
+<tr class="row-odd"><td><p>2</p></td>
+<td><p>Sequential Parallel</p></td>
+<td><p>serial</p></td>
+<td><p>parallel</p></td>
+<td><p>1 simultaneous application instance on <span class="math notranslate nohighlight">\(N\)</span> processors</p></td>
+</tr>
+<tr class="row-even"><td><p>3</p></td>
+<td><p>Evaluation Tiling</p></td>
+<td><p>serial</p></td>
+<td><p>parallel</p></td>
+<td><p><span class="math notranslate nohighlight">\(M/N\)</span> simultaneous <span class="math notranslate nohighlight">\(N\)</span> processor jobs</p></td>
+</tr>
+<tr class="row-odd"><td><p>4</p></td>
+<td><p>Evaluation Submission</p></td>
+<td><p>serial</p></td>
+<td><p>parallel</p></td>
+<td><p>submit <em>expensive</em> <span class="math notranslate nohighlight">\(N\)</span> processor application jobs to a scheduler (e.g., qsub)</p></td>
+</tr>
+</tbody>
+</table>
+<p>Relevant example files for each case are included in directories
+<code class="docutils literal notranslate"><span class="pre">dakota/share/dakota/examples/parallelism/</span></code> with
+the Dakota distribution. These typically include a PBS or SLURM job
+submission script to launch the Dakota study, a Dakota input file, and
+a driver script.</p>
+<section id="case-1-massively-serial-multiple-serial-analysis-jobs">
+<h3>Case 1: Massively Serial — Multiple serial analysis jobs<a class="headerlink" href="#case-1-massively-serial-multiple-serial-analysis-jobs" title="Link to this heading"></a></h3>
+<p>In this case, Dakota will launch multiple simultaneous single processor
+application runs (an embarrassingly parallel model). Dakota is run in
+parallel, making this example an elaboration of the message-passing
+<a class="reference internal" href="#parallel-slp"><span class="std std-ref">single-level parallel</span></a> mode.
+Specifically in this example, Dakota is run in parallel with <span class="math notranslate nohighlight">\(M=6\)</span>
+processors (<code class="docutils literal notranslate"><span class="pre">pbs_submission</span></code>):</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>mpiexec -n 6 dakota dakota_pstudy.in
+</pre></div>
+</div>
+<p>and will launch <span class="math notranslate nohighlight">\(M\)</span> simultaneous analysis jobs, and as each job
+completes, another will be launched, until all jobs are complete.</p>
+<ul>
+<li><p>If the analysis is extremely fast, performance may be improved by
+launching multiple evaluation jobs local to each Dakota MPI process,
+specifying</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>asynchronous evaluation_concurrency = [2 or more]
+</pre></div>
+</div>
+<p>As discussed in <a class="reference internal" href="#parallel-slp-hybrid"><span class="std std-ref">Hybrid Parallelism</span></a>, combining
+MPI and local (asynchronous) parallelism in this way is an example of
+hybrid parallelism.</p>
+</li>
+<li><p>Conversely, if the analysis has large memory requirements, Dakota may
+be launched on fewer than the total number of available cores, which
+has the effect of increasing the memory available to each MPI task.
+This is known as undersubscription. In this case, the simulation may
+still be able to take advantage of thread-based parallelism
+technologies such as OpenMP. Users are advised to consult their HPC’s
+documentation or user support to determine how to control the number
+of MPI tasks launched per compute node.</p></li>
+<li><p>Hybrid parallelism is another way to reduce Dakota’s memory
+footprint. Dakota may be launched in parallel using one MPI task per
+node and configured to run multiple evaluations concurrently on each
+node using local parallelism. Suppose it is desired to run 160
+concurrent evaluations, and the compute nodes each have 16
+processors. The job script should reserve 10 nodes, assign one MPI
+task per node, and to run Dakota using 10 tasks. The interface
+section of the Dakota input file should contain:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>asynchronous evaluation_concurrency = 16
+</pre></div>
+</div>
+</li>
+</ul>
+<p><strong>Note:</strong> The MPI standard does not support nested calls to MPI_Init.
+Although some MPI implementations are tolerant of nested calls and work
+as naively expected, it is not possible generally to launch an
+MPI-enabled user simulation in parallel beneath Dakota running in
+parallel. This restriction includes launching parallelized user
+simulations on one core (i.e. <code class="docutils literal notranslate"><span class="pre">mpiexec</span> <span class="pre">-n</span> <span class="pre">1</span></code>).</p>
+</section>
+<section id="case-2-sequential-parallel-one-parallel-analysis-job-at-a-time">
+<h3>Case 2: Sequential Parallel — One parallel analysis job at a time<a class="headerlink" href="#case-2-sequential-parallel-one-parallel-analysis-job-at-a-time" title="Link to this heading"></a></h3>
+<p>This case is relevant for multi-processor analysis jobs, typically where
+the analysis is expensive (i.e., is long-running or sufficient
+processors are not available to run more than one simultaneous
+analysis). Note that for extremely long-running parallel jobs, Case 4
+(Evaluation Submission) below may be more appropriate.</p>
+<p>In this case, Dakota runs in serial</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>dakota dakota_pstudy.in
+</pre></div>
+</div>
+<p>and the driver script launches the application with <code class="docutils literal notranslate"><span class="pre">mpiexec</span> <span class="pre">-n</span> <span class="pre">K</span></code>,
+where <span class="math notranslate nohighlight">\(K \leq M\)</span>, to launch the application code within the
+processor allocation:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>mpiexec -n 6 text_book_par application.in application.out
+</pre></div>
+</div>
+</section>
+<section id="case-3-evaluation-tiling-multiple-simultaneous-parallel-analysis-jobs">
+<h3>Case 3: Evaluation Tiling — Multiple simultaneous parallel analysis jobs<a class="headerlink" href="#case-3-evaluation-tiling-multiple-simultaneous-parallel-analysis-jobs" title="Link to this heading"></a></h3>
+<p>In this case, the nodes or processors (or MPI tasks) of a single job are
+partitioned into equally-sized <em>tiles</em>. The number of MPI tasks in each
+tile is <span class="math notranslate nohighlight">\(N\)</span>, the number needed to run the parallel application,
+and so there are a total of <span class="math notranslate nohighlight">\(M/N\)</span> tiles, where <span class="math notranslate nohighlight">\(M\)</span> is the
+total number of MPI tasks in the allocation. Dakota, which is run
+serially by the job script, asynchronously launches evaluations, each of
+which runs a parallel application on an available tile.</p>
+<p>It is up to the user to ensure consistency among the number of nodes in
+the allocation, the number of processors (or MPI tasks) per node,
+Dakota’s <code class="docutils literal notranslate"><span class="pre">evaluation_concurrency</span></code>, and the number of processors (or
+MPI tasks) per parallel application run. For instance, suppose it is
+desired to perform 10 concurrent runs of a parallel application, each
+requiring 32 processors. The compute nodes each have 16 processors. The
+job script must reserve 2 nodes per application run (<span class="math notranslate nohighlight">\(32/16\)</span>) for
+a total of <span class="math notranslate nohighlight">\(2 \cdot 10 = 20\)</span> nodes. Dakota’s
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/interface-asynchronous-evaluation_concurrency.html"><span class="pre">evaluation_concurrency</span></a></code> must be set to 10.</p>
+<p>Under ideal circumstances, as Dakota concurrently launches evaluations
+of the user’s parallel application, the cluster workload manager (e.g.
+SLURM, PBS) performs load balancing and ensures that the runs “land” on
+idle resources. In this situation, the Dakota-application interface
+script is relatively simple; in the execution phase, the application is
+run using the appropriate parallel launcher (e.g. <code class="docutils literal notranslate"><span class="pre">srun</span></code>), specifying
+the number of MPI tasks to use.</p>
+<p>However, if load balancing is not automatically handled by the workload
+manager, and the user does nothing to manage tiling, then all the
+evaluations may land on the first few nodes, leaving the rest idle and
+severly degrading performance. Clearly, care must be taken to ensure
+that evaluations are tiled correctly.</p>
+<p>Whether correct evaluation tiling occurs automatically can depend
+intimately on how the HPC adminstrators configured the workload manager
+and MPI. Users are advised to perform small-scale experiments to
+determine whether performance is as expected, and/or to contact their
+system administrator for guidance.</p>
+<p>Dakota provides a few examples and tools to help users orchestrate
+placement of parallel applications on available resources when the
+resource manager does not. They are explained in the following sections.</p>
+<p>A related consideration is the memory usage of Dakota itself. If the
+user’s application is memory intensive, it may be desirable to reserve a
+node or a portion of a node for Dakota to prevent it from degrading the
+performance of evaluations. It is necessary in this case to determine
+where the job script, and hence Dakota, is run. Consulting the workload
+manager’s documenation or the HPC’s system administrator is advised.</p>
+<section id="mpiexec-server-mode">
+<h4>Mpiexec server mode<a class="headerlink" href="#mpiexec-server-mode" title="Link to this heading"></a></h4>
+<p>Mpiexec (<a class="reference external" href="http://www.osc.edu/">http://www.osc.edu/</a> pw/mpiexec/) works in concert with MPICH
+implementations, extending mpirun to run jobs in a PBS environment with
+additional features. It offers a background server option which can be
+used to tile multiple MPI jobs within a single parallel resource
+allocation. (Note that with MPICH, there is a difference between
+<code class="docutils literal notranslate"><span class="pre">mpirun</span></code> and <code class="docutils literal notranslate"><span class="pre">mpiexec</span></code>, unlike with OpenMPI, where both are
+typically aliases for <code class="docutils literal notranslate"><span class="pre">orterun</span></code>.) See the example in
+<code class="docutils literal notranslate"><span class="pre">Case3-EvaluationTiling/MPICH</span></code>.</p>
+<p>In this case, an <code class="docutils literal notranslate"><span class="pre">mpiexec</span></code> server process is started and backgrounded
+to service application requests for processors; Dakota runs in serial
+(<code class="docutils literal notranslate"><span class="pre">pbs_submission</span></code>):</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>mpiexec -server &amp;
+
+dakota dakota_pstudy.in
+</pre></div>
+</div>
+<p>and asynchronously launches <span class="math notranslate nohighlight">\(M/N=3\)</span> evaluations (<code class="docutils literal notranslate"><span class="pre">dakota_pstudy.in</span></code>):</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span><span class="k">interface</span>
+  fork
+    asynchronous evaluation_concurrency = 3
+    analysis_driver = &#39;text_book_par_driver&#39;
+</pre></div>
+</div>
+<p>The simulator script calls <code class="docutils literal notranslate"><span class="pre">mpiexec</span> <span class="pre">-n</span> <span class="pre">2</span></code> to run the analysis in
+parallel and the mpiexec server assigns a subset of the available
+processors to the particular MPI task (<code class="docutils literal notranslate"><span class="pre">text_book_par</span></code>):</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>mpiexec -n 2 text_book_simple_par application.in application.out
+</pre></div>
+</div>
+<p>An error will result if more application tasks are launched than the
+processor allocation permits. An error may result if the application
+does not exit cleanly. At present similar capability is not supported by
+OpenMPI, although a daemon mode similar to Mpiexec has been proposed.</p>
+</section>
+<section id="relative-node-scheduling">
+<h4>Relative node scheduling<a class="headerlink" href="#relative-node-scheduling" title="Link to this heading"></a></h4>
+<p>This Evaluation Tiling variant uses OpenMPI 1.3.3 or newer. It leverages
+Dakota’s option together with integer arithmetic to schedule each
+evaluation on the right subset of the processor allocation. A Bash-based
+example is provided in <code class="docutils literal notranslate"><span class="pre">Case3-EvaluationTiling/OpenMPI</span></code>.
+Similar approaches work with some AIX/POE installations as well.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">mpitile</span></code> utility, released with Dakota 6.6, transparently manages
+construction of relative node lists when using the OpenMPI command
+<code class="docutils literal notranslate"><span class="pre">mpirun</span></code> and the SLURM workload manager. <code class="docutils literal notranslate"><span class="pre">mpitile</span></code> resides in the
+Dakota <code class="docutils literal notranslate"><span class="pre">bin/</span></code> folder and is a wrapper for <code class="docutils literal notranslate"><span class="pre">mpirun</span></code>. It uses a file locking
+mechanism to support dynamic scheduling of evaluations but also has a
+<code class="docutils literal notranslate"><span class="pre">–static</span></code> option. Using the <code class="docutils literal notranslate"><span class="pre">–dedicated-master</span></code> option, either an
+entire <code class="docutils literal notranslate"><span class="pre">NODE</span></code> or a <code class="docutils literal notranslate"><span class="pre">TILE</span></code> can be reserved for Dakota. Running
+<code class="docutils literal notranslate"><span class="pre">mpitile</span></code> with the <code class="docutils literal notranslate"><span class="pre">–help</span></code> option provides a basic description of
+its options. The script <code class="docutils literal notranslate"><span class="pre">text_book_mpitile_dynamic.sh</span></code> in the
+<code class="docutils literal notranslate"><span class="pre">OpenMPI</span></code> example folder demonstrates usage of <code class="docutils literal notranslate"><span class="pre">mpitile</span></code>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">mpitile</span></code> is based on the Python module
+<code class="docutils literal notranslate"><span class="pre">dakota.interfacing.parallel</span></code>, also released with Dakota 6.6.
+Interface scripts written in Python may benefit from using its API
+directly. An example is located at
+<code class="docutils literal notranslate"><span class="pre">Case3-EvaluationTiling/OpenMPI/text_book_di_dynamic.py</span></code>. The
+<code class="docutils literal notranslate"><span class="pre">dakota</span></code> Python package is located in
+<code class="docutils literal notranslate"><span class="pre">dakota/share/dakota/Python/</span></code>, which users should add to the
+environment variable <code class="docutils literal notranslate"><span class="pre">PYTHONPATH</span></code>.</p>
+</section>
+<section id="machinefile-management">
+<h4>Machinefile management<a class="headerlink" href="#machinefile-management" title="Link to this heading"></a></h4>
+<p>This Evaluation Tiling variant applies when the application must be
+compiled with OpenMPI or another MPI implementation that does not
+support a server mode for job tiling, but does support the use of
+machine files specifying the resources on which to run the application
+job. A set of scripts are used to manage the partitioning of the
+<span class="math notranslate nohighlight">\(M\)</span> processor allocation into tiles contain <span class="math notranslate nohighlight">\(N\)</span> processors.
+Each tile has an associated machines file consisting of a unique subset
+of the assigned resources. Note that this will not work with early
+OpenMPI versions with some resource managers (e.g., OpenMPI 1.2 with
+Torque), where machinefiles, even if a proper subset of
+<code class="docutils literal notranslate"><span class="pre">$PBS_NODEFILE</span></code>, are ignored. This will however work with OpenMPI 1.3
+and newer. See the example in <code class="docutils literal notranslate"><span class="pre">Case3-EvaluationTiling/MachinefileMgmt</span></code>.</p>
+<p>In this case the <code class="docutils literal notranslate"><span class="pre">pbs_submission</span></code> script defines variables specifying
+how to create a separate node file for each job and sets up a set of
+nodefiles for use by each evaluation. As when using relative node lists,
+Dakota runs in serial and uses asynchronous evaluation concurrency to
+launch the jobs. The interface script <code class="docutils literal notranslate"><span class="pre">text_book_par_driver</span></code>
+contains logic to lock a node file
+for the application run and return it when complete. As each job
+completes, the next is scheduled.</p>
+</section>
+</section>
+<section id="case-4-evaluation-submission-parallel-analysis-jobs-submitted-to-a-queue">
+<h3>Case 4: Evaluation Submission — Parallel analysis jobs submitted to a queue<a class="headerlink" href="#case-4-evaluation-submission-parallel-analysis-jobs-submitted-to-a-queue" title="Link to this heading"></a></h3>
+<p>This case describes running Dakota to submit parallel jobs to a batch
+queue. This option is likely only useful when the cost of an individual
+analysis evaluation is high (such that the job requires far too many
+processors or hours to run all the evaluations) and there is no feedback
+to Dakota required to generate subsequent evaluation points. So this
+scenario is likely more relevant for sensitivity analysis and
+uncertainty quantification than optimization.</p>
+<p>In the first pass, Dakota runs (likely interactively) in serial on a
+login node or other node capable of job submission:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>dakota dakota_pstudy.in
+</pre></div>
+</div>
+<p>For each evaluation, the simulator script (<code class="docutils literal notranslate"><span class="pre">text_book_par_driver</span></code>)
+will generate a <code class="docutils literal notranslate"><span class="pre">pbs_submission</span></code> script and submit it to the
+scheduler. Dummy results are returned to Dakota which will exit when
+all jobs have been scheduled.</p>
+<p>In the second pass, when analysis is complete, the analysis driver is
+changed to <code class="docutils literal notranslate"><span class="pre">post_process</span></code> and Dakota is executed on a login node to
+collect the results of the study.</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="advancedsimulationcodeinterfaces.html" class="btn btn-neutral float-left" title="Advanced Simulation Code Interfaces" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="simulationfailurecapturing.html" class="btn btn-neutral float-right" title="Simulation Failure Capturing" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <!--
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Sandia National Laboratories.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+  --> 
+
+</footer>
+        </div>
+      </div>
+	  
+	  <div style="background-color: #0f0f0f;color:#fafafa;padding:20px">
+	    <div>
+		  <h2><em>Exceptional service in the national interest</em></h2>
+		</div>
+		<p>© 2023 National Technology and Engineering Solutions of Sandia, LLC. | <a href="https://www.sandia.gov/contact_us/index.html">Questions &amp; Comments</a> | <a href="https://www.sandia.gov/general/privacy-security/index.html">Privacy &amp; Security</a></p>
+		<p><a href="http://energy.gov" rel="noopener noreferrer" target="_blank"><img alt="U.S. Department of Energy" longdesc="https://energy.gov" src="https://www.sandia.gov/_common/images/doe_logo_white.png" style="height:37px; width:140px"></a> <a href="http://nnsa.energy.gov/" rel="noopener noreferrer" target="_blank"> <img alt="National Nuclear Security Administration" longdesc="http://nnsa.gov" src="https://www.sandia.gov/_common/images/nnsa_logo_white.png" style="height:37px; width:116px"></a></p>
+		<p><a href="https://www.sandia.gov">Sandia National Laboratories</a> is a multimission laboratory managed and operated by National Technology and Engineering Solutions of Sandia, LLC., a wholly owned subsidiary of Honeywell International, Inc., for the U.S. Department of Energy’s National Nuclear Security Administration under contract DE-NA-0003525.</p>
+	  </div>	  	  
+	  
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

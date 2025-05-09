@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Preferences &mdash; dakota  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/dakota_theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/sandiaheaderlite.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Eclipse Reference" href="Eclipse.html" />
+    <link rel="prev" title="Context Menu Tools" href="ContextMenuTools.html" /> 
+  
+  <meta name="sandia.approval_type" content="formal"/>
+  <meta property="sandia.approved" content="SAND2025-05563O"/>
+  <meta name="description" content="The Dakota project delivers both state-of-the-art research and robust, usable software for optimization and UQ."/>
+  <meta name="keywords" content="Dakota, optimization, UQ, uncertainty quantification, parametric analysis, design exploration, model calibration, risk analysis"/>
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> dakota
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../setupdakota.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../usingdakota/usingdakota.html">Using Dakota</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../usingdakotagui.html">Using Dakota GUI</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#introduction">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#example-search">Example Search</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#wizards">Wizards</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#editing-dakota-input-files">Editing Dakota Input Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#running-dakota">Running Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#running-dakota-remotely">Running Dakota Remotely</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#output-from-dakota">Output from Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#gui-tools">GUI Tools</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../usingdakotagui.html#miscellaneous">Miscellaneous</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="ContextMenuTools.html">Context Menu Tools</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Preferences</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#introduction">Introduction</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#blackbox">BlackBox</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#chartreuse">Chartreuse</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dakota">Dakota</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#dakota-chartreuse">Dakota &gt; Chartreuse</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#dakota-examples-search">Dakota &gt; Examples Search</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#remote-git-repo-configuration">Remote Git Repo Configuration</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#dakota-manual">Dakota &gt; Manual</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#dakota-text-editor">Dakota &gt; Text Editor</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#dakota-workflow-support">Dakota &gt; Workflow Support</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#highlighter">Highlighter</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="Eclipse.html">Eclipse Reference</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../externaltools/externaltools.html">Using External Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../compiling/compiling.html">Compiling Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developingdakota/developingdakota.html">Developing Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../misc/misc.html">Miscellaneous</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">dakota</a>
+      </nav>
+
+	  <!-- SNL Lite header -->
+	  <div class="snlheader-subsite--wrapper-default">
+		<snlheader class="snlheader-subsite" role="snlbanner">
+		  <div class="wrapper">
+			<a href="https://www.sandia.gov/index.html">
+			  <div class="logo-transparent"><p class="logo">Sandia National Laboratories</p></div>
+			</a>
+			<div class="nav-top">
+			  <a class="visuallyhidden" name="mainnav"></a>
+			  <div aria-label="main navigation" class="core-nav-transparent core-nav-transparent--visible" role="navigation">
+				<ul role="navigation" class="secondary-links">
+				  <li id="search-text-link">
+					<a aria-label="Search" href="https://www.sandia.gov/search/">Search Sandia.gov</a>
+				  </li>
+				  <li id="directory-text-link">
+					<a href="https://www.sandia.gov/directory.html" aria-expanded="false" aria-label="Site Directory">All Sandia Websites</a>
+				  </li>
+				</ul>
+			  </div>
+			</div>
+		  </div> 
+		</snlheader>
+	  </div>	  
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../usingdakotagui.html">Using Dakota GUI</a></li>
+      <li class="breadcrumb-item active">Preferences</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/usingdakotagui/miscgui/Preferences.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="preferences">
+<span id="gui-preferences-main"></span><h1>Preferences<a class="headerlink" href="#preferences" title="Link to this heading"></a></h1>
+<section id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Link to this heading"></a></h2>
+<p>The Dakota GUI’s main area for basic, global configurations can be found under Window &gt; Preferences.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>On Mac, this option is located under Dakota GUI &gt; Preferences.</p>
+</div>
+<img alt="How you get to the Preferences dialog" src="../../_images/GettingStarted_Preferences_1.png" />
+</section>
+<section id="blackbox">
+<span id="gui-preferences-blackbox"></span><h2>BlackBox<a class="headerlink" href="#blackbox" title="Link to this heading"></a></h2>
+<img alt="Blackbox preferences" src="../../_images/GettingStarted_Preferences_9.png" />
+<p>The Preferences page for BlackBox enables you to control which pre-processing template files are recognized by Dakota GUI. Recognizing pre-processing templates (done via
+the file’s extension) is crucial for taking advantage of pre-processing template files throughout the GUI (for example, in the New Dakota Study wizard).
+Typically, you would want to have every box checked, but there may be situations where you want to uncheck boxes (i.e. force the GUI to <em>not</em> recognize a particular
+format) if you are experiencing clashes between file extensions and recognized pre-processing strategies.</p>
+</section>
+<section id="chartreuse">
+<span id="gui-preferences-chartreuse"></span><h2>Chartreuse<a class="headerlink" href="#chartreuse" title="Link to this heading"></a></h2>
+<img alt="Chartreuse preferences" src="../../_images/GettingStarted_Preferences_3.png" />
+<ul>
+<li><p><strong>Default Plot Data Provider</strong> If a file containing plottable content (for instance, Dakota tabular data files) is selected for graphical plotting,
+but Dakota GUI cannot make a determination about how to interpret it, this field determines the default plot data provider to use.</p></li>
+<li><p><strong>Plotting Library</strong> This setting allows you to control which underlying plotting library is used to render graphical plots.</p></li>
+<li><p><strong>Allow plotting library to access online resources</strong> If this box is checked, Chartreuse will attempt to download the latest version of the plotting library
+before rendering a plot. If unchecked, it will use a slightly older version of the plotting library shipped with the GUI.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This option should <em>always</em> remain unchecked if you are using Dakota GUI in an environment without Internet access! Otherwise, your plots will not render
+and you will only see a white screen in the Chartreuse plot editor area.</p>
+</div>
+</li>
+<li><p><strong>Default Color Scale</strong> This setting allows you to decide which color scale is used by default for plots requiring a color scale (for instance, heatmaps).</p>
+<ul class="simple">
+<li><p>See <a class="reference external" href="https://www.kennethmoreland.com/color-advice/">“Color Map Advice for Scientific Visualization” by Kenneth Moreland.</a></p></li>
+</ul>
+</li>
+<li><p><strong>Default Font</strong> Using this option, you can control the font and font size shown on your plot titles.</p></li>
+<li><p><strong>Default Axis Font Size</strong> Using this option, you can control the size of the font written along each axis.</p></li>
+<li><p><strong>Default Tick Font Size</strong> Using this option, you can control the size of the font written along tick lines.</p></li>
+<li><p><strong>Fast Plot Data Retrieval Option</strong> For <a class="reference internal" href="../chartreuse/ChartreuseSandbox.html#chartreuse-sandbox-main"><span class="std std-ref">fast plotting in the Chartreuse Sandbox</span></a>, the option selected in this dropdown
+will govern which data retrieval method is used by default.</p></li>
+<li><p><strong>Show dialog before sending plot data to Sandbox View</strong> If checked, a dialog allowing you to change data retrieval methods
+will be displayed prior to creating a plot. See the <a class="reference internal" href="../chartreuse/ChartreuseSandbox.html#chartreuse-sandbox-main"><span class="std std-ref">Chartreuse Sandbox</span></a> documentation for more information.</p></li>
+</ul>
+</section>
+<section id="dakota">
+<span id="gui-preferences-dakota"></span><h2>Dakota<a class="headerlink" href="#dakota" title="Link to this heading"></a></h2>
+<img alt="Dakota preferences" src="../../_images/GettingStarted_Preferences_2.png" />
+<ul>
+<li><p><strong>Dakota executable</strong> The path to the Dakota executable.</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><em>Note:</em> If the GUI can’t automatically detect the location of your Dakota executable, this field will be blank and need to be manually configured the first time you use the GUI.</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><strong>Path to Python interpreter (optional)</strong> You can manually provide your own path to a Python interpreter.  If provided, this Python interpreter will be used by
+any Python-based driver scripts, overriding any other Python interpreters on your system path.</p></li>
+<li><p><strong>Suppress launch configurations</strong> If this option is checked, Dakota GUI will
+hide <a class="reference internal" href="../running/DakotaRunConfiguration.html#gui-run-configurations-eclipse-run-configs"><span class="std std-ref">launch configuration types unrelated to running Dakota.</span></a></p></li>
+<li><p><strong>Show advanced keyword options</strong> If checked, all Dakota keyword options will be presented in
+the <a class="reference internal" href="../inputfiles/DakotaVisualEditor.html#gui-visual-editor-main"><span class="std std-ref">Dakota Visual Editor.</span></a>  Otherwise, less common keywords will be hidden.</p></li>
+</ul>
+<section id="dakota-chartreuse">
+<h3>Dakota &gt; Chartreuse<a class="headerlink" href="#dakota-chartreuse" title="Link to this heading"></a></h3>
+<p>The sheer number of Dakota configuration options for Chartreuse are vast:</p>
+<img alt="Dakota Chartreuse preferences" src="../../_images/GettingStarted_Preferences_7.png" />
+<ul class="simple">
+<li><p><strong>Show Dakota eval id on plot trace points as hover text</strong>: This very specific configuration option should
+hopefully be self-evident, but if not, checking this will enable the display of Dakota’s eval id number
+when hovering over plot trace points while using <a class="reference internal" href="../chartreuse/Chartreuse.html#chartreuse-main"><span class="std std-ref">Chartreuse</span></a>.</p></li>
+</ul>
+</section>
+<section id="dakota-examples-search">
+<span id="gui-preferences-dakota-examples"></span><h3>Dakota &gt; Examples Search<a class="headerlink" href="#dakota-examples-search" title="Link to this heading"></a></h3>
+<img alt="Dakota examples search preferences" src="../../_images/DakotaStudyIntro_SearchOnline_1.png" />
+<ul class="simple">
+<li><p>Set the top-level radio button to “Search local filesystem” to cause the Dakota Examples Search dialog <a class="reference internal" href="../examples/DakotaExamples.html#gui-examples-offline"><span class="std std-ref">to look for examples within the Dakota install directory</span></a>.</p></li>
+<li><p>Set the top-level radio button to “Search remote Git repo” to cause the Dakota Examples Search dialog <a class="reference internal" href="../examples/DakotaExamples.html#gui-examples-online"><span class="std std-ref">to look online for Dakota examples</span></a>.</p></li>
+</ul>
+<section id="remote-git-repo-configuration">
+<h4>Remote Git Repo Configuration<a class="headerlink" href="#remote-git-repo-configuration" title="Link to this heading"></a></h4>
+<p>Note that you can configure Dakota GUI to clone examples from not one but many repos.  To import from an online Git repo directly into your workspace, you must first tell the
+Dakota GUI which repo you want to clone from, as well as provide credentials if necessary.</p>
+<p>To add a new repository, click “Add.”</p>
+<img alt="The New Repository dialog" src="../../_images/DakotaStudyIntro_SearchOnline_2.png" />
+<p>Provide the URL for your Git repo, as well as an optional name for your repo (to make it easier to find later, if you are cloning from a multitude of repos).</p>
+<p>Then, choose HTTPS or SSH for your chosen protocol.  If you choose HTTPS, you can provide your Git username.  If you choose SSH, you can provide your public and private key files.</p>
+<p>Check the “Access repo anonymously” button if you know your repository allows anonymous access, and you don’t want to be pestered with authentication pop-up dialogs.</p>
+<p>When finished, click OK.</p>
+<p>Back on the main Preferences dialog, if you wish to control the location on disk where your examples will initially be cloned, use the “Clone destination” file selection control
+to provide a file path.  Otherwise, the Git repos will be cloned to a random temporary directory on your machine, which will get deleted by your operating system after
+enough time has passed.</p>
+<p>When finished, click “Apply and Close.”</p>
+</section>
+</section>
+<section id="dakota-manual">
+<h3>Dakota &gt; Manual<a class="headerlink" href="#dakota-manual" title="Link to this heading"></a></h3>
+<img alt="Dakota manual preferences" src="../../_images/GettingStarted_Preferences_4.png" />
+<ul class="simple">
+<li><p><strong>Dakota manual path</strong> Configure where the Dakota GUI will look for the Dakota manual.  By default,
+the online version of the Dakota manual (hosted at dakota.sandia.gov) is used, but you can also switch to a local version of
+the manual if you are working without an Internet connection.</p></li>
+</ul>
+</section>
+<section id="dakota-text-editor">
+<h3>Dakota &gt; Text Editor<a class="headerlink" href="#dakota-text-editor" title="Link to this heading"></a></h3>
+<img alt="Dakota text editor preferences" src="../../_images/GettingStarted_Preferences_6.png" />
+<p>Configuration options for the Dakota text editor.</p>
+<ul class="simple">
+<li><p><strong>Default Indentation Type:</strong> Specify whether to use tabs or spaces for indentation.</p></li>
+<li><p><strong>Default Indentation Amount:</strong> Specify how many tabs or spaces to indent by.</p></li>
+<li><p><strong>Default Quote Type:</strong> Specify whether single or double quotes are used for Dakota strings.</p></li>
+<li><p><strong>Add line breaks to lists of elements when generating studies:</strong> Automatically formats element lists to make them easier to read.</p></li>
+<li><p><strong>Colors:</strong> Configure the colors used in the Dakota Text editor</p></li>
+</ul>
+</section>
+<section id="dakota-workflow-support">
+<span id="gui-preferences-dakota-workflow"></span><h3>Dakota &gt; Workflow Support<a class="headerlink" href="#dakota-workflow-support" title="Link to this heading"></a></h3>
+<img alt="Dakota Chartreuse preferences" src="../../_images/GettingStarted_Preferences_8.png" />
+<ul class="simple">
+<li><p><strong>Workflow Interface Manifest Driver Template Style:</strong> This configuration option allows you to specify the
+default pre-processing style when specifying a Next-Gen Workflow based driver for Dakota. There are two
+styles recognized by Dakota GUI:</p>
+<ul>
+<li><p><em>{DRIVER} (dprepro markup)</em> - uses DPREPRO to activate the relationship between a Dakota study and
+a Next-Gen Workflow analysis driver. Refer to the section on the <a class="reference internal" href="../ngw/NextGenWorkflowAnalysisDrivers.html#ngw-analysisdrivers-dprepro"><span class="std std-ref">relationship between DREPRO and Next-Gen Workflow</span></a> for more information.</p></li>
+<li><p><em>SAW_DRIVER= (magic string)</em> - a legacy option for interacting with Next-Gen Workflow that is nevertheless
+still useful in some contexts. Refer to the section on the <a class="reference internal" href="../ngw/NextGenWorkflowAnalysisDrivers.html#ngw-analysisdrivers-sawdriverstring"><span class="std std-ref">usage of “SAW_DRIVER=” string</span></a> here.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+</section>
+<section id="highlighter">
+<span id="gui-preferences-highlighter"></span><h2>Highlighter<a class="headerlink" href="#highlighter" title="Link to this heading"></a></h2>
+<img alt="Highlighter preferences" src="../../_images/GettingStarted_Preferences_5.png" />
+<ul class="simple">
+<li><p><strong>Default Pre-processing Marker</strong> This setting controls what pre-processor markup type is used by default.</p>
+<ul>
+<li><p><strong>APREPRO</strong> APREPRO is an algebraic pre-processor that reads a file containing both general text and algebraic, string, or conditional expressions.
+<a class="reference external" href="https://sandialabs.github.io/seacas-docs/sphinx/html/#aprepro">You can learn more about APREPRO here.</a></p></li>
+<li><p><strong>DPREPRO</strong> DPREPRO is a Dakota-developed derivation of APREPRO with similar syntax.
+<a class="reference internal" href="../../externaltools/dpreproandpyprepro.html#interfaces-dprepro-and-pyprepro"><span class="std std-ref">You can learn more about DPREPRO here.</span></a></p></li>
+<li><p><strong>Positional Preprocessor</strong> A special type of pre-processor used by Dakota GUI.  Rather than marking up a text file, a positional pre-processor
+is an in-memory instruction that replaces a range of text characters at runtime.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="ContextMenuTools.html" class="btn btn-neutral float-left" title="Context Menu Tools" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="Eclipse.html" class="btn btn-neutral float-right" title="Eclipse Reference" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <!--
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Sandia National Laboratories.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+  --> 
+
+</footer>
+        </div>
+      </div>
+	  
+	  <div style="background-color: #0f0f0f;color:#fafafa;padding:20px">
+	    <div>
+		  <h2><em>Exceptional service in the national interest</em></h2>
+		</div>
+		<p>© 2023 National Technology and Engineering Solutions of Sandia, LLC. | <a href="https://www.sandia.gov/contact_us/index.html">Questions &amp; Comments</a> | <a href="https://www.sandia.gov/general/privacy-security/index.html">Privacy &amp; Security</a></p>
+		<p><a href="http://energy.gov" rel="noopener noreferrer" target="_blank"><img alt="U.S. Department of Energy" longdesc="https://energy.gov" src="https://www.sandia.gov/_common/images/doe_logo_white.png" style="height:37px; width:140px"></a> <a href="http://nnsa.energy.gov/" rel="noopener noreferrer" target="_blank"> <img alt="National Nuclear Security Administration" longdesc="http://nnsa.gov" src="https://www.sandia.gov/_common/images/nnsa_logo_white.png" style="height:37px; width:116px"></a></p>
+		<p><a href="https://www.sandia.gov">Sandia National Laboratories</a> is a multimission laboratory managed and operated by National Technology and Engineering Solutions of Sandia, LLC., a wholly owned subsidiary of Honeywell International, Inc., for the U.S. Department of Energy’s National Nuclear Security Administration under contract DE-NA-0003525.</p>
+	  </div>	  	  
+	  
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

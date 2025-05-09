@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Other Dakota Outputs &mdash; dakota  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/dakota_theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/sandiaheaderlite.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Study Types" href="../studytypes.html" />
+    <link rel="prev" title="Legacy Graphics Output" href="graphicslegacy.html" /> 
+  
+  <meta name="sandia.approval_type" content="formal"/>
+  <meta property="sandia.approved" content="SAND2025-05563O"/>
+  <meta name="description" content="The Dakota project delivers both state-of-the-art research and robust, usable software for optimization and UQ."/>
+  <meta name="keywords" content="Dakota, optimization, UQ, uncertainty quantification, parametric analysis, design exploration, model calibration, risk analysis"/>
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> dakota
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../setupdakota.html">Getting Started</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../usingdakota.html">Using Dakota</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../introduction/aboutdakota.html">About Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../introduction/helloworld.html">Dakota Beginner’s Tutorial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples.html">Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../introduction/couplingtosimulations.html">Coupling Dakota to a Simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../inputfile.html">Dakota Input File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../running.html">Running Dakota</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../output.html">Dakota Output</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="standardoutput.html">Standard Output</a></li>
+<li class="toctree-l3"><a class="reference internal" href="standarderror.html">Error Messages Output</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tabulardata.html">Tabular Output Data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hdf.html">HDF5 Output</a></li>
+<li class="toctree-l3"><a class="reference internal" href="graphicslegacy.html">Legacy Graphics Output</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Other Dakota Outputs</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#stochastic-expansion-exports">Stochastic expansion exports</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#surrogate-model-exports">Surrogate Model Exports</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#variables-output-from-pre-run">Variables Output from Pre-run</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../studytypes.html">Study Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../topics.html">Topics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../advanced.html">Advanced Topics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../theory.html">Dakota Theory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference.html">Keyword Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../usingdakotagui/usingdakotagui.html">Using Dakota GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../externaltools/externaltools.html">Using External Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../compiling/compiling.html">Compiling Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developingdakota/developingdakota.html">Developing Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../misc/misc.html">Miscellaneous</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">dakota</a>
+      </nav>
+
+	  <!-- SNL Lite header -->
+	  <div class="snlheader-subsite--wrapper-default">
+		<snlheader class="snlheader-subsite" role="snlbanner">
+		  <div class="wrapper">
+			<a href="https://www.sandia.gov/index.html">
+			  <div class="logo-transparent"><p class="logo">Sandia National Laboratories</p></div>
+			</a>
+			<div class="nav-top">
+			  <a class="visuallyhidden" name="mainnav"></a>
+			  <div aria-label="main navigation" class="core-nav-transparent core-nav-transparent--visible" role="navigation">
+				<ul role="navigation" class="secondary-links">
+				  <li id="search-text-link">
+					<a aria-label="Search" href="https://www.sandia.gov/search/">Search Sandia.gov</a>
+				  </li>
+				  <li id="directory-text-link">
+					<a href="https://www.sandia.gov/directory.html" aria-expanded="false" aria-label="Site Directory">All Sandia Websites</a>
+				  </li>
+				</ul>
+			  </div>
+			</div>
+		  </div> 
+		</snlheader>
+	  </div>	  
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../usingdakota.html">Using Dakota</a></li>
+          <li class="breadcrumb-item"><a href="../output.html">Dakota Output</a></li>
+      <li class="breadcrumb-item active">Other Dakota Outputs</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/usingdakota/output/otheroutput.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="other-dakota-outputs">
+<span id="other-output"></span><h1>Other Dakota Outputs<a class="headerlink" href="#other-dakota-outputs" title="Link to this heading"></a></h1>
+<section id="stochastic-expansion-exports">
+<span id="other-output-pce"></span><h2>Stochastic expansion exports<a class="headerlink" href="#stochastic-expansion-exports" title="Link to this heading"></a></h2>
+<p>Polynomial chaos expansion (PCE) methods compute coefficients for
+response expansions which employ a basis of multivariate orthogonal
+polynomials. The <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/polynomial_chaos.html"><span class="pre">polynomial_chaos</span></a></code> method calculates these
+coefficients based on <a class="reference internal" href="../studytypes/uq.html#uq-expansion"><span class="std std-ref">a number of stochastic expansion approaches</span></a>.
+One may output the PCE coefficients to a file using the keyword
+<code class="docutils literal notranslate"><span class="pre">export_expansion_file</span> <span class="pre">=</span> <span class="pre">STRING</span></code>. Each row of the exported file will
+contain a coefficient, followed by the multi-index indicating which
+basis terms correspond to it. Only <a class="reference internal" href="../inputfile/inputstodakota.html#input-tabularformat"><span class="std std-ref">free-form format</span></a> is supported
+for this file.</p>
+<p>When using numerical integration schemes with structured rules, Dakota
+can also output the integration points and corresponding weights to a
+tabular file. This output is generated when <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method.html"><span class="pre">method</span></a></code> <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-output.html"><span class="pre">output</span></a></code> is
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-output-verbose.html"><span class="pre">verbose</span></a></code> or higher. Weights and points are printed to a file
+<code class="docutils literal notranslate"><span class="pre">dakota_quadrature_tabular.dat</span></code> (tensor product quadrature),
+<code class="docutils literal notranslate"><span class="pre">dakota_sparse_tabular.dat</span></code> (sparse grids), or
+<code class="docutils literal notranslate"><span class="pre">dakota_cubature_tabular.dat</span></code> (cubature methods), with one line per
+integration point.</p>
+</section>
+<section id="surrogate-model-exports">
+<span id="other-output-surr"></span><h2>Surrogate Model Exports<a class="headerlink" href="#surrogate-model-exports" title="Link to this heading"></a></h2>
+<p>Most Dakota surrogate models, including all those implemented in
+Surfpack, all those in the experimental surrogate module, and some
+stochastic expansion approaches support the keyword . When specified,
+any approximate evaluations performed on the surrogate model will be
+output to the specified data file. The data file can be exported in any
+of the <a class="reference internal" href="../inputfile/inputstodakota.html#input-tabularformat"><span class="std std-ref">tabular formats</span></a> (default
+annotated). This facilitates plotting or external diagnostics of the
+surrogate model. Additionally, the Gaussian Process surrogate models can
+export variance predictions through .</p>
+<p>In addition, the Surfpack and experimental families of global surrogate
+models can be exported to text and binary archives for later reuse in
+Dakota or other contexts, such as evaluation from C or Python, or with
+the <code class="docutils literal notranslate"><span class="pre">surfpack</span></code> executable or library API. Select Surfpack models can
+export to a human-readable and self-documenting algebraic form, suitable
+for reuse in user-developed tools. The
+<a class="reference internal" href="../reference/model-surrogate-global-gaussian_process-surfpack.html#model-surrogate-global-gaussian-process-surfpack"><span class="std std-ref">keyword group for surfpack</span></a>
+is used to specify model export filenames and formats.</p>
+</section>
+<section id="variables-output-from-pre-run">
+<span id="other-output-prerun"></span><h2>Variables Output from Pre-run<a class="headerlink" href="#variables-output-from-pre-run" title="Link to this heading"></a></h2>
+<p>The pre-run mode (supported only for select methods) permits
+specification of an output file to which Dakota will write parameter
+(variables) data in <a class="reference internal" href="../inputfile/inputstodakota.html#input-tabularformat"><span class="std std-ref">any supported tabular data format</span></a>
+(default annotated) with data columns corresponding to each variable.
+This file can be generated with sampling, parameter study, and DACE
+methods by invoking</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>dakota -i dakota.in -pre_run ::variables.dat
+</pre></div>
+</div>
+<p>for example, to output the variables (samples) in an LHS study. If a
+user adds the corresponding response values to this file, it may then be
+imported using Dakota’s post-run mode. Command line pre-run will always
+export in annotated format. To export pre-run data in other formats,
+specify <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/environment-pre_run.html"><span class="pre">pre_run</span></a></code> in the input file instead of at the command-line,
+and provide a format option.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="graphicslegacy.html" class="btn btn-neutral float-left" title="Legacy Graphics Output" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../studytypes.html" class="btn btn-neutral float-right" title="Study Types" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <!--
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Sandia National Laboratories.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+  --> 
+
+</footer>
+        </div>
+      </div>
+	  
+	  <div style="background-color: #0f0f0f;color:#fafafa;padding:20px">
+	    <div>
+		  <h2><em>Exceptional service in the national interest</em></h2>
+		</div>
+		<p>© 2023 National Technology and Engineering Solutions of Sandia, LLC. | <a href="https://www.sandia.gov/contact_us/index.html">Questions &amp; Comments</a> | <a href="https://www.sandia.gov/general/privacy-security/index.html">Privacy &amp; Security</a></p>
+		<p><a href="http://energy.gov" rel="noopener noreferrer" target="_blank"><img alt="U.S. Department of Energy" longdesc="https://energy.gov" src="https://www.sandia.gov/_common/images/doe_logo_white.png" style="height:37px; width:140px"></a> <a href="http://nnsa.energy.gov/" rel="noopener noreferrer" target="_blank"> <img alt="National Nuclear Security Administration" longdesc="http://nnsa.gov" src="https://www.sandia.gov/_common/images/nnsa_logo_white.png" style="height:37px; width:116px"></a></p>
+		<p><a href="https://www.sandia.gov">Sandia National Laboratories</a> is a multimission laboratory managed and operated by National Technology and Engineering Solutions of Sandia, LLC., a wholly owned subsidiary of Honeywell International, Inc., for the U.S. Department of Energy’s National Nuclear Security Administration under contract DE-NA-0003525.</p>
+	  </div>	  	  
+	  
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

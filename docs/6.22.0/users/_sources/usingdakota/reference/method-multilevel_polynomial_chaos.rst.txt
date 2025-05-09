@@ -1,0 +1,285 @@
+.. _method-multilevel_polynomial_chaos:
+
+"""""""""""""""""""""""""""
+multilevel_polynomial_chaos
+"""""""""""""""""""""""""""
+
+
+Multilevel uncertainty quantification using polynomial chaos expansions
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-multilevel_polynomial_chaos-max_iterations
+   method-multilevel_polynomial_chaos-allocation_control
+   method-multilevel_polynomial_chaos-convergence_tolerance
+   method-multilevel_polynomial_chaos-metric_scale
+   method-multilevel_polynomial_chaos-refinement_metric
+   method-multilevel_polynomial_chaos-discrepancy_emulation
+   method-multilevel_polynomial_chaos-expansion_order_sequence
+   method-multilevel_polynomial_chaos-orthogonal_least_interpolation
+   method-multilevel_polynomial_chaos-askey
+   method-multilevel_polynomial_chaos-wiener
+   method-multilevel_polynomial_chaos-normalized
+   method-multilevel_polynomial_chaos-export_expansion_file
+   method-multilevel_polynomial_chaos-samples_on_emulator
+   method-multilevel_polynomial_chaos-sample_type
+   method-multilevel_polynomial_chaos-rng
+   method-multilevel_polynomial_chaos-probability_refinement
+   method-multilevel_polynomial_chaos-final_moments
+   method-multilevel_polynomial_chaos-response_levels
+   method-multilevel_polynomial_chaos-probability_levels
+   method-multilevel_polynomial_chaos-reliability_levels
+   method-multilevel_polynomial_chaos-gen_reliability_levels
+   method-multilevel_polynomial_chaos-distribution
+   method-multilevel_polynomial_chaos-variance_based_decomp
+   method-multilevel_polynomial_chaos-diagonal_covariance
+   method-multilevel_polynomial_chaos-full_covariance
+   method-multilevel_polynomial_chaos-import_approx_points_file
+   method-multilevel_polynomial_chaos-export_approx_points_file
+   method-multilevel_polynomial_chaos-seed_sequence
+   method-multilevel_polynomial_chaos-fixed_seed
+   method-multilevel_polynomial_chaos-model_pointer
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+------------------------------------+-----------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword                     | Dakota Keyword Description                    |
+|                         | Group              |                                    |                                               |
++=========================+====================+====================================+===============================================+
+| Optional                                     | `max_iterations`__                 | Number of iterations allowed for optimizers   |
+|                                              |                                    | and adaptive UQ methods                       |
++----------------------------------------------+------------------------------------+-----------------------------------------------+
+| Optional                                     | `allocation_control`__             | Sample allocation approach for multilevel     |
+|                                              |                                    | expansions                                    |
++----------------------------------------------+------------------------------------+-----------------------------------------------+
+| Optional                                     | `convergence_tolerance`__          | Stopping criterion based on objective         |
+|                                              |                                    | function or statistics convergence            |
++----------------------------------------------+------------------------------------+-----------------------------------------------+
+| Optional                                     | `metric_scale`__                   | define scaling of statistical metrics when    |
+|                                              |                                    | adapting UQ surrogates                        |
++----------------------------------------------+------------------------------------+-----------------------------------------------+
+| Optional                                     | `refinement_metric`__              | Metric used for guiding adaptive refinement   |
+|                                              |                                    | during UQ.                                    |
++----------------------------------------------+------------------------------------+-----------------------------------------------+
+| Optional                                     | `discrepancy_emulation`__          | Formulation for emulation of model            |
+|                                              |                                    | discrepancies.                                |
++-------------------------+--------------------+------------------------------------+-----------------------------------------------+
+| Required (Choose One)   | Coefficient        | `expansion_order_sequence`__       | Sequence of expansion orders used in a        |
+|                         | Computation        |                                    | multi-stage expansion                         |
+|                         | Approach           +------------------------------------+-----------------------------------------------+
+|                         |                    | `orthogonal_least_interpolation`__ | Build a polynomial chaos expansion from       |
+|                         |                    |                                    | simulation samples using orthogonal least     |
+|                         |                    |                                    | interpolation.                                |
++-------------------------+--------------------+------------------------------------+-----------------------------------------------+
+| Optional (Choose One)   | Basis Polynomial   | `askey`__                          | Select the standardized random variables (and |
+|                         | Family             |                                    | associated basis polynomials) from the Askey  |
+|                         |                    |                                    | family that best match the user-specified     |
+|                         |                    |                                    | random variables.                             |
+|                         |                    +------------------------------------+-----------------------------------------------+
+|                         |                    | `wiener`__                         | Use standard normal random variables (along   |
+|                         |                    |                                    | with Hermite orthogonal basis polynomials)    |
+|                         |                    |                                    | when transforming to a standardized           |
+|                         |                    |                                    | probability space.                            |
++-------------------------+--------------------+------------------------------------+-----------------------------------------------+
+| Optional                                     | `normalized`__                     | The normalized specification requests output  |
+|                                              |                                    | of PCE coefficients that correspond to        |
+|                                              |                                    | normalized orthogonal basis polynomials       |
++----------------------------------------------+------------------------------------+-----------------------------------------------+
+| Optional                                     | `export_expansion_file`__          | Export the coefficients and multi-index of a  |
+|                                              |                                    | Polynomial Chaos Expansion (PCE) to a file    |
++----------------------------------------------+------------------------------------+-----------------------------------------------+
+| Optional                                     | `samples_on_emulator`__            | Number of samples at which to evaluate an     |
+|                                              |                                    | emulator (surrogate)                          |
++----------------------------------------------+------------------------------------+-----------------------------------------------+
+| Optional                                     | `sample_type`__                    | Selection of sampling strategy                |
++----------------------------------------------+------------------------------------+-----------------------------------------------+
+| Optional                                     | `rng`__                            | Selection of a random number generator        |
++----------------------------------------------+------------------------------------+-----------------------------------------------+
+| Optional                                     | `probability_refinement`__         | Allow refinement of probability and           |
+|                                              |                                    | generalized reliability results using         |
+|                                              |                                    | importance sampling                           |
++----------------------------------------------+------------------------------------+-----------------------------------------------+
+| Optional                                     | `final_moments`__                  | Output moments of the specified type and      |
+|                                              |                                    | include them within the set of final          |
+|                                              |                                    | statistics.                                   |
++----------------------------------------------+------------------------------------+-----------------------------------------------+
+| Optional                                     | `response_levels`__                | Values at which to estimate desired           |
+|                                              |                                    | statistics for each response                  |
++----------------------------------------------+------------------------------------+-----------------------------------------------+
+| Optional                                     | `probability_levels`__             | Specify probability levels at which to        |
+|                                              |                                    | estimate the corresponding response value     |
++----------------------------------------------+------------------------------------+-----------------------------------------------+
+| Optional                                     | `reliability_levels`__             | Specify reliability levels at which the       |
+|                                              |                                    | response values will be estimated             |
++----------------------------------------------+------------------------------------+-----------------------------------------------+
+| Optional                                     | `gen_reliability_levels`__         | Specify generalized relability levels at      |
+|                                              |                                    | which to estimate the corresponding response  |
+|                                              |                                    | value                                         |
++----------------------------------------------+------------------------------------+-----------------------------------------------+
+| Optional                                     | `distribution`__                   | Selection of cumulative or complementary      |
+|                                              |                                    | cumulative functions                          |
++----------------------------------------------+------------------------------------+-----------------------------------------------+
+| Optional                                     | `variance_based_decomp`__          | Activates global sensitivity analysis based   |
+|                                              |                                    | on decomposition of response variance into    |
+|                                              |                                    | main, interaction, and total effects          |
++-------------------------+--------------------+------------------------------------+-----------------------------------------------+
+| Optional (Choose One)   | Covariance Type    | `diagonal_covariance`__            | Display only the diagonal terms of the        |
+|                         |                    |                                    | covariance matrix                             |
+|                         |                    +------------------------------------+-----------------------------------------------+
+|                         |                    | `full_covariance`__                | Display the full covariance matrix            |
++-------------------------+--------------------+------------------------------------+-----------------------------------------------+
+| Optional                                     | `import_approx_points_file`__      | Filename for points at which to evaluate the  |
+|                                              |                                    | PCE/SC surrogate                              |
++----------------------------------------------+------------------------------------+-----------------------------------------------+
+| Optional                                     | `export_approx_points_file`__      | Output file for surrogate model value         |
+|                                              |                                    | evaluations                                   |
++----------------------------------------------+------------------------------------+-----------------------------------------------+
+| Optional                                     | `seed_sequence`__                  | Sequence of seed values for multi-stage       |
+|                                              |                                    | random sampling                               |
++----------------------------------------------+------------------------------------+-----------------------------------------------+
+| Optional                                     | `fixed_seed`__                     | Reuses the same seed value for multiple       |
+|                                              |                                    | random sampling sets                          |
++----------------------------------------------+------------------------------------+-----------------------------------------------+
+| Optional                                     | `model_pointer`__                  | Identifier for model block to be used by a    |
+|                                              |                                    | method                                        |
++----------------------------------------------+------------------------------------+-----------------------------------------------+
+
+.. __: method-multilevel_polynomial_chaos-max_iterations.html
+__ method-multilevel_polynomial_chaos-allocation_control.html
+__ method-multilevel_polynomial_chaos-convergence_tolerance.html
+__ method-multilevel_polynomial_chaos-metric_scale.html
+__ method-multilevel_polynomial_chaos-refinement_metric.html
+__ method-multilevel_polynomial_chaos-discrepancy_emulation.html
+__ method-multilevel_polynomial_chaos-expansion_order_sequence.html
+__ method-multilevel_polynomial_chaos-orthogonal_least_interpolation.html
+__ method-multilevel_polynomial_chaos-askey.html
+__ method-multilevel_polynomial_chaos-wiener.html
+__ method-multilevel_polynomial_chaos-normalized.html
+__ method-multilevel_polynomial_chaos-export_expansion_file.html
+__ method-multilevel_polynomial_chaos-samples_on_emulator.html
+__ method-multilevel_polynomial_chaos-sample_type.html
+__ method-multilevel_polynomial_chaos-rng.html
+__ method-multilevel_polynomial_chaos-probability_refinement.html
+__ method-multilevel_polynomial_chaos-final_moments.html
+__ method-multilevel_polynomial_chaos-response_levels.html
+__ method-multilevel_polynomial_chaos-probability_levels.html
+__ method-multilevel_polynomial_chaos-reliability_levels.html
+__ method-multilevel_polynomial_chaos-gen_reliability_levels.html
+__ method-multilevel_polynomial_chaos-distribution.html
+__ method-multilevel_polynomial_chaos-variance_based_decomp.html
+__ method-multilevel_polynomial_chaos-diagonal_covariance.html
+__ method-multilevel_polynomial_chaos-full_covariance.html
+__ method-multilevel_polynomial_chaos-import_approx_points_file.html
+__ method-multilevel_polynomial_chaos-export_approx_points_file.html
+__ method-multilevel_polynomial_chaos-seed_sequence.html
+__ method-multilevel_polynomial_chaos-fixed_seed.html
+__ method-multilevel_polynomial_chaos-model_pointer.html
+
+
+
+**Description**
+
+
+As described in :dakkw:`method-polynomial_chaos`, the polynomial chaos
+expansion (PCE) is a general framework for the approximate representation
+of random response functions in terms of series expansions in standardized
+random variables:
+
+
+.. math:: R = \sum_{i=0}^P \alpha_i \Psi_i(\xi) 
+
+where :math:`\alpha_i`  is a deterministic coefficient, :math:`\Psi_i`  is a
+multidimensional orthogonal polynomial and :math:`\xi`  is a vector of
+standardized random variables.
+
+In the multilevel and multifidelity cases, we decompose this expansion
+into several constituent expansions, one per model form or solution
+control level.  In a bi-fidelity case with low-fidelity (LF) and
+high-fidelity (HF) models, we have:
+
+
+.. math:: R = \sum_{i=0}^{P^{LF}} \alpha^{LF}_i \Psi_i(\xi)
+     + \sum_{i=0}^{P^{HF}}      \delta_i \Psi_i(\xi) 
+
+where :math:`\delta_i`  is a coefficient for the discrepancy expansion.
+
+For the case of regression-based PCE (least squares, compressed sensing,
+or orthogonal least interpolation), an optimal sample allocation procedure
+can be applied for the resolution of each level within a multilevel sampling
+procedure as in :dakkw:`method-multilevel_sampling`.  The core difference
+is that a Monte Carlo estimator of the statistics is replaced with a
+PCE-based estimator of the statistics, requiring approximation of the
+variance of these estimators.
+
+Initial prototypes for multilevel PCE can be explored using
+``dakota/share/dakota/test/dakota_uq_diffusion_mlpce``.in, and will be stabilized in
+future releases.
+
+
+*Additional Resources*
+
+Dakota provides access to multilevel PCE methods through the
+NonDMultilevelPolynomialChaos class. Refer to the 
+:ref:`theory:uq:expansion` section within the theory portion of the Users Guide
+for additional information on the Multilevel PCE algorithm.
+
+
+*Expected HDF5 Output*
+
+If Dakota was built with HDF5 support and run with the
+:dakkw:`environment-results_output-hdf5` keyword, this method
+writes the following results to HDF5:
+
+
+- :ref:`hdf5_results-se_moments` (expansion moments only)
+- :ref:`hdf5_results-pdf`
+- :ref:`hdf5_results-level_mappings`
+
+In addition, the execution group has the attribute ``equiv_hf_evals``, which
+records the equivalent number of high-fidelity evaluations.
+
+
+
+**Examples**
+
+
+
+.. code-block::
+
+    method,
+     multilevel_polynomial_chaos
+       model_pointer = 'HIERARCH'
+       pilot_samples = 10
+       expansion_order_sequence = 2
+       collocation_ratio = .9
+       seed = 1237
+       orthogonal_matching_pursuit
+       convergence_tolerance = .01
+     output silent
+    
+    model,
+     id_model = 'HIERARCH'
+     surrogate ensemble
+       ordered_model_fidelities = 'SIM1'
+       correction additive zeroth_order
+    
+    model,
+     id_model = 'SIM1'
+     simulation
+       solution_level_control = 'mesh_size'
+       solution_level_cost = 1. 8. 64. 512. 4096.
+
+
+
+

@@ -1,0 +1,62 @@
+.. _method-bayes_calibration-muq-multilevel_mcmc-initial_chain_samples:
+
+"""""""""""""""""""""
+initial_chain_samples
+"""""""""""""""""""""
+
+
+Number of initial samples for each level
+
+
+
+
+**Topics**
+
+
+bayesian_calibration
+
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* INTEGER
+
+- *Default:* 100
+
+
+**Description**
+
+
+Set the number of samples taken at each level.
+
+*Default Behavior*
+
+Defaults to 100.
+
+
+
+
+**Examples**
+
+
+
+.. code-block::
+
+    method,
+    bayes_calibration muq
+    multilevel_mcmc
+        initial_chain_samples = 50
+        target_variance = 0.5
+        subsampling_steps = 12 0
+        greedy_resampling_factor = 0.5
+
+
+

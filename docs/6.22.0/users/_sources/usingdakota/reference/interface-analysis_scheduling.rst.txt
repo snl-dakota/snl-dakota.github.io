@@ -1,0 +1,61 @@
+.. _interface-analysis_scheduling:
+
+"""""""""""""""""""
+analysis_scheduling
+"""""""""""""""""""
+
+
+Specify the scheduling of concurrent analyses when Dakota is run in parallel
+
+
+
+**Topics**
+
+
+concurrency_and_parallelism
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   interface-analysis_scheduling-dedicated
+   interface-analysis_scheduling-peer
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+- *Default:* automatic (see discussion)
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+--------------------+-----------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword     | Dakota Keyword Description                    |
+|                         | Group              |                    |                                               |
++=========================+====================+====================+===============================================+
+| Required (Choose One)   | Scheduling Mode    | `dedicated`__      | Specify a dedicated scheduler partition for   |
+|                         |                    |                    | concurrent analysis executions                |
+|                         |                    +--------------------+-----------------------------------------------+
+|                         |                    | `peer`__           | Specify a peer partition for parallel         |
+|                         |                    |                    | analysis scheduling                           |
++-------------------------+--------------------+--------------------+-----------------------------------------------+
+
+.. __: interface-analysis_scheduling-dedicated.html
+__ interface-analysis_scheduling-peer.html
+
+
+
+**Description**
+
+
+When Dakota is run in parallel, the partition type for the analysis
+servers is determined automatically. If this setting is undesirable,
+it may be overridden by the user using the ``analysis_scheduling``
+keyword.
+
+

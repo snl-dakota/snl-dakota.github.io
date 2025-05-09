@@ -8,6 +8,10 @@ This site hosts the Dakota documentation, whereas this is the primary
 
 ## Dakota Manuals
 
+* Dakota Version 6.22.0 
+  - [User Guide](./docs/6.22.0/users/) \| [download](./docs/6.22.0/downloads/user-html-6.22.0.tar.gz)
+  - [C++ Developer Guide](./docs/6.22.0/developers/) \| [download](./docs/6.22.0/downloads/html-dev-6.22.0.tar.gz)
+
 * Dakota Version 6.21.0 
   - [User Guide](./docs/6.21.0/users/) \| [download](./docs/6.21.0/downloads/user-html-6.21.0.tar.gz)
   - [C++ Developer Guide](./docs/6.21.0/developers/) \| [download](./docs/6.21.0/downloads/html-dev-6.21.0.tar.gz)

@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Working with Simulation Models &mdash; dakota  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/dakota_theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/sandiaheaderlite.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Examples in the GUI" href="../examples/DakotaExamples.html" />
+    <link rel="prev" title="GUI Quickstart" href="quickstart.html" /> 
+  
+  <meta name="sandia.approval_type" content="formal"/>
+  <meta property="sandia.approved" content="SAND2025-05563O"/>
+  <meta name="description" content="The Dakota project delivers both state-of-the-art research and robust, usable software for optimization and UQ."/>
+  <meta name="keywords" content="Dakota, optimization, UQ, uncertainty quantification, parametric analysis, design exploration, model calibration, risk analysis"/>
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> dakota
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../setupdakota.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../usingdakota/usingdakota.html">Using Dakota</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../usingdakotagui.html">Using Dakota GUI</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../usingdakotagui.html#introduction">Introduction</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="launching.html">Launching the GUI</a></li>
+<li class="toctree-l3"><a class="reference internal" href="quickstart.html">GUI Quickstart</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Working with Simulation Models</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#next-gen-workflow">Next-Gen Workflow</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#simple-text-formats">Simple Text Formats</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#json-yaml">JSON/YAML</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#ini">INI</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#example-search">Example Search</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#wizards">Wizards</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#editing-dakota-input-files">Editing Dakota Input Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#running-dakota">Running Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#running-dakota-remotely">Running Dakota Remotely</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#output-from-dakota">Output from Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#gui-tools">GUI Tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#miscellaneous">Miscellaneous</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../externaltools/externaltools.html">Using External Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../compiling/compiling.html">Compiling Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developingdakota/developingdakota.html">Developing Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../misc/misc.html">Miscellaneous</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">dakota</a>
+      </nav>
+
+	  <!-- SNL Lite header -->
+	  <div class="snlheader-subsite--wrapper-default">
+		<snlheader class="snlheader-subsite" role="snlbanner">
+		  <div class="wrapper">
+			<a href="https://www.sandia.gov/index.html">
+			  <div class="logo-transparent"><p class="logo">Sandia National Laboratories</p></div>
+			</a>
+			<div class="nav-top">
+			  <a class="visuallyhidden" name="mainnav"></a>
+			  <div aria-label="main navigation" class="core-nav-transparent core-nav-transparent--visible" role="navigation">
+				<ul role="navigation" class="secondary-links">
+				  <li id="search-text-link">
+					<a aria-label="Search" href="https://www.sandia.gov/search/">Search Sandia.gov</a>
+				  </li>
+				  <li id="directory-text-link">
+					<a href="https://www.sandia.gov/directory.html" aria-expanded="false" aria-label="Site Directory">All Sandia Websites</a>
+				  </li>
+				</ul>
+			  </div>
+			</div>
+		  </div> 
+		</snlheader>
+	  </div>	  
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../usingdakotagui.html">Using Dakota GUI</a></li>
+      <li class="breadcrumb-item active">Working with Simulation Models</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/usingdakotagui/introduction/simulationmodels.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="working-with-simulation-models">
+<span id="gui-simulation-models-overview"></span><h1>Working with Simulation Models<a class="headerlink" href="#working-with-simulation-models" title="Link to this heading"></a></h1>
+<p>Dakota’s primary mechanism for iterating over an external simulation model is to exchange parameters and responses between itself
+and the simulation model.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Please refer to the main article on <a class="reference internal" href="../../usingdakota/introduction/couplingtosimulations.html#couplingtosimulations-main"><span class="std std-ref">coupling Dakota to a simulation</span></a>
+for a detailed, general explanation.</p>
+</div>
+<p>In the context of Dakota GUI, there are two main approaches for defining an external simulation model:</p>
+<section id="next-gen-workflow">
+<h2>Next-Gen Workflow<a class="headerlink" href="#next-gen-workflow" title="Link to this heading"></a></h2>
+<p><a class="reference internal" href="../ngw/NextGenWorkflow.html#ngw-main"><span class="std std-ref">Next-Gen Workflow</span></a> is a powerful, node-based workflow tool that allows you to create an arbitrarily complex,
+visual representation of a workflow that passes information from beginning to end. The nature of Next-Gen Workflow makes it
+ideal for constructing simulation model defintions, as well as analysis drivers for Dakota itself.</p>
+</section>
+<section id="simple-text-formats">
+<span id="gui-simulation-models-ini-json-yaml"></span><h2>Simple Text Formats<a class="headerlink" href="#simple-text-formats" title="Link to this heading"></a></h2>
+<p>Dakota GUI also recognizes INI, JSON, and YAML formats if you wish to define the inputs and outputs of your simulation model
+using a simple text structure. For small, simple models, this is often the quickest approach for defining your simulation model.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In each of the following examples, the same model is being represented: Dakota’s classic “cantilever beam”
+model. The cantilever beam model accepts seven input parameters: Length (L), Width (w), Thickness (t), Young’s Modulus (E),
+Density (p), Horizontal load (X), and Vertical load (Y). And the cantilever beam model emits three output responses: the mass of
+the beam, the stress on the beam, and the displacement of the beam.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you do not want to write one of these simple text files by hand, you may opt to use the <a class="reference internal" href="../wizards/NewParameterResponseFile.html#wizards-newparamresponsefile-main"><span class="std std-ref">New Parameter/Response File Wizard</span></a> instead.</p>
+</div>
+<section id="json-yaml">
+<h3>JSON/YAML<a class="headerlink" href="#json-yaml" title="Link to this heading"></a></h3>
+<img alt="JSON file example" src="../../_images/ExampleSimulationModel_JSON.png" />
+<img alt="YAML file example" src="../../_images/ExampleSimulationModel_YAML.png" />
+<p>JSON and YAML are both popular formats for writing structured text. While their syntax differs, the content that Dakota GUI looks for
+remains the same between the two formats:</p>
+<ul class="simple">
+<li><p>The struct containing input parameters must be labeled with one of the following keys in order to be recognized:
+<code class="docutils literal notranslate"><span class="pre">input</span></code>, <code class="docutils literal notranslate"><span class="pre">inputs</span></code>, <code class="docutils literal notranslate"><span class="pre">parameters</span></code>, <code class="docutils literal notranslate"><span class="pre">params</span></code>, <code class="docutils literal notranslate"><span class="pre">variables</span></code>, <code class="docutils literal notranslate"><span class="pre">Input</span></code>, <code class="docutils literal notranslate"><span class="pre">Inputs</span></code>, <code class="docutils literal notranslate"><span class="pre">Parameters</span></code>, <code class="docutils literal notranslate"><span class="pre">Params</span></code>, or <code class="docutils literal notranslate"><span class="pre">Variables</span></code>.</p></li>
+<li><p>The struct containing output responses must be labeled with one of the following keys in order to be recognized:
+<code class="docutils literal notranslate"><span class="pre">output</span></code>, <code class="docutils literal notranslate"><span class="pre">outputs</span></code>, <code class="docutils literal notranslate"><span class="pre">responses</span></code>, <code class="docutils literal notranslate"><span class="pre">resps</span></code>, <code class="docutils literal notranslate"><span class="pre">results</span></code>, <code class="docutils literal notranslate"><span class="pre">Output</span></code>, <code class="docutils literal notranslate"><span class="pre">Outputs</span></code>, <code class="docutils literal notranslate"><span class="pre">Responses</span></code>, <code class="docutils literal notranslate"><span class="pre">Resps</span></code>, or <code class="docutils literal notranslate"><span class="pre">Results</span></code>.</p></li>
+<li><p>Input parameters can be stored either as a flat list or a dictionary of key-value pairs. If it’s a flat list, the
+values within will be treated as the input parameter labels. If it’s a dictionary, the keys will be the input parameter
+labels, and the values will be treated as initial starting values for the input parameters. In the screenshots above,
+we opted to use a dictionary to store parameter labels and their starting values.</p></li>
+<li><p>Output responses may also be stored in either a flat list or a dictionary of key-value pairs. While the dictionary option
+for responses is legal and parseable, there is currently no recognized use for initial response values in the Dakota GUI.
+In the screenshots above, we opted to use a flat list to store response labels.</p></li>
+</ul>
+</section>
+<section id="ini">
+<h3>INI<a class="headerlink" href="#ini" title="Link to this heading"></a></h3>
+<img alt="INI file example" src="../../_images/ExampleSimulationModel_INI.png" />
+<p>The GUI also supports flat INI files for storing parameter and response information. Because INI files are flat, special care must be taken to represent your model’s
+inputs and outputs in INI format:</p>
+<ul class="simple">
+<li><p>If you wish to supply starting values for your input parameters, these are represented using standard INI key-value syntax, with an equals symbol separating the key from the value.</p></li>
+<li><p>The complete list of input parameters are provided in a comma-separated list. This comma-separated list is the value for a single key, which must be one of the following:
+<code class="docutils literal notranslate"><span class="pre">_input</span></code>, <code class="docutils literal notranslate"><span class="pre">_inputs</span></code>, <code class="docutils literal notranslate"><span class="pre">_parameters</span></code>, <code class="docutils literal notranslate"><span class="pre">_params</span></code>, <code class="docutils literal notranslate"><span class="pre">_variables</span></code>, <code class="docutils literal notranslate"><span class="pre">_Input</span></code>, <code class="docutils literal notranslate"><span class="pre">_Inputs</span></code>, <code class="docutils literal notranslate"><span class="pre">_Parameters</span></code>, <code class="docutils literal notranslate"><span class="pre">_Params</span></code>, or <code class="docutils literal notranslate"><span class="pre">_Variables</span></code>.</p></li>
+<li><p>Likewise, the complete list of output responses are provided in a comma-separated list. This comma-separated list is the value for a single key, which must be one of the following:
+<code class="docutils literal notranslate"><span class="pre">_output</span></code>, <code class="docutils literal notranslate"><span class="pre">_outputs</span></code>, <code class="docutils literal notranslate"><span class="pre">_responses</span></code>, <code class="docutils literal notranslate"><span class="pre">_resps</span></code>, <code class="docutils literal notranslate"><span class="pre">_results</span></code>, <code class="docutils literal notranslate"><span class="pre">_Output</span></code>, <code class="docutils literal notranslate"><span class="pre">_Outputs</span></code>, <code class="docutils literal notranslate"><span class="pre">_Responses</span></code>, <code class="docutils literal notranslate"><span class="pre">_Resps</span></code>, or <code class="docutils literal notranslate"><span class="pre">_Results</span></code>.</p></li>
+<li><p>Note the underscore prefixing each reserved word for parameter and response lists. This underscore designates to Dakota GUI that these key-value pairs have special
+meaning and are not just another key-value pair for an input parameter value.</p></li>
+</ul>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="quickstart.html" class="btn btn-neutral float-left" title="GUI Quickstart" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../examples/DakotaExamples.html" class="btn btn-neutral float-right" title="Examples in the GUI" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <!--
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Sandia National Laboratories.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+  --> 
+
+</footer>
+        </div>
+      </div>
+	  
+	  <div style="background-color: #0f0f0f;color:#fafafa;padding:20px">
+	    <div>
+		  <h2><em>Exceptional service in the national interest</em></h2>
+		</div>
+		<p>© 2023 National Technology and Engineering Solutions of Sandia, LLC. | <a href="https://www.sandia.gov/contact_us/index.html">Questions &amp; Comments</a> | <a href="https://www.sandia.gov/general/privacy-security/index.html">Privacy &amp; Security</a></p>
+		<p><a href="http://energy.gov" rel="noopener noreferrer" target="_blank"><img alt="U.S. Department of Energy" longdesc="https://energy.gov" src="https://www.sandia.gov/_common/images/doe_logo_white.png" style="height:37px; width:140px"></a> <a href="http://nnsa.energy.gov/" rel="noopener noreferrer" target="_blank"> <img alt="National Nuclear Security Administration" longdesc="http://nnsa.gov" src="https://www.sandia.gov/_common/images/nnsa_logo_white.png" style="height:37px; width:116px"></a></p>
+		<p><a href="https://www.sandia.gov">Sandia National Laboratories</a> is a multimission laboratory managed and operated by National Technology and Engineering Solutions of Sandia, LLC., a wholly owned subsidiary of Honeywell International, Inc., for the U.S. Department of Energy’s National Nuclear Security Administration under contract DE-NA-0003525.</p>
+	  </div>	  	  
+	  
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

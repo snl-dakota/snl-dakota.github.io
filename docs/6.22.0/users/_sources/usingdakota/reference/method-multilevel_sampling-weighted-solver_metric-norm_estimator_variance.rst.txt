@@ -1,0 +1,50 @@
+.. _method-multilevel_sampling-weighted-solver_metric-norm_estimator_variance:
+
+"""""""""""""""""""""""
+norm_estimator_variance
+"""""""""""""""""""""""
+
+
+Utilize a p-norm over the vector of QoI estimator variances as the solver metric for sampling-based multifidelity methods.
+
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-multilevel_sampling-weighted-solver_metric-norm_estimator_variance-norm_order
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+--------------------+-----------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword     | Dakota Keyword Description                    |
+|                         | Group              |                    |                                               |
++=========================+====================+====================+===============================================+
+| Optional                                     | `norm_order`__     | Utilize the response covariance metric for    |
+|                                              |                    | guiding adaptive refinement during UQ.        |
++----------------------------------------------+--------------------+-----------------------------------------------+
+
+.. __: method-multilevel_sampling-weighted-solver_metric-norm_estimator_variance-norm_order.html
+
+
+
+**Description**
+
+
+The p-norm option provides more flexibility in defining a middle
+ground between the average and max options for scalar reduction of the
+estimator variance vector.  As the order of the norm increases, the
+metric approaches the max option (the infinity norm).  The default
+norm order is 2.
+
+
+

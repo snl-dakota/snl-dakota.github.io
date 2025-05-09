@@ -1,0 +1,1922 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Optimization &mdash; dakota  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/dakota_theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/sandiaheaderlite.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../../_static/copybutton.js?v=f281be69"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Nonlinear Least Squares" href="nonlinearleastsquares.html" />
+    <link rel="prev" title="Uncertainty Quantification" href="uq.html" /> 
+  
+  <meta name="sandia.approval_type" content="formal"/>
+  <meta property="sandia.approved" content="SAND2025-05563O"/>
+  <meta name="description" content="The Dakota project delivers both state-of-the-art research and robust, usable software for optimization and UQ."/>
+  <meta name="keywords" content="Dakota, optimization, UQ, uncertainty quantification, parametric analysis, design exploration, model calibration, risk analysis"/>
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> dakota
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../setupdakota.html">Getting Started</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../usingdakota.html">Using Dakota</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../introduction/aboutdakota.html">About Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../introduction/helloworld.html">Dakota Beginner’s Tutorial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples.html">Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../introduction/couplingtosimulations.html">Coupling Dakota to a Simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../inputfile.html">Dakota Input File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../running.html">Running Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../output.html">Dakota Output</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../studytypes.html">Study Types</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="parameterstudies.html">Parameter Studies</a></li>
+<li class="toctree-l3"><a class="reference internal" href="designofexperiments.html">Design of Experiments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="uq.html">Uncertainty Quantification</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Optimization</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#optimization-formulations">Optimization Formulations</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#problem-classification">Problem Classification</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#constraint-considerations">Constraint Considerations</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#optimizing-with-dakota-choosing-a-method">Optimizing with Dakota: Choosing a Method</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#gradient-based-local-methods">Gradient-Based Local Methods</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#methods-for-unconstrained-problems">Methods for Unconstrained Problems</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#methods-for-bound-constrained-problems">Methods for Bound-Constrained Problems</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#methods-for-constrained-problems">Methods for Constrained Problems</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#derivative-free-local-methods">Derivative-Free Local Methods</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#method-descriptions">Method Descriptions</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#example">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#derivative-free-global-methods">Derivative-Free Global Methods</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#opt-methods-gradientfree-global-descriptions">Method Descriptions</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#examples">Examples</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#additional-optimization-capabilities">Additional Optimization Capabilities</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#multiobjective-optimization">Multiobjective Optimization</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#multiobjective-example-1">Multiobjective Example 1</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#multiobjective-example-2">Multiobjective Example 2</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#optimization-with-user-specified-or-automatic-scaling">Optimization with User-specified or Automatic Scaling</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#scaling-example">Scaling Example</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#optimization-usage-guidelines">Optimization Usage Guidelines</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#optimization-third-party-libraries">Optimization Third Party Libraries</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#video-resources">Video Resources</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="nonlinearleastsquares.html">Nonlinear Least Squares</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../topics.html">Topics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../advanced.html">Advanced Topics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../theory.html">Dakota Theory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference.html">Keyword Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../usingdakotagui/usingdakotagui.html">Using Dakota GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../externaltools/externaltools.html">Using External Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../compiling/compiling.html">Compiling Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developingdakota/developingdakota.html">Developing Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../misc/misc.html">Miscellaneous</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">dakota</a>
+      </nav>
+
+	  <!-- SNL Lite header -->
+	  <div class="snlheader-subsite--wrapper-default">
+		<snlheader class="snlheader-subsite" role="snlbanner">
+		  <div class="wrapper">
+			<a href="https://www.sandia.gov/index.html">
+			  <div class="logo-transparent"><p class="logo">Sandia National Laboratories</p></div>
+			</a>
+			<div class="nav-top">
+			  <a class="visuallyhidden" name="mainnav"></a>
+			  <div aria-label="main navigation" class="core-nav-transparent core-nav-transparent--visible" role="navigation">
+				<ul role="navigation" class="secondary-links">
+				  <li id="search-text-link">
+					<a aria-label="Search" href="https://www.sandia.gov/search/">Search Sandia.gov</a>
+				  </li>
+				  <li id="directory-text-link">
+					<a href="https://www.sandia.gov/directory.html" aria-expanded="false" aria-label="Site Directory">All Sandia Websites</a>
+				  </li>
+				</ul>
+			  </div>
+			</div>
+		  </div> 
+		</snlheader>
+	  </div>	  
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../usingdakota.html">Using Dakota</a></li>
+          <li class="breadcrumb-item"><a href="../studytypes.html">Study Types</a></li>
+      <li class="breadcrumb-item active">Optimization</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/usingdakota/studytypes/optimization.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="optimization">
+<span id="opt"></span><h1>Optimization<a class="headerlink" href="#optimization" title="Link to this heading"></a></h1>
+<p>Optimization algorithms work to minimize (or maximize) an objective
+function, typically calculated by the user simulation code, subject to
+constraints on design variables and responses. Available approaches in
+Dakota include well-tested and proven gradient-based, derivative-free
+local, and global methods for use in science and engineering design
+applications. Dakota also offers more advanced algorithms, e.g., to
+manage multi-objective optimization or perform surrogate-based
+minimization. This page summarizes optimization problem formulation,
+standard algorithms available in Dakota (mostly through included
+<a class="reference internal" href="#opt-libraries"><span class="std std-ref">third party libraries</span></a>),
+some <a class="reference internal" href="../advanced/advancedmethods.html#adv-meth"><span class="std std-ref">advanced capabilities</span></a>, and offers
+<a class="reference internal" href="#opt-usage"><span class="std std-ref">usage guidelines</span></a>.</p>
+<section id="optimization-formulations">
+<span id="opt-formulations"></span><h2>Optimization Formulations<a class="headerlink" href="#optimization-formulations" title="Link to this heading"></a></h2>
+<p>This section provides a basic introduction to the mathematical
+formulation of optimization problems. The primary goal of this section
+is to introduce terms relating to these topics and is not intended to
+be a description of theory or numerical algorithms. For further details,
+consult <span id="id1">[<a class="reference internal" href="../../misc/bibliography.html#id13" title="J. S. Arora. Introduction to Optimum Design. McGraw-Hill, New York, 1989.">Aro89</a>, <a class="reference internal" href="../../misc/bibliography.html#id111" title="P. E. Gill, W. Murray, and M. H. Wright. Practical Optimization. Academic Press, San Diego, CA, 1981.">GMW81</a>, <a class="reference internal" href="../../misc/bibliography.html#id138" title="R. T. Haftka and Z. Gurdal. Elements of Structural Optimization. Kluwer, Boston, 1992.">HG92</a>, <a class="reference internal" href="../../misc/bibliography.html#id219" title="J. Nocedal and Wright S. J. Numerical Optimization. Springer Series in Operations Research. Springer, New York, 1999.">NJ99</a>, <a class="reference internal" href="../../misc/bibliography.html#id291" title="G. N. Vanderplaats. Numerical Optimization Techniques for Engineering Design: With Applications. McGraw-Hill, New York, 1984.">Van84</a>]</span>.</p>
+<p>A general optimization problem is formulated as follows:</p>
+<div class="math notranslate nohighlight" id="equation-optimformulation">
+<span class="eqno">(35)<a class="headerlink" href="#equation-optimformulation" title="Link to this equation"></a></span>\[\begin{split}  \hbox{minimize:} &amp; &amp; f(\mathbf{x})\nonumber\\
+  &amp; &amp; \mathbf{x} \in \Re^{n}\nonumber\\
+  \hbox{subject to:} &amp; &amp;
+  \mathbf{g}_{L} \leq \mathbf{g(x)} \leq \mathbf{g}_U\nonumber\\
+  &amp; &amp; \mathbf{h(x)}=\mathbf{h}_{t}\label{opt:formulations:equation01}\\
+  &amp; &amp; \mathbf{a}_{L} \leq \mathbf{A}_i\mathbf{x} \leq
+  \mathbf{a}_U\nonumber\\
+  &amp; &amp; \mathbf{A}_{e}\mathbf{x}=\mathbf{a}_{t}\nonumber\\
+  &amp; &amp; \mathbf{x}_{L} \leq \mathbf{x} \leq \mathbf{x}_U\nonumber\end{split}\]</div>
+<p>where vector and matrix terms are marked in bold typeface. In this
+formulation, <span class="math notranslate nohighlight">\(\mathbf{x}=[x_{1},x_{2},\ldots,x_{n}]\)</span> is an
+n-dimensional vector of real-valued <em>design variables</em> or <em>design
+parameters</em>. The n-dimensional vectors, <span class="math notranslate nohighlight">\(\mathbf{x}_{L}\)</span> and
+<span class="math notranslate nohighlight">\(\mathbf{x}_U\)</span>, are the lower and upper bounds, respectively, on
+the design parameters. These bounds define the allowable values for the
+elements of <span class="math notranslate nohighlight">\(\mathbf{x}\)</span>, and the set of all allowable values is
+termed the <em>design space</em> or the <em>parameter space</em>. A <em>design point</em> or
+a <em>sample point</em> is a particular set of values within the parameter
+space.</p>
+<p>The optimization goal is to minimize the <em>objective function</em>,
+<span class="math notranslate nohighlight">\(f(\mathbf{x})\)</span>, while satisfying the constraints. Constraints can
+be categorized as either linear or nonlinear and as either inequality or
+equality. The <em>nonlinear inequality constraints</em>, <span class="math notranslate nohighlight">\(\mathbf{g(x)}\)</span>,
+are “2-sided,” in that they have both lower and upper bounds,
+<span class="math notranslate nohighlight">\(\mathbf{g}_L\)</span> and <span class="math notranslate nohighlight">\(\mathbf{g}_U\)</span>, respectively. The
+<em>nonlinear equality constraints</em>, <span class="math notranslate nohighlight">\(\mathbf{h(x)}\)</span>, have target
+values specified by <span class="math notranslate nohighlight">\(\mathbf{h}_{t}\)</span>. The linear inequality
+constraints create a linear system <span class="math notranslate nohighlight">\(\mathbf{A}_i\mathbf{x}\)</span>, where
+<span class="math notranslate nohighlight">\(\mathbf{A}_i\)</span> is the coefficient matrix for the linear system.
+These constraints are also 2-sided as they have lower and upper bounds,
+<span class="math notranslate nohighlight">\(\mathbf{a}_L\)</span> and <span class="math notranslate nohighlight">\(\mathbf{a}_U\)</span>, respectively. The linear
+equality constraints create a linear system
+<span class="math notranslate nohighlight">\(\mathbf{A}_e\mathbf{x}\)</span>, where <span class="math notranslate nohighlight">\(\mathbf{A}_e\)</span> is the
+coefficient matrix for the linear system and <span class="math notranslate nohighlight">\(\mathbf{a}_{t}\)</span> are
+the target values. The constraints partition the parameter space into
+feasible and infeasible regions. A design point is said to be <em>feasible</em>
+if and only if it satisfies all of the constraints. Correspondingly, a
+design point is said to be <em>infeasible</em> if it violates one or more of
+the constraints.</p>
+<p>Many different methods exist to solve the optimization problem given by
+Equation <a class="reference internal" href="#equation-optimformulation">(35)</a>,
+all of which iterate on <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> in some manner. That is, an
+initial value for each parameter in <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> is chosen, the
+<em>response quantities</em>, <span class="math notranslate nohighlight">\(f(\mathbf{x})\)</span>, <span class="math notranslate nohighlight">\(\mathbf{g(x)}\)</span>,
+<span class="math notranslate nohighlight">\(\mathbf{h(x)}\)</span>, are computed, often by running a simulation, and
+some algorithm is applied to generate a new <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> that will
+either reduce the objective function, reduce the amount of
+infeasibility, or both. To facilitate a general presentation of these
+methods, three criteria will be used in the following discussion to
+differentiate them: optimization problem type, search goal, and search
+method.</p>
+<section id="problem-classification">
+<span id="opt-formulations-classification"></span><h3>Problem Classification<a class="headerlink" href="#problem-classification" title="Link to this heading"></a></h3>
+<p>The <strong>optimization problem type</strong> can be characterized both by the types
+of constraints present in the problem and by the linearity or
+nonlinearity of the objective and constraint functions. For constraint
+categorization, a hierarchy of complexity exists for optimization
+algorithms, ranging from simple bound constraints, through linear
+constraints, to full nonlinear constraints. By the nature of this
+increasing complexity, optimization problem categorizations are
+inclusive of all constraint types up to a particular level of
+complexity. That is, an <em>unconstrained problem</em> has no constraints, a
+<em>bound-constrained problem</em> has only lower and upper bounds on the
+design parameters, a <em>linearly-constrained problem</em> has both linear and
+bound constraints, and a <em>nonlinearly-constrained problem</em> may contain
+the full range of nonlinear, linear, and bound constraints. If all of
+the linear and nonlinear constraints are equality constraints, then this
+is referred to as an <em>equality-constrained problem</em>, and if all of the
+linear and nonlinear constraints are inequality constraints, then this
+is referred to as an <em>inequality-constrained problem</em>. Further
+categorizations can be made based on the linearity of the objective and
+constraint functions. A problem where the objective function and all
+constraints are linear is called a <em>linear programming (LP) problem</em>.
+These types of problems commonly arise in scheduling, logistics, and
+resource allocation applications. Likewise, a problem where at least
+some of the objective and constraint functions are nonlinear is called a
+<em>nonlinear programming (NLP) problem</em>. These NLP problems predominate in
+engineering applications and are the primary focus of Dakota.</p>
+<p>The <strong>search goal</strong> refers to the ultimate objective of the optimization
+algorithm, i.e., either global or local optimization. In <em>global
+optimization</em>, the goal is to find the design point that gives the
+lowest feasible objective function value over the entire parameter
+space. In contrast, in <em>local optimization</em>, the goal is to find a
+design point that is lowest relative to a “nearby” region of the
+parameter space. In almost all cases, global optimization will be more
+computationally expensive than local optimization. Thus, the user must
+choose an optimization algorithm with an appropriate search scope that
+best fits the problem goals and the computational budget.</p>
+<p>The <strong>search method</strong> refers to the approach taken in the optimization
+algorithm to locate a new design point that has a lower objective
+function or is more feasible than the current design point. The search
+method can be classified as either <em>gradient-based</em> or
+<em>nongradient-based</em>. In a gradient-based algorithm, gradients of the
+response functions are computed to find the direction of improvement.
+Gradient-based optimization is the search method that underlies many
+efficient local optimization methods. However, a drawback to this
+approach is that gradients can be computationally expensive, inaccurate,
+or even nonexistent. In such situations, nongradient-based search
+methods may be useful. There are numerous approaches to
+nongradient-based optimization. Some of the more well known of these
+include pattern search methods (nongradient-based local techniques) and
+genetic algorithms (nongradient-based global techniques).</p>
+<p>Because of the computational cost of running simulation models,
+surrogate-based optimization (SBO) methods are often used to reduce the
+number of actual simulation runs. In SBO, a surrogate or approximate
+model is constructed based on a limited number of simulation runs. The
+optimization is then performed on the surrogate model. Dakota has an
+extensive framework for managing a variety of local, multipoint, global,
+and hierarchical surrogates for use in optimization. Finally, sometimes
+there are multiple objectives that one may want to optimize
+simultaneously instead of a single scalar objective. In this case, one
+may employ multi-objective methods that are described
+<a class="reference internal" href="#opt-additional-multiobjective"><span class="std std-ref">below</span></a>.</p>
+<p>This overview of optimization approaches underscores that no single
+optimization method or algorithm works best for all types of
+optimization problems. The <a class="reference internal" href="#opt-usage"><span class="std std-ref">Optimization Usage Guidelines</span></a> section
+offers guidelines for choosing a Dakota optimization algorithm best matched to your
+specific optimization problem.</p>
+</section>
+<section id="constraint-considerations">
+<span id="opt-formulations-constraints"></span><h3>Constraint Considerations<a class="headerlink" href="#constraint-considerations" title="Link to this heading"></a></h3>
+<p>Dakota’s input commands permit the user to specify two-sided nonlinear
+inequality constraints of the form
+<span class="math notranslate nohighlight">\(g_{L_{i}} \leq g_{i}(\mathbf{x})
+\leq g_{U_{i}}\)</span>, as well as nonlinear equality constraints of the form
+<span class="math notranslate nohighlight">\(h_{j}(\mathbf{x}) = h_{t_{j}}\)</span>. Some optimizers (e.g.,
+those in the NPSOL and OPTPP family, <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-soga.html"><span class="pre">soga</span></a></code>,
+and <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-moga.html"><span class="pre">moga</span></a></code> methods) can handle these
+constraint forms directly, whereas other optimizers (e.g.,
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-asynch_pattern_search.html"><span class="pre">asynch_pattern_search</span></a></code>, <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-mesh_adaptive_search.html"><span class="pre">mesh_adaptive_search</span></a></code>,
+those in the DOT and CONMIN families) require Dakota to perform an internal
+conversion of all constraints to one-sided inequality constraints of the
+form <span class="math notranslate nohighlight">\(g_{i}(\mathbf{x}) \leq 0\)</span>. In the latter case, the two-sided
+inequality constraints are treated as
+<span class="math notranslate nohighlight">\(g_{i}(\mathbf{x}) - g_{U_{i}} \leq 0\)</span> and <span class="math notranslate nohighlight">\(g_{L_{i}} -
+g_{i}(\mathbf{x}) \leq 0\)</span> and the equality constraints are treated as
+<span class="math notranslate nohighlight">\(h_{j}(\mathbf{x}) - h_{t_{j}} \leq 0\)</span> and <span class="math notranslate nohighlight">\(h_{t_{j}} -
+h_{j}(\mathbf{x}) \leq 0\)</span>.</p>
+<p>The situation is similar for linear constraints: <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-asynch_pattern_search.html"><span class="pre">asynch_pattern_search</span></a></code>,
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/methods-soga.html"><span class="pre">soga</span></a></code>, <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/methods-moga.html"><span class="pre">moga</span></a></code>, NPSOL, and OPTPP methods support them
+directory, whereas DOT and CONMIN  methods do not.</p>
+<p>For linear inequalities of the form <span class="math notranslate nohighlight">\(a_{L_{i}} \leq
+\mathbf{a}_{i}^{T}\mathbf{x} \leq a_{U_{i}}\)</span> and linear equalities of
+the form <span class="math notranslate nohighlight">\(\mathbf{a}_{i}^{T}\mathbf{x} = a_{t_{j}}\)</span>, the nonlinear
+constraint arrays in DOT and CONMIN methods are further
+augmented to include <span class="math notranslate nohighlight">\(\mathbf{a}_{i}^{T}\mathbf{x} - a_{U_{i}}
+\leq 0\)</span> and <span class="math notranslate nohighlight">\(a_{L_{i}} - \mathbf{a}_{i}^{T}\mathbf{x} \leq 0\)</span> in
+the inequality case and
+<span class="math notranslate nohighlight">\(\mathbf{a}_{i}^{T}\mathbf{x} - a_{t_{j}} \leq 0\)</span> and
+<span class="math notranslate nohighlight">\(a_{t_{j}} - \mathbf{a}_{i}^{T}\mathbf{x} \leq 0\)</span> in the equality
+case. Awareness of these constraint augmentation procedures can be
+important for understanding the diagnostic data returned from the
+DOT and CONMIN methods.</p>
+<p>Other optimizers fall somewhere in between. NLPQL methods support nonlinear
+equality constraints <span class="math notranslate nohighlight">\(h_{j}(\mathbf{x}) = 0\)</span> and nonlinear one-sided inequalities
+<span class="math notranslate nohighlight">\(g_{i}(\mathbf{x}) \geq 0\)</span>, but does not natively support linear
+constraints. Constraint mappings are used with NLPQL for both linear and
+nonlinear cases. Most COLINY methods now support two-sided
+nonlinear inequality constraints and nonlinear constraints with targets,
+but do not natively support linear constraints. ROL’s (<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-rol.html"><span class="pre">rol</span></a></code>)
+augmented Lagrangian method converts inequality constraints into
+equality constraints with bounded slack variables. This conversion is
+performed internally within ROL, but might explain potentially weak
+convergence rates for problems with large number of inequality
+constraints.</p>
+<p>When gradient and Hessian information is used in the optimization,
+derivative components are most commonly computed with respect to the
+active continuous variables, which in this case are the <em>continuous
+design variables</em>. This differs from parameter study methods (for which
+all continuous variables are active) and from non-deterministic analysis
+methods (for which the uncertain variables are active). Refer to the
+<a class="reference internal" href="../inputfile/responses.html#responses-active"><span class="std std-ref">Active Variables for Derivatives</span></a> section for additional
+information on derivative components and active continuous variables.</p>
+</section>
+</section>
+<section id="optimizing-with-dakota-choosing-a-method">
+<span id="opt-methods"></span><h2>Optimizing with Dakota: Choosing a Method<a class="headerlink" href="#optimizing-with-dakota-choosing-a-method" title="Link to this heading"></a></h2>
+<p>This section summarizes the optimization methods available in Dakota. We
+group them according to search method and search goal and establish
+their relevance to types of problems. For a summary of this discussion,
+see <a class="reference internal" href="#opt-usage"><span class="std std-ref">Optimization Usage Guidelines</span></a>.</p>
+<section id="gradient-based-local-methods">
+<span id="opt-methods-gradient"></span><h3>Gradient-Based Local Methods<a class="headerlink" href="#gradient-based-local-methods" title="Link to this heading"></a></h3>
+<p>Gradient-based optimizers are best suited for efficient navigation to a
+local minimum in the vicinity of the initial point. They are not
+intended to find global optima in nonconvex design spaces. For global
+optimization methods, see
+<a class="reference internal" href="#opt-methods-gradientfree-global"><span class="std std-ref">Derivative-Free Global Methods</span></a>.
+Gradient-based optimization methods are highly efficient, with the best
+convergence rates of all of the local optimization methods, and are the
+methods of choice when the problem is smooth, unimodal, and
+well-behaved. However, these methods can be among the least robust when
+a problem exhibits nonsmooth, discontinuous, or multimodal behavior. The
+derivative-free methods described in <a class="reference internal" href="#opt-methods-gradientfree-local"><span class="std std-ref">Derivative-Free Local Methods</span></a>
+are more appropriate for problems with these characteristics.</p>
+<p>Gradient accuracy is a critical factor for gradient-based optimizers, as
+inaccurate derivatives will often lead to failures in the search or
+premature termination of the method. Analytic gradients and Hessians
+are ideal but often unavailable. If analytic gradient and Hessian
+information can be provided by an application code, a full Newton method
+will achieve quadratic convergence rates near the solution. If only
+gradient information is available and the Hessian information is
+approximated from an accumulation of gradient data, superlinear
+convergence rates can be obtained. It is most often the case for
+engineering applications, however, that a finite difference method will
+be used by the optimization algorithm to estimate gradient values.
+Dakota allows the user to select the step size for these calculations,
+as well as choose between forward-difference and central-difference
+algorithms. The finite difference step size should be selected as small
+as possible, to allow for local accuracy and convergence, but not so
+small that the steps are “in the noise.” This requires an assessment of
+the local smoothness of the response functions using, for example, a
+parameter study method. Central differencing will generally produce more
+reliable gradients than forward differencing but at roughly twice the
+expense.</p>
+<p>Gradient-based methods for nonlinear optimization problems can be
+described as iterative processes in which a sequence of subproblems,
+usually which involve an approximation to the full nonlinear problem,
+are solved until the solution converges to a local optimum of the full
+problem. The optimization methods available in Dakota fall into several
+categories, each of which is characterized by the nature of the
+subproblems solved at each iteration.</p>
+<section id="methods-for-unconstrained-problems">
+<span id="opt-methods-gradient-unconstrained"></span><h4>Methods for Unconstrained Problems<a class="headerlink" href="#methods-for-unconstrained-problems" title="Link to this heading"></a></h4>
+<p>For unconstrained problems, conjugate gradient methods can be applied
+which require first derivative information. The subproblems entail
+minimizing a quadratic function over a space defined by the gradient and
+directions that are mutually conjugate with respect to the Hessian.
+There are a couple of options in terms of methods to be used strictly
+for unconstrained problems, namely the Polak-Ribiere conjugate gradient
+method (<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-optpp_cg.html"><span class="pre">optpp_cg</span></a></code>) and ROL’s (Rapid Optimization Library for
+large-scale optimization, part of the Trilinos software
+suite <span id="id2">[<a class="reference internal" href="../../misc/bibliography.html#id176" title="D. P. Kouri, D. Ridzal, B. G. van Bloeman Waanders, and G. von Winckel. Rapid optimization library. Technical Report SAND2014-19572, Sandia National Laboratories, Albuquerque, NM, 2014.">KRvBWvW14</a>]</span>) trust-region method with truncated
+conjugate gradient subproblem solver (<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-rol.html"><span class="pre">rol</span></a></code>). ROL relies on secant
+updates for the Hessian, with the approximation to the Hessian matrix
+at each iteration provided using only values of the gradient at current
+and previous iterates.</p>
+<p>Note that ROL has been developed for, and mostly applied to, problems
+with analytic gradients/Hessians. Nonetheless, ROL can be used with
+Dakota-, or vendor-provided finite-differencing approximations to the
+gradient of the objective function. However, a user relying on such
+approximations is advised to use alternative optimizers that
+exhibit better performance in those scenarios.</p>
+</section>
+<section id="methods-for-bound-constrained-problems">
+<span id="opt-methods-gradient-bound-constrained"></span><h4>Methods for Bound-Constrained Problems<a class="headerlink" href="#methods-for-bound-constrained-problems" title="Link to this heading"></a></h4>
+<p>For bound-constrained problems, both conjugate gradient methods and
+quasi-Newton methods (described in the next sub-section) are available
+in Dakota. For conjugate gradient methods, the Fletcher-Reeves conjugate
+gradient method (<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-conmin_frcg.html"><span class="pre">conmin_frcg</span></a></code> and
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-dot_frcg.html"><span class="pre">dot_frcg</span></a></code> <span id="id3">[<a class="reference internal" href="../../misc/bibliography.html#id292" title="DOT Users Manual, Version 4.20. Vanderplaats Research and Development, Inc., Colorado Springs, CO, 1995.">Vanderplaats Research and Development, Inc.95</a>]</span>) and ROL’s trust-region method
+with truncated conjugate gradient subproblem solver (<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-rol.html"><span class="pre">rol</span></a></code>) are
+available. Note that ROL exhibits slow/erratic convergence when
+finite-differencing approximations to the gradient of objective function
+are used. DOT (<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-dot_bfgs.html"><span class="pre">dot_bfgs</span></a></code>) provides a quasi-Newton method for such
+problems.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>In DOT version 4.20, we have noticed inconsistent behavior of <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-dot_frcg.html"><span class="pre">dot_frcg</span></a></code>
+across different versions of Linux. Our best assessment is that it is
+due to different treatments of uninitialized variables. As we do not
+know the intention of the code authors and maintaining DOT source code
+is outside of the Dakota project scope, we have not made nor are we
+recommending any code changes to address this. However, all users who
+use <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-dot_frcg.html"><span class="pre">dot_frcg</span></a></code> in DOT 4.20 should be aware that results may
+not be reliable.</p>
+</div>
+</section>
+<section id="methods-for-constrained-problems">
+<span id="opt-methods-gradient-constrained"></span><h4>Methods for Constrained Problems<a class="headerlink" href="#methods-for-constrained-problems" title="Link to this heading"></a></h4>
+<p>For constrained problems, the available methods fall under one of four
+categories, namely Sequential Quadratic Programming (SQP) methods,
+Newton methods, Method of Feasible Directions (MFD) methods, and the
+augmented Lagrangian method.</p>
+<p>Sequential Quadratic Programming (SQP) methods are appropriate for
+nonlinear optimization problems with nonlinear constraints. Each
+subproblem involves minimizing a quadratic approximation of the Lagrangian
+subject to linearized constraints. Only gradient information is
+required; Hessians are approximated by low-rank updates defined by the
+step taken at each iterations.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>While the solution found by an SQP method will respect the constraints, the
+intermediate iterates may not. Dakota optimization methods that respect
+lienar constraints throughout</p>
+</div>
+<p>SQP methods available in Dakota include
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-dot_sqp.html"><span class="pre">dot_sqp</span></a></code>, <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-nlpql_sqp.html"><span class="pre">nlpql_sqp</span></a></code>, and <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-npsol_sqp.html"><span class="pre">npsol_sqp</span></a></code>
+<span id="id4">[<a class="reference internal" href="../../misc/bibliography.html#id112" title="P. E. Gill, W. Murray, M. A. Saunders, and M. H. Wright. User's guide for NPSOL (Version 4.0): a Fortran package for nonlinear programming. Technical Report TR SOL-86-2, System Optimization Laboratory, Stanford University, Stanford, CA, 1986.">GMSW86</a>]</span>. The particular implementation in <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-nlpql_sqp.html"><span class="pre">nlpql_sqp</span></a></code> <span id="id5">[<a class="reference internal" href="../../misc/bibliography.html#id259" title="K. Schittkowski. NLPQLP: a fortran implementation of a sequential quadratic programming algorithm with distributed and non-monotone line search – user's guide. Technical Report, Department of Mathematics, University of Bayreuth, Bayreuth, Germany, 2004.">Sch04</a>]</span>
+uses a variant with distributed and non-monotonic line search. Thus, this
+variant is designed to be more robust in the presence of inaccurate or
+noisy gradients common in many engineering applications. ROL’s
+composite-step method (<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-rol.html"><span class="pre">rol</span></a></code>), utilizing SQP with trust regions,
+for equality-constrained problems is another option (Note that ROL exhibits
+slow/erratic convergence when finite-differencing approximations to the
+gradient of objective and constraints are used). Also available is a
+method related to SQP: sequential linear programming (<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-dot_slp.html"><span class="pre">dot_slp</span></a></code>).</p>
+<p>Newton Methods can be applied to nonlinear optimization problems with
+nonlinear constraints. The subproblems associated with these methods
+entail finding the solution to a linear system of equations derived by
+setting the derivative of a second-order Taylor series expansion to
+zero. Unlike SQP methods, Newton methods maintain feasibility over the
+course of the optimization iterations. The variants of this approach
+correspond to the amount of derivative information provided by the user.
+The full Newton method (<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-optpp_newton.html"><span class="pre">optpp_newton</span></a></code>) expects both gradients and
+Hessians to be provided. Quasi-Newton methods (<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-optpp_q_newton.html"><span class="pre">optpp_q_newton</span></a></code>)
+expect only gradients. The Hessian is approximated by the
+Broyden-Fletcher-Goldfarb-Shanno (BFGS) low-rank updates. Finally, the
+finite difference Newton method (<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-optpp_fd_newton.html"><span class="pre">optpp_fd_newton</span></a></code>) expects only
+gradients and approximates the Hessian with second-order finite
+differences.</p>
+<p>Method of Feasible Directions (MFD) methods are appropriate for
+nonlinear optimization problems with nonlinear constraints. These
+methods ensure that all iterates remain feasible. Dakota includes
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-conmin_mfd.html"><span class="pre">conmin_mfd</span></a></code> <span id="id6">[<a class="reference internal" href="../../misc/bibliography.html#id290" title="G. N. Vanderplaats. CONMIN – a FORTRAN program for constrained function minimization. Technical Report TM X-62282, NASA, 1973. See also Addendum to Technical Memorandum, 1978.">Van73</a>]</span> and <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-dot_mmfd.html"><span class="pre">dot_mmfd</span></a></code></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>One observed drawback to <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-conmin_mfd.html"><span class="pre">conmin_mfd</span></a></code> is that it does a poor job
+handling equality constraints. <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-dot_mmfd.html"><span class="pre">dot_mmfd</span></a></code> does not suffer from this
+problem, nor do other methods for constrained problems.</p>
+</div>
+<p>The augmented Lagrangian method provides a strategy to handle equality
+and inequality constraints by introducing the augmented Lagrangian
+function, combining the use of Lagrange multipliers and a quadratic
+penalty term. It is implemented in ROL (<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-rol.html"><span class="pre">rol</span></a></code>) exhibiting scalable
+performance for large-scale problems. As previously stated, ROL exhibits
+slow/erratic convergence when finite-differencing approximations to the
+gradient of objective function and/or constraints are used. Users are
+advised to resort to alternative optimizers until performance of ROL
+improves in future releases.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Not all Dakota methods strictly respect linear constraints. Those that
+propose only feasible candidate design points include <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-asynch_pattern_search.html"><span class="pre">asynch_pattern_search</span></a></code>,
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-npsol_sqp.html"><span class="pre">npsol_sqp</span></a></code>, and the OPTPP family of methods, with the exception of
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-optpp_fd_newton.html"><span class="pre">optpp_fd_newton</span></a></code>. Other methods seek feasible solutions, but may
+violate linear constraints as they run.</p>
+</div>
+</section>
+</section>
+<section id="derivative-free-local-methods">
+<span id="opt-methods-gradientfree-local"></span><h3>Derivative-Free Local Methods<a class="headerlink" href="#derivative-free-local-methods" title="Link to this heading"></a></h3>
+<p>Derivative-free methods can be more robust and more inherently parallel
+than gradient-based approaches. They can be applied in situations were
+gradient calculations are too expensive or unreliable. In addition, some
+derivative-free methods can be used for global optimization, while
+<a class="reference internal" href="#opt-methods-gradient"><span class="std std-ref">gradient-based techniques</span></a>, by
+themselves, cannot. For these reasons, derivative-free methods are often
+go-to methods when the problem may be nonsmooth, multimodal, or poorly
+behaved. It is important to be aware, however, that they exhibit much
+slower convergence rates for finding an optimum, and as a result, tend
+to be much more computationally demanding than gradient-based methods.
+They often require from several hundred to a thousand or more function
+evaluations for local methods, depending on the number of variables, and
+may require from thousands to tens-of-thousands of function evaluations
+for global methods. Given the computational cost, it is often prudent to
+use derivative-free methods to identify regions of interest and then use
+gradient-based methods to home in on the solution. In addition to slow
+convergence, nonlinear constraint support in derivative-free methods is
+an open area of research and, while supported by many methods in Dakota,
+is not as refined as constraint support in gradient-based methods.</p>
+<section id="method-descriptions">
+<span id="opt-methods-gradientfree-local-descriptions"></span><h4>Method Descriptions<a class="headerlink" href="#method-descriptions" title="Link to this heading"></a></h4>
+<p><strong>Pattern Search</strong> methods can be applied to nonlinear optimization
+problems with nonlinear constraints. They generally walk through the domain
+according to a defined stencil of search directions. These methods are
+best suited for efficient navigation to a local minimum in the vicinity
+of the initial point; however, they sometimes exhibit limited global
+identification abilities if the stencil is such that it allows them to
+step over local minima. There are two main pattern search methods
+available in Dakota, and they vary according to richness of available
+stencil and the way constraints are supported. Asynchronous Parallel Pattern
+Search (APPS) <span id="id7">[<a class="reference internal" href="../../misc/bibliography.html#id130" title="G. A. Gray and T. G. Kolda. Algorithm 856: APPSPACK 4.0: asynchronous parallel pattern search for derivative-free optimization. ACM Transactions on Mathematical Software, 32(3):485–507, September 2006.">GK06</a>]</span> (<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-asynch_pattern_search.html"><span class="pre">asynch_pattern_search</span></a></code>)
+uses the coordinate basis as its stencil, and it handles nonlinear
+constraints explicitly through modification of the coordinate stencil to
+allow directions that parallel constraints <span id="id8">[<a class="reference internal" href="../../misc/bibliography.html#id131" title="J. D Griffin and T. G. Kolda. Nonlinearly-constrained optimization using asynchronous parallel generating set search. Technical Report SAND2007-3257, Sandia National Laboratories, Livermore, CA, 2007.">GK07</a>]</span>. A
+second variant of pattern search, <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-coliny_pattern_search.html"><span class="pre">coliny_pattern_search</span></a></code>, has the
+option of using either a coordinate or a simplex basis as well as
+allowing more options for the stencil to evolve over the course of the
+optimization. It handles nonlinear constraints through the use of
+penalty functions.</p>
+<p>The <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-mesh_adaptive_search.html"><span class="pre">mesh_adaptive_search</span></a></code> <span id="id9">[<a class="reference internal" href="../../misc/bibliography.html#id15" title="C. Audet, S. Le Digabel, and C. Tribes. NOMAD user guide. Technical Report G-2009-37, Les cahiers du GERAD, 2009. URL: http://www.gerad.ca/NOMAD/Downloads/user_guide.pdf.">ALeDigabelT09</a>]</span>, <span id="id10">[<a class="reference internal" href="../../misc/bibliography.html#id5" title="M.A. Abramson, C. Audet, G. Couture, J.E. Dennis, Jr., S. Le Digabel, and C. Tribes. The NOMAD project. Software available at http://www.gerad.ca/nomad. URL: http://www.gerad.ca/nomad.">AAC+</a>]</span>, <span id="id11">[<a class="reference internal" href="../../misc/bibliography.html#id184" title="S. Le Digabel. Algorithm 909: NOMAD: nonlinear optimization with the MADS algorithm. ACM Transactions on Mathematical Software, 37(4):1–15, 2011.">LeDigabel11</a>]</span>
+is similar in spirit to and falls in the same class of methods as the
+pattern search methods. The primary difference is that its underlying
+search structure is that of a mesh. The <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-mesh_adaptive_search.html"><span class="pre">mesh_adaptive_search</span></a></code> also
+provides a unique optimization capability in Dakota in that it can
+explicitly treat categorical variables, i.e., <a class="reference internal" href="../inputfile/variables.html#variables-design-ddv"><span class="std std-ref">non-relaxable discrete
+variables</span></a>. Furthermore,
+it provides the ability to use a surrogate model to inform the priority
+of function evaluations with the goal of reducing the number needed.</p>
+<p><strong>Simplex</strong> methods for nonlinear optimization problem are similar to
+pattern search methods, but their search directions are defined by
+triangles that are reflected, expanded, and contracted across the
+variable space. The two simplex-based methods available in Dakota are
+the Parallel Direct Search method <span id="id12">[<a class="reference internal" href="../../misc/bibliography.html#id53" title="J. E. Dennis and V. J. Torczon. Derivative-free pattern search methods for multidisciplinary design problems. In Proc. 5th AIAA/USAF/NASA/ISSMO Symposium on Multidisciplinary Analysis and Optimization, number AIAA-94-4349, 922–932. Panama City, FL, September 7–9 1994.">DT94</a>]</span>
+(<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-optpp_pds.html"><span class="pre">optpp_pds</span></a></code>) and the Constrained Optimization BY Linear
+Approximations (COBYLA) (<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-coliny_cobyla.html"><span class="pre">coliny_cobyla</span></a></code>). The former handles only
+bound constraints, while the latter handles nonlinear constraints.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>One drawback of both simplex-based methods is that their current
+implementations do not allow them to take advantage of parallel
+computing resources via Dakota’s infrastructure. Additionally, we note
+that the implementation of COBYLA is such that the best function value
+is not always returned to Dakota for reporting. The user is advised to
+look through the Dakota screen output or the tabular output file (if
+generated) to confirm what the best function value and corresponding
+parameter values are. Furthermore, COBYLA does not always respect bound
+constraints when scaling is turned on. Neither bug will be fixed, as
+maintaining third-party source code (such as COBYLA) is outside of the
+Dakota project scope.</p>
+</div>
+<p>A <strong>Greedy Search Heuristic</strong> for nonlinear optimization problems is
+captured in the Solis-Wets (<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-coliny_solis_wets.html"><span class="pre">coliny_solis_wets</span></a></code>) method.
+This method takes a sampling-based approach in order to identify search directions.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>An observed drawback to <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-coliny_solis_wets.html"><span class="pre">coliny_solis_wets</span></a></code> is that it does a
+poor job solving problems with nonlinear constraints. This algorithm is also
+not implemented in such a way as to
+take advantage of parallel computing resources via Dakota’s
+infrastructure.</p>
+</div>
+<p><strong>Nonlinear Optimization with Path Augmented Constraints (NOWPAC)</strong> is a
+provably-convergent gradient-free inequality-constrained optimization
+method that solves a series of trust region surrogate-based subproblems
+to generate improving steps. Due to its use of an interior penalty
+scheme and enforcement of strict feasibility,
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-nowpac.html"><span class="pre">nowpac</span></a></code> <span id="id13">[<a class="reference internal" href="../../misc/bibliography.html#id326" title="F. Augustin and Y. M. Marzouk. NOWPAC: a provably convergent derivative-free nonlinear optimizer with path-augmented constraints. arXiv, math.OC:1403.1931, 2014. URL: http://arxiv.org/abs/1403.1931.">AM14</a>]</span> does not support
+linear or nonlinear equality constraints. The stochastic version is
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-snowpac.html"><span class="pre">snowpac</span></a></code>, which incorporates noise estimates in its objective and
+inequality constraints. <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-snowpac.html"><span class="pre">snowpac</span></a></code> modifies its trust region controls
+and adds smoothing from a Gaussian process surrogate in order to
+mitigate noise.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Unlike the stochastic version (<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-snowpac.html"><span class="pre">snowpac</span></a></code>), <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-nowpac.html"><span class="pre">nowpac</span></a></code> does
+not currently support a feasibility restoration mode, so it is necessary to start from
+a feasible design. Also, <code class="docutils literal notranslate"><span class="pre">(s)nowpac</span></code> is not configured with Dakota by default
+and requires a separate installation of the NOWPAC distribution, along
+with third-party libraries Eigen and NLOPT.</p>
+</div>
+</section>
+<section id="example">
+<span id="opt-methods-gradientfree-local-example"></span><h4>Example<a class="headerlink" href="#example" title="Link to this heading"></a></h4>
+<p>The Dakota input file shown in
+<a class="reference internal" href="#opt-methods-gradientfree-local-example-ps"><span class="std std-numref">Listing 52</span></a>
+applies a pattern search method to minimize the
+<a class="reference internal" href="../examples/gettingstarted.html#examples-gettingstarted-rosenbrock"><span class="std std-ref">Rosenbrock function</span></a>. We
+note that this example is used as a means of demonstrating the contrast
+between input files for gradient-based and derivative-free optimization.
+Since derivatives can be computed analytically and efficiently, the
+preferred approach to solving this problem is a gradient-based method.</p>
+<p>The Dakota input file shown in
+<a class="reference internal" href="#opt-methods-gradientfree-local-example-ps"><span class="std std-numref">Listing 52</span></a>
+is similar to the input file for the gradient-based optimization, except
+it has a different set of keywords in the method block,, and the gradient
+specification in the responses block has been
+changed to <code class="docutils literal notranslate"><span class="pre">no_gradients</span></code>. The pattern search optimization algorithm
+used, <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-coliny_pattern_search.html"><span class="pre">coliny_pattern_search</span></a></code> is part of the SCOLIB
+library <span id="id14">[<a class="reference internal" href="../../misc/bibliography.html#id145" title="W. E. Hart. The coliny project. Web site, 2007. http://software.sandia.gov/Acro/Coliny/.">Har07</a>]</span>. See the <a class="reference internal" href="../reference.html#keyword-reference-area"><span class="std std-ref">Keyword Reference</span></a>
+for more information on the <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method.html"><span class="pre">method</span></a></code>
+block commands that can be used with SCOLIB algorithms.</p>
+<div class="literal-block-wrapper docutils container" id="opt-methods-gradientfree-local-example-ps">
+<div class="code-block-caption"><span class="caption-number">Listing 52 </span><span class="caption-text">Rosenbrock pattern search optimization example: the
+Dakota input file – see
+<code class="docutils literal notranslate"><span class="pre">dakota/share/dakota/examples/users/rosen_opt_patternsearch.in</span></code></span><a class="headerlink" href="#opt-methods-gradientfree-local-example-ps" title="Link to this code"></a></div>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span><span class="c"># Dakota Input File: rosen_opt_patternsearch.in</span>
+
+<span class="k">environment</span>
+  tabular_data
+    tabular_data_file = &#39;rosen_opt_patternsearch.dat&#39;
+
+<span class="k">method</span>
+  coliny_pattern_search
+    initial_delta = 0.5
+    solution_target = 1e-4
+    exploratory_moves
+      basic_pattern
+    contraction_factor = 0.75
+    max_iterations = 1000
+    max_function_evaluations = 2000
+    variable_tolerance = 1e-4
+
+<span class="k">model</span>
+  single
+
+<span class="k">variables</span>
+  continuous_design = 2
+    initial_point     0.0      0.0
+    lower_bounds     -2.0     -2.0
+    upper_bounds      2.0      2.0
+    descriptors       &#39;x1&#39;     &quot;x2&quot;
+
+<span class="k">interface</span>
+  analysis_drivers = &#39;rosenbrock&#39;
+    direct
+
+<span class="k">responses</span>
+  objective_functions = 1
+  no_gradients
+  no_hessians
+</pre></div>
+</div>
+</div>
+<p>For this run, the optimizer was given an initial design point of
+<span class="math notranslate nohighlight">\((x_1,x_2) = (0.0,0.0)\)</span> and was limited to 2000 function
+evaluations. In this case, the pattern search algorithm stopped short of
+the optimum at <span class="math notranslate nohighlight">\((x_1,x_2) = (1.0,1,0)\)</span>, although it was making
+progress in that direction when it was terminated. (It would have
+reached the minimum point eventually.)</p>
+<p><a class="reference internal" href="#opt-methods-gradientfree-local-example-ps-complete"><span class="std std-numref">Fig. 46</span></a> shows
+the locations of the function evaluations used in the pattern search algorithm.
+<a class="reference internal" href="#opt-methods-gradientfree-local-example-ps-closeup"><span class="std std-numref">Fig. 47</span></a>
+provides a close-up view of the pattern search function evaluations used
+at the start of the algorithm. The coordinate pattern is clearly visible
+at the start of the iteration history, and the decreasing size of the
+coordinate pattern is evident at the design points move toward
+<span class="math notranslate nohighlight">\((x_1,x_2) = (1.0,1.0)\)</span>.</p>
+<figure class="align-default" id="opt-methods-gradientfree-local-example-ps-complete">
+<a class="reference internal image-reference" href="../../_images/rosen_ps_opt_pts.png"><img alt="Complete sequence of design points evaluated during a pattern search optimization of the Rosenbrock function" src="../../_images/rosen_ps_opt_pts.png" style="height: 2.5in;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 46 </span><span class="caption-text">Rosenbrock pattern search: sequence of design points (dots) evaluated</span><a class="headerlink" href="#opt-methods-gradientfree-local-example-ps-complete" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<figure class="align-default" id="opt-methods-gradientfree-local-example-ps-closeup">
+<a class="reference internal image-reference" href="../../_images/rosen_ps_opt_pts2.png"><img alt="Close-up view near the minimum of the Rosenbrock function" src="../../_images/rosen_ps_opt_pts2.png" style="height: 2.5in;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 47 </span><span class="caption-text">Rosenbrock pattern search: close-up view illustrating the shape of the coordinate pattern used</span><a class="headerlink" href="#opt-methods-gradientfree-local-example-ps-closeup" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>While pattern search algorithms are useful in many optimization
+problems, this example shows some of the drawbacks to this algorithm.
+While a pattern search method may make good initial progress towards an
+optimum, it is often slow to converge. On a smooth, differentiable
+function such as Rosenbrock’s function, a nongradient-based method will
+not be as efficient as a gradient-based method. However, there are many
+engineering design applications where gradient information is inaccurate
+or unavailable, which renders gradient-based optimizers ineffective.
+Thus, pattern search algorithms are often good choices in complex
+engineering applications when the quality of gradient data is suspect.</p>
+</section>
+</section>
+<section id="derivative-free-global-methods">
+<span id="opt-methods-gradientfree-global"></span><h3>Derivative-Free Global Methods<a class="headerlink" href="#derivative-free-global-methods" title="Link to this heading"></a></h3>
+<p>Much of the discussion of <a class="reference internal" href="#opt-methods-gradientfree-local"><span class="std std-ref">Derivative-Free Local Methods</span></a>
+is also applicable to derivative-free global methods, so we forego repeating
+it here. There are two types of global optimization methods in Dakota.</p>
+<section id="opt-methods-gradientfree-global-descriptions">
+<span id="id15"></span><h4>Method Descriptions<a class="headerlink" href="#opt-methods-gradientfree-global-descriptions" title="Link to this heading"></a></h4>
+<p><strong>Evolutionary Algorithms (EA)</strong> are based on Darwin’s theory of
+survival of the fittest. The EA algorithm starts with a randomly
+selected population of design points in the parameter space, where the
+values of the design parameters form a “genetic string,” analogous to
+DNA in a biological system, that uniquely represents each design point
+in the population. The EA then follows a sequence of generations, where
+the best design points in the population (i.e., those having low
+objective function values) are considered to be the most “fit” and are
+allowed to survive and reproduce. The EA simulates the evolutionary
+process by employing the mathematical analogs of processes such as
+natural selection, breeding, and mutation. Ultimately, the EA identifies
+a design point (or a family of design points) that minimizes the
+objective function of the optimization problem. An extensive discussion
+of EAs is beyond the scope of this text, but may be found in a variety
+of sources (cf.,  <span id="id16">[<a class="reference internal" href="../../misc/bibliography.html#id138" title="R. T. Haftka and Z. Gurdal. Elements of Structural Optimization. Kluwer, Boston, 1992.">HG92</a>]</span> pp.
+149-158; <span id="id17">[<a class="reference internal" href="../../misc/bibliography.html#id124" title="D. E. Goldberg. Genetic Algorithms in Search, Optimization, and Machine Learning. Addison-Wessley Publishing Co., Inc., Reading, MA, 1989.">Gol89</a>]</span>). EAs available in Dakota include
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-coliny_ea.html"><span class="pre">coliny_ea</span></a></code>, <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-soga.html"><span class="pre">soga</span></a></code>, and <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-moga.html"><span class="pre">moga</span></a></code>.
+The latter is specifically designed for multi-objective problems, discussed further
+<a class="reference internal" href="#opt-additional"><span class="std std-ref">below</span></a>. All variants can optimize over discrete
+variables, including discrete string variables, in addition to
+continuous variables.</p>
+<p><strong>DIvision of RECTangles (DIRECT)</strong> <span id="id18">[<a class="reference internal" href="../../misc/bibliography.html#id99" title="J. Gablonsky. Direct version 2.0 userguide technical report. Technical Report CRSC-TR01-08, North Carolina State University, Center for Research in Scientific Computation, Raleigh, NC, 2001.">Gab01</a>]</span> balances
+local search in promising regions of the design space with global search
+in unexplored regions. It adaptively subdivides the space of feasible
+design points to guarantee that iterates are generated in the
+neighborhood of a global minimum in finitely many iterations. Dakota
+includes two implementations (<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-ncsu_direct.html"><span class="pre">ncsu_direct</span></a></code> and
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-coliny_direct.html"><span class="pre">coliny_direct</span></a></code>). In practice, DIRECT has proven an effective
+heuristic for many applications. For some problems, the <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-ncsu_direct.html"><span class="pre">ncsu_direct</span></a></code>
+implementation has outperformed the <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-coliny_direct.html"><span class="pre">coliny_direct</span></a></code> implementation.
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-ncsu_direct.html"><span class="pre">ncsu_direct</span></a></code> can accommodate only bound constraints, while
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-coliny_direct.html"><span class="pre">coliny_direct</span></a></code> handles nonlinear constraints using a penalty
+formulation of the problem.</p>
+<p><strong>Efficient Global Optimization (EGO)</strong> is a global optimization
+technique that employs response surface
+surrogates <span id="id19">[<a class="reference internal" href="../../misc/bibliography.html#id158" title="D. Huang, T. T. Allen, W. I. Notz, and N. Zeng. Global optimization of stochastic black-box systems via sequential kriging meta-models. Journal of Global Optimization, 34:441–466, 2006.">HANZ06</a>, <a class="reference internal" href="../../misc/bibliography.html#id165" title="D. Jones, M. Schonlau, and W. Welch. Efficient global optimization of expensive black-box functions. Journal of Global Optimization, 13:455–492, 1998.">JSW98</a>]</span>. The <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-efficient_global.html"><span class="pre">efficient_global</span></a></code>
+method is Dakota’s implementation of EGO.</p>
+<p>In each EGO iteration, a Gaussian process (GP) approximation for the objective
+function is constructed based on sample points of the true simulation. The GP
+allows one to specify the prediction at a new input location as well as the
+uncertainty associated with that prediction. The key idea in EGO is to
+maximize an Expected Improvement Function (EIF), defined as the
+expectation that any point in the search space will provide a better
+solution than the current best solution, based on the expected values
+and variances predicted by the GP model.</p>
+<p>It is important to understand
+how the use of this EIF leads to optimal solutions. The EIF indicates
+how much the objective function value at a new potential location is
+expected to be less than the predicted value at the current best
+solution. Because the GP model provides a Gaussian distribution at each
+predicted point, expectations can be calculated. Points with good
+expected values and even a small variance will have a significant
+expectation of producing a better solution (exploitation), but so will
+points that have relatively poor expected values and greater variance
+(exploration). The EIF incorporates both the idea of choosing points
+which minimize the objective and choosing points about which there is
+large prediction uncertainty (e.g., there are few or no samples in that
+area of the space, and thus the probability may be high that a sample
+value is potentially lower than other values). Because the uncertainty
+is higher in regions of the design space with few observations, this
+provides a balance between exploiting areas of the design space that
+predict good solutions, and exploring areas where more information is
+needed.</p>
+<p>There are two major differences between our implementation and that of
+ <span id="id20">[<a class="reference internal" href="../../misc/bibliography.html#id165" title="D. Jones, M. Schonlau, and W. Welch. Efficient global optimization of expensive black-box functions. Journal of Global Optimization, 13:455–492, 1998.">JSW98</a>]</span>: we do not use a branch and bound method to
+find points which maximize the EIF. Rather, we use the DIRECT algorithm.
+Second, we allow for multiobjective optimization and nonlinear least
+squares including general nonlinear constraints. Constraints are handled
+through an augmented Lagrangian merit function approach (see
+<a class="reference internal" href="../theory/surrogatebasedoptimization.html#sblm"><span class="std std-ref">Surrogate-Based Local Minimization</span></a>).</p>
+<div class="admonition note" id="opt-methods-gradientfree-global-example">
+<p class="admonition-title">Note</p>
+<p>Dakota also has an experimental branch and bound
+capability that provides a gradient-based approach to
+solving mixed-variable global optimization problems. One key distinction
+is that it does not handle categorical variables (e.g., string
+variables). The branch and bound method is discussed further in
+the <a class="reference internal" href="../advanced/advancedmethods.html#adv-meth-minlp"><span class="std std-ref">Mixed Integer Nonlinear Programming</span></a> section.</p>
+</div>
+</section>
+<section id="examples">
+<h4>Examples<a class="headerlink" href="#examples" title="Link to this heading"></a></h4>
+<p><strong>Evolutionary algorithm:</strong> In contrast to pattern search algorithms,
+which are local optimization methods, evolutionary algorithms (EA) are
+global optimization methods. As was described above for the pattern
+search algorithm, the <a class="reference internal" href="../examples/gettingstarted.html#examples-gettingstarted-rosenbrock"><span class="std std-ref">Rosenbrock function</span></a>
+is not an ideal test problem
+for showcasing the capabilities of evolutionary algorithms. Rather, EAs
+are best suited to optimization problems that have multiple local
+optima, and where gradients are either too expensive to compute or are
+not readily available.</p>
+<div class="literal-block-wrapper docutils container" id="opt-methods-gradientfree-global-example-rosenbrock-ea">
+<div class="code-block-caption"><span class="caption-number">Listing 53 </span><span class="caption-text">Rosenbrock evolutionary algorithm optimization example:
+the Dakota input file – see
+<code class="docutils literal notranslate"><span class="pre">dakota/share/dakota/examples/users/rosen_opt_ea.in</span></code></span><a class="headerlink" href="#opt-methods-gradientfree-global-example-rosenbrock-ea" title="Link to this code"></a></div>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span><span class="c"># Dakota Input File: rosen_opt_ea.in</span>
+
+<span class="k">environment</span>
+  tabular_data
+    tabular_data_file = &#39;rosen_opt_ea.dat&#39;
+
+<span class="k">method</span>
+  coliny_ea
+    max_iterations = 100
+    max_function_evaluations = 2000
+    seed = 11011011
+    population_size = 50
+    fitness_type merit_function
+    mutation_type offset_normal
+    mutation_rate 1.0
+    crossover_type two_point
+    crossover_rate 0.0
+    replacement_type chc = 10
+
+<span class="k">model</span>
+  single
+
+<span class="k">variables</span>
+  continuous_design = 2
+    lower_bounds     -2.0     -2.0
+    upper_bounds      2.0      2.0
+    descriptors       &#39;x1&#39;     &quot;x2&quot;
+
+<span class="k">interface</span>
+  analysis_drivers = &#39;rosenbrock&#39;
+    direct
+
+<span class="k">responses</span>
+  objective_functions = 1
+  no_gradients
+  no_hessians
+</pre></div>
+</div>
+</div>
+<p><a class="reference internal" href="#opt-methods-gradientfree-global-example-rosenbrock-ea"><span class="std std-numref">Listing 53</span></a>
+shows a Dakota input file that uses an EA to minimize the Rosenbrock
+function. For this example the EA has a population size of 50. At the
+start of the first generation, a random number generator is used to
+select 50 design points that will comprise the initial population. A
+specific seed value is used in this example to generate repeatable
+results.</p>
+<p>A two-point crossover technique
+is used to exchange genetic string values between the members of the
+population during the EA breeding process. The result of the breeding
+process is a population comprised of the 10 best “parent” design points
+(elitist strategy) plus 40 new “child” design points. The EA
+optimization process will be terminated after either 100 iterations
+(generations of the EA) or 2,000 function evaluations. The EA software
+available in Dakota provides the user with much flexibility in choosing
+the settings used in the optimization process.
+See <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-coliny_ea.html"><span class="pre">coliny_ea</span></a></code> and <span id="id21">[<a class="reference internal" href="../../misc/bibliography.html#id145" title="W. E. Hart. The coliny project. Web site, 2007. http://software.sandia.gov/Acro/Coliny/.">Har07</a>]</span> for details
+on these settings.</p>
+<p>The EA optimization results printed at the end of this file show that
+the best design point found was <span class="math notranslate nohighlight">\((x_1,x_2) = (0.98,0.95)\)</span>. The
+file <code class="docutils literal notranslate"><span class="pre">ea_tabular.dat.sav</span></code>
+provides a listing of the design parameter values and objective
+function values for all 2,000 design points evaluated during the running
+of the EA. <a class="reference internal" href="#opt-methods-gradientfree-global-example-rosenbrock-initial"><span class="std std-numref">Fig. 48</span></a>
+shows the population of 50 randomly selected design points that comprise
+the first generation of the EA, and <a class="reference internal" href="#opt-methods-gradientfree-global-example-rosenbrock-final"><span class="std std-numref">Fig. 49</span></a>
+shows the final population of 50 design points, where most of the 50
+points are clustered near <span class="math notranslate nohighlight">\((x_1,x_2) = (0.98,0.95)\)</span>.</p>
+<figure class="align-default" id="opt-methods-gradientfree-global-example-rosenbrock-initial">
+<a class="reference internal image-reference" href="../../_images/rosen_ea_init.png"><img alt="50 randomly chosen design points in the initial population of a genetic algorithm, overlaid on a contour plot of the Rosenbrock function" src="../../_images/rosen_ea_init.png" style="height: 2.5in;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 48 </span><span class="caption-text">50 design points in the initial population of an evolutionary algorithm</span><a class="headerlink" href="#opt-methods-gradientfree-global-example-rosenbrock-initial" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<figure class="align-default" id="opt-methods-gradientfree-global-example-rosenbrock-final">
+<a class="reference internal image-reference" href="../../_images/rosen_ea_final.png"><img alt="Final population of design points, overlaid on a contour plot of the Rosenbrock function" src="../../_images/rosen_ea_final.png" style="height: 2.5in;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 49 </span><span class="caption-text">The final population of design points of an evolutionary algorithm</span><a class="headerlink" href="#opt-methods-gradientfree-global-example-rosenbrock-final" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>As described above, an EA is not well-suited to an optimization problem
+involving a smooth, differentiable objective such as the Rosenbrock
+function. Rather, EAs are better suited to optimization problems where
+conventional gradient-based optimization fails, such as situations where
+there are multiple local optima and/or gradients are not available. In
+such cases, the computational expense of an EA is warranted since other
+optimization methods are not applicable or impractical.</p>
+<p>In many optimization problems, EAs often quickly identify promising regions of
+the design space where the global minimum may be located. However, an EA
+can be slow to converge to the optimum. For this reason, it can be an
+effective approach to combine the global search capabilities of a EA
+with the efficient local search of a gradient-based algorithm in a
+<em>hybrid optimization</em> strategy. In this approach, the optimization
+starts by using a few iterations of a EA to provide the initial search
+for a good region of the parameter space (low objective function and/or
+feasible constraints), and then it switches to a gradient-based
+algorithm (using the best design point found by the EA as its starting
+point) to perform an efficient local search for an optimum design point.
+More information on this hybrid approach is provided in
+the <a class="reference internal" href="../advanced/advancedmethods.html#adv-meth-hybrid"><span class="std std-ref">Hybrid Minimization</span></a> section.</p>
+<p><strong>Efficient Global Optimization:</strong> The method is specified as
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-efficient_global.html"><span class="pre">efficient_global</span></a></code>. Currently we do not expose any specification
+controls for the underlying Gaussian process model used or for the
+optimization of the expected improvement function, which is currently
+performed by the NCSU DIRECT algorithm. The only item the user can
+specify is a seed which is used in the Latin Hypercube Sampling to
+generate the initial set of points which is used to construct the
+initial Gaussian process. Parallel optimization with multiple concurrent
+evaluations is possible by adjusting the batch size, which is consisted
+of two smaller batches. The first batch aims at maximizing the
+acquisition function, where the second batch promotes the exploration by
+maximizing the variance. An example specification for the EGO algorithm
+is shown in <a class="reference internal" href="#opt-methods-gradientfree-global-example-egm-rosen"><span class="std std-numref">Listing 54</span></a>.</p>
+<div class="literal-block-wrapper docutils container" id="opt-methods-gradientfree-global-example-egm-rosen">
+<div class="code-block-caption"><span class="caption-number">Listing 54 </span><span class="caption-text">Dakota input file for the efficient global optimization
+example – see
+<code class="docutils literal notranslate"><span class="pre">dakota/share/dakota/examples/users/dakota_rosenbrock_ego.in</span></code></span><a class="headerlink" href="#opt-methods-gradientfree-global-example-egm-rosen" title="Link to this code"></a></div>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span><span class="c"># Dakota Input File: rosen_opt_ego.in</span>
+
+<span class="k">environment</span>
+  tabular_data
+    tabular_data_file = &#39;rosen_opt_ego.dat&#39;
+
+<span class="k">method</span>
+  efficient_global
+    seed = 123456
+
+<span class="k">variables</span>
+  continuous_design = 2
+    lower_bounds   -2.0 -2.0
+    upper_bounds    2.0  2.0
+    descriptors     &#39;x1&#39; &#39;x2&#39;
+
+<span class="k">interface</span>
+  analysis_drivers = &#39;rosenbrock&#39;
+    direct
+
+<span class="k">responses</span>
+  objective_functions = 1
+  no_gradients
+  no_hessians
+</pre></div>
+</div>
+</div>
+<p>There are two types of parallelization within the <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-efficient_global.html"><span class="pre">efficient_global</span></a></code>
+method: the first one is batch-sequential parallel, which is active by
+default, and the second one is asynchronous batch parallel. These are activated
+using the <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-efficient_global-batch_size-synchronization-blocking.html"><span class="pre">blocking</span></a></code> and
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-efficient_global-batch_size-synchronization-nonblocking.html"><span class="pre">nonblocking</span></a></code> keywords, respectively.
+See <code class="docutils literal notranslate"><span class="pre">dakota/share/dakota/examples/users/dakota_rosenbrock_ego_stoch.in</span></code>
+for how to set up an asynchronous parallel EGO study.</p>
+<p>Both of these parallel EGO variants are enabled by setting a batch
+size with the keyword <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-efficient_global-batch_size.html"><span class="pre">batch_size</span></a></code>.
+The whole batch is further divided into two sub-batches: the
+first batch focuses on querying points corresponding to maximal value
+of the acquisition function, whereas the second batch focuses on
+querying points with maximal posterior variances in the GP. The size
+of the second batch is set with the keyword <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-efficient_global-batch_size-exploration.html"><span class="pre">exploration</span></a></code>,
+which has to be less than or equal to <code class="docutils literal notranslate"><span class="pre">batch_size</span> <span class="pre">-</span> <span class="pre">1</span></code>.</p>
+<p>For further elaboration of the difference between batch-sequential
+parallel and asynchronous parallel, see the detailed discussion of
+<a class="reference internal" href="../theory/surrogatebasedglobaloptimization.html#uq-ego"><span class="std std-ref">Efficient Global Optimization</span></a>.</p>
+</section>
+</section>
+</section>
+<section id="additional-optimization-capabilities">
+<span id="opt-additional"></span><h2>Additional Optimization Capabilities<a class="headerlink" href="#additional-optimization-capabilities" title="Link to this heading"></a></h2>
+<p>Dakota has several capabilities which extend the services provided
+by the optimization software packages described above.
+Those described in this section include:</p>
+<ul class="simple">
+<li><p><strong>Multiobjective optimization</strong>: There are three capabilities for
+multiobjective optimization in Dakota. The first is MOGA, described
+<a class="reference internal" href="#opt-methods-gradientfree-global-descriptions"><span class="std std-ref">above</span></a>.
+The second is the Pareto-set strategy, described in
+<a class="reference internal" href="../advanced/advancedmethods.html#adv-meth-pareto"><span class="std std-ref">Pareto Optimization</span></a>. The third is a
+weighting factor approach for multiobjective reduction, in which a
+composite objective function is constructed from a set of individual
+objective functions using a user-specified set of
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/responses-objective_functions-weights.html"><span class="pre">weights</span></a></code>.
+These latter two approaches work with any of the above single
+objective algorithms.</p></li>
+<li><p><strong>Scaling,</strong> where any optimizer (or least squares solver described
+in <a class="reference internal" href="nonlinearleastsquares.html#nls"><span class="std std-ref">Nonlinear Least Squares</span></a>), can accept
+user-specified (and in some cases automatic or logarithmic) scaling
+of continuous design variables, objective functions (or least squares
+terms), and constraints. Some optimization algorithms are sensitive
+to the relative scaling of problem inputs and outputs, and this
+feature can help.</p></li>
+</ul>
+<p>The <a class="reference internal" href="../advanced/advancedmethods.html#adv-meth"><span class="std std-ref">Advanced Methods</span></a> section offers details
+on the following component-based meta-algorithm approaches:</p>
+<ul class="simple">
+<li><p><strong>Sequential Hybrid Minimization</strong>: This meta-algorithm allows the
+user to specify a sequence of minimization methods, with the results
+from one method providing the starting point for the next method in
+the sequence. An example that is useful in many engineering design
+problems involves the use of a nongradient-based global optimization
+method (e.g., genetic algorithm) to identify promising regions of
+the parameter space. Solutions from these regions are provided to a
+gradient-based method (quasi-Newton, SQP, etc.) to perform an efficient
+local search for the optimum point.</p></li>
+<li><p><strong>Multistart Local Minimization</strong>: This meta-algorithm uses many
+local minimization runs (often gradient-based), each of which is
+started from a different initial point in the parameter space. This
+is an attractive approach in situations where multiple local optima
+are known to exist or may potentially exist in the parameter space.
+This approach combines the efficiency of local minimization methods
+with the parameter space coverage of a global stratification
+technique.</p></li>
+<li><p><strong>Pareto-Set Minimization</strong>: The Pareto-set minimization strategy
+allows the user to specify different sets of weights for either the
+individual objective functions in a multiobjective optimization
+problem or the individual residual terms in a least squares problem.
+Dakota executes each of these weighting sets as a separate
+minimization problem, serially or in parallel, and then outputs the
+set of optimal designs which define the Pareto set. Pareto set
+information can be useful in making trade-off decisions in
+engineering design problems.</p></li>
+</ul>
+<section id="multiobjective-optimization">
+<span id="opt-additional-multiobjective"></span><h3>Multiobjective Optimization<a class="headerlink" href="#multiobjective-optimization" title="Link to this heading"></a></h3>
+<p>Multiobjective optimization refers to the simultaneous optimization of
+two or more objective functions. Often these are competing objectives,
+such as cost and performance. The optimal design in a multi-objective
+problem is usually not a single point. Rather, it is a set of points
+called the Pareto front. Each point on the Pareto front satisfies the
+Pareto optimality criterion, which is stated as follows: a feasible
+vector <span class="math notranslate nohighlight">\(X^{*}\)</span> is Pareto optimal if there exists no other feasible
+vector <span class="math notranslate nohighlight">\(X\)</span> which would improve some objective without causing a
+simultaneous worsening in at least one other objective. Thus, if a
+feasible point <span class="math notranslate nohighlight">\(X'\)</span> exists that CAN be improved on one or more
+objectives simultaneously, it is not Pareto optimal: it is said to be
+“dominated” and the points along the Pareto front are said to be
+“non-dominated.”</p>
+<p>There are three capabilities for multiobjective optimization in Dakota.
+First, there is the MOGA capability described <a class="reference internal" href="#opt-methods-gradientfree-global-descriptions"><span class="std std-ref">above</span></a>.
+This is a specialized algorithm capability. The second capability
+involves the use of response data transformations to recast a
+multiobjective problem as a single-objective problem. Currently, Dakota
+supports the simple weighted sum approach for this transformation, in
+which a composite objective function is constructed from a set of
+individual objective functions using a user-specified set of weighting
+factors. This approach is optimization algorithm independent, in that it
+works with any of the optimization methods listed previously in this
+chapter. The third capability is the Pareto-set meta-algorithm described
+in the <a class="reference internal" href="../advanced/advancedmethods.html#adv-meth-pareto"><span class="std std-ref">Pareto Optimization</span></a> section. This capability
+also utilizes the multiobjective response data transformations to allow
+optimization algorithm independence; however, it builds upon the basic
+approach by computing sets of optima in order to generate a Pareto
+trade-off surface.</p>
+<p>In the multiobjective transformation approach in which multiple
+objectives are combined into one, an appropriate single-objective
+optimization technique is used to solve the problem. The advantage of
+this approach is that one can use any number of optimization methods
+that are especially suited for the particular problem class. One
+disadvantage of the weighted sum transformation approach is that a
+linear weighted sum objective will only find one solution on the Pareto
+front. Since each optimization of a single weighted objective will find
+only one point near or on the Pareto front, many optimizations need to
+be performed to get a good parametric understanding of the influence of
+the weights. Thus, this approach can become computationally expensive.</p>
+<p>A multiobjective optimization problem is indicated by the specification
+of multiple (<span class="math notranslate nohighlight">\(R\)</span>) objective functions in the responses keyword
+block (i.e., the <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/responses-objective_functions.html"><span class="pre">objective_functions</span></a></code> specification is greater than
+<code class="docutils literal notranslate"><span class="pre">1</span></code>). The weighting factors on these objective functions can be
+optionally specified using the <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/responses-objective_functions-weights.html"><span class="pre">weights</span></a></code>
+keyword (the default is equal weightings <span class="math notranslate nohighlight">\(\frac{1}{R}\)</span>). The composite
+objective function for this optimization problem, <span class="math notranslate nohighlight">\(F\)</span>, is formed using these
+weights as follows: <span class="math notranslate nohighlight">\(F=\sum_{k=1}^{R}w_{k}f_{k}\)</span>, where the <span class="math notranslate nohighlight">\(f_{k}\)</span>
+terms are the individual objective function values, the <span class="math notranslate nohighlight">\(w_{k}\)</span>
+terms are the weights, and <span class="math notranslate nohighlight">\(R\)</span> is the number of objective
+functions. The weighting factors stipulate the relative importance of
+the design concerns represented by the individual objective functions;
+the higher the weighting factor, the more dominant a particular
+objective function will be in the optimization process. Constraints are
+not affected by the weighting factor mapping; therefore, both
+constrained and unconstrained multiobjective optimization problems can
+be formulated and solved with Dakota, assuming selection of an
+appropriate constrained or unconstrained single-objective optimization
+algorithm. When both multiobjective weighting and scaling are active,
+response scaling is applied prior to weighting.</p>
+<section id="multiobjective-example-1">
+<span id="opt-additional-multiobjective-example1"></span><h4>Multiobjective Example 1<a class="headerlink" href="#multiobjective-example-1" title="Link to this heading"></a></h4>
+<p><a class="reference internal" href="#opt-additional-multiobjective-example1-figure01"><span class="std std-numref">Listing 55</span></a>
+shows a Dakota input file for a multiobjective optimization problem
+based on the <a class="reference internal" href="../examples/additionalexamples.html#additional-textbook"><span class="std std-ref">“textbook”</span></a> test problem. In the standard textbook
+formulation, there is one objective function and two constraints. In the
+multiobjective textbook formulation, all three of these functions are
+treated as objective functions (<code class="docutils literal notranslate"><span class="pre">objective_functions</span> <span class="pre">=</span> <span class="pre">3</span></code>), with
+weights given by the <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/responses-objective_functions-weights.html"><span class="pre">weights</span></a></code> keyword.
+Note that it is not required that the weights sum to a value of one. The
+multiobjective optimization capability also allows any number of constraints,
+although none are included in this example.</p>
+<div class="literal-block-wrapper docutils container" id="opt-additional-multiobjective-example1-figure01">
+<div class="code-block-caption"><span class="caption-number">Listing 55 </span><span class="caption-text">Example Dakota input file for multiobjective optimization –
+see <code class="docutils literal notranslate"><span class="pre">dakota/share/dakota/examples/users/textbook_opt_multiobj1.in</span></code></span><a class="headerlink" href="#opt-additional-multiobjective-example1-figure01" title="Link to this code"></a></div>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span><span class="c"># Dakota Input File: textbook_opt_multiobj1.in</span>
+
+<span class="k">environment</span>
+  tabular_data
+    tabular_data_file = &#39;textbook_opt_multiobj1.dat&#39;
+
+<span class="k">method</span>
+<span class="c">## (NPSOL requires a software license; if not available, try</span>
+<span class="c">## conmin_frcg or optpp_q_newton instead)</span>
+  npsol_sqp
+    convergence_tolerance = 1.e-8
+
+<span class="k">variables</span>
+  continuous_design = 2
+    initial_point    0.9    1.1
+    upper_bounds     5.8    2.9
+    lower_bounds     0.5   -2.9
+    descriptors      &#39;x1&#39;   &#39;x2&#39;
+
+<span class="k">interface</span>
+  analysis_drivers = &#39;text_book&#39;
+    direct
+
+<span class="k">responses</span>
+  objective_functions = 3
+  weights = .7 .2 .1
+  analytic_gradients
+  no_hessians
+</pre></div>
+</div>
+</div>
+<p><a class="reference internal" href="#opt-additional-multiobjective-example1-figure02"><span class="std std-numref">Listing 56</span></a>
+shows an excerpt of the results for this multiobjective optimization
+problem, with output in verbose mode. The data for function evaluation 9
+show that the simulator is returning the values and gradients of the
+three objective functions and that this data is being combined by Dakota
+into the value and gradient of the composite objective function, as
+identified by the header “<code class="docutils literal notranslate"><span class="pre">Multiobjective</span> <span class="pre">transformation:</span></code>”. This
+combination of value and gradient data from the individual objective
+functions employs the user-specified weightings of <code class="docutils literal notranslate"><span class="pre">.7</span></code>, <code class="docutils literal notranslate"><span class="pre">.2</span></code>, and
+<code class="docutils literal notranslate"><span class="pre">.1</span></code>. Convergence to the optimum of the multiobjective problem is
+indicated in this case by the gradient of the composite objective
+function going to zero (no constraints are active).</p>
+<div class="literal-block-wrapper docutils container" id="opt-additional-multiobjective-example1-figure02">
+<div class="code-block-caption"><span class="caption-number">Listing 56 </span><span class="caption-text">Dakota results for the multiobjective optimization example.</span><a class="headerlink" href="#opt-additional-multiobjective-example1-figure02" title="Link to this code"></a></div>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>   ------------------------------
+   Begin Function Evaluation    9
+   ------------------------------
+   Parameters for function evaluation 9:
+                         5.9388064483e-01 x1
+                         7.4158741198e-01 x2
+
+   (text_book /tmp/fileFNNH3v /tmp/fileRktLe9)
+   Removing /tmp/fileFNNH3v and /tmp/fileRktLe9
+
+   Active response data for function evaluation 9:
+   Active set vector = { 3 3 3 } Deriv vars vector = { 1 2 }
+                         3.1662048106e-02 obj_fn_1
+                        -1.8099485683e-02 obj_fn_2
+                         2.5301156719e-01 obj_fn_3
+    [ -2.6792982175e-01 -6.9024137415e-02 ] obj_fn_1 gradient
+    [  1.1877612897e+00 -5.0000000000e-01 ] obj_fn_2 gradient
+    [ -5.0000000000e-01  1.4831748240e+00 ] obj_fn_3 gradient
+
+
+
+   -----------------------------------
+   Post-processing Function Evaluation
+   -----------------------------------
+   Multiobjective transformation:
+                         4.3844693257e-02 obj_fn
+    [  1.3827084219e-06  5.8620632776e-07  ] obj_fn gradient
+
+       7    1 1.0E+00    9  4.38446933E-02 1.5E-06    2 T TT
+
+    Exit NPSOL - Optimal solution found.
+
+    Final nonlinear objective value =   0.4384469E-01
+</pre></div>
+</div>
+</div>
+<p>By performing multiple optimizations for different sets of weights, a
+family of optimal solutions can be generated which define the trade-offs
+that result when managing competing design concerns. This set of
+solutions is referred to as the Pareto set. The
+<a class="reference internal" href="../advanced/advancedmethods.html#adv-meth-pareto"><span class="std std-ref">Pareto Optimization</span></a> section describes an algorithm
+for directly generating the Pareto set in order to investigate the
+trade-offs in multiobjective optimization problems.</p>
+</section>
+<section id="multiobjective-example-2">
+<span id="opt-additional-multiobjective-example2"></span><h4>Multiobjective Example 2<a class="headerlink" href="#multiobjective-example-2" title="Link to this heading"></a></h4>
+<p>This example illustrates multi-objective optimization using the genetic
+algorithm method <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-moga.html"><span class="pre">moga</span></a></code>. It is based on the idea that as
+the population evolves in a GA, solutions that are non-dominated are
+chosen to remain in the population.</p>
+<p>The MOGA algorithm has separate fitness assessment and selection operators called
+the <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-moga-fitness_type-domination_count.html"><span class="pre">domination_count</span></a></code> fitness assessor
+and <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-moga-replacement_type-below_limit.html"><span class="pre">below_limit</span></a></code> selector,
+respectively.</p>
+<p>The <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-moga-fitness_type-domination_count.html"><span class="pre">domination_count</span></a></code> fitness assessor ranks
+population members such that their resulting fitness is a function of the number of
+other designs that dominate them. This approach of selection works especially well on
+multi-objective problems because it has been specifically designed to
+avoid problems with aggregating and scaling objective function values
+and transforming them into a single objective.</p>
+<p>The <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-moga-replacement_type-below_limit.html"><span class="pre">below_limit</span></a></code> selector then
+chooses designs by considering the fitness of each. If the fitness of a
+design is below a limit that corresponds to a design
+being dominated by more than a specified number of other designs, then it is
+discarded. Otherwise it is kept and selected to go to the next generation.</p>
+<p>This selector requires that a minimum number of selections take
+place. The <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-moga-replacement_type-below_limit-shrinkage_fraction.html"><span class="pre">shrinkage_fraction</span></a></code>
+determines the minimum number of selections that will take place if enough designs are
+available. It is interpreted as a percentage of the population size that must go on to
+the subsequent generation. To enforce this, the
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-moga-replacement_type-below_limit.html"><span class="pre">below_limit</span></a></code> selector
+is automatically relaxed until a sufficient number of designs can be selected.
+The moga method has many other important features.</p>
+<p>We demonstrate the MOGA algorithm on three examples that are taken from
+a multiobjective evolutionary algorithm (MOEA) test suite described by
+Van Veldhuizen et. al. in <span id="id22">[<a class="reference internal" href="../../misc/bibliography.html#id39" title="C. A. Coello, D. A. Van Veldhuizen, and G. B. Lamont. Evolutionary Algorithms for Solving Multi-Objective Problems. Kluwer Academic/Plenum Publishers, New York, 2002.">CVVL02</a>]</span>. These three
+examples illustrate the different forms that the Pareto set may take.
+For each problem, we describe the Dakota input and show a graph of the
+Pareto front. These problems are all solved with the <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-moga.html"><span class="pre">moga</span></a></code> method.
+The first example is presented below, the other two examples are
+presented in the additional examples section under the headings
+<a class="reference internal" href="../examples/additionalexamples.html#additional-multiobjective-problem2"><span class="std std-ref">Multiobjective Test Problem 2</span></a> and
+<a class="reference internal" href="../examples/additionalexamples.html#additional-multiobjective-problem3"><span class="std std-ref">Multiobjective Test Problem 3</span></a>.</p>
+<p>In Van Veldhuizen’s notation, the set of all Pareto optimal design
+configurations (design variable values only) is denoted
+<span class="math notranslate nohighlight">\(\mathtt{P^*}\)</span> or <span class="math notranslate nohighlight">\(\mathtt{P_{true}}\)</span> and is defined as:</p>
+<div class="math notranslate nohighlight">
+\[\begin{aligned}
+  P^*:=\{x\in\Omega\,|\,\neg\exists\,\,
+  x^\prime\in\Omega\quad\bar{f}(x^\prime)\preceq\bar{f}(x)\}\end{aligned}\]</div>
+<p>The Pareto front, which is the set of objective function values
+associated with the Pareto optimal design configurations, is denoted
+<span class="math notranslate nohighlight">\(\mathtt{PF^*}\)</span> or <span class="math notranslate nohighlight">\(\mathtt{PF_{true}}\)</span> and is defined as:</p>
+<div class="math notranslate nohighlight">
+\[\begin{aligned}
+  PF^*:=\{\bar{u}=\bar{f}=(f_1(x),\ldots,f_k(x))\,|\, x\in P^*\}\end{aligned}\]</div>
+<p>The values calculated for the Pareto set and the Pareto front using the
+moga method are close to but not always exactly the true values,
+depending on the number of generations the moga is run, the various
+settings governing the GA, and the complexity of the Pareto set.</p>
+<p>The first test problem is a case where <span class="math notranslate nohighlight">\(P_{true}\)</span> is connected and
+<span class="math notranslate nohighlight">\(PF_{true}\)</span> is concave. The problem is to simultaneously optimize
+<span class="math notranslate nohighlight">\(f_1\)</span> and <span class="math notranslate nohighlight">\(f_2\)</span> given three input variables, <span class="math notranslate nohighlight">\(x_1\)</span>,
+<span class="math notranslate nohighlight">\(x_2\)</span>, and <span class="math notranslate nohighlight">\(x_3\)</span>, where the inputs are bounded by
+<span class="math notranslate nohighlight">\(-4 \leq x_{i} \leq 4\)</span>:</p>
+<p><a class="reference internal" href="#opt-additional-multiobjective-example2-moga1inp"><span class="std std-numref">Listing 57</span></a>
+shows an input file that demonstrates some of the multi-objective
+capabilities available with the moga method.</p>
+<div class="literal-block-wrapper docutils container" id="opt-additional-multiobjective-example2-moga1inp">
+<div class="code-block-caption"><span class="caption-number">Listing 57 </span><span class="caption-text">Multiple objective genetic algorithm (MOGA) example: the
+Dakota input file – see
+<code class="docutils literal notranslate"><span class="pre">dakota/share/dakota/examples/users/mogatest1.in</span></code></span><a class="headerlink" href="#opt-additional-multiobjective-example2-moga1inp" title="Link to this code"></a></div>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span><span class="c"># Dakota Input File: mogatest1.in</span>
+
+<span class="k">environment</span>
+  tabular_data
+    tabular_data_file = &#39;mogatest1.dat&#39;
+
+<span class="k">method</span>
+  moga
+    seed = 10983
+  max_function_evaluations = 2500
+  initialization_type unique_random
+  crossover_type shuffle_random
+    num_offspring = 2 num_parents = 2
+    crossover_rate = 0.8
+  mutation_type replace_uniform
+    mutation_rate = 0.1
+  fitness_type domination_count
+  replacement_type below_limit = 6
+    shrinkage_fraction = 0.9
+  convergence_type metric_tracker
+    percent_change = 0.05 num_generations = 40
+  final_solutions = 3
+  output silent
+
+<span class="k">variables</span>
+  continuous_design = 3
+    initial_point     0    0    0
+    upper_bounds      4    4    4
+    lower_bounds     -4   -4   -4
+    descriptors     &#39;x1&#39; &#39;x2&#39; &#39;x3&#39;
+
+<span class="k">interface</span>
+  analysis_drivers = &#39;mogatest1&#39;
+    direct
+
+<span class="k">responses</span>
+  objective_functions = 2
+  no_gradients
+  no_hessians
+</pre></div>
+</div>
+</div>
+<p>In this example, the three best solutions (as specified by
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-final_solutions.html"><span class="pre">final_solutions</span> <span class="pre">=</span> <span class="pre">3</span></a></code>) are written to the output. Additionally, final
+results from moga are output to a file called <code class="docutils literal notranslate"><span class="pre">finaldata1.dat</span></code>, which
+contains  a list of inputs and outputs.
+Plotting the output columns against each other allows one to see the
+Pareto front generated by <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-moga.html"><span class="pre">moga</span></a></code>.</p>
+<p><a class="reference internal" href="#opt-additional-multiobjective-example2-moga-pareto"><span class="std std-numref">Fig. 50</span></a>
+shows an example of the Pareto front for this problem. Note that a
+Pareto front easily shows the trade-offs between Pareto optimal
+solutions. For instance, look at the point with <span class="math notranslate nohighlight">\(f_1\)</span> and <span class="math notranslate nohighlight">\(f_2\)</span> values equal
+to <span class="math notranslate nohighlight">\((0.9, 0.23)\)</span>. One cannot improve (minimize) the value of objective
+function <span class="math notranslate nohighlight">\(f_1\)</span> without increasing the value of <span class="math notranslate nohighlight">\(f_2\)</span>: another point on the
+Pareto front, <span class="math notranslate nohighlight">\((0.63, 0.63)\)</span> represents a better value of objective <span class="math notranslate nohighlight">\(f_1\)</span> but
+a worse value of objective <span class="math notranslate nohighlight">\(f_2\)</span>.</p>
+<figure class="align-default" id="opt-additional-multiobjective-example2-moga-pareto">
+<img alt="Multiple objective genetic algorithm (MOGA) example: Pareto front showing trade-offs between functions f1 and f2." src="../../_images/dakota_mogatest1_pareto_front.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 50 </span><span class="caption-text">Multiple objective genetic algorithm (MOGA) example: Pareto front
+showing trade-offs between functions f1 and f2.</span><a class="headerlink" href="#opt-additional-multiobjective-example2-moga-pareto" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+</section>
+</section>
+<section id="optimization-with-user-specified-or-automatic-scaling">
+<span id="opt-additional-scaling"></span><h3>Optimization with User-specified or Automatic Scaling<a class="headerlink" href="#optimization-with-user-specified-or-automatic-scaling" title="Link to this heading"></a></h3>
+<p>Some optimization problems involving design variables, objective
+functions, or constraints on vastly different scales may be solved more
+efficiently if these quantities are adjusted to a common scale
+(typically on the order of unity). With any optimizer (or least squares
+solver described in <a class="reference internal" href="nonlinearleastsquares.html#nls"><span class="std std-ref">Nonlinear Least Squares</span></a>),
+user-specified characteristic value scaling may be applied to any of
+continuous design variables, functions/residuals, nonlinear inequality
+and equality constraints, and linear inequality and equality
+constraints. Automatic scaling is available for variables or responses
+with one- or two-sided bounds or equalities and may be combined with
+user-specified scaling values. Logarithmic (<span class="math notranslate nohighlight">\(\log_{10}\)</span>) scaling
+is available and may also be combined with characteristic values. Log
+scaling is not available for linear constraints. Moreover, when
+continuous design variables are log scaled, linear constraints are not
+permitted in the problem formulation. Discrete variable scaling is not
+supported.</p>
+<p>Scaling is enabled on a per-method basis for optimizers and calibration
+(least squares and Bayesian) methods by including the <code class="docutils literal notranslate"><span class="pre">scaling</span></code> keyword in the
+relevant <code class="docutils literal notranslate"><span class="pre">method</span></code> specification in the Dakota input file, e.g. for the
+<a class="reference internal" href="../reference/method-optpp_q_newton-scaling.html#method-optpp-q-newton-scaling"><span class="std std-ref">optpp_q_newton method</span></a>. When scaling is
+enabled, variables, functions, gradients, Hessians, etc., are
+transformed such that the optimizer iterates in the scaled
+variable/response space. Evaluations of the computational model
+as specified in the interface are performed in the original problem
+scale, alleviating the need to rewrite the interface
+to the simulation code to perform scaling. When the <code class="docutils literal notranslate"><span class="pre">scaling</span></code> keyword is
+absent form the <code class="docutils literal notranslate"><span class="pre">method</span></code> block, all scale type and value specifications
+in the <code class="docutils literal notranslate"><span class="pre">variables</span></code> and <code class="docutils literal notranslate"><span class="pre">responses</span></code> blocks are ignored. Dakota prints
+scaling initialization and diagnostic information to the console when
+the output verbosity is set above normal.</p>
+<p>Scaling for a particular variable or response type is enabled through
+their <code class="docutils literal notranslate"><span class="pre">scales</span></code>, <code class="docutils literal notranslate"><span class="pre">scale_types</span></code> and related specifications (drill down
+into <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/variables.html"><span class="pre">variables</span></a></code> or <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/responses.html"><span class="pre">responses</span></a></code>). Valid options
+for the string-valued specifications include <code class="docutils literal notranslate"><span class="pre">’value’</span></code>, <code class="docutils literal notranslate"><span class="pre">’auto’</span></code>, or
+<code class="docutils literal notranslate"><span class="pre">’log’</span></code>, for characteristic value, automatic, or logarithmic scaling,
+respectively (although not all types are valid for scaling all
+entities). If a single string is specified with any of these keywords it
+will apply to each component of the relevant vector, e.g., with
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/variables-continuous_design.html"><span class="pre">continuous_design</span> <span class="pre">=</span> <span class="pre">3</span></a></code>,
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/variables-continuous_design-scale_types.html"><span class="pre">scale_types</span> <span class="pre">=</span> <span class="pre">'value'</span></a></code> will
+enable characteristic value scaling for each of the 3 continuous design
+variables.</p>
+<p>One may specify no, one, or a vector of characteristic scale values
+through the <code class="docutils literal notranslate"><span class="pre">scales</span></code> specifications. These characteristic values are required for
+<code class="docutils literal notranslate"><span class="pre">’value’</span></code>, and optional for <code class="docutils literal notranslate"><span class="pre">’auto’</span></code> and <code class="docutils literal notranslate"><span class="pre">’log’</span></code>. If scales are
+specified, but not scale types, value scaling is assumed. As with types,
+if a single value is specified with any of these keywords it will apply
+to each component of the relevant vector, e.g., if <code class="docutils literal notranslate"><span class="pre">scales=3.4</span></code> is specified for
+continuous design variables, Dakota will apply a characteristic scaling
+value of 3.4 to each continuous design variable.</p>
+<p>When scaling is enabled, the following procedures determine the
+transformations used to scale each component of a variables or response
+vector. A warning is issued if scaling would result in division by a
+value smaller in magnitude than <code class="docutils literal notranslate"><span class="pre">1.0e10*DBL_MIN</span></code>. User-provided values
+violating this lower bound are accepted unaltered, whereas for
+automatically calculated scaling, the lower bound is enforced.</p>
+<ul>
+<li><p>No <code class="docutils literal notranslate"><span class="pre">scales</span></code> and no <code class="docutils literal notranslate"><span class="pre">scale_types`</span></code> specified for this component (variable or
+response type): no scaling performed on this component.</p></li>
+<li><p>Characteristic value (<code class="docutils literal notranslate"><span class="pre">’value’</span></code>): the corresponding quantity is
+scaled (divided) by the required characteristic value provided in the
+corresponding specification, and bounds are adjusted as necessary. If
+the value is negative, the sense of inequalities are changed
+accordingly.</p></li>
+<li><p>Automatic (<code class="docutils literal notranslate"><span class="pre">’auto’</span></code>): First, any characteristic values from the
+optional corresponding specification are applied. Then, automatic
+scaling will be attempted according to the following scheme:</p>
+<ul class="simple">
+<li><p>two-sided bounds scaled into the interval <span class="math notranslate nohighlight">\([0,1]\)</span>;</p></li>
+<li><p>one-sided bounds or targets are scaled by a characteristic value
+to move the bound or target to 1, and the sense of inequalities
+are changed if necessary;</p></li>
+<li><p>no bounds or targets: no automatic scaling possible for this
+component</p></li>
+</ul>
+<p>Automatic scaling is not available for objective functions nor least
+squares terms since they lack bound constraints. Further, when
+automatically scaled, linear constraints are scaled by characteristic
+values only, not affinely scaled into <span class="math notranslate nohighlight">\([0,1]\)</span>.</p>
+</li>
+<li><p>Logarithmic (<code class="docutils literal notranslate"><span class="pre">’log’</span></code>): First, any characteristic values from the
+optional <code class="docutils literal notranslate"><span class="pre">scales</span></code> specification are applied. Then, <span class="math notranslate nohighlight">\(\log_{10}\)</span> scaling
+is applied. Logarithmic scaling is not available for linear
+constraints. Further, when continuous design variables are log
+scaled, linear constraints are not allowed.</p></li>
+</ul>
+<p>Scaling for linear constraints specified through <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/variables-linear_inequality_scales.html"><span class="pre">linear_inequality_scales</span></a></code>
+or <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/variables-linear_equality_scales.html"><span class="pre">linear_equality_scales</span></a></code>  is applied <em>after</em>
+any (user-specified or automatic) continuous variable scaling. For
+example, for scaling mapping unscaled continuous design variables
+<span class="math notranslate nohighlight">\(x\)</span> to scaled variables <span class="math notranslate nohighlight">\(\tilde{x}\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\tilde{x}^j = \frac{x^j - x^j_O}{x^j_M},\]</div>
+<p>where <span class="math notranslate nohighlight">\(x^j_M\)</span> is the final component multiplier and <span class="math notranslate nohighlight">\(x^j_O\)</span>
+the offset, we have the following matrix system for linear inequality
+constraints</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+&amp; a_L \leq A_i x \leq a_U \\
+&amp; a_L \leq A_i \left( \mathrm{diag}(x_M) \tilde{x} + x_O \right) \leq a_U \\
+&amp; a_L - A_i x_O \leq A_i \mathrm{diag}(x_M) \tilde{x} \leq a_U - A_i x_O \\
+&amp; \tilde{a}_L \leq \tilde{A}_i \tilde{x} \leq \tilde{a}_U,\end{aligned}\end{split}\]</div>
+<p>and user-specified or automatically computed scaling multipliers are
+applied to this final transformed system, which accounts for any
+continuous design variable scaling. When automatic scaling is in use for
+linear constraints they are linearly scaled by characteristic values
+only, not affinely scaled into the interval <span class="math notranslate nohighlight">\([0,1]\)</span>.</p>
+<section id="scaling-example">
+<span id="opt-additional-scaling-example"></span><h4>Scaling Example<a class="headerlink" href="#scaling-example" title="Link to this heading"></a></h4>
+<p><a class="reference internal" href="#opt-additional-scaling-example-figure01"><span class="std std-numref">Listing 58</span></a>
+demonstrates the use of several scaling keywords for the Rosenbrock
+optimization problem. The first continuous design variable <code class="docutils literal notranslate"><span class="pre">x1</span></code> is scaled by
+a characteristic value of 4.0, and the second, <code class="docutils literal notranslate"><span class="pre">x2</span></code>, is scaled by 0.1 then logarithmically.
+The objective function will be scaled by a factor of 50.0. Note that not only do the
+<code class="docutils literal notranslate"><span class="pre">scales</span></code> and <code class="docutils literal notranslate"><span class="pre">scale_types</span></code> keywords appear in the <code class="docutils literal notranslate"><span class="pre">variables</span></code> and <code class="docutils literal notranslate"><span class="pre">responses</span></code> blocks;
+the <code class="docutils literal notranslate"><span class="pre">scaling</span></code> keyword is also present in the method block. Both are necessary for scaling
+to occur.</p>
+<div class="literal-block-wrapper docutils container" id="opt-additional-scaling-example-figure01">
+<div class="code-block-caption"><span class="caption-number">Listing 58 </span><span class="caption-text">Sample usage of scaling keywords in Dakota input specification –
+see <code class="docutils literal notranslate"><span class="pre">dakota/share/dakota/examples/users/rosen_opt_scaled.in</span></code></span><a class="headerlink" href="#opt-additional-scaling-example-figure01" title="Link to this code"></a></div>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span><span class="c"># Dakota Input File: rosen_opt_scaled.in</span>
+
+<span class="k">environment</span>
+  tabular_data
+    tabular_data_file = &#39;rosen_opt_scaled.dat&#39;
+
+<span class="k">method</span>
+  conmin_frcg
+    scaling
+    output verbose
+
+<span class="k">model</span>
+  single
+
+<span class="k">variables</span>
+  continuous_design = 2
+    initial_point    -1.2      1.0
+    lower_bounds     -2.0      0.001
+    upper_bounds      2.0      2.0
+    descriptors       &#39;x1&#39;     &quot;x2&quot;
+    scale_types = &#39;value&#39; &#39;log&#39;
+    scales = 4.0 0.1
+
+<span class="k">interface</span>
+  analysis_drivers = &#39;rosenbrock&#39;
+    direct
+
+<span class="k">responses</span>
+  objective_functions = 1
+    primary_scale_types = &#39;value&#39;
+    primary_scales = 50.0
+  analytic_gradients
+  no_hessians
+</pre></div>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="optimization-usage-guidelines">
+<span id="opt-usage"></span><h2>Optimization Usage Guidelines<a class="headerlink" href="#optimization-usage-guidelines" title="Link to this heading"></a></h2>
+<p>In selecting an optimization method, important considerations include
+the type of variables in the problem (continuous, discrete, mixed),
+whether a global search is needed or a local search is sufficient, and
+the required constraint support (unconstrained, bound constrained, or
+generally constrained). Less obvious, but equally important,
+considerations include the efficiency of convergence to an optimum
+(i.e., convergence rate) and the robustness of the method in the
+presence of challenging design space features (e.g., nonsmoothness,
+simulation failures).</p>
+<p><a class="reference internal" href="#opt-usage-guideopt"><span class="std std-numref">Table 12</span></a> provides a convenient reference for
+choosing an optimization method or strategy to match the characteristics
+of the user’s problem.
+With respect to constraint support, it should be understood that the
+methods with more advanced constraint support are also applicable to the
+lower constraint support levels; they are listed only at their highest
+level of constraint support for brevity.</p>
+<table class="docutils align-default" id="opt-usage-guideopt">
+<caption><span class="caption-number">Table 12 </span><span class="caption-text">Guidelines for optimization method selection.</span><a class="headerlink" href="#opt-usage-guideopt" title="Link to this table"></a></caption>
+<thead>
+<tr class="row-odd"><th class="head"><p><strong>Method
+Classification</strong></p></th>
+<th class="head"><p><strong>Desired Problem
+Characteristics</strong></p></th>
+<th class="head"><p><strong>Applicable
+Methods</strong></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td rowspan="4"><p>Gradient-Based
+Local</p></td>
+<td><p>No constraints</p></td>
+<td><p><code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-optpp_cg.html"><span class="pre">optpp_cg</span></a></code>,
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-rol.html"><span class="pre">rol</span></a></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>bound constraints</p></td>
+<td><p><code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-dot_bfgs.html"><span class="pre">dot_bfgs</span></a></code>,
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-dot_frcg.html"><span class="pre">dot_frcg</span></a></code>,
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-conmin_frcg.html"><span class="pre">conmin_frcg</span></a></code>,
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-rol.html"><span class="pre">rol</span></a></code></p></td>
+</tr>
+<tr class="row-even"><td><p>bound constraints,
+linear and nonlinear
+constraints</p></td>
+<td><p><code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-npsol_sqp.html"><span class="pre">npsol_sqp</span></a></code>,
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-nlpql_sqp.html"><span class="pre">nlpql_sqp</span></a></code>,
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-dot_mmfd.html"><span class="pre">dot_mmfd</span></a></code>,
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-dot_slp.html"><span class="pre">dot_slp</span></a></code>,
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-dot_sqp.html"><span class="pre">dot_sqp</span></a></code>,
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-conmin_mfd.html"><span class="pre">conmin_mfd</span></a></code>,
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-optpp_newton.html"><span class="pre">optpp_newton</span></a></code>,
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-optpp_q_newton.html"><span class="pre">optpp_q_newton</span></a></code>,
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-optpp_fd_newton.html"><span class="pre">optpp_fd_newton</span></a></code>,
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-rol.html"><span class="pre">rol</span></a></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>bound constraints,
+linear and nonlinear
+constraints;
+multiobjective</p></td>
+<td><p><a class="reference internal" href="../reference/responses-objective_functions-weights.html#responses-objective-functions-weights"><span class="std std-ref">Weighted sum of objectives</span></a>,</p>
+<p><a class="reference internal" href="../advanced/advancedmethods.html#adv-meth-pareto"><span class="std std-ref">Pareto Optimization</span></a></p>
+</td>
+</tr>
+<tr class="row-even"><td><p>Gradient-Based
+Global</p></td>
+<td><p>bound constraints,
+linear and nonlinear
+constraints</p></td>
+<td><p><a class="reference internal" href="../advanced/advancedmethods.html#adv-meth-hybrid"><span class="std std-ref">Hybrid Minimization</span></a>,</p>
+<p><a class="reference internal" href="../advanced/advancedmethods.html#adv-meth-multistart"><span class="std std-ref">Multistart Local Minimization</span></a></p>
+</td>
+</tr>
+<tr class="row-odd"><td rowspan="4"><p>Derivative-Free
+Local</p></td>
+<td><p>bound constraints</p></td>
+<td><p><code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-optpp_pds.html"><span class="pre">optpp_pds</span></a></code></p></td>
+</tr>
+<tr class="row-even"><td><p>bound constraints,
+nonlinear
+constraints</p></td>
+<td><p><code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-coliny_cobyla.html"><span class="pre">coliny_cobyla</span></a></code>,</p>
+<p><code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-coliny_pattern_search.html"><span class="pre">coliny_pattern_search</span></a></code>,
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-coliny_solis_wets.html"><span class="pre">coliny_solis_wets</span></a></code>,</p>
+</td>
+</tr>
+<tr class="row-odd"><td><p>bound constraints,</p>
+<p>linear and nonlinear
+constraints</p>
+</td>
+<td><p><code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-asynch_pattern_search.html"><span class="pre">asynch_pattern_search</span></a></code>,</p>
+<p><code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-surrogate_based_local.html"><span class="pre">surrogate_based_local</span></a></code></p>
+</td>
+</tr>
+<tr class="row-even"><td><p>discrete variables;
+bound constraints,
+nonlinear
+constraints</p></td>
+<td><p><code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-mesh_adaptive_search.html"><span class="pre">mesh_adaptive_search</span></a></code></p></td>
+</tr>
+<tr class="row-odd"><td rowspan="6"><p>Derivative-Free
+Global</p></td>
+<td><p>bound constraints</p></td>
+<td><p><code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-ncsu_direct.html"><span class="pre">ncsu_direct</span></a></code></p></td>
+</tr>
+<tr class="row-even"><td><p>bound constraints,
+nonlinear
+constraints</p></td>
+<td><p><code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-coliny_direct.html"><span class="pre">coliny_direct</span></a></code>,</p>
+<p><code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-efficient_global.html"><span class="pre">efficient_global</span></a></code></p>
+</td>
+</tr>
+<tr class="row-odd"><td><p>bound constraints,
+linear and nonlinear
+constraints</p></td>
+<td><p><code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-surrogate_based_global.html"><span class="pre">surrogate_based_global</span></a></code></p></td>
+</tr>
+<tr class="row-even"><td><p>discrete variables;
+bound constraints,
+nonlinear
+constraints</p></td>
+<td><p><code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-coliny_ea.html"><span class="pre">coliny_ea</span></a></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>discrete variables;
+bound constraints,
+linear and nonlinear
+constraints</p></td>
+<td><p><code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-soga.html"><span class="pre">soga</span></a></code></p></td>
+</tr>
+<tr class="row-even"><td><p>discrete variables;
+bound constraints,
+linear and nonlinear
+constraints;
+multiobjective</p></td>
+<td><p><code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-moga.html"><span class="pre">moga</span></a></code></p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Gradient-based methods require continuous variables and differentiable (smooth) responses.
+Non-smooth objective functions can be optimized using derivative-free methods. All of Dakota’s
+optimization methods permit continous design variables; those that are compatible with discrete
+variables are so indicated in the table.</p>
+</div>
+<p><strong>Gradient-based Methods</strong></p>
+<p>Gradient-based optimization methods are highly efficient, with the
+best convergence rates of all of the optimization methods. If analytic
+gradient and Hessian information can be provided by an application
+code, a full Newton method will provide quadratic convergence rates
+near the solution. More commonly, only gradient information is
+available and a quasi-Newton method is chosen in which the Hessian
+information is approximated from an accumulation of gradient data. In
+this case, superlinear convergence rates can be obtained. First-order
+methods, such as the Method of Feasible Directions, may achieve only a
+linear rate of convergence, which may entail more iterations, but
+potentially at a lower cost per iteration associated with Hessian
+calculations. These characteristics make gradient-based optimization
+the methods of choice when the problem is smooth, unimodal, and
+well-behaved. However, when the problem exhibits nonsmooth,
+discontinuous, or multimodal behavior, these methods can also be the
+least robust since inaccurate gradients will lead to bad search
+directions, failed line searches, and early termination, and the
+presence of multiple minima will be missed.</p>
+<p>Thus, for gradient-based optimization, a critical factor is the gradient
+accuracy. Analytic gradients are ideal, but are often unavailable. For
+many engineering applications, a finite difference method will be used
+by the optimization algorithm to estimate gradient values. Dakota allows
+the user to select the step size for these calculations, as well as
+choose between forward-difference and central-difference algorithms. The
+finite difference step size should be selected as small as possible, to
+allow for local accuracy and convergence, but not so small that the
+steps are “in the noise.” This requires an assessment of the local
+smoothness of the response functions using, for example, a parameter
+study method. Central differencing, in general, will produce more
+reliable gradients than forward differencing, but at roughly twice the
+expense.</p>
+<p>ROL has traditionally been developed and applied to problems with
+analytic gradients (and Hessians). Nonetheless, ROL can be used with
+Dakota-provided finite-differencing approximations to the gradient of
+both objective and constraints. However, a user relying on such
+approximations is advised to resort to alternative optimizers such as
+DOT until performance of ROL improves in future releases.</p>
+<p>We offer the following recommendations in deciding upon a suitable
+gradient-based method for a given problem</p>
+<ul class="simple">
+<li><p>For <strong>unconstrained and bound-constrained problems</strong>, conjugate
+gradient-based methods exhibit the best scalability for large-scale
+problems (1,000+ variables). These include the Polak-Ribiere
+conjugate gradient method (<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-optpp_cg.html"><span class="pre">optpp_cg</span></a></code>), ROL’s trust-region method
+with truncated conjugate gradient subproblem solver (<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-rol.html"><span class="pre">rol</span></a></code>), and
+the Fletcher-Reeves conjugate gradient method (<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-conmin_frcg.html"><span class="pre">conmin_frcg</span></a></code> and
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-dot_frcg.html"><span class="pre">dot_frcg</span></a></code>). These methods also provide good performance for small-
+to intermediate-sized problems. Note that due to performance issues,
+users relying on finite-differencing approximations to the gradient
+of the objective function are advised to resort to alternative
+optimizers such as DOT until performance of ROL improves in future
+releases.</p></li>
+<li><p>For <strong>constrained problems</strong>, with large number of constraints with
+respect to number of variables, Method of Feasible Directions methods
+(<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-conmin_mfd.html"><span class="pre">conmin_mfd</span></a></code> and <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-dot_mmfd.html"><span class="pre">dot_mmfd</span></a></code>) and Sequential Quadratic
+Programming methods (<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-nlpql_sqp.html"><span class="pre">nlpql_sqp</span></a></code> and <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-npsol_sqp.html"><span class="pre">npsol_sqp</span></a></code>) exhibit good
+performance (relatively fast convergence rates). The quasi-Newton method
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-optpp_q_newton.html"><span class="pre">optpp_q_newton</span></a></code> show moderate performance for constrained problems
+across all scales.</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>We have observed weak convergence rates while using <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-npsol_sqp.html"><span class="pre">npsol_sqp</span></a></code> for certain
+problems with equality constraints.</p>
+</div>
+<p><strong>Non-gradient-based Methods</strong></p>
+<p>Nongradient-based methods exhibit much slower convergence rates for
+finding an optimum, and as a result, tend to be much more
+computationally demanding than gradient-based methods. Nongradient
+local optimization methods, such as pattern search algorithms, often
+require from several hundred to a thousand or more function
+evaluations, depending on the number of variables, and nongradient
+global optimization methods such as genetic algorithms may require
+from thousands to tens-of-thousands of function evaluations. Clearly,
+for nongradient optimization studies, the computational cost of the
+function evaluation must be relatively small in order to obtain an
+optimal solution in a reasonable amount of time. In addition,
+nonlinear constraint support in nongradient methods is an open area of
+research and, while supported by many nongradient methods in Dakota,
+is not as refined as constraint support in gradient-based methods.
+However, nongradient methods can be more robust and more inherently
+parallel than gradient-based approaches. They can be applied in
+situations were gradient calculations are too expensive or unreliable.
+In addition, some nongradient-based methods can be used for global
+optimization which gradient-based techniques, by themselves, cannot.
+For these reasons, nongradient-based methods deserve consideration
+when the problem may be nonsmooth, multimodal, or poorly behaved.</p>
+<p><strong>Surrogate-based Methods</strong></p>
+<p>The effectiveness or efficiency of optimization (and calibration)
+methods can often be improved through the use of surrogate models. Any
+Dakota optimization method can be used with a (build-once) global
+surrogate by specifying the <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/model-id_model.html"><span class="pre">id_model</span></a></code> of a global surrogate
+model with the optimizer’s <code class="docutils literal notranslate"><span class="pre">model_pointer</span></code> keyword. This approach can
+be used with surrogates trained from (static) imported data or trained
+online using a Dakota <a class="reference internal" href="designofexperiments.html#dace"><span class="std std-ref">Design of Experiments</span></a> submethod.</p>
+<p>When online query of the underlying truth model at new design values is
+possible, tailored/adaptive surrogate-based methods may perform better
+as they refine the surrogate as the optimization progresses. The
+surrogate-based local approach (see
+<a class="reference internal" href="../advanced/advancedmethods.html#adv-meth-sbm-sblm"><span class="std std-ref">Surrogate-based Local Minimization</span></a>) brings the
+efficiency of gradient-based optimization/least squares methods to
+nonsmooth or poorly behaved problems by smoothing noisy or discontinuous
+response results with a data fit surrogate model (e.g., a quadratic
+polynomial) and then minimizing on the smooth surrogate using efficient
+gradient-based techniques. The surrogate-based global approach (see
+<a class="reference internal" href="../advanced/advancedmethods.html#adv-meth-sbm-sbgm"><span class="std std-ref">Surrogate-based Global Minimization</span></a>) similarly
+employs optimizers/least squares methods with surrogate models, but rather than
+localizing through the use of trust regions, seeks global solutions
+using global methods. And the <a class="reference internal" href="#opt-methods-gradientfree-global"><span class="std std-ref">efficient global</span></a>
+approach uses the specific combination of Gaussian process surrogate models
+and the DIRECT global optimizer. Similar to these surrogate-based approaches,
+the hybrid and multistart optimization component-based algorithms seek
+to bring the efficiency of gradient-based optimization methods to global
+optimization problems. In the former case, a global optimization method
+can be used for a few cycles to locate promising regions and then local
+gradient-based optimization is used to efficiently converge on one or
+more optima. In the latter case, a stratification technique is used to
+disperse a series of local gradient-based optimization runs through
+parameter space. Without surrogate data smoothing, however, these
+strategies are best for smooth multimodal problems. The
+<a class="reference internal" href="../advanced/advancedmethods.html#adv-meth-hybrid"><span class="std std-ref">Hybrid Minimization</span></a> and
+<a class="reference internal" href="../advanced/advancedmethods.html#adv-meth-multistart"><span class="std std-ref">Multistart Local Minimization</span></a> sections provide more
+information on these approaches.</p>
+<p><strong>Specifying Mixed Bounds:</strong> When solving constrained optimization
+problems, optimization (and calibration) solvers will use
+<code class="docutils literal notranslate"><span class="pre">*lower_bounds</span></code> and <code class="docutils literal notranslate"><span class="pre">*upper_bounds</span></code> information from individual
+variable types, linear constraints (see <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/variables.html"><span class="pre">variables</span></a></code>), and
+nonlinear constraints (see <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/responses.html"><span class="pre">responses</span></a></code>). For most optimization
+solvers, a nonexistent upper bound can be specified by using a value
+greater than the “big bound size” constant (1.e+30 for continuous
+variables, 1.e+9 for discrete integer variables) and a nonexistent
+lower bound can be specified by using a value less than the negation
+of these constants (-1.e+30 for continuous, -1.e+9 for discrete
+integer). Not all optimizers currently support this feature, e.g., DOT
+and CONMIN will treat these large bound values as actual variable
+bounds, but this should not be problematic in practice.</p>
+</section>
+<section id="optimization-third-party-libraries">
+<span id="opt-libraries"></span><h2>Optimization Third Party Libraries<a class="headerlink" href="#optimization-third-party-libraries" title="Link to this heading"></a></h2>
+<p>As mentioned previously, Dakota serves as a delivery vehicle for a
+number third-party optimization libraries. The packages are listed here
+along with the license status and web page where available.</p>
+<ul class="simple">
+<li><p>CONMIN (<code class="docutils literal notranslate"><span class="pre">conmin_</span></code> methods) License: Public Domain (NASA).</p></li>
+<li><p>DOT (<code class="docutils literal notranslate"><span class="pre">dot_</span></code> methods) License: commercial; website: Vanderplaats
+Research and Development, <a class="reference external" href="http://www.vrand.com">http://www.vrand.com</a>.</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The DOT library is Not included in the
+open source version of Dakota. Sandia National Laboratories and Los
+Alamos National Laboratory have limited seats for DOT. Other users
+may obtain their own copy of DOT and compile it with the Dakota
+source code.</p>
+</div>
+<ul class="simple">
+<li><p>HOPSPACK (<code class="docutils literal notranslate"><span class="pre">asynch_pattern_search</span></code>) License: LGPL; web page:
+<a class="reference external" href="https://software.sandia.gov/trac/hopspack">https://software.sandia.gov/trac/hopspack</a>.</p></li>
+<li><p>JEGA (<code class="docutils literal notranslate"><span class="pre">soga</span></code>, <code class="docutils literal notranslate"><span class="pre">moga</span></code>) License: LGPL</p></li>
+<li><p>NCSUOpt (<code class="docutils literal notranslate"><span class="pre">ncsu_direct</span></code>) License: MIT</p></li>
+<li><p>NLPQL (<code class="docutils literal notranslate"><span class="pre">nlpql_</span></code> methods) License: commercial; website: Prof. Klaus
+Schittkowski,
+<a class="reference external" href="http://www.uni-bayreuth.de/departments/math/~kschittkowski/nlpqlp20.htm">http://www.uni-bayreuth.de/departments/math/~kschittkowski/nlpqlp20.htm</a>).</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The NLPQL library is not included in the open source version of Dakota. Users may obtain
+their own copy of NLPQLP and compile it with the Dakota source code.</p>
+</div>
+<ul class="simple">
+<li><p>NPSOL (<code class="docutils literal notranslate"><span class="pre">npsol_</span></code> methods) License: commercial; website: Stanford
+Business Software <a class="reference external" href="http://www.sbsi-sol-optimize.com">http://www.sbsi-sol-optimize.com</a>.</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The NPSOL library is not included in
+the open source version of Dakota. Sandia National Laboratories,
+Lawrence Livermore National Laboratory, and Los Alamos National
+Laboratory all have site licenses for NPSOL. Other users may obtain
+their own copy of NPSOL and compile it with the Dakota source code.*</p>
+</div>
+<ul class="simple">
+<li><p>NOMAD (<code class="docutils literal notranslate"><span class="pre">mesh_adaptive_search</span></code>) License: LGPL; website:
+<a class="reference external" href="http://www.gerad.ca/NOMAD/Project/Home.html">http://www.gerad.ca/NOMAD/Project/Home.html</a>.</p></li>
+<li><p>OPT++ (<code class="docutils literal notranslate"><span class="pre">optpp_</span></code> methods) License: LGPL; website:
+<a class="reference external" href="http://csmr.ca.sandia.gov/opt++">http://csmr.ca.sandia.gov/opt++</a>.</p></li>
+<li><p>ROL (<code class="docutils literal notranslate"><span class="pre">rol</span></code>) License: BSD; website:
+<a class="reference external" href="https://trilinos.org/packages/rol">https://trilinos.org/packages/rol</a>.</p></li>
+<li><p>SCOLIB (<code class="docutils literal notranslate"><span class="pre">coliny_</span></code> methods) License: BSD; website:
+<a class="reference external" href="https://software.sandia.gov/trac/acro/wiki/Packages">https://software.sandia.gov/trac/acro/wiki/Packages</a>.</p></li>
+</ul>
+</section>
+<section id="video-resources">
+<h2>Video Resources<a class="headerlink" href="#video-resources" title="Link to this heading"></a></h2>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Title</p></th>
+<th class="head"><p>Link</p></th>
+<th class="head"><p>Resources</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Optimization</p></td>
+<td><p><a class="reference external" href="https://digitalops.sandia.gov/Mediasite/Play/a13c912f3e994c4ea010aacd903b12111d"><img alt="Optimization" src="../../_images/OptimizationTrainingTeaser.png" /></a></p></td>
+<td><p><a class="reference external" href="https://dakota.sandia.gov/sites/default/files/training/DakotaTraining_Optimization.pdf">Slides</a> /
+<a class="reference external" href="https://dakota.sandia.gov/sites/default/files/training/optimization-220216.zip">Exercises</a></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="uq.html" class="btn btn-neutral float-left" title="Uncertainty Quantification" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="nonlinearleastsquares.html" class="btn btn-neutral float-right" title="Nonlinear Least Squares" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <!--
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Sandia National Laboratories.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+  --> 
+
+</footer>
+        </div>
+      </div>
+	  
+	  <div style="background-color: #0f0f0f;color:#fafafa;padding:20px">
+	    <div>
+		  <h2><em>Exceptional service in the national interest</em></h2>
+		</div>
+		<p>© 2023 National Technology and Engineering Solutions of Sandia, LLC. | <a href="https://www.sandia.gov/contact_us/index.html">Questions &amp; Comments</a> | <a href="https://www.sandia.gov/general/privacy-security/index.html">Privacy &amp; Security</a></p>
+		<p><a href="http://energy.gov" rel="noopener noreferrer" target="_blank"><img alt="U.S. Department of Energy" longdesc="https://energy.gov" src="https://www.sandia.gov/_common/images/doe_logo_white.png" style="height:37px; width:140px"></a> <a href="http://nnsa.energy.gov/" rel="noopener noreferrer" target="_blank"> <img alt="National Nuclear Security Administration" longdesc="http://nnsa.gov" src="https://www.sandia.gov/_common/images/nnsa_logo_white.png" style="height:37px; width:116px"></a></p>
+		<p><a href="https://www.sandia.gov">Sandia National Laboratories</a> is a multimission laboratory managed and operated by National Technology and Engineering Solutions of Sandia, LLC., a wholly owned subsidiary of Honeywell International, Inc., for the U.S. Department of Energy’s National Nuclear Security Administration under contract DE-NA-0003525.</p>
+	  </div>	  	  
+	  
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

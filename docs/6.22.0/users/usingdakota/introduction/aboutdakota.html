@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About Dakota &mdash; dakota  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/dakota_theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/sandiaheaderlite.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Dakota Beginner’s Tutorial" href="helloworld.html" />
+    <link rel="prev" title="Using Dakota" href="../usingdakota.html" /> 
+  
+  <meta name="sandia.approval_type" content="formal"/>
+  <meta property="sandia.approved" content="SAND2025-05563O"/>
+  <meta name="description" content="The Dakota project delivers both state-of-the-art research and robust, usable software for optimization and UQ."/>
+  <meta name="keywords" content="Dakota, optimization, UQ, uncertainty quantification, parametric analysis, design exploration, model calibration, risk analysis"/>
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> dakota
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../setupdakota.html">Getting Started</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../usingdakota.html">Using Dakota</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">About Dakota</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#summary">Summary</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#intended-use-and-impact">Intended Use and Impact</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#motivation-for-dakota-development">Motivation for Dakota Development</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#history">History</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#c-software-toolkit">C++ Software Toolkit</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="helloworld.html">Dakota Beginner’s Tutorial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples.html">Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="couplingtosimulations.html">Coupling Dakota to a Simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../inputfile.html">Dakota Input File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../running.html">Running Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../output.html">Dakota Output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../studytypes.html">Study Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../topics.html">Topics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../advanced.html">Advanced Topics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../theory.html">Dakota Theory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference.html">Keyword Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../usingdakotagui/usingdakotagui.html">Using Dakota GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../externaltools/externaltools.html">Using External Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../compiling/compiling.html">Compiling Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developingdakota/developingdakota.html">Developing Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../misc/misc.html">Miscellaneous</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">dakota</a>
+      </nav>
+
+	  <!-- SNL Lite header -->
+	  <div class="snlheader-subsite--wrapper-default">
+		<snlheader class="snlheader-subsite" role="snlbanner">
+		  <div class="wrapper">
+			<a href="https://www.sandia.gov/index.html">
+			  <div class="logo-transparent"><p class="logo">Sandia National Laboratories</p></div>
+			</a>
+			<div class="nav-top">
+			  <a class="visuallyhidden" name="mainnav"></a>
+			  <div aria-label="main navigation" class="core-nav-transparent core-nav-transparent--visible" role="navigation">
+				<ul role="navigation" class="secondary-links">
+				  <li id="search-text-link">
+					<a aria-label="Search" href="https://www.sandia.gov/search/">Search Sandia.gov</a>
+				  </li>
+				  <li id="directory-text-link">
+					<a href="https://www.sandia.gov/directory.html" aria-expanded="false" aria-label="Site Directory">All Sandia Websites</a>
+				  </li>
+				</ul>
+			  </div>
+			</div>
+		  </div> 
+		</snlheader>
+	  </div>	  
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../usingdakota.html">Using Dakota</a></li>
+      <li class="breadcrumb-item active">About Dakota</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/usingdakota/introduction/aboutdakota.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="about-dakota">
+<span id="aboutdakota-main"></span><h1>About Dakota<a class="headerlink" href="#about-dakota" title="Link to this heading"></a></h1>
+<section id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Link to this heading"></a></h2>
+<p>The Dakota project delivers both state-of-the-art research and robust, usable software for optimization and UQ. Broadly,
+the Dakota software’s advanced parametric analyses enable design exploration, model calibration, risk analysis, and quantification
+of margins and uncertainty with computational models. The Dakota toolkit provides a flexible, extensible interface between such
+simulation codes and its iterative systems analysis methods, which include:</p>
+<ul class="simple">
+<li><p>optimization with gradient and nongradient-based methods;</p></li>
+<li><p>uncertainty quantification with sampling, reliability, stochastic expansion, and epistemic methods;</p></li>
+<li><p>parameter estimation using nonlinear least squares (deterministic) or Bayesian inference (stochastic); and</p></li>
+<li><p>sensitivity/variance analysis with design of experiments and parameter study methods.</p></li>
+</ul>
+<p>These capabilities may be used on their own or as components within advanced strategies such as hybrid optimization,
+surrogate-based optimization, mixed integer nonlinear programming, or optimization under uncertainty.</p>
+</section>
+<section id="intended-use-and-impact">
+<span id="aboutdakota-use"></span><h2>Intended Use and Impact<a class="headerlink" href="#intended-use-and-impact" title="Link to this heading"></a></h2>
+<p>Computational methods developed in structural mechanics, heat transfer, fluid mechanics, shock physics, and many other fields
+of engineering can be an enormous aid to understanding the complex physical systems they simulate. Often, it is desired to use
+these simulations as virtual prototypes to obtain an optimized design for a particular system, or to develop confidence in performing
+predictions for systems that cannot be observed or tested directly. This effort seeks to enhance the utility of these computational
+simulations by enabling their use for a variety of iterative analyses, so that simulations may be used not just for single-point
+solutions, but also achieve broader impact in the areas of credible prediction and optimal design.</p>
+<p>This allows analysts to address the fundamental engineering questions of foremost importance to our programs, such as</p>
+<ul class="simple">
+<li><p>“What is the best design?”</p></li>
+<li><p>“How safe is it?”</p></li>
+<li><p>“How much confidence do I have in my answer?”</p></li>
+</ul>
+<p>with respect to system performance objectives such as:</p>
+<ul class="simple">
+<li><p>minimizing weight, cost, or defects;</p></li>
+<li><p>limiting a critical temperature, stress, or vibration response;</p></li>
+<li><p>maximizing performance, reliability, throughput, reconfigurability, agility, or design robustness</p></li>
+</ul>
+<p>A systematic approach for addressing these questions will lead to higher confidence in our computational simulations, in turn
+leading to better designs and improved system performance. Moreover, a reduced dependence on physical testing can shorten
+the design cycle and reduce development costs.</p>
+</section>
+<section id="motivation-for-dakota-development">
+<span id="aboutdakota-motivation"></span><h2>Motivation for Dakota Development<a class="headerlink" href="#motivation-for-dakota-development" title="Link to this heading"></a></h2>
+<p>Computational models are commonly used in engineering design and scientific discovery activities for simulating complex
+physical systems in disciplines such as fluid mechanics, structural dynamics, heat transfer, nonlinear structural mechanics,
+shock physics, and many others. These simulators can be an enormous aid to engineers who want to develop an understanding
+and/or predictive capability for complex behaviors typically observed in the corresponding physical systems. Simulators often
+serve as virtual prototypes, where a set of predefined system parameters, such as size or location dimensions and material
+properties, are adjusted to improve the performance of a system, as defined by one or more system performance objectives.
+Such optimization or tuning of the virtual prototype requires executing the simulator, evaluating performance objective(s),
+and adjusting the system parameters in an iterative, automated, and directed way. System performance objectives can be formulated,
+for example, to minimize weight, cost, or defects; to limit a critical temperature, stress, or vibration response; or to
+maximize performance, reliability, throughput, agility, or design robustness. In addition, one would often like to design
+computer experiments, run parameter studies, or perform uncertainty quantification (UQ). These approaches reveal how system
+performance changes as a design or uncertain input variable changes. Sampling methods are often used in uncertainty quantification
+to calculate a distribution on system performance measures, and to understand which uncertain inputs contribute most to the
+variance of the outputs.</p>
+<p>A primary goal for Dakota development is to provide engineers and other disciplinary scientists with a systematic and rapid
+means to obtain improved or optimal designs or understand sensitivity or uncertainty using simulation-based models. These
+capabilities generally lead to improved designs and system performance in earlier design stages, alleviating dependence on
+physical prototypes and testing, shortening design cycles, and reducing product development costs. In addition to providing
+this practical environment for answering system performance questions, the Dakota toolkit provides an extensible platform for
+the research and rapid prototyping of customized methods and meta-algorithms.</p>
+</section>
+<section id="history">
+<h2>History<a class="headerlink" href="#history" title="Link to this heading"></a></h2>
+<p>The Dakota project started in 1994 as an internal research and development activity at Sandia National Laboratories in Albuquerque,
+New Mexico. The original goal was to provide a common set of optimization tools for a group of engineers solving structural analysis
+and design problems. Prior to the Dakota project, there was no focused effort to archive optimization methods for reuse on other
+projects. Thus, engineers found themselves repeatedly building new custom interfaces between the engineering analysis software
+and optimization software. This was especially burdensome when using parallel computing, as each project developed a unique
+program to coordinate concurrent simulations on a network of workstations or a parallel computer. The initial Dakota toolkit
+provided the engineering and analysis community at Sandia access to a variety of optimization algorithms, hiding the complexity
+of the optimization software interfaces from the users. Engineers could readily switch between optimization software packages by
+simply changing a few lines in a Dakota input file. In addition to structural analysis, Dakota has been applied to computational
+fluid dynamics, nonlinear dynamics, shock physics, heat transfer, electrical circuits, and many other science and engineering models.</p>
+<p>Dakota has grown significantly beyond an optimization toolkit. In addition to its state-of-the-art optimization methods, Dakota
+includes methods for global sensitivity and variance analysis, parameter estimation, uncertainty quantification, and verification,
+as well as meta-level strategies for surrogate-based optimization, hybrid optimization, and optimization under uncertainty.
+Available to all these algorithms is parallel computation support; ranging from desktop multiprocessor computers to massively
+parallel computers typically found at national laboratories and supercomputer centers.</p>
+<p>As of Version 5.0, Dakota is publicly released as open source under a GNU Lesser General Public License and is available for free
+download world-wide under the <a class="reference external" href="http://www.gnu.org/licenses/lgpl.html">LGPL software use agreement</a>. Dakota
+Versions 3.0 through 4.2+ were licensed under the GNU General Public License. Dakota public release facilitates research and software
+collaborations among Dakota developers at Sandia National Laboratories and other institutions, including academic, government, and
+corporate entities. See the <a class="reference internal" href="../../misc/faq.html#faq-main"><span class="std std-ref">Dakota FAQ</span></a> for more information on the public release rationale and ways to contribute.
+You may also peruse the <a class="reference internal" href="../../misc/contributors.html#contributors"><span class="std std-ref">listing of current and former contributors and third-party library developers</span></a>.</p>
+</section>
+<section id="c-software-toolkit">
+<h2>C++ Software Toolkit<a class="headerlink" href="#c-software-toolkit" title="Link to this heading"></a></h2>
+<p>Written in C++, the Dakota toolkit provides a flexible, extensible interface between simulation codes and a variety of iterative
+systems analysis methods, including optimization, uncertainty quantification, deterministic/stochastic calibration, and
+parametric/sensitivity/variance analysis. These capabilities may be used on their own or as foundational components within advanced
+solution strategies that coordinate multiple computational models and iteration methods.  Initiated in 1994, it strives to span the
+research to production spectrum, providing both a mature tool for production use as well as a foundation for new algorithm research.</p>
+<p>Dakota is open source under GNU LGPL, with applications spanning defense programs for DOE and DOD, climate modeling,
+computational materials, nuclear power, renewable energy, and many others.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../usingdakota.html" class="btn btn-neutral float-left" title="Using Dakota" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="helloworld.html" class="btn btn-neutral float-right" title="Dakota Beginner’s Tutorial" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <!--
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Sandia National Laboratories.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+  --> 
+
+</footer>
+        </div>
+      </div>
+	  
+	  <div style="background-color: #0f0f0f;color:#fafafa;padding:20px">
+	    <div>
+		  <h2><em>Exceptional service in the national interest</em></h2>
+		</div>
+		<p>© 2023 National Technology and Engineering Solutions of Sandia, LLC. | <a href="https://www.sandia.gov/contact_us/index.html">Questions &amp; Comments</a> | <a href="https://www.sandia.gov/general/privacy-security/index.html">Privacy &amp; Security</a></p>
+		<p><a href="http://energy.gov" rel="noopener noreferrer" target="_blank"><img alt="U.S. Department of Energy" longdesc="https://energy.gov" src="https://www.sandia.gov/_common/images/doe_logo_white.png" style="height:37px; width:140px"></a> <a href="http://nnsa.energy.gov/" rel="noopener noreferrer" target="_blank"> <img alt="National Nuclear Security Administration" longdesc="http://nnsa.gov" src="https://www.sandia.gov/_common/images/nnsa_logo_white.png" style="height:37px; width:116px"></a></p>
+		<p><a href="https://www.sandia.gov">Sandia National Laboratories</a> is a multimission laboratory managed and operated by National Technology and Engineering Solutions of Sandia, LLC., a wholly owned subsidiary of Honeywell International, Inc., for the U.S. Department of Energy’s National Nuclear Security Administration under contract DE-NA-0003525.</p>
+	  </div>	  	  
+	  
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

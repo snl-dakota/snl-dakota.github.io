@@ -1,0 +1,71 @@
+.. _environment-post_run-input:
+
+"""""
+input
+"""""
+
+
+Base filename for post-run mode data input
+
+
+
+**Topics**
+
+
+dakota_IO
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   environment-post_run-input-custom_annotated
+   environment-post_run-input-annotated
+   environment-post_run-input-freeform
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* STRING
+
+- *Default:* no post-run specific input read
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+----------------------+-----------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword       | Dakota Keyword Description                    |
+|                         | Group              |                      |                                               |
++=========================+====================+======================+===============================================+
+| Optional (Choose One)   | Tabular Format     | `custom_annotated`__ | Selects custom-annotated tabular file format  |
+|                         |                    +----------------------+-----------------------------------------------+
+|                         |                    | `annotated`__        | Selects annotated tabular file format         |
+|                         |                    +----------------------+-----------------------------------------------+
+|                         |                    | `freeform`__         | Selects freeform file format                  |
++-------------------------+--------------------+----------------------+-----------------------------------------------+
+
+.. __: environment-post_run-input-custom_annotated.html
+__ environment-post_run-input-annotated.html
+__ environment-post_run-input-freeform.html
+
+
+
+**Description**
+
+
+Specify a base filename from which Dakota will read any
+post-run input data, such as parameter/response data on which to
+calulate final statistics. This option is overridden by any
+command-line -post_run arguments.
+
+*Usage Tips*
+
+Dakota imports tabular data in one of three formats:
+
+- ``annotated`` (default)
+- ``custom_annotated``
+- ``freeform``
+
+

@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>function_train &mdash; dakota  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/dakota_theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/sandiaheaderlite.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../../_static/copybutton.js?v=f281be69"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="regression_type" href="model-surrogate-global-function_train-regression_type.html" />
+    <link rel="prev" title="binary_archive" href="model-surrogate-global-moving_least_squares-import_model-binary_archive.html" /> 
+  
+  <meta name="sandia.approval_type" content="formal"/>
+  <meta property="sandia.approved" content="SAND2025-05563O"/>
+  <meta name="description" content="The Dakota project delivers both state-of-the-art research and robust, usable software for optimization and UQ."/>
+  <meta name="keywords" content="Dakota, optimization, UQ, uncertainty quantification, parametric analysis, design exploration, model calibration, risk analysis"/>
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> dakota
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../setupdakota.html">Getting Started</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../usingdakota.html">Using Dakota</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../introduction/aboutdakota.html">About Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../introduction/helloworld.html">Dakota Beginner’s Tutorial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples.html">Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../introduction/couplingtosimulations.html">Coupling Dakota to a Simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../inputfile.html">Dakota Input File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../running.html">Running Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../output.html">Dakota Output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../studytypes.html">Study Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../topics.html">Topics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../advanced.html">Advanced Topics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../theory.html">Dakota Theory</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../reference.html">Keyword Reference</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="environment.html">environment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="method.html">method</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="model.html">model</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="model-id_model.html">id_model</a></li>
+<li class="toctree-l4"><a class="reference internal" href="model-single.html">single</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="model-surrogate.html">surrogate</a><ul class="current">
+<li class="toctree-l5"><a class="reference internal" href="model-surrogate-id_surrogates.html">id_surrogates</a></li>
+<li class="toctree-l5 current"><a class="reference internal" href="model-surrogate-global.html">global</a><ul class="current">
+<li class="toctree-l6"><a class="reference internal" href="model-surrogate-global-experimental_gaussian_process.html">experimental_gaussian_process</a></li>
+<li class="toctree-l6"><a class="reference internal" href="model-surrogate-global-gaussian_process.html">gaussian_process</a></li>
+<li class="toctree-l6"><a class="reference internal" href="model-surrogate-global-mars.html">mars</a></li>
+<li class="toctree-l6"><a class="reference internal" href="model-surrogate-global-moving_least_squares.html">moving_least_squares</a></li>
+<li class="toctree-l6 current"><a class="current reference internal" href="#">function_train</a><ul>
+<li class="toctree-l7"><a class="reference internal" href="model-surrogate-global-function_train-regression_type.html">regression_type</a></li>
+<li class="toctree-l7"><a class="reference internal" href="model-surrogate-global-function_train-max_solver_iterations.html">max_solver_iterations</a></li>
+<li class="toctree-l7"><a class="reference internal" href="model-surrogate-global-function_train-max_cross_iterations.html">max_cross_iterations</a></li>
+<li class="toctree-l7"><a class="reference internal" href="model-surrogate-global-function_train-solver_tolerance.html">solver_tolerance</a></li>
+<li class="toctree-l7"><a class="reference internal" href="model-surrogate-global-function_train-response_scaling.html">response_scaling</a></li>
+<li class="toctree-l7"><a class="reference internal" href="model-surrogate-global-function_train-tensor_grid.html">tensor_grid</a></li>
+<li class="toctree-l7"><a class="reference internal" href="model-surrogate-global-function_train-rounding_tolerance.html">rounding_tolerance</a></li>
+<li class="toctree-l7"><a class="reference internal" href="model-surrogate-global-function_train-arithmetic_tolerance.html">arithmetic_tolerance</a></li>
+<li class="toctree-l7"><a class="reference internal" href="model-surrogate-global-function_train-start_order.html">start_order</a></li>
+<li class="toctree-l7"><a class="reference internal" href="model-surrogate-global-function_train-adapt_order.html">adapt_order</a></li>
+<li class="toctree-l7"><a class="reference internal" href="model-surrogate-global-function_train-kick_order.html">kick_order</a></li>
+<li class="toctree-l7"><a class="reference internal" href="model-surrogate-global-function_train-max_order.html">max_order</a></li>
+<li class="toctree-l7"><a class="reference internal" href="model-surrogate-global-function_train-max_cv_order_candidates.html">max_cv_order_candidates</a></li>
+<li class="toctree-l7"><a class="reference internal" href="model-surrogate-global-function_train-start_rank.html">start_rank</a></li>
+<li class="toctree-l7"><a class="reference internal" href="model-surrogate-global-function_train-adapt_rank.html">adapt_rank</a></li>
+<li class="toctree-l7"><a class="reference internal" href="model-surrogate-global-function_train-kick_rank.html">kick_rank</a></li>
+<li class="toctree-l7"><a class="reference internal" href="model-surrogate-global-function_train-max_rank.html">max_rank</a></li>
+<li class="toctree-l7"><a class="reference internal" href="model-surrogate-global-function_train-max_cv_rank_candidates.html">max_cv_rank_candidates</a></li>
+</ul>
+</li>
+<li class="toctree-l6"><a class="reference internal" href="model-surrogate-global-neural_network.html">neural_network</a></li>
+<li class="toctree-l6"><a class="reference internal" href="model-surrogate-global-radial_basis.html">radial_basis</a></li>
+<li class="toctree-l6"><a class="reference internal" href="model-surrogate-global-polynomial.html">polynomial</a></li>
+<li class="toctree-l6"><a class="reference internal" href="model-surrogate-global-experimental_polynomial.html">experimental_polynomial</a></li>
+<li class="toctree-l6"><a class="reference internal" href="model-surrogate-global-experimental_python.html">experimental_python</a></li>
+<li class="toctree-l6"><a class="reference internal" href="model-surrogate-global-domain_decomposition.html">domain_decomposition</a></li>
+<li class="toctree-l6"><a class="reference internal" href="model-surrogate-global-total_points.html">total_points</a></li>
+<li class="toctree-l6"><a class="reference internal" href="model-surrogate-global-minimum_points.html">minimum_points</a></li>
+<li class="toctree-l6"><a class="reference internal" href="model-surrogate-global-recommended_points.html">recommended_points</a></li>
+<li class="toctree-l6"><a class="reference internal" href="model-surrogate-global-dace_method_pointer.html">dace_method_pointer</a></li>
+<li class="toctree-l6"><a class="reference internal" href="model-surrogate-global-truth_model_pointer.html">truth_model_pointer</a></li>
+<li class="toctree-l6"><a class="reference internal" href="model-surrogate-global-reuse_points.html">reuse_points</a></li>
+<li class="toctree-l6"><a class="reference internal" href="model-surrogate-global-import_build_points_file.html">import_build_points_file</a></li>
+<li class="toctree-l6"><a class="reference internal" href="model-surrogate-global-export_approx_points_file.html">export_approx_points_file</a></li>
+<li class="toctree-l6"><a class="reference internal" href="model-surrogate-global-use_derivatives.html">use_derivatives</a></li>
+<li class="toctree-l6"><a class="reference internal" href="model-surrogate-global-correction.html">correction</a></li>
+<li class="toctree-l6"><a class="reference internal" href="model-surrogate-global-metrics.html">metrics</a></li>
+<li class="toctree-l6"><a class="reference internal" href="model-surrogate-global-import_challenge_points_file.html">import_challenge_points_file</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="model-surrogate-multipoint.html">multipoint</a></li>
+<li class="toctree-l5"><a class="reference internal" href="model-surrogate-local.html">local</a></li>
+<li class="toctree-l5"><a class="reference internal" href="model-surrogate-ensemble.html">ensemble</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="model-nested.html">nested</a></li>
+<li class="toctree-l4"><a class="reference internal" href="model-active_subspace.html">active_subspace</a></li>
+<li class="toctree-l4"><a class="reference internal" href="model-adapted_basis.html">adapted_basis</a></li>
+<li class="toctree-l4"><a class="reference internal" href="model-random_field.html">random_field</a></li>
+<li class="toctree-l4"><a class="reference internal" href="model-variables_pointer.html">variables_pointer</a></li>
+<li class="toctree-l4"><a class="reference internal" href="model-responses_pointer.html">responses_pointer</a></li>
+<li class="toctree-l4"><a class="reference internal" href="model-hierarchical_tagging.html">hierarchical_tagging</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="variables.html">variables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="interface.html">interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="responses.html">responses</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../usingdakotagui/usingdakotagui.html">Using Dakota GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../externaltools/externaltools.html">Using External Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../compiling/compiling.html">Compiling Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developingdakota/developingdakota.html">Developing Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../misc/misc.html">Miscellaneous</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">dakota</a>
+      </nav>
+
+	  <!-- SNL Lite header -->
+	  <div class="snlheader-subsite--wrapper-default">
+		<snlheader class="snlheader-subsite" role="snlbanner">
+		  <div class="wrapper">
+			<a href="https://www.sandia.gov/index.html">
+			  <div class="logo-transparent"><p class="logo">Sandia National Laboratories</p></div>
+			</a>
+			<div class="nav-top">
+			  <a class="visuallyhidden" name="mainnav"></a>
+			  <div aria-label="main navigation" class="core-nav-transparent core-nav-transparent--visible" role="navigation">
+				<ul role="navigation" class="secondary-links">
+				  <li id="search-text-link">
+					<a aria-label="Search" href="https://www.sandia.gov/search/">Search Sandia.gov</a>
+				  </li>
+				  <li id="directory-text-link">
+					<a href="https://www.sandia.gov/directory.html" aria-expanded="false" aria-label="Site Directory">All Sandia Websites</a>
+				  </li>
+				</ul>
+			  </div>
+			</div>
+		  </div> 
+		</snlheader>
+	  </div>	  
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../usingdakota.html">Using Dakota</a></li>
+          <li class="breadcrumb-item"><a href="../reference.html">Keyword Reference</a></li>
+          <li class="breadcrumb-item"><a href="model.html">model</a></li>
+          <li class="breadcrumb-item"><a href="model-surrogate.html">surrogate</a></li>
+          <li class="breadcrumb-item"><a href="model-surrogate-global.html">global</a></li>
+      <li class="breadcrumb-item active">function_train</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/usingdakota/reference/model-surrogate-global-function_train.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="function-train">
+<span id="model-surrogate-global-function-train"></span><h1>function_train<a class="headerlink" href="#function-train" title="Link to this heading"></a></h1>
+<p>Global surrogate model based on functional tensor train decomposition</p>
+<div class="toctree-wrapper compound">
+</div>
+<p><strong>Specification</strong></p>
+<ul class="simple">
+<li><p><em>Alias:</em> None</p></li>
+<li><p><em>Arguments:</em> None</p></li>
+</ul>
+<p><strong>Child Keywords:</strong></p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Required/Optional</p></th>
+<th class="head"><p>Description of
+Group</p></th>
+<th class="head"><p>Dakota Keyword</p></th>
+<th class="head"><p>Dakota Keyword Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td colspan="2"><p>Optional</p></td>
+<td><p><a class="reference external" href="model-surrogate-global-function_train-regression_type.html">regression_type</a></p></td>
+<td><p>Type of solver for forming function train
+approximations by regression</p></td>
+</tr>
+<tr class="row-odd"><td colspan="2"><p>Optional</p></td>
+<td><p><a class="reference external" href="model-surrogate-global-function_train-max_solver_iterations.html">max_solver_iterations</a></p></td>
+<td><p>Maximum iterations in determining polynomial
+coefficients</p></td>
+</tr>
+<tr class="row-even"><td colspan="2"><p>Optional</p></td>
+<td><p><a class="reference external" href="model-surrogate-global-function_train-max_cross_iterations.html">max_cross_iterations</a></p></td>
+<td><p>Maximum number of iterations for
+cross-approximation during a rank adaptation.</p></td>
+</tr>
+<tr class="row-odd"><td colspan="2"><p>Optional</p></td>
+<td><p><a class="reference external" href="model-surrogate-global-function_train-solver_tolerance.html">solver_tolerance</a></p></td>
+<td><p>Convergence tolerance for the optimizer used
+during the regression solve.</p></td>
+</tr>
+<tr class="row-even"><td colspan="2"><p>Optional</p></td>
+<td><p><a class="reference external" href="model-surrogate-global-function_train-response_scaling.html">response_scaling</a></p></td>
+<td><p>Perform bounds-scaling on response values
+prior to surrogate emulation</p></td>
+</tr>
+<tr class="row-odd"><td colspan="2"><p>Optional</p></td>
+<td><p><a class="reference external" href="model-surrogate-global-function_train-tensor_grid.html">tensor_grid</a></p></td>
+<td><p>Use sub-sampled tensor-product quadrature
+points to build a polynomial chaos expansion.</p></td>
+</tr>
+<tr class="row-even"><td colspan="2"><p>Optional</p></td>
+<td><p><a class="reference external" href="model-surrogate-global-function_train-rounding_tolerance.html">rounding_tolerance</a></p></td>
+<td><p>An accuracy tolerance that is used to guide
+rounding during rank adaptation.</p></td>
+</tr>
+<tr class="row-odd"><td colspan="2"><p>Optional</p></td>
+<td><p><a class="reference external" href="model-surrogate-global-function_train-arithmetic_tolerance.html">arithmetic_tolerance</a></p></td>
+<td><p>A secondary rounding tolerance used for
+post-processing</p></td>
+</tr>
+<tr class="row-even"><td colspan="2"><p>Optional</p></td>
+<td><p><a class="reference external" href="model-surrogate-global-function_train-start_order.html">start_order</a></p></td>
+<td><p>(Initial) polynomial order of each univariate
+function within the functional tensor train.</p></td>
+</tr>
+<tr class="row-odd"><td colspan="2"><p>Optional</p></td>
+<td><p><a class="reference external" href="model-surrogate-global-function_train-adapt_order.html">adapt_order</a></p></td>
+<td><p>Activate adaptive procedure for determining
+the best basis order</p></td>
+</tr>
+<tr class="row-even"><td colspan="2"><p>Optional</p></td>
+<td><p><a class="reference external" href="model-surrogate-global-function_train-kick_order.html">kick_order</a></p></td>
+<td><p>increment used when adapting the basis order
+in function train methods</p></td>
+</tr>
+<tr class="row-odd"><td colspan="2"><p>Optional</p></td>
+<td><p><a class="reference external" href="model-surrogate-global-function_train-max_order.html">max_order</a></p></td>
+<td><p>Maximum polynomial order of each univariate
+function within the functional tensor train.</p></td>
+</tr>
+<tr class="row-even"><td colspan="2"><p>Optional</p></td>
+<td><p><a class="reference external" href="model-surrogate-global-function_train-max_cv_order_candidates.html">max_cv_order_candidates</a></p></td>
+<td><p>Limit the number of cross-validation
+candidates for basis order</p></td>
+</tr>
+<tr class="row-odd"><td colspan="2"><p>Optional</p></td>
+<td><p><a class="reference external" href="model-surrogate-global-function_train-start_rank.html">start_rank</a></p></td>
+<td><p>The initial rank used for the starting point
+during a rank adaptation.</p></td>
+</tr>
+<tr class="row-even"><td colspan="2"><p>Optional</p></td>
+<td><p><a class="reference external" href="model-surrogate-global-function_train-adapt_rank.html">adapt_rank</a></p></td>
+<td><p>Activate adaptive procedure for determining
+best rank representation</p></td>
+</tr>
+<tr class="row-odd"><td colspan="2"><p>Optional</p></td>
+<td><p><a class="reference external" href="model-surrogate-global-function_train-kick_rank.html">kick_rank</a></p></td>
+<td><p>The increment in rank employed during each
+iteration of the rank adaptation.</p></td>
+</tr>
+<tr class="row-even"><td colspan="2"><p>Optional</p></td>
+<td><p><a class="reference external" href="model-surrogate-global-function_train-max_rank.html">max_rank</a></p></td>
+<td><p>Limits the maximum rank that is explored
+during a rank adaptation.</p></td>
+</tr>
+<tr class="row-odd"><td colspan="2"><p>Optional</p></td>
+<td><p><a class="reference external" href="model-surrogate-global-function_train-max_cv_rank_candidates.html">max_cv_rank_candidates</a></p></td>
+<td><p>Limit the number of cross-validation
+candidates for rank</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Description</strong></p>
+<p>Tensor train decompositions are approximations that exploit low rank structure
+in an input-output mapping.  The form of the approximation can be written as a
+set of matrix valued products:</p>
+<div class="math notranslate nohighlight">
+\[f_r(x) = F_1(x_1) F_2(x_2) \dots F_d(x_d)\]</div>
+<p>where the “cores” expand to</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}F_k(x_k) =
+\begin{bmatrix}
+f_k^{11}(x_k)       &amp; dots ````&amp; f_k^{1r_k}(x_k)\\
+\vdots              &amp; \ddots &amp; \vdots\\
+f_k^{r_{k-1}1}(x_k) &amp; dots ````&amp; f_k^{r_{k-1}r_k}(x_k)
+\end{bmatrix}\end{split}\]</div>
+<p>An example expansion over four random variables with rank vector (1,7,5,3,1) is</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}f_r(x) =
+\begin{bmatrix}
+f_1^{11}(x_1)       &amp; dots ````&amp; f_1^{17}(x_1)
+\end{bmatrix}
+\begin{bmatrix}
+f_2^{11}(x_2)       &amp; dots ````&amp; f_2^{15}(x_2)\\
+\vdots              &amp; \ddots &amp; \vdots\\
+f_2^{71}(x_2) &amp; dots ````&amp; f_2^{75}(x_2)
+\end{bmatrix}
+\begin{bmatrix}
+f_3^{11}(x_3)       &amp; dots ````&amp; f_3^{13}(x_3)\\
+\vdots              &amp; \ddots &amp; \vdots\\
+f_3^{51}(x_3) &amp; dots ````&amp; f_3^{53}(x_3)
+\end{bmatrix}
+\begin{bmatrix}
+f_4^{11}(x_4) \\
+\vdots \\
+f_4^{31}(x_4)
+\end{bmatrix}\end{split}\]</div>
+<p>In the current implementation, orthogonal polynomial basis functions
+(Hermite and Legendre) are employed as the basis functions <span class="math notranslate nohighlight">\(f_i^{jk}(x_i)\)</span> ,
+although the C3 library will enable additional options in the future.</p>
+<p>The number of coefficients that must be computed by the regression solver
+can be inferred from the construction above.  For each QoI, the regression
+size can be determined as follows:</p>
+<ul class="simple">
+<li><p>For a v variables, orders a o is a v-vector and ranks a r is a v+1-vector</p></li>
+<li><p>the first core is a <span class="math notranslate nohighlight">\(1 \times r_1\)</span>  row vector and contributes <span class="math notranslate nohighlight">\((o_0 + 1) r_1\)</span>  terms</p></li>
+<li><p>the  last core is a <span class="math notranslate nohighlight">\(r_{v-1} \times 1\)</span>  col vector and contributes <span class="math notranslate nohighlight">\((o_{v-1}+1) r_{v-1}\)</span>  terms</p></li>
+<li><p>the middle v-2 cores are <span class="math notranslate nohighlight">\(r_i \times r_{i+1}\)</span>  matrices that contribute <span class="math notranslate nohighlight">\(r_i r_{i+1} (o_i + 1)\)</span>  terms, <span class="math notranslate nohighlight">\(i = 1, ..., v-2\)</span></p></li>
+<li><p>neighboring vec/mat dimensions must match, so there are v-1 unique ranks</p></li>
+</ul>
+<p><em>Usage Tips</em></p>
+<p>This new capability is stabilizing and beginning to be embedded in
+higher-level strategies such as multilevel-multifidelity algorithms.
+It is not included in the Dakota build by default, as some C3 library
+dependencies (CBLAS) can induce small differences in our regression suite.</p>
+<p>This capability is also being used as a prototype to explore
+model-based versus method-based specification of stochastic
+expansions.  While the model specification is stand-alone, it
+currently requires a corresponding method specification to exercise
+the model, which can be a generic UQ strategy such as
+<code class="docutils literal notranslate"><span class="pre">surrogate_based_uq</span></code> method or a <code class="docutils literal notranslate"><span class="pre">sampling</span></code> method.  The intent is to
+migrate function train, polynomial chaos, and stochastic collocation
+toward model-only specifications that can then be employed in any
+surrogate/emulator context.</p>
+<p><strong>Examples</strong></p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span><span class="k">model</span>,
+ id_model = &#39;FT&#39;
+ surrogate global function_train
+   start_order = 2
+   start_rank  = 2  kick_rank = 2  max_rank = 10
+   adapt_rank
+ dace_method_pointer = &#39;SAMPLING&#39;
+</pre></div>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="model-surrogate-global-moving_least_squares-import_model-binary_archive.html" class="btn btn-neutral float-left" title="binary_archive" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="model-surrogate-global-function_train-regression_type.html" class="btn btn-neutral float-right" title="regression_type" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <!--
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Sandia National Laboratories.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+  --> 
+
+</footer>
+        </div>
+      </div>
+	  
+	  <div style="background-color: #0f0f0f;color:#fafafa;padding:20px">
+	    <div>
+		  <h2><em>Exceptional service in the national interest</em></h2>
+		</div>
+		<p>© 2023 National Technology and Engineering Solutions of Sandia, LLC. | <a href="https://www.sandia.gov/contact_us/index.html">Questions &amp; Comments</a> | <a href="https://www.sandia.gov/general/privacy-security/index.html">Privacy &amp; Security</a></p>
+		<p><a href="http://energy.gov" rel="noopener noreferrer" target="_blank"><img alt="U.S. Department of Energy" longdesc="https://energy.gov" src="https://www.sandia.gov/_common/images/doe_logo_white.png" style="height:37px; width:140px"></a> <a href="http://nnsa.energy.gov/" rel="noopener noreferrer" target="_blank"> <img alt="National Nuclear Security Administration" longdesc="http://nnsa.gov" src="https://www.sandia.gov/_common/images/nnsa_logo_white.png" style="height:37px; width:116px"></a></p>
+		<p><a href="https://www.sandia.gov">Sandia National Laboratories</a> is a multimission laboratory managed and operated by National Technology and Engineering Solutions of Sandia, LLC., a wholly owned subsidiary of Honeywell International, Inc., for the U.S. Department of Energy’s National Nuclear Security Administration under contract DE-NA-0003525.</p>
+	  </div>	  	  
+	  
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

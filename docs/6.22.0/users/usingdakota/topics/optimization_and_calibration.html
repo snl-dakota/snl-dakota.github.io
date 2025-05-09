@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Optimization and Calibration &mdash; dakota  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/dakota_theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/sandiaheaderlite.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../../_static/copybutton.js?v=f281be69"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Package: COLINY" href="package_coliny.html" />
+    <link rel="prev" title="Nonlinear Least Squares" href="nonlinear_least_squares.html" /> 
+  
+  <meta name="sandia.approval_type" content="formal"/>
+  <meta property="sandia.approved" content="SAND2025-05563O"/>
+  <meta name="description" content="The Dakota project delivers both state-of-the-art research and robust, usable software for optimization and UQ."/>
+  <meta name="keywords" content="Dakota, optimization, UQ, uncertainty quantification, parametric analysis, design exploration, model calibration, risk analysis"/>
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> dakota
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../setupdakota.html">Getting Started</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../usingdakota.html">Using Dakota</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../introduction/aboutdakota.html">About Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../introduction/helloworld.html">Dakota Beginner’s Tutorial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples.html">Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../introduction/couplingtosimulations.html">Coupling Dakota to a Simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../inputfile.html">Dakota Input File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../running.html">Running Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../output.html">Dakota Output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../studytypes.html">Study Types</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../topics.html">Topics</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="aleatory_uncertainty_quantification_methods.html">Aleatory Uncertainty Quantification Methods</a></li>
+<li class="toctree-l3"><a class="reference internal" href="design_and_analysis_of_computer_experiments.html">Design and Analysis of Computer Experiments (DACE)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="epistemic_uncertainty_quantification_methods.html">Epistemic Uncertainty Quantification Methods</a></li>
+<li class="toctree-l3"><a class="reference internal" href="evidence_theory.html">Evidence Theory</a></li>
+<li class="toctree-l3"><a class="reference internal" href="interval_estimation.html">Interval Estimation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="linear_constraints.html">Linear Constraints</a></li>
+<li class="toctree-l3"><a class="reference internal" href="method_independent_controls.html">Method-Independent Controls</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nonlinear_constraints.html">Nonlinear Constraints</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nonlinear_least_squares.html">Nonlinear Least Squares</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Optimization and Calibration</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#optimization-formulations">Optimization Formulations</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#constraint-considerations">Constraint Considerations</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#optimizing-with-dakota-choosing-a-method">Optimizing with Dakota: Choosing a Method</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#gradient-based-local-methods">Gradient-Based Local Methods</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="package_coliny.html">Package: COLINY</a></li>
+<li class="toctree-l3"><a class="reference internal" href="package_conmin.html">Package: CONMIN</a></li>
+<li class="toctree-l3"><a class="reference internal" href="package_ddace.html">Package: DDACE</a></li>
+<li class="toctree-l3"><a class="reference internal" href="package_dot.html">Package: DOT</a></li>
+<li class="toctree-l3"><a class="reference internal" href="package_fsudace.html">Package: FSUDace</a></li>
+<li class="toctree-l3"><a class="reference internal" href="package_hopspack.html">Package: HOPSPACK</a></li>
+<li class="toctree-l3"><a class="reference internal" href="package_jega.html">Package: JEGA</a></li>
+<li class="toctree-l3"><a class="reference internal" href="package_nlpql.html">Package: NLPQL</a></li>
+<li class="toctree-l3"><a class="reference internal" href="package_npsol.html">Package: NPSOL</a></li>
+<li class="toctree-l3"><a class="reference internal" href="package_optpp.html">Package: OPT++</a></li>
+<li class="toctree-l3"><a class="reference internal" href="package_psuade.html">Package: PSUADE</a></li>
+<li class="toctree-l3"><a class="reference internal" href="package_queso.html">Package: QUESO</a></li>
+<li class="toctree-l3"><a class="reference internal" href="package_scolib.html">Package: SCOLIB</a></li>
+<li class="toctree-l3"><a class="reference internal" href="parameter_studies.html">Parameter Studies</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pointers.html">Pointers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reliability_methods.html">Reliability Methods</a></li>
+<li class="toctree-l3"><a class="reference internal" href="response_types.html">Response Types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sampling.html">Sampling</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sequential_quadratic_programming.html">Sequential Quadratic Programming (SQP)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="stochastic_expansion_methods.html">Stochastic Expansion Methods</a></li>
+<li class="toctree-l3"><a class="reference internal" href="uncertainty_quantification.html">Uncertainty Quantification</a></li>
+<li class="toctree-l3"><a class="reference internal" href="variable_support.html">Variable Support</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../advanced.html">Advanced Topics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../theory.html">Dakota Theory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference.html">Keyword Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../usingdakotagui/usingdakotagui.html">Using Dakota GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../externaltools/externaltools.html">Using External Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../compiling/compiling.html">Compiling Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developingdakota/developingdakota.html">Developing Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../misc/misc.html">Miscellaneous</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">dakota</a>
+      </nav>
+
+	  <!-- SNL Lite header -->
+	  <div class="snlheader-subsite--wrapper-default">
+		<snlheader class="snlheader-subsite" role="snlbanner">
+		  <div class="wrapper">
+			<a href="https://www.sandia.gov/index.html">
+			  <div class="logo-transparent"><p class="logo">Sandia National Laboratories</p></div>
+			</a>
+			<div class="nav-top">
+			  <a class="visuallyhidden" name="mainnav"></a>
+			  <div aria-label="main navigation" class="core-nav-transparent core-nav-transparent--visible" role="navigation">
+				<ul role="navigation" class="secondary-links">
+				  <li id="search-text-link">
+					<a aria-label="Search" href="https://www.sandia.gov/search/">Search Sandia.gov</a>
+				  </li>
+				  <li id="directory-text-link">
+					<a href="https://www.sandia.gov/directory.html" aria-expanded="false" aria-label="Site Directory">All Sandia Websites</a>
+				  </li>
+				</ul>
+			  </div>
+			</div>
+		  </div> 
+		</snlheader>
+	  </div>	  
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../usingdakota.html">Using Dakota</a></li>
+          <li class="breadcrumb-item"><a href="../topics.html">Topics</a></li>
+      <li class="breadcrumb-item active">Optimization and Calibration</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/usingdakota/topics/optimization_and_calibration.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="optimization-and-calibration">
+<span id="topic-optimization-and-calibration"></span><h1>Optimization and Calibration<a class="headerlink" href="#optimization-and-calibration" title="Link to this heading"></a></h1>
+<p>Optimization algorithms work to minimize (or maximize) an objective
+function, typically calculated by the user simulation code, subject to
+constraints on design variables and responses. Available approaches in
+Dakota include well-tested, proven gradient-based, derivative-free
+local, and global methods for use in science and engineering design
+applications. Dakota also offers more advanced algorithms, e.g., to
+manage multi-objective optimization or perform surrogate-based
+minimization.  This chapter summarizes optimization problem
+formulation, standard algorithms available in Dakota (mostly through
+included third-party libraries, see <a class="reference internal" href="../studytypes/optimization.html#opt-libraries"><span class="std std-ref">Optimization Third Party Libraries</span></a>), some
+advanced capabilities, and offers usage guidelines.</p>
+<section id="optimization-formulations">
+<span id="optformulations"></span><h2>Optimization Formulations<a class="headerlink" href="#optimization-formulations" title="Link to this heading"></a></h2>
+<p>This section provides a basic introduction to the mathematical
+formulation of optimization, problems. The primary goal of this
+section is to introduce terms relating to these topics, and is not
+intended to be a description of theory or numerical algorithms. For
+further details,
+consult <span id="id1">[<a class="reference internal" href="../../misc/bibliography.html#id13" title="J. S. Arora. Introduction to Optimum Design. McGraw-Hill, New York, 1989.">Aro89</a>, <a class="reference internal" href="../../misc/bibliography.html#id111" title="P. E. Gill, W. Murray, and M. H. Wright. Practical Optimization. Academic Press, San Diego, CA, 1981.">GMW81</a>, <a class="reference internal" href="../../misc/bibliography.html#id138" title="R. T. Haftka and Z. Gurdal. Elements of Structural Optimization. Kluwer, Boston, 1992.">HG92</a>, <a class="reference internal" href="../../misc/bibliography.html#id219" title="J. Nocedal and Wright S. J. Numerical Optimization. Springer Series in Operations Research. Springer, New York, 1999.">NJ99</a>, <a class="reference internal" href="../../misc/bibliography.html#id291" title="G. N. Vanderplaats. Numerical Optimization Techniques for Engineering Design: With Applications. McGraw-Hill, New York, 1984.">Van84</a>]</span>.</p>
+<p>A general optimization problem is formulated as follows:</p>
+<div class="math notranslate nohighlight" id="equation-topicoptimformulation">
+<span class="eqno">(36)<a class="headerlink" href="#equation-topicoptimformulation" title="Link to this equation"></a></span>\[\begin{split}  \hbox{minimize:} &amp; &amp; f(\mathbf{x})\nonumber\\
+  &amp; &amp; \mathbf{x} \in \Re^{n}\nonumber\\
+  \hbox{subject to:} &amp; &amp;
+  \mathbf{g}_{L} \leq \mathbf{g(x)} \leq \mathbf{g}_U\nonumber\\
+  &amp; &amp; \mathbf{h(x)}=\mathbf{h}_{t}\label{opt:formulations:equation01}\\
+  &amp; &amp; \mathbf{a}_{L} \leq \mathbf{A}_i\mathbf{x} \leq
+  \mathbf{a}_U\nonumber\\
+  &amp; &amp; \mathbf{A}_{e}\mathbf{x}=\mathbf{a}_{t}\nonumber\\
+  &amp; &amp; \mathbf{x}_{L} \leq \mathbf{x} \leq \mathbf{x}_U\nonumber\end{split}\]</div>
+<p>where vector and matrix terms are marked in bold typeface. In this
+formulation, <span class="math notranslate nohighlight">\(\mathbf{x}=[x_{1},x_{2},\ldots,x_{n}]\)</span>  is an
+n-dimensional vector of real-valued <em>design variables</em> or
+<em>design parameters</em>. The n-dimensional vectors, <span class="math notranslate nohighlight">\(\mathbf{x}_{L}\)</span>
+and <span class="math notranslate nohighlight">\(\mathbf{x}_U\)</span> , are the lower and upper bounds, respectively, on
+the design parameters. These bounds define the allowable values for
+the elements of <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> , and the set of all allowable values is
+termed the <em>design space</em> or the <em>parameter space</em>. A
+<em>design point</em> or a <em>sample point</em> is a particular set of
+values within the parameter space.</p>
+<p>The optimization goal is to minimize the <em>objective function</em>,
+<span class="math notranslate nohighlight">\(f(\mathbf{x})\)</span> , while satisfying the constraints. Constraints can be
+categorized as either linear or nonlinear and as either inequality or
+equality. The <em>nonlinear inequality constraints}</em>,
+<span class="math notranslate nohighlight">\(\mathbf{g(x)}\)</span> , are ‘’2-sided,’’ in that they have both lower and
+upper bounds, <span class="math notranslate nohighlight">\(\mathbf{g}_L\)</span>  and <span class="math notranslate nohighlight">\(\mathbf{g}_U\)</span> , respectively. The
+<em>nonlinear equality constraints</em>, <span class="math notranslate nohighlight">\(\mathbf{h(x)}\)</span> , have target
+values specified by <span class="math notranslate nohighlight">\(\mathbf{h}_{t}\)</span> . The linear inequality
+constraints create a linear system <span class="math notranslate nohighlight">\(\mathbf{A}_i\mathbf{x}\)</span> , where
+<span class="math notranslate nohighlight">\(\mathbf{A}_i\)</span>  is the coefficient matrix for the linear system. These
+constraints are also 2-sided as they have lower and upper bounds,
+<span class="math notranslate nohighlight">\(\mathbf{a}_L\)</span>  and <span class="math notranslate nohighlight">\(\mathbf{a}_U\)</span> , respectively. The linear equality
+constraints create a linear system <span class="math notranslate nohighlight">\(\mathbf{A}_e\mathbf{x}\)</span> , where
+<span class="math notranslate nohighlight">\(\mathbf{A}_e\)</span>  is the coefficient matrix for the linear system and
+<span class="math notranslate nohighlight">\(\mathbf{a}_{t}\)</span>  are the target values. The constraints partition the
+parameter space into feasible and infeasible regions. A design point
+is said to be <em>feasible</em> if and only if it satisfies all of the
+constraints. Correspondingly, a design point is said to be
+<em>infeasible</em> if it violates one or more of the constraints.</p>
+<p>Many different methods exist to solve the optimization problem given
+in <a class="reference internal" href="../studytypes/optimization.html#opt-formulations"><span class="std std-ref">Optimization Formulations</span></a>, all of which iterate on
+<span class="math notranslate nohighlight">\(\mathbf{x}\)</span>  in some manner. That is, an initial value for each
+parameter in <span class="math notranslate nohighlight">\(\mathbf{x}\)</span>  is chosen, the <em>response quantities</em>,
+<span class="math notranslate nohighlight">\(f(\mathbf{x})\)</span> , <span class="math notranslate nohighlight">\(\mathbf{g(x)}\)</span> , <span class="math notranslate nohighlight">\(\mathbf{h(x)}\)</span> , are computed, often
+by running a simulation, and some algorithm is applied to generate a
+new <span class="math notranslate nohighlight">\(\mathbf{x}\)</span>  that will either reduce the objective function,
+reduce the amount of infeasibility, or both. To facilitate a general
+presentation of these methods, three criteria will be used in the
+following discussion to differentiate them: optimization problem type,
+search goal, and search method.</p>
+<p>The <em>optimization problem type</em> can be characterized both by
+the types of constraints present in the problem and by the linearity
+or nonlinearity of the objective and constraint functions. For
+constraint categorization, a hierarchy of complexity exists for
+optimization algorithms, ranging from simple bound constraints,
+through linear constraints, to full nonlinear constraints. By the
+nature of this increasing complexity, optimization problem
+categorizations are inclusive of all constraint types up to a
+particular level of complexity. That is, an <em>unconstrained
+problem</em> has no constraints, a <em>bound-constrained problem</em> has
+only lower and upper bounds on the design parameters, a
+<em>linearly-constrained problem</em> has both linear and bound
+constraints, and a <em>nonlinearly-constrained problem</em> may contain
+the full range of nonlinear, linear, and bound constraints. If all of
+the linear and nonlinear constraints are equality constraints, then
+this is referred to as an <em>equality-constrained problem</em>, and if
+all of the linear and nonlinear constraints are inequality
+constraints, then this is referred to as an
+<em>inequality-constrained problem</em>. Further categorizations can be
+made based on the linearity of the objective and constraint functions.
+A problem where the objective function and all constraints are linear
+is called a <em>linear programming (LP) problem</em>. These types of
+problems commonly arise in scheduling, logistics, and resource
+allocation applications. Likewise, a problem where at least some of
+the objective and constraint functions are nonlinear is called a
+<em>nonlinear programming (NLP) problem</em>. These NLP problems
+predominate in engineering applications and are the primary focus of
+Dakota.</p>
+<p>The <em>search goal</em> refers to the ultimate objective of the
+optimization algorithm, i.e., either global or local optimization. In
+<em>global optimization</em>, the goal is to find the design point that
+gives the lowest feasible objective function value over the entire
+parameter space. In contrast, in <em>local optimization</em>, the goal
+is to find a design point that is lowest relative to a ‘’nearby’’
+region of the parameter space. In almost all cases, global
+optimization will be more computationally expensive than local
+optimization. Thus, the user must choose an optimization algorithm
+with an appropriate search scope that best fits the problem goals and
+the computational budget.</p>
+<p>The <em>search method</em> refers to the approach taken in the
+optimization algorithm to locate a new design point that has a lower
+objective function or is more feasible than the current design point.
+The search method can be classified as either <em>gradient-based</em> or
+<em>nongradient-based</em>. In a gradient-based algorithm, gradients of
+the response functions are computed to find the direction of
+improvement. Gradient-based optimization is the search method that
+underlies many efficient local optimization methods. However, a
+drawback to this approach is that gradients can be computationally
+expensive, inaccurate, or even nonexistent. In such situations,
+nongradient-based search methods may be useful. There are numerous
+approaches to nongradient-based optimization. Some of the more well
+known of these include pattern search methods (nongradient-based local
+techniques) and genetic algorithms (nongradient-based global
+techniques).</p>
+<p>Because of the computational cost of running simulation
+models, surrogate-based optimization (SBO) methods are often used to
+reduce the number of actual simulation runs. In SBO, a surrogate or
+approximate model is constructed based on a limited number of
+simulation runs. The optimization is then performed on the surrogate
+model. Dakota has an extensive framework for managing a variety of
+local, multipoint, global, and hierarchical surrogates for use in
+optimization. Finally, sometimes there are multiple objectives that
+one may want to optimize simultaneously instead of a single scalar
+objective.  In this case, one may employ multi-objective methods
+that are described in <a class="reference internal" href="../studytypes/optimization.html#opt-additional-multiobjective"><span class="std std-ref">Multiobjective Optimization</span></a>.</p>
+<p>This overview of optimization approaches underscores that no single
+optimization method or algorithm works best for all types of
+optimization problems. <a class="reference internal" href="../studytypes/optimization.html#opt-usage"><span class="std std-ref">Optimization Usage Guidelines</span></a> offers guidelines for
+choosing a Dakota optimization algorithm best matched to your specific
+optimization problem.</p>
+<section id="constraint-considerations">
+<span id="optformulationsconstraints"></span><h3>Constraint Considerations<a class="headerlink" href="#constraint-considerations" title="Link to this heading"></a></h3>
+<p>Dakota’s input commands permit the user to specify two-sided nonlinear
+inequality constraints of the form <span class="math notranslate nohighlight">\(g_{L_{i}} \leq g_{i}(\mathbf{x})
+\leq g_{U_{i}}\)</span> , as well as nonlinear equality constraints of the form
+<span class="math notranslate nohighlight">\(h_{j}(\mathbf{x}) = h_{t_{j}}\)</span> . Some optimizers (e.g.,
+<code class="docutils literal notranslate"><span class="pre">npsol_</span></code>, <code class="docutils literal notranslate"><span class="pre">optpp_</span></code>, <code class="docutils literal notranslate"><span class="pre">soga</span></code>, and <code class="docutils literal notranslate"><span class="pre">moga</span></code>
+methods) can handle these constraint forms directly, whereas other
+optimizers (e.g., <code class="docutils literal notranslate"><span class="pre">asynch_pattern_search</span></code>, <code class="docutils literal notranslate"><span class="pre">dot_</span></code>,
+and <code class="docutils literal notranslate"><span class="pre">conmin_</span></code>, <code class="docutils literal notranslate"><span class="pre">mesh_adaptive_search</span></code>) require Dakota
+to perform an internal conversion of all constraints to one-sided
+inequality constraints of the form <span class="math notranslate nohighlight">\(g_{i}(\mathbf{x}) \leq 0\)</span> . In the
+latter case, the two-sided inequality constraints are treated as
+<span class="math notranslate nohighlight">\(g_{i}(\mathbf{x}) - g_{U_{i}} \leq 0\)</span>  and <span class="math notranslate nohighlight">\(g_{L_{i}} -
+g_{i}(\mathbf{x}) \leq 0\)</span>  and the equality constraints are treated as
+<span class="math notranslate nohighlight">\(h_{j}(\mathbf{x}) - h_{t_{j}} \leq 0\)</span>  and <span class="math notranslate nohighlight">\(h_{t_{j}} -
+h_{j}(\mathbf{x}) \leq 0\)</span> . The situation is similar for linear
+constraints: <code class="docutils literal notranslate"><span class="pre">asynch_pattern_search</span></code>, <code class="docutils literal notranslate"><span class="pre">npsol_</span></code>,
+<code class="docutils literal notranslate"><span class="pre">optpp_</span></code>, <code class="docutils literal notranslate"><span class="pre">soga</span></code>, and <code class="docutils literal notranslate"><span class="pre">moga</span></code> methods support
+them directly, whereas <code class="docutils literal notranslate"><span class="pre">dot_</span></code> and <code class="docutils literal notranslate"><span class="pre">conmin_</span></code> methods do
+not. For linear inequalities of the form <span class="math notranslate nohighlight">\(a_{L_{i}} \leq
+\mathbf{a}_{i}^{T}\mathbf{x} \leq a_{U_{i}}\)</span>  and linear equalities of
+the form <span class="math notranslate nohighlight">\(\mathbf{a}_{i}^{T}\mathbf{x} = a_{t_{j}}\)</span> , the nonlinear
+constraint arrays in <code class="docutils literal notranslate"><span class="pre">dot_</span></code> and <code class="docutils literal notranslate"><span class="pre">conmin_</span></code> methods are
+further augmented to include <span class="math notranslate nohighlight">\(\mathbf{a}_{i}^{T}\mathbf{x} - a_{U_{i}}
+\leq 0\)</span>  and <span class="math notranslate nohighlight">\(a_{L_{i}} - \mathbf{a}_{i}^{T}\mathbf{x} \leq 0\)</span>  in the
+inequality case and <span class="math notranslate nohighlight">\(\mathbf{a}_{i}^{T}\mathbf{x} - a_{t_{j}} \leq 0\)</span>
+and <span class="math notranslate nohighlight">\(a_{t_{j}} - \mathbf{a}_{i}^{T}\mathbf{x} \leq 0\)</span>  in the equality
+case. Awareness of these constraint augmentation procedures can be
+important for understanding the diagnostic data returned from the
+<code class="docutils literal notranslate"><span class="pre">dot_</span></code> and <code class="docutils literal notranslate"><span class="pre">conmin_</span></code> methods. Other optimizers fall
+somewhere in between.  <code class="docutils literal notranslate"><span class="pre">nlpql_</span></code> methods support nonlinear
+equality constraints <span class="math notranslate nohighlight">\(h_{j}(\mathbf{x}) = 0\)</span>  and nonlinear one-sided
+inequalities <span class="math notranslate nohighlight">\(g_{i}(\mathbf{x}) \geq 0\)</span> , but does not natively support
+linear constraints. Constraint mappings are used with NLPQL for both
+linear and nonlinear cases. Most <code class="docutils literal notranslate"><span class="pre">coliny_</span></code> methods now support
+two-sided nonlinear inequality constraints and nonlinear constraints
+with targets, but do not natively support linear constraints.</p>
+<p>When gradient and Hessian information is used in the optimization,
+derivative components are most commonly computed with respect to the
+active continuous variables, which in this case are the
+<em>continuous design variables</em>. This differs from parameter study
+methods (for which all continuous variables are active) and from
+nondeterministic analysis methods (for which the uncertain variables
+are active). Refer to <a class="reference internal" href="../inputfile/responses.html#responses-main"><span class="std std-ref">Responses</span></a> for additional
+information on derivative components and active continuous variables.</p>
+</section>
+</section>
+<section id="optimizing-with-dakota-choosing-a-method">
+<span id="optmethods"></span><h2>Optimizing with Dakota: Choosing a Method<a class="headerlink" href="#optimizing-with-dakota-choosing-a-method" title="Link to this heading"></a></h2>
+<p>This section summarizes the optimization methods available in
+Dakota. We group them according to search method and search goal and
+establish their relevance to types of problems. For a summary of this
+discussion, see <a class="reference internal" href="../studytypes/optimization.html#opt-usage"><span class="std std-ref">Optimization Usage Guidelines</span></a>.</p>
+<section id="gradient-based-local-methods">
+<span id="optmethodsgradient"></span><h3>Gradient-Based Local Methods<a class="headerlink" href="#gradient-based-local-methods" title="Link to this heading"></a></h3>
+<p>Gradient-based optimizers are best suited for efficient navigation to
+a local minimum in the vicinity of the initial point.  They are not
+intended to find global optima in nonconvex design spaces.  For global
+optimization methods, see <a class="reference internal" href="../studytypes/optimization.html#opt-methods-gradientfree-global"><span class="std std-ref">Derivative-Free Global Methods</span></a>.
+Gradient-based optimization methods are highly efficient, with the
+best convergence rates of all of the local optimization methods, and
+are the methods of choice when the problem is smooth, unimodal, and
+well-behaved. However, these methods can be among the least robust
+when a problem exhibits nonsmooth, discontinuous, or multimodal
+behavior.  The derivative-free methods described
+in <a class="reference internal" href="../studytypes/optimization.html#opt-methods-gradientfree-local"><span class="std std-ref">Derivative-Free Local Methods</span></a> are more appropriate for
+problems with these characteristics.</p>
+<p>Gradient accuracy is a critical factor for gradient-based optimizers,
+as inaccurate derivatives will often lead to failures in the search or
+pre-mature termination of the method.  Analytic gradients and Hessians
+are ideal but often unavailable.  If analytic gradient and Hessian
+information can be provided by an application code, a full Newton
+method will achieve quadratic convergence rates near the solution. If
+only gradient information is available and the Hessian information is
+approximated from an accumulation of gradient data, the superlinear
+convergence rates can be obtained.  It is most often the case for
+engineering applications, however, that a finite difference method
+will be used by the optimization algorithm to estimate gradient
+values. Dakota allows the user to select the step size for these
+calculations, as well as choose between forward-difference and
+central-difference algorithms. The finite difference step size should
+be selected as small as possible, to allow for local accuracy and
+convergence, but not so small that the steps are ‘’in the noise.’’
+This requires an assessment of the local smoothness of the response
+functions using, for example, a parameter study method. Central
+differencing will generally produce more reliable gradients than
+forward differencing but at roughly twice the expense.</p>
+<p>Gradient-based methods for nonlinear optimization problems can be
+described as iterative processes in which a sequence of subproblems,
+usually which involve an approximation to the full nonlinear problem,
+are solved until the solution converges to a local optimum of the full
+problem.  The optimization methods available in Dakota fall into
+several categories, each of which is characterized by the nature of
+the subproblems solved at each iteration.</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="nonlinear_least_squares.html" class="btn btn-neutral float-left" title="Nonlinear Least Squares" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="package_coliny.html" class="btn btn-neutral float-right" title="Package: COLINY" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <!--
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Sandia National Laboratories.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+  --> 
+
+</footer>
+        </div>
+      </div>
+	  
+	  <div style="background-color: #0f0f0f;color:#fafafa;padding:20px">
+	    <div>
+		  <h2><em>Exceptional service in the national interest</em></h2>
+		</div>
+		<p>© 2023 National Technology and Engineering Solutions of Sandia, LLC. | <a href="https://www.sandia.gov/contact_us/index.html">Questions &amp; Comments</a> | <a href="https://www.sandia.gov/general/privacy-security/index.html">Privacy &amp; Security</a></p>
+		<p><a href="http://energy.gov" rel="noopener noreferrer" target="_blank"><img alt="U.S. Department of Energy" longdesc="https://energy.gov" src="https://www.sandia.gov/_common/images/doe_logo_white.png" style="height:37px; width:140px"></a> <a href="http://nnsa.energy.gov/" rel="noopener noreferrer" target="_blank"> <img alt="National Nuclear Security Administration" longdesc="http://nnsa.gov" src="https://www.sandia.gov/_common/images/nnsa_logo_white.png" style="height:37px; width:116px"></a></p>
+		<p><a href="https://www.sandia.gov">Sandia National Laboratories</a> is a multimission laboratory managed and operated by National Technology and Engineering Solutions of Sandia, LLC., a wholly owned subsidiary of Honeywell International, Inc., for the U.S. Department of Energy’s National Nuclear Security Administration under contract DE-NA-0003525.</p>
+	  </div>	  	  
+	  
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

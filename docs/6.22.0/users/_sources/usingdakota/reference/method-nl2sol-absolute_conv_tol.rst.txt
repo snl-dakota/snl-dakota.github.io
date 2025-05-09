@@ -1,0 +1,37 @@
+.. _method-nl2sol-absolute_conv_tol:
+
+"""""""""""""""""
+absolute_conv_tol
+"""""""""""""""""
+
+
+Absolute convergence tolerance
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* REAL
+
+- *Default:* -1. (use NL2SOL internal default)
+
+
+**Description**
+
+
+``absolute_conv_tol`` (NL2SOL's
+``afctol``) is the absolute function convergence tolerance (stop when half
+the sum of squares is less than ``absolute_conv_tol``, which is mainly
+of interest on zero-residual test problems).
+
+The internal default is a function of machine epsilon
+(as limited by ``function_precision``). The default is selected with a value of -1.
+
+

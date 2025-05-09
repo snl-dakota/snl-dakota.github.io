@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Demo TPL &mdash; dakota  documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/dakota_theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/sandiaheaderlite.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Testing Dakota Code" href="../../testingcode.html" />
+    <link rel="prev" title="Working with Variable Containers and Views" href="workingwithvariablecontainers.html" /> 
+  
+  <meta name="sandia.approval_type" content="formal"/>
+  <meta property="sandia.approved" content="SAND2025-05563O"/>
+  <meta name="description" content="The Dakota project delivers both state-of-the-art research and robust, usable software for optimization and UQ."/>
+  <meta name="keywords" content="Dakota, optimization, UQ, uncertainty quantification, parametric analysis, design exploration, model calibration, risk analysis"/>
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../index.html" class="icon icon-home"> dakota
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../setupdakota.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usingdakota/usingdakota.html">Using Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usingdakotagui/usingdakotagui.html">Using Dakota GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../externaltools/externaltools.html">Using External Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../compiling/compiling.html">Compiling Dakota</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../developingdakota.html">Developing Dakota</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../devenvironment.html">Setup Your Development Environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../gitforversioncontrol.html">Git for Version Control</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../writingcode.html">Writing Dakota Code</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../overview.html">Overview of Dakota</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../services.html">Services</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../developmentpractices.html">Development Practices and Guidance</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="codingstyle.html">Coding Style Guidelines and Conventions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="modifyingdakotainput.html">Instructions for Modifying Dakota’s Input Specification</a></li>
+<li class="toctree-l4"><a class="reference internal" href="interfacinglibrary.html">Interfacing with Dakota as a Library</a></li>
+<li class="toctree-l4"><a class="reference internal" href="iteratorflow.html">Understanding Iterator Flow</a></li>
+<li class="toctree-l4"><a class="reference internal" href="performingfunctionevaluations.html">Performing Function Evaluations</a></li>
+<li class="toctree-l4"><a class="reference internal" href="workingwithvariablecontainers.html">Working with Variable Containers and Views</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Demo TPL</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#quickstart-building-and-running-the-demo">Quickstart: Building and Running the Demo</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#building-a-tpl-under-dakota-using-cmake">Building a TPL under Dakota using CMake</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#test-driven-code-development">Test-Driven Code Development</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#exposing-tpl-functionality-to-dakota">Exposing TPL Functionality to Dakota</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#exposing-tpl-options-through-dakota">Exposing TPL Options Through Dakota</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#exchanging-parameters-and-reponses">Exchanging Parameters and Reponses</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../testingcode.html">Testing Dakota Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../documenting.html">Documenting Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../writingdocs.html">Dakota Documentation Mechanics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../tpls.html">Dakota’s Third-Party Libraries</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../misc/misc.html">Miscellaneous</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">dakota</a>
+      </nav>
+
+	  <!-- SNL Lite header -->
+	  <div class="snlheader-subsite--wrapper-default">
+		<snlheader class="snlheader-subsite" role="snlbanner">
+		  <div class="wrapper">
+			<a href="https://www.sandia.gov/index.html">
+			  <div class="logo-transparent"><p class="logo">Sandia National Laboratories</p></div>
+			</a>
+			<div class="nav-top">
+			  <a class="visuallyhidden" name="mainnav"></a>
+			  <div aria-label="main navigation" class="core-nav-transparent core-nav-transparent--visible" role="navigation">
+				<ul role="navigation" class="secondary-links">
+				  <li id="search-text-link">
+					<a aria-label="Search" href="https://www.sandia.gov/search/">Search Sandia.gov</a>
+				  </li>
+				  <li id="directory-text-link">
+					<a href="https://www.sandia.gov/directory.html" aria-expanded="false" aria-label="Site Directory">All Sandia Websites</a>
+				  </li>
+				</ul>
+			  </div>
+			</div>
+		  </div> 
+		</snlheader>
+	  </div>	  
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../developingdakota.html">Developing Dakota</a></li>
+          <li class="breadcrumb-item"><a href="../../writingcode.html">Writing Dakota Code</a></li>
+          <li class="breadcrumb-item"><a href="../developmentpractices.html">Development Practices and Guidance</a></li>
+      <li class="breadcrumb-item active">Demo TPL</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../_sources/developingdakota/writingcode/developmentpractices/demotpl.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="demo-tpl">
+<h1>Demo TPL<a class="headerlink" href="#demo-tpl" title="Link to this heading"></a></h1>
+<p>This is a simple Demo which serves as a working example for bringing a new Third-Party Library (TPL) into Dakota. The Demo will serve to show minimal requirements for:</p>
+<ul class="simple">
+<li><p>building and running the Demo</p></li>
+<li><p>building a TPL under Dakota using CMake</p></li>
+<li><p>exposing TPL functionality to Dakota</p></li>
+<li><p>exposing TPL options through Dakota</p></li>
+<li><p>transferring data between a TPL and Dakota</p></li>
+</ul>
+<p>Following this Demo, a developer should be able to integrate an optimization TPL/method that:</p>
+<ul class="simple">
+<li><p>is derivative-free</p></li>
+<li><p>operates over continuous variables</p></li>
+<li><p>supports any of the following types of constraints
+- bound constraints
+- nonlinear inequality constraints
+- nonlinear equality constraints</p></li>
+</ul>
+<section id="quickstart-building-and-running-the-demo">
+<h2>Quickstart: Building and Running the Demo<a class="headerlink" href="#quickstart-building-and-running-the-demo" title="Link to this heading"></a></h2>
+<p>In order to build and run this Demo, it is necessary to build Dakota from source. Complete instructions for doing so can be found at <a class="reference external" href="https://dakota.sandia.gov/content/build-compile-source-code">https://dakota.sandia.gov/content/build-compile-source-code</a>. At the point in the instructions where cmake is invoked, append -DHAVE_DEMO_TPL:BOOL=ON to the cmake invocation.</p>
+<p>Building Dakota with the Demo TPL enabled will also activate a working example found in $DAKOTA_BUILD/test/dakota_demo_app, where $DAKOTA_BUILD is the root of the Dakota build tree. The test can be run from $DAKOTA_BUILD/test using</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>`ctest -R demo_app`
+</pre></div>
+</div>
+<p>Summary info will be output to the screen, and test artifacts can be found in $DAKOTA_BUILD/test/dakota_demo_app.</p>
+<p>Alternatively the example can be run in the same way a user runs Dakota. In particular, from the $DAKOTA_BUILD/test/dakota_demo_app directory, issue the following command:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>`/path/to/dakota -i dakota_demo_app.in`
+</pre></div>
+</div>
+<p>The remainder of this file describes how to integrate a TPL into Dakota using the Demo (found in $DAKOTA_SRC/packages/external/demo_tpl) as an example.</p>
+</section>
+<section id="building-a-tpl-under-dakota-using-cmake">
+<h2>Building a TPL under Dakota using CMake<a class="headerlink" href="#building-a-tpl-under-dakota-using-cmake" title="Link to this heading"></a></h2>
+<p>This section shows how to include the relevant parts of the Demo TPL as a library that Dakota builds and includes as part of its own native Cmake build.</p>
+<p>Assuming the Demo tpl source code has been placed alongside other Dakota TPLs in $DAKOTA_SRC/packages/external/demo_tpl, a simple CMakeLists.txt file can be created at this location to allow Dakota to include it within its own Cmake setup. An minimal example might include:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span><span class="c"># File $DAKOTA_SRC/packages/external/demo_tpl/CMakeLists.txt</span>
+cmake_minimum_required(VERSION 2.8)
+project(&quot;DEMO_TPL&quot; CXX)
+SUBDIRS(src)
+</pre></div>
+</div>
+<p>In the src subdirectory of demo_tpl would be another CMakeLists.txt file which essentially identifies the relevant source code to be compiled into a library along with defining the library which Daktoa will later include, e.g.</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span><span class="c"># File $DAKOTA_SRC/packages/external/demo_tpl/src/CMakeLists.txt</span>
+set(demo_tpl_HEADERS
+    demo_opt.hpp
+   )
+set(demo_tpl_SOURCES
+    demo_opt.cpp
+   )
+<span class="c"># Set the DEMO_TPL library name.</span>
+add_library(demo_tpl ${demo_tpl_SOURCES})
+<span class="c"># Define install targets for &quot;make install&quot;</span>
+install(TARGETS demo_tpl EXPORT ${ExportTarget} DESTINATION lib)
+</pre></div>
+</div>
+<p>Note that it is possible to use Cmake’s glob feature to bring in all source and header files, but care must be taken to avoid introducing main(…) symbols which will collide with Dakota’s main at link time.</p>
+<p>At this point, Dakota’s CMakeLists.txt files will need to be modified to include the Demo TPL. The following modifications can be used to bring in the Demo TPL, conditioned on having -DHAVE_DEMO_TPL:BOOL=ON defined when invoking cmake to configure Dakota:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span><span class="c"># File $DAKOTA_SRC/packages/CMakeLists.txt</span>
+&lt;... snip ...&gt;
+  option(HAVE_DEMO_TPL &quot;Build the Demo_TPL package.&quot; OFF)
+&lt;... end snip ...&gt;
+&lt;... snip ...&gt;
+  if(HAVE_DEMO_TPL)
+    add_subdirectory(external/demo_tpl)
+  endif(HAVE_DEMO_TPL)
+&lt;... end snip ...&gt;
+</pre></div>
+</div>
+<p>This next modification to Dakota will allow the Demo TPL to be used by other Dakota source code by including the necessary include paths, link-time libraries and needed #defines:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span><span class="c"># File $DAKOTA_SRC/src/CMakeLists.txt</span>
+&lt;... snip ...&gt;
+if(HAVE_DEMO_TPL)
+  set(DAKOTA_DEMOTPL_ROOT_DIR &quot;${Dakota_SOURCE_DIR}/packages/external/demo_tpl&quot;)
+  list(APPEND DAKOTA_INCDIRS
+      ${DAKOTA_DEMOTPL_ROOT_DIR}/dakota_src
+      ${DAKOTA_DEMOTPL_ROOT_DIR}/src)
+set(iterator_src ${iterator_src} ${Dakota_SOURCE_DIR}/packages/external/demo_tpl/dakota_src/DemoOptimizer.cpp)
+  list(APPEND DAKOTA_PKG_LIBS demo_tpl)
+list(APPEND EXPORT_TARGETS demo_tpl)
+  add_definitions(&quot;-DHAVE_DEMO_TPL&quot;)
+endif(HAVE_DEMO_TPL)
+&lt;... end snip ...&gt;
+</pre></div>
+</div>
+</section>
+<section id="test-driven-code-development">
+<h2>Test-Driven Code Development<a class="headerlink" href="#test-driven-code-development" title="Link to this heading"></a></h2>
+<p>Before making concrete changes, it is often helpful to create a simple Dakota test which will serve to guide the process. This is akin to test-driven development which essentially creates a test which fails until everything has been implemented to allow it to run and pass. A candidate test for the current activity could be the following:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span><span class="c"># File $DAKOTA_SRC/test/dakota_demo_app.in</span>
+    method,
+        demo_tpl
+        options_file = &quot;demo_tpl.opts&quot;
+    variables,
+        continuous_design = 3
+        initial_point      -1.0    1.5   2.0
+        upper_bounds       10.0   10.0  10.0
+        lower_bounds       -10.0  -10.0 -10.0
+        descriptors         &#39;x1&#39;  &#39;x2&#39;  &#39;x3&#39;
+    interface,
+        direct
+        analysis_driver = &#39;text_book&#39;
+    responses,
+        objective_functions = 1
+        no_gradients
+        no_hessians
+</pre></div>
+</div>
+<p>For this test to run, we will need to be able to pass parsed options to the Demo TPL and exchange parameters and response values between Dakota and Demo TPL. These details are presented in the following sections.</p>
+</section>
+<section id="exposing-tpl-functionality-to-dakota">
+<h2>Exposing TPL Functionality to Dakota<a class="headerlink" href="#exposing-tpl-functionality-to-dakota" title="Link to this heading"></a></h2>
+<p>Dakota performs some internal checks in order to confirm applicability of a specified method to the problem defined. In order for Dakota to perform those checks for the Demo TPL, the functionality of the method must be communicated to Dakota. That is done via implementation of a traits class. Traits define the types of problems and data formats the Demo TPL supports by overriding the default traits accessors in TraitsBase. By default, nothing is supported, and the TPL integrator must explicitly turn on the traits for any supported features.</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>// File $DAKOTA_SRC/packages/external/demo_tpl/dakota_src/DemoOptimizer.hpp
+class DemoOptTraits: public TraitsBase
+{
+public:
+  &lt;... snip ...&gt;
+  //
+  //- Heading: Constructor and destructor
+  //
+  DemoOptTraits() { }
+  virtual ~DemoOptTraits() { }
+  &lt;... end snip ...&gt;
+  &lt;... snip ...&gt;
+  //
+  //- Heading: Virtual member function redefinitions
+  //
+  bool supports_continuous_variables() override
+    { return true; }
+  &lt;... end snip ...&gt;
+}; // class DemoOptTraits
+</pre></div>
+</div>
+<p>A complete list of traits can be found in $DAKOTA_SRC/src/DakotaTraitsBase.hpp. The subset applicable to the Demo TPL can be found in $DAKOTA_SRC/packages/external/demo_tpl/dakota_src/DemoOptimizer.hpp.</p>
+</section>
+<section id="exposing-tpl-options-through-dakota">
+<h2>Exposing TPL Options Through Dakota<a class="headerlink" href="#exposing-tpl-options-through-dakota" title="Link to this heading"></a></h2>
+<p>The simplest way to pass options to a TPL is via a file. The Demo TPL has the ability to read in a file of method options when given a file name. This file name can be specified in the Dakota input file and retrieved as illustrated below.</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>// File $DAKOTA_SRC/packages/external/demo_tpl/dakota_src/DemoOptimizer.cpp
+  &lt;... snip ...&gt;
+  // Check for native Demo_Opt input file.  The file name needs to be
+  // included in the Dakota input file.
+  String adv_opts_file = probDescDB.get_string(&quot;method.advanced_options_file&quot;);
+  if (!adv_opts_file.empty())
+  {
+    if (!boost::filesystem::exists(adv_opts_file))
+    {
+      Cerr &lt;&lt; &quot;\nError: Demo_Opt options_file &#39;&quot; &lt;&lt; adv_opts_file
+           &lt;&lt; &quot;&#39; specified, but file not found.\n&quot;;
+      abort_handler(METHOD_ERROR);
+    }
+  }
+  &lt;... end snip ...&gt;
+</pre></div>
+</div>
+<p>If desired, common stopping criteria can be retrieved from the Dakota input file, rather than passed through a TPL-specific input file, as follows.</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>// File $DAKOTA_SRC/packages/external/demo_tpl/dakota_src/DemoOptimizer.cpp
+  &lt;... snip ...&gt;
+  get_common_stopping_criteria(max_fn_evals, max_iters, conv_tol,
+  min_var_chg, obj_target );
+  &lt;... end snip ...&gt;
+</pre></div>
+</div>
+</section>
+<section id="exchanging-parameters-and-reponses">
+<h2>Exchanging Parameters and Reponses<a class="headerlink" href="#exchanging-parameters-and-reponses" title="Link to this heading"></a></h2>
+<p>Like any TPL, the Demo TPL will need to exchange parameter and obective function values with Dakota. For purposes of demonstration, an example interface between Dakota and the Demo TPL can be seen in $DAKOTA_SRC/packages/external/demo_tpl/dakota_src/DemoOptimizer.hpp (with corresponding .cpp in the same directory). Within these files is a key callback interface used by the Demo TPL to obtain objective function values for given parameter values (3 in the test above), eg:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// File $DAKOTA_SRC/packages/external/demo_tpl/dakota_src/DemoOptimizer.cpp</span>
+<span class="n">Real</span>
+<span class="nf">DemoTPLOptimizer::compute_obj</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="n">verbose</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="c1">// Tell Dakota what variable values to use for the function</span>
+<span class="w">  </span><span class="c1">// valuation.  x must be (converted to) a std::vector&lt;double&gt; to use</span>
+<span class="w">  </span><span class="c1">// this demo with minimal changes.</span>
+<span class="w">  </span><span class="n">set_variables</span><span class="o">&lt;&gt;</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">iteratedModel</span><span class="p">,</span><span class="w"> </span><span class="n">iteratedModel</span><span class="p">.</span><span class="n">current_variables</span><span class="p">());</span>
+<span class="w">  </span><span class="c1">// Evaluate the function at the specified x.</span>
+<span class="w">  </span><span class="n">iteratedModel</span><span class="p">.</span><span class="n">evaluate</span><span class="p">();</span>
+<span class="w">  </span><span class="c1">// Retrieve the the function value and sign it appropriately based</span>
+<span class="w">  </span><span class="c1">// on whether minimize or maximize has been specified in the Dakota</span>
+<span class="w">  </span><span class="c1">// input file.</span>
+<span class="w">  </span><span class="kt">double</span><span class="w"> </span><span class="n">f</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dataTransferHandler</span><span class="o">-&gt;</span><span class="n">get_response_value_from_dakota</span><span class="p">(</span><span class="n">iteratedModel</span><span class="p">.</span><span class="n">current_response</span><span class="p">());</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="n">f</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>In this instance, the Demo TPL uses std::vector&lt;double&gt; as its native parameter vector data type and is calling back to the example problem (Dakota model) via an interface to Dakota to obtain a single double (aliased to Real in Dakota) obective function value for a given set of parameter values. These data exchanges are facilitated by used of “data adapters” supplied by Dakota with the set_variables&lt;&gt;(…) utility and dataTransferHandler helper class utilized in this case.</p>
+<p>For problems involving nonlinear equality and inequality constraints Dakota treats these as additional responses to the objective funtction(s). The Demo TPL supports both types for purposes of showing how these additional responses can be computed by Dakota (via interface to an underlying model) and transferred to the TPL. Similar to the call (by Demo) to compute_obj(…) are two additional methods to compute and transfer nonlinear constraint responses, eg:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// File $DAKOTA_SRC/packages/external/demo_tpl/dakota_src/DemoOptimizer.cpp</span>
+<span class="kt">void</span>
+<span class="nf">DemoTPLOptimizer::compute_nln_eq</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Real</span><span class="o">&gt;</span><span class="w"> </span><span class="o">&amp;</span><span class="n">c</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Real</span><span class="o">&gt;</span><span class="w"> </span><span class="o">&amp;</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="n">verbose</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="c1">// Tell Dakota what variable values to use for the nonlinear constraint</span>
+<span class="w">  </span><span class="c1">// evaluations.  x must be (converted to) a std::vector&lt;double&gt; to use</span>
+<span class="w">  </span><span class="c1">// this demo with minimal changes.</span>
+<span class="w">  </span><span class="n">set_variables</span><span class="o">&lt;&gt;</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">iteratedModel</span><span class="p">,</span><span class="w"> </span><span class="n">iteratedModel</span><span class="p">.</span><span class="n">current_variables</span><span class="p">());</span>
+<span class="w">  </span><span class="c1">// Evaluate the function at the specified x.</span>
+<span class="w">  </span><span class="n">iteratedModel</span><span class="p">.</span><span class="n">evaluate</span><span class="p">();</span>
+<span class="w">  </span><span class="c1">// Use an adapter to copy data</span>
+<span class="w">  </span><span class="n">dataTransferHandler</span><span class="o">-&gt;</span><span class="n">get_nonlinear_eq_constraints_from_dakota</span><span class="p">(</span><span class="n">iteratedModel</span><span class="p">.</span><span class="n">current_response</span><span class="p">(),</span><span class="w"> </span><span class="n">c</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="kt">void</span>
+<span class="nf">DemoTPLOptimizer::compute_nln_ineq</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Real</span><span class="o">&gt;</span><span class="w"> </span><span class="o">&amp;</span><span class="n">c</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Real</span><span class="o">&gt;</span><span class="w"> </span><span class="o">&amp;</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="n">verbose</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">set_variables</span><span class="o">&lt;&gt;</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">iteratedModel</span><span class="p">,</span><span class="w"> </span><span class="n">iteratedModel</span><span class="p">.</span><span class="n">current_variables</span><span class="p">());</span>
+<span class="w">  </span><span class="n">iteratedModel</span><span class="p">.</span><span class="n">evaluate</span><span class="p">();</span>
+<span class="w">  </span><span class="n">dataTransferHandler</span><span class="o">-&gt;</span><span class="n">get_nonlinear_ineq_constraints_from_dakota</span><span class="p">(</span><span class="n">iteratedModel</span><span class="p">.</span><span class="n">current_response</span><span class="p">(),</span><span class="w"> </span><span class="n">c</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Both of these callback methods (to Dakota), compute_nln_eq(…) and compute_nln_ineq(…) follow the same pattern as seen for the objective function callback: 1) set the Dakota model with the current variables (parameters), 2) evaluate the model and 3) transfer the desired response (objective or constraint) back to the TPL. The third step is facilitated by the appropriate call to the dataTransferHandler helper class. It should be noted that even though as many as three separate calls to evaluate the model are made for the same parameter values, Dakota maintains an internal cache of response values for each unique set. The model will be evaluated the first time a new set of parameter values is provided, but the cached values will simply be returned thereafter, thereby avoiding superfluous model evaluations.</p>
+<p>Dakota must also provide initial parameter values to the Demo TPL and retrieve final objective function and variable values from the Demo TPL. The initial values for parameters and bound constraints can be obtained from Dakota with the get_variables&lt;&gt;(…) helpers. This example returns the values to a standard vector of doubles (Reals). These values can then be passed to the Demo TPL using whatever API is provided. The API for this last step varies with the particular TPL, and Demo provides a function set_problem_data in this case.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// File $DAKOTA_SRC/packages/external/demo_tpl/dakota_src/DemoOptimizer.cpp</span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">DemoTPLOptimizer::initialize_variables_and_constraints</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="c1">// Get the number of variables, the initial values, and the values</span>
+<span class="w">  </span><span class="c1">// of bound constraints.  They are returned to standard C++ data</span>
+<span class="w">  </span><span class="c1">// types.  This example considers only continuous variables.  Other</span>
+<span class="w">  </span><span class="c1">// types of variables and constraints will be added at a later time.</span>
+<span class="w">  </span><span class="c1">// Note that double is aliased to Real in Dakota.</span>
+<span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">num_total_vars</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">numContinuousVars</span><span class="p">;</span>
+<span class="w">  </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Real</span><span class="o">&gt;</span><span class="w"> </span><span class="n">init_point</span><span class="p">(</span><span class="n">num_total_vars</span><span class="p">);</span>
+<span class="w">  </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Real</span><span class="o">&gt;</span><span class="w"> </span><span class="n">lower</span><span class="p">(</span><span class="n">num_total_vars</span><span class="p">),</span>
+<span class="w">                    </span><span class="n">upper</span><span class="p">(</span><span class="n">num_total_vars</span><span class="p">);</span>
+<span class="w">  </span><span class="c1">// More on DemoOptTraits can be found in DemoOptimizer.hpp.</span>
+<span class="w">  </span><span class="n">get_variables</span><span class="p">(</span><span class="n">iteratedModel</span><span class="p">,</span><span class="w"> </span><span class="n">init_point</span><span class="p">);</span>
+<span class="w">  </span><span class="n">get_variable_bounds_from_dakota</span><span class="o">&lt;</span><span class="n">DemoOptTraits</span><span class="o">&gt;</span><span class="p">(</span><span class="w"> </span><span class="n">lower</span><span class="p">,</span><span class="w"> </span><span class="n">upper</span><span class="w"> </span><span class="p">);</span>
+<span class="w">  </span><span class="c1">// Replace this line by whatever the TPL being integrated uses to</span>
+<span class="w">  </span><span class="c1">// ingest variable values and bounds, including any data type</span>
+<span class="w">  </span><span class="c1">// conversion needed.</span>
+<span class="w">  </span><span class="c1">// ------------------  TPL_SPECIFIC  ------------------</span>
+<span class="w">  </span><span class="n">demoOpt</span><span class="o">-&gt;</span><span class="n">set_problem_data</span><span class="p">(</span><span class="n">init_point</span><span class="p">,</span><span class="w">   </span><span class="c1">//  &quot;Initial Guess&quot;</span>
+<span class="w">                            </span><span class="n">lower</span><span class="w">     </span><span class="p">,</span><span class="w">   </span><span class="c1">//  &quot;Lower Bounds&quot;</span>
+<span class="w">                            </span><span class="n">upper</span><span class="w">      </span><span class="p">);</span><span class="w"> </span><span class="c1">//  &quot;Upper Bounds&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The TPL should be able to return an optimal objective function value and the corresponding variable (parameter) values via its API. As has been the case throughout, the data should be doubles (aliased to Real in Dakota). The following code takes the values returned by Demo via a call to get_best_f() and sets the Dakota data structures that contain final objective and variable values. It adjusts the sign of the objective based on whether minimize or maximize has been specified in the Dakota input file (minimize is the default). If the problem being optimized involves nonlinear equality and/or inequality constraints, these will also need to be obtained from the TPL and passed to Dakota as part of the array of best function values (responses).</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// File $DAKOTA_SRC/packages/external/demo_tpl/dakota_src/DemoOptimizer.cpp</span>
+<span class="c1">// in method void DemoTPLOptimizer::core_run()</span>
+<span class="w">  </span><span class="c1">// Replace this line with however the TPL being incorporated returns</span>
+<span class="w">  </span><span class="c1">// the optimal function value.  To use this demo with minimal</span>
+<span class="w">  </span><span class="c1">// changes, the returned value needs to be (converted to) a</span>
+<span class="w">  </span><span class="c1">// double.</span>
+<span class="w">  </span><span class="kt">double</span><span class="w"> </span><span class="n">best_f</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">demoOpt</span><span class="o">-&gt;</span><span class="n">get_best_f</span><span class="p">();</span><span class="w"> </span><span class="c1">// TPL_SPECIFIC</span>
+<span class="w">  </span><span class="c1">// If the TPL defaults to doing minimization, no need to do</span>
+<span class="w">  </span><span class="c1">// anything with this code.  It manages needed sign changes</span>
+<span class="w">  </span><span class="c1">// depending on whether minimize or maximize has been specified in</span>
+<span class="w">  </span><span class="c1">// the Dakota input file.</span>
+<span class="w">  </span><span class="k">const</span><span class="w"> </span><span class="n">BoolDeque</span><span class="o">&amp;</span><span class="w"> </span><span class="n">max_sense</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">iteratedModel</span><span class="p">.</span><span class="n">primary_response_fn_sense</span><span class="p">();</span>
+<span class="w">  </span><span class="n">RealVector</span><span class="w"> </span><span class="nf">best_fns</span><span class="p">(</span><span class="n">iteratedModel</span><span class="p">.</span><span class="n">response_size</span><span class="p">());</span><span class="w"> </span><span class="c1">// includes nonlinear contraints</span>
+<span class="w">  </span><span class="c1">// Get best (single) objcetive value respecting max/min expectations</span>
+<span class="w">  </span><span class="n">best_fns</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">max_sense</span><span class="p">.</span><span class="n">empty</span><span class="p">()</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">max_sense</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="w"> </span><span class="o">?</span><span class="w">  </span><span class="o">-</span><span class="n">best_f</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">best_f</span><span class="p">;</span>
+<span class="w">  </span><span class="c1">// Get best Nonlinear Equality Constraints from TPL</span>
+<span class="w">  </span><span class="k">if</span><span class="p">(</span><span class="w"> </span><span class="n">numNonlinearEqConstraints</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">)</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">best_nln_eqs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">demoOpt</span><span class="o">-&gt;</span><span class="n">get_best_nln_eqs</span><span class="p">();</span><span class="w"> </span><span class="c1">// TPL_SPECIFIC</span>
+<span class="w">    </span><span class="n">dataTransferHandler</span><span class="o">-&gt;</span><span class="n">get_best_nonlinear_eq_constraints_from_tpl</span><span class="p">(</span>
+<span class="w">                                        </span><span class="n">best_nln_eqs</span><span class="p">,</span>
+<span class="w">                                        </span><span class="n">best_fns</span><span class="p">);</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="w">  </span><span class="c1">// Get best Nonlinear Inequality Constraints from TPL</span>
+<span class="w">  </span><span class="k">if</span><span class="p">(</span><span class="w"> </span><span class="n">numNonlinearIneqConstraints</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">)</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">best_nln_ineqs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">demoOpt</span><span class="o">-&gt;</span><span class="n">get_best_nln_ineqs</span><span class="p">();</span><span class="w"> </span><span class="c1">// TPL_SPECIFIC</span>
+<span class="w">    </span><span class="n">dataTransferHandler</span><span class="o">-&gt;</span><span class="n">get_best_nonlinear_ineq_constraints_from_tpl</span><span class="p">(</span>
+<span class="w">                                        </span><span class="n">best_nln_ineqs</span><span class="p">,</span>
+<span class="w">                                        </span><span class="n">best_fns</span><span class="p">);</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="w">  </span><span class="n">bestResponseArray</span><span class="p">.</span><span class="n">front</span><span class="p">().</span><span class="n">function_values</span><span class="p">(</span><span class="n">best_fns</span><span class="p">);</span>
+<span class="w">  </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="w"> </span><span class="n">best_x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">demoOpt</span><span class="o">-&gt;</span><span class="n">get_best_x</span><span class="p">();</span><span class="w"> </span><span class="c1">// TPL_SPECIFIC</span>
+<span class="w">  </span><span class="c1">// Set Dakota optimal value data.</span>
+<span class="w">  </span><span class="n">set_variables</span><span class="o">&lt;&gt;</span><span class="p">(</span><span class="n">best_x</span><span class="p">,</span><span class="w"> </span><span class="n">iteratedModel</span><span class="p">,</span><span class="w"> </span><span class="n">bestVariablesArray</span><span class="p">.</span><span class="n">front</span><span class="p">());</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="workingwithvariablecontainers.html" class="btn btn-neutral float-left" title="Working with Variable Containers and Views" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../../testingcode.html" class="btn btn-neutral float-right" title="Testing Dakota Code" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <!--
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Sandia National Laboratories.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+  --> 
+
+</footer>
+        </div>
+      </div>
+	  
+	  <div style="background-color: #0f0f0f;color:#fafafa;padding:20px">
+	    <div>
+		  <h2><em>Exceptional service in the national interest</em></h2>
+		</div>
+		<p>© 2023 National Technology and Engineering Solutions of Sandia, LLC. | <a href="https://www.sandia.gov/contact_us/index.html">Questions &amp; Comments</a> | <a href="https://www.sandia.gov/general/privacy-security/index.html">Privacy &amp; Security</a></p>
+		<p><a href="http://energy.gov" rel="noopener noreferrer" target="_blank"><img alt="U.S. Department of Energy" longdesc="https://energy.gov" src="https://www.sandia.gov/_common/images/doe_logo_white.png" style="height:37px; width:140px"></a> <a href="http://nnsa.energy.gov/" rel="noopener noreferrer" target="_blank"> <img alt="National Nuclear Security Administration" longdesc="http://nnsa.gov" src="https://www.sandia.gov/_common/images/nnsa_logo_white.png" style="height:37px; width:116px"></a></p>
+		<p><a href="https://www.sandia.gov">Sandia National Laboratories</a> is a multimission laboratory managed and operated by National Technology and Engineering Solutions of Sandia, LLC., a wholly owned subsidiary of Honeywell International, Inc., for the U.S. Department of Energy’s National Nuclear Security Administration under contract DE-NA-0003525.</p>
+	  </div>	  	  
+	  
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

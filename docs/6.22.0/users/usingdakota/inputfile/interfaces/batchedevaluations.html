@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Batched Evaluations &mdash; dakota  documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/dakota_theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/sandiaheaderlite.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Parameter to Response Mapping Examples" href="mappingexamples.html" />
+    <link rel="prev" title="Simulation File Management" href="simulationfilemanagement.html" /> 
+  
+  <meta name="sandia.approval_type" content="formal"/>
+  <meta property="sandia.approved" content="SAND2025-05563O"/>
+  <meta name="description" content="The Dakota project delivers both state-of-the-art research and robust, usable software for optimization and UQ."/>
+  <meta name="keywords" content="Dakota, optimization, UQ, uncertainty quantification, parametric analysis, design exploration, model calibration, risk analysis"/>
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../index.html" class="icon icon-home"> dakota
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../setupdakota.html">Getting Started</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../usingdakota.html">Using Dakota</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../introduction/aboutdakota.html">About Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../introduction/helloworld.html">Dakota Beginner’s Tutorial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../examples.html">Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../introduction/couplingtosimulations.html">Coupling Dakota to a Simulation</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../inputfile.html">Dakota Input File</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../formatting.html">Input File Formatting</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../model.html">Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../variables.html">Variables</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../interfaces.html">Interfaces</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="simulationinterfaces.html">Simulation Interfaces</a></li>
+<li class="toctree-l4"><a class="reference internal" href="buildingblackboxinterface.html">Building a Black-Box Interface to a Simulation Code</a></li>
+<li class="toctree-l4"><a class="reference internal" href="simulationinterfacecomponents.html">Simulation Interface Components</a></li>
+<li class="toctree-l4"><a class="reference internal" href="simulationfilemanagement.html">Simulation File Management</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Batched Evaluations</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#file-formats">File Formats</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#work-directories-tagging-and-other-features">Work Directories, Tagging, and Other Features</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="mappingexamples.html">Parameter to Response Mapping Examples</a></li>
+<li class="toctree-l4"><a class="reference internal" href="dakotainterfacing.html">The Python dakota.interfacing module</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../responses.html">Responses</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../inputstodakota.html">Inputs to Dakota</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../inputspec.html">Dakota Input Spec</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../inputfile.html#video-resources">Video Resources</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../running.html">Running Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../output.html">Dakota Output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../studytypes.html">Study Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../topics.html">Topics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../advanced.html">Advanced Topics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../theory.html">Dakota Theory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../reference.html">Keyword Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usingdakotagui/usingdakotagui.html">Using Dakota GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../externaltools/externaltools.html">Using External Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../compiling/compiling.html">Compiling Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../developingdakota/developingdakota.html">Developing Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../misc/misc.html">Miscellaneous</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">dakota</a>
+      </nav>
+
+	  <!-- SNL Lite header -->
+	  <div class="snlheader-subsite--wrapper-default">
+		<snlheader class="snlheader-subsite" role="snlbanner">
+		  <div class="wrapper">
+			<a href="https://www.sandia.gov/index.html">
+			  <div class="logo-transparent"><p class="logo">Sandia National Laboratories</p></div>
+			</a>
+			<div class="nav-top">
+			  <a class="visuallyhidden" name="mainnav"></a>
+			  <div aria-label="main navigation" class="core-nav-transparent core-nav-transparent--visible" role="navigation">
+				<ul role="navigation" class="secondary-links">
+				  <li id="search-text-link">
+					<a aria-label="Search" href="https://www.sandia.gov/search/">Search Sandia.gov</a>
+				  </li>
+				  <li id="directory-text-link">
+					<a href="https://www.sandia.gov/directory.html" aria-expanded="false" aria-label="Site Directory">All Sandia Websites</a>
+				  </li>
+				</ul>
+			  </div>
+			</div>
+		  </div> 
+		</snlheader>
+	  </div>	  
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../usingdakota.html">Using Dakota</a></li>
+          <li class="breadcrumb-item"><a href="../../inputfile.html">Dakota Input File</a></li>
+          <li class="breadcrumb-item"><a href="../interfaces.html">Interfaces</a></li>
+      <li class="breadcrumb-item active">Batched Evaluations</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../_sources/usingdakota/inputfile/interfaces/batchedevaluations.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="batched-evaluations">
+<span id="interfaces-batch"></span><h1>Batched Evaluations<a class="headerlink" href="#batched-evaluations" title="Link to this heading"></a></h1>
+<p>Dakota provides for execution of evaluations in batches.
+Batch mode is intended to allow a user to assume greater control over where
+and when to run individual evaluations. It is activated using the <code class="docutils literal notranslate"><a class="reference external" href="../../../usingdakota/reference/interface-batch.html"><span class="pre">batch</span></a></code> keyword.</p>
+<p>In batch mode, Dakota writes the parameters for multiple (a batch of)
+evaluations to a single batch parameters file and then invokes the
+analysis driver once for the entire batch. The pathname of the combined
+parameters file (and of the results file) are communicated to the driver
+as command line arguments. After the driver exits, Dakota expects to
+find results for the entire batch in a single combined results file.</p>
+<p>The analysis driver is responsible for parsing the parameters file and
+performing an evaluation for each set of parameters it contains, and for
+returning results for all the evaluations to Dakota. The user is free to
+set up the driver to perform the evaluations in the batch in a way that
+is convenient.</p>
+<p>By default, all currently available evaluations are added to a single
+batch. For example, in a sampling study that has a 1000 samples, by
+default all 1000 evaluations would be added to a single batch. The batch
+size may be limited using the <code class="docutils literal notranslate"><a class="reference external" href="../../../usingdakota/reference/interface-batch-size.html"><span class="pre">size</span></a></code> subkeyword. Setting
+<code class="docutils literal notranslate"><span class="pre">size</span> <span class="pre">=</span> <span class="pre">100</span></code> would result in 10 equal-size batches being run one after
+another in a 1000-sample study.</p>
+<section id="file-formats">
+<h2>File Formats<a class="headerlink" href="#file-formats" title="Link to this heading"></a></h2>
+<p>For <a class="reference internal" href="../variables.html#variables-parameters-standard"><span class="std std-ref">standard</span></a>
+and <a class="reference internal" href="../variables.html#variables-parameters-aprepro"><span class="std std-ref">APREPRO</span></a>-format parameters files,
+the combined parameters file for a batch is simply the concatenation of
+the paramters information for all the evaluations in the batch, in standard
+or APREPRO format.</p>
+<p>The following example parameters file contains parameter sets for two
+evaluations.</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>                     1 variables
+-4.912558193411678e-01 x1
+                     1 functions
+                     1 ASV_1:response_fn_1
+                     1 derivative_variables
+                     1 DVV_1:x1
+                     0 analysis_components
+                   1:1 eval_id
+                     1 variables
+-2.400695372000337e-01 x1
+                     1 functions
+                     1 ASV_1:response_fn_1
+                     1 derivative_variables
+                     1 DVV_1:x1
+                     0 analysis_components
+                   1:2 eval_id    interface,
+</pre></div>
+</div>
+<p>Note that the <code class="docutils literal notranslate"><span class="pre">eval_id</span></code> contains two pieces of information separated
+by a colon. The second is the evaluation number, and the first is the
+batch number. The batch number is an incrementing integer that uniquely
+identifies the batch.</p>
+<p>A <a class="reference internal" href="../variables.html#variables-parameters-json"><span class="std std-ref">JSON format</span></a> batch parameters file contains an array at the top level.
+The elements of the array are objects that contain parameters information
+for each evaluation in the batch.</p>
+<p>The combined results file format is likewise a concatenation of the
+results for all the evaluations in the batch. However, a line beginning
+with the “#” character must separate the results for each evaluation.</p>
+<p>The order of the evaluations in the results file must match the order in
+the parameters file.</p>
+<p>The following is an example batch results file corresponding to the
+batch parameters file above. The initial # on the first line is
+optional, and a final # (not shown here) is allowed.</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span><span class="c">#</span>
+                     4.945481774823024e+00 f
+<span class="c">#</span>
+                     2.364744129789246e+00 f
+</pre></div>
+</div>
+</section>
+<section id="work-directories-tagging-and-other-features">
+<h2>Work Directories, Tagging, and Other Features<a class="headerlink" href="#work-directories-tagging-and-other-features" title="Link to this heading"></a></h2>
+<p>Each batch is executed in a work directory when this feature is enabled.
+The batch number is used to tag files and directories if tagging is
+requested (or Dakota automatically applies a tag to safely save a file
+or directory). As explained in the previous section, the batch number is
+an incrementing integer beginning with 1 that uniquely identifies a
+batch.</p>
+<p>Batch mode restricts the use of several other Dakota features:</p>
+<ul class="simple">
+<li><p>No <code class="docutils literal notranslate"><a class="reference external" href="../../../usingdakota/reference/interface-analysis_drivers-input_filter.html"><span class="pre">input_filter</span></a></code> or
+<code class="docutils literal notranslate"><a class="reference external" href="../../../usingdakota/reference/interface-analysis_drivers-output_filter.html"><span class="pre">output_filter</span></a></code> is allowed.</p></li>
+<li><p>Only one <code class="docutils literal notranslate"><a class="reference external" href="../../../usingdakota/reference/interface-analysis_drivers.html"><span class="pre">analysis_drivers</span></a></code> keyword is permitted.</p></li>
+<li><p><code class="docutils literal notranslate"><a class="reference external" href="../../../usingdakota/reference/interface-failure_capture.html"><span class="pre">failure_capture</span></a></code> modes are limited to abort and recover.</p></li>
+<li><p>Asynchronous evaluation is disallowed (only one batch at a time may
+be executed).</p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="simulationfilemanagement.html" class="btn btn-neutral float-left" title="Simulation File Management" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="mappingexamples.html" class="btn btn-neutral float-right" title="Parameter to Response Mapping Examples" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <!--
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Sandia National Laboratories.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+  --> 
+
+</footer>
+        </div>
+      </div>
+	  
+	  <div style="background-color: #0f0f0f;color:#fafafa;padding:20px">
+	    <div>
+		  <h2><em>Exceptional service in the national interest</em></h2>
+		</div>
+		<p>© 2023 National Technology and Engineering Solutions of Sandia, LLC. | <a href="https://www.sandia.gov/contact_us/index.html">Questions &amp; Comments</a> | <a href="https://www.sandia.gov/general/privacy-security/index.html">Privacy &amp; Security</a></p>
+		<p><a href="http://energy.gov" rel="noopener noreferrer" target="_blank"><img alt="U.S. Department of Energy" longdesc="https://energy.gov" src="https://www.sandia.gov/_common/images/doe_logo_white.png" style="height:37px; width:140px"></a> <a href="http://nnsa.energy.gov/" rel="noopener noreferrer" target="_blank"> <img alt="National Nuclear Security Administration" longdesc="http://nnsa.gov" src="https://www.sandia.gov/_common/images/nnsa_logo_white.png" style="height:37px; width:116px"></a></p>
+		<p><a href="https://www.sandia.gov">Sandia National Laboratories</a> is a multimission laboratory managed and operated by National Technology and Engineering Solutions of Sandia, LLC., a wholly owned subsidiary of Honeywell International, Inc., for the U.S. Department of Energy’s National Nuclear Security Administration under contract DE-NA-0003525.</p>
+	  </div>	  	  
+	  
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

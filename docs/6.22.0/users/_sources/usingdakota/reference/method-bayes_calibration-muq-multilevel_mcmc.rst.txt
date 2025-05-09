@@ -1,0 +1,67 @@
+.. _method-bayes_calibration-muq-multilevel_mcmc:
+
+"""""""""""""""
+multilevel_mcmc
+"""""""""""""""
+
+
+Use the Multi-level MCMC algorithm
+
+
+
+
+**Topics**
+
+
+bayesian_calibration
+
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-bayes_calibration-muq-multilevel_mcmc-initial_chain_samples
+   method-bayes_calibration-muq-multilevel_mcmc-target_variance
+   method-bayes_calibration-muq-multilevel_mcmc-greedy_resampling_factor
+   method-bayes_calibration-muq-multilevel_mcmc-subsampling_steps
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+- *Default:* dram
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+------------------------------+-----------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword               | Dakota Keyword Description                    |
+|                         | Group              |                              |                                               |
++=========================+====================+==============================+===============================================+
+| Optional                                     | `initial_chain_samples`__    | Number of initial samples for each level      |
++----------------------------------------------+------------------------------+-----------------------------------------------+
+| Required                                     | `target_variance`__          | Target variance for the greedy algorithm      |
++----------------------------------------------+------------------------------+-----------------------------------------------+
+| Optional                                     | `greedy_resampling_factor`__ | Greedy resampling factor                      |
++----------------------------------------------+------------------------------+-----------------------------------------------+
+| Optional                                     | `subsampling_steps`__        | Number of samples at each level               |
++----------------------------------------------+------------------------------+-----------------------------------------------+
+
+.. __: method-bayes_calibration-muq-multilevel_mcmc-initial_chain_samples.html
+__ method-bayes_calibration-muq-multilevel_mcmc-target_variance.html
+__ method-bayes_calibration-muq-multilevel_mcmc-greedy_resampling_factor.html
+__ method-bayes_calibration-muq-multilevel_mcmc-subsampling_steps.html
+
+
+
+**Description**
+
+
+Use the multi-level algorithm (:cite:p:`Seelinger2021ACM`) from the MUQ library.
+
+
+

@@ -1,0 +1,83 @@
+.. _method-multifidelity_sampling-numerical_solve-solver_metric:
+
+"""""""""""""
+solver_metric
+"""""""""""""
+
+
+Metric employed during numerical solutions in sampling-based multifidelity UQ methods.
+
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-multifidelity_sampling-numerical_solve-solver_metric-average_estimator_variance
+   method-multifidelity_sampling-numerical_solve-solver_metric-norm_estimator_variance
+   method-multifidelity_sampling-numerical_solve-solver_metric-max_estimator_variance
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+- *Default:* average_estimator_variance
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+--------------------------------+-----------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword                 | Dakota Keyword Description                    |
+|                         | Group              |                                |                                               |
++=========================+====================+================================+===============================================+
+| Required (Choose One)   | Optimization       | `average_estimator_variance`__ | Utilize the estimator variance averaged over  |
+|                         | Solver Metric      |                                | the QoI as the solver metric for              |
+|                         |                    |                                | sampling-based multifidelity methods.         |
+|                         |                    +--------------------------------+-----------------------------------------------+
+|                         |                    | `norm_estimator_variance`__    | Utilize a p-norm over the vector of QoI       |
+|                         |                    |                                | estimator variances as the solver metric for  |
+|                         |                    |                                | sampling-based multifidelity methods.         |
+|                         |                    +--------------------------------+-----------------------------------------------+
+|                         |                    | `max_estimator_variance`__     | Utilize the maximum estimator variance as the |
+|                         |                    |                                | solver metric for sampling-based              |
+|                         |                    |                                | multifidelity methods.                        |
++-------------------------+--------------------+--------------------------------+-----------------------------------------------+
+
+.. __: method-multifidelity_sampling-numerical_solve-solver_metric-average_estimator_variance.html
+__ method-multifidelity_sampling-numerical_solve-solver_metric-norm_estimator_variance.html
+__ method-multifidelity_sampling-numerical_solve-solver_metric-max_estimator_variance.html
+
+
+
+**Description**
+
+
+For sampling-based multifidelity UQ methods, this specification
+selects the metric to be used during numerical solutions for sample
+allocations per model.  When there are multiple quantities of interest
+(QoI), the vector of QoI estimator variances needs to be converted to
+a scalar for use by the numerical solver.  Options include the
+average, maximum, and p-norm of the QoI vector, with the default of
+average estimator variance.
+
+
+
+
+**Examples**
+
+
+
+.. code-block::
+
+    method,
+	approximate_control_variate acv_mf
+	  solver_metric norm_estimator_variance norm_order = 2	# objective fn for budget-constrained
+	solution_mode  online_pilot
+	pilot_samples = 50 seed = 8674132
+	max_function_evaluations = 500
+
+
+

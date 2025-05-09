@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>standard &mdash; dakota  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/dakota_theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/sandiaheaderlite.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="aprepro" href="interface-analysis_drivers-fork-parameters_format-aprepro.html" />
+    <link rel="prev" title="parameters_format" href="interface-analysis_drivers-fork-parameters_format.html" /> 
+  
+  <meta name="sandia.approval_type" content="formal"/>
+  <meta property="sandia.approved" content="SAND2025-05563O"/>
+  <meta name="description" content="The Dakota project delivers both state-of-the-art research and robust, usable software for optimization and UQ."/>
+  <meta name="keywords" content="Dakota, optimization, UQ, uncertainty quantification, parametric analysis, design exploration, model calibration, risk analysis"/>
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> dakota
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../setupdakota.html">Getting Started</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../usingdakota.html">Using Dakota</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../introduction/aboutdakota.html">About Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../introduction/helloworld.html">Dakota Beginner’s Tutorial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples.html">Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../introduction/couplingtosimulations.html">Coupling Dakota to a Simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../inputfile.html">Dakota Input File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../running.html">Running Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../output.html">Dakota Output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../studytypes.html">Study Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../topics.html">Topics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../advanced.html">Advanced Topics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../theory.html">Dakota Theory</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../reference.html">Keyword Reference</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="environment.html">environment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="method.html">method</a></li>
+<li class="toctree-l3"><a class="reference internal" href="model.html">model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="variables.html">variables</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="interface.html">interface</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="interface-id_interface.html">id_interface</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="interface-analysis_drivers.html">analysis_drivers</a><ul class="current">
+<li class="toctree-l5"><a class="reference internal" href="interface-analysis_drivers-input_filter.html">input_filter</a></li>
+<li class="toctree-l5"><a class="reference internal" href="interface-analysis_drivers-output_filter.html">output_filter</a></li>
+<li class="toctree-l5"><a class="reference internal" href="interface-analysis_drivers-system.html">system</a></li>
+<li class="toctree-l5 current"><a class="reference internal" href="interface-analysis_drivers-fork.html">fork</a><ul class="current">
+<li class="toctree-l6"><a class="reference internal" href="interface-analysis_drivers-fork-parameters_file.html">parameters_file</a></li>
+<li class="toctree-l6"><a class="reference internal" href="interface-analysis_drivers-fork-results_file.html">results_file</a></li>
+<li class="toctree-l6 current"><a class="reference internal" href="interface-analysis_drivers-fork-parameters_format.html">parameters_format</a><ul class="current">
+<li class="toctree-l7 current"><a class="current reference internal" href="#">standard</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="interface-analysis_drivers-fork-parameters_format-aprepro.html">aprepro</a></li>
+<li class="toctree-l7"><a class="reference internal" href="interface-analysis_drivers-fork-parameters_format-json.html">json</a></li>
+</ul>
+</li>
+<li class="toctree-l6"><a class="reference internal" href="interface-analysis_drivers-fork-results_format.html">results_format</a></li>
+<li class="toctree-l6"><a class="reference internal" href="interface-analysis_drivers-fork-file_tag.html">file_tag</a></li>
+<li class="toctree-l6"><a class="reference internal" href="interface-analysis_drivers-fork-file_save.html">file_save</a></li>
+<li class="toctree-l6"><a class="reference internal" href="interface-analysis_drivers-fork-work_directory.html">work_directory</a></li>
+<li class="toctree-l6"><a class="reference internal" href="interface-analysis_drivers-fork-allow_existing_results.html">allow_existing_results</a></li>
+<li class="toctree-l6"><a class="reference internal" href="interface-analysis_drivers-fork-verbatim.html">verbatim</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="interface-analysis_drivers-direct.html">direct</a></li>
+<li class="toctree-l5"><a class="reference internal" href="interface-analysis_drivers-plugin.html">plugin</a></li>
+<li class="toctree-l5"><a class="reference internal" href="interface-analysis_drivers-matlab.html">matlab</a></li>
+<li class="toctree-l5"><a class="reference internal" href="interface-analysis_drivers-python.html">python</a></li>
+<li class="toctree-l5"><a class="reference internal" href="interface-analysis_drivers-scilab.html">scilab</a></li>
+<li class="toctree-l5"><a class="reference internal" href="interface-analysis_drivers-grid.html">grid</a></li>
+<li class="toctree-l5"><a class="reference internal" href="interface-analysis_drivers-analysis_components.html">analysis_components</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="interface-algebraic_mappings.html">algebraic_mappings</a></li>
+<li class="toctree-l4"><a class="reference internal" href="interface-failure_capture.html">failure_capture</a></li>
+<li class="toctree-l4"><a class="reference internal" href="interface-deactivate.html">deactivate</a></li>
+<li class="toctree-l4"><a class="reference internal" href="interface-batch.html">batch</a></li>
+<li class="toctree-l4"><a class="reference internal" href="interface-asynchronous.html">asynchronous</a></li>
+<li class="toctree-l4"><a class="reference internal" href="interface-evaluation_servers.html">evaluation_servers</a></li>
+<li class="toctree-l4"><a class="reference internal" href="interface-evaluation_scheduling.html">evaluation_scheduling</a></li>
+<li class="toctree-l4"><a class="reference internal" href="interface-processors_per_evaluation.html">processors_per_evaluation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="interface-analysis_servers.html">analysis_servers</a></li>
+<li class="toctree-l4"><a class="reference internal" href="interface-analysis_scheduling.html">analysis_scheduling</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="responses.html">responses</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../usingdakotagui/usingdakotagui.html">Using Dakota GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../externaltools/externaltools.html">Using External Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../compiling/compiling.html">Compiling Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developingdakota/developingdakota.html">Developing Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../misc/misc.html">Miscellaneous</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">dakota</a>
+      </nav>
+
+	  <!-- SNL Lite header -->
+	  <div class="snlheader-subsite--wrapper-default">
+		<snlheader class="snlheader-subsite" role="snlbanner">
+		  <div class="wrapper">
+			<a href="https://www.sandia.gov/index.html">
+			  <div class="logo-transparent"><p class="logo">Sandia National Laboratories</p></div>
+			</a>
+			<div class="nav-top">
+			  <a class="visuallyhidden" name="mainnav"></a>
+			  <div aria-label="main navigation" class="core-nav-transparent core-nav-transparent--visible" role="navigation">
+				<ul role="navigation" class="secondary-links">
+				  <li id="search-text-link">
+					<a aria-label="Search" href="https://www.sandia.gov/search/">Search Sandia.gov</a>
+				  </li>
+				  <li id="directory-text-link">
+					<a href="https://www.sandia.gov/directory.html" aria-expanded="false" aria-label="Site Directory">All Sandia Websites</a>
+				  </li>
+				</ul>
+			  </div>
+			</div>
+		  </div> 
+		</snlheader>
+	  </div>	  
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../usingdakota.html">Using Dakota</a></li>
+          <li class="breadcrumb-item"><a href="../reference.html">Keyword Reference</a></li>
+          <li class="breadcrumb-item"><a href="interface.html">interface</a></li>
+          <li class="breadcrumb-item"><a href="interface-analysis_drivers.html">analysis_drivers</a></li>
+          <li class="breadcrumb-item"><a href="interface-analysis_drivers-fork.html">fork</a></li>
+          <li class="breadcrumb-item"><a href="interface-analysis_drivers-fork-parameters_format.html">parameters_format</a></li>
+      <li class="breadcrumb-item active">standard</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/usingdakota/reference/interface-analysis_drivers-fork-parameters_format-standard.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="standard">
+<span id="interface-analysis-drivers-fork-parameters-format-standard"></span><h1>standard<a class="headerlink" href="#standard" title="Link to this heading"></a></h1>
+<p>Use the standard format for parameters files</p>
+<div class="toctree-wrapper compound">
+</div>
+<p><strong>Specification</strong></p>
+<ul class="simple">
+<li><p><em>Alias:</em> None</p></li>
+<li><p><em>Arguments:</em> None</p></li>
+</ul>
+<p><strong>Description</strong></p>
+<p>When this keyword is used, parameters files will be written in
+the default <cite>standard</cite> format, which is explained
+<a class="reference internal" href="../inputfile/variables.html#variables-parameters-standard"><span class="std std-ref">here</span></a>. A strength of the <cite>standard</cite>
+format is that it is relatively easy to parse using ordinary GNU
+text processing tools. It is also understood by Dakota’s template
+processing tool, <a class="reference internal" href="../../externaltools/dpreproandpyprepro.html#interfaces-dprepro-and-pyprepro"><span class="std std-ref">dprepro</span></a>
+and the <a class="reference internal" href="../inputfile/interfaces/dakotainterfacing.html#interfaces-dakota-interfacing"><span class="std std-ref">dakota.interfacing</span></a>
+module.</p>
+<p><strong>Examples</strong></p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span><span class="k">interface</span>
+  fork
+  analysis_drivers &#39;driver.py&#39;
+  parameters_file = &quot;params.in&quot;
+  results_file = &quot;results.out&quot;
+  parameters_format
+    standard
+</pre></div>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="interface-analysis_drivers-fork-parameters_format.html" class="btn btn-neutral float-left" title="parameters_format" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="interface-analysis_drivers-fork-parameters_format-aprepro.html" class="btn btn-neutral float-right" title="aprepro" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <!--
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Sandia National Laboratories.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+  --> 
+
+</footer>
+        </div>
+      </div>
+	  
+	  <div style="background-color: #0f0f0f;color:#fafafa;padding:20px">
+	    <div>
+		  <h2><em>Exceptional service in the national interest</em></h2>
+		</div>
+		<p>© 2023 National Technology and Engineering Solutions of Sandia, LLC. | <a href="https://www.sandia.gov/contact_us/index.html">Questions &amp; Comments</a> | <a href="https://www.sandia.gov/general/privacy-security/index.html">Privacy &amp; Security</a></p>
+		<p><a href="http://energy.gov" rel="noopener noreferrer" target="_blank"><img alt="U.S. Department of Energy" longdesc="https://energy.gov" src="https://www.sandia.gov/_common/images/doe_logo_white.png" style="height:37px; width:140px"></a> <a href="http://nnsa.energy.gov/" rel="noopener noreferrer" target="_blank"> <img alt="National Nuclear Security Administration" longdesc="http://nnsa.gov" src="https://www.sandia.gov/_common/images/nnsa_logo_white.png" style="height:37px; width:116px"></a></p>
+		<p><a href="https://www.sandia.gov">Sandia National Laboratories</a> is a multimission laboratory managed and operated by National Technology and Engineering Solutions of Sandia, LLC., a wholly owned subsidiary of Honeywell International, Inc., for the U.S. Department of Energy’s National Nuclear Security Administration under contract DE-NA-0003525.</p>
+	  </div>	  	  
+	  
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

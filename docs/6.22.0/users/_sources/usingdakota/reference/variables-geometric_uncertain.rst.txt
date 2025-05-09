@@ -1,0 +1,69 @@
+.. _variables-geometric_uncertain:
+
+"""""""""""""""""""
+geometric_uncertain
+"""""""""""""""""""
+
+
+Aleatory uncertain discrete variable - geometric
+
+
+
+
+**Topics**
+
+
+discrete_variables, aleatory_uncertain_variables
+
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   variables-geometric_uncertain-probability_per_trial
+   variables-geometric_uncertain-initial_point
+   variables-geometric_uncertain-descriptors
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* INTEGER
+
+- *Default:* no geometric uncertain variables
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+---------------------------+-----------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword            | Dakota Keyword Description                    |
+|                         | Group              |                           |                                               |
++=========================+====================+===========================+===============================================+
+| Required                                     | `probability_per_trial`__ | Geometric distribution parameter              |
++----------------------------------------------+---------------------------+-----------------------------------------------+
+| Optional                                     | `initial_point`__         | Initial values for variables                  |
++----------------------------------------------+---------------------------+-----------------------------------------------+
+| Optional                                     | `descriptors`__           | Labels for the variables                      |
++----------------------------------------------+---------------------------+-----------------------------------------------+
+
+.. __: variables-geometric_uncertain-probability_per_trial.html
+__ variables-geometric_uncertain-initial_point.html
+__ variables-geometric_uncertain-descriptors.html
+
+
+
+**Description**
+
+
+The geometric distribution represents the number of successful trials that might occur before a failure is observed.
+
+The density function for the geometric distribution is given by:
+
+.. math:: f(x) = {p}{(1-p)^{x}},
+
+where :math:`p` is the probability of failure per trial.
+
+
+

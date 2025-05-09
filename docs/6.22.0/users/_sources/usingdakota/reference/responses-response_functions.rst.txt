@@ -1,0 +1,67 @@
+.. _responses-response_functions:
+
+""""""""""""""""""
+response_functions
+""""""""""""""""""
+
+
+Generic response type
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   responses-response_functions-scalar_responses
+   responses-response_functions-field_responses
+
+
+**Specification**
+
+- *Alias:* num_response_functions 
+
+- *Arguments:* INTEGER
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+----------------------+-----------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword       | Dakota Keyword Description                    |
+|                         | Group              |                      |                                               |
++=========================+====================+======================+===============================================+
+| Optional                                     | `scalar_responses`__ | Number of scalar response functions           |
++----------------------------------------------+----------------------+-----------------------------------------------+
+| Optional                                     | `field_responses`__  | Number of field responses functions           |
++----------------------------------------------+----------------------+-----------------------------------------------+
+
+.. __: responses-response_functions-scalar_responses.html
+__ responses-response_functions-field_responses.html
+
+
+
+**Description**
+
+
+A generic response data set is specified using
+``response_functions``. Each of these functions is simply a response
+quantity of interest with no special interpretation taken by the
+method in use.
+
+Whereas objective, constraint, and residual functions have special
+meanings for optimization and least squares algorithms, the generic
+response function data set need not have a specific interpretation and
+the user is free to define whatever functional form is convenient.
+
+
+
+**Theory**
+
+
+This type of data set is used by uncertainty
+quantification methods, in which the effect of parameter uncertainty
+on response functions is quantified, and can also be used in parameter
+study and design of experiments methods (although these methods are
+not restricted to this data set), in which the effect of parameter
+variations on response functions is evaluated.
+
+

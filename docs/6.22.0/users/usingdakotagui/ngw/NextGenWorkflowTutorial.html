@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tutorial: Create an NGW Analysis Driver for Dakota &mdash; dakota  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/dakota_theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/sandiaheaderlite.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Next-Gen Workflow Node Glossary" href="NodeGlossary.html" />
+    <link rel="prev" title="Using Next-Gen Workflow as a Dakota Analysis Driver" href="NextGenWorkflowAnalysisDrivers.html" /> 
+  
+  <meta name="sandia.approval_type" content="formal"/>
+  <meta property="sandia.approved" content="SAND2025-05563O"/>
+  <meta name="description" content="The Dakota project delivers both state-of-the-art research and robust, usable software for optimization and UQ."/>
+  <meta name="keywords" content="Dakota, optimization, UQ, uncertainty quantification, parametric analysis, design exploration, model calibration, risk analysis"/>
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> dakota
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../setupdakota.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../usingdakota/usingdakota.html">Using Dakota</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../usingdakotagui.html">Using Dakota GUI</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#introduction">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#example-search">Example Search</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#wizards">Wizards</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#editing-dakota-input-files">Editing Dakota Input Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#running-dakota">Running Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#running-dakota-remotely">Running Dakota Remotely</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#output-from-dakota">Output from Dakota</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../usingdakotagui.html#gui-tools">GUI Tools</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../chartreuse/Chartreuse.html">Chartreuse</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="NextGenWorkflow.html">Next-Gen Workflow</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="NextGenWorkflowBasics.html">Next-Gen Workflow Basics</a></li>
+<li class="toctree-l4"><a class="reference internal" href="NextGenWorkflowAnalysisDrivers.html">Using Next-Gen Workflow as a Dakota Analysis Driver</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Tutorial: Create an NGW Analysis Driver for Dakota</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#prerequisites">Prerequisites</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#pre-processing">Pre-Processing</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#simulation-model-execution">Simulation Model Execution</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#post-processing">Post-Processing</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="NodeGlossary.html">Next-Gen Workflow Node Glossary</a></li>
+<li class="toctree-l4"><a class="reference internal" href="QueueSubmitScripts.html">Next-Gen Workflow Queue Submit Scripts</a></li>
+<li class="toctree-l4"><a class="reference internal" href="NextGenWorkflow.html#highlighted-node-topics">Highlighted Node Topics</a></li>
+<li class="toctree-l4"><a class="reference internal" href="NextGenWorkflow.html#further-reading">Further Reading</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../qoi/QOI.html">QOI</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../usingdakotagui.html#miscellaneous">Miscellaneous</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../externaltools/externaltools.html">Using External Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../compiling/compiling.html">Compiling Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developingdakota/developingdakota.html">Developing Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../misc/misc.html">Miscellaneous</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">dakota</a>
+      </nav>
+
+	  <!-- SNL Lite header -->
+	  <div class="snlheader-subsite--wrapper-default">
+		<snlheader class="snlheader-subsite" role="snlbanner">
+		  <div class="wrapper">
+			<a href="https://www.sandia.gov/index.html">
+			  <div class="logo-transparent"><p class="logo">Sandia National Laboratories</p></div>
+			</a>
+			<div class="nav-top">
+			  <a class="visuallyhidden" name="mainnav"></a>
+			  <div aria-label="main navigation" class="core-nav-transparent core-nav-transparent--visible" role="navigation">
+				<ul role="navigation" class="secondary-links">
+				  <li id="search-text-link">
+					<a aria-label="Search" href="https://www.sandia.gov/search/">Search Sandia.gov</a>
+				  </li>
+				  <li id="directory-text-link">
+					<a href="https://www.sandia.gov/directory.html" aria-expanded="false" aria-label="Site Directory">All Sandia Websites</a>
+				  </li>
+				</ul>
+			  </div>
+			</div>
+		  </div> 
+		</snlheader>
+	  </div>	  
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../usingdakotagui.html">Using Dakota GUI</a></li>
+          <li class="breadcrumb-item"><a href="NextGenWorkflow.html">Next-Gen Workflow</a></li>
+      <li class="breadcrumb-item active">Tutorial: Create an NGW Analysis Driver for Dakota</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/usingdakotagui/ngw/NextGenWorkflowTutorial.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="tutorial-create-an-ngw-analysis-driver-for-dakota">
+<span id="gui-nestedworkflowtutorial-main"></span><h1>Tutorial: Create an NGW Analysis Driver for Dakota<a class="headerlink" href="#tutorial-create-an-ngw-analysis-driver-for-dakota" title="Link to this heading"></a></h1>
+<p>This section shows you the concrete steps for creating a workflow-based Dakota analysis driver.  This is meant to be an exemplary tutorial,
+and not the “only” way to do things.  In practice, you can use any combination of nodes to get from point A to point B; in fact, you are
+encouraged to experiment with NGW to see what it is capable of.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You can read more about the relationship between Dakota analysis drivers and Next-Gen Workflow <a class="reference internal" href="NextGenWorkflowAnalysisDrivers.html#ngw-analysisdrivers"><span class="std std-ref">here</span></a>.</p>
+</div>
+<p>We will use the classic cantilever beam problem for this example, <a class="reference internal" href="../examples/DakotaExamples.html#gui-examples-offline"><span class="std std-ref">available in the shipped Dakota example files.</span></a></p>
+<section id="prerequisites">
+<h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>Setup your system path to include Dakota!!!</strong> Some workflow nodes require access to the bin directory of Dakota (for example, the “pyprepro” node).
+As a result, before you create any workflows that will be executed as analysis drivers for Dakota, make sure that Dakota’s “bin” directory is available on
+your operating system’s path (“PATH” variable on Unix, “Path” variable on Windows).</p></li>
+<li><p>Your cantilever.template <strong>must be marked up with supported markup</strong>.  Consult the section on <a class="reference internal" href="../miscgui/ContextMenuTools.html#gui-context-tools-markup"><span class="std std-ref">marking up a template file.</span></a>
+if you need help with this.  The following example will use modern DPREPRO/pyprepro markup. You may choose to APREPRO instead if you wish, but note that aprepro uses slightly different syntax.</p></li>
+<li><p>You must first create a new workflow using the <a class="reference internal" href="../wizards/NewWorkflowDriver.html#wizards-newworkflowdriver-main"><span class="std std-ref">Workflow-Based Dakota Driver wizard.</span></a></p></li>
+</ul>
+<img alt="Our new IWF file" src="../../_images/NewDakotaStudy_Drivers_Workflow_2.png" />
+<p>Double-click the IWF file generated by the Workflow-Based Dakota Driver wizard to get a look at the workflow canvas:</p>
+<img alt="A workflow with beginning parameters and end responses, but nothing is in the middle." src="../../_images/NewDakotaStudy_Drivers_Workflow_3.png" />
+<p>These nodes were generated thanks to the Workflow-Based Dakota Driver wizard.  Now all that’s left is to create intermediate nodes that pass information between the input parameters and output responses.</p>
+</section>
+<section id="pre-processing">
+<h2>Pre-Processing<a class="headerlink" href="#pre-processing" title="Link to this heading"></a></h2>
+<p>Let’s focus on pre-processing first.  In the Palette view, expand the “Dakota” folder.  Select <a class="reference internal" href="nodes/pyprepro.html#ngw-node-pyprepro"><span class="std std-ref">“pyprepro”</span></a> and drag it onto the workflow canvas.  This node is responsible
+for running the <a class="reference internal" href="../../externaltools/dpreproandpyprepro.html#interfaces-dprepro-and-pyprepro"><span class="std std-ref">pyprepro pre-processing utility</span></a> that typically comes shipped with Dakota.</p>
+<img alt="pyprepro node" src="../../_images/NewDakotaStudy_Drivers_Workflow_7.png" />
+<p>One of the nice things about the pyprepro node is that is does not require explicit connector lines to be drawn from each parameter node into itself.  Rather, the
+mere presence of global parameter values is enough for the pyprepro node to work with.  The “aprepro” node could be used in exactly the same way.</p>
+<p>Using the Project Explorer view, not the Palette view, drag the “cantilever” executable file onto the canvas. Select the “a plain file node”
+radio button and click OK.  NGW will automatically convert “cantilever” to a file node.  Do the same for the “cantilever.template” file that we
+previously marked up.</p>
+<img alt="New file nodes" src="../../_images/NewDakotaStudy_Drivers_Workflow_9.png" />
+<p>Connect the “fileReference” output port of the cantilever.template node to the “templateFile” input port of the pyprepro node.  This will let pyprepro know
+which template file to place the global parameter values in.</p>
+<img alt="Connecting the nodes" src="../../_images/NewDakotaStudy_Drivers_Workflow_10.png" />
+</section>
+<section id="simulation-model-execution">
+<h2>Simulation Model Execution<a class="headerlink" href="#simulation-model-execution" title="Link to this heading"></a></h2>
+<p>Let’s focus on executing the simulation model next.  Using the Palette, expand the Applications folder and drag the “externalProcess” node onto the canvas.
+This node is responsible for performing the execution of our black-box simulation model.</p>
+<img alt="Adding an externalProcess node" src="../../_images/NewDakotaStudy_Drivers_Workflow_11.png" />
+<p>Now, from pyprepro’s “outputFile” output port, drag a connector to the blank space beneath “stdIn” on the externalProcess node to create an input port also
+called “outputFile.”  Then, drag a connector from the cantilever file node’s “fileReference” output port to blank space on the externalProcess node to create
+an input port also called “cantilever”.</p>
+<img alt="Connecting the nodes" src="../../_images/NewDakotaStudy_Drivers_Workflow_12.png" />
+<p>Let’s review what’s happening here.  We have provided the externalProcess node with references to two files – the “cantilever” executable file that
+is sitting in our workspace, and to a processed input file that doesn’t exist yet, but will be created by the pyprepro node at runtime.</p>
+<p>Next, we need to tell the externalProcess node what to do with these two files.  The “cantilever” executable is actually a Python script with
+the .py extension removed; because of that, we’ll need to call it using Python.</p>
+<p>Click on the externalProcess node to bring up its properties in the Settings editor view.</p>
+<p>In the “command” field seen in the Settings editor view, type the following:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>python ${cantilever} ${outputFile}
+</pre></div>
+</div>
+<p>Note the syntax of dollar signs and curly brackets.  These are <strong>tokens</strong> that will get replaced at runtime as appropriate.  They will be replaced
+because <em>the token names match the names of input ports for this node</em>, so NGW will know what to replace the tokens with.  Essentially, what we
+are saying here is “replace the token ${cantilever} with a path to the cantilever file, and replace the token ${outputFile} with a path to the
+processed input file when it gets created by pyprepro node.”  This relieves the user from having to worry about paths to files that can potentially
+change as the workflow is running.</p>
+</section>
+<section id="post-processing">
+<h2>Post-Processing<a class="headerlink" href="#post-processing" title="Link to this heading"></a></h2>
+<p>Now let’s post-process the output from our cantilever executable.  From the “Dakota” folder in the Palette view, drag a <a class="reference internal" href="nodes/qoiExtractor.html#ngw-node-qoiextractor"><span class="std std-ref">“qoiExtractor”</span></a>
+node onto the canvas:</p>
+<img alt="Adding a QOIExtractor node" src="../../_images/NewDakotaStudy_Drivers_Workflow_13.png" />
+<p>The <a class="reference internal" href="nodes/qoiExtractor.html#ngw-node-qoiextractor"><span class="std std-ref">“qoiExtractor”</span></a> node works with “QOIs” (short for “quantity of interest”), which is simply a value extracted from a body of unstructured text.
+These are the values that will eventually be returned to Dakota as responses.</p>
+<p>Our cantilever black-box simulation model only prints out to the console, so we can grab the externalProcess node’s “stdout” output port, and drag a connector
+from it to the <a class="reference internal" href="nodes/qoiExtractor.html#ngw-node-qoiextractor"><span class="std std-ref">“qoiExtractor”</span></a> node’s “inputText” port to forward all output stream text into the qoiExtractor node:</p>
+<img alt="Connecting the nodes" src="../../_images/NewDakotaStudy_Drivers_Workflow_14.png" />
+<p>Click on the <a class="reference internal" href="nodes/qoiExtractor.html#ngw-node-qoiextractor"><span class="std std-ref">“qoiExtractor”</span></a> node to bring up its properties in the Settings editor view:</p>
+<img alt="The Settings editor for the QOIExtractor node" src="../../_images/NewDakotaStudy_Drivers_Workflow_15.png" />
+<p>We need to now tell this node what quantities of interest (QOIs) to extract from the stream of input text it’s going to receive.
+Because the <a class="reference internal" href="nodes/qoiExtractor.html#ngw-node-qoiextractor"><span class="std std-ref">“qoiExtractor”</span></a> node will connect directly to our already-created response nodes, we’re going to need to extract three QOIs
+from the text – “mass,” “stress,” and “displacement.”</p>
+<p>Click on “Add QOI Extractor.”  In the first dialog that pops up, type in “mass” and click OK.  Use the next dialog to extract “mass” from the expected output of the “cantilever” executable.</p>
+<p><a class="reference internal" href="../qoi/QOI.html#qoi-main"><span class="std std-ref">If you’ve never used a QOI extractor before, take a detour to learn about QOIs and how to extract them using the Dakota GUI.</span></a></p>
+<p>Follow the same process to create QOI extractors for “stress” and “displacement.”</p>
+<p>When you’re done, your settings editor view should look something like this:</p>
+<img alt="The Settings editor for the QOIExtractor node, populated" src="../../_images/NewDakotaStudy_Drivers_Workflow_16.png" />
+<p>Click on Apply in the bottom-right corner of the Settings editor view to save the changes.  Note that something has happened to the <a class="reference internal" href="nodes/qoiExtractor.html#ngw-node-qoiextractor"><span class="std std-ref">“qoiExtractor”</span></a> node.
+For each new QOI extractor that we added, a new output port with the same name has been added to the <a class="reference internal" href="nodes/qoiExtractor.html#ngw-node-qoiextractor"><span class="std std-ref">“qoiExtractor”</span></a> node.  Each output port knows how to
+forward the value of the corresponding extracted QOI, so now all that remains is to connect each of these output ports to the already-created response nodes.</p>
+<img alt="Final connections" src="../../_images/NewDakotaStudy_Drivers_Workflow_17.png" />
+<p>And we’re done!</p>
+<p><strong>Running this workflow by itself</strong></p>
+<img alt="The action bar for workflows" src="../../_images/Run_Using_Workflow_7.png" />
+<p>If you defined initial values for each of your input parameters, then at this point, you can hit one of the two play buttons on the action ribbon to see this workflow run in isolation,
+as well as test whether it’s working as expected.  It’s highly recommended that you verify that the workflow behaves correctly by itself before attaching it to a Dakota study.</p>
+<p><strong>What happens when Dakota calls this workflow?</strong></p>
+<p>So, we now have a workflow that can read in parameters and return response values.  This is cool, but what we want eventually is for Dakota to provide new parameters on each Dakota iteration.  How do we do that?</p>
+<ol class="arabic simple">
+<li><p><a class="reference internal" href="../wizards/NewDakotaStudy.html#wizards-newdakotastudy"><span class="std std-ref">We need to create a Dakota study that will drive the workflow, using the New Dakota Study wizard.</span></a></p></li>
+<li><p><a class="reference internal" href="../wizards/NewDakotaWrapperWorkflow.html#wizards-newwrapperworkflow-main"><span class="std std-ref">After that, we will need to create a second, outer workflow that knows how to launch a Dakota study that uses the workflow engine as its analysis driver.</span></a></p></li>
+</ol>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="NextGenWorkflowAnalysisDrivers.html" class="btn btn-neutral float-left" title="Using Next-Gen Workflow as a Dakota Analysis Driver" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="NodeGlossary.html" class="btn btn-neutral float-right" title="Next-Gen Workflow Node Glossary" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <!--
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Sandia National Laboratories.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+  --> 
+
+</footer>
+        </div>
+      </div>
+	  
+	  <div style="background-color: #0f0f0f;color:#fafafa;padding:20px">
+	    <div>
+		  <h2><em>Exceptional service in the national interest</em></h2>
+		</div>
+		<p>© 2023 National Technology and Engineering Solutions of Sandia, LLC. | <a href="https://www.sandia.gov/contact_us/index.html">Questions &amp; Comments</a> | <a href="https://www.sandia.gov/general/privacy-security/index.html">Privacy &amp; Security</a></p>
+		<p><a href="http://energy.gov" rel="noopener noreferrer" target="_blank"><img alt="U.S. Department of Energy" longdesc="https://energy.gov" src="https://www.sandia.gov/_common/images/doe_logo_white.png" style="height:37px; width:140px"></a> <a href="http://nnsa.energy.gov/" rel="noopener noreferrer" target="_blank"> <img alt="National Nuclear Security Administration" longdesc="http://nnsa.gov" src="https://www.sandia.gov/_common/images/nnsa_logo_white.png" style="height:37px; width:116px"></a></p>
+		<p><a href="https://www.sandia.gov">Sandia National Laboratories</a> is a multimission laboratory managed and operated by National Technology and Engineering Solutions of Sandia, LLC., a wholly owned subsidiary of Honeywell International, Inc., for the U.S. Department of Energy’s National Nuclear Security Administration under contract DE-NA-0003525.</p>
+	  </div>	  	  
+	  
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

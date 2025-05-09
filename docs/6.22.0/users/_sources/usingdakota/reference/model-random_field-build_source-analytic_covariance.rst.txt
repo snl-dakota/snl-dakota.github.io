@@ -1,0 +1,64 @@
+.. _model-random_field-build_source-analytic_covariance:
+
+"""""""""""""""""""
+analytic_covariance
+"""""""""""""""""""
+
+
+Use an analytic covariance function for the purposes
+of generating a random field model.
+THIS IS AN EXPERIMENTAL CAPABILITY.
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   model-random_field-build_source-analytic_covariance-squared_exponential
+   model-random_field-build_source-analytic_covariance-exponential
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+-------------------------+-----------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword          | Dakota Keyword Description                    |
+|                         | Group              |                         |                                               |
++=========================+====================+=========================+===============================================+
+| Required (Choose One)   | Covariance Kernel  | `squared_exponential`__ | Specify a squared exponential covariance in   |
+|                         | Form               |                         | the case where the random field is built from |
+|                         |                    |                         | an analytic covariance functio. THIS IS AN    |
+|                         |                    |                         | EXPERIMENTAL CAPABILITY.                      |
+|                         |                    +-------------------------+-----------------------------------------------+
+|                         |                    | `exponential`__         | Specify an exponential covariance in the case |
+|                         |                    |                         | where the random field is built from an       |
+|                         |                    |                         | analytic covariance functio. THIS IS AN       |
+|                         |                    |                         | EXPERIMENTAL CAPABILITY.                      |
++-------------------------+--------------------+-------------------------+-----------------------------------------------+
+
+.. __: model-random_field-build_source-analytic_covariance-squared_exponential.html
+__ model-random_field-build_source-analytic_covariance-exponential.html
+
+
+
+**Description**
+
+
+As part of the capability to generate a random field representation, the user
+needs to specify the data used to generate the random field representation.
+If ``analytic_covariance`` is specified, an analytic covariance function will be used to generate instantiations
+of a random field over a mesh.
+The form of the covariance function must be specified (e.g. ``exponential`` or ``squared_exponential``.
+THIS IS AN EXPERIMENTAL CAPABILITY UNDER ACTIVE DEVELOPMENT.
+
+*Default Behavior*
+Currently, the ``build_source`` that is fully working is the
+``dace_method_pointer``.  The others are not fully operational.
+
+

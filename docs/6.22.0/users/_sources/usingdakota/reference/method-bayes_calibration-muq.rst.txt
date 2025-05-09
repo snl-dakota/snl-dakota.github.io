@@ -1,0 +1,112 @@
+.. _method-bayes_calibration-muq:
+
+"""
+muq
+"""
+
+
+Markov Chain Monte Carlo algorithms from the MUQ package
+
+
+
+**Topics**
+
+
+bayesian_calibration
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-bayes_calibration-muq-chain_samples
+   method-bayes_calibration-muq-seed
+   method-bayes_calibration-muq-rng
+   method-bayes_calibration-muq-export_chain_points_file
+   method-bayes_calibration-muq-adaptive_metropolis
+   method-bayes_calibration-muq-delayed_rejection
+   method-bayes_calibration-muq-dili
+   method-bayes_calibration-muq-dram
+   method-bayes_calibration-muq-multilevel_mcmc
+   method-bayes_calibration-muq-mala
+   method-bayes_calibration-muq-metropolis_hastings
+   method-bayes_calibration-muq-pre_solve
+   method-bayes_calibration-muq-proposal_covariance
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+------------------------------+-----------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword               | Dakota Keyword Description                    |
+|                         | Group              |                              |                                               |
++=========================+====================+==============================+===============================================+
+| Required                                     | `chain_samples`__            | Number of Markov Chain Monte Carlo posterior  |
+|                                              |                              | samples                                       |
++----------------------------------------------+------------------------------+-----------------------------------------------+
+| Optional                                     | `seed`__                     | Seed of the random number generator           |
++----------------------------------------------+------------------------------+-----------------------------------------------+
+| Optional                                     | `rng`__                      | Selection of a random number generator        |
++----------------------------------------------+------------------------------+-----------------------------------------------+
+| Optional                                     | `export_chain_points_file`__ | Export the MCMC chain to the specified        |
+|                                              |                              | filename                                      |
++-------------------------+--------------------+------------------------------+-----------------------------------------------+
+| Optional (Choose One)   | MCMC Algorithm     | `adaptive_metropolis`__      | Use the Adaptive Metropolis MCMC algorithm    |
+|                         |                    +------------------------------+-----------------------------------------------+
+|                         |                    | `delayed_rejection`__        | Use the Delayed Rejection MCMC algorithm      |
+|                         |                    +------------------------------+-----------------------------------------------+
+|                         |                    | `dili`__                     | Dimension-independent likelihood-informed     |
+|                         |                    |                              | MCMC                                          |
+|                         |                    +------------------------------+-----------------------------------------------+
+|                         |                    | `dram`__                     | Use the DRAM MCMC algorithm                   |
+|                         |                    +------------------------------+-----------------------------------------------+
+|                         |                    | `multilevel_mcmc`__          | Use the Multi-level MCMC algorithm            |
+|                         |                    +------------------------------+-----------------------------------------------+
+|                         |                    | `mala`__                     | Metropolis-adjusted Langevin algorithm        |
+|                         |                    +------------------------------+-----------------------------------------------+
+|                         |                    | `metropolis_hastings`__      | Use the Metropolis-Hastings MCMC algorithm    |
++-------------------------+--------------------+------------------------------+-----------------------------------------------+
+| Optional                                     | `pre_solve`__                | Perform deterministic optimization for MAP    |
+|                                              |                              | before Bayesian calibration                   |
++----------------------------------------------+------------------------------+-----------------------------------------------+
+| Optional                                     | `proposal_covariance`__      | Defines the technique used to generate the    |
+|                                              |                              | MCMC proposal covariance.                     |
++----------------------------------------------+------------------------------+-----------------------------------------------+
+
+.. __: method-bayes_calibration-muq-chain_samples.html
+__ method-bayes_calibration-muq-seed.html
+__ method-bayes_calibration-muq-rng.html
+__ method-bayes_calibration-muq-export_chain_points_file.html
+__ method-bayes_calibration-muq-adaptive_metropolis.html
+__ method-bayes_calibration-muq-delayed_rejection.html
+__ method-bayes_calibration-muq-dili.html
+__ method-bayes_calibration-muq-dram.html
+__ method-bayes_calibration-muq-multilevel_mcmc.html
+__ method-bayes_calibration-muq-mala.html
+__ method-bayes_calibration-muq-metropolis_hastings.html
+__ method-bayes_calibration-muq-pre_solve.html
+__ method-bayes_calibration-muq-proposal_covariance.html
+
+
+
+**Description**
+
+
+The ``muq`` method supports the following MCMC algorithms:
+adaptive metropolis (AM), Metropolis Hasting (MH), delayed
+rejection (DR), delayed-rejection adaptive metropolis (DRAM),
+Metropolis-adjusted Langevin algorithm (MALA), dimension-independent
+likelihood-informed (DILI), and multi-level MCMC.
+
+The ``muq`` method is currently an experimental method that relies
+on algorithms from MIT's MUQ code documented at:
+https://bitbucket.org/mituq/muq2/src/master/
+
+
+

@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Advanced Model Recursions &mdash; dakota  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/dakota_theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/sandiaheaderlite.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../../_static/copybutton.js?v=f281be69"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Advanced Simulation Code Interfaces" href="advancedsimulationcodeinterfaces.html" />
+    <link rel="prev" title="Advanced Methods" href="advancedmethods.html" /> 
+  
+  <meta name="sandia.approval_type" content="formal"/>
+  <meta property="sandia.approved" content="SAND2025-05563O"/>
+  <meta name="description" content="The Dakota project delivers both state-of-the-art research and robust, usable software for optimization and UQ."/>
+  <meta name="keywords" content="Dakota, optimization, UQ, uncertainty quantification, parametric analysis, design exploration, model calibration, risk analysis"/>
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> dakota
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../setupdakota.html">Getting Started</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../usingdakota.html">Using Dakota</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../introduction/aboutdakota.html">About Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../introduction/helloworld.html">Dakota Beginner’s Tutorial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples.html">Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../introduction/couplingtosimulations.html">Coupling Dakota to a Simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../inputfile.html">Dakota Input File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../running.html">Running Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../output.html">Dakota Output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../studytypes.html">Study Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../topics.html">Topics</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../advanced.html">Advanced Topics</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="advancedmethods.html">Advanced Methods</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Advanced Model Recursions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#mixed-aleatory-epistemic-uq">Mixed Aleatory-Epistemic UQ</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#interval-valued-probability-ivp">Interval-valued probability (IVP)</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#second-order-probability-sop">Second-order probability (SOP)</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#dempster-shafer-theory-of-evidence">Dempster-Shafer Theory of Evidence</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#optimization-under-uncertainty-ouu">Optimization Under Uncertainty (OUU)</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#nested-ouu">Nested OUU</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#surrogate-based-ouu-sbouu">Surrogate-Based OUU (SBOUU)</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#trust-region-surrogate-based-ouu-tr-sbouu">Trust-Region Surrogate-Based OUU (TR-SBOUU)</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#rbdo">RBDO</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#stochastic-expansion-based-design-optimization">Stochastic Expansion-Based Design Optimization</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#epistemic-ouu">Epistemic OUU</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#surrogate-based-uncertainty-quantification">Surrogate-Based Uncertainty Quantification</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="advancedsimulationcodeinterfaces.html">Advanced Simulation Code Interfaces</a></li>
+<li class="toctree-l3"><a class="reference internal" href="parallelcomputing.html">Parallel Computing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="simulationfailurecapturing.html">Simulation Failure Capturing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="activesubspace.html">Active Subspace Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="basisadaptation.html">Basis Adaptation Models</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../theory.html">Dakota Theory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference.html">Keyword Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../usingdakotagui/usingdakotagui.html">Using Dakota GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../externaltools/externaltools.html">Using External Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../compiling/compiling.html">Compiling Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developingdakota/developingdakota.html">Developing Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../misc/misc.html">Miscellaneous</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">dakota</a>
+      </nav>
+
+	  <!-- SNL Lite header -->
+	  <div class="snlheader-subsite--wrapper-default">
+		<snlheader class="snlheader-subsite" role="snlbanner">
+		  <div class="wrapper">
+			<a href="https://www.sandia.gov/index.html">
+			  <div class="logo-transparent"><p class="logo">Sandia National Laboratories</p></div>
+			</a>
+			<div class="nav-top">
+			  <a class="visuallyhidden" name="mainnav"></a>
+			  <div aria-label="main navigation" class="core-nav-transparent core-nav-transparent--visible" role="navigation">
+				<ul role="navigation" class="secondary-links">
+				  <li id="search-text-link">
+					<a aria-label="Search" href="https://www.sandia.gov/search/">Search Sandia.gov</a>
+				  </li>
+				  <li id="directory-text-link">
+					<a href="https://www.sandia.gov/directory.html" aria-expanded="false" aria-label="Site Directory">All Sandia Websites</a>
+				  </li>
+				</ul>
+			  </div>
+			</div>
+		  </div> 
+		</snlheader>
+	  </div>	  
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../usingdakota.html">Using Dakota</a></li>
+          <li class="breadcrumb-item"><a href="../advanced.html">Advanced Topics</a></li>
+      <li class="breadcrumb-item active">Advanced Model Recursions</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/usingdakota/advanced/advancedmodelrecursions.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="advanced-model-recursions">
+<span id="adv-models"></span><h1>Advanced Model Recursions<a class="headerlink" href="#advanced-model-recursions" title="Link to this heading"></a></h1>
+<p>The surrogate and nested model constructs admit a wide variety of
+multi-iterator, multi-model solution approaches. For example,
+optimization within optimization (for hierarchical multidisciplinary
+optimization), uncertainty quantification within uncertainty
+quantification (for interval-valued probability, second-order
+probability, or Dempster-Shafer approaches to mixed aleatory-epistemic
+UQ), uncertainty quantification within optimization (for optimization
+under uncertainty), and optimization within uncertainty quantification
+(for uncertainty of optima) are all supported, with and without
+surrogate model indirection. Three important examples are highlighted:
+mixed aleatory-epistemic UQ, optimization under uncertainty, and
+surrogate-based UQ.</p>
+<p>In addition, concurrency can be exploited across sub-iteration instances.
+For example, multiple inner loop UQ assessments can be performed
+simultaneously within optimization under uncertainty or mixed
+aleatory-epistemic UQ studies, provided the outer
+loop algorithm supports concurrency in its evaluations. Both
+meta-iterators and nested models support <code class="docutils literal notranslate"><span class="pre">iterator_servers</span></code>,
+<code class="docutils literal notranslate"><span class="pre">processors_per_iterator</span></code>, and <code class="docutils literal notranslate"><span class="pre">iterator_scheduling</span></code> specifications
+which can be used to define a <a class="reference internal" href="parallelcomputing.html#parallel"><span class="std std-ref">parallel configuration</span></a> that partitions
+servers for supporting sub-iteration concurrency.</p>
+<section id="mixed-aleatory-epistemic-uq">
+<span id="adv-models-mixed-uq"></span><h2>Mixed Aleatory-Epistemic UQ<a class="headerlink" href="#mixed-aleatory-epistemic-uq" title="Link to this heading"></a></h2>
+<p>Mixed UQ approaches employ nested models to embed one uncertainty
+quantification (UQ) within another. The outer level UQ is commonly
+linked to epistemic uncertainties (also known as reducible
+uncertainties) resulting from a lack of knowledge, and the inner UQ is
+commonly linked to aleatory uncertainties (also known as irreducible
+uncertainties) that are inherent in nature. The outer level generates
+sets of realizations of the epistemic parameters, and each set of these
+epistemic parameters in used within a separate inner loop probabilistic
+analysis over the aleatory random variables. In this manner, ensembles
+of aleatory statistics are generated, one set for each realization of
+the epistemic parameters.</p>
+<p>In Dakota, we support interval-valued probability (IVP), second-order
+probability (SOP), and Dempster-Shafer theory of evidence (DSTE)
+approaches to mixed uncertainty. These three approaches differ in how
+they treat the epistemic variables in the outer loop: they are treated
+as intervals in IVP, as belief structures in DSTE, and as subjective
+probability distributions in SOP. This set of techniques provides a
+spectrum of assumed epistemic structure, from strongest assumptions in
+SOP to weakest in IVP.</p>
+<section id="interval-valued-probability-ivp">
+<span id="adv-models-mixed-uq-ivp"></span><h3>Interval-valued probability (IVP)<a class="headerlink" href="#interval-valued-probability-ivp" title="Link to this heading"></a></h3>
+<p>In IVP (also known as probability bounds
+analysis <span id="id1">[<a class="reference internal" href="../../misc/bibliography.html#id16" title="J. M. Aughenbaugh and C. J. J. Paredis. Probability bounds analysis as a general approach to sensitivity analysis in decision making under uncertainty. In SAE World Congress and Exposition, number SAE-2007-01-1480. Detroit, MI, 2007. SAE.">AP07</a>, <a class="reference internal" href="../../misc/bibliography.html#id91" title="S. Ferson and W. T. Tucker. Sensitivity analysis using probability bounding. Reliability Engineering and System Safety, 91:1435–1442, 2006.">FT06</a>, <a class="reference internal" href="../../misc/bibliography.html#id167" title="D. R. Karanki, H. S. Kishwaha, A. K. Verma, and S. Ajit. Uncertainty analysis based on probability bounds (p-box) approach in probabilistic safety assessment. Risk Analysis, 29:662–675, 2009.">KKVA09</a>]</span>), we employ an outer
+loop of interval estimation in combination with an aleatory inner loop.
+In interval analysis, it is assumed that nothing is known about the
+uncertain input variables except that they lie within certain intervals.
+The problem of uncertainty propagation then becomes an interval analysis
+problem: given inputs that are defined within intervals, what are the
+corresponding intervals on the outputs?</p>
+<p>Starting from a specification of intervals and probability distributions
+on the inputs, the intervals may augment the probability distributions,
+insert into the probability distributions, or some combination (refer to
+the <a class="reference internal" href="../inputfile/model.html#models-nested"><span class="std std-ref">Nested Models section</span></a> for more information). We generate an
+ensemble of cumulative distribution functions (CDF) or Complementary
+Cumulative Distribution Functions (CCDF), one CDF/CCDF result for each
+aleatory analysis. Plotting an entire ensemble of CDFs or CCDFs in a
+“horsetail” plot allows one to visualize the upper and lower bounds on
+the family of distributions (see <a class="reference internal" href="#fig-horsetail"><span class="std std-numref">Fig. 56</span></a>).</p>
+<figure class="align-center" id="fig-horsetail">
+<a class="reference internal image-reference" href="../../_images/horsetail.png"><img alt="Example CDF ensemble. Commonly referred to as a “horsetail” plot." src="../../_images/horsetail.png" style="width: 3.5in;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 56 </span><span class="caption-text">Example CDF ensemble. Commonly referred to as a “horsetail” plot.</span><a class="headerlink" href="#fig-horsetail" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>Given that the ensemble stems from multiple realizations of the
+epistemic uncertainties, the interpretation is that each CDF/CCDF
+instance has no relative probability of occurrence, only that each
+instance is possible. For prescribed response levels on the CDF/CCDF, an
+interval on the probability is computed based on the bounds of the
+ensemble at that level, and vice versa for prescribed probability
+levels. This interval on a statistic is interpreted simply as a possible
+range, where the statistic could take any of the possible values in the
+range.</p>
+<p>A sample input file is shown in <a class="reference internal" href="#adv-models-2ndprob"><span class="std std-numref">Listing 67</span></a>, in which the
+outer epistemic level variables are defined as intervals. Samples will
+be generated from these intervals to select means for <span class="math notranslate nohighlight">\(X\)</span> and
+<span class="math notranslate nohighlight">\(Y\)</span> that are employed in an inner level reliability analysis of
+the <a class="reference internal" href="../examples/additionalexamples.html#additional-cantilever"><span class="std std-ref">cantilever problem</span></a>.</p>
+<p><a class="reference internal" href="#adv-models-2ndprob-res"><span class="std std-numref">Listing 68</span></a> shows
+excerpts from the resulting output. In this particular example, the
+outer loop generates 50 possible realizations of epistemic variables,
+which are then sent to the inner loop to calculate statistics such as
+the mean weight, and cumulative distribution function for the stress and
+displacement reliability indices. Thus, the outer loop has 50 possible
+values for the mean weight, but since there is no distribution structure
+on these observations, only the minimum and maximum value are reported.
+Similarly, the minimum and maximum values of the CCDF for the stress and
+displacement reliability indices are reported.</p>
+<p>When performing a mixed aleatory-epistemic analysis, response levels and
+probability levels should only be defined in the (inner) aleatory loop.
+For example, if one wants to generate an interval around possible CDFs
+or CCDFS, we suggest defining a number of probability levels in the
+inner loop (0.1, 0.2, 0.3, etc). For each epistemic instance, these will
+be calculated during the inner loop and reported back to the outer loop.
+In this way, there will be an ensemble of CDF percentiles (for example)
+and one will have interval bounds for each of these percentile levels
+defined. Finally, although the epistemic variables are often values
+defining distribution parameters for the inner loop, they are not
+required to be: they can just be separate uncertain variables in the
+problem.</p>
+<div class="literal-block-wrapper docutils container" id="adv-models-2ndprob">
+<div class="code-block-caption"><span class="caption-number">Listing 67 </span><span class="caption-text">Dakota input file for the interval-valued probability example – see <code class="docutils literal notranslate"><span class="pre">dakota/share/dakota/examples/users/cantilever_uq_sop_rel.in</span></code></span><a class="headerlink" href="#adv-models-2ndprob" title="Link to this code"></a></div>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span><span class="c"># Dakota Input File: cantilever_uq_sop_rel.in</span>
+
+<span class="k">environment</span>
+    top_method_pointer = &#39;EPISTEMIC&#39;
+
+<span class="k">method</span>
+  id_method = &#39;EPISTEMIC&#39;
+  sampling
+    samples = 50 seed = 12347
+    model_pointer = &#39;EPIST_M&#39;
+
+<span class="k">model</span>
+  id_model = &#39;EPIST_M&#39;
+  nested
+    sub_method_pointer = &#39;ALEATORY&#39;
+    primary_variable_mapping   = &#39;X&#39;    &#39;Y&#39;
+    secondary_variable_mapping = &#39;mean&#39; &#39;mean&#39;
+    primary_response_mapping   = 1. 0. 0. 0. 0. 0. 0. 0.
+                                 0. 0. 0. 0. 1. 0. 0. 0.
+                                 0. 0. 0. 0. 0. 0. 0. 1.
+  variables_pointer  = &#39;EPIST_V&#39;
+  responses_pointer  = &#39;EPIST_R&#39;
+
+<span class="k">variables</span>
+  id_variables = &#39;EPIST_V&#39;
+  continuous_interval_uncertain = 2
+    num_intervals = 1 1
+    interval_probabilities =      1.0       1.0
+    lower_bounds =      400.0     800.0
+    upper_bounds =      600.0    1200.0
+    descriptors      &#39;X_mean&#39;  &#39;Y_mean&#39;
+
+<span class="k">responses</span>
+  id_responses = &#39;EPIST_R&#39;
+  response_functions = 3
+  descriptors = &#39;mean_wt&#39; &#39;ccdf_beta_s&#39; &#39;ccdf_beta_d&#39;
+  no_gradients
+  no_hessians
+
+<span class="k">method</span>
+  id_method = &#39;ALEATORY&#39;
+  local_reliability
+    mpp_search no_approx
+    response_levels = 0.0 0.0
+      num_response_levels = 0 1 1
+    compute reliabilities
+    distribution complementary
+    model_pointer = &#39;ALEAT_M&#39;
+
+<span class="k">model</span>
+  id_model = &#39;ALEAT_M&#39;
+  single
+    interface_pointer = &#39;ALEAT_I&#39;
+  variables_pointer = &#39;ALEAT_V&#39;
+  responses_pointer = &#39;ALEAT_R&#39;
+
+<span class="k">variables</span>
+  id_variables = &#39;ALEAT_V&#39;
+  continuous_design = 2
+    initial_point    2.4522 3.8826
+    descriptors &#39;w&#39; &#39;t&#39;
+  normal_uncertain = 4
+    means             =  40000. 29.E+6 500. 1000.
+    std_deviations    =  2000. 1.45E+6 100. 100.
+    descriptors       =  &#39;R&#39; &#39;E&#39; &#39;X&#39; &#39;Y&#39;
+
+<span class="k">interface</span>
+  id_interface = &#39;ALEAT_I&#39;
+  analysis_drivers = &#39;cantilever&#39;
+    direct
+  deactivate evaluation_cache restart_file
+
+<span class="k">responses</span>
+  id_responses = &#39;ALEAT_R&#39;
+  response_functions = 3
+  descriptors = &#39;weight&#39; &#39;stress&#39; &#39;displ&#39;
+  analytic_gradients
+  no_hessians
+</pre></div>
+</div>
+</div>
+<div class="literal-block-wrapper docutils container" id="adv-models-2ndprob-res">
+<div class="code-block-caption"><span class="caption-number">Listing 68 </span><span class="caption-text">Interval-valued statistics for cantilever beam reliability indices..</span><a class="headerlink" href="#adv-models-2ndprob-res" title="Link to this code"></a></div>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>Statistics based on 50 samples:
+
+Min and Max values for each response function:
+mean_wt:  Min = 9.5209117200e+00  Max = 9.5209117200e+00
+ccdf_beta_s:  Min = 1.7627715524e+00  Max = 4.2949468386e+00
+ccdf_beta_d:  Min = 2.0125192955e+00  Max = 3.9385559339e+00
+</pre></div>
+</div>
+</div>
+<p>As compared to aleatory quantities of interest (e.g., mean, variance,
+probability) that must be integrated over a full probability domain, we
+observe that the desired minima and maxima of the output ranges are
+local point solutions in the epistemic parameter space, such that we may
+employ directed optimization techniques to compute these extrema and
+potentially avoid the cost of sampling the full epistemic space.</p>
+<p>In <code class="docutils literal notranslate"><span class="pre">dakota/share/dakota/test</span></code>, test input files such as
+<code class="docutils literal notranslate"><span class="pre">dakota_uq_cantilever_ivp_exp.in</span></code> and
+<code class="docutils literal notranslate"><span class="pre">dakota_uq_short_column_ivp_exp.in</span></code> replace the outer loop sampling
+with the <a class="reference internal" href="../studytypes/uq.html#uq-interval"><span class="std std-ref">local and global interval optimization methods</span></a>.
+In these cases, we no longer generate horse tails and infer intervals,
+but rather compute the desired intervals directly.</p>
+</section>
+<section id="second-order-probability-sop">
+<span id="adv-models-mixed-uq-sop"></span><h3>Second-order probability (SOP)<a class="headerlink" href="#second-order-probability-sop" title="Link to this heading"></a></h3>
+<p>SOP is similar to IVP in its segregation of aleatory and epistemic
+uncertainties and its use of nested iteration. However, rather than
+modeling epistemic uncertainty with a single interval per variable and
+computing interval-valued statistics, we instead employ subjective
+probability distributions and compute epistemic statistics on the
+aleatory statistics (for example, probabilities on probabilities – the
+source of the “second-order” terminology <span id="id2">[<a class="reference internal" href="../../misc/bibliography.html#id126" title="I. R. Goodman and H. T. Nguyen. Probability updating using second order probabilities and conditional event algebra. Information Sciences, 121:295–347, 1999.">GN99</a>]</span>).
+Now the different hairs of the horsetail shown in
+<a class="reference internal" href="#fig-horsetail"><span class="std std-numref">Fig. 56</span></a> have a relative probability of
+occurrence and stronger inferences may be drawn. In particular, mean,
+5<span class="math notranslate nohighlight">\(^{th}\)</span> percentile, and 95<span class="math notranslate nohighlight">\(^{th}\)</span> percentile
+probability values are a common example. Second-order probability is
+sometimes referred to as probability of frequency (PoF) analysis,
+referring to a probabilistic interpretation of the epistemic variables
+and a frequency interpretation of the aleatory variables. The PoF
+terminology is used in a recent National Academy of Sciences report on
+the Quantification of Margins and Uncertainties
+(QMU) <span id="id3">[<a class="reference internal" href="../../misc/bibliography.html#id207" title="National Research Council of the National Academies. Evaluation of Quantification of Margins and Uncertainties Methodology for Assessing and Certifying the Reliability of the Nuclear Stockpile. National Academy Press, Washington D.C., 2008.">NationalRCotNAcademies08</a>]</span>.</p>
+<p>Rather than employing interval estimation techniques at the outer loop
+in SOP, we instead apply probabilistic methods, potentially the same
+ones as used for the aleatory propagation on the inner loop. The
+previous example in <a class="reference internal" href="#adv-models-2ndprob"><span class="std std-numref">Listing 67</span></a> can be modified to
+define the epistemic outer loop using uniform variables instead of
+interval variables (annotated test <code class="docutils literal notranslate"><span class="pre">#1</span></code> in
+<code class="docutils literal notranslate"><span class="pre">dakota/share/dakota/test/dakota_uq_cantilever_sop_rel.in</span></code>). The process of
+generating the epistemic values is essentially the same in both cases;
+however, the interpretation of results is quite different. In IVP, each
+“hair” or individual CDF in the horsetail plot in
+<a class="reference internal" href="#fig-horsetail"><span class="std std-numref">Fig. 56</span></a> would be interpreted as a possible
+realization of aleatory uncertainty conditional on a particular
+epistemic sample realization. The ensemble then indicates the influence
+of the epistemic variables (e.g. by how widespread the ensemble is).
+However, if the outer loop variables are defined to be uniformly
+distributed in SOP, then the outer loop results will be reported as
+statistics (such as mean and standard deviation) and not merely
+intervals. It is important to emphasize that these outer level output
+statistics are only meaningful to the extent that the outer level input
+probability specifications are meaningful (i.e., to the extent that
+uniform distributions are believed to be representative of the epistemic
+variables).</p>
+<p>In <code class="docutils literal notranslate"><span class="pre">dakota/share/dakota/test</span></code>, additional test input files such as
+<code class="docutils literal notranslate"><span class="pre">dakota_uq_cantilever_sop_exp.in</span></code> and
+<code class="docutils literal notranslate"><span class="pre">dakota_uq_short_column_sop_exp.in</span></code> explore other outer/inner loop
+probabilistic analysis combinations, particulary using stochastic
+expansion methods.</p>
+</section>
+<section id="dempster-shafer-theory-of-evidence">
+<span id="adv-models-mixed-uq-dste"></span><h3>Dempster-Shafer Theory of Evidence<a class="headerlink" href="#dempster-shafer-theory-of-evidence" title="Link to this heading"></a></h3>
+<p>In IVP, we estimate a single epistemic output interval for each aleatory
+statistic. This same nested analysis procedure may be employed within
+the cell computations of a DSTE approach. Instead of a single interval,
+we now compute multiple output intervals, one for each combination of
+the input basic probability assignments, in order to define epistemic
+belief and plausibility functions on the aleatory statistics computed in
+the inner loop. While this can significantly increase the computational
+requirements, belief and plausibility functions provide a more finely
+resolved epistemic characterization than a basic output interval.</p>
+<p>The single-level DSTE approach for propagating epistemic uncertainties
+is described <a class="reference internal" href="../studytypes/uq.html#uq-dempshaf"><span class="std std-ref">in this section</span></a>. An example of nested
+DSTE for propagating mixed uncertainties can be seen in
+<code class="docutils literal notranslate"><span class="pre">dakota/share/dakota/test</span></code> in the input file
+<code class="docutils literal notranslate"><span class="pre">dakota_uq_ishigami_dste_exp.in</span></code>.</p>
+</section>
+</section>
+<section id="optimization-under-uncertainty-ouu">
+<span id="adv-models-ouu"></span><h2>Optimization Under Uncertainty (OUU)<a class="headerlink" href="#optimization-under-uncertainty-ouu" title="Link to this heading"></a></h2>
+<p>Optimization under uncertainty (OUU) approaches incorporate an
+uncertainty quantification method within the optimization process. This
+is often needed in engineering design problems when one must include the
+effect of input parameter uncertainties on the response functions of
+interest. A typical engineering example of OUU would minimize the
+probability of failure of a structure for a set of applied loads, where
+there is uncertainty in the loads and/or material properties of the
+structural components.</p>
+<p>In OUU, a nondeterministic method is used to evaluate the effect of
+uncertain variable distributions on response functions of interest
+(refer to the <a class="reference internal" href="../studytypes/uq.html#uq"><span class="std std-ref">main UQ section</span></a> for additional information on
+nondeterministic analysis). Statistics on these response functions are
+then included in the objective and constraint functions of an
+optimization process. Different UQ methods can have very different
+features from an optimization perspective, leading to the tailoring of
+optimization under uncertainty approaches to particular underlying UQ
+methodologies.</p>
+<p>If the UQ method is sampling based, then three approaches are currently
+supported: nested OUU, surrogate-based OUU, and trust-region
+surrogate-based OUU. Additional details and computational results are
+provided in <span id="id4">[<a class="reference internal" href="../../misc/bibliography.html#id78" title="M. S. Eldred, A. A. Giunta, S. F. Wojtkiewicz, Jr., and T. G. Trucano. Formulations for surrogate-based optimization under uncertainty. In Proc. 9th AIAA/ISSMO Symposium on Multidisciplinary Analysis and Optimization, number AIAA-2002-5585. Atlanta, GA, September 4–6, 2002.">EGWojtkiewiczJrT02</a>]</span>.</p>
+<p>Another class of OUU algorithms is called reliability-based design
+optimization (RBDO). RBDO methods are used to perform design
+optimization accounting for reliability metrics. The
+<a class="reference internal" href="../studytypes/uq.html#uq-reliability"><span class="std std-ref">reliability analysis capabilities</span></a> provide a rich foundation
+for exploring a variety of RBDO formulations. <span id="id5">[<a class="reference internal" href="../../misc/bibliography.html#id84" title="M. S. Eldred, H. Agarwal, V. M. Perez, S. F. Wojtkiewicz, Jr., and J. E. Renaud. Investigation of reliability method formulations in DAKOTA/UQ. Structure &amp; Infrastructure Engineering: Maintenance, Management, Life-Cycle Design &amp; Performance, 3(3):199–213, 2007.">EAP+07</a>]</span>
+investigated bi-level, fully-analytic bi-level, and first-order
+sequential RBDO approaches employing underlying first-order reliability
+assessments. <span id="id6">[<a class="reference internal" href="../../misc/bibliography.html#id81" title="M. S. Eldred and B. J. Bichon. Second-order reliability formulations in DAKOTA/UQ. In Proceedings of the 47th AIAA/ASME/ASCE/AHS/ASC Structures, Structural Dynamics and Materials Conference, number AIAA-2006-1828. Newport, RI, May 1–4 2006.">EB06</a>]</span> investigated fully-analytic
+bi-level and second-order sequential RBDO approaches employing
+underlying second-order reliability assessments.</p>
+<p>When using stochastic expansions for UQ, analytic moments and analytic
+design sensitivities can be exploited as described
+in <span id="id7">[<a class="reference internal" href="../../misc/bibliography.html#id85" title="M. S. Eldred, C. G. Webster, and P. Constantine. Evaluation of non-intrusive approaches for wiener-askey generalized polynomial chaos. In Proceedings of the 10th AIAA Non-Deterministic Approaches Conference, number AIAA-2008-1892. Schaumburg, IL, April 7–10 2008.">EWC08</a>]</span>. Several approaches for obtaining design
+sensitivities of statistical metrics are discussed <a class="reference internal" href="#adv-models-ouu-sebdo"><span class="std std-ref">here</span></a>.</p>
+<p>Finally, when employing epistemic methods for UQ, the set of statistics
+available for use within optimization are interval-based. Robustness
+metrics typically involve the width of the intervals, and reliability
+metrics typically involve the worst case upper or lower bound of the
+interval.</p>
+<p>Each of these OUU methods is overviewed in the following sections.</p>
+<section id="nested-ouu">
+<span id="adv-models-ouu-nested"></span><h3>Nested OUU<a class="headerlink" href="#nested-ouu" title="Link to this heading"></a></h3>
+<p>In the case of a nested approach, the optimization loop is the outer
+loop which seeks to optimize a nondeterministic quantity (e.g., minimize
+probability of failure). The uncertainty quantification (UQ) inner loop
+evaluates this nondeterministic quantity (e.g., computes the probability
+of failure) for each optimization function evaluation.
+<a class="reference internal" href="#adv-models-figure08"><span class="std std-numref">Fig. 57</span></a> depicts the nested OUU iteration
+where <span class="math notranslate nohighlight">\(\mathit{\mathbf{d}}\)</span> are the design variables,
+<span class="math notranslate nohighlight">\(\mathit{\mathbf{u}}\)</span> are the uncertain variables characterized by
+probability distributions, <span class="math notranslate nohighlight">\(\mathit{\mathbf{r_{u}(d,u)}}\)</span> are the
+response functions from the simulation, and
+<span class="math notranslate nohighlight">\(\mathit{\mathbf{s_{u}(d)}}\)</span> are the statistics generated from the
+uncertainty quantification on these response functions.</p>
+<figure class="align-center" id="adv-models-figure08">
+<img alt="Formulation 1: Nested OUU." src="../../_images/nested_ouu.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 57 </span><span class="caption-text">Formulation 1: Nested OUU.</span><a class="headerlink" href="#adv-models-figure08" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p><a class="reference internal" href="#adv-models-figure09"><span class="std std-numref">Listing 69</span></a> shows a Dakota
+input file for a nested OUU example problem that is based on the
+textbook test problem. In this example, the objective function contains
+two probability of failure estimates, and an inequality constraint
+contains another probability of failure estimate. For this example,
+failure is defined to occur when one of the textbook response functions
+exceeds its threshold value. The environment keyword block at the top of
+the input file identifies this as an OUU problem. The environment
+keyword block is followed by the optimization specification, consisting
+of the optimization method, the continuous design variables, and the
+response quantities that will be used by the optimizer. The mapping
+matrices used for incorporating UQ statistics into the optimization
+response data are described <a class="reference internal" href="../reference/model-nested-sub_method_pointer.html#model-nested-sub-method-pointer"><span class="std std-ref">here</span></a>.</p>
+<p>The uncertainty quantification specification includes the UQ method, the uncertain variable probability
+distributions, the interface to the simulation code, and the UQ response
+attributes. As with other complex Dakota input files, the identification
+tags given in each keyword block can be used to follow the relationships
+among the different keyword blocks.</p>
+<div class="literal-block-wrapper docutils container" id="adv-models-figure09">
+<div class="code-block-caption"><span class="caption-number">Listing 69 </span><span class="caption-text">Dakota input file for the nested OUU example – see <code class="docutils literal notranslate"><span class="pre">dakota/share/dakota/examples/users/textbook_opt_ouu1.in</span></code></span><a class="headerlink" href="#adv-models-figure09" title="Link to this code"></a></div>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span><span class="c"># Dakota Input File: textbook_opt_ouu1.in</span>
+
+<span class="k">environment</span>
+  top_method_pointer = &#39;OPTIM&#39;
+
+<span class="k">method</span>
+  id_method = &#39;OPTIM&#39;
+<span class="c">## (NPSOL requires a software license; if not available, try</span>
+<span class="c">## conmin_mfd or optpp_q_newton instead)</span>
+  npsol_sqp
+    convergence_tolerance = 1.e-10
+    model_pointer = &#39;OPTIM_M&#39;
+
+<span class="k">model</span>
+  id_model = &#39;OPTIM_M&#39;
+  nested
+    sub_method_pointer = &#39;UQ&#39;
+    primary_response_mapping   = 0. 0. 1. 0. 0. 1. 0. 0. 0.
+    secondary_response_mapping = 0. 0. 0. 0. 0. 0. 0. 0. 1.
+  variables_pointer  = &#39;OPTIM_V&#39;
+  responses_pointer  = &#39;OPTIM_R&#39;
+
+<span class="k">variables</span>
+  id_variables = &#39;OPTIM_V&#39;
+  continuous_design = 2
+    initial_point    1.8    1.0
+    upper_bounds     2.164  4.0
+    lower_bounds     1.5    0.0
+    descriptors      &#39;d1&#39;   &#39;d2&#39;
+
+<span class="k">responses</span>
+  id_responses = &#39;OPTIM_R&#39;
+  objective_functions = 1
+  nonlinear_inequality_constraints = 1
+    upper_bounds = .1
+  numerical_gradients
+    method_source dakota
+    interval_type central
+    fd_step_size = 1.e-1
+  no_hessians
+
+<span class="k">method</span>
+  id_method = &#39;UQ&#39;
+  sampling
+    model_pointer = &#39;UQ_M&#39;
+    samples = 50  sample_type lhs
+    seed = 1
+    response_levels = 3.6e+11 1.2e+05 3.5e+05
+    distribution complementary
+
+<span class="k">model</span>
+  id_model = &#39;UQ_M&#39;
+  single
+    interface_pointer = &#39;UQ_I&#39;
+  variables_pointer = &#39;UQ_V&#39;
+  responses_pointer = &#39;UQ_R&#39;
+
+<span class="k">variables</span>
+  id_variables = &#39;UQ_V&#39;
+  continuous_design = 2
+  normal_uncertain = 2
+    means          =  248.89 593.33
+    std_deviations =   12.4   29.7
+    descriptors    =  &#39;nuv1&#39;  &#39;nuv2&#39;
+  uniform_uncertain = 2
+    lower_bounds =  199.3  474.63
+    upper_bounds =  298.5  712.
+    descriptors  =  &#39;uuv1&#39;  &#39;uuv2&#39;
+  weibull_uncertain = 2
+    alphas       =    12. 30.
+    betas        =   250. 590.
+    descriptors  =  &#39;wuv1&#39;  &#39;wuv2&#39;
+
+<span class="k">interface</span>
+  id_interface = &#39;UQ_I&#39;
+  analysis_drivers = &#39;text_book_ouu&#39;
+    direct
+<span class="c">#    fork asynch evaluation_concurrency = 5</span>
+
+<span class="k">responses</span>
+  id_responses = &#39;UQ_R&#39;
+  response_functions = 3
+  no_gradients
+  no_hessians
+</pre></div>
+</div>
+</div>
+<p>Latin hypercube sampling is used as the UQ method in this example
+problem. Thus, each evaluation of the response functions by the
+optimizer entails 50 Latin hypercube samples. In general, nested OUU
+studies can easily generate several thousand function evaluations and
+gradient-based optimizers may not perform well due to noisy or
+insensitive statistics resulting from under-resolved sampling. These
+observations motivate the use of surrogate-based approaches to OUU.</p>
+<p>Other nested OUU examples in the directory
+<code class="docutils literal notranslate"><span class="pre">dakota/share/dakota/test</span></code> include <code class="docutils literal notranslate"><span class="pre">dakota_ouu1_tbch.in</span></code>, which
+adds an additional interface for including deterministic data in the
+textbook OUU problem, and <code class="docutils literal notranslate"><span class="pre">dakota_ouu1_cantilever.in</span></code>, which solves
+the <a class="reference internal" href="../examples/additionalexamples.html#additional-cantilever"><span class="std std-ref">cantilever OUU problem</span></a> with a
+nested approach. For each of these files, the “<code class="docutils literal notranslate"><span class="pre">1</span></code>” identifies
+formulation 1, which is short-hand for the nested approach.</p>
+</section>
+<section id="surrogate-based-ouu-sbouu">
+<span id="adv-models-ouu-sb"></span><h3>Surrogate-Based OUU (SBOUU)<a class="headerlink" href="#surrogate-based-ouu-sbouu" title="Link to this heading"></a></h3>
+<p>Surrogate-based optimization under uncertainty strategies can be
+effective in reducing the expense of OUU studies. Possible formulations
+include use of a surrogate model at the optimization level, at the
+uncertainty quantification level, or at both levels. These surrogate
+models encompass both data fit surrogates (at the optimization or UQ
+level) and model hierarchy surrogates (at the UQ level only).
+<a class="reference internal" href="#adv-models-figure10"><span class="std std-numref">Fig. 58</span></a> depicts the different
+surrogate-based formulations where <span class="math notranslate nohighlight">\(\mathbf{\hat{r}_{u}}\)</span> and
+<span class="math notranslate nohighlight">\(\mathbf{\hat{s}_{u}}\)</span> are approximate response functions and
+approximate response statistics, respectively, generated from the
+surrogate models.</p>
+<figure class="align-center" id="adv-models-figure10">
+<img alt="Formulations 2, 3, and 4 for Surrogate-based OUU." src="../../_images/sbouu.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 58 </span><span class="caption-text">Formulations 2, 3, and 4 for Surrogate-based OUU.</span><a class="headerlink" href="#adv-models-figure10" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>SBOUU examples in the <code class="docutils literal notranslate"><span class="pre">dakota/share/dakota/test</span></code> directory include
+<code class="docutils literal notranslate"><span class="pre">dakota_sbouu2_tbch.in</span></code>, <code class="docutils literal notranslate"><span class="pre">dakota_sbouu3_tbch.in</span></code>, and
+<code class="docutils literal notranslate"><span class="pre">dakota_sbouu4_tbch.in</span></code>, which solve the textbook OUU problem, and
+<code class="docutils literal notranslate"><span class="pre">dakota_sbouu2_cantilever.in</span></code>, <code class="docutils literal notranslate"><span class="pre">dakota_sbouu3_cantilever.in</span></code>, and
+<code class="docutils literal notranslate"><span class="pre">dakota_sbouu4_cantilever.in</span></code>, which solve <a class="reference internal" href="../examples/additionalexamples.html#additional-cantilever"><span class="std std-ref">the cantilever OUU problem</span></a>.
+For each of these files, the “<code class="docutils literal notranslate"><span class="pre">2</span></code>,” “<code class="docutils literal notranslate"><span class="pre">3</span></code>,” and “<code class="docutils literal notranslate"><span class="pre">4</span></code>” identify formulations
+2, 3, and 4, which are short-hand for the “layered containing nested,”
+“nested containing layered,” and “layered containing nested containing
+layered” surrogate-based formulations, respectively. In general, the use
+of surrogates greatly reduces the computational expense of these OUU
+study. However, without restricting and verifying the steps in the
+approximate optimization cycles, weaknesses in the data fits can be
+exploited and poor solutions may be obtained. The need to maintain
+accuracy of results leads to the use of trust-region surrogate-based
+approaches.</p>
+</section>
+<section id="trust-region-surrogate-based-ouu-tr-sbouu">
+<span id="adv-models-ouu-trsb"></span><h3>Trust-Region Surrogate-Based OUU (TR-SBOUU)<a class="headerlink" href="#trust-region-surrogate-based-ouu-tr-sbouu" title="Link to this heading"></a></h3>
+<p>The TR-SBOUU approach applies the <a class="reference internal" href="advancedmethods.html#adv-meth-sbm-sblm"><span class="std std-ref">trust region logic of deterministic SBO</span></a>
+to SBOUU. Trust-region verifications are applicable when surrogates are used at
+the optimization level, i.e., formulations 2 and 4. As a result of
+periodic verifications and surrogate rebuilds, these techniques are more
+expensive than SBOUU; however they are more reliable in that they
+maintain the accuracy of results. Relative to nested OUU (formulation
+1), TR-SBOUU tends to be less expensive and less sensitive to initial
+seed and starting point.</p>
+<p>TR-SBOUU examples in the directory <code class="docutils literal notranslate"><span class="pre">dakota/share/dakota/test</span></code>
+include <code class="docutils literal notranslate"><span class="pre">dakota_trsbouu2_tbch.in</span></code> and <code class="docutils literal notranslate"><span class="pre">dakota_trsbouu4_tbch.in</span></code>,
+which solve the textbook OUU problem, and
+<code class="docutils literal notranslate"><span class="pre">dakota_trsbouu2_cantilever.in</span></code> and
+<code class="docutils literal notranslate"><span class="pre">dakota_trsbouu4_cantilever.in</span></code>, which solve <a class="reference internal" href="../examples/additionalexamples.html#additional-cantilever"><span class="std std-ref">the cantilever OUU problem</span></a>.</p>
+<p>Computational results for several example problems are available
+in <span id="id8">[<a class="reference internal" href="../../misc/bibliography.html#id78" title="M. S. Eldred, A. A. Giunta, S. F. Wojtkiewicz, Jr., and T. G. Trucano. Formulations for surrogate-based optimization under uncertainty. In Proc. 9th AIAA/ISSMO Symposium on Multidisciplinary Analysis and Optimization, number AIAA-2002-5585. Atlanta, GA, September 4–6, 2002.">EGWojtkiewiczJrT02</a>]</span>.</p>
+</section>
+<section id="rbdo">
+<span id="adv-models-ouu-rbdo"></span><h3>RBDO<a class="headerlink" href="#rbdo" title="Link to this heading"></a></h3>
+<p>Bi-level and sequential approaches to reliability-based design
+optimization (RBDO) and their associated sensitivity analysis
+requirements are described in the <a class="reference internal" href="../theory/ouu.html#ouu"><span class="std std-ref">Optimization Under Uncertainty theory section</span></a>.</p>
+<p>A number of bi-level RBDO examples are provided in
+<code class="docutils literal notranslate"><span class="pre">dakota/share/dakota/test</span></code>. The <code class="docutils literal notranslate"><span class="pre">dakota_rbdo_cantilever.in</span></code>,
+<code class="docutils literal notranslate"><span class="pre">dakota_rbdo_short_column.in</span></code>, and <code class="docutils literal notranslate"><span class="pre">dakota_rbdo_steel_column.in</span></code>
+input files solve the <a class="reference internal" href="../examples/additionalexamples.html#additional-cantilever"><span class="std std-ref">cantilever</span></a>,
+<a class="reference internal" href="../examples/additionalexamples.html#additional-short-column"><span class="std std-ref">short column</span></a>, and
+<a class="reference internal" href="../examples/additionalexamples.html#additional-steel-column"><span class="std std-ref">steel column</span></a> OUU
+problems using a bi-level RBDO approach employing numerical design
+gradients. The <code class="docutils literal notranslate"><span class="pre">dakota_rbdo_cantilever_analytic.in</span></code> and
+<code class="docutils literal notranslate"><span class="pre">dakota_rbdo_short_column_analytic.in</span></code> input files solve the
+cantilever and short column OUU problems using a bi-level RBDO
+approach with analytic design gradients and first-order limit state
+approximations. The <code class="docutils literal notranslate"><span class="pre">dakota_rbdo_cantilever_analytic2.in</span></code>,
+<code class="docutils literal notranslate"><span class="pre">dakota_rbdo_short_column_analytic2.in</span></code>, and
+<code class="docutils literal notranslate"><span class="pre">dakota_rbdo_steel_column_analytic2.in</span></code> input files also employ
+analytic design gradients, but are extended to employ second-order
+limit state approximations and integrations.</p>
+<p>Sequential RBDO examples are also provided in
+<code class="docutils literal notranslate"><span class="pre">dakota/share/dakota/test</span></code>. The <code class="docutils literal notranslate"><span class="pre">dakota_rbdo_cantilever_trsb.in</span></code>
+and <code class="docutils literal notranslate"><span class="pre">dakota_rbdo_short_column_trsb.in</span></code> input files solve the
+cantilever and short column OUU problems using a first-order
+sequential RBDO approach with analytic design gradients and
+first-order limit state approximations. The
+<code class="docutils literal notranslate"><span class="pre">dakota_rbdo_cantilever_trsb2.in</span></code>,
+<code class="docutils literal notranslate"><span class="pre">dakota_rbdo_short_column_trsb2.in</span></code>, and
+<code class="docutils literal notranslate"><span class="pre">dakota_rbdo_steel_column_trsb2.in</span></code> input files utilize second-order
+sequential RBDO approaches that employ second-order limit state
+approximations and integrations (from analytic limit state Hessians with
+respect to the uncertain variables) and quasi-Newton approximations to
+the reliability metric Hessians with respect to design variables.</p>
+</section>
+<section id="stochastic-expansion-based-design-optimization">
+<span id="adv-models-ouu-sebdo"></span><h3>Stochastic Expansion-Based Design Optimization<a class="headerlink" href="#stochastic-expansion-based-design-optimization" title="Link to this heading"></a></h3>
+<p>For stochastic expansion-based approaches to optimization under
+uncertainty, bi-level, sequential, and multifidelity approaches and
+their associated sensitivity analysis requirements are described in the
+<a class="reference internal" href="../theory/ouu.html#ouu"><span class="std std-ref">Optimization Under Uncertainty theory section</span></a>.</p>
+<p>In dakota/share/dakota/test, the <code class="docutils literal notranslate"><span class="pre">dakota_pcbdo_cantilever.in</span></code>,
+<code class="docutils literal notranslate"><span class="pre">dakota_pcbdo_rosenbrock.in</span></code>, <code class="docutils literal notranslate"><span class="pre">dakota_pcbdo_short_column.in</span></code>, and
+<code class="docutils literal notranslate"><span class="pre">dakota_pcbdo_steel_column.in</span></code> input files solve <a class="reference internal" href="../examples/additionalexamples.html#additional-cantilever"><span class="std std-ref">cantilever</span></a>,
+Rosenbrock, <a class="reference internal" href="../examples/additionalexamples.html#additional-short-column"><span class="std std-ref">short column</span></a>, and
+<a class="reference internal" href="../examples/additionalexamples.html#additional-steel-column"><span class="std std-ref">steel column</span></a> OUU
+problems using a bi-level polynomial chaos-based approach, where the
+statistical design metrics are reliability indices based on moment
+projection (see the <a class="reference internal" href="../theory/reliability.html#theory-uq-reliability-local-mv"><span class="std std-ref">Mean Value section</span></a> in Reliability Methods theory section). The test matrix in
+the former three input files evaluate design gradients of these
+reliability indices using several different approaches: analytic design
+gradients based on a PCE formed over only over the random variables,
+analytic design gradients based on a PCE formed over all variables,
+numerical design gradients based on a PCE formed only over the random
+variables, and numerical design gradients based on a PCE formed over all
+variables. In the cases where the expansion is formed over all
+variables, only a single PCE construction is required for the complete
+PCBDO process, whereas the expansions only over the random variables
+must be recomputed for each change in design variables. Sensitivities
+for “augmented” design variables (which are separate from and augment
+the random variables) may be handled using either analytic approach;
+however, sensitivities for “inserted” design variables (which define
+distribution parameters for the random variables) must be</p>
+<p>computed using
+<span class="math notranslate nohighlight">\(\frac{dR}{dx} \frac{dx}{ds}\)</span> (refer to <a class="reference internal" href="../theory/ouu.html#ouu-sebdo-ssa"><span class="std std-ref">Stochastic Sensitivity
+Analysis</span></a> section in the Optimization Under Uncertainty theory section).</p>
+<p>Additional test input files include:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">dakota_scbdo_cantilever.in</span></code>,
+<code class="docutils literal notranslate"><span class="pre">dakota_scbdo_rosenbrock.in</span></code>,
+<code class="docutils literal notranslate"><span class="pre">dakota_scbdo_short_column.in</span></code>, and
+<code class="docutils literal notranslate"><span class="pre">dakota_scbdo_steel_column.in</span></code>
+input files solve cantilever, Rosenbrock, short column, and
+steel column OUU problems using a bi-level stochastic
+collocation-based approach.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">dakota_pcbdo_cantilever_trsb.in</span></code>,
+<code class="docutils literal notranslate"><span class="pre">dakota_pcbdo_rosenbrock_trsb.in</span></code>,
+<code class="docutils literal notranslate"><span class="pre">dakota_pcbdo_short_column_trsb.in</span></code>,
+<code class="docutils literal notranslate"><span class="pre">dakota_pcbdo_steel_column_trsb.in</span></code>,
+<code class="docutils literal notranslate"><span class="pre">dakota_scbdo_cantilever_trsb.in</span></code>,
+<code class="docutils literal notranslate"><span class="pre">dakota_scbdo_rosenbrock_trsb.in</span></code>,
+<code class="docutils literal notranslate"><span class="pre">dakota_scbdo_short_column_trsb.in</span></code>, and
+<code class="docutils literal notranslate"><span class="pre">dakota_scbdo_steel_column_trsb.in</span></code>
+input files solve cantilever, Rosenbrock, short
+column, and steel column OUU problems using sequential polynomial
+chaos-based and stochastic collocation-based approaches.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">dakota_pcbdo_cantilever_mf.in</span></code>, <code class="docutils literal notranslate"><span class="pre">dakota_pcbdo_rosenbrock_mf.in</span></code>,
+<code class="docutils literal notranslate"><span class="pre">dakota_pcbdo_short_column_mf.in</span></code>, <code class="docutils literal notranslate"><span class="pre">dakota_scbdo_cantilever_mf.in</span></code>,
+<code class="docutils literal notranslate"><span class="pre">dakota_scbdo_rosenbrock_mf.in</span></code>, and <code class="docutils literal notranslate"><span class="pre">dakota_scbdo_short_column_mf.in</span></code>
+input files solve cantilever, Rosenbrock, and short
+column OUU problems using multifidelity polynomial chaos-based and
+stochastic collocation-based approaches.</p></li>
+</ul>
+</section>
+<section id="epistemic-ouu">
+<span id="adv-models-ouu-epistemic"></span><h3>Epistemic OUU<a class="headerlink" href="#epistemic-ouu" title="Link to this heading"></a></h3>
+<p>An emerging capability is optimization under epistemic uncertainty. As
+described in the section on <a class="reference internal" href="../reference/model-nested.html#model-nested"><span class="std std-ref">nested models</span></a>, epistemic and mixed
+aleatory/epistemic uncertainty quantification methods generate lower and
+upper interval bounds for all requested response, probability,
+reliability, and generalized reliability level mappings. Design for
+robustness in the presence of epistemic uncertainty could simply involve
+minimizing the range of these intervals (subtracting lower from upper
+using the nested model response mappings), and design for reliability in
+the presence of epistemic uncertainty could involve controlling the
+worst case upper or lower bound of the interval.</p>
+<p>We now have the capability to perform epistemic analysis by using
+interval optimization on the “outer loop” to calculate bounding
+statistics of the aleatory uncertainty on the “inner loop.” Preliminary
+studies <span id="id9">[<a class="reference internal" href="../../misc/bibliography.html#id87" title="M. S Eldred and L. P. Swiler. Efficient algorithms for mixed aleatory-epistemic uncertainty quantification with application to radiation-hardened electronics. part 1: algorithms and benchmark results. Technical Report SAND2009-5805, Sandia National Laboratories, Albuquerque, NM, 2009.">ES09</a>]</span> have shown this approach is more
+efficient and accurate than nested sampling, which was described in
+<a class="reference internal" href="#adv-models-mixed-uq-sop"><span class="std std-ref">the example from this section</span></a>. This approach uses an
+efficient global optimization method for the outer loop and stochastic
+expansion methods (e.g. polynomial chaos or stochastic collocation on
+the inner loop). The interval optimization is described <a class="reference internal" href="../studytypes/uq.html#uq-interval"><span class="std std-ref">here</span></a>.
+Example input files demonstrating the use of interval estimation for epistemic analysis,
+specifically in epistemic-aleatory nesting, are:
+<code class="docutils literal notranslate"><span class="pre">dakota_uq_cantilever_sop_exp.in</span></code>, and <code class="docutils literal notranslate"><span class="pre">dakota_short_column_sop_exp.in</span></code>.
+Both files are in <code class="docutils literal notranslate"><span class="pre">dakota/share/dakota/test</span></code>.</p>
+</section>
+</section>
+<section id="surrogate-based-uncertainty-quantification">
+<span id="adv-models-sbuq"></span><h2>Surrogate-Based Uncertainty Quantification<a class="headerlink" href="#surrogate-based-uncertainty-quantification" title="Link to this heading"></a></h2>
+<p>Many uncertainty quantification (UQ) methods are computationally costly.
+For example, sampling often requires many function evaluations to obtain
+accurate estimates of moments or percentile values of an output
+distribution. One approach to overcome the computational cost of
+sampling is to evaluate the true function (e.g. run the analysis driver)
+on a fixed, small set of samples, use these sample evaluations to create
+a response surface approximation (e.g. a surrogate model or meta-model)
+of the underlying “true” function, then perform random sampling (using
+thousands or millions of samples) on the approximation to obtain
+estimates of the mean, variance, and percentiles of the response.</p>
+<p>This approach, called “surrogate-based uncertainty quantification” is
+easy to do in Dakota, and one can set up input files to compare the
+results using no approximation (e.g. determine the mean, variance, and
+percentiles of the output directly based on the initial sample values)
+with the results obtained by sampling a variety of surrogate
+approximations. Example input files of a standard UQ analysis based on
+sampling alone vs. sampling a surrogate are shown in
+<code class="docutils literal notranslate"><span class="pre">textbook_uq_sampling.in</span></code> and <code class="docutils literal notranslate"><span class="pre">textbook_uq_surrogate.in</span></code> in the
+<code class="docutils literal notranslate"><span class="pre">dakota/share/dakota/examples/users</span></code> directory.</p>
+<p>Note that one must exercise some caution when using surrogate-based
+methods for uncertainty quantification. In general, there is not a
+single, straightforward approach to incorporate the error of the
+surrogate fit into the uncertainty estimates of the output produced by
+sampling the surrogate. Two references which discuss some of the related
+issues are <span id="id10">[<a class="reference internal" href="../../misc/bibliography.html#id122" title="A. A. Giunta, J. M. McFarland, L. P. Swiler, and M. S. Eldred. The promise and peril of uncertainty quantification using respone surface approximations. Structure and Infrastructure Engineering, 2(3-4):175-189, September-December 2006.">GMSE06</a>]</span> and <span id="id11">[<a class="reference internal" href="../../misc/bibliography.html#id276" title="L. P Swiler, R. Slepoy, and A. A. Giunta. Evaluation of sampling methods in constructing response surface approximations. In Proc. 47th AIAA/ASME/ASCE/AHS/ASC Structures, Structural Dynamics, and Materials Conference, number AIAA-2006-1827. Newport, RI, May 1-4 2006.">SSG06</a>]</span>. The
+first reference shows that statistics of a response based on a surrogate
+model were less accurate, and sometimes biased, for surrogates
+constructed on very small sample sizes. In many cases,
+however, <span id="id12">[<a class="reference internal" href="../../misc/bibliography.html#id122" title="A. A. Giunta, J. M. McFarland, L. P. Swiler, and M. S. Eldred. The promise and peril of uncertainty quantification using respone surface approximations. Structure and Infrastructure Engineering, 2(3-4):175-189, September-December 2006.">GMSE06</a>]</span> shows that surrogate-based UQ
+performs well and sometimes generates more accurate estimates of
+statistical quantities on the output. The second reference goes into
+more detail about the interaction between sample type and response
+surface type (e.g., are some response surfaces more accurate when
+constructed on a particular sample type such as LHS vs. an orthogonal
+array?) In general, there is not a strong dependence of the surrogate
+performance with respect to sample type, but some sample types perform
+better with respect to some metrics and not others (for example, a
+Hammersley sample may do well at lowering root mean square error of the
+surrogate fit but perform poorly at lowering the maximum absolute
+deviation of the error). Much of this work is empirical and application
+dependent. If you choose to use surrogates in uncertainty
+quantification, we strongly recommend trying a variety of surrogates and
+examining diagnostic goodness-of-fit metrics.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p><em>Known Issue: When using discrete variables, there have been sometimes
+significant differences in data fit surrogate behavior observed across
+computing platforms in some cases. The cause has not yet been fully
+diagnosed and is currently under investigation. In addition, guidance on
+appropriate construction and use of surrogates with discrete variables
+is under development. In the meantime, users should therefore be aware
+that there is a risk of inaccurate results when using surrogates with
+discrete variables.</em></p>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="advancedmethods.html" class="btn btn-neutral float-left" title="Advanced Methods" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="advancedsimulationcodeinterfaces.html" class="btn btn-neutral float-right" title="Advanced Simulation Code Interfaces" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <!--
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Sandia National Laboratories.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+  --> 
+
+</footer>
+        </div>
+      </div>
+	  
+	  <div style="background-color: #0f0f0f;color:#fafafa;padding:20px">
+	    <div>
+		  <h2><em>Exceptional service in the national interest</em></h2>
+		</div>
+		<p>© 2023 National Technology and Engineering Solutions of Sandia, LLC. | <a href="https://www.sandia.gov/contact_us/index.html">Questions &amp; Comments</a> | <a href="https://www.sandia.gov/general/privacy-security/index.html">Privacy &amp; Security</a></p>
+		<p><a href="http://energy.gov" rel="noopener noreferrer" target="_blank"><img alt="U.S. Department of Energy" longdesc="https://energy.gov" src="https://www.sandia.gov/_common/images/doe_logo_white.png" style="height:37px; width:140px"></a> <a href="http://nnsa.energy.gov/" rel="noopener noreferrer" target="_blank"> <img alt="National Nuclear Security Administration" longdesc="http://nnsa.gov" src="https://www.sandia.gov/_common/images/nnsa_logo_white.png" style="height:37px; width:116px"></a></p>
+		<p><a href="https://www.sandia.gov">Sandia National Laboratories</a> is a multimission laboratory managed and operated by National Technology and Engineering Solutions of Sandia, LLC., a wholly owned subsidiary of Honeywell International, Inc., for the U.S. Department of Energy’s National Nuclear Security Administration under contract DE-NA-0003525.</p>
+	  </div>	  	  
+	  
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

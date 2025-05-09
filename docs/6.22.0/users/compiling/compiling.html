@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Compiling Dakota &mdash; dakota  documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/dakota_theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/sandiaheaderlite.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Setup Development Environment" href="devenv.html" />
+    <link rel="prev" title="The Dakota Restart Utility" href="../externaltools/restartutility.html" /> 
+  
+  <meta name="sandia.approval_type" content="formal"/>
+  <meta property="sandia.approved" content="SAND2025-05563O"/>
+  <meta name="description" content="The Dakota project delivers both state-of-the-art research and robust, usable software for optimization and UQ."/>
+  <meta name="keywords" content="Dakota, optimization, UQ, uncertainty quantification, parametric analysis, design exploration, model calibration, risk analysis"/>
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> dakota
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../setupdakota.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usingdakota/usingdakota.html">Using Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usingdakotagui/usingdakotagui.html">Using Dakota GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../externaltools/externaltools.html">Using External Tools</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Compiling Dakota</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="devenv.html">Setup Development Environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="getsource.html">Obtain Source Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configure.html">Configure with CMake</a></li>
+<li class="toctree-l2"><a class="reference internal" href="build.html">Build and Install Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test.html">Running Dakota Tests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html">End-to-end Compilation Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../developingdakota/developingdakota.html">Developing Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../misc/misc.html">Miscellaneous</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">dakota</a>
+      </nav>
+
+	  <!-- SNL Lite header -->
+	  <div class="snlheader-subsite--wrapper-default">
+		<snlheader class="snlheader-subsite" role="snlbanner">
+		  <div class="wrapper">
+			<a href="https://www.sandia.gov/index.html">
+			  <div class="logo-transparent"><p class="logo">Sandia National Laboratories</p></div>
+			</a>
+			<div class="nav-top">
+			  <a class="visuallyhidden" name="mainnav"></a>
+			  <div aria-label="main navigation" class="core-nav-transparent core-nav-transparent--visible" role="navigation">
+				<ul role="navigation" class="secondary-links">
+				  <li id="search-text-link">
+					<a aria-label="Search" href="https://www.sandia.gov/search/">Search Sandia.gov</a>
+				  </li>
+				  <li id="directory-text-link">
+					<a href="https://www.sandia.gov/directory.html" aria-expanded="false" aria-label="Site Directory">All Sandia Websites</a>
+				  </li>
+				</ul>
+			  </div>
+			</div>
+		  </div> 
+		</snlheader>
+	  </div>	  
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Compiling Dakota</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/compiling/compiling.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="compiling-dakota">
+<span id="compiling-main"></span><h1>Compiling Dakota<a class="headerlink" href="#compiling-dakota" title="Link to this heading"></a></h1>
+<p>For more experienced users, Dakota can be built from source
+code. Consider this option if:</p>
+<ul class="simple">
+<li><p>You want to customize Dakota with additional packages, e.g., enable
+QUESO or an experimental feature</p></li>
+<li><p>You are installing to a platform not explcitly listed in the binary
+executable distribution list (including Linux other than
+RHEL-compatible)</p></li>
+<li><p>You have previously licensed DOT, NPSOL, and/or NLPQL and want to
+add these packages to the Dakota build.</p></li>
+</ul>
+<p>Compiling Dakota from source requires:</p>
+<ul class="simple">
+<li><p>A <a class="reference internal" href="devenv.html#devenv"><span class="std std-ref">development environment</span></a> that has Dakota’s
+dependencies.</p></li>
+<li><p><a class="reference internal" href="getsource.html#getsource"><span class="std std-ref">Obtaining the source code</span></a> via download or Git.</p></li>
+<li><p><a class="reference internal" href="configure.html#configure"><span class="std std-ref">Configuring with CMake</span></a> to (1) set Dakota options
+as well as external software locations and options, and (2) generate
+a development environment-specific build tree.</p></li>
+<li><p>Building Dakota, i.e. running the development environment’s <a class="reference internal" href="build.html#build"><span class="std std-ref">build
+process</span></a> to compile and link the Dakota executable, e.g.,
+using Unix <code class="docutils literal notranslate"><span class="pre">make</span></code>, Windows Visual Studio, or <code class="docutils literal notranslate"><span class="pre">nmake</span></code>.</p></li>
+<li><p><a class="reference internal" href="test.html#test"><span class="std std-ref">Running and assessing tests</span></a>.</p></li>
+</ul>
+<p><strong>Quickstart Build</strong></p>
+<p>This simple example shows the Dakota build process (configure,
+compile, install) on a Unix-like platform with mostly default
+options:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>mkdir build
+cd build
+
+<span class="c"># configure the build tree</span>
+cmake -D CMAKE_INSTALL_PREFIX=/path/to/dakota-installation /path/to/dakota-source
+
+<span class="c"># compile/link, specifying the number of processors</span>
+make -j 4
+
+<span class="c"># run a minimal set of Dakota acceptance tests (these should all pass)</span>
+ctest -j 4 -L Accept
+
+<span class="c"># install to the specified prefix</span>
+make install
+</pre></div>
+</div>
+<p>The remaining pages in this section describe the compilation process
+and options in more detail.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="devenv.html">Setup Development Environment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getsource.html">Obtain Source Code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="configure.html">Configure with CMake</a></li>
+<li class="toctree-l1"><a class="reference internal" href="build.html">Build and Install Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="test.html">Running Dakota Tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">End-to-end Compilation Examples</a></li>
+</ul>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../externaltools/restartutility.html" class="btn btn-neutral float-left" title="The Dakota Restart Utility" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="devenv.html" class="btn btn-neutral float-right" title="Setup Development Environment" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <!--
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Sandia National Laboratories.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+  --> 
+
+</footer>
+        </div>
+      </div>
+	  
+	  <div style="background-color: #0f0f0f;color:#fafafa;padding:20px">
+	    <div>
+		  <h2><em>Exceptional service in the national interest</em></h2>
+		</div>
+		<p>© 2023 National Technology and Engineering Solutions of Sandia, LLC. | <a href="https://www.sandia.gov/contact_us/index.html">Questions &amp; Comments</a> | <a href="https://www.sandia.gov/general/privacy-security/index.html">Privacy &amp; Security</a></p>
+		<p><a href="http://energy.gov" rel="noopener noreferrer" target="_blank"><img alt="U.S. Department of Energy" longdesc="https://energy.gov" src="https://www.sandia.gov/_common/images/doe_logo_white.png" style="height:37px; width:140px"></a> <a href="http://nnsa.energy.gov/" rel="noopener noreferrer" target="_blank"> <img alt="National Nuclear Security Administration" longdesc="http://nnsa.gov" src="https://www.sandia.gov/_common/images/nnsa_logo_white.png" style="height:37px; width:116px"></a></p>
+		<p><a href="https://www.sandia.gov">Sandia National Laboratories</a> is a multimission laboratory managed and operated by National Technology and Engineering Solutions of Sandia, LLC., a wholly owned subsidiary of Honeywell International, Inc., for the U.S. Department of Energy’s National Nuclear Security Administration under contract DE-NA-0003525.</p>
+	  </div>	  	  
+	  
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

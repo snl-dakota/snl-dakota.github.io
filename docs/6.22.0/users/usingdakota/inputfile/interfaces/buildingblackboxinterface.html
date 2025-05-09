@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Building a Black-Box Interface to a Simulation Code &mdash; dakota  documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/dakota_theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/sandiaheaderlite.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Simulation Interface Components" href="simulationinterfacecomponents.html" />
+    <link rel="prev" title="Simulation Interfaces" href="simulationinterfaces.html" /> 
+  
+  <meta name="sandia.approval_type" content="formal"/>
+  <meta property="sandia.approved" content="SAND2025-05563O"/>
+  <meta name="description" content="The Dakota project delivers both state-of-the-art research and robust, usable software for optimization and UQ."/>
+  <meta name="keywords" content="Dakota, optimization, UQ, uncertainty quantification, parametric analysis, design exploration, model calibration, risk analysis"/>
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../index.html" class="icon icon-home"> dakota
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../setupdakota.html">Getting Started</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../usingdakota.html">Using Dakota</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../introduction/aboutdakota.html">About Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../introduction/helloworld.html">Dakota Beginner’s Tutorial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../examples.html">Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../introduction/couplingtosimulations.html">Coupling Dakota to a Simulation</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../inputfile.html">Dakota Input File</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../formatting.html">Input File Formatting</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../model.html">Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../variables.html">Variables</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../interfaces.html">Interfaces</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="simulationinterfaces.html">Simulation Interfaces</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Building a Black-Box Interface to a Simulation Code</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#generic-script-interface-files">Generic Script Interface Files</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#adapting-these-scripts-to-another-simulation">Adapting These Scripts to Another Simulation</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#additional-examples">Additional Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="simulationinterfacecomponents.html">Simulation Interface Components</a></li>
+<li class="toctree-l4"><a class="reference internal" href="simulationfilemanagement.html">Simulation File Management</a></li>
+<li class="toctree-l4"><a class="reference internal" href="batchedevaluations.html">Batched Evaluations</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mappingexamples.html">Parameter to Response Mapping Examples</a></li>
+<li class="toctree-l4"><a class="reference internal" href="dakotainterfacing.html">The Python dakota.interfacing module</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../responses.html">Responses</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../inputstodakota.html">Inputs to Dakota</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../inputspec.html">Dakota Input Spec</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../inputfile.html#video-resources">Video Resources</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../running.html">Running Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../output.html">Dakota Output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../studytypes.html">Study Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../topics.html">Topics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../advanced.html">Advanced Topics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../theory.html">Dakota Theory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../reference.html">Keyword Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usingdakotagui/usingdakotagui.html">Using Dakota GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../externaltools/externaltools.html">Using External Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../compiling/compiling.html">Compiling Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../developingdakota/developingdakota.html">Developing Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../misc/misc.html">Miscellaneous</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">dakota</a>
+      </nav>
+
+	  <!-- SNL Lite header -->
+	  <div class="snlheader-subsite--wrapper-default">
+		<snlheader class="snlheader-subsite" role="snlbanner">
+		  <div class="wrapper">
+			<a href="https://www.sandia.gov/index.html">
+			  <div class="logo-transparent"><p class="logo">Sandia National Laboratories</p></div>
+			</a>
+			<div class="nav-top">
+			  <a class="visuallyhidden" name="mainnav"></a>
+			  <div aria-label="main navigation" class="core-nav-transparent core-nav-transparent--visible" role="navigation">
+				<ul role="navigation" class="secondary-links">
+				  <li id="search-text-link">
+					<a aria-label="Search" href="https://www.sandia.gov/search/">Search Sandia.gov</a>
+				  </li>
+				  <li id="directory-text-link">
+					<a href="https://www.sandia.gov/directory.html" aria-expanded="false" aria-label="Site Directory">All Sandia Websites</a>
+				  </li>
+				</ul>
+			  </div>
+			</div>
+		  </div> 
+		</snlheader>
+	  </div>	  
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../usingdakota.html">Using Dakota</a></li>
+          <li class="breadcrumb-item"><a href="../../inputfile.html">Dakota Input File</a></li>
+          <li class="breadcrumb-item"><a href="../interfaces.html">Interfaces</a></li>
+      <li class="breadcrumb-item active">Building a Black-Box Interface to a Simulation Code</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../_sources/usingdakota/inputfile/interfaces/buildingblackboxinterface.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="building-a-black-box-interface-to-a-simulation-code">
+<span id="interfaces-building"></span><h1>Building a Black-Box Interface to a Simulation Code<a class="headerlink" href="#building-a-black-box-interface-to-a-simulation-code" title="Link to this heading"></a></h1>
+<p>To interface a simulation code to Dakota using one of the black-box
+interfaces (system call or fork), pre- and post-processing functionality
+typically needs to be supplied (or developed) in order to transfer the
+parameters from Dakota to the simulator input file and to extract the
+response values of interest from the simulator’s output file for return
+to Dakota (see <a class="reference internal" href="../../introduction/couplingtosimulations.html#coupling-figure01"><span class="std std-numref">Fig. 28</span></a> and <a class="reference internal" href="simulationinterfacecomponents.html#interfaces-bbinterfacecomp"><span class="std std-numref">Fig. 30</span></a>).
+This is often managed through the use of scripting languages, such as
+C-shell <span id="id1">[<a class="reference internal" href="../../../misc/bibliography.html#id10" title="G. Anderson and P. Anderson. The UNIX C Shell Field Guide. Prentice-Hall, Englewood Cliffs, NJ, 1986.">AA86</a>]</span>, Bourne shell <span id="id2">[<a class="reference internal" href="../../../misc/bibliography.html#id27" title="B. Blinn. Portable Shell Programming: An Extensive Collection of Bourne Shell Examples. Prentice Hall PTR, New Jersey, 1996.">Bli96</a>]</span>, Perl <span id="id3">[<a class="reference internal" href="../../../misc/bibliography.html#id295" title="L. Wall, T. Christiansen, and R. L. Schwartz. Programming Perl. O'Reilly &amp; Associates, Cambridge, 2nd edition, 1996.">WCS96</a>]</span>, or
+Python <span id="id4">[<a class="reference internal" href="../../../misc/bibliography.html#id193" title="A. Martelli. Python in a Nutshell. O'Reilly and Associates, Cambridge, MA, 2003.">Mar03</a>]</span>. While these are common and convenient
+choices for simulation drivers/filters, it is important to recognize
+that any executable file can be used. If the user prefers, the desired
+pre- and post-processing functionality may also be compiled or
+interpreted from any number of programming languages (C, C++, F77, F95,
+JAVA, Basic, etc.).</p>
+<p>In the <code class="docutils literal notranslate"><span class="pre">dakota/share/dakota/examples/official/drivers/bash/</span></code> directory, a simple example uses the Rosenbrock test function as
+a mock engineering simulation code. Several scripts have been included
+to demonstrate ways to accomplish the pre- and post-processing needs.
+Actual simulation codes will, of course, have different pre- and
+post-processing requirements, and as such, this example serves only to
+demonstrate the issues associated with interfacing a simulator.
+Modifications will almost surely be required for new applications.</p>
+<section id="generic-script-interface-files">
+<span id="interfaces-generic"></span><h2>Generic Script Interface Files<a class="headerlink" href="#generic-script-interface-files" title="Link to this heading"></a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">dakota/share/dakota/examples/official/drivers/bash/</span></code> directory
+contains four important files: <code class="docutils literal notranslate"><span class="pre">dakota_rosenbrock.in</span></code> (the Dakota
+input file), <code class="docutils literal notranslate"><span class="pre">simulator_script.sh</span></code> (the simulation driver script),
+<code class="docutils literal notranslate"><span class="pre">templatedir/ros.template</span></code> (a template simulation input file), and
+<code class="docutils literal notranslate"><span class="pre">templatedir/rosenbrock_bb.py</span></code> (the Rosenbrock simulator).</p>
+<p>The file <code class="docutils literal notranslate"><span class="pre">dakota_rosenbrock.in</span></code> specifies the study that Dakota will
+perform and, in the interface section, describes the components to be
+used in performing function evaluations. In particular, it identifies
+<code class="docutils literal notranslate"><span class="pre">simulator_script.sh</span></code> as its <code class="docutils literal notranslate"><span class="pre">analysis_driver</span></code>, as shown in
+<a class="reference internal" href="#advint-figure01"><span class="std std-numref">Listing 20</span></a>.</p>
+<div class="literal-block-wrapper docutils container" id="advint-figure01">
+<div class="code-block-caption"><span class="caption-number">Listing 20 </span><span class="caption-text">The <code class="docutils literal notranslate"><span class="pre">dakota_rosenbrock.in</span></code> input file.</span><a class="headerlink" href="#advint-figure01" title="Link to this code"></a></div>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span><span class="c">#  DAKOTA INPUT FILE - dakota_rosenbrock.in</span>
+<span class="c">#  This sample Dakota input file optimizes the Rosenbrock function.</span>
+<span class="c">#  See p. 95 in Practical Optimization by Gill, Murray, and Wright.</span>
+
+<span class="k">method</span>
+  conmin_frcg
+
+<span class="k">variables</span>
+  continuous_design = 2
+    cdv_initial_point   -1.0      1.0
+    cdv_lower_bounds    -2.0     -2.0
+    cdv_upper_bounds     2.0      2.0
+    cdv_descriptor       &#39;x1&#39;     &#39;x2&#39;
+
+<span class="k">interface</span>
+  fork
+    analysis_driver = &#39;simulator_script.sh&#39;
+    parameters_file = &#39;params.in&#39;
+    results_file    = &#39;results.out&#39;
+      file_save
+    work_directory named &#39;workdir&#39;
+      directory_tag directory_save
+      link_files = &#39;templatedir/*&#39;
+    deactivate active_set_vector
+     
+<span class="k">responses</span>
+  num_objective_functions = 1
+  analytic_gradients
+  no_hessians
+</pre></div>
+</div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">simulator_script.sh</span></code> listed in <a class="reference internal" href="#advint-figure02"><span class="std std-numref">Listing 21</span></a> is a
+short driver shell script that Dakota executes to perform each
+function evaluation. The names of the parameters and results files are
+passed to the script on its command line; they are referenced in the
+script by <code class="docutils literal notranslate"><span class="pre">$1</span></code> and <code class="docutils literal notranslate"><span class="pre">$2</span></code>, respectively. The <code class="docutils literal notranslate"><span class="pre">simulator_script.sh</span></code>
+is divided into three parts: pre-processing, analysis, and
+post-processing.</p>
+<div class="literal-block-wrapper docutils container" id="advint-figure02">
+<div class="code-block-caption"><span class="caption-number">Listing 21 </span><span class="caption-text">The <code class="docutils literal notranslate"><span class="pre">simulator_script.sh</span></code> sample driver script.</span><a class="headerlink" href="#advint-figure02" title="Link to this code"></a></div>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span><span class="c">#!/bin/sh</span>
+<span class="c"># Sample simulator to Dakota system call script</span>
+
+<span class="c"># The first and second command line arguments to the script are the</span>
+<span class="c"># names of the Dakota parameters and results files.</span>
+params=$1
+results=$2
+
+<span class="c"># --------------</span>
+<span class="c"># PRE-PROCESSING</span>
+<span class="c"># --------------</span>
+<span class="c"># Incorporate the parameters from Dakota into the template, writing ros.in</span>
+
+dprepro3 $params ros.template ros.in
+
+<span class="c"># ---------</span>
+<span class="c"># EXECUTION</span>
+<span class="c"># ---------</span>
+
+./rosenbrock_bb.py
+
+<span class="c"># ---------------</span>
+<span class="c"># POST-PROCESSING</span>
+<span class="c"># ---------------</span>
+
+<span class="c"># extract function value from the simulation output</span>
+grep &#39;Function value&#39; ros.out | cut -c 18- &gt; results.tmp
+<span class="c"># extract gradients from the simulation output (in this case will be ignored</span>
+<span class="c"># by Dakota if not needed)</span>
+grep -i &#39;Function g&#39; ros.out | cut -c 21- &gt;&gt; results.tmp
+mv results.tmp $results
+</pre></div>
+</div>
+</div>
+<p>In the pre-processing portion, the <code class="docutils literal notranslate"><span class="pre">simulator_script.sh</span></code> uses <code class="docutils literal notranslate"><span class="pre">dprepro</span></code>,
+a template processing utility, to extract the current variable values from
+a parameters file (<code class="docutils literal notranslate"><span class="pre">$1</span></code>) and combine them with the simulator template
+input file (<code class="docutils literal notranslate"><span class="pre">ros.template</span></code>) to create a new input file (<code class="docutils literal notranslate"><span class="pre">ros.in</span></code>) for
+the simulator.</p>
+<p>Dakota also provides a second, more general-purpose template processing
+tool named <code class="docutils literal notranslate"><span class="pre">pyprepro</span></code>, which provides many of the same features and
+functions as <code class="docutils literal notranslate"><span class="pre">dprepro</span></code>. Both <code class="docutils literal notranslate"><span class="pre">pyprepro</span></code> and <code class="docutils literal notranslate"><span class="pre">dprepro</span></code> permit parameter
+substitution and execution of arbitrary Python scripting within templates.</p>
+<p>This pair of tools is extensively documented in the
+<a class="reference internal" href="../../../externaltools/dpreproandpyprepro.html#interfaces-dprepro-and-pyprepro"><span class="std std-ref">main dprepro and pyprepro section.</span></a></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Internal to Sandia, the APREPRO utility is also often used for pre-processing.
+Other preprocessing tools of potential interest are the BPREPRO utility
+(see <span id="id5">[<a class="reference internal" href="../../../misc/bibliography.html#id297" title="B. Walton. BPREPRO preprocessor documentation. Online document http://bwalton.com/bprepro.html.">Wal</a>]</span>), and at Lockheed Martin sites, the JPrePost utility,
+a Java pre- and post-processor <span id="id6">[<a class="reference internal" href="../../../misc/bibliography.html#id92" title="D. Flaggs. JPrePost user's manual. In preparation.">Fla</a>]</span>.</p>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">dprepro</span></code> script will be used from here on out, for simplicity of discussion.
+<code class="docutils literal notranslate"><span class="pre">dprepro</span></code> can use either Dakota’s <a class="reference internal" href="../variables.html#variables-parameters-aprepro"><span class="std std-ref">aprepro parameters file format</span></a>
+or <a class="reference internal" href="../variables.html#variables-parameters-standard"><span class="std std-ref">Dakota’s standard format</span></a>, so either option
+may be selected in the interface section of the Dakota input file.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">ros.template</span></code> file in <a class="reference internal" href="#advint-figure04"><span class="std std-numref">Listing 22</span></a>
+is a template simulation input file which contains targets for the incoming variable values,
+identified by the strings “<code class="docutils literal notranslate"><span class="pre">{x1}</span></code>” and “<code class="docutils literal notranslate"><span class="pre">{x2}</span></code>”. These identifiers
+match the variable descriptors specified in <code class="docutils literal notranslate"><span class="pre">dakota_rosenbrock.in</span></code>. The template input file is
+contrived as Rosenbrock has nothing to do with finite element analysis;
+it only mimics a finite element code to demonstrate the simulator
+template process. The <code class="docutils literal notranslate"><span class="pre">dprepro</span></code> script will search the simulator
+template input file for fields marked with curly brackets and then
+create a new file (<code class="docutils literal notranslate"><span class="pre">ros.in</span></code>) by replacing these targets with the corresponding
+numerical values for the variables. As shown in <code class="docutils literal notranslate"><span class="pre">simulator_script.sh</span></code>, the names for the
+Dakota parameters file (<code class="docutils literal notranslate"><span class="pre">$1</span></code>), template file (<code class="docutils literal notranslate"><span class="pre">ros.template</span></code>), and generated input
+file (<code class="docutils literal notranslate"><span class="pre">ros.in</span></code>) must be specified in the <code class="docutils literal notranslate"><span class="pre">dprepro</span></code> command line arguments.</p>
+<div class="literal-block-wrapper docutils container" id="advint-figure04">
+<div class="code-block-caption"><span class="caption-number">Listing 22 </span><span class="caption-text">Listing of the <code class="docutils literal notranslate"><span class="pre">ros.template</span></code> file</span><a class="headerlink" href="#advint-figure04" title="Link to this code"></a></div>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>Title of Model: Rosenbrock black box
+***************************************************************************
+* Description:  This is an input file to the Rosenbrock black box
+*               Fortran simulator.  This simulator is structured so
+*               as to resemble the input/output from an engineering
+*               simulation code, even though Rosenbrock&#39;s function
+*               is a simple analytic function.  The node, element,
+*               and material blocks are dummy inputs.
+*
+* Input:  x1 and x2
+* Output: objective function value
+*************************************************************************** 
+node 1 location 0.0 0.0
+node 2 location 0.0 1.0
+node 3 location 1.0 0.0
+node 4 location 1.0 1.0
+node 5 location 2.0 0.0
+node 6 location 2.0 1.0
+node 7 location 3.0 0.0
+node 8 location 3.0 1.0
+element 1 nodes 1 3 4 2
+element 2 nodes 3 5 6 4
+element 3 nodes 5 7 8 6
+element 4 nodes 7 9 10 8
+material 1 elements 1 2
+material 2 elements 3 4
+variable 1 {x1}
+variable 2 {x2}
+end
+</pre></div>
+</div>
+</div>
+<p>The second part of the script executes the <code class="docutils literal notranslate"><span class="pre">rosenbrock_bb.py</span></code> simulator. The input and
+output file names, <code class="docutils literal notranslate"><span class="pre">ros.in</span></code> and <code class="docutils literal notranslate"><span class="pre">ros.out</span></code>, respectively, are hard-coded into the simulator. When the
+<code class="docutils literal notranslate"><span class="pre">./rosenbrock_bb.py</span></code> simulator is executed, the values for <code class="docutils literal notranslate"><span class="pre">x1</span></code> and <code class="docutils literal notranslate"><span class="pre">x2</span></code> are read in from
+<code class="docutils literal notranslate"><span class="pre">ros.in</span></code>, the Rosenbrock function is evaluated, and the function value is
+written out to <code class="docutils literal notranslate"><span class="pre">ros.out</span></code>.</p>
+<p>The third part performs the post-processing and writes the response
+results to a file for Dakota to read. Using the UNIX “<code class="docutils literal notranslate"><span class="pre">grep</span></code>” utility,
+the particular response values of interest are extracted from the raw
+simulator output and saved to a temporary file (<code class="docutils literal notranslate"><span class="pre">results.tmp</span></code>). When complete, this
+file is renamed <code class="docutils literal notranslate"><span class="pre">$2</span></code>, which in this example is always <code class="docutils literal notranslate"><span class="pre">results.out</span></code>. Note that
+moving or renaming the completed results file avoids any problems with
+read race conditions (see the section on
+<a class="reference internal" href="../../advanced/parallelcomputing.html#parallel-slp-local-system"><span class="std std-ref">system call synchronization</span></a>).</p>
+<p>Because the Dakota input file <code class="docutils literal notranslate"><span class="pre">dakota_rosenbrock.in</span></code> (<a class="reference internal" href="#advint-figure01"><span class="std std-numref">Listing 20</span></a>) specifies
+<code class="docutils literal notranslate"><span class="pre">work_directory</span></code> and <code class="docutils literal notranslate"><span class="pre">directory_tag</span></code> in its interface section, each
+invocation of <code class="docutils literal notranslate"><span class="pre">simulator_script.sh</span></code> wakes up in its own temporary directory, which Dakota has
+populated with the contents of directory <code class="docutils literal notranslate"><span class="pre">templatedir/</span></code>. Having a separate directory
+for each invocation of <code class="docutils literal notranslate"><span class="pre">simulator_script.sh</span></code> simplifies the script when the Dakota input file
+specifies <code class="docutils literal notranslate"><span class="pre">asynchronous</span></code> (so several instances of <code class="docutils literal notranslate"><span class="pre">simulator_script.sh</span></code> might run
+simultaneously), as fixed names such as <code class="docutils literal notranslate"><span class="pre">ros.in</span></code>, <code class="docutils literal notranslate"><span class="pre">ros.out</span></code>, and <code class="docutils literal notranslate"><span class="pre">results.tmp</span></code> can be used for
+intermediate files. If neither <code class="docutils literal notranslate"><span class="pre">asynchronous</span></code> nor <code class="docutils literal notranslate"><span class="pre">file_tag</span></code> is
+specified, and if there is no need (e.g., for debugging) to retain
+intermediate files having fixed names, then <code class="docutils literal notranslate"><span class="pre">directory_tag</span></code> offers no
+benefit and can be omitted. An alternative to <code class="docutils literal notranslate"><span class="pre">directory_tag</span></code> is to
+proceed as earlier versions of this chapter — prior to Dakota 5.0’s
+introduction of <code class="docutils literal notranslate"><span class="pre">work_directory</span></code> — recommended: add two more steps to
+the <code class="docutils literal notranslate"><span class="pre">simulator_script.sh</span></code>, an initial one to create a temporary directory explicitly and copy
+<code class="docutils literal notranslate"><span class="pre">templatedir/</span></code> to it if needed, and a final step to remove the temporary directory and
+any files in it.</p>
+<p>When <code class="docutils literal notranslate"><span class="pre">work_directory</span></code> is specified, Dakota adjusts the <code class="docutils literal notranslate"><span class="pre">$PATH</span></code> seen
+by <code class="docutils literal notranslate"><span class="pre">simulator_script.sh</span></code> so that simple program names (i.e., names not containing a slash)
+that are visible in Dakota’s directory will also be visible in the work
+directory. Relative path names — involving an intermediate slash but not
+an initial one, such as <code class="docutils literal notranslate"><span class="pre">./rosenbrock_bb.py</span></code> or <code class="docutils literal notranslate"><span class="pre">a/bc/rosenbrock_bb</span></code> — will only be visible in the work directory
+if a <code class="docutils literal notranslate"><span class="pre">link_files</span></code> or <code class="docutils literal notranslate"><span class="pre">copy_files</span></code> specification (see
+<a class="reference external" href="#interfaces:workdir">1.5.5</a>) has made them visible there.</p>
+<p>As an example of the data flow on a particular function evaluation,
+consider evaluation 60. The parameters file for this evaluation consists
+of:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>                    2 variables
+4.664752623441543e-01 x1
+2.256400864298234e-01 x2
+                    1 functions
+                    3 ASV_1:obj_fn
+                    2 derivative_variables
+                    1 DVV_1:x1
+                    2 DVV_2:x2
+                    0 analysis_components
+                   60 eval_id
+</pre></div>
+</div>
+<p>This file is called <code class="docutils literal notranslate"><span class="pre">workdir/workdir.60/params.in</span></code> if the line</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>named &#39;workdir&#39; file_save  directory_save
+</pre></div>
+</div>
+<p>in <a class="reference internal" href="#advint-figure01"><span class="std std-numref">Listing 20</span></a> is uncommented. The
+first portion of the file indicates that there are two variables,
+followed by new values for variables <code class="docutils literal notranslate"><span class="pre">x1</span></code> and <code class="docutils literal notranslate"><span class="pre">x2</span></code>, and one response
+function (an objective function), followed by an active set vector (ASV)
+value of <code class="docutils literal notranslate"><span class="pre">1</span></code>. The ASV indicates the need to return the value of the
+objective function for these parameters (see the <a class="reference internal" href="../variables.html#variables-asv"><span class="std std-ref">Active Set Vector section</span></a>).</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">dprepro</span></code> script reads the variable values from this file, namely <code class="docutils literal notranslate"><span class="pre">4.664752623441543e-01</span></code> and
+<code class="docutils literal notranslate"><span class="pre">2.256400864298234e-01</span></code> for <code class="docutils literal notranslate"><span class="pre">x1</span></code> and <code class="docutils literal notranslate"><span class="pre">x2</span></code> respectively, and
+substitutes them in the <code class="docutils literal notranslate"><span class="pre">{x1}</span></code> and <code class="docutils literal notranslate"><span class="pre">{x2}</span></code> fields of the <code class="docutils literal notranslate"><span class="pre">ros.template</span></code> file. The
+final three lines of the resulting input file (<code class="docutils literal notranslate"><span class="pre">ros.in</span></code>) then appear as follows:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>variable 1 0.4664752623
+variable 2 0.2256400864
+end
+</pre></div>
+</div>
+<p>where all other lines are identical to the template file. The <code class="docutils literal notranslate"><span class="pre">rosenbrock_bb</span></code> simulator
+accepts <code class="docutils literal notranslate"><span class="pre">ros.in</span></code> as its input file and generates the following output to the file
+<code class="docutils literal notranslate"><span class="pre">ros.out</span></code>:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>Beginning execution of model: Rosenbrock black box
+Set up complete.
+Reading nodes.
+Reading elements.
+Reading materials.
+Checking connectivity...OK
+*****************************************************
+
+Input value for x1 =  4.6647526230000003e-01
+Input value for x2 =  2.2564008640000000e-01
+
+Computing solution...Done
+*****************************************************
+Function value =   2.9111427884970176e-01
+Function gradient = [ -2.5674048470887652e+00   1.6081832124292317e+00 ]
+</pre></div>
+</div>
+<p>Next, the appropriate values are extracted from the raw simulator output
+and returned in the results file. This post-processing is relatively
+trivial in this case, and the <code class="docutils literal notranslate"><span class="pre">simulator_script.sh</span></code> uses the <code class="docutils literal notranslate"><span class="pre">grep</span></code> and <code class="docutils literal notranslate"><span class="pre">cut</span></code> utilities to
+extract the value from the “<code class="docutils literal notranslate"><span class="pre">Function</span> <span class="pre">value</span></code>” line of the <code class="docutils literal notranslate"><span class="pre">ros.out</span></code> output
+file and save it to <code class="docutils literal notranslate"><span class="pre">$results</span></code>, which is the <code class="docutils literal notranslate"><span class="pre">results.out</span></code> file for this evaluation.
+This single value provides the objective function value requested by the
+ASV.</p>
+<p>After 132 of these function evaluations, the following Dakota output
+shows the final solution using the <code class="docutils literal notranslate"><span class="pre">rosenbrock_bb.py</span></code> simulator:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span>Exit NPSOL - Optimal solution found.
+
+Final nonlinear objective value =   0.1165704E-06
+
+NPSOL exits with INFORM code = 0 (see &quot;Interpretation of output&quot; section in NPSOL manual)
+
+NOTE: see Fortran device 9 file (fort.9 or ftn09)
+      for complete NPSOL iteration history.
+
+&lt;&lt;&lt;&lt;&lt; Iterator npsol_sqp completed.
+&lt;&lt;&lt;&lt;&lt; Function evaluation summary: 132 total (132 new, 0 duplicate)
+&lt;&lt;&lt;&lt;&lt; Best parameters          =
+                      9.9965861667e-01 x1
+                      9.9931682203e-01 x2
+&lt;&lt;&lt;&lt;&lt; Best objective function  =
+                   1.1657044253e-07
+&lt;&lt;&lt;&lt;&lt; Best evaluation ID: 130
+
+&lt;&lt;&lt;&lt;&lt; Iterator npsol_sqp completed.
+&lt;&lt;&lt;&lt;&lt; Single Method Strategy completed.
+Dakota execution time in seconds:
+  Total CPU        =       0.12 [parent =   0.116982, child =   0.003018]
+  Total wall clock =    1.47497
+</pre></div>
+</div>
+</section>
+<section id="adapting-these-scripts-to-another-simulation">
+<h2>Adapting These Scripts to Another Simulation<a class="headerlink" href="#adapting-these-scripts-to-another-simulation" title="Link to this heading"></a></h2>
+<p>To adapt this approach for use with another simulator, several steps
+need to be performed:</p>
+<ol class="arabic simple">
+<li><p>Create a template simulation input file by identifying the fields in
+an existing input file that correspond to the variables of interest
+and then replacing them with <code class="docutils literal notranslate"><span class="pre">{}</span></code> identifiers (e.g. <code class="docutils literal notranslate"><span class="pre">{cdv_1}</span></code>,
+<code class="docutils literal notranslate"><span class="pre">{cdv_2}</span></code>, etc.) which match the Dakota variable descriptors. Copy
+this template input file to a templatedir that will be used to create
+working directories for the simulation.</p></li>
+<li><p>Modify the <code class="docutils literal notranslate"><span class="pre">dprepro</span></code> arguments in <code class="docutils literal notranslate"><span class="pre">simulator_script.sh</span></code> to reflect names of the Dakota
+parameters file (previously <code class="docutils literal notranslate"><span class="pre">$1</span></code>), template file name (previously
+<code class="docutils literal notranslate"><span class="pre">ros.template</span></code>) and generated input file (previously <code class="docutils literal notranslate"><span class="pre">ros.in</span></code>). Alternatively, use APREPRO,
+BPREPRO, or JPrePost to perform this step (and adapt the syntax
+accordingly).</p></li>
+<li><p>Modify the analysis section of <code class="docutils literal notranslate"><span class="pre">simulator_script.sh</span></code> to replace the <code class="docutils literal notranslate"><span class="pre">rosenbrock_bb</span></code> function call with the
+new simulator name and command line syntax (typically including the
+input and output file names).</p></li>
+<li><p>Change the post-processing section in <code class="docutils literal notranslate"><span class="pre">simulator_script.sh</span></code> to reflect the revised
+extraction process. At a minimum, this would involve changing the
+<code class="docutils literal notranslate"><span class="pre">grep</span></code> command to reflect the name of the output file, the string
+to search for, and the characters to cut out of the captured output
+line. For more involved post-processing tasks, invocation of
+additional tools may have to be added to the script.</p></li>
+<li><p>Modify the <code class="docutils literal notranslate"><span class="pre">dakota_rosbenbrock.in</span></code> input file to reflect, at a minimum, updated variables and
+responses specifications.</p></li>
+</ol>
+<p>These nonintrusive interfacing approaches can be used to rapidly
+interface with simulation codes. While generally custom for each new
+application, typical interface development time is on the order of an
+hour or two. Thus, this approach is scalable when dealing with many
+different application codes. Weaknesses of this approach include the
+potential for loss of data precision (if care is not taken to preserve
+precision in pre- and post-processing file I/O), a lack of robustness in
+post-processing (if the data capture is too simplistic), and scripting
+overhead (only noticeable if the simulation time is on the order of a
+second or less).</p>
+<p>If the application scope at a particular site is more focused and only a
+small number of simulation codes are of interest, then more
+sophisticated interfaces may be warranted. For example, the economy of
+scale afforded by a common simulation framework justifies additional
+effort in the development of a high quality Dakota interface. In these
+cases, more sophisticated interfacing approaches could involve a more
+thoroughly developed black box interface with robust support of a
+variety of inputs and outputs, or it might involve intrusive interfaces
+such as the direct simulation interface discussed below in the
+<a class="reference internal" href="../../advanced/advancedsimulationcodeinterfaces.html#advint-direct"><span class="std std-ref">“Developing a Direct Simulation Interface” section</span></a>
+or the <a class="reference internal" href="../../introduction/couplingtosimulations.html#user-supplied-sim-code-sand"><span class="std std-ref">“SAND Simulation Codes” section</span></a>
+of the main page on interface coupling.</p>
+</section>
+<section id="additional-examples">
+<h2>Additional Examples<a class="headerlink" href="#additional-examples" title="Link to this heading"></a></h2>
+<p>A variety of additional examples of black-box interfaces to simulation
+codes are maintained in the <code class="docutils literal notranslate"><span class="pre">dakota/share/dakota/examples/official/drivers</span></code> directory.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="simulationinterfaces.html" class="btn btn-neutral float-left" title="Simulation Interfaces" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="simulationinterfacecomponents.html" class="btn btn-neutral float-right" title="Simulation Interface Components" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <!--
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Sandia National Laboratories.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+  --> 
+
+</footer>
+        </div>
+      </div>
+	  
+	  <div style="background-color: #0f0f0f;color:#fafafa;padding:20px">
+	    <div>
+		  <h2><em>Exceptional service in the national interest</em></h2>
+		</div>
+		<p>© 2023 National Technology and Engineering Solutions of Sandia, LLC. | <a href="https://www.sandia.gov/contact_us/index.html">Questions &amp; Comments</a> | <a href="https://www.sandia.gov/general/privacy-security/index.html">Privacy &amp; Security</a></p>
+		<p><a href="http://energy.gov" rel="noopener noreferrer" target="_blank"><img alt="U.S. Department of Energy" longdesc="https://energy.gov" src="https://www.sandia.gov/_common/images/doe_logo_white.png" style="height:37px; width:140px"></a> <a href="http://nnsa.energy.gov/" rel="noopener noreferrer" target="_blank"> <img alt="National Nuclear Security Administration" longdesc="http://nnsa.gov" src="https://www.sandia.gov/_common/images/nnsa_logo_white.png" style="height:37px; width:116px"></a></p>
+		<p><a href="https://www.sandia.gov">Sandia National Laboratories</a> is a multimission laboratory managed and operated by National Technology and Engineering Solutions of Sandia, LLC., a wholly owned subsidiary of Honeywell International, Inc., for the U.S. Department of Energy’s National Nuclear Security Administration under contract DE-NA-0003525.</p>
+	  </div>	  	  
+	  
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
