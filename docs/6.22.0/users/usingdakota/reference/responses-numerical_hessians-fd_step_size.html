@@ -189,13 +189,13 @@ a minimum absolute differencing interval is needed when the current
 parameter value is close to zero. This prevents finite difference
 intervals for the parameter which are too small to distinguish
 differences in the response quantities being computed. Dakota, DOT,
-CONMIN, and OPT++ all use &lt;tt&gt;.01*fd_step_size&lt;/tt&gt; as their
+CONMIN, and OPT++ all use <code class="docutils literal notranslate"><span class="pre">.01*fd_step_size</span></code> as their
 minimum absolute differencing interval. With a
-&lt;tt&gt;fd_step_size = .001&lt;/tt&gt;, for example, Dakota, DOT,
+<code class="docutils literal notranslate"><span class="pre">fd_step_size</span> <span class="pre">=</span> <span class="pre">.001</span></code>, for example, Dakota, DOT,
 CONMIN, and OPT++ will use intervals of .001*current value with a
 minimum interval of 1.e-5. NPSOL and NLSSOL use a different formula
 for their finite difference intervals:
-&lt;tt&gt;fd_step_size*(1+|current parameter value|)&lt;/tt&gt;. This
+<code class="docutils literal notranslate"><span class="pre">fd_step_size*(1+|current</span> <span class="pre">parameter</span> <span class="pre">value|)</span></code>. This
 definition has the advantage of eliminating the need for a minimum
 absolute differencing interval since the interval no longer goes to
 zero as the current parameter value goes to zero.</p>

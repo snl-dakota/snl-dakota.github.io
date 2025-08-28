@@ -186,9 +186,9 @@
 variables in question have bounds, it by default chooses finite-differencing
 steps that keep the variables within their specified bounds. Older versions
 of Dakota generally ignored bounds when computing finite differences.
-To restore the older behavior, one can add keyword &lt;tt&gt;ignore_bounds&lt;/tt&gt;
-to the &lt;tt&gt;response&lt;/tt&gt; specification when &lt;tt&gt;method_source dakota&lt;/tt&gt;
-(or just &lt;tt&gt;dakota&lt;/tt&gt;) is also specified.</p>
+To restore the older behavior, one can add keyword <code class="docutils literal notranslate"><span class="pre">ignore_bounds</span></code>
+to the <code class="docutils literal notranslate"><span class="pre">response</span></code> specification when <code class="docutils literal notranslate"><span class="pre">method_source</span> <span class="pre">dakota</span></code>
+(or just <code class="docutils literal notranslate"><span class="pre">dakota</span></code>) is also specified.</p>
 <p>In forward difference or backward difference computations, honoring
 bounds is straightforward.</p>
 <p>To honor bounds when approximating <span class="math notranslate nohighlight">\(\partial f / \partial x_i\)</span> , i.e., component <span class="math notranslate nohighlight">\(i\)</span>
