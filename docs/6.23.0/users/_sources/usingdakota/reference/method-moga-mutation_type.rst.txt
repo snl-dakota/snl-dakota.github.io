@@ -1,0 +1,80 @@
+.. _method-moga-mutation_type:
+
+"""""""""""""
+mutation_type
+"""""""""""""
+
+
+Select a mutation type for JEGA methods
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-moga-mutation_type-bit_random
+   method-moga-mutation_type-replace_uniform
+   method-moga-mutation_type-offset_normal
+   method-moga-mutation_type-offset_cauchy
+   method-moga-mutation_type-offset_uniform
+   method-moga-mutation_type-mutation_rate
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+- *Default:* replace_uniform
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+---------------------+-----------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword      | Dakota Keyword Description                    |
+|                         | Group              |                     |                                               |
++=========================+====================+=====================+===============================================+
+| Required (Choose One)   | Mutation Type      | `bit_random`__      | Mutate by flipping a random bit               |
+|                         |                    +---------------------+-----------------------------------------------+
+|                         |                    | `replace_uniform`__ | Use uniformly distributed value over range of |
+|                         |                    |                     | parameter                                     |
+|                         |                    +---------------------+-----------------------------------------------+
+|                         |                    | `offset_normal`__   | Set mutation offset to use a normal           |
+|                         |                    |                     | distribution                                  |
+|                         |                    +---------------------+-----------------------------------------------+
+|                         |                    | `offset_cauchy`__   | Use a Cauchy distribution for the mutation    |
+|                         |                    |                     | offset                                        |
+|                         |                    +---------------------+-----------------------------------------------+
+|                         |                    | `offset_uniform`__  | Set mutation offset to use a uniform          |
+|                         |                    |                     | distribution                                  |
++-------------------------+--------------------+---------------------+-----------------------------------------------+
+| Optional                                     | `mutation_rate`__   | Set probability of a mutation                 |
++----------------------------------------------+---------------------+-----------------------------------------------+
+
+.. __: method-moga-mutation_type-bit_random.html
+__ method-moga-mutation_type-replace_uniform.html
+__ method-moga-mutation_type-offset_normal.html
+__ method-moga-mutation_type-offset_cauchy.html
+__ method-moga-mutation_type-offset_uniform.html
+__ method-moga-mutation_type-mutation_rate.html
+
+
+
+**Description**
+
+
+Five mutation types are available for selection by keyword:
+``replace_uniform``, ``bit_random``, ``offset_cauchy``, ``offset_normal``, and
+``offset_uniform``. They are described in greater detail on their
+respective keyword pages.
+
+The ``offset_*`` mutators all act by adding a random "offset" to a variable
+value. The random amount has a mean of zero in all cases. The size of the offset
+is controlled using the ``mutation_scale`` keyword, which is interpreted
+differently for each ``offset_*`` type.
+
+The rate of mutations for all types is controlled suing the ``mutation_rate``.
+The rate is applied differently in each ``mutation_type``.
+
+

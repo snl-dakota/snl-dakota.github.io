@@ -1,0 +1,220 @@
+.. _method-coliny_ea:
+
+"""""""""
+coliny_ea
+"""""""""
+
+
+Evolutionary Algorithm
+
+
+
+**Topics**
+
+
+package_scolib, package_coliny, global_optimization_methods
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-coliny_ea-population_size
+   method-coliny_ea-initialization_type
+   method-coliny_ea-fitness_type
+   method-coliny_ea-replacement_type
+   method-coliny_ea-crossover_rate
+   method-coliny_ea-crossover_type
+   method-coliny_ea-mutation_rate
+   method-coliny_ea-mutation_type
+   method-coliny_ea-constraint_penalty
+   method-coliny_ea-solution_target
+   method-coliny_ea-seed
+   method-coliny_ea-show_misc_options
+   method-coliny_ea-misc_options
+   method-coliny_ea-max_iterations
+   method-coliny_ea-convergence_tolerance
+   method-coliny_ea-max_function_evaluations
+   method-coliny_ea-scaling
+   method-coliny_ea-model_pointer
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+------------------------------+-----------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword               | Dakota Keyword Description                    |
+|                         | Group              |                              |                                               |
++=========================+====================+==============================+===============================================+
+| Optional                                     | `population_size`__          | Set the population size                       |
++----------------------------------------------+------------------------------+-----------------------------------------------+
+| Optional                                     | `initialization_type`__      | Specify how to initialize the population      |
++----------------------------------------------+------------------------------+-----------------------------------------------+
+| Optional                                     | `fitness_type`__             | Select fitness type                           |
++----------------------------------------------+------------------------------+-----------------------------------------------+
+| Optional                                     | `replacement_type`__         | Select a replacement type for SCOLIB          |
+|                                              |                              | evolutionary algorithm ( ``coliny_ea``)       |
++----------------------------------------------+------------------------------+-----------------------------------------------+
+| Optional                                     | `crossover_rate`__           | Specify the probability of a crossover event  |
++----------------------------------------------+------------------------------+-----------------------------------------------+
+| Optional                                     | `crossover_type`__           | Select a crossover type                       |
++----------------------------------------------+------------------------------+-----------------------------------------------+
+| Optional                                     | `mutation_rate`__            | Set probability of a mutation                 |
++----------------------------------------------+------------------------------+-----------------------------------------------+
+| Optional                                     | `mutation_type`__            | Select a mutation type                        |
++----------------------------------------------+------------------------------+-----------------------------------------------+
+| Optional                                     | `constraint_penalty`__       | Multiplier for the penalty function           |
++----------------------------------------------+------------------------------+-----------------------------------------------+
+| Optional                                     | `solution_target`__          | Stopping criteria based on objective function |
+|                                              |                              | value                                         |
++----------------------------------------------+------------------------------+-----------------------------------------------+
+| Optional                                     | `seed`__                     | Seed of the random number generator           |
++----------------------------------------------+------------------------------+-----------------------------------------------+
+| Optional                                     | `show_misc_options`__        | Show algorithm parameters not exposed in      |
+|                                              |                              | Dakota input                                  |
++----------------------------------------------+------------------------------+-----------------------------------------------+
+| Optional                                     | `misc_options`__             | Set method options not available through      |
+|                                              |                              | Dakota spec                                   |
++----------------------------------------------+------------------------------+-----------------------------------------------+
+| Optional                                     | `max_iterations`__           | Number of iterations allowed for optimizers   |
+|                                              |                              | and adaptive UQ methods                       |
++----------------------------------------------+------------------------------+-----------------------------------------------+
+| Optional                                     | `convergence_tolerance`__    | Stopping criterion based on objective         |
+|                                              |                              | function or statistics convergence            |
++----------------------------------------------+------------------------------+-----------------------------------------------+
+| Optional                                     | `max_function_evaluations`__ | Number of function evaluations allowed for    |
+|                                              |                              | optimizers                                    |
++----------------------------------------------+------------------------------+-----------------------------------------------+
+| Optional                                     | `scaling`__                  | Turn on scaling for variables, responses, and |
+|                                              |                              | constraints                                   |
++----------------------------------------------+------------------------------+-----------------------------------------------+
+| Optional                                     | `model_pointer`__            | Identifier for model block to be used by a    |
+|                                              |                              | method                                        |
++----------------------------------------------+------------------------------+-----------------------------------------------+
+
+.. __: method-coliny_ea-population_size.html
+__ method-coliny_ea-initialization_type.html
+__ method-coliny_ea-fitness_type.html
+__ method-coliny_ea-replacement_type.html
+__ method-coliny_ea-crossover_rate.html
+__ method-coliny_ea-crossover_type.html
+__ method-coliny_ea-mutation_rate.html
+__ method-coliny_ea-mutation_type.html
+__ method-coliny_ea-constraint_penalty.html
+__ method-coliny_ea-solution_target.html
+__ method-coliny_ea-seed.html
+__ method-coliny_ea-show_misc_options.html
+__ method-coliny_ea-misc_options.html
+__ method-coliny_ea-max_iterations.html
+__ method-coliny_ea-convergence_tolerance.html
+__ method-coliny_ea-max_function_evaluations.html
+__ method-coliny_ea-scaling.html
+__ method-coliny_ea-model_pointer.html
+
+
+
+**Description**
+
+
+Evolutionary Algorithm
+
+*See the page :ref:`topic-package_scolib` for important information
+regarding all SCOLIB methods*
+
+``coliny_pattern_search`` supports concurrency up to the size of
+the population
+
+The random ``seed`` control provides a mechanism for making a
+stochastic optimization repeatable. That is, the use of the same
+random seed in identical studies will generate identical results. The
+``population_size`` control specifies how many individuals will
+comprise the EA's population.
+
+The ``initialization_type`` defines the type of initialization for the
+population of the EA. There are three types: ``simple_random``,
+``unique_random``, and ``flat_file``. ``simple_random`` creates initial
+solutions with random variable values according to a uniform random
+number distribution. It gives no consideration to any previously
+generated designs. The number of designs is specified by the
+``population_size``. ``unique_random`` is the same as ``simple_random``,
+except that when a new solution is generated, it is checked against
+the rest of the solutions. If it duplicates any of them, it is
+rejected. ``flat_file`` allows the initial population to be read from
+a flat file. If ``flat_file`` is specified, a file name must be given.
+
+The ``fitness_type`` controls how strongly differences in "fitness"
+(i.e., the objective function) are weighted in the process of
+selecting "parents" for crossover:
+
+
+- the ``linear_rank`` setting uses a linear scaling of probability of selection based on the rank order of each individual's objective function within the population
+- the ``merit_function`` setting uses a proportional scaling of probability of selection based on the relative value of each individual's objective function within the population
+
+The ``replacement_type`` controls how current populations and newly
+generated individuals are combined to create a new population. Each
+of the ``replacement_type`` selections accepts an integer value, which
+is referred to below as the ``replacement_size``.
+
+
+- The ``random`` setting creates a new population using (a) ``replacement_size`` randomly selected individuals from the current population, and (b) ``population_size`` - ``replacement_size`` individuals randomly selected from among the newly generated individuals (the number of which is optionally specified using ``new_solutions_generated``) that are created for each generation (using the selection, crossover, and mutation procedures).
+- The ``chc`` setting creates a new population using (a) the ``replacement_size`` best individuals from the *combination* of the current population and the newly generated individuals, and (b) ``population_size`` - ``replacement_size`` individuals randomly selected from among the remaining individuals in this combined pool. The ``chc`` setting is the preferred selection for many engineering problems.
+- The ``elitist`` (default) setting creates a new population using (a) the ``replacement_size`` best individuals from the current population, (b) and ``population_size`` - ``replacement_size`` individuals randomly selected from the newly generated individuals. It is possible in this case to lose a good solution from the newly generated individuals if it is not randomly selected for replacement; however, the default ``new_solutions_generated`` value is set such that the entire set of newly generated individuals will be selected for replacement.
+
+Note that ``new_solutions_generated`` is not recognized by Dakota as a
+valid keyword unless ``replacement_type`` has been specified.
+
+
+
+*Expected HDF5 Output*
+
+If Dakota was built with HDF5 support and run with the
+:dakkw:`environment-results_output-hdf5` keyword, this method
+writes the following results to HDF5:
+
+
+- :ref:`hdf5_results-best_params`
+- :ref:`hdf5_results-best_obj_fncs` (when :dakkw:`responses-objective_functions`) are specified)
+- :ref:`hdf5_results-best_constraints`
+- :ref:`hdf5_results-calibration` (when :dakkw:`responses-calibration_terms` are specified)
+
+
+
+**Theory**
+
+
+The basic steps of an evolutionary algorithm are depicted in Figure
+5.2.
+
+\image html ga.jpg "Figure 5.2 Depiction of evolutionary algorithm"
+\image latex ga.eps "Depiction of evolutionary algorithm" width=10cm
+
+They can be enumerated as follows:
+
+
+1. Select an initial population randomly and perform function evaluations on these individuals
+
+2. Perform selection for parents based on relative fitness
+
+3. Apply crossover and mutation to generate ``new_solutions_generated`` new individuals from the selected parents
+
+
+  - Apply crossover with a fixed probability from two selected parents
+
+  - If crossover is applied, apply mutation to the newly generated individual with a fixed probability
+
+  - If crossover is not applied, apply mutation with a fixed probability to a single selected parent
+
+
+4. Perform function evaluations on the new individuals
+
+5. Perform replacement to determine the new population
+
+6. Return to step 2 and continue the algorithm until convergence criteria are satisfied or iteration limits are exceeded
+
+

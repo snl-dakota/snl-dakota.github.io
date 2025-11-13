@@ -1,0 +1,107 @@
+.. _responses-numerical_hessians:
+
+""""""""""""""""""
+numerical_hessians
+""""""""""""""""""
+
+
+Hessians are needed and will be approximated by finite differences
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   responses-numerical_hessians-fd_step_size
+   responses-numerical_hessians-relative
+   responses-numerical_hessians-absolute
+   responses-numerical_hessians-bounds
+   responses-numerical_hessians-forward
+   responses-numerical_hessians-central
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+--------------------+-----------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword     | Dakota Keyword Description                    |
+|                         | Group              |                    |                                               |
++=========================+====================+====================+===============================================+
+| Optional                                     | `fd_step_size`__   | Step size used when computing gradients and   |
+|                                              |                    | Hessians                                      |
++-------------------------+--------------------+--------------------+-----------------------------------------------+
+| Optional (Choose One)   | Step Scaling       | `relative`__       | (Default) Scale step size by the parameter    |
+|                         |                    |                    | value                                         |
+|                         |                    +--------------------+-----------------------------------------------+
+|                         |                    | `absolute`__       | Do not scale step-size                        |
+|                         |                    +--------------------+-----------------------------------------------+
+|                         |                    | `bounds`__         | Scale step-size by the domain of the          |
+|                         |                    |                    | parameter                                     |
++-------------------------+--------------------+--------------------+-----------------------------------------------+
+| Optional (Choose One)   | Finite Difference  | `forward`__        | (Default) Use forward differences             |
+|                         | Type               +--------------------+-----------------------------------------------+
+|                         |                    | `central`__        | Use central differences                       |
++-------------------------+--------------------+--------------------+-----------------------------------------------+
+
+.. __: responses-numerical_hessians-fd_step_size.html
+__ responses-numerical_hessians-relative.html
+__ responses-numerical_hessians-absolute.html
+__ responses-numerical_hessians-bounds.html
+__ responses-numerical_hessians-forward.html
+__ responses-numerical_hessians-central.html
+
+
+
+**Description**
+
+
+The ``numerical_hessians`` specification means that Hessian information
+is needed and will be computed with finite differences using either
+first-order gradient differencing (for the cases of
+``analytic_gradients`` or for the functions identified by
+``id_analytic_gradients`` in the case of ``mixed_gradients``) or first- or
+second-order function value differencing (all other gradient
+specifications). In the former case, the following expression
+
+.. math:: 
+
+   \nabla^2 f ({\bf x})_i ong
+   \frac{\nabla f ({\bf x} + h {\bf e}_i) - \nabla f ({\bf x})}{h}
+
+estimates the :math:`i^{th}`  Hessian column, and in the latter case, the
+following expressions
+
+.. math:: 
+
+   \nabla^2 f ({\bf x})_{i,j} ong ````\frac{f({\bf x} + h_i {\bf e}_i + h_j {\bf e}_j) -
+   f({\bf x} + h_i {\bf e}_i) -
+   f({\bf x} - h_j {\bf e}_j) +
+   f({\bf x})}{h_i h_j}
+
+and
+
+.. math:: 
+
+   \nabla^2 f ({\bf x})_{i,j} ong ````\frac{f({\bf x} + h {\bf e}_i + h {\bf e}_j) -
+   f({\bf x} + h {\bf e}_i - h {\bf e}_j) -
+   f({\bf x} - h {\bf e}_i + h {\bf e}_j) +
+   f({\bf x} - h {\bf e}_i - h {\bf e}_j)}{4h^2}
+
+provide first- and second-order estimates of the :math:`ij^{th}`  Hessian term.
+Prior to Dakota 5.0, Dakota always used second-order estimates.
+In Dakota 5.0 and newer, the default is to use first-order estimates
+(which honor bounds on the variables and
+require only about a quarter as many function evaluations
+as do the second-order estimates), but specifying ``central``
+after ``numerical_hessians`` causes Dakota to use the old second-order
+estimates, which do not honor bounds. In optimization algorithms that
+use Hessians, there is little reason to use second-order differences in
+computing Hessian approximations.
+
+

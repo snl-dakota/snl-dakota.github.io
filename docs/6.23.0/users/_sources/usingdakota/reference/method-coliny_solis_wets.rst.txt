@@ -1,0 +1,158 @@
+.. _method-coliny_solis_wets:
+
+"""""""""""""""""
+coliny_solis_wets
+"""""""""""""""""
+
+
+Simple greedy local search method
+
+
+
+**Topics**
+
+
+package_scolib, package_coliny
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-coliny_solis_wets-contract_after_failure
+   method-coliny_solis_wets-no_expansion
+   method-coliny_solis_wets-expand_after_success
+   method-coliny_solis_wets-constant_penalty
+   method-coliny_solis_wets-contraction_factor
+   method-coliny_solis_wets-constraint_penalty
+   method-coliny_solis_wets-initial_delta
+   method-coliny_solis_wets-variable_tolerance
+   method-coliny_solis_wets-solution_target
+   method-coliny_solis_wets-seed
+   method-coliny_solis_wets-show_misc_options
+   method-coliny_solis_wets-misc_options
+   method-coliny_solis_wets-max_iterations
+   method-coliny_solis_wets-convergence_tolerance
+   method-coliny_solis_wets-max_function_evaluations
+   method-coliny_solis_wets-scaling
+   method-coliny_solis_wets-model_pointer
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+------------------------------+-----------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword               | Dakota Keyword Description                    |
+|                         | Group              |                              |                                               |
++=========================+====================+==============================+===============================================+
+| Optional                                     | `contract_after_failure`__   | The number of unsuccessful cycles prior to    |
+|                                              |                              | contraction.                                  |
++----------------------------------------------+------------------------------+-----------------------------------------------+
+| Optional                                     | `no_expansion`__             | Don't allow expansion of the search pattern   |
++----------------------------------------------+------------------------------+-----------------------------------------------+
+| Optional                                     | `expand_after_success`__     | Set the factor by which a search pattern can  |
+|                                              |                              | be expanded                                   |
++----------------------------------------------+------------------------------+-----------------------------------------------+
+| Optional                                     | `constant_penalty`__         | Use a simple weighted penalty to manage       |
+|                                              |                              | feasibility                                   |
++----------------------------------------------+------------------------------+-----------------------------------------------+
+| Optional                                     | `contraction_factor`__       | Amount by which step length is rescaled       |
++----------------------------------------------+------------------------------+-----------------------------------------------+
+| Optional                                     | `constraint_penalty`__       | Multiplier for the penalty function           |
++----------------------------------------------+------------------------------+-----------------------------------------------+
+| Optional                                     | `initial_delta`__            | Initial step size for derivative-free         |
+|                                              |                              | optimizers                                    |
++----------------------------------------------+------------------------------+-----------------------------------------------+
+| Optional                                     | `variable_tolerance`__       | Step length-based stopping criteria for       |
+|                                              |                              | derivative-free optimizers                    |
++----------------------------------------------+------------------------------+-----------------------------------------------+
+| Optional                                     | `solution_target`__          | Stopping criteria based on objective function |
+|                                              |                              | value                                         |
++----------------------------------------------+------------------------------+-----------------------------------------------+
+| Optional                                     | `seed`__                     | Seed of the random number generator           |
++----------------------------------------------+------------------------------+-----------------------------------------------+
+| Optional                                     | `show_misc_options`__        | Show algorithm parameters not exposed in      |
+|                                              |                              | Dakota input                                  |
++----------------------------------------------+------------------------------+-----------------------------------------------+
+| Optional                                     | `misc_options`__             | Set method options not available through      |
+|                                              |                              | Dakota spec                                   |
++----------------------------------------------+------------------------------+-----------------------------------------------+
+| Optional                                     | `max_iterations`__           | Number of iterations allowed for optimizers   |
+|                                              |                              | and adaptive UQ methods                       |
++----------------------------------------------+------------------------------+-----------------------------------------------+
+| Optional                                     | `convergence_tolerance`__    | Stopping criterion based on objective         |
+|                                              |                              | function or statistics convergence            |
++----------------------------------------------+------------------------------+-----------------------------------------------+
+| Optional                                     | `max_function_evaluations`__ | Number of function evaluations allowed for    |
+|                                              |                              | optimizers                                    |
++----------------------------------------------+------------------------------+-----------------------------------------------+
+| Optional                                     | `scaling`__                  | Turn on scaling for variables, responses, and |
+|                                              |                              | constraints                                   |
++----------------------------------------------+------------------------------+-----------------------------------------------+
+| Optional                                     | `model_pointer`__            | Identifier for model block to be used by a    |
+|                                              |                              | method                                        |
++----------------------------------------------+------------------------------+-----------------------------------------------+
+
+.. __: method-coliny_solis_wets-contract_after_failure.html
+__ method-coliny_solis_wets-no_expansion.html
+__ method-coliny_solis_wets-expand_after_success.html
+__ method-coliny_solis_wets-constant_penalty.html
+__ method-coliny_solis_wets-contraction_factor.html
+__ method-coliny_solis_wets-constraint_penalty.html
+__ method-coliny_solis_wets-initial_delta.html
+__ method-coliny_solis_wets-variable_tolerance.html
+__ method-coliny_solis_wets-solution_target.html
+__ method-coliny_solis_wets-seed.html
+__ method-coliny_solis_wets-show_misc_options.html
+__ method-coliny_solis_wets-misc_options.html
+__ method-coliny_solis_wets-max_iterations.html
+__ method-coliny_solis_wets-convergence_tolerance.html
+__ method-coliny_solis_wets-max_function_evaluations.html
+__ method-coliny_solis_wets-scaling.html
+__ method-coliny_solis_wets-model_pointer.html
+
+
+
+**Description**
+
+
+The Solis-Wets method is a simple greedy local search heuristic for
+continuous parameter spaces. Solis-Wets generates trial points using a
+multivariate normal distribution, and unsuccessful trial points are
+reflected about the current point to find a descent direction.
+
+.. note::
+    See the page :ref:`topic-package_scolib` for important information
+    regarding all SCOLIB methods.
+
+``coliny_solis_wets`` is inherently serial, no concurrency is used.
+
+These specifications have the same meaning as corresponding
+specifications for :dakkw:`method-coliny_pattern_search`. Please see that
+page for specification details.
+
+In particular, ``coliny_solis_wets`` supports dynamic rescaling of the
+step length, and dynamic rescaling of the constraint penalty. The only
+new specification is ``contract_after_failure``, which specifies the
+number of unsuccessful cycles which must occur with a specific delta
+prior to contraction of the delta.
+
+*Expected HDF5 Output*
+
+If Dakota was built with HDF5 support and run with the
+:dakkw:`environment-results_output-hdf5` keyword, this method
+writes the following results to HDF5:
+
+
+- :ref:`hdf5_results-best_params`
+- :ref:`hdf5_results-best_obj_fncs` (when :dakkw:`responses-objective_functions`) are specified)
+- :ref:`hdf5_results-best_constraints`
+- :ref:`hdf5_results-calibration` (when :dakkw:`responses-calibration_terms` are specified)
+
+

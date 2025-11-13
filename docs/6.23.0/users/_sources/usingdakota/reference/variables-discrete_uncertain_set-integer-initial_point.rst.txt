@@ -1,0 +1,52 @@
+.. _variables-discrete_uncertain_set-integer-initial_point:
+
+"""""""""""""
+initial_point
+"""""""""""""
+
+
+Initial values for variables
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* INTEGERLIST
+
+
+**Description**
+
+
+Specifies the initial or default value a variable should assume, for
+example when starting a method or fixing the value of an inactive
+variable.
+
+*Default Behavior*
+
+Range variables, including :dakkw:`variables-continuous_design`,
+:dakkw:`variables-continuous_state`, :dakkw:`variables-discrete_design_range`, and
+:dakkw:`variables-discrete_state_range` are initialized to:
+
+
+- Mean/midpoint (or next smaller integer value) when doubly-bounded
+- 0 when unbounded
+- 0 when semi-bounded and zero is in the half interval, otherwise to     the specified lower or upper bound
+
+Set variables, including :dakkw:`variables-discrete_design_set` and
+:dakkw:`variables-discrete_state_set` default to the middle (or next smaller)
+value of the ordered set of admissible values.
+
+Uncertain variables default initialize to their mean (or nearest
+admissible discrete) value, truncating to any specified lower or upper
+bounds as needed. Epistemic uncertain variable means are calculated
+making a probabilistic assumption on the specified intervals or set
+values.
+
+

@@ -1,0 +1,40 @@
+.. _method-hybrid-collaborative-iterator_scheduling-dedicated:
+
+"""""""""
+dedicated
+"""""""""
+
+
+Specify a dedicated scheduler partition for concurrent iterator executions
+
+
+
+**Topics**
+
+
+concurrency_and_parallelism
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+
+**Description**
+
+
+This option overrides the Dakota parallel automatic configuration, forcing
+the use of a dedicated scheduler partition. In this partition, one processor
+(the "dedicated scheduler") dynamically schedules work on the iterator
+servers. This reduces the number of processors available to create servers
+by 1.
+
+

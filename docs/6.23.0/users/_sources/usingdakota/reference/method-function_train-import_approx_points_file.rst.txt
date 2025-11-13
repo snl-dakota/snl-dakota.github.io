@@ -1,0 +1,80 @@
+.. _method-function_train-import_approx_points_file:
+
+"""""""""""""""""""""""""
+import_approx_points_file
+"""""""""""""""""""""""""
+
+
+Filename for points at which to evaluate the PCE/SC surrogate
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-function_train-import_approx_points_file-custom_annotated
+   method-function_train-import_approx_points_file-annotated
+   method-function_train-import_approx_points_file-freeform
+   method-function_train-import_approx_points_file-active_only
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* STRING
+
+- *Default:* no point import from a file
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+----------------------+-----------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword       | Dakota Keyword Description                    |
+|                         | Group              |                      |                                               |
++=========================+====================+======================+===============================================+
+| Optional (Choose One)   | Tabular Format     | `custom_annotated`__ | Selects custom-annotated tabular file format  |
+|                         |                    +----------------------+-----------------------------------------------+
+|                         |                    | `annotated`__        | Selects annotated tabular file format         |
+|                         |                    +----------------------+-----------------------------------------------+
+|                         |                    | `freeform`__         | Selects freeform file format                  |
++-------------------------+--------------------+----------------------+-----------------------------------------------+
+| Optional                                     | `active_only`__      | Import only active variables from tabular     |
+|                                              |                      | data file                                     |
++----------------------------------------------+----------------------+-----------------------------------------------+
+
+.. __: method-function_train-import_approx_points_file-custom_annotated.html
+__ method-function_train-import_approx_points_file-annotated.html
+__ method-function_train-import_approx_points_file-freeform.html
+__ method-function_train-import_approx_points_file-active_only.html
+
+
+
+**Description**
+
+
+*Default Behavior*
+No import of points at which to evaluate the surrogate.
+
+*Expected Output*
+The PCE/SC surrogate model will be evaluated at the list of points
+(input variable values) provided in the file and results tabulated
+and/or statistics computed at them, depending on the method context.
+
+
+
+**Examples**
+
+
+
+.. code-block::
+
+    method
+      polynomial_chaos
+        expansion_order = 4
+        import_approx_points_file = 'import.mcmc_annot.dat'
+          annotated
+
+
+
+

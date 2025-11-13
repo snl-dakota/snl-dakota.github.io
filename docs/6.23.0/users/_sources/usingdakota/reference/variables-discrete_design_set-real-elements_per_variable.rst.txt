@@ -1,0 +1,36 @@
+.. _variables-discrete_design_set-real-elements_per_variable:
+
+"""""""""""""""""""""
+elements_per_variable
+"""""""""""""""""""""
+
+
+Number of admissible elements for each set variable
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+
+
+**Specification**
+
+- *Alias:* num_set_values 
+
+- *Arguments:* INTEGERLIST
+
+- *Default:* equal distribution
+
+
+**Description**
+
+
+Discrete set variables (including design, uncertain, and state) take
+on only a fixed set of values.  For each type (integer, string, or
+real), this keyword specifies how many admissible values are provided
+for each variable.  If not specified, equal apportionment of elements
+among variables is assumed, and the number of elements must be evenly
+divisible by the number of variables.
+
+

@@ -1,0 +1,65 @@
+.. _method-bayes_calibration-queso-export_chain_points_file:
+
+""""""""""""""""""""""""
+export_chain_points_file
+""""""""""""""""""""""""
+
+
+Export the MCMC chain to the specified filename
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-bayes_calibration-queso-export_chain_points_file-custom_annotated
+   method-bayes_calibration-queso-export_chain_points_file-annotated
+   method-bayes_calibration-queso-export_chain_points_file-freeform
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* STRING
+
+- *Default:* chain export to default filename
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+----------------------+-----------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword       | Dakota Keyword Description                    |
+|                         | Group              |                      |                                               |
++=========================+====================+======================+===============================================+
+| Optional (Choose One)   | Tabular Format     | `custom_annotated`__ | Selects custom-annotated tabular file format  |
+|                         |                    +----------------------+-----------------------------------------------+
+|                         |                    | `annotated`__        | Selects annotated tabular file format         |
+|                         |                    +----------------------+-----------------------------------------------+
+|                         |                    | `freeform`__         | Selects freeform file format                  |
++-------------------------+--------------------+----------------------+-----------------------------------------------+
+
+.. __: method-bayes_calibration-queso-export_chain_points_file-custom_annotated.html
+__ method-bayes_calibration-queso-export_chain_points_file-annotated.html
+__ method-bayes_calibration-queso-export_chain_points_file-freeform.html
+
+
+
+**Description**
+
+
+The filename to which the final MCMC posterior chain will be exported.
+
+*Default Behavior*
+No export to file.
+
+*Expected Output*
+
+A tabular data file will be produced in the specified format
+(annotated by default) containing samples from the posterior distribution.
+
+*Usage Tips*
+
+*Additional Discussion*
+
+

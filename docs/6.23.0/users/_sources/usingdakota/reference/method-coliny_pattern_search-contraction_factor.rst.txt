@@ -1,0 +1,35 @@
+.. _method-coliny_pattern_search-contraction_factor:
+
+""""""""""""""""""
+contraction_factor
+""""""""""""""""""
+
+
+Amount by which step length is rescaled
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* REAL
+
+- *Default:* 0.5
+
+
+**Description**
+
+
+For pattern search methods, ``contraction_factor`` specifies the amount
+by which step length is rescaled after unsuccesful iterates, must be
+strictly between 0 and 1.
+
+For methods that can expand the step length, the expansion is 1/ ``contraction_factor``
+
+

@@ -1,0 +1,63 @@
+.. _responses-calibration_terms-calibration_data-scalar_data_file:
+
+""""""""""""""""
+scalar_data_file
+""""""""""""""""
+
+
+Specify a scalar data file to complement field data files (mixed case)
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   responses-calibration_terms-calibration_data-scalar_data_file-custom_annotated
+   responses-calibration_terms-calibration_data-scalar_data_file-annotated
+   responses-calibration_terms-calibration_data-scalar_data_file-freeform
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* STRING
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+----------------------+-----------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword       | Dakota Keyword Description                    |
+|                         | Group              |                      |                                               |
++=========================+====================+======================+===============================================+
+| Optional (Choose One)   | Tabular Format     | `custom_annotated`__ | Selects custom-annotated tabular file format  |
+|                         |                    |                      | for experiment data                           |
+|                         |                    +----------------------+-----------------------------------------------+
+|                         |                    | `annotated`__        | Selects annotated tabular file format for     |
+|                         |                    |                      | experiment data                               |
+|                         |                    +----------------------+-----------------------------------------------+
+|                         |                    | `freeform`__         | Selects free-form tabular file format for     |
+|                         |                    |                      | experiment data                               |
++-------------------------+--------------------+----------------------+-----------------------------------------------+
+
+.. __: responses-calibration_terms-calibration_data-scalar_data_file-custom_annotated.html
+__ responses-calibration_terms-calibration_data-scalar_data_file-annotated.html
+__ responses-calibration_terms-calibration_data-scalar_data_file-freeform.html
+
+
+
+**Description**
+
+
+When calibrating both scalar and field calibration terms, to
+associated experimental data, the scalar data may be provided in the
+file named by ``scalar_data_file``.  This file follows the same format
+as: :dakkw:`responses-calibration_terms-calibration_data_file`.
+
+*Default Behavior*
+
+If ``scalar_data_file`` is omitted, all calibration data, including for
+scalar responses, will be read from the generic field
+``calibration_data`` format.
+
+

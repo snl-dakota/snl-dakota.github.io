@@ -1,0 +1,39 @@
+.. _method-multilevel_function_train-arithmetic_tolerance:
+
+""""""""""""""""""""
+arithmetic_tolerance
+""""""""""""""""""""
+
+
+A secondary rounding tolerance used for post-processing
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* REAL
+
+- *Default:* 1.e-10
+
+
+**Description**
+
+
+After forming one or more function train approximations, this
+tolerance is used for rolling up final results, in particular,
+combining multilevel/multifidelity expansions and forming products for
+higher-order moment estimation.  It is generally intended as a looser
+tolerance than ``rounding_tolerance``.
+
+*Default Behavior*
+
+If this tolerance is not specified, then we adopt the internal C3 default.
+
+

@@ -1,0 +1,34 @@
+.. _interface-analysis_drivers-fork-allow_existing_results:
+
+""""""""""""""""""""""
+allow_existing_results
+""""""""""""""""""""""
+
+
+Change how Dakota deals with existing results files
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+- *Default:* results files removed before each evaluation
+
+
+**Description**
+
+
+By default Dakota will remove existing results files before invoking
+the ``analysis_driver`` to avoid problems created by stale files in the
+current directory. To override this behavior and not delete existing
+files, specify ``allow_existing_results``.
+
+

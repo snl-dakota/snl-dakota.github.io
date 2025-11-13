@@ -1,0 +1,42 @@
+.. _method-ncsu_direct-min_boxsize_limit:
+
+"""""""""""""""""
+min_boxsize_limit
+"""""""""""""""""
+
+
+Stopping Criterion based on shortest edge of hyperrectangle
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* REAL
+
+- *Default:* 1.0e-4
+
+
+**Description**
+
+
+``min_boxsize_limit`` is a setting that terminates the optimization
+when the measure of a hyperrectangle S with f(c(S)) = fmin is less
+than min_boxsize_limit.
+
+Each subregion considered by DIRECT has a \b size, which corresponds
+to the longest diagonal of the subregion.
+
+``min_boxsize_limit`` specification terminates DIRECT if the size of
+the smallest subregion falls below this threshold.
+
+In practice, this specification is likely to be more effective at
+limiting DIRECT's search.
+
+

@@ -1,0 +1,55 @@
+.. _variables-linear_equality_targets:
+
+"""""""""""""""""""""""
+linear_equality_targets
+"""""""""""""""""""""""
+
+
+Define target values for the linear equality constraints
+
+
+
+
+**Topics**
+
+
+linear_constraints
+
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* REALLIST
+
+- *Default:* vector values = 0 .
+
+
+**Description**
+
+
+In the equality case, the targets :math:`a_t`  provide the equality constraint right hand sides:
+
+.. math:: Ax = a_t
+
+If this is not specified, the defaults for the equality constraint targets enforce a value of ``0``. for each constraint:
+
+.. math:: Ax = 0.0
+
+
+
+
+**Examples**
+
+
+Examples of specifying linear equality constraints to Dakota are provided on the :dakkw:`variables-linear_equality_constraint_matrix` page.
+
+
+

@@ -1,0 +1,44 @@
+.. _model-nested-optional_interface_pointer-optional_interface_responses_pointer:
+
+""""""""""""""""""""""""""""""""""""
+optional_interface_responses_pointer
+""""""""""""""""""""""""""""""""""""
+
+
+Pointer to responses block that defines non-nested responses
+
+
+
+**Topics**
+
+
+block_pointer
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* STRING
+
+- *Default:* reuse of top-level responses specification
+
+
+**Description**
+
+
+``optional_interface_responses_pointer`` points to the reponses block (specifically,
+its :dakkw:`responses-id_responses` label) that defines the non-nested response to return
+to the nested model. The ``primary_response_mapping`` keywords control how these
+non-nested respones are combined with responses from the nested sub-iterator. See the
+entry for ``optional_interface_pointer`` for a full description. If
+``optional_interface_responses_pointer`` is not provided, the top-level.
+responses specification is reused.
+
+

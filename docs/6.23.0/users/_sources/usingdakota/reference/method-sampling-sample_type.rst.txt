@@ -1,0 +1,93 @@
+.. _method-sampling-sample_type:
+
+"""""""""""
+sample_type
+"""""""""""
+
+
+Selection of sampling strategy
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-sampling-sample_type-lhs
+   method-sampling-sample_type-random
+   method-sampling-sample_type-incremental_lhs
+   method-sampling-sample_type-incremental_random
+   method-sampling-sample_type-low_discrepancy
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+- *Default:* lhs
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+------------------------+-----------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword         | Dakota Keyword Description                    |
+|                         | Group              |                        |                                               |
++=========================+====================+========================+===============================================+
+| Required (Choose One)   | Sample Type        | `lhs`__                | Uses Latin Hypercube Sampling (LHS) to sample |
+|                         |                    |                        | variables                                     |
+|                         |                    +------------------------+-----------------------------------------------+
+|                         |                    | `random`__             | Uses purely random Monte Carlo sampling to    |
+|                         |                    |                        | sample variables                              |
+|                         |                    +------------------------+-----------------------------------------------+
+|                         |                    | `incremental_lhs`__    | (Deprecated keyword) Augments an existing     |
+|                         |                    |                        | Latin Hypercube Sampling (LHS) study          |
+|                         |                    +------------------------+-----------------------------------------------+
+|                         |                    | `incremental_random`__ | (Deprecated keyword) Augments an existing     |
+|                         |                    |                        | random sampling study                         |
+|                         |                    +------------------------+-----------------------------------------------+
+|                         |                    | `low_discrepancy`__    | Uses low-discrepancy points to sample         |
+|                         |                    |                        | variables                                     |
++-------------------------+--------------------+------------------------+-----------------------------------------------+
+
+.. __: method-sampling-sample_type-lhs.html
+__ method-sampling-sample_type-random.html
+__ method-sampling-sample_type-incremental_lhs.html
+__ method-sampling-sample_type-incremental_random.html
+__ method-sampling-sample_type-low_discrepancy.html
+
+
+
+**Description**
+
+
+The ``sample_type`` keyword allows the user to select between three types
+of sampling: Monte Carlo (pure random), Latin hypercube
+(stratified), and low-discrepancy (quasi-Monte Carlo) sampling.
+
+The incremental keywords are deprecated; instead use ``samples``
+together with ``refinement_samples``.
+
+*Default Behavior*
+
+If the ``sample_type`` keyword is present, it must be accompanied by
+``lhs``, ``random`` or ``low_discrepancy``.  In most contexts, ``lhs`` is the 
+default (exception: multilevel_sampling uses Monte Carlo by default).
+
+
+
+**Examples**
+
+
+
+.. code-block::
+
+    method
+      sampling
+        sample_type lhs
+        samples = 20
+        seed = 83921
+
+
+
+

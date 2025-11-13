@@ -1,0 +1,62 @@
+.. _method-adaptive_sampling-fitness_metric:
+
+""""""""""""""
+fitness_metric
+""""""""""""""
+
+
+(Experimental) Specify the ``fitness_metric`` used to select the next point
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-adaptive_sampling-fitness_metric-predicted_variance
+   method-adaptive_sampling-fitness_metric-distance
+   method-adaptive_sampling-fitness_metric-gradient
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+- *Default:* predicted_variance
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+------------------------+-----------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword         | Dakota Keyword Description                    |
+|                         | Group              |                        |                                               |
++=========================+====================+========================+===============================================+
+| Required (Choose One)   | Fitness Metric     | `predicted_variance`__ | Pick points with highest variance             |
+|                         |                    +------------------------+-----------------------------------------------+
+|                         |                    | `distance`__           | Space filling metric                          |
+|                         |                    +------------------------+-----------------------------------------------+
+|                         |                    | `gradient`__           | Fill the range space of the surrogate         |
++-------------------------+--------------------+------------------------+-----------------------------------------------+
+
+.. __: method-adaptive_sampling-fitness_metric-predicted_variance.html
+__ method-adaptive_sampling-fitness_metric-distance.html
+__ method-adaptive_sampling-fitness_metric-gradient.html
+
+
+
+**Description**
+
+
+``adaptive`` sampling is an experimental capability that is not ready
+for production use at this time.
+
+The user can specify the ``fitness_metric`` used to select the
+next point (or points) to evaluate and add to the set.
+The fitness metrics used for scoring candidate points include:
+
+- ``predicted_variance``
+- ``distance``
+- ``gradient``
+
+

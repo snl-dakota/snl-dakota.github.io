@@ -1,0 +1,39 @@
+.. _method-coliny_ea-replacement_type-chc:
+
+"""
+chc
+"""
+
+
+Create new population using replacement
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* INTEGER
+
+
+**Description**
+
+
+The ``replacement_type`` controls how current populations and newly
+generated individuals are combined to create a new population.  Each
+of the ``replacement_type`` selections accepts an integer value, which
+is referred as the ``replacement_size``:
+
+The ``chc`` setting creates a new population using (a) the
+``replacement_size`` best individuals from the *combination* of the
+current population and the newly generated individuals, and (b)
+``population_size`` - ``replacement_size`` individuals randomly selected
+from among the remaining individuals in this combined pool.  The
+``chc`` setting is the preferred selection for many engineering problems.
+
+

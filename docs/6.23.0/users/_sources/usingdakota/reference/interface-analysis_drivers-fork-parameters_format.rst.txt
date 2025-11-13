@@ -1,0 +1,79 @@
+.. _interface-analysis_drivers-fork-parameters_format:
+
+"""""""""""""""""
+parameters_format
+"""""""""""""""""
+
+
+Format of the parameters file
+
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   interface-analysis_drivers-fork-parameters_format-standard
+   interface-analysis_drivers-fork-parameters_format-aprepro
+   interface-analysis_drivers-fork-parameters_format-json
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+- *Default:* standard format
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+--------------------+-----------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword     | Dakota Keyword Description                    |
+|                         | Group              |                    |                                               |
++=========================+====================+====================+===============================================+
+| Required (Choose One)   | Parameters file    | `standard`__       | Use the standard format for parameters files  |
+|                         | format             +--------------------+-----------------------------------------------+
+|                         |                    | `aprepro`__        | Use the APREPRO format for parameters files   |
+|                         |                    +--------------------+-----------------------------------------------+
+|                         |                    | `json`__           | Use the JSON format for parameters files      |
++-------------------------+--------------------+--------------------+-----------------------------------------------+
+
+.. __: interface-analysis_drivers-fork-parameters_format-standard.html
+__ interface-analysis_drivers-fork-parameters_format-aprepro.html
+__ interface-analysis_drivers-fork-parameters_format-json.html
+
+
+
+**Description**
+
+
+
+This keyword group is used to select from among the supported
+parameters file formats.
+
+*Default Behavior*
+
+By default, the `standard` format is used.
+
+
+
+
+
+**Examples**
+
+
+
+.. code-block::
+
+    interface
+      fork
+      analysis_drivers 'driver.py'
+      parameters_file = "params.in"
+      results_file = "results.out"
+      parameters_format
+        json
+    
+
+

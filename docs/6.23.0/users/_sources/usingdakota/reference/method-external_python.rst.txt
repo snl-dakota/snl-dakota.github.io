@@ -1,0 +1,74 @@
+.. _method-external_python:
+
+"""""""""""""""
+external_python
+"""""""""""""""
+
+
+Use the external python methods interface
+
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-external_python-class_path_and_name
+   method-external_python-options_file
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+-------------------------+-----------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword          | Dakota Keyword Description                    |
+|                         | Group              |                         |                                               |
++=========================+====================+=========================+===============================================+
+| Required                                     | `class_path_and_name`__ | Specify the module and class name of the      |
+|                                              |                         | external python method                        |
++----------------------------------------------+-------------------------+-----------------------------------------------+
+| Optional                                     | `options_file`__        | Filename to pass to exteral python methods    |
++----------------------------------------------+-------------------------+-----------------------------------------------+
+
+.. __: method-external_python-class_path_and_name.html
+__ method-external_python-options_file.html
+
+
+
+**Description**
+
+
+This is an experimental capability that allows the user to expose
+python algorithms to Dakota as top-level Iterators.  The Dakota model
+is available to python and supplies function, gradient, and hessian
+responses as appropriate in addition to helper functions for model
+queries and output to the Dakota output stream.
+
+The code example below shows class initialization which outputs the
+wrapped model 'executor' docstring.
+
+
+
+
+**Examples**
+
+
+
+.. code-block::
+
+  import ext_method
+
+  class RandomSample:
+
+      def __init__(self, executor, params_file=None):
+          self.executor = executor
+          help(self.executor)
+
+
+

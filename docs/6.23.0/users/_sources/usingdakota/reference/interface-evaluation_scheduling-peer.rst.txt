@@ -1,0 +1,59 @@
+.. _interface-evaluation_scheduling-peer:
+
+""""
+peer
+""""
+
+
+Specify a peer partition for parallel evaluation scheduling
+
+
+
+**Topics**
+
+
+concurrency_and_parallelism
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   interface-evaluation_scheduling-peer-dynamic
+   interface-evaluation_scheduling-peer-static
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+--------------------+-----------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword     | Dakota Keyword Description                    |
+|                         | Group              |                    |                                               |
++=========================+====================+====================+===============================================+
+| Required (Choose One)   | Scheduling Mode    | `dynamic`__        | Specify dynamic scheduling in a peer          |
+|                         |                    |                    | partition when Dakota is run in parallel.     |
+|                         |                    +--------------------+-----------------------------------------------+
+|                         |                    | `static`__         | Specify static scheduling in a peer partition |
+|                         |                    |                    | when Dakota is run in parallel.               |
++-------------------------+--------------------+--------------------+-----------------------------------------------+
+
+.. __: interface-evaluation_scheduling-peer-dynamic.html
+__ interface-evaluation_scheduling-peer-static.html
+
+
+
+**Description**
+
+
+This option overrides the Dakota parallel automatic configuration, forcing
+the use of a peer partition. In a peer partition, all processors are
+available to be assigned to evaluation servers. The scheduling, ``static`` or
+``dynamic``, must also be specified.
+
+

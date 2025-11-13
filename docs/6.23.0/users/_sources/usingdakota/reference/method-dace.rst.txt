@@ -1,0 +1,146 @@
+.. _method-dace:
+
+""""
+dace
+""""
+
+
+Design and Analysis of Computer Experiments
+
+
+
+**Topics**
+
+
+package_ddace, design_and_analysis_of_computer_experiments
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-dace-grid
+   method-dace-random
+   method-dace-oas
+   method-dace-lhs
+   method-dace-oa_lhs
+   method-dace-box_behnken
+   method-dace-central_composite
+   method-dace-samples
+   method-dace-seed
+   method-dace-fixed_seed
+   method-dace-main_effects
+   method-dace-quality_metrics
+   method-dace-variance_based_decomp
+   method-dace-symbols
+   method-dace-model_pointer
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+---------------------------+-----------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword            | Dakota Keyword Description                    |
+|                         | Group              |                           |                                               |
++=========================+====================+===========================+===============================================+
+| Required (Choose One)   | DACE type          | `grid`__                  | Grid Sampling                                 |
+|                         |                    +---------------------------+-----------------------------------------------+
+|                         |                    | `random`__                | Uses purely random Monte Carlo sampling to    |
+|                         |                    |                           | sample variables                              |
+|                         |                    +---------------------------+-----------------------------------------------+
+|                         |                    | `oas`__                   | Orthogonal Array Sampling                     |
+|                         |                    +---------------------------+-----------------------------------------------+
+|                         |                    | `lhs`__                   | Uses Latin Hypercube Sampling (LHS) to sample |
+|                         |                    |                           | variables                                     |
+|                         |                    +---------------------------+-----------------------------------------------+
+|                         |                    | `oa_lhs`__                | Orthogonal Array Latin Hypercube Sampling     |
+|                         |                    +---------------------------+-----------------------------------------------+
+|                         |                    | `box_behnken`__           | Box-Behnken Design                            |
+|                         |                    +---------------------------+-----------------------------------------------+
+|                         |                    | `central_composite`__     | Central Composite Design                      |
++-------------------------+--------------------+---------------------------+-----------------------------------------------+
+| Optional                                     | `samples`__               | Number of samples for sampling-based methods  |
++----------------------------------------------+---------------------------+-----------------------------------------------+
+| Optional                                     | `seed`__                  | Seed of the random number generator           |
++----------------------------------------------+---------------------------+-----------------------------------------------+
+| Optional                                     | `fixed_seed`__            | Reuses the same seed value for multiple       |
+|                                              |                           | random sampling sets                          |
++----------------------------------------------+---------------------------+-----------------------------------------------+
+| Optional                                     | `main_effects`__          | ANOVA                                         |
++----------------------------------------------+---------------------------+-----------------------------------------------+
+| Optional                                     | `quality_metrics`__       | Calculate metrics to assess the quality of    |
+|                                              |                           | quasi-Monte Carlo samples                     |
++----------------------------------------------+---------------------------+-----------------------------------------------+
+| Optional                                     | `variance_based_decomp`__ | Activates global sensitivity analysis based   |
+|                                              |                           | on decomposition of response variance into    |
+|                                              |                           | contributions from variables                  |
++----------------------------------------------+---------------------------+-----------------------------------------------+
+| Optional                                     | `symbols`__               | Number of replications in the sample set      |
++----------------------------------------------+---------------------------+-----------------------------------------------+
+| Optional                                     | `model_pointer`__         | Identifier for model block to be used by a    |
+|                                              |                           | method                                        |
++----------------------------------------------+---------------------------+-----------------------------------------------+
+
+.. __: method-dace-grid.html
+__ method-dace-random.html
+__ method-dace-oas.html
+__ method-dace-lhs.html
+__ method-dace-oa_lhs.html
+__ method-dace-box_behnken.html
+__ method-dace-central_composite.html
+__ method-dace-samples.html
+__ method-dace-seed.html
+__ method-dace-fixed_seed.html
+__ method-dace-main_effects.html
+__ method-dace-quality_metrics.html
+__ method-dace-variance_based_decomp.html
+__ method-dace-symbols.html
+__ method-dace-model_pointer.html
+
+
+
+**Description**
+
+
+The Distributed Design and Analysis of Computer Experiments (DDACE)
+library provides the following DACE techniques:
+
+#. grid sampling ( ``grid``)
+#. pure random sampling ( ``random``)
+#. orthogonal array sampling ( ``oas``)
+#. latin hypercube sampling ( ``lhs``)
+#. orthogonal array latin hypercube sampling ( ``oa_lhs``)
+#. Box-Behnken ( ``box_behnken``)
+#. central composite design ( ``central_composite``)
+
+These methods all generate point sets that may be used to drive a set of
+computer experiments.  Note that all of the DACE methods generated
+randomized designs, except for Box-Behnken and Central composite which
+are classical designs.  That is, the grid sampling will generate a
+randomized grid, not what one typically thinks of as a grid
+of uniformly spaced points over a rectangular grid.  Similar,
+the orthogonal array is a randomized version of an orthogonal
+array:  it does not generate discrete, fixed levels.
+
+In addition to the selection of the method, there are keywords
+that affect the method outputs:
+
+#. :dakkw:`method-dace-main_effects`
+#. :dakkw:`method-dace-quality_metrics`
+#. :dakkw:`method-dace-variance_based_decomp`
+
+And keywords that affect the sampling:
+
+#. :dakkw:`method-dace-fixed_seed`
+#. :dakkw:`method-dace-symbols`
+#. :dakkw:`method-dace-samples`
+#. :dakkw:`method-dace-seed`
+
+
+

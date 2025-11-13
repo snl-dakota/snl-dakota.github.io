@@ -1,0 +1,49 @@
+.. _model-surrogate-global-neural_network-max_nodes:
+
+"""""""""
+max_nodes
+"""""""""
+
+
+Maximum number of hidden layer nodes
+
+
+
+**Topics**
+
+
+surrogate_models
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+
+
+**Specification**
+
+- *Alias:* nodes 
+
+- *Arguments:* INTEGER
+
+- *Default:* numTrainingData - 1
+
+
+**Description**
+
+
+Limits the maximum number of hidden layer nodes in the neural network
+model.  The default is to use one less node than the number of
+available training data points yielding a fully-determined linear
+least squares problem.  However, reducing the number of nodes can help
+reduce overfitting and more importantly, can drastically reduce
+surrogate construction time when building from a large data set.
+(Historically, Dakota limited the number of nodes to 100.)
+
+The keyword ``max_nodes`` provides an upper bound.  Dakota's orthogonal
+matching pursuit algorithm may further reduce the effective number of
+nodes in the final model to achieve better generalization to unseen
+points.
+
+

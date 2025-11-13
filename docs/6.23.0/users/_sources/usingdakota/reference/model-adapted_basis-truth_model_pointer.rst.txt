@@ -1,0 +1,67 @@
+.. _model-adapted_basis-truth_model_pointer:
+
+"""""""""""""""""""
+truth_model_pointer
+"""""""""""""""""""
+
+
+Pointer to specify a "truth" model, from which to construct a surrogate
+
+
+
+**Topics**
+
+
+block_pointer
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   model-adapted_basis-truth_model_pointer-sparse_grid_level
+   model-adapted_basis-truth_model_pointer-expansion_order
+   model-adapted_basis-truth_model_pointer-dimension
+   model-adapted_basis-truth_model_pointer-rotation_method
+
+
+**Specification**
+
+- *Alias:* actual_model_pointer 
+
+- *Arguments:* STRING
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+-----------------------+-----------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword        | Dakota Keyword Description                    |
+|                         | Group              |                       |                                               |
++=========================+====================+=======================+===============================================+
+| Required (Choose One)   | Expansion Basis    | `sparse_grid_level`__ | Level to use in sparse grid integration or    |
+|                         | Control            |                       | interpolation                                 |
+|                         |                    +-----------------------+-----------------------------------------------+
+|                         |                    | `expansion_order`__   | The (initial) order of a polynomial expansion |
++-------------------------+--------------------+-----------------------+-----------------------------------------------+
+| Optional                                     | `dimension`__         | Prescribe the number of active dimensions     |
++----------------------------------------------+-----------------------+-----------------------------------------------+
+| Optional                                     | `rotation_method`__   | Method used to build the rotation matrix      |
++----------------------------------------------+-----------------------+-----------------------------------------------+
+
+.. __: model-adapted_basis-truth_model_pointer-sparse_grid_level.html
+__ model-adapted_basis-truth_model_pointer-expansion_order.html
+__ model-adapted_basis-truth_model_pointer-dimension.html
+__ model-adapted_basis-truth_model_pointer-rotation_method.html
+
+
+
+**Description**
+
+
+This must point to a model block, identified by :dakkw:`model-id_model`.
+That model will be run to generate training data, from which a
+surrogate model will be constructed.
+
+See :ref:`topic-block_pointer` for details about pointers.
+
+

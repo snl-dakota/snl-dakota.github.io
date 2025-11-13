@@ -1,0 +1,84 @@
+.. _variables-histogram_point_uncertain-string:
+
+""""""
+string
+""""""
+
+
+String (categorical) valued point histogram variable
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   variables-histogram_point_uncertain-string-pairs_per_variable
+   variables-histogram_point_uncertain-string-abscissas
+   variables-histogram_point_uncertain-string-counts
+   variables-histogram_point_uncertain-string-initial_point
+   variables-histogram_point_uncertain-string-descriptors
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* INTEGER
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+------------------------+-----------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword         | Dakota Keyword Description                    |
+|                         | Group              |                        |                                               |
++=========================+====================+========================+===============================================+
+| Optional                                     | `pairs_per_variable`__ | Number of pairs defining each histogram point |
+|                                              |                        | string variable                               |
++----------------------------------------------+------------------------+-----------------------------------------------+
+| Required                                     | `abscissas`__          | String abscissas for a point histogram        |
++----------------------------------------------+------------------------+-----------------------------------------------+
+| Required                                     | `counts`__             | Counts for string-valued point histogram      |
++----------------------------------------------+------------------------+-----------------------------------------------+
+| Optional                                     | `initial_point`__      | Initial values for variables                  |
++----------------------------------------------+------------------------+-----------------------------------------------+
+| Optional                                     | `descriptors`__        | Labels for the variables                      |
++----------------------------------------------+------------------------+-----------------------------------------------+
+
+.. __: variables-histogram_point_uncertain-string-pairs_per_variable.html
+__ variables-histogram_point_uncertain-string-abscissas.html
+__ variables-histogram_point_uncertain-string-counts.html
+__ variables-histogram_point_uncertain-string-initial_point.html
+__ variables-histogram_point_uncertain-string-descriptors.html
+
+
+
+**Description**
+
+
+This probability mass function is string-valued; the abscissa values
+must all be strings.  The ``n`` abscissa values are paired with ``n``
+``counts`` which indicate the relative frequency (mass) of each string
+relative to the other specified strings.
+
+
+
+**Examples**
+
+
+
+.. code-block::
+
+    histogram_point_uncertain
+      string = 2
+      pairs_per_variable = 2            3
+      abscissas          = 'no' 'yes'   'function1' 'function2' 'function3'
+      counts             = 1     1      1           2           1
+      descriptors        = 'vote'       'which_function'
+
+
+Here there are two variables, the first one ('vote') has two possible
+string values 'yes' and 'no' which are equally probable.  The second
+one has three options for 'which_function', and 'function2' is twice
+as probable as 'function1' or 'function3'.
+
+

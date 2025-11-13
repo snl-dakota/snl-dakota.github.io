@@ -1,0 +1,93 @@
+.. _method-sampling-sample_type-low_discrepancy-rank_1_lattice-generating_vector-predefined:
+
+""""""""""
+predefined
+""""""""""
+
+
+Specify a predefined generating vector
+
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-sampling-sample_type-low_discrepancy-rank_1_lattice-generating_vector-predefined-kuo
+   method-sampling-sample_type-low_discrepancy-rank_1_lattice-generating_vector-predefined-cools_kuo_nuyens
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+- *Default:* Default generating vector
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+----------------------+-----------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword       | Dakota Keyword Description                    |
+|                         | Group              |                      |                                               |
++=========================+====================+======================+===============================================+
+| Required (Choose One)   | Predefined         | `kuo`__              | A generating vector that provides up to 2\    |
+|                         | Generating Vectors |                      | :sup:`20` points in up to 3600 dimensions     |
+|                         |                    +----------------------+-----------------------------------------------+
+|                         |                    | `cools_kuo_nuyens`__ | A generating vector that provides up to 2\    |
+|                         |                    |                      | :sup:`20` points in up to 250 dimensions      |
++-------------------------+--------------------+----------------------+-----------------------------------------------+
+
+.. __: method-sampling-sample_type-low_discrepancy-rank_1_lattice-generating_vector-predefined-kuo.html
+__ method-sampling-sample_type-low_discrepancy-rank_1_lattice-generating_vector-predefined-cools_kuo_nuyens.html
+
+
+
+**Description**
+
+
+Dakota provides two predefined generating vectors:
+
+- :dakkw:`method-sampling-sample_type-low_discrepancy-rank_1_lattice-generating_vector-predefined-cools_kuo_nuyens` (default): generates up to 2\ :sup:`20` points in up to 250 dimensions :cite:p:`Cools06`.
+- :dakkw:`method-sampling-sample_type-low_discrepancy-rank_1_lattice-generating_vector-predefined-kuo`: generates up to 2\ :sup:`20` points in up to 3600 dimensions :cite:p:`Kuo06`.
+
+
+
+
+**Examples**
+
+
+
+.. code-block::
+
+    environment
+      tabular_data
+        tabular_data_file = 'samples.dat'
+        freeform
+
+    method
+      sampling
+        samples 1024
+        sample_type
+          low_discrepancy
+            rank_1_lattice
+              generating_vector predefined kuo
+
+    variables
+      uniform_uncertain = 3
+        lower_bounds 0.0 0.0 0.0
+        upper_bounds 1.0 1.0 1.0
+
+    interface
+      analysis_drivers = 'genz'
+      analysis_components = 'cp1'
+      direct
+
+    responses
+      response_functions = 1
+      no_gradients
+      no_hessians
+
+
+

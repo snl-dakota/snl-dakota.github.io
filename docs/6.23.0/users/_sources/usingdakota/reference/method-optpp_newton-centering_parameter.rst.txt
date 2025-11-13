@@ -1,0 +1,39 @@
+.. _method-optpp_newton-centering_parameter:
+
+"""""""""""""""""""
+centering_parameter
+"""""""""""""""""""
+
+
+Controls how closely the algorithm should follow the "central path"
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* REAL
+
+- *Default:* Merit function dependent: 0.2 (el_bakry), 0.2 (argaez_tapia), 0.1 (van_shanno)
+
+
+**Description**
+
+
+The ``centering_parameter`` specification is a parameter (between 0 and
+1) that controls how closely the algorithm should follow the "central
+path".
+See  :cite:p:`Wright1` for the definition of central
+path. The larger the value, the more closely the algorithm follows the
+central path, which results in small steps. A value of 0 indicates
+that the algorithm will take a pure Newton step. Default values are
+.2, .2, and .1 for the ``el_bakry``, ``argaez_tapia``, and ``van_shanno``
+merit functions, respectively.
+
+

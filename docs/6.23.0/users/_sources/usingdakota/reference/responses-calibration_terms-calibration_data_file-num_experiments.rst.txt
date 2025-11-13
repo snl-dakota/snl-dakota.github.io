@@ -1,0 +1,36 @@
+.. _responses-calibration_terms-calibration_data_file-num_experiments:
+
+"""""""""""""""
+num_experiments
+"""""""""""""""
+
+
+Add context to data: number of different experiments
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* INTEGER
+
+- *Default:* 1
+
+
+**Description**
+
+
+The number of different experiments.  Dakota will expand the total
+number of residual terms based on the number of calibration terms and
+the number of experiments.  For example, if the number of calibration terms
+are five scalars, and there are three experiments, the total number of
+residuals in the least squares formulation will be 15.
+See :dakkw:`responses-calibration_terms-calibration_data` or :dakkw:`responses-calibration_terms-calibration_data_file`.
+
+

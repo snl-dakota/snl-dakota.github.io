@@ -1,0 +1,52 @@
+.. _method-moga-fitness_type:
+
+""""""""""""
+fitness_type
+""""""""""""
+
+
+Select the fitness type for JEGA methods
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-moga-fitness_type-layer_rank
+   method-moga-fitness_type-domination_count
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+- *Default:* domination_count
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+----------------------+-----------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword       | Dakota Keyword Description                    |
+|                         | Group              |                      |                                               |
++=========================+====================+======================+===============================================+
+| Required (Choose One)   | Fitness Type       | `layer_rank`__       | Assign each member to a layer, based on       |
+|                         |                    |                      | domination the rank based on layers           |
+|                         |                    +----------------------+-----------------------------------------------+
+|                         |                    | `domination_count`__ | Rank each member by the number of members     |
+|                         |                    |                      | that dominate it                              |
++-------------------------+--------------------+----------------------+-----------------------------------------------+
+
+.. __: method-moga-fitness_type-layer_rank.html
+__ method-moga-fitness_type-domination_count.html
+
+
+
+**Description**
+
+
+The two JEGA methods use different fitness types, which are described
+on their respective pages.
+
+

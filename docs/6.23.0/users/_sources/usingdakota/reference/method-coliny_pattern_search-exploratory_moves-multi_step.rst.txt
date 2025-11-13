@@ -1,0 +1,34 @@
+.. _method-coliny_pattern_search-exploratory_moves-multi_step:
+
+""""""""""
+multi_step
+""""""""""
+
+
+Examine trial step around successful new point
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+
+**Description**
+
+
+The ``multi_step`` case examines each trial step in the pattern in
+turn.  If a successful step is found, the pattern search continues
+examining trial steps about this new point.  In this manner, the
+effects of multiple successful steps are cumulative within a single
+iteration.  This option does not support any parallelism and will
+result in a serial pattern
+
+

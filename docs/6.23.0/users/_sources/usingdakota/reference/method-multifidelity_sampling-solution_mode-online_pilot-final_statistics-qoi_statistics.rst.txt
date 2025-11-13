@@ -1,0 +1,75 @@
+.. _method-multifidelity_sampling-solution_mode-online_pilot-final_statistics-qoi_statistics:
+
+""""""""""""""
+qoi_statistics
+""""""""""""""
+
+
+Return the quantity of interest (QoI) statistics as the final results of a UQ method
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-multifidelity_sampling-solution_mode-online_pilot-final_statistics-qoi_statistics-final_moments
+   method-multifidelity_sampling-solution_mode-online_pilot-final_statistics-qoi_statistics-distribution
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+--------------------+-----------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword     | Dakota Keyword Description                    |
+|                         | Group              |                    |                                               |
++=========================+====================+====================+===============================================+
+| Optional                                     | `final_moments`__  | Output moments of the specified type and      |
+|                                              |                    | include them within the set of final          |
+|                                              |                    | statistics.                                   |
++----------------------------------------------+--------------------+-----------------------------------------------+
+| Optional                                     | `distribution`__   | Placeholder for future capabilities           |
++----------------------------------------------+--------------------+-----------------------------------------------+
+
+.. __: method-multifidelity_sampling-solution_mode-online_pilot-final_statistics-qoi_statistics-final_moments.html
+__ method-multifidelity_sampling-solution_mode-online_pilot-final_statistics-qoi_statistics-distribution.html
+
+
+
+**Description**
+
+
+In most nested execution contexts, the outer loop is operating
+on the set of moments and level mappings returned by an inner loop UQ method.
+Thus ``qoi_statistics`` is the default.
+
+Sub-specifications include the type of ``final_moments`` ( ``none``, ``standard``,
+or ``central``) and the sense of ``distribution`` functions ( ``cumulative`` or
+``complementary``).
+
+
+
+**Examples**
+
+
+
+.. code-block::
+
+    method,
+     id_method = 'UQ'
+     model_pointer = 'ENSEMBLE'
+     multifidelity_sampling
+       max_function_evaluations = 1000
+       pilot_samples = 25
+       seed = 8674132
+       solution_mode online_pilot
+       final_statistics qoi_statistics
+
+
+
+

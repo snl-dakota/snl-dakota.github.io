@@ -1,0 +1,65 @@
+.. _model-surrogate-multipoint:
+
+""""""""""
+multipoint
+""""""""""
+
+
+Construct a surrogate from multiple existing training points
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   model-surrogate-multipoint-tana
+   model-surrogate-multipoint-qmea
+   model-surrogate-multipoint-truth_model_pointer
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+-------------------------+-----------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword          | Dakota Keyword Description                    |
+|                         | Group              |                         |                                               |
++=========================+====================+=========================+===============================================+
+| Required (Choose One)   | Multipoint         | `tana`__                | Local multi-point model via two-point         |
+|                         | Surrogate          |                         | nonlinear approximation                       |
+|                         |                    +-------------------------+-----------------------------------------------+
+|                         |                    | `qmea`__                | Multi-point surrogate approximation based on  |
+|                         |                    |                         | QMEA algorithm                                |
++-------------------------+--------------------+-------------------------+-----------------------------------------------+
+| Required                                     | `truth_model_pointer`__ | Pointer to specify a "truth" model, from      |
+|                                              |                         | which to construct a surrogate                |
++----------------------------------------------+-------------------------+-----------------------------------------------+
+
+.. __: model-surrogate-multipoint-tana.html
+__ model-surrogate-multipoint-qmea.html
+__ model-surrogate-multipoint-truth_model_pointer.html
+
+
+
+**Description**
+
+
+Multipoint approximations use data from previous design points to
+improve the accuracy of local approximations. The data often
+comes from the current and previous iterates of a minimization algorithm.
+
+Currently, only the
+Two-point Adaptive Nonlinearity Approximation (TANA-3) method of
+:cite:p:`Xu98` is supported with the ``tana`` keyword.
+
+The
+truth model to be used to generate the value/gradient data used in the
+approximation is identified through the required
+``truth_model_pointer`` specification.
+
+

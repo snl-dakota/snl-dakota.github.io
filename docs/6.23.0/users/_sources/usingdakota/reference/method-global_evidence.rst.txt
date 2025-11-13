@@ -1,0 +1,146 @@
+.. _method-global_evidence:
+
+"""""""""""""""
+global_evidence
+"""""""""""""""
+
+
+Evidence theory with evidence measures computed with global optimization methods
+
+
+
+**Topics**
+
+
+epistemic_uncertainty_quantification_methods, evidence_theory
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-global_evidence-samples
+   method-global_evidence-seed
+   method-global_evidence-sbgo
+   method-global_evidence-ego
+   method-global_evidence-ea
+   method-global_evidence-lhs
+   method-global_evidence-response_levels
+   method-global_evidence-probability_levels
+   method-global_evidence-gen_reliability_levels
+   method-global_evidence-distribution
+   method-global_evidence-rng
+   method-global_evidence-model_pointer
+
+
+**Specification**
+
+- *Alias:* nond_global_evidence 
+
+- *Arguments:* None
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+----------------------------+-----------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword             | Dakota Keyword Description                    |
+|                         | Group              |                            |                                               |
++=========================+====================+============================+===============================================+
+| Optional                                     | `samples`__                | Number of samples for sampling-based methods  |
++----------------------------------------------+----------------------------+-----------------------------------------------+
+| Optional                                     | `seed`__                   | Seed of the random number generator           |
++-------------------------+--------------------+----------------------------+-----------------------------------------------+
+| Optional (Choose One)   | Solution Approach  | `sbgo`__                   | Use the surrogate based optimization method   |
+|                         |                    +----------------------------+-----------------------------------------------+
+|                         |                    | `ego`__                    | Use the Efficient Global Optimization method  |
+|                         |                    +----------------------------+-----------------------------------------------+
+|                         |                    | `ea`__                     | Use an evolutionary algorithm                 |
+|                         |                    +----------------------------+-----------------------------------------------+
+|                         |                    | `lhs`__                    | Uses Latin Hypercube Sampling (LHS) to sample |
+|                         |                    |                            | variables                                     |
++-------------------------+--------------------+----------------------------+-----------------------------------------------+
+| Optional                                     | `response_levels`__        | Values at which to estimate desired           |
+|                                              |                            | statistics for each response                  |
++----------------------------------------------+----------------------------+-----------------------------------------------+
+| Optional                                     | `probability_levels`__     | Specify probability levels at which to        |
+|                                              |                            | estimate the corresponding response value     |
++----------------------------------------------+----------------------------+-----------------------------------------------+
+| Optional                                     | `gen_reliability_levels`__ | Specify generalized relability levels at      |
+|                                              |                            | which to estimate the corresponding response  |
+|                                              |                            | value                                         |
++----------------------------------------------+----------------------------+-----------------------------------------------+
+| Optional                                     | `distribution`__           | Selection of cumulative or complementary      |
+|                                              |                            | cumulative functions                          |
++----------------------------------------------+----------------------------+-----------------------------------------------+
+| Optional                                     | `rng`__                    | Selection of a random number generator        |
++----------------------------------------------+----------------------------+-----------------------------------------------+
+| Optional                                     | `model_pointer`__          | Identifier for model block to be used by a    |
+|                                              |                            | method                                        |
++----------------------------------------------+----------------------------+-----------------------------------------------+
+
+.. __: method-global_evidence-samples.html
+__ method-global_evidence-seed.html
+__ method-global_evidence-sbgo.html
+__ method-global_evidence-ego.html
+__ method-global_evidence-ea.html
+__ method-global_evidence-lhs.html
+__ method-global_evidence-response_levels.html
+__ method-global_evidence-probability_levels.html
+__ method-global_evidence-gen_reliability_levels.html
+__ method-global_evidence-distribution.html
+__ method-global_evidence-rng.html
+__ method-global_evidence-model_pointer.html
+
+
+
+**Description**
+
+
+``global_evidence`` allows the user to specify
+several global approaches for calculating the belief and plausibility functions:
+
+- ``lhs`` - note: this takes the minimum and maximum of the samples as the bounds per "interval cell combination."
+- ``ego`` - uses Efficient Global Optimization which is based on an adaptive Gaussian process surrogate.
+- ``sbo`` - uses a Gaussian process surrogate (non-adaptive) within an optimization process.
+- ``ea`` - uses an evolutionary algorithm.  This can be expensive as the ea will be run for each interval cell combination.
+
+
+Note that to calculate the plausibility and belief cumulative
+distribution functions, one has to look at all combinations of
+intervals for the uncertain variables. In terms of implementation, if
+one is using LHS sampling as outlined above, this method creates a
+large sample over the response surface, then examines each cell to
+determine the minimum and maximum sample values within each cell. To
+do this, one needs to set the number of samples relatively high: the
+default is 10,000 and we recommend at least that number. If the model
+you are running is a simulation that is computationally quite
+expensive, we recommend that you set up a surrogate model within the
+Dakota input file so that ``global_evidence`` performs its sampling and
+calculations on the surrogate and not on the original model. If one
+uses optimization methods instead to find the minimum and maximum
+sample values within each cell, this can also be computationally
+expensive.
+
+*Additional Resources*
+
+See the topic page :ref:`topic-evidence_theory` for important
+background information and usage notes.
+
+Refer to :ref:`topic-variable_support` for information on supported
+variable types.
+
+
+
+**Theory**
+
+
+The basic idea is that one specifies an "evidence structure"
+on uncertain inputs and propagates that to obtain belief and
+plausibility functions on the response functions. The inputs are
+defined by sets of intervals and Basic Probability Assignments (BPAs).
+Evidence propagation is computationally expensive, since the minimum
+and maximum function value must be calculated for each "interval cell
+combination." These bounds are aggregated into belief and
+plausibility.
+
+

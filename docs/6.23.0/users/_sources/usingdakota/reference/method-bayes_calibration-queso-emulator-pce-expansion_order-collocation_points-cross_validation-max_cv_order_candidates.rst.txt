@@ -1,0 +1,35 @@
+.. _method-bayes_calibration-queso-emulator-pce-expansion_order-collocation_points-cross_validation-max_cv_order_candidates:
+
+"""""""""""""""""""""""
+max_cv_order_candidates
+"""""""""""""""""""""""
+
+
+Limit the number of cross-validation candidates for basis order
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* INTEGER
+
+- *Default:* ushort max
+
+
+**Description**
+
+
+When generating refinement candidates by advancing the upper bound used
+for a cross-validation range, the number of cross-validation can eventually
+become excessive and hamper algorithm progress.  This control limits the
+maximum number of candidates, which when active, will increase the lower
+bound for this range as the upper bound is advanced.
+
+

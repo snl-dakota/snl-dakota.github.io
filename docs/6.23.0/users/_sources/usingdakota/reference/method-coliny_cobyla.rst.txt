@@ -1,0 +1,153 @@
+.. _method-coliny_cobyla:
+
+"""""""""""""
+coliny_cobyla
+"""""""""""""
+
+
+Constrained Optimization BY Linear Approximations (COBYLA)
+
+
+
+**Topics**
+
+
+package_scolib, package_coliny, local_optimization_methods, constrained
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-coliny_cobyla-initial_delta
+   method-coliny_cobyla-variable_tolerance
+   method-coliny_cobyla-solution_target
+   method-coliny_cobyla-seed
+   method-coliny_cobyla-show_misc_options
+   method-coliny_cobyla-misc_options
+   method-coliny_cobyla-max_iterations
+   method-coliny_cobyla-convergence_tolerance
+   method-coliny_cobyla-max_function_evaluations
+   method-coliny_cobyla-scaling
+   method-coliny_cobyla-model_pointer
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+------------------------------+-----------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword               | Dakota Keyword Description                    |
+|                         | Group              |                              |                                               |
++=========================+====================+==============================+===============================================+
+| Optional                                     | `initial_delta`__            | Reasonable initial changes to optimization    |
+|                                              |                              | variables                                     |
++----------------------------------------------+------------------------------+-----------------------------------------------+
+| Optional                                     | `variable_tolerance`__       | Required or expected accuracy in optimization |
+|                                              |                              | variables.                                    |
++----------------------------------------------+------------------------------+-----------------------------------------------+
+| Optional                                     | `solution_target`__          | Stopping criteria based on objective function |
+|                                              |                              | value                                         |
++----------------------------------------------+------------------------------+-----------------------------------------------+
+| Optional                                     | `seed`__                     | Seed of the random number generator           |
++----------------------------------------------+------------------------------+-----------------------------------------------+
+| Optional                                     | `show_misc_options`__        | Show algorithm parameters not exposed in      |
+|                                              |                              | Dakota input                                  |
++----------------------------------------------+------------------------------+-----------------------------------------------+
+| Optional                                     | `misc_options`__             | Set method options not available through      |
+|                                              |                              | Dakota spec                                   |
++----------------------------------------------+------------------------------+-----------------------------------------------+
+| Optional                                     | `max_iterations`__           | Number of iterations allowed for optimizers   |
+|                                              |                              | and adaptive UQ methods                       |
++----------------------------------------------+------------------------------+-----------------------------------------------+
+| Optional                                     | `convergence_tolerance`__    | Stopping criterion based on objective         |
+|                                              |                              | function or statistics convergence            |
++----------------------------------------------+------------------------------+-----------------------------------------------+
+| Optional                                     | `max_function_evaluations`__ | Number of function evaluations allowed for    |
+|                                              |                              | optimizers                                    |
++----------------------------------------------+------------------------------+-----------------------------------------------+
+| Optional                                     | `scaling`__                  | Turn on scaling for variables, responses, and |
+|                                              |                              | constraints                                   |
++----------------------------------------------+------------------------------+-----------------------------------------------+
+| Optional                                     | `model_pointer`__            | Identifier for model block to be used by a    |
+|                                              |                              | method                                        |
++----------------------------------------------+------------------------------+-----------------------------------------------+
+
+.. __: method-coliny_cobyla-initial_delta.html
+__ method-coliny_cobyla-variable_tolerance.html
+__ method-coliny_cobyla-solution_target.html
+__ method-coliny_cobyla-seed.html
+__ method-coliny_cobyla-show_misc_options.html
+__ method-coliny_cobyla-misc_options.html
+__ method-coliny_cobyla-max_iterations.html
+__ method-coliny_cobyla-convergence_tolerance.html
+__ method-coliny_cobyla-max_function_evaluations.html
+__ method-coliny_cobyla-scaling.html
+__ method-coliny_cobyla-model_pointer.html
+
+
+
+**Description**
+
+
+The Constrained Optimization BY Linear Approximations (COBYLA)
+algorithm is an extension to the Nelder-Mead simplex algorithm for
+handling general linear/nonlinear constraints and is invoked using the
+``coliny_cobyla`` group specification. The COBYLA algorithm employs
+linear approximations to the objective and constraint functions, the
+approximations being formed by linear interpolation at N+1 points in
+the space of the variables. We regard these interpolation points as
+vertices of a simplex. The step length parameter controls the size of
+the simplex and it is reduced automatically from ``initial_delta`` to
+``variable_tolerance``. One advantage that COBYLA has over many of its
+competitors is that it treats each constraint individually when
+calculating a change to the variables, instead of lumping the
+constraints together into a single penalty function.
+
+*See the page :ref:`topic-package_scolib` for important information
+regarding all SCOLIB methods*
+
+``coliny_cobyla`` is inherently serial.
+
+*Stopping Critieria*
+
+COBYLA currently only supports termination based on
+ \li :dakkw:`method-coliny_cobyla-max_function_evaluations`
+ \li :dakkw:`method-coliny_cobyla-solution_target`
+
+Other method-independent stopping criteria ( ``max_iterations`` and
+``convergence_tolerance``) will be ignored if set.
+
+*Known Bugs*
+
+The implementation of the ``coliny_cobyla`` optimization method is such
+that the best function value is not always returned to Dakota for
+reporting.  The user is advised to look through the Dakota screen
+output or the tabular output file (if generated) to confirm what the
+best function value and corresponding parameter values are.
+
+The ``coliny_cobyla`` optimization method does not always respect bound
+constraints when scaling is turned on.
+
+Neither bug will be fixed, as maintaining third-party source code
+(such as COBYLA) is outside of the Dakota project scope.
+
+
+*Expected HDF5 Output*
+
+If Dakota was built with HDF5 support and run with the
+:dakkw:`environment-results_output-hdf5` keyword, this method
+writes the following results to HDF5:
+
+
+- :ref:`hdf5_results-best_params`
+- :ref:`hdf5_results-best_obj_fncs` (when :dakkw:`responses-objective_functions`) are specified)
+- :ref:`hdf5_results-best_constraints`
+- :ref:`hdf5_results-calibration` (when :dakkw:`responses-calibration_terms` are specified)
+
+

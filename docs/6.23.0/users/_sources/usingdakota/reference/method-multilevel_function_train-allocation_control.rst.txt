@@ -1,0 +1,61 @@
+.. _method-multilevel_function_train-allocation_control:
+
+""""""""""""""""""
+allocation_control
+""""""""""""""""""
+
+
+Sample allocation approach for multilevel expansions
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-multilevel_function_train-allocation_control-estimator_variance
+   method-multilevel_function_train-allocation_control-rank_sampling
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+------------------------+-----------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword         | Dakota Keyword Description                    |
+|                         | Group              |                        |                                               |
++=========================+====================+========================+===============================================+
+| Required (Choose One)   | Multilevel Sample  | `estimator_variance`__ | Variance of mean estimator within multilevel  |
+|                         | Allocation Control |                        | polynomial chaos                              |
+|                         |                    +------------------------+-----------------------------------------------+
+|                         |                    | `rank_sampling`__      | Sample allocation based on rank sampling      |
+|                         |                    |                        | within multilevel function train              |
++-------------------------+--------------------+------------------------+-----------------------------------------------+
+
+.. __: method-multilevel_function_train-allocation_control-estimator_variance.html
+__ method-multilevel_function_train-allocation_control-rank_sampling.html
+
+
+
+**Description**
+
+
+Multilevel expansions, including regression-based polynomial chaos expansion
+(PCE) and function train (FT) expansions, require a sample allocation strategy.
+Three options are currently available:
+
+
+- allocation based on assuming a convergence rate for the estimator variance (for regression PCE)
+- restricted isometry property (RIP) sampling (for regression PCE via compressed sensing)
+- rank sampling (for FT)
+
+*Default Behavior*
+
+Current defaults, when ``allocation_control`` is not specified, are
+estimator variance for PCE and rank sampling for FT.
+
+

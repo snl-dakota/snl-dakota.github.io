@@ -1,0 +1,91 @@
+.. _method-output:
+
+""""""
+output
+""""""
+
+
+Control how much method information is written to the screen and output file
+
+
+
+**Topics**
+
+
+dakota_output, method_independent_controls
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-output-debug
+   method-output-verbose
+   method-output-normal
+   method-output-quiet
+   method-output-silent
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+- *Default:* normal
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+--------------------+-----------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword     | Dakota Keyword Description                    |
+|                         | Group              |                    |                                               |
++=========================+====================+====================+===============================================+
+| Required (Choose One)   | Output Level       | `debug`__          | Level 5 of 5 - maximum                        |
+|                         |                    +--------------------+-----------------------------------------------+
+|                         |                    | `verbose`__        | Level 4 of 5 - more than normal               |
+|                         |                    +--------------------+-----------------------------------------------+
+|                         |                    | `normal`__         | Level 3 of 5 - default                        |
+|                         |                    +--------------------+-----------------------------------------------+
+|                         |                    | `quiet`__          | Level 2 of 5 - less than normal               |
+|                         |                    +--------------------+-----------------------------------------------+
+|                         |                    | `silent`__         | Level 1 of 5 - minimum                        |
++-------------------------+--------------------+--------------------+-----------------------------------------------+
+
+.. __: method-output-debug.html
+__ method-output-verbose.html
+__ method-output-normal.html
+__ method-output-quiet.html
+__ method-output-silent.html
+
+
+
+**Description**
+
+
+Choose from a total of five output levels during the course of a Dakota study.
+If there is no user specification for output verbosity, then the default
+setting is ``normal``.
+
+Specific mappings are as follows:
+
+- ``silent`` (i.e., really quiet):   silent iterators, silent model, silent interface, quiet approximation,   quiet file operations
+- ``quiet``:   quiet iterators, quiet model, quiet interface, quiet approximation,   quiet file operations
+- ``normal``:   normal iterators, normal model, normal interface, quiet approximation,   quiet file operations
+- ``verbose``:   verbose iterators, normal model, verbose interface, verbose approximation,   verbose file operations
+- ``debug`` (i.e., really verbose):   debug iterators, normal model, debug interface, verbose approximation,   verbose file operations
+
+Note that iterators and interfaces utilize the full granularity in verbosity,
+whereas models, approximations, and file operations do not.
+With respect to iterator verbosity, different iterators implement this control
+in slightly different ways (as described below in the method independent
+controls descriptions for each iterator), however the meaning is consistent.
+
+For models, interfaces, approximations, and file operations, ``quiet``
+suppresses parameter and response set reporting and ``silent`` further
+suppresses function evaluation headers and scheduling output. Similarly,
+``verbose`` adds file management, approximation evaluation, and global
+approximation coefficient details, and ``debug`` further adds diagnostics
+from nonblocking schedulers.
+
+

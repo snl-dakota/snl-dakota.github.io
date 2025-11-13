@@ -1,0 +1,80 @@
+.. _method-multilevel_blue-solution_mode-online_pilot-relaxation:
+
+""""""""""
+relaxation
+""""""""""
+
+
+For an online pilot mode, apply under-relaxation to the shared sample increments
+
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-multilevel_blue-solution_mode-online_pilot-relaxation-factor_sequence
+   method-multilevel_blue-solution_mode-online_pilot-relaxation-fixed_factor
+   method-multilevel_blue-solution_mode-online_pilot-relaxation-recursive_factor
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+- *Default:* no relaxation
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+----------------------+-----------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword       | Dakota Keyword Description                    |
+|                         | Group              |                      |                                               |
++=========================+====================+======================+===============================================+
+| Required (Choose One)   | Relaxation factor  | `factor_sequence`__  | For under-relaxation of shared sample         |
+|                         |                    |                      | increments, apply a sequence of factors, one  |
+|                         |                    |                      | per iteration                                 |
+|                         |                    +----------------------+-----------------------------------------------+
+|                         |                    | `fixed_factor`__     | For under-relaxation of shared sample         |
+|                         |                    |                      | increments, apply a fixed factor that is      |
+|                         |                    |                      | invariant with iteration                      |
+|                         |                    +----------------------+-----------------------------------------------+
+|                         |                    | `recursive_factor`__ | For under-relaxation of shared sample         |
+|                         |                    |                      | increments, apply a recursive factor on each  |
+|                         |                    |                      | iteration that advances the relaxation factor |
+|                         |                    |                      | toward 1                                      |
++-------------------------+--------------------+----------------------+-----------------------------------------------+
+
+.. __: method-multilevel_blue-solution_mode-online_pilot-relaxation-factor_sequence.html
+__ method-multilevel_blue-solution_mode-online_pilot-relaxation-fixed_factor.html
+__ method-multilevel_blue-solution_mode-online_pilot-relaxation-recursive_factor.html
+
+
+
+**Description**
+
+
+Multilevel / multifidelity sampling methods are adaptive UQ methods
+that utilize a pilot sample to estimate an initial set of correlations
+or variances, and then augment the pilot with additional sample
+increments to optimally allocate resources.  In the iterated
+``online_pilot`` solution mode, the initial pilot sample is updated with
+additional shared samples in the direction of the optimal solution to
+the resource allocation problem.  When the initial correlation /
+covariance approximations are inaccurate, this update can be overly
+aggressive, such that it becomes advisable to only accept a portion of
+this suggested increment through use of an under-relaxation factor.
+
+Three options are provided for defining a sequence of under-relaxation
+factors: ``factor_sequence``, ``fixed_factor``, and ``recursive_factor``.
+
+**Default Behavior**
+
+Relaxation is an optional specification, and no relaxation (accept the
+full magnitude of suggested sample increments) is the default.
+
+
+
+

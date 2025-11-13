@@ -1,0 +1,53 @@
+.. _method-soga-convergence_type:
+
+""""""""""""""""
+convergence_type
+""""""""""""""""
+
+
+Select the convergence type for JEGA methods
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-soga-convergence_type-best_fitness_tracker
+   method-soga-convergence_type-average_fitness_tracker
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+- *Default:* average_fitness_tracker
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+-----------------------------+-----------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword              | Dakota Keyword Description                    |
+|                         | Group              |                             |                                               |
++=========================+====================+=============================+===============================================+
+| Required (Choose One)   | Convergence Type   | `best_fitness_tracker`__    | Tracks the best fitness of the population     |
+|                         |                    +-----------------------------+-----------------------------------------------+
+|                         |                    | `average_fitness_tracker`__ | Tracks the average fitness of the population  |
++-------------------------+--------------------+-----------------------------+-----------------------------------------------+
+
+.. __: method-soga-convergence_type-best_fitness_tracker.html
+__ method-soga-convergence_type-average_fitness_tracker.html
+
+
+
+**Description**
+
+
+The two JEGA methods use different convergence types, which are
+described on their respective pages.
+
+All the convergence types are modified by the optional keywords
+``percent_change`` and ``num_generations``.
+
+

@@ -1,0 +1,61 @@
+.. _method-sampling-sample_type-low_discrepancy-digital_net-generating_matrices:
+
+"""""""""""""""""""
+generating_matrices
+"""""""""""""""""""
+
+
+Specify the generating matrices of this digital net
+
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-sampling-sample_type-low_discrepancy-digital_net-generating_matrices-inline
+   method-sampling-sample_type-low_discrepancy-digital_net-generating_matrices-file
+   method-sampling-sample_type-low_discrepancy-digital_net-generating_matrices-predefined
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+- *Default:* No generating matrices
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+--------------------+-----------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword     | Dakota Keyword Description                    |
+|                         | Group              |                    |                                               |
++=========================+====================+====================+===============================================+
+| Optional (Choose One)   | Generating         | `inline`__         | Specify inline generating matrices            |
+|                         | Matrices           +--------------------+-----------------------------------------------+
+|                         |                    | `file`__           | Specify generating matrices read from file    |
+|                         |                    +--------------------+-----------------------------------------------+
+|                         |                    | `predefined`__     | Specify predefined generating matrices        |
++-------------------------+--------------------+--------------------+-----------------------------------------------+
+
+.. __: method-sampling-sample_type-low_discrepancy-digital_net-generating_matrices-inline.html
+__ method-sampling-sample_type-low_discrepancy-digital_net-generating_matrices-file.html
+__ method-sampling-sample_type-low_discrepancy-digital_net-generating_matrices-predefined.html
+
+
+
+**Description**
+
+
+There are three ways in which a user can specify generating matrices:
+
+- inline generating matrices (with the keyword :dakkw:`method-sampling-sample_type-low_discrepancy-digital_net-generating_matrices-inline`)
+- generating matrices read from an external file (with the keyword :dakkw:`method-sampling-sample_type-low_discrepancy-digital_net-generating_matrices-file`)
+- predefined generating matrices (with the keyword :dakkw:`method-sampling-sample_type-low_discrepancy-digital_net-generating_matrices-predefined`)
+
+One of these options must be specified if the ``generating_matrices`` keyword is provided.
+
+
+

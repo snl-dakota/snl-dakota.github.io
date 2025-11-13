@@ -1,0 +1,59 @@
+.. _model-surrogate-global-experimental_polynomial:
+
+"""""""""""""""""""""""
+experimental_polynomial
+"""""""""""""""""""""""
+
+
+Use a deterministic polynomial surrogate
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   model-surrogate-global-experimental_polynomial-basis_order
+   model-surrogate-global-experimental_polynomial-options_file
+   model-surrogate-global-experimental_polynomial-export_model
+   model-surrogate-global-experimental_polynomial-import_model
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+--------------------+-----------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword     | Dakota Keyword Description                    |
+|                         | Group              |                    |                                               |
++=========================+====================+====================+===============================================+
+| Required                                     | `basis_order`__    | Total degree of the polynomial basis          |
++----------------------------------------------+--------------------+-----------------------------------------------+
+| Optional                                     | `options_file`__   | Filename for a YAML file that specifies       |
+|                                              |                    | polynomial surrogate options                  |
++----------------------------------------------+--------------------+-----------------------------------------------+
+| Optional                                     | `export_model`__   | Exports surrogate model in user-specified     |
+|                                              |                    | format(s)                                     |
++----------------------------------------------+--------------------+-----------------------------------------------+
+| Optional                                     | `import_model`__   | Import surrogate model from archive file      |
++----------------------------------------------+--------------------+-----------------------------------------------+
+
+.. __: model-surrogate-global-experimental_polynomial-basis_order.html
+__ model-surrogate-global-experimental_polynomial-options_file.html
+__ model-surrogate-global-experimental_polynomial-export_model.html
+__ model-surrogate-global-experimental_polynomial-import_model.html
+
+
+
+**Description**
+
+
+Compute a polynomial surrogate for a specified total order by
+least-squares regression. This model is implemented in Dakota's
+surrogates module and is considered experimental.
+
+

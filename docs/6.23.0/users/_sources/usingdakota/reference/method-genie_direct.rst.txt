@@ -1,0 +1,63 @@
+.. _method-genie_direct:
+
+""""""""""""
+genie_direct
+""""""""""""
+
+
+Classical high-dimensional global Lipschitzian optimization
+Classical high-dimensional global Lipschitzian optimization
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-genie_direct-seed
+   method-genie_direct-max_function_evaluations
+   method-genie_direct-scaling
+   method-genie_direct-model_pointer
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+------------------------------+-----------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword               | Dakota Keyword Description                    |
+|                         | Group              |                              |                                               |
++=========================+====================+==============================+===============================================+
+| Optional                                     | `seed`__                     | Seed of the random number generator           |
++----------------------------------------------+------------------------------+-----------------------------------------------+
+| Optional                                     | `max_function_evaluations`__ | Number of function evaluations allowed for    |
+|                                              |                              | optimizers                                    |
++----------------------------------------------+------------------------------+-----------------------------------------------+
+| Optional                                     | `scaling`__                  | Turn on scaling for variables, responses, and |
+|                                              |                              | constraints                                   |
++----------------------------------------------+------------------------------+-----------------------------------------------+
+| Optional                                     | `model_pointer`__            | Identifier for model block to be used by a    |
+|                                              |                              | method                                        |
++----------------------------------------------+------------------------------+-----------------------------------------------+
+
+.. __: method-genie_direct-seed.html
+__ method-genie_direct-max_function_evaluations.html
+__ method-genie_direct-scaling.html
+__ method-genie_direct-model_pointer.html
+
+
+
+**Description**
+
+
+DIRECT (DIviding RECTangles) partitions the domain into hyperrectangles and uses an iterative Lipschitzian optimization approach to search for a global optimal point.
+
+DIRECT begins by scaling the domain into the unit hypercube by adopting a center-sampling strategy. The objective function is evaluated at the midpoint of the domain, where a lower bound is constructed. In one-dimension, the domain is tri-sected and two new center points are sampled. At each iteration (dividing and sampling), DIRECT identifies intervals that contain the best minimal value of the objective function found up to that point. This strategy of selecting and dividing gives DIRECT its performance and convergence properties compared to other deterministic methods.
+
+The classical DIRECT method [Shubert 1972] has two limitations: poor scaling to high dimensions; and relying on a global K; whose exact value is often unknown. The enhanced DIRECT algorithm [Jones et al. 1993] generalizes [Shubert 1972] to higher dimensions and does not require knowledge of the Lipschitz constant.
+
+

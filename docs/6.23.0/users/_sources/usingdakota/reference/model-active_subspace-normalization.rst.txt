@@ -1,0 +1,55 @@
+.. _model-active_subspace-normalization:
+
+"""""""""""""
+normalization
+"""""""""""""
+
+
+Normalize gradient samples
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   model-active_subspace-normalization-mean_value
+   model-active_subspace-normalization-mean_gradient
+   model-active_subspace-normalization-local_gradient
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+--------------------+-----------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword     | Dakota Keyword Description                    |
+|                         | Group              |                    |                                               |
++=========================+====================+====================+===============================================+
+| Required (Choose One)   | Normalize By...    | `mean_value`__     | Normalize by sample mean of function values   |
+|                         |                    +--------------------+-----------------------------------------------+
+|                         |                    | `mean_gradient`__  | Normalize by sample mean of gradient norms    |
+|                         |                    +--------------------+-----------------------------------------------+
+|                         |                    | `local_gradient`__ | Normalize each gradient sample by its norm    |
++-------------------------+--------------------+--------------------+-----------------------------------------------+
+
+.. __: model-active_subspace-normalization-mean_value.html
+__ model-active_subspace-normalization-mean_gradient.html
+__ model-active_subspace-normalization-local_gradient.html
+
+
+
+**Description**
+
+
+Normalize the matrix of sampled gradients before identifying subspace.
+
+*Default Behavior*
+
+The default is :dakkw:`model-active_subspace-normalization-local_gradient`
+
+

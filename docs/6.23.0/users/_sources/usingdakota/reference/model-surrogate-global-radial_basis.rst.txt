@@ -1,0 +1,85 @@
+.. _model-surrogate-global-radial_basis:
+
+""""""""""""
+radial_basis
+""""""""""""
+
+
+Radial basis function (RBF) model
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   model-surrogate-global-radial_basis-bases
+   model-surrogate-global-radial_basis-max_pts
+   model-surrogate-global-radial_basis-min_partition
+   model-surrogate-global-radial_basis-max_subsets
+   model-surrogate-global-radial_basis-export_model
+   model-surrogate-global-radial_basis-import_model
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+--------------------+-----------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword     | Dakota Keyword Description                    |
+|                         | Group              |                    |                                               |
++=========================+====================+====================+===============================================+
+| Optional                                     | `bases`__          | Initial number of radial basis functions      |
++----------------------------------------------+--------------------+-----------------------------------------------+
+| Optional                                     | `max_pts`__        | Maximum number of RBF CVT points              |
++----------------------------------------------+--------------------+-----------------------------------------------+
+| Optional                                     | `min_partition`__  | (Inactive) Minimum RBF partition              |
++----------------------------------------------+--------------------+-----------------------------------------------+
+| Optional                                     | `max_subsets`__    | Number of trial RBF subsets                   |
++----------------------------------------------+--------------------+-----------------------------------------------+
+| Optional                                     | `export_model`__   | Exports surrogate model in user-specified     |
+|                                              |                    | format(s)                                     |
++----------------------------------------------+--------------------+-----------------------------------------------+
+| Optional                                     | `import_model`__   | Import surrogate model from archive file      |
++----------------------------------------------+--------------------+-----------------------------------------------+
+
+.. __: model-surrogate-global-radial_basis-bases.html
+__ model-surrogate-global-radial_basis-max_pts.html
+__ model-surrogate-global-radial_basis-min_partition.html
+__ model-surrogate-global-radial_basis-max_subsets.html
+__ model-surrogate-global-radial_basis-export_model.html
+__ model-surrogate-global-radial_basis-import_model.html
+
+
+
+**Description**
+
+
+Radial basis functions :math:`\phi`  are functions whose value typically
+depends on the distance from a center point, called the centroid,
+:math:`{\bf c}` .
+
+The surrogate model approximation comprises a sum of K weighted radial
+basis functions:
+
+.. math::  \hat{f}({\bf x})=\sum_{k=1}^{K}w_{k}\phi({\parallel {\bf x} - {\bf c_{k}} \parallel}) 
+
+These basis functions take many forms, but Gaussian kernels or splines
+are most common.  The Dakota implementation uses a Gaussian radial
+basis function.  The weights are determined via a linear least squares
+solution approach.  See :cite:p:`Orr96` for more details.
+
+*Known Issue: When using discrete variables, there have been
+sometimes significant differences in surrogate behavior observed
+across computing platforms in some cases.  The cause has not yet been
+fully diagnosed and is currently under investigation.  In addition,
+guidance on appropriate construction and use of surrogates with
+discrete variables is under development.  In the meantime, users
+should therefore be aware that there is a risk of inaccurate results
+when using surrogates with discrete variables.*
+
+

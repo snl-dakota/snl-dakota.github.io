@@ -1,0 +1,53 @@
+.. _variables-lognormal_uncertain-means:
+
+"""""
+means
+"""""
+
+
+First parameter of the lognormal distribution (options 1 & 2)
+
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   variables-lognormal_uncertain-means-std_deviations
+   variables-lognormal_uncertain-means-error_factors
+
+
+**Specification**
+
+- *Alias:* lnuv_means 
+
+- *Arguments:* REALLIST
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+--------------------+-----------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword     | Dakota Keyword Description                    |
+|                         | Group              |                    |                                               |
++=========================+====================+====================+===============================================+
+| Required (Choose One)   | Spread             | `std_deviations`__ | Second parameter of the lognormal             |
+|                         |                    |                    | distribution (option 1)                       |
+|                         |                    +--------------------+-----------------------------------------------+
+|                         |                    | `error_factors`__  | Second parameter of the lognormal             |
+|                         |                    |                    | distribution (option 2)                       |
++-------------------------+--------------------+--------------------+-----------------------------------------------+
+
+.. __: variables-lognormal_uncertain-means-std_deviations.html
+__ variables-lognormal_uncertain-means-error_factors.html
+
+
+
+**Description**
+
+
+For the lognormal variables, one may specify either the mean :math:`\mu`  and standard deviation :math:`\sigma`  of the actual lognormal distribution, the mean :math:`\mu` and error factor :math:`\epsilon`  of the actual lognormal distribution.
+
+This corresponds to the mean of the lognormal random variable
+
+
+

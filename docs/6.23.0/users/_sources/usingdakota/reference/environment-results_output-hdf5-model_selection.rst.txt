@@ -1,0 +1,134 @@
+.. _environment-results_output-hdf5-model_selection:
+
+"""""""""""""""
+model_selection
+"""""""""""""""
+
+
+Select the models that write evaluation data to HDF5
+
+
+
+**Topics**
+
+
+dakota_output
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   environment-results_output-hdf5-model_selection-top_method
+   environment-results_output-hdf5-model_selection-none
+   environment-results_output-hdf5-model_selection-all_methods
+   environment-results_output-hdf5-model_selection-all
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+--------------------+-----------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword     | Dakota Keyword Description                    |
+|                         | Group              |                    |                                               |
++=========================+====================+====================+===============================================+
+| Required (Choose One)   | Model Evaluation   | `top_method`__     | Write evaluation data only for the top-level  |
+|                         | Storage Selection  |                    | method's model to HDF5                        |
+|                         |                    +--------------------+-----------------------------------------------+
+|                         |                    | `none`__           | Write evaluation data for no models to HDF5   |
+|                         |                    +--------------------+-----------------------------------------------+
+|                         |                    | `all_methods`__    | Write evaluation data to HDF5 for all models  |
+|                         |                    |                    | that belong directly to methods               |
+|                         |                    +--------------------+-----------------------------------------------+
+|                         |                    | `all`__            | Write evaluation data to HDF5 for all models  |
++-------------------------+--------------------+--------------------+-----------------------------------------------+
+
+.. __: environment-results_output-hdf5-model_selection-top_method.html
+__ environment-results_output-hdf5-model_selection-none.html
+__ environment-results_output-hdf5-model_selection-all_methods.html
+__ environment-results_output-hdf5-model_selection-all.html
+
+
+
+**Description**
+
+
+By default, when HDF5 output is enabled, Dakota writes evaluation
+data only for the model that belongs to the top-level method. This
+keyword group is used to override the default.
+
+HDF5 output is an experimental feature, and the contents and organization of
+the output file is subject to change. The current organization and a
+brief explanation of HDF5 is provided in the :ref:`hdf5_output<hdf5_output>` section
+of this manual.
+
+The example below will be used to explain the effect of each keyword.
+
+
+
+**Examples**
+
+
+
+.. code-block::
+
+    environment
+      results_output
+          hdf5
+           # model_selection
+           #  top_method
+           #  all_methods
+           #  all
+           #  none
+          results_output_file 'my_results'  # The .h5 extension will be added
+    
+       method_pointer 'opt'
+    
+    method
+      id_method 'opt'
+        optpp_q_newton
+      model_pointer 'surr'
+    
+    model
+      id_model 'surr'
+      surrogate global gaussian_process surfpack
+      dace_method_pointer 'training'
+    
+    method
+      id_method 'training'
+      sampling
+        seed 1234
+        samples 20
+      model_pointer 'truth_m'
+    
+    model
+      id_model 'truth_m'
+      simulation
+    
+    interface
+      id_interface 'truth'
+      direct
+        analysis_drivers 'text_book'
+    
+    variables
+      continuous_design 2
+        descriptors 'x1' 'x2'
+        lower_bounds -2.0 -2.0
+        upper_bounds  2.0  2.0
+    
+    responses
+      objective_functions 2
+        descriptors 'f1' 'f2'
+      analytic_gradients
+      no_hessians
+    
+
+
+
+

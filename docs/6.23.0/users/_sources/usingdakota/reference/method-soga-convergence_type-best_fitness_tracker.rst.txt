@@ -1,0 +1,53 @@
+.. _method-soga-convergence_type-best_fitness_tracker:
+
+""""""""""""""""""""
+best_fitness_tracker
+""""""""""""""""""""
+
+
+Tracks the best fitness of the population
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-soga-convergence_type-best_fitness_tracker-percent_change
+   method-soga-convergence_type-best_fitness_tracker-num_generations
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+---------------------+-----------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword      | Dakota Keyword Description                    |
+|                         | Group              |                     |                                               |
++=========================+====================+=====================+===============================================+
+| Optional                                     | `percent_change`__  | Define the convergence criterion for JEGA     |
+|                                              |                     | methods                                       |
++----------------------------------------------+---------------------+-----------------------------------------------+
+| Optional                                     | `num_generations`__ | Define the convergence criterion for JEGA     |
+|                                              |                     | methods                                       |
++----------------------------------------------+---------------------+-----------------------------------------------+
+
+.. __: method-soga-convergence_type-best_fitness_tracker-percent_change.html
+__ method-soga-convergence_type-best_fitness_tracker-num_generations.html
+
+
+
+**Description**
+
+
+The ``best_fitness_tracker`` tracks the best fitness in the
+population. Convergence occurs after ``num_generations`` has passed and
+there has been less than ``percent_change`` in the best fitness
+value. The percent change can be as low as 0% in which case there must
+be no change at all over the number of generations.
+
+

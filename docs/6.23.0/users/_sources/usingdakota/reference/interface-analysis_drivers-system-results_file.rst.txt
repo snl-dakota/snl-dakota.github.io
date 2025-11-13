@@ -1,0 +1,40 @@
+.. _interface-analysis_drivers-system-results_file:
+
+""""""""""""
+results_file
+""""""""""""
+
+
+Specify the name of the results file
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* STRING
+
+- *Default:* Unix temp files
+
+
+**Description**
+
+
+The results file must be written by the analysis driver.
+It is read by Dakota to determine the response values for
+each function evaluation.
+
+The name of the file can be optionally specified using
+the ``results_file`` keyword.
+
+If this is not specified, the default data transfer files are
+temporary files with system-generated names (e.g.,
+``/tmp/dakota_results_aaaa0886``).
+
+
