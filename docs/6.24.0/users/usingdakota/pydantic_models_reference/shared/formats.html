@@ -1,0 +1,1219 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Formats &mdash; dakota  documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/autodoc_pydantic.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/dakota_theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/sandiaheaderlite.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Interface" href="interface.html" />
+    <link rel="prev" title="Expansion" href="expansion.html" /> 
+  
+  <meta name="sandia.approval_type" content="formal"/>
+  <meta property="sandia.approved" content="SAND2025-14179O"/>
+  <meta name="description" content="The Dakota project delivers both state-of-the-art research and robust, usable software for optimization and UQ."/>
+  <meta name="keywords" content="Dakota, optimization, UQ, uncertainty quantification, parametric analysis, design exploration, model calibration, risk analysis"/>
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../index.html" class="icon icon-home"> dakota
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../setupdakota.html">Getting Started</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../usingdakota.html">Using Dakota</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../introduction/aboutdakota.html">About Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../introduction/helloworld.html">Dakota Beginner’s Tutorial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../examples.html">Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../introduction/couplingtosimulations.html">Coupling Dakota to a Simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../inputfile.html">Dakota Input File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../running.html">Running Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../output.html">Dakota Output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../studytypes.html">Study Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../topics.html">Topics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../advanced.html">Advanced Topics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../theory.html">Dakota Theory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../reference.html">Keyword Reference</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../pydantic_models_reference.html">JSON Input Reference</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="../../pydantic_models_reference.html#current-documentation">Current Documentation</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="../study.html">Study</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../methods.html">Methods</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../environment.html">Environment</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../interface.html">Interface</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../model.html">Model</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../responses.html">Responses</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../variables.html">Variables</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="../shared.html">Shared</a><ul class="current">
+<li class="toctree-l5"><a class="reference internal" href="bayesian.html">Bayesian</a></li>
+<li class="toctree-l5"><a class="reference internal" href="core.html">Core</a></li>
+<li class="toctree-l5"><a class="reference internal" href="expansion.html">Expansion</a></li>
+<li class="toctree-l5 current"><a class="current reference internal" href="#">Formats</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.formats.MethodImportBuildFormatAnnotated"><code class="docutils literal notranslate"><span class="pre">MethodImportBuildFormatAnnotated</span></code></a><ul>
+<li class="toctree-l7"><a class="reference internal" href="#dakota.spec.shared.formats.MethodImportBuildFormatAnnotated.annotated"><code class="docutils literal notranslate"><span class="pre">MethodImportBuildFormatAnnotated.annotated</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.formats.MethodImportBuildFormatCustomAnnotated"><code class="docutils literal notranslate"><span class="pre">MethodImportBuildFormatCustomAnnotated</span></code></a><ul>
+<li class="toctree-l7"><a class="reference internal" href="#dakota.spec.shared.formats.MethodImportBuildFormatCustomAnnotated.custom_annotated"><code class="docutils literal notranslate"><span class="pre">MethodImportBuildFormatCustomAnnotated.custom_annotated</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.formats.MethodImportBuildFormatCustomAnnotatedConfig"><code class="docutils literal notranslate"><span class="pre">MethodImportBuildFormatCustomAnnotatedConfig</span></code></a><ul>
+<li class="toctree-l7"><a class="reference internal" href="#dakota.spec.shared.formats.MethodImportBuildFormatCustomAnnotatedConfig.eval_id"><code class="docutils literal notranslate"><span class="pre">MethodImportBuildFormatCustomAnnotatedConfig.eval_id</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#dakota.spec.shared.formats.MethodImportBuildFormatCustomAnnotatedConfig.header"><code class="docutils literal notranslate"><span class="pre">MethodImportBuildFormatCustomAnnotatedConfig.header</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#dakota.spec.shared.formats.MethodImportBuildFormatCustomAnnotatedConfig.interface_id"><code class="docutils literal notranslate"><span class="pre">MethodImportBuildFormatCustomAnnotatedConfig.interface_id</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.formats.MethodImportBuildFormatFreeform"><code class="docutils literal notranslate"><span class="pre">MethodImportBuildFormatFreeform</span></code></a><ul>
+<li class="toctree-l7"><a class="reference internal" href="#dakota.spec.shared.formats.MethodImportBuildFormatFreeform.freeform"><code class="docutils literal notranslate"><span class="pre">MethodImportBuildFormatFreeform.freeform</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.formats.MethodImportBuildFormatMixin"><code class="docutils literal notranslate"><span class="pre">MethodImportBuildFormatMixin</span></code></a><ul>
+<li class="toctree-l7"><a class="reference internal" href="#dakota.spec.shared.formats.MethodImportBuildFormatMixin.format"><code class="docutils literal notranslate"><span class="pre">MethodImportBuildFormatMixin.format</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.formats.ModelFullSurfpackExportFormatExportModel"><code class="docutils literal notranslate"><span class="pre">ModelFullSurfpackExportFormatExportModel</span></code></a><ul>
+<li class="toctree-l7"><a class="reference internal" href="#dakota.spec.shared.formats.ModelFullSurfpackExportFormatExportModel.filename_prefix"><code class="docutils literal notranslate"><span class="pre">ModelFullSurfpackExportFormatExportModel.filename_prefix</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#dakota.spec.shared.formats.ModelFullSurfpackExportFormatExportModel.formats"><code class="docutils literal notranslate"><span class="pre">ModelFullSurfpackExportFormatExportModel.formats</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.formats.ModelFullSurfpackExportFormatFormats"><code class="docutils literal notranslate"><span class="pre">ModelFullSurfpackExportFormatFormats</span></code></a><ul>
+<li class="toctree-l7"><a class="reference internal" href="#dakota.spec.shared.formats.ModelFullSurfpackExportFormatFormats.algebraic_console"><code class="docutils literal notranslate"><span class="pre">ModelFullSurfpackExportFormatFormats.algebraic_console</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#dakota.spec.shared.formats.ModelFullSurfpackExportFormatFormats.algebraic_file"><code class="docutils literal notranslate"><span class="pre">ModelFullSurfpackExportFormatFormats.algebraic_file</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#dakota.spec.shared.formats.ModelFullSurfpackExportFormatFormats.binary_archive"><code class="docutils literal notranslate"><span class="pre">ModelFullSurfpackExportFormatFormats.binary_archive</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#dakota.spec.shared.formats.ModelFullSurfpackExportFormatFormats.text_archive"><code class="docutils literal notranslate"><span class="pre">ModelFullSurfpackExportFormatFormats.text_archive</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.formats.ModelFullSurfpackExportFormatMixin"><code class="docutils literal notranslate"><span class="pre">ModelFullSurfpackExportFormatMixin</span></code></a><ul>
+<li class="toctree-l7"><a class="reference internal" href="#dakota.spec.shared.formats.ModelFullSurfpackExportFormatMixin.export_model"><code class="docutils literal notranslate"><span class="pre">ModelFullSurfpackExportFormatMixin.export_model</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="interface.html">Interface</a></li>
+<li class="toctree-l5"><a class="reference internal" href="misc.html">Misc</a></li>
+<li class="toctree-l5"><a class="reference internal" href="optimization.html">Optimization</a></li>
+<li class="toctree-l5"><a class="reference internal" href="responses.html">Responses</a></li>
+<li class="toctree-l5"><a class="reference internal" href="sampling.html">Sampling</a></li>
+<li class="toctree-l5"><a class="reference internal" href="surrogate.html">Surrogate</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../pydantic_models_reference.html#relationship-to-the-freeform-input-format">Relationship to the Freeform Input Format</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../pydantic_models_reference.html#how-to-work-with-the-pydantic-documentation">How to Work with the Pydantic Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../pydantic_models_reference.html#using-dakota-parser-to-bootstrap-json-input">Using <code class="docutils literal notranslate"><span class="pre">dakota_parser</span></code> to Bootstrap JSON Input</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usingdakotagui/usingdakotagui.html">Using Dakota GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../externaltools/externaltools.html">Using External Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../compiling/compiling.html">Compiling Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../developingdakota/developingdakota.html">Developing Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../misc/misc.html">Miscellaneous</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">dakota</a>
+      </nav>
+
+	  <!-- SNL Lite header -->
+	  <div class="snlheader-subsite--wrapper-default">
+		<snlheader class="snlheader-subsite" role="snlbanner">
+		  <div class="wrapper">
+			<a href="https://www.sandia.gov/index.html">
+			  <div class="logo-transparent"><p class="logo">Sandia National Laboratories</p></div>
+			</a>
+			<div class="nav-top">
+			  <a class="visuallyhidden" name="mainnav"></a>
+			  <div aria-label="main navigation" class="core-nav-transparent core-nav-transparent--visible" role="navigation">
+				<ul role="navigation" class="secondary-links">
+				  <li id="search-text-link">
+					<a aria-label="Search" href="https://www.sandia.gov/search/">Search Sandia.gov</a>
+				  </li>
+				  <li id="directory-text-link">
+					<a href="https://www.sandia.gov/directory.html" aria-expanded="false" aria-label="Site Directory">All Sandia Websites</a>
+				  </li>
+				</ul>
+			  </div>
+			</div>
+		  </div> 
+		</snlheader>
+	  </div>	  
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../usingdakota.html">Using Dakota</a></li>
+          <li class="breadcrumb-item"><a href="../../pydantic_models_reference.html">JSON Input Reference</a></li>
+          <li class="breadcrumb-item"><a href="../shared.html">Shared</a></li>
+      <li class="breadcrumb-item active">Formats</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../_sources/usingdakota/pydantic_models_reference/shared/formats.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-dakota.spec.shared.formats">
+<span id="formats"></span><h1>Formats<a class="headerlink" href="#module-dakota.spec.shared.formats" title="Link to this heading"></a></h1>
+<p>Generated Pydantic models for shared.formats</p>
+<dl class="py class pydantic_model">
+<dt class="sig sig-object py" id="dakota.spec.shared.formats.MethodImportBuildFormatAnnotated">
+<em class="property"><span class="pre">pydantic</span> <span class="pre">model</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">dakota.spec.shared.formats.</span></span><span class="sig-name descname"><span class="pre">MethodImportBuildFormatAnnotated</span></span><a class="headerlink" href="#dakota.spec.shared.formats.MethodImportBuildFormatAnnotated" title="Link to this definition"></a></dt>
+<dd><p>Selects annotated tabular file format</p>
+<p><details  class="autodoc_pydantic_collapsable_json">
+<summary>Show JSON schema</summary><div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">   </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;MethodImportBuildFormatAnnotated&quot;</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Selects annotated tabular file format&quot;</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;object&quot;</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">&quot;properties&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;annotated&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">         </span><span class="nt">&quot;const&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">         </span><span class="nt">&quot;default&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">         </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Selects annotated tabular file format&quot;</span><span class="p">,</span>
+<span class="w">         </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Annotated&quot;</span><span class="p">,</span>
+<span class="w">         </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;boolean&quot;</span><span class="p">,</span>
+<span class="w">         </span><span class="nt">&quot;x-materialization&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">            </span><span class="p">{</span>
+<span class="w">               </span><span class="nt">&quot;ir_key&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;method.import_build_format&quot;</span><span class="p">,</span>
+<span class="w">               </span><span class="nt">&quot;ir_value_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;unsigned short&quot;</span><span class="p">,</span>
+<span class="w">               </span><span class="nt">&quot;storage_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;PRESENCE_ENUM&quot;</span><span class="p">,</span>
+<span class="w">               </span><span class="nt">&quot;stored_value&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;TABULAR_ANNOTATED&quot;</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">         </span><span class="p">]</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">   </span><span class="p">},</span>
+<span class="w">   </span><span class="nt">&quot;additionalProperties&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</details></p><dl class="field-list simple">
+<dt class="field-odd">Fields<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><a class="reference internal" href="#dakota.spec.shared.formats.MethodImportBuildFormatAnnotated.annotated" title="dakota.spec.shared.formats.MethodImportBuildFormatAnnotated.annotated"><code class="xref py py-obj docutils literal notranslate"><span class="pre">annotated</span> <span class="pre">(Literal[True])</span></code></a></p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="dakota.spec.shared.formats.MethodImportBuildFormatAnnotated.annotated">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">annotated</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="k"><span class="pre">True</span></span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#dakota.spec.shared.formats.MethodImportBuildFormatAnnotated.annotated" title="Link to this definition"></a></dt>
+<dd><p>Selects annotated tabular file format</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class pydantic_model">
+<dt class="sig sig-object py" id="dakota.spec.shared.formats.MethodImportBuildFormatCustomAnnotated">
+<em class="property"><span class="pre">pydantic</span> <span class="pre">model</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">dakota.spec.shared.formats.</span></span><span class="sig-name descname"><span class="pre">MethodImportBuildFormatCustomAnnotated</span></span><a class="headerlink" href="#dakota.spec.shared.formats.MethodImportBuildFormatCustomAnnotated" title="Link to this definition"></a></dt>
+<dd><p>Selects custom-annotated tabular file format</p>
+<p><details  class="autodoc_pydantic_collapsable_json">
+<summary>Show JSON schema</summary><div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">   </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;MethodImportBuildFormatCustomAnnotated&quot;</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Selects custom-annotated tabular file format&quot;</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;object&quot;</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">&quot;properties&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;custom_annotated&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">         </span><span class="nt">&quot;$ref&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;#/$defs/MethodImportBuildFormatCustomAnnotatedConfig&quot;</span><span class="p">,</span>
+<span class="w">         </span><span class="nt">&quot;x-materialization&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">            </span><span class="p">{</span>
+<span class="w">               </span><span class="nt">&quot;ir_key&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;method.import_build_format&quot;</span><span class="p">,</span>
+<span class="w">               </span><span class="nt">&quot;ir_value_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;unsigned short&quot;</span><span class="p">,</span>
+<span class="w">               </span><span class="nt">&quot;storage_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;PRESENCE_ENUM&quot;</span><span class="p">,</span>
+<span class="w">               </span><span class="nt">&quot;stored_value&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;TABULAR_NONE&quot;</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">         </span><span class="p">],</span>
+<span class="w">         </span><span class="nt">&quot;x-model-default&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;MethodImportBuildFormatCustomAnnotatedConfig&quot;</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">   </span><span class="p">},</span>
+<span class="w">   </span><span class="nt">&quot;$defs&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;MethodImportBuildFormatCustomAnnotatedConfig&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">         </span><span class="nt">&quot;additionalProperties&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">         </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Selects custom-annotated tabular file format&quot;</span><span class="p">,</span>
+<span class="w">         </span><span class="nt">&quot;properties&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;header&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">               </span><span class="nt">&quot;anyOf&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                  </span><span class="p">{</span>
+<span class="w">                     </span><span class="nt">&quot;const&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">                     </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;boolean&quot;</span>
+<span class="w">                  </span><span class="p">},</span>
+<span class="w">                  </span><span class="p">{</span>
+<span class="w">                     </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;null&quot;</span>
+<span class="w">                  </span><span class="p">}</span>
+<span class="w">               </span><span class="p">],</span>
+<span class="w">               </span><span class="nt">&quot;default&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+<span class="w">               </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Enable header row in custom-annotated tabular file&quot;</span><span class="p">,</span>
+<span class="w">               </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Header&quot;</span><span class="p">,</span>
+<span class="w">               </span><span class="nt">&quot;x-materialization&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                  </span><span class="p">{</span>
+<span class="w">                     </span><span class="nt">&quot;ir_key&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;method.import_build_format&quot;</span><span class="p">,</span>
+<span class="w">                     </span><span class="nt">&quot;ir_value_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;unsigned short&quot;</span><span class="p">,</span>
+<span class="w">                     </span><span class="nt">&quot;storage_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;AUGMENT_ENUM&quot;</span><span class="p">,</span>
+<span class="w">                     </span><span class="nt">&quot;stored_value&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;TABULAR_HEADER&quot;</span>
+<span class="w">                  </span><span class="p">}</span>
+<span class="w">               </span><span class="p">]</span>
+<span class="w">            </span><span class="p">},</span>
+<span class="w">            </span><span class="nt">&quot;eval_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">               </span><span class="nt">&quot;anyOf&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                  </span><span class="p">{</span>
+<span class="w">                     </span><span class="nt">&quot;const&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">                     </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;boolean&quot;</span>
+<span class="w">                  </span><span class="p">},</span>
+<span class="w">                  </span><span class="p">{</span>
+<span class="w">                     </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;null&quot;</span>
+<span class="w">                  </span><span class="p">}</span>
+<span class="w">               </span><span class="p">],</span>
+<span class="w">               </span><span class="nt">&quot;default&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+<span class="w">               </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Enable evaluation ID column in custom-annotated tabular file&quot;</span><span class="p">,</span>
+<span class="w">               </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Eval Id&quot;</span><span class="p">,</span>
+<span class="w">               </span><span class="nt">&quot;x-materialization&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                  </span><span class="p">{</span>
+<span class="w">                     </span><span class="nt">&quot;ir_key&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;method.import_build_format&quot;</span><span class="p">,</span>
+<span class="w">                     </span><span class="nt">&quot;ir_value_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;unsigned short&quot;</span><span class="p">,</span>
+<span class="w">                     </span><span class="nt">&quot;storage_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;AUGMENT_ENUM&quot;</span><span class="p">,</span>
+<span class="w">                     </span><span class="nt">&quot;stored_value&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;TABULAR_EVAL_ID&quot;</span>
+<span class="w">                  </span><span class="p">}</span>
+<span class="w">               </span><span class="p">]</span>
+<span class="w">            </span><span class="p">},</span>
+<span class="w">            </span><span class="nt">&quot;interface_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">               </span><span class="nt">&quot;anyOf&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                  </span><span class="p">{</span>
+<span class="w">                     </span><span class="nt">&quot;const&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">                     </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;boolean&quot;</span>
+<span class="w">                  </span><span class="p">},</span>
+<span class="w">                  </span><span class="p">{</span>
+<span class="w">                     </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;null&quot;</span>
+<span class="w">                  </span><span class="p">}</span>
+<span class="w">               </span><span class="p">],</span>
+<span class="w">               </span><span class="nt">&quot;default&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+<span class="w">               </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Enable interface ID column in custom-annotated tabular file&quot;</span><span class="p">,</span>
+<span class="w">               </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Interface Id&quot;</span><span class="p">,</span>
+<span class="w">               </span><span class="nt">&quot;x-materialization&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                  </span><span class="p">{</span>
+<span class="w">                     </span><span class="nt">&quot;ir_key&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;method.import_build_format&quot;</span><span class="p">,</span>
+<span class="w">                     </span><span class="nt">&quot;ir_value_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;unsigned short&quot;</span><span class="p">,</span>
+<span class="w">                     </span><span class="nt">&quot;storage_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;AUGMENT_ENUM&quot;</span><span class="p">,</span>
+<span class="w">                     </span><span class="nt">&quot;stored_value&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;TABULAR_IFACE_ID&quot;</span>
+<span class="w">                  </span><span class="p">}</span>
+<span class="w">               </span><span class="p">]</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">         </span><span class="p">},</span>
+<span class="w">         </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;MethodImportBuildFormatCustomAnnotatedConfig&quot;</span><span class="p">,</span>
+<span class="w">         </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;object&quot;</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">   </span><span class="p">},</span>
+<span class="w">   </span><span class="nt">&quot;additionalProperties&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</details></p><dl class="field-list simple">
+<dt class="field-odd">Fields<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><a class="reference internal" href="#dakota.spec.shared.formats.MethodImportBuildFormatCustomAnnotated.custom_annotated" title="dakota.spec.shared.formats.MethodImportBuildFormatCustomAnnotated.custom_annotated"><code class="xref py py-obj docutils literal notranslate"><span class="pre">custom_annotated</span> <span class="pre">(dakota.spec.shared.formats.MethodImportBuildFormatCustomAnnotatedConfig)</span></code></a></p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="dakota.spec.shared.formats.MethodImportBuildFormatCustomAnnotated.custom_annotated">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">custom_annotated</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#dakota.spec.shared.formats.MethodImportBuildFormatCustomAnnotatedConfig" title="dakota.spec.shared.formats.MethodImportBuildFormatCustomAnnotatedConfig"><span class="pre">MethodImportBuildFormatCustomAnnotatedConfig</span></a></em><em class="property"> <span class="pre">[Optional]</span></em><a class="headerlink" href="#dakota.spec.shared.formats.MethodImportBuildFormatCustomAnnotated.custom_annotated" title="Link to this definition"></a></dt>
+<dd><p>Selects custom-annotated tabular file format</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class pydantic_model">
+<dt class="sig sig-object py" id="dakota.spec.shared.formats.MethodImportBuildFormatCustomAnnotatedConfig">
+<em class="property"><span class="pre">pydantic</span> <span class="pre">model</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">dakota.spec.shared.formats.</span></span><span class="sig-name descname"><span class="pre">MethodImportBuildFormatCustomAnnotatedConfig</span></span><a class="headerlink" href="#dakota.spec.shared.formats.MethodImportBuildFormatCustomAnnotatedConfig" title="Link to this definition"></a></dt>
+<dd><p>Selects custom-annotated tabular file format</p>
+<p><details  class="autodoc_pydantic_collapsable_json">
+<summary>Show JSON schema</summary><div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">   </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;MethodImportBuildFormatCustomAnnotatedConfig&quot;</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Selects custom-annotated tabular file format&quot;</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;object&quot;</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">&quot;properties&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;header&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">         </span><span class="nt">&quot;anyOf&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">            </span><span class="p">{</span>
+<span class="w">               </span><span class="nt">&quot;const&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">               </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;boolean&quot;</span>
+<span class="w">            </span><span class="p">},</span>
+<span class="w">            </span><span class="p">{</span>
+<span class="w">               </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;null&quot;</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">         </span><span class="p">],</span>
+<span class="w">         </span><span class="nt">&quot;default&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+<span class="w">         </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Enable header row in custom-annotated tabular file&quot;</span><span class="p">,</span>
+<span class="w">         </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Header&quot;</span><span class="p">,</span>
+<span class="w">         </span><span class="nt">&quot;x-materialization&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">            </span><span class="p">{</span>
+<span class="w">               </span><span class="nt">&quot;ir_key&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;method.import_build_format&quot;</span><span class="p">,</span>
+<span class="w">               </span><span class="nt">&quot;ir_value_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;unsigned short&quot;</span><span class="p">,</span>
+<span class="w">               </span><span class="nt">&quot;storage_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;AUGMENT_ENUM&quot;</span><span class="p">,</span>
+<span class="w">               </span><span class="nt">&quot;stored_value&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;TABULAR_HEADER&quot;</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">         </span><span class="p">]</span>
+<span class="w">      </span><span class="p">},</span>
+<span class="w">      </span><span class="nt">&quot;eval_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">         </span><span class="nt">&quot;anyOf&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">            </span><span class="p">{</span>
+<span class="w">               </span><span class="nt">&quot;const&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">               </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;boolean&quot;</span>
+<span class="w">            </span><span class="p">},</span>
+<span class="w">            </span><span class="p">{</span>
+<span class="w">               </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;null&quot;</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">         </span><span class="p">],</span>
+<span class="w">         </span><span class="nt">&quot;default&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+<span class="w">         </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Enable evaluation ID column in custom-annotated tabular file&quot;</span><span class="p">,</span>
+<span class="w">         </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Eval Id&quot;</span><span class="p">,</span>
+<span class="w">         </span><span class="nt">&quot;x-materialization&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">            </span><span class="p">{</span>
+<span class="w">               </span><span class="nt">&quot;ir_key&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;method.import_build_format&quot;</span><span class="p">,</span>
+<span class="w">               </span><span class="nt">&quot;ir_value_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;unsigned short&quot;</span><span class="p">,</span>
+<span class="w">               </span><span class="nt">&quot;storage_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;AUGMENT_ENUM&quot;</span><span class="p">,</span>
+<span class="w">               </span><span class="nt">&quot;stored_value&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;TABULAR_EVAL_ID&quot;</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">         </span><span class="p">]</span>
+<span class="w">      </span><span class="p">},</span>
+<span class="w">      </span><span class="nt">&quot;interface_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">         </span><span class="nt">&quot;anyOf&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">            </span><span class="p">{</span>
+<span class="w">               </span><span class="nt">&quot;const&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">               </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;boolean&quot;</span>
+<span class="w">            </span><span class="p">},</span>
+<span class="w">            </span><span class="p">{</span>
+<span class="w">               </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;null&quot;</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">         </span><span class="p">],</span>
+<span class="w">         </span><span class="nt">&quot;default&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+<span class="w">         </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Enable interface ID column in custom-annotated tabular file&quot;</span><span class="p">,</span>
+<span class="w">         </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Interface Id&quot;</span><span class="p">,</span>
+<span class="w">         </span><span class="nt">&quot;x-materialization&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">            </span><span class="p">{</span>
+<span class="w">               </span><span class="nt">&quot;ir_key&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;method.import_build_format&quot;</span><span class="p">,</span>
+<span class="w">               </span><span class="nt">&quot;ir_value_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;unsigned short&quot;</span><span class="p">,</span>
+<span class="w">               </span><span class="nt">&quot;storage_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;AUGMENT_ENUM&quot;</span><span class="p">,</span>
+<span class="w">               </span><span class="nt">&quot;stored_value&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;TABULAR_IFACE_ID&quot;</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">         </span><span class="p">]</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">   </span><span class="p">},</span>
+<span class="w">   </span><span class="nt">&quot;additionalProperties&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</details></p><dl class="field-list simple">
+<dt class="field-odd">Fields<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><a class="reference internal" href="#dakota.spec.shared.formats.MethodImportBuildFormatCustomAnnotatedConfig.eval_id" title="dakota.spec.shared.formats.MethodImportBuildFormatCustomAnnotatedConfig.eval_id"><code class="xref py py-obj docutils literal notranslate"><span class="pre">eval_id</span> <span class="pre">(Literal[True]</span> <span class="pre">|</span> <span class="pre">None)</span></code></a></p></li>
+<li><p><a class="reference internal" href="#dakota.spec.shared.formats.MethodImportBuildFormatCustomAnnotatedConfig.header" title="dakota.spec.shared.formats.MethodImportBuildFormatCustomAnnotatedConfig.header"><code class="xref py py-obj docutils literal notranslate"><span class="pre">header</span> <span class="pre">(Literal[True]</span> <span class="pre">|</span> <span class="pre">None)</span></code></a></p></li>
+<li><p><a class="reference internal" href="#dakota.spec.shared.formats.MethodImportBuildFormatCustomAnnotatedConfig.interface_id" title="dakota.spec.shared.formats.MethodImportBuildFormatCustomAnnotatedConfig.interface_id"><code class="xref py py-obj docutils literal notranslate"><span class="pre">interface_id</span> <span class="pre">(Literal[True]</span> <span class="pre">|</span> <span class="pre">None)</span></code></a></p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="dakota.spec.shared.formats.MethodImportBuildFormatCustomAnnotatedConfig.eval_id">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">eval_id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="k"><span class="pre">True</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#dakota.spec.shared.formats.MethodImportBuildFormatCustomAnnotatedConfig.eval_id" title="Link to this definition"></a></dt>
+<dd><p>Enable evaluation ID column in custom-annotated tabular file</p>
+</dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="dakota.spec.shared.formats.MethodImportBuildFormatCustomAnnotatedConfig.header">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">header</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="k"><span class="pre">True</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#dakota.spec.shared.formats.MethodImportBuildFormatCustomAnnotatedConfig.header" title="Link to this definition"></a></dt>
+<dd><p>Enable header row in custom-annotated tabular file</p>
+</dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="dakota.spec.shared.formats.MethodImportBuildFormatCustomAnnotatedConfig.interface_id">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">interface_id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="k"><span class="pre">True</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#dakota.spec.shared.formats.MethodImportBuildFormatCustomAnnotatedConfig.interface_id" title="Link to this definition"></a></dt>
+<dd><p>Enable interface ID column in custom-annotated tabular file</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class pydantic_model">
+<dt class="sig sig-object py" id="dakota.spec.shared.formats.MethodImportBuildFormatFreeform">
+<em class="property"><span class="pre">pydantic</span> <span class="pre">model</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">dakota.spec.shared.formats.</span></span><span class="sig-name descname"><span class="pre">MethodImportBuildFormatFreeform</span></span><a class="headerlink" href="#dakota.spec.shared.formats.MethodImportBuildFormatFreeform" title="Link to this definition"></a></dt>
+<dd><p>Selects freeform file format</p>
+<p><details  class="autodoc_pydantic_collapsable_json">
+<summary>Show JSON schema</summary><div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">   </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;MethodImportBuildFormatFreeform&quot;</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Selects freeform file format&quot;</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;object&quot;</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">&quot;properties&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;freeform&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">         </span><span class="nt">&quot;const&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">         </span><span class="nt">&quot;default&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">         </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Selects freeform file format&quot;</span><span class="p">,</span>
+<span class="w">         </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Freeform&quot;</span><span class="p">,</span>
+<span class="w">         </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;boolean&quot;</span><span class="p">,</span>
+<span class="w">         </span><span class="nt">&quot;x-materialization&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">            </span><span class="p">{</span>
+<span class="w">               </span><span class="nt">&quot;ir_key&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;method.import_build_format&quot;</span><span class="p">,</span>
+<span class="w">               </span><span class="nt">&quot;ir_value_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;unsigned short&quot;</span><span class="p">,</span>
+<span class="w">               </span><span class="nt">&quot;storage_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;PRESENCE_ENUM&quot;</span><span class="p">,</span>
+<span class="w">               </span><span class="nt">&quot;stored_value&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;TABULAR_NONE&quot;</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">         </span><span class="p">]</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">   </span><span class="p">},</span>
+<span class="w">   </span><span class="nt">&quot;additionalProperties&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</details></p><dl class="field-list simple">
+<dt class="field-odd">Fields<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><a class="reference internal" href="#dakota.spec.shared.formats.MethodImportBuildFormatFreeform.freeform" title="dakota.spec.shared.formats.MethodImportBuildFormatFreeform.freeform"><code class="xref py py-obj docutils literal notranslate"><span class="pre">freeform</span> <span class="pre">(Literal[True])</span></code></a></p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="dakota.spec.shared.formats.MethodImportBuildFormatFreeform.freeform">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">freeform</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="k"><span class="pre">True</span></span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#dakota.spec.shared.formats.MethodImportBuildFormatFreeform.freeform" title="Link to this definition"></a></dt>
+<dd><p>Selects freeform file format</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class pydantic_model">
+<dt class="sig sig-object py" id="dakota.spec.shared.formats.MethodImportBuildFormatMixin">
+<em class="property"><span class="pre">pydantic</span> <span class="pre">model</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">dakota.spec.shared.formats.</span></span><span class="sig-name descname"><span class="pre">MethodImportBuildFormatMixin</span></span><a class="headerlink" href="#dakota.spec.shared.formats.MethodImportBuildFormatMixin" title="Link to this definition"></a></dt>
+<dd><p>Generated model for MethodImportBuildFormatMixin</p>
+<p><details  class="autodoc_pydantic_collapsable_json">
+<summary>Show JSON schema</summary><div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">   </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;MethodImportBuildFormatMixin&quot;</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Generated model for MethodImportBuildFormatMixin&quot;</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;object&quot;</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">&quot;properties&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;format&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">         </span><span class="nt">&quot;anchor&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">         </span><span class="nt">&quot;anyOf&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">            </span><span class="p">{</span>
+<span class="w">               </span><span class="nt">&quot;$ref&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;#/$defs/MethodImportBuildFormatCustomAnnotated&quot;</span>
+<span class="w">            </span><span class="p">},</span>
+<span class="w">            </span><span class="p">{</span>
+<span class="w">               </span><span class="nt">&quot;$ref&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;#/$defs/MethodImportBuildFormatAnnotated&quot;</span>
+<span class="w">            </span><span class="p">},</span>
+<span class="w">            </span><span class="p">{</span>
+<span class="w">               </span><span class="nt">&quot;$ref&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;#/$defs/MethodImportBuildFormatFreeform&quot;</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">         </span><span class="p">],</span>
+<span class="w">         </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Tabular Format&quot;</span><span class="p">,</span>
+<span class="w">         </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Format&quot;</span><span class="p">,</span>
+<span class="w">         </span><span class="nt">&quot;x-model-default&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;MethodImportBuildFormatAnnotated&quot;</span><span class="p">,</span>
+<span class="w">         </span><span class="nt">&quot;x-union-pattern&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">   </span><span class="p">},</span>
+<span class="w">   </span><span class="nt">&quot;$defs&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;MethodImportBuildFormatAnnotated&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">         </span><span class="nt">&quot;additionalProperties&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">         </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Selects annotated tabular file format&quot;</span><span class="p">,</span>
+<span class="w">         </span><span class="nt">&quot;properties&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;annotated&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">               </span><span class="nt">&quot;const&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">               </span><span class="nt">&quot;default&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">               </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Selects annotated tabular file format&quot;</span><span class="p">,</span>
+<span class="w">               </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Annotated&quot;</span><span class="p">,</span>
+<span class="w">               </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;boolean&quot;</span><span class="p">,</span>
+<span class="w">               </span><span class="nt">&quot;x-materialization&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                  </span><span class="p">{</span>
+<span class="w">                     </span><span class="nt">&quot;ir_key&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;method.import_build_format&quot;</span><span class="p">,</span>
+<span class="w">                     </span><span class="nt">&quot;ir_value_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;unsigned short&quot;</span><span class="p">,</span>
+<span class="w">                     </span><span class="nt">&quot;storage_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;PRESENCE_ENUM&quot;</span><span class="p">,</span>
+<span class="w">                     </span><span class="nt">&quot;stored_value&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;TABULAR_ANNOTATED&quot;</span>
+<span class="w">                  </span><span class="p">}</span>
+<span class="w">               </span><span class="p">]</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">         </span><span class="p">},</span>
+<span class="w">         </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;MethodImportBuildFormatAnnotated&quot;</span><span class="p">,</span>
+<span class="w">         </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;object&quot;</span>
+<span class="w">      </span><span class="p">},</span>
+<span class="w">      </span><span class="nt">&quot;MethodImportBuildFormatCustomAnnotated&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">         </span><span class="nt">&quot;additionalProperties&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">         </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Selects custom-annotated tabular file format&quot;</span><span class="p">,</span>
+<span class="w">         </span><span class="nt">&quot;properties&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;custom_annotated&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">               </span><span class="nt">&quot;$ref&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;#/$defs/MethodImportBuildFormatCustomAnnotatedConfig&quot;</span><span class="p">,</span>
+<span class="w">               </span><span class="nt">&quot;x-materialization&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                  </span><span class="p">{</span>
+<span class="w">                     </span><span class="nt">&quot;ir_key&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;method.import_build_format&quot;</span><span class="p">,</span>
+<span class="w">                     </span><span class="nt">&quot;ir_value_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;unsigned short&quot;</span><span class="p">,</span>
+<span class="w">                     </span><span class="nt">&quot;storage_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;PRESENCE_ENUM&quot;</span><span class="p">,</span>
+<span class="w">                     </span><span class="nt">&quot;stored_value&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;TABULAR_NONE&quot;</span>
+<span class="w">                  </span><span class="p">}</span>
+<span class="w">               </span><span class="p">],</span>
+<span class="w">               </span><span class="nt">&quot;x-model-default&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;MethodImportBuildFormatCustomAnnotatedConfig&quot;</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">         </span><span class="p">},</span>
+<span class="w">         </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;MethodImportBuildFormatCustomAnnotated&quot;</span><span class="p">,</span>
+<span class="w">         </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;object&quot;</span>
+<span class="w">      </span><span class="p">},</span>
+<span class="w">      </span><span class="nt">&quot;MethodImportBuildFormatCustomAnnotatedConfig&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">         </span><span class="nt">&quot;additionalProperties&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">         </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Selects custom-annotated tabular file format&quot;</span><span class="p">,</span>
+<span class="w">         </span><span class="nt">&quot;properties&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;header&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">               </span><span class="nt">&quot;anyOf&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                  </span><span class="p">{</span>
+<span class="w">                     </span><span class="nt">&quot;const&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">                     </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;boolean&quot;</span>
+<span class="w">                  </span><span class="p">},</span>
+<span class="w">                  </span><span class="p">{</span>
+<span class="w">                     </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;null&quot;</span>
+<span class="w">                  </span><span class="p">}</span>
+<span class="w">               </span><span class="p">],</span>
+<span class="w">               </span><span class="nt">&quot;default&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+<span class="w">               </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Enable header row in custom-annotated tabular file&quot;</span><span class="p">,</span>
+<span class="w">               </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Header&quot;</span><span class="p">,</span>
+<span class="w">               </span><span class="nt">&quot;x-materialization&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                  </span><span class="p">{</span>
+<span class="w">                     </span><span class="nt">&quot;ir_key&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;method.import_build_format&quot;</span><span class="p">,</span>
+<span class="w">                     </span><span class="nt">&quot;ir_value_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;unsigned short&quot;</span><span class="p">,</span>
+<span class="w">                     </span><span class="nt">&quot;storage_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;AUGMENT_ENUM&quot;</span><span class="p">,</span>
+<span class="w">                     </span><span class="nt">&quot;stored_value&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;TABULAR_HEADER&quot;</span>
+<span class="w">                  </span><span class="p">}</span>
+<span class="w">               </span><span class="p">]</span>
+<span class="w">            </span><span class="p">},</span>
+<span class="w">            </span><span class="nt">&quot;eval_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">               </span><span class="nt">&quot;anyOf&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                  </span><span class="p">{</span>
+<span class="w">                     </span><span class="nt">&quot;const&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">                     </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;boolean&quot;</span>
+<span class="w">                  </span><span class="p">},</span>
+<span class="w">                  </span><span class="p">{</span>
+<span class="w">                     </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;null&quot;</span>
+<span class="w">                  </span><span class="p">}</span>
+<span class="w">               </span><span class="p">],</span>
+<span class="w">               </span><span class="nt">&quot;default&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+<span class="w">               </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Enable evaluation ID column in custom-annotated tabular file&quot;</span><span class="p">,</span>
+<span class="w">               </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Eval Id&quot;</span><span class="p">,</span>
+<span class="w">               </span><span class="nt">&quot;x-materialization&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                  </span><span class="p">{</span>
+<span class="w">                     </span><span class="nt">&quot;ir_key&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;method.import_build_format&quot;</span><span class="p">,</span>
+<span class="w">                     </span><span class="nt">&quot;ir_value_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;unsigned short&quot;</span><span class="p">,</span>
+<span class="w">                     </span><span class="nt">&quot;storage_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;AUGMENT_ENUM&quot;</span><span class="p">,</span>
+<span class="w">                     </span><span class="nt">&quot;stored_value&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;TABULAR_EVAL_ID&quot;</span>
+<span class="w">                  </span><span class="p">}</span>
+<span class="w">               </span><span class="p">]</span>
+<span class="w">            </span><span class="p">},</span>
+<span class="w">            </span><span class="nt">&quot;interface_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">               </span><span class="nt">&quot;anyOf&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                  </span><span class="p">{</span>
+<span class="w">                     </span><span class="nt">&quot;const&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">                     </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;boolean&quot;</span>
+<span class="w">                  </span><span class="p">},</span>
+<span class="w">                  </span><span class="p">{</span>
+<span class="w">                     </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;null&quot;</span>
+<span class="w">                  </span><span class="p">}</span>
+<span class="w">               </span><span class="p">],</span>
+<span class="w">               </span><span class="nt">&quot;default&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+<span class="w">               </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Enable interface ID column in custom-annotated tabular file&quot;</span><span class="p">,</span>
+<span class="w">               </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Interface Id&quot;</span><span class="p">,</span>
+<span class="w">               </span><span class="nt">&quot;x-materialization&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                  </span><span class="p">{</span>
+<span class="w">                     </span><span class="nt">&quot;ir_key&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;method.import_build_format&quot;</span><span class="p">,</span>
+<span class="w">                     </span><span class="nt">&quot;ir_value_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;unsigned short&quot;</span><span class="p">,</span>
+<span class="w">                     </span><span class="nt">&quot;storage_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;AUGMENT_ENUM&quot;</span><span class="p">,</span>
+<span class="w">                     </span><span class="nt">&quot;stored_value&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;TABULAR_IFACE_ID&quot;</span>
+<span class="w">                  </span><span class="p">}</span>
+<span class="w">               </span><span class="p">]</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">         </span><span class="p">},</span>
+<span class="w">         </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;MethodImportBuildFormatCustomAnnotatedConfig&quot;</span><span class="p">,</span>
+<span class="w">         </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;object&quot;</span>
+<span class="w">      </span><span class="p">},</span>
+<span class="w">      </span><span class="nt">&quot;MethodImportBuildFormatFreeform&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">         </span><span class="nt">&quot;additionalProperties&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">         </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Selects freeform file format&quot;</span><span class="p">,</span>
+<span class="w">         </span><span class="nt">&quot;properties&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;freeform&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">               </span><span class="nt">&quot;const&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">               </span><span class="nt">&quot;default&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">               </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Selects freeform file format&quot;</span><span class="p">,</span>
+<span class="w">               </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Freeform&quot;</span><span class="p">,</span>
+<span class="w">               </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;boolean&quot;</span><span class="p">,</span>
+<span class="w">               </span><span class="nt">&quot;x-materialization&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                  </span><span class="p">{</span>
+<span class="w">                     </span><span class="nt">&quot;ir_key&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;method.import_build_format&quot;</span><span class="p">,</span>
+<span class="w">                     </span><span class="nt">&quot;ir_value_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;unsigned short&quot;</span><span class="p">,</span>
+<span class="w">                     </span><span class="nt">&quot;storage_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;PRESENCE_ENUM&quot;</span><span class="p">,</span>
+<span class="w">                     </span><span class="nt">&quot;stored_value&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;TABULAR_NONE&quot;</span>
+<span class="w">                  </span><span class="p">}</span>
+<span class="w">               </span><span class="p">]</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">         </span><span class="p">},</span>
+<span class="w">         </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;MethodImportBuildFormatFreeform&quot;</span><span class="p">,</span>
+<span class="w">         </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;object&quot;</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">   </span><span class="p">},</span>
+<span class="w">   </span><span class="nt">&quot;additionalProperties&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</details></p><dl class="field-list simple">
+<dt class="field-odd">Fields<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><a class="reference internal" href="#dakota.spec.shared.formats.MethodImportBuildFormatMixin.format" title="dakota.spec.shared.formats.MethodImportBuildFormatMixin.format"><code class="xref py py-obj docutils literal notranslate"><span class="pre">format</span> <span class="pre">(dakota.spec.shared.formats.MethodImportBuildFormatCustomAnnotated</span> <span class="pre">|</span> <span class="pre">dakota.spec.shared.formats.MethodImportBuildFormatAnnotated</span> <span class="pre">|</span> <span class="pre">dakota.spec.shared.formats.MethodImportBuildFormatFreeform)</span></code></a></p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="dakota.spec.shared.formats.MethodImportBuildFormatMixin.format">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">format</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#dakota.spec.shared.formats.MethodImportBuildFormatCustomAnnotated" title="dakota.spec.shared.formats.MethodImportBuildFormatCustomAnnotated"><span class="pre">MethodImportBuildFormatCustomAnnotated</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#dakota.spec.shared.formats.MethodImportBuildFormatAnnotated" title="dakota.spec.shared.formats.MethodImportBuildFormatAnnotated"><span class="pre">MethodImportBuildFormatAnnotated</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#dakota.spec.shared.formats.MethodImportBuildFormatFreeform" title="dakota.spec.shared.formats.MethodImportBuildFormatFreeform"><span class="pre">MethodImportBuildFormatFreeform</span></a></em><em class="property"> <span class="pre">[Optional]</span></em><a class="headerlink" href="#dakota.spec.shared.formats.MethodImportBuildFormatMixin.format" title="Link to this definition"></a></dt>
+<dd><p>Tabular Format</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class pydantic_model">
+<dt class="sig sig-object py" id="dakota.spec.shared.formats.ModelFullSurfpackExportFormatExportModel">
+<em class="property"><span class="pre">pydantic</span> <span class="pre">model</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">dakota.spec.shared.formats.</span></span><span class="sig-name descname"><span class="pre">ModelFullSurfpackExportFormatExportModel</span></span><a class="headerlink" href="#dakota.spec.shared.formats.ModelFullSurfpackExportFormatExportModel" title="Link to this definition"></a></dt>
+<dd><p>Exports surrogate model in user-specified format(s)</p>
+<p><details  class="autodoc_pydantic_collapsable_json">
+<summary>Show JSON schema</summary><div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">   </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ModelFullSurfpackExportFormatExportModel&quot;</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Exports surrogate model in user-specified format(s)&quot;</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;object&quot;</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">&quot;properties&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;filename_prefix&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">         </span><span class="nt">&quot;default&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;exported_surrogate&quot;</span><span class="p">,</span>
+<span class="w">         </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;User-customizable portion of exported/imported surrogate model filenames&quot;</span><span class="p">,</span>
+<span class="w">         </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Filename Prefix&quot;</span><span class="p">,</span>
+<span class="w">         </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
+<span class="w">         </span><span class="nt">&quot;x-materialization&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">            </span><span class="p">{</span>
+<span class="w">               </span><span class="nt">&quot;ir_key&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;model.surrogate.model_export_prefix&quot;</span><span class="p">,</span>
+<span class="w">               </span><span class="nt">&quot;ir_value_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;String&quot;</span><span class="p">,</span>
+<span class="w">               </span><span class="nt">&quot;storage_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;DIRECT_VALUE&quot;</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">         </span><span class="p">]</span>
+<span class="w">      </span><span class="p">},</span>
+<span class="w">      </span><span class="nt">&quot;formats&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">         </span><span class="nt">&quot;$ref&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;#/$defs/ModelFullSurfpackExportFormatFormats&quot;</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">   </span><span class="p">},</span>
+<span class="w">   </span><span class="nt">&quot;$defs&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;ModelFullSurfpackExportFormatFormats&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">         </span><span class="nt">&quot;additionalProperties&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">         </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Formats for surrogate model export&quot;</span><span class="p">,</span>
+<span class="w">         </span><span class="nt">&quot;properties&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;text_archive&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">               </span><span class="nt">&quot;anyOf&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                  </span><span class="p">{</span>
+<span class="w">                     </span><span class="nt">&quot;const&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">                     </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;boolean&quot;</span>
+<span class="w">                  </span><span class="p">},</span>
+<span class="w">                  </span><span class="p">{</span>
+<span class="w">                     </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;null&quot;</span>
+<span class="w">                  </span><span class="p">}</span>
+<span class="w">               </span><span class="p">],</span>
+<span class="w">               </span><span class="nt">&quot;default&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+<span class="w">               </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Surrogate model plain-text archive file format&quot;</span><span class="p">,</span>
+<span class="w">               </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Text Archive&quot;</span><span class="p">,</span>
+<span class="w">               </span><span class="nt">&quot;x-materialization&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                  </span><span class="p">{</span>
+<span class="w">                     </span><span class="nt">&quot;ir_key&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;model.surrogate.model_export_format&quot;</span><span class="p">,</span>
+<span class="w">                     </span><span class="nt">&quot;ir_value_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;unsigned short&quot;</span><span class="p">,</span>
+<span class="w">                     </span><span class="nt">&quot;storage_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;AUGMENT_ENUM&quot;</span><span class="p">,</span>
+<span class="w">                     </span><span class="nt">&quot;stored_value&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;TEXT_ARCHIVE&quot;</span>
+<span class="w">                  </span><span class="p">}</span>
+<span class="w">               </span><span class="p">]</span>
+<span class="w">            </span><span class="p">},</span>
+<span class="w">            </span><span class="nt">&quot;binary_archive&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">               </span><span class="nt">&quot;anyOf&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                  </span><span class="p">{</span>
+<span class="w">                     </span><span class="nt">&quot;const&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">                     </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;boolean&quot;</span>
+<span class="w">                  </span><span class="p">},</span>
+<span class="w">                  </span><span class="p">{</span>
+<span class="w">                     </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;null&quot;</span>
+<span class="w">                  </span><span class="p">}</span>
+<span class="w">               </span><span class="p">],</span>
+<span class="w">               </span><span class="nt">&quot;default&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+<span class="w">               </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Surrogate model binary archive file format&quot;</span><span class="p">,</span>
+<span class="w">               </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Binary Archive&quot;</span><span class="p">,</span>
+<span class="w">               </span><span class="nt">&quot;x-materialization&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                  </span><span class="p">{</span>
+<span class="w">                     </span><span class="nt">&quot;ir_key&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;model.surrogate.model_export_format&quot;</span><span class="p">,</span>
+<span class="w">                     </span><span class="nt">&quot;ir_value_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;unsigned short&quot;</span><span class="p">,</span>
+<span class="w">                     </span><span class="nt">&quot;storage_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;AUGMENT_ENUM&quot;</span><span class="p">,</span>
+<span class="w">                     </span><span class="nt">&quot;stored_value&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;BINARY_ARCHIVE&quot;</span>
+<span class="w">                  </span><span class="p">}</span>
+<span class="w">               </span><span class="p">]</span>
+<span class="w">            </span><span class="p">},</span>
+<span class="w">            </span><span class="nt">&quot;algebraic_file&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">               </span><span class="nt">&quot;anyOf&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                  </span><span class="p">{</span>
+<span class="w">                     </span><span class="nt">&quot;const&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">                     </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;boolean&quot;</span>
+<span class="w">                  </span><span class="p">},</span>
+<span class="w">                  </span><span class="p">{</span>
+<span class="w">                     </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;null&quot;</span>
+<span class="w">                  </span><span class="p">}</span>
+<span class="w">               </span><span class="p">],</span>
+<span class="w">               </span><span class="nt">&quot;default&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+<span class="w">               </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Export surrogate model in algebraic format to a file&quot;</span><span class="p">,</span>
+<span class="w">               </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Algebraic File&quot;</span><span class="p">,</span>
+<span class="w">               </span><span class="nt">&quot;x-materialization&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                  </span><span class="p">{</span>
+<span class="w">                     </span><span class="nt">&quot;ir_key&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;model.surrogate.model_export_format&quot;</span><span class="p">,</span>
+<span class="w">                     </span><span class="nt">&quot;ir_value_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;unsigned short&quot;</span><span class="p">,</span>
+<span class="w">                     </span><span class="nt">&quot;storage_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;AUGMENT_ENUM&quot;</span><span class="p">,</span>
+<span class="w">                     </span><span class="nt">&quot;stored_value&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ALGEBRAIC_FILE&quot;</span>
+<span class="w">                  </span><span class="p">}</span>
+<span class="w">               </span><span class="p">]</span>
+<span class="w">            </span><span class="p">},</span>
+<span class="w">            </span><span class="nt">&quot;algebraic_console&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">               </span><span class="nt">&quot;anyOf&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                  </span><span class="p">{</span>
+<span class="w">                     </span><span class="nt">&quot;const&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">                     </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;boolean&quot;</span>
+<span class="w">                  </span><span class="p">},</span>
+<span class="w">                  </span><span class="p">{</span>
+<span class="w">                     </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;null&quot;</span>
+<span class="w">                  </span><span class="p">}</span>
+<span class="w">               </span><span class="p">],</span>
+<span class="w">               </span><span class="nt">&quot;default&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+<span class="w">               </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Export surrogate model in algebraic format to the console&quot;</span><span class="p">,</span>
+<span class="w">               </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Algebraic Console&quot;</span><span class="p">,</span>
+<span class="w">               </span><span class="nt">&quot;x-materialization&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                  </span><span class="p">{</span>
+<span class="w">                     </span><span class="nt">&quot;ir_key&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;model.surrogate.model_export_format&quot;</span><span class="p">,</span>
+<span class="w">                     </span><span class="nt">&quot;ir_value_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;unsigned short&quot;</span><span class="p">,</span>
+<span class="w">                     </span><span class="nt">&quot;storage_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;AUGMENT_ENUM&quot;</span><span class="p">,</span>
+<span class="w">                     </span><span class="nt">&quot;stored_value&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ALGEBRAIC_CONSOLE&quot;</span>
+<span class="w">                  </span><span class="p">}</span>
+<span class="w">               </span><span class="p">]</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">         </span><span class="p">},</span>
+<span class="w">         </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ModelFullSurfpackExportFormatFormats&quot;</span><span class="p">,</span>
+<span class="w">         </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;object&quot;</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">   </span><span class="p">},</span>
+<span class="w">   </span><span class="nt">&quot;additionalProperties&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">&quot;required&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">      </span><span class="s2">&quot;formats&quot;</span>
+<span class="w">   </span><span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</details></p><dl class="field-list simple">
+<dt class="field-odd">Fields<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><a class="reference internal" href="#dakota.spec.shared.formats.ModelFullSurfpackExportFormatExportModel.filename_prefix" title="dakota.spec.shared.formats.ModelFullSurfpackExportFormatExportModel.filename_prefix"><code class="xref py py-obj docutils literal notranslate"><span class="pre">filename_prefix</span> <span class="pre">(str)</span></code></a></p></li>
+<li><p><a class="reference internal" href="#dakota.spec.shared.formats.ModelFullSurfpackExportFormatExportModel.formats" title="dakota.spec.shared.formats.ModelFullSurfpackExportFormatExportModel.formats"><code class="xref py py-obj docutils literal notranslate"><span class="pre">formats</span> <span class="pre">(dakota.spec.shared.formats.ModelFullSurfpackExportFormatFormats)</span></code></a></p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="dakota.spec.shared.formats.ModelFullSurfpackExportFormatExportModel.filename_prefix">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">filename_prefix</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'exported_surrogate'</span></em><a class="headerlink" href="#dakota.spec.shared.formats.ModelFullSurfpackExportFormatExportModel.filename_prefix" title="Link to this definition"></a></dt>
+<dd><p>User-customizable portion of exported/imported surrogate model filenames</p>
+</dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="dakota.spec.shared.formats.ModelFullSurfpackExportFormatExportModel.formats">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">formats</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#dakota.spec.shared.formats.ModelFullSurfpackExportFormatFormats" title="dakota.spec.shared.formats.ModelFullSurfpackExportFormatFormats"><span class="pre">ModelFullSurfpackExportFormatFormats</span></a></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#dakota.spec.shared.formats.ModelFullSurfpackExportFormatExportModel.formats" title="Link to this definition"></a></dt>
+<dd><p>Formats for surrogate model export</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class pydantic_model">
+<dt class="sig sig-object py" id="dakota.spec.shared.formats.ModelFullSurfpackExportFormatFormats">
+<em class="property"><span class="pre">pydantic</span> <span class="pre">model</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">dakota.spec.shared.formats.</span></span><span class="sig-name descname"><span class="pre">ModelFullSurfpackExportFormatFormats</span></span><a class="headerlink" href="#dakota.spec.shared.formats.ModelFullSurfpackExportFormatFormats" title="Link to this definition"></a></dt>
+<dd><p>Formats for surrogate model export</p>
+<p><details  class="autodoc_pydantic_collapsable_json">
+<summary>Show JSON schema</summary><div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">   </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ModelFullSurfpackExportFormatFormats&quot;</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Formats for surrogate model export&quot;</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;object&quot;</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">&quot;properties&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;text_archive&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">         </span><span class="nt">&quot;anyOf&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">            </span><span class="p">{</span>
+<span class="w">               </span><span class="nt">&quot;const&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">               </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;boolean&quot;</span>
+<span class="w">            </span><span class="p">},</span>
+<span class="w">            </span><span class="p">{</span>
+<span class="w">               </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;null&quot;</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">         </span><span class="p">],</span>
+<span class="w">         </span><span class="nt">&quot;default&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+<span class="w">         </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Surrogate model plain-text archive file format&quot;</span><span class="p">,</span>
+<span class="w">         </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Text Archive&quot;</span><span class="p">,</span>
+<span class="w">         </span><span class="nt">&quot;x-materialization&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">            </span><span class="p">{</span>
+<span class="w">               </span><span class="nt">&quot;ir_key&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;model.surrogate.model_export_format&quot;</span><span class="p">,</span>
+<span class="w">               </span><span class="nt">&quot;ir_value_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;unsigned short&quot;</span><span class="p">,</span>
+<span class="w">               </span><span class="nt">&quot;storage_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;AUGMENT_ENUM&quot;</span><span class="p">,</span>
+<span class="w">               </span><span class="nt">&quot;stored_value&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;TEXT_ARCHIVE&quot;</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">         </span><span class="p">]</span>
+<span class="w">      </span><span class="p">},</span>
+<span class="w">      </span><span class="nt">&quot;binary_archive&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">         </span><span class="nt">&quot;anyOf&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">            </span><span class="p">{</span>
+<span class="w">               </span><span class="nt">&quot;const&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">               </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;boolean&quot;</span>
+<span class="w">            </span><span class="p">},</span>
+<span class="w">            </span><span class="p">{</span>
+<span class="w">               </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;null&quot;</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">         </span><span class="p">],</span>
+<span class="w">         </span><span class="nt">&quot;default&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+<span class="w">         </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Surrogate model binary archive file format&quot;</span><span class="p">,</span>
+<span class="w">         </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Binary Archive&quot;</span><span class="p">,</span>
+<span class="w">         </span><span class="nt">&quot;x-materialization&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">            </span><span class="p">{</span>
+<span class="w">               </span><span class="nt">&quot;ir_key&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;model.surrogate.model_export_format&quot;</span><span class="p">,</span>
+<span class="w">               </span><span class="nt">&quot;ir_value_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;unsigned short&quot;</span><span class="p">,</span>
+<span class="w">               </span><span class="nt">&quot;storage_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;AUGMENT_ENUM&quot;</span><span class="p">,</span>
+<span class="w">               </span><span class="nt">&quot;stored_value&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;BINARY_ARCHIVE&quot;</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">         </span><span class="p">]</span>
+<span class="w">      </span><span class="p">},</span>
+<span class="w">      </span><span class="nt">&quot;algebraic_file&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">         </span><span class="nt">&quot;anyOf&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">            </span><span class="p">{</span>
+<span class="w">               </span><span class="nt">&quot;const&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">               </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;boolean&quot;</span>
+<span class="w">            </span><span class="p">},</span>
+<span class="w">            </span><span class="p">{</span>
+<span class="w">               </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;null&quot;</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">         </span><span class="p">],</span>
+<span class="w">         </span><span class="nt">&quot;default&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+<span class="w">         </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Export surrogate model in algebraic format to a file&quot;</span><span class="p">,</span>
+<span class="w">         </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Algebraic File&quot;</span><span class="p">,</span>
+<span class="w">         </span><span class="nt">&quot;x-materialization&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">            </span><span class="p">{</span>
+<span class="w">               </span><span class="nt">&quot;ir_key&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;model.surrogate.model_export_format&quot;</span><span class="p">,</span>
+<span class="w">               </span><span class="nt">&quot;ir_value_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;unsigned short&quot;</span><span class="p">,</span>
+<span class="w">               </span><span class="nt">&quot;storage_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;AUGMENT_ENUM&quot;</span><span class="p">,</span>
+<span class="w">               </span><span class="nt">&quot;stored_value&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ALGEBRAIC_FILE&quot;</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">         </span><span class="p">]</span>
+<span class="w">      </span><span class="p">},</span>
+<span class="w">      </span><span class="nt">&quot;algebraic_console&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">         </span><span class="nt">&quot;anyOf&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">            </span><span class="p">{</span>
+<span class="w">               </span><span class="nt">&quot;const&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">               </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;boolean&quot;</span>
+<span class="w">            </span><span class="p">},</span>
+<span class="w">            </span><span class="p">{</span>
+<span class="w">               </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;null&quot;</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">         </span><span class="p">],</span>
+<span class="w">         </span><span class="nt">&quot;default&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+<span class="w">         </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Export surrogate model in algebraic format to the console&quot;</span><span class="p">,</span>
+<span class="w">         </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Algebraic Console&quot;</span><span class="p">,</span>
+<span class="w">         </span><span class="nt">&quot;x-materialization&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">            </span><span class="p">{</span>
+<span class="w">               </span><span class="nt">&quot;ir_key&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;model.surrogate.model_export_format&quot;</span><span class="p">,</span>
+<span class="w">               </span><span class="nt">&quot;ir_value_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;unsigned short&quot;</span><span class="p">,</span>
+<span class="w">               </span><span class="nt">&quot;storage_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;AUGMENT_ENUM&quot;</span><span class="p">,</span>
+<span class="w">               </span><span class="nt">&quot;stored_value&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ALGEBRAIC_CONSOLE&quot;</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">         </span><span class="p">]</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">   </span><span class="p">},</span>
+<span class="w">   </span><span class="nt">&quot;additionalProperties&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</details></p><dl class="field-list simple">
+<dt class="field-odd">Fields<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><a class="reference internal" href="#dakota.spec.shared.formats.ModelFullSurfpackExportFormatFormats.algebraic_console" title="dakota.spec.shared.formats.ModelFullSurfpackExportFormatFormats.algebraic_console"><code class="xref py py-obj docutils literal notranslate"><span class="pre">algebraic_console</span> <span class="pre">(Literal[True]</span> <span class="pre">|</span> <span class="pre">None)</span></code></a></p></li>
+<li><p><a class="reference internal" href="#dakota.spec.shared.formats.ModelFullSurfpackExportFormatFormats.algebraic_file" title="dakota.spec.shared.formats.ModelFullSurfpackExportFormatFormats.algebraic_file"><code class="xref py py-obj docutils literal notranslate"><span class="pre">algebraic_file</span> <span class="pre">(Literal[True]</span> <span class="pre">|</span> <span class="pre">None)</span></code></a></p></li>
+<li><p><a class="reference internal" href="#dakota.spec.shared.formats.ModelFullSurfpackExportFormatFormats.binary_archive" title="dakota.spec.shared.formats.ModelFullSurfpackExportFormatFormats.binary_archive"><code class="xref py py-obj docutils literal notranslate"><span class="pre">binary_archive</span> <span class="pre">(Literal[True]</span> <span class="pre">|</span> <span class="pre">None)</span></code></a></p></li>
+<li><p><a class="reference internal" href="#dakota.spec.shared.formats.ModelFullSurfpackExportFormatFormats.text_archive" title="dakota.spec.shared.formats.ModelFullSurfpackExportFormatFormats.text_archive"><code class="xref py py-obj docutils literal notranslate"><span class="pre">text_archive</span> <span class="pre">(Literal[True]</span> <span class="pre">|</span> <span class="pre">None)</span></code></a></p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="dakota.spec.shared.formats.ModelFullSurfpackExportFormatFormats.algebraic_console">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">algebraic_console</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="k"><span class="pre">True</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#dakota.spec.shared.formats.ModelFullSurfpackExportFormatFormats.algebraic_console" title="Link to this definition"></a></dt>
+<dd><p>Export surrogate model in algebraic format to the console</p>
+</dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="dakota.spec.shared.formats.ModelFullSurfpackExportFormatFormats.algebraic_file">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">algebraic_file</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="k"><span class="pre">True</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#dakota.spec.shared.formats.ModelFullSurfpackExportFormatFormats.algebraic_file" title="Link to this definition"></a></dt>
+<dd><p>Export surrogate model in algebraic format to a file</p>
+</dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="dakota.spec.shared.formats.ModelFullSurfpackExportFormatFormats.binary_archive">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">binary_archive</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="k"><span class="pre">True</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#dakota.spec.shared.formats.ModelFullSurfpackExportFormatFormats.binary_archive" title="Link to this definition"></a></dt>
+<dd><p>Surrogate model binary archive file format</p>
+</dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="dakota.spec.shared.formats.ModelFullSurfpackExportFormatFormats.text_archive">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">text_archive</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="k"><span class="pre">True</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#dakota.spec.shared.formats.ModelFullSurfpackExportFormatFormats.text_archive" title="Link to this definition"></a></dt>
+<dd><p>Surrogate model plain-text archive file format</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class pydantic_model">
+<dt class="sig sig-object py" id="dakota.spec.shared.formats.ModelFullSurfpackExportFormatMixin">
+<em class="property"><span class="pre">pydantic</span> <span class="pre">model</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">dakota.spec.shared.formats.</span></span><span class="sig-name descname"><span class="pre">ModelFullSurfpackExportFormatMixin</span></span><a class="headerlink" href="#dakota.spec.shared.formats.ModelFullSurfpackExportFormatMixin" title="Link to this definition"></a></dt>
+<dd><p>Generated model for ModelFullSurfpackExportFormatMixin</p>
+<p><details  class="autodoc_pydantic_collapsable_json">
+<summary>Show JSON schema</summary><div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">   </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ModelFullSurfpackExportFormatMixin&quot;</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Generated model for ModelFullSurfpackExportFormatMixin&quot;</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;object&quot;</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">&quot;properties&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;export_model&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">         </span><span class="nt">&quot;anyOf&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">            </span><span class="p">{</span>
+<span class="w">               </span><span class="nt">&quot;$ref&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;#/$defs/ModelFullSurfpackExportFormatExportModel&quot;</span>
+<span class="w">            </span><span class="p">},</span>
+<span class="w">            </span><span class="p">{</span>
+<span class="w">               </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;null&quot;</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">         </span><span class="p">],</span>
+<span class="w">         </span><span class="nt">&quot;default&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+<span class="w">         </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Exports surrogate model in user-specified format(s)&quot;</span><span class="p">,</span>
+<span class="w">         </span><span class="nt">&quot;x-materialization&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">            </span><span class="p">{</span>
+<span class="w">               </span><span class="nt">&quot;ir_key&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;model.surrogate.export_surrogate&quot;</span><span class="p">,</span>
+<span class="w">               </span><span class="nt">&quot;ir_value_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;bool&quot;</span><span class="p">,</span>
+<span class="w">               </span><span class="nt">&quot;storage_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;PRESENCE_TRUE&quot;</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">         </span><span class="p">]</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">   </span><span class="p">},</span>
+<span class="w">   </span><span class="nt">&quot;$defs&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;ModelFullSurfpackExportFormatExportModel&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">         </span><span class="nt">&quot;additionalProperties&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">         </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Exports surrogate model in user-specified format(s)&quot;</span><span class="p">,</span>
+<span class="w">         </span><span class="nt">&quot;properties&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;filename_prefix&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">               </span><span class="nt">&quot;default&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;exported_surrogate&quot;</span><span class="p">,</span>
+<span class="w">               </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;User-customizable portion of exported/imported surrogate model filenames&quot;</span><span class="p">,</span>
+<span class="w">               </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Filename Prefix&quot;</span><span class="p">,</span>
+<span class="w">               </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
+<span class="w">               </span><span class="nt">&quot;x-materialization&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                  </span><span class="p">{</span>
+<span class="w">                     </span><span class="nt">&quot;ir_key&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;model.surrogate.model_export_prefix&quot;</span><span class="p">,</span>
+<span class="w">                     </span><span class="nt">&quot;ir_value_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;String&quot;</span><span class="p">,</span>
+<span class="w">                     </span><span class="nt">&quot;storage_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;DIRECT_VALUE&quot;</span>
+<span class="w">                  </span><span class="p">}</span>
+<span class="w">               </span><span class="p">]</span>
+<span class="w">            </span><span class="p">},</span>
+<span class="w">            </span><span class="nt">&quot;formats&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">               </span><span class="nt">&quot;$ref&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;#/$defs/ModelFullSurfpackExportFormatFormats&quot;</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">         </span><span class="p">},</span>
+<span class="w">         </span><span class="nt">&quot;required&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">            </span><span class="s2">&quot;formats&quot;</span>
+<span class="w">         </span><span class="p">],</span>
+<span class="w">         </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ModelFullSurfpackExportFormatExportModel&quot;</span><span class="p">,</span>
+<span class="w">         </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;object&quot;</span>
+<span class="w">      </span><span class="p">},</span>
+<span class="w">      </span><span class="nt">&quot;ModelFullSurfpackExportFormatFormats&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">         </span><span class="nt">&quot;additionalProperties&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">         </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Formats for surrogate model export&quot;</span><span class="p">,</span>
+<span class="w">         </span><span class="nt">&quot;properties&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;text_archive&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">               </span><span class="nt">&quot;anyOf&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                  </span><span class="p">{</span>
+<span class="w">                     </span><span class="nt">&quot;const&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">                     </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;boolean&quot;</span>
+<span class="w">                  </span><span class="p">},</span>
+<span class="w">                  </span><span class="p">{</span>
+<span class="w">                     </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;null&quot;</span>
+<span class="w">                  </span><span class="p">}</span>
+<span class="w">               </span><span class="p">],</span>
+<span class="w">               </span><span class="nt">&quot;default&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+<span class="w">               </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Surrogate model plain-text archive file format&quot;</span><span class="p">,</span>
+<span class="w">               </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Text Archive&quot;</span><span class="p">,</span>
+<span class="w">               </span><span class="nt">&quot;x-materialization&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                  </span><span class="p">{</span>
+<span class="w">                     </span><span class="nt">&quot;ir_key&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;model.surrogate.model_export_format&quot;</span><span class="p">,</span>
+<span class="w">                     </span><span class="nt">&quot;ir_value_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;unsigned short&quot;</span><span class="p">,</span>
+<span class="w">                     </span><span class="nt">&quot;storage_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;AUGMENT_ENUM&quot;</span><span class="p">,</span>
+<span class="w">                     </span><span class="nt">&quot;stored_value&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;TEXT_ARCHIVE&quot;</span>
+<span class="w">                  </span><span class="p">}</span>
+<span class="w">               </span><span class="p">]</span>
+<span class="w">            </span><span class="p">},</span>
+<span class="w">            </span><span class="nt">&quot;binary_archive&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">               </span><span class="nt">&quot;anyOf&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                  </span><span class="p">{</span>
+<span class="w">                     </span><span class="nt">&quot;const&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">                     </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;boolean&quot;</span>
+<span class="w">                  </span><span class="p">},</span>
+<span class="w">                  </span><span class="p">{</span>
+<span class="w">                     </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;null&quot;</span>
+<span class="w">                  </span><span class="p">}</span>
+<span class="w">               </span><span class="p">],</span>
+<span class="w">               </span><span class="nt">&quot;default&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+<span class="w">               </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Surrogate model binary archive file format&quot;</span><span class="p">,</span>
+<span class="w">               </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Binary Archive&quot;</span><span class="p">,</span>
+<span class="w">               </span><span class="nt">&quot;x-materialization&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                  </span><span class="p">{</span>
+<span class="w">                     </span><span class="nt">&quot;ir_key&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;model.surrogate.model_export_format&quot;</span><span class="p">,</span>
+<span class="w">                     </span><span class="nt">&quot;ir_value_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;unsigned short&quot;</span><span class="p">,</span>
+<span class="w">                     </span><span class="nt">&quot;storage_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;AUGMENT_ENUM&quot;</span><span class="p">,</span>
+<span class="w">                     </span><span class="nt">&quot;stored_value&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;BINARY_ARCHIVE&quot;</span>
+<span class="w">                  </span><span class="p">}</span>
+<span class="w">               </span><span class="p">]</span>
+<span class="w">            </span><span class="p">},</span>
+<span class="w">            </span><span class="nt">&quot;algebraic_file&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">               </span><span class="nt">&quot;anyOf&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                  </span><span class="p">{</span>
+<span class="w">                     </span><span class="nt">&quot;const&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">                     </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;boolean&quot;</span>
+<span class="w">                  </span><span class="p">},</span>
+<span class="w">                  </span><span class="p">{</span>
+<span class="w">                     </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;null&quot;</span>
+<span class="w">                  </span><span class="p">}</span>
+<span class="w">               </span><span class="p">],</span>
+<span class="w">               </span><span class="nt">&quot;default&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+<span class="w">               </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Export surrogate model in algebraic format to a file&quot;</span><span class="p">,</span>
+<span class="w">               </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Algebraic File&quot;</span><span class="p">,</span>
+<span class="w">               </span><span class="nt">&quot;x-materialization&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                  </span><span class="p">{</span>
+<span class="w">                     </span><span class="nt">&quot;ir_key&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;model.surrogate.model_export_format&quot;</span><span class="p">,</span>
+<span class="w">                     </span><span class="nt">&quot;ir_value_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;unsigned short&quot;</span><span class="p">,</span>
+<span class="w">                     </span><span class="nt">&quot;storage_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;AUGMENT_ENUM&quot;</span><span class="p">,</span>
+<span class="w">                     </span><span class="nt">&quot;stored_value&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ALGEBRAIC_FILE&quot;</span>
+<span class="w">                  </span><span class="p">}</span>
+<span class="w">               </span><span class="p">]</span>
+<span class="w">            </span><span class="p">},</span>
+<span class="w">            </span><span class="nt">&quot;algebraic_console&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">               </span><span class="nt">&quot;anyOf&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                  </span><span class="p">{</span>
+<span class="w">                     </span><span class="nt">&quot;const&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">                     </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;boolean&quot;</span>
+<span class="w">                  </span><span class="p">},</span>
+<span class="w">                  </span><span class="p">{</span>
+<span class="w">                     </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;null&quot;</span>
+<span class="w">                  </span><span class="p">}</span>
+<span class="w">               </span><span class="p">],</span>
+<span class="w">               </span><span class="nt">&quot;default&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+<span class="w">               </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Export surrogate model in algebraic format to the console&quot;</span><span class="p">,</span>
+<span class="w">               </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Algebraic Console&quot;</span><span class="p">,</span>
+<span class="w">               </span><span class="nt">&quot;x-materialization&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                  </span><span class="p">{</span>
+<span class="w">                     </span><span class="nt">&quot;ir_key&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;model.surrogate.model_export_format&quot;</span><span class="p">,</span>
+<span class="w">                     </span><span class="nt">&quot;ir_value_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;unsigned short&quot;</span><span class="p">,</span>
+<span class="w">                     </span><span class="nt">&quot;storage_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;AUGMENT_ENUM&quot;</span><span class="p">,</span>
+<span class="w">                     </span><span class="nt">&quot;stored_value&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ALGEBRAIC_CONSOLE&quot;</span>
+<span class="w">                  </span><span class="p">}</span>
+<span class="w">               </span><span class="p">]</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">         </span><span class="p">},</span>
+<span class="w">         </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ModelFullSurfpackExportFormatFormats&quot;</span><span class="p">,</span>
+<span class="w">         </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;object&quot;</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">   </span><span class="p">},</span>
+<span class="w">   </span><span class="nt">&quot;additionalProperties&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</details></p><dl class="field-list simple">
+<dt class="field-odd">Fields<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><a class="reference internal" href="#dakota.spec.shared.formats.ModelFullSurfpackExportFormatMixin.export_model" title="dakota.spec.shared.formats.ModelFullSurfpackExportFormatMixin.export_model"><code class="xref py py-obj docutils literal notranslate"><span class="pre">export_model</span> <span class="pre">(dakota.spec.shared.formats.ModelFullSurfpackExportFormatExportModel</span> <span class="pre">|</span> <span class="pre">None)</span></code></a></p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="dakota.spec.shared.formats.ModelFullSurfpackExportFormatMixin.export_model">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">export_model</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#dakota.spec.shared.formats.ModelFullSurfpackExportFormatExportModel" title="dakota.spec.shared.formats.ModelFullSurfpackExportFormatExportModel"><span class="pre">ModelFullSurfpackExportFormatExportModel</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#dakota.spec.shared.formats.ModelFullSurfpackExportFormatMixin.export_model" title="Link to this definition"></a></dt>
+<dd><p>Exports surrogate model in user-specified format(s)</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="expansion.html" class="btn btn-neutral float-left" title="Expansion" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="interface.html" class="btn btn-neutral float-right" title="Interface" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <!--
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Sandia National Laboratories.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+  --> 
+
+</footer>
+        </div>
+      </div>
+	  
+	  <div style="background-color: #0f0f0f;color:#fafafa;padding:20px">
+	    <div>
+		  <h2><em>Exceptional service in the national interest</em></h2>
+		</div>
+		<p>© 2023 National Technology and Engineering Solutions of Sandia, LLC. | <a href="https://www.sandia.gov/contact_us/index.html">Questions &amp; Comments</a> | <a href="https://www.sandia.gov/general/privacy-security/index.html">Privacy &amp; Security</a></p>
+		<p><a href="http://energy.gov" rel="noopener noreferrer" target="_blank"><img alt="U.S. Department of Energy" longdesc="https://energy.gov" src="https://www.sandia.gov/_common/images/doe_logo_white.png" style="height:37px; width:140px"></a> <a href="http://nnsa.energy.gov/" rel="noopener noreferrer" target="_blank"> <img alt="National Nuclear Security Administration" longdesc="http://nnsa.gov" src="https://www.sandia.gov/_common/images/nnsa_logo_white.png" style="height:37px; width:116px"></a></p>
+		<p><a href="https://www.sandia.gov">Sandia National Laboratories</a> is a multimission laboratory managed and operated by National Technology and Engineering Solutions of Sandia, LLC., a wholly owned subsidiary of Honeywell International, Inc., for the U.S. Department of Energy’s National Nuclear Security Administration under contract DE-NA-0003525.</p>
+	  </div>	  	  
+	  
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

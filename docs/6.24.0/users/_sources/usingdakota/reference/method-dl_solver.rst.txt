@@ -1,0 +1,78 @@
+.. _method-dl_solver:
+
+"""""""""
+dl_solver
+"""""""""
+
+
+(Experimental) Dynamically-loaded solver
+
+
+
+**Topics**
+
+
+optimization_and_calibration
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-dl_solver-id_method
+   method-dl_solver-output
+   method-dl_solver-final_solutions
+   method-dl_solver-max_function_evaluations
+   method-dl_solver-scaling
+   method-dl_solver-model_pointer
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* STRING
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+------------------------------+-----------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword               | Dakota Keyword Description                    |
+|                         | Group              |                              |                                               |
++=========================+====================+==============================+===============================================+
+| Optional                                     | `id_method`__                | Name the method block; helpful when there are |
+|                                              |                              | multiple                                      |
++----------------------------------------------+------------------------------+-----------------------------------------------+
+| Optional                                     | `output`__                   | Control how much method information is        |
+|                                              |                              | written to the screen and output file         |
++----------------------------------------------+------------------------------+-----------------------------------------------+
+| Optional                                     | `final_solutions`__          | Number of designs returned as the best        |
+|                                              |                              | solutions                                     |
++----------------------------------------------+------------------------------+-----------------------------------------------+
+| Optional                                     | `max_function_evaluations`__ | Number of function evaluations allowed for    |
+|                                              |                              | optimizers                                    |
++----------------------------------------------+------------------------------+-----------------------------------------------+
+| Optional                                     | `scaling`__                  | Turn on scaling for variables, responses, and |
+|                                              |                              | constraints                                   |
++----------------------------------------------+------------------------------+-----------------------------------------------+
+| Optional                                     | `model_pointer`__            | Identifier for model block to be used by a    |
+|                                              |                              | method                                        |
++----------------------------------------------+------------------------------+-----------------------------------------------+
+
+.. __: method-dl_solver-id_method.html
+__ method-dl_solver-output.html
+__ method-dl_solver-final_solutions.html
+__ method-dl_solver-max_function_evaluations.html
+__ method-dl_solver-scaling.html
+__ method-dl_solver-model_pointer.html
+
+
+
+**Description**
+
+
+This keyword specifies a dynamically-loaded optimization solver
+library, an experimental Dakota feature that is not enabled by
+default.
+
+

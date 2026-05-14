@@ -1,0 +1,36 @@
+.. _method-ncsu_direct-volume_boxsize_limit:
+
+""""""""""""""""""""
+volume_boxsize_limit
+""""""""""""""""""""
+
+
+Stopping criterion based on volume of search space
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* REAL
+
+- *Default:* 1.0e-6
+
+
+**Description**
+
+
+``volume_boxsize_limit`` is a setting that terminates the optimization
+when the volume of a hyperrectangle S with f(c(S)) = fmin is less than
+volume_boxsize_limit percent of the original hyperrectangle.
+Basically, volume_boxsize_limit stops the optimization when the volume
+of the particular rectangle which has fmin is less than a certain
+percentage of the whole volume.
+
+

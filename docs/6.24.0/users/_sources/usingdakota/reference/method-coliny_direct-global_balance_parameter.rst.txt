@@ -1,0 +1,36 @@
+.. _method-coliny_direct-global_balance_parameter:
+
+""""""""""""""""""""""""
+global_balance_parameter
+""""""""""""""""""""""""
+
+
+Tolerance for whether a subregion is worth dividing
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* REAL
+
+- *Default:* 0.0
+
+
+**Description**
+
+
+The ``global_balance_parameter`` controls how much global search is
+performed by only allowing a subregion to be subdivided if the size of
+the subregion divided by the size of the largest subregion is at least
+``global_balance_parameter``.  Intuitively, this forces large
+subregions to be subdivided before the smallest subregions are
+refined.
+
+

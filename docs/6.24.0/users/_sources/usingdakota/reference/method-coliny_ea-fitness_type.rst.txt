@@ -1,0 +1,50 @@
+.. _method-coliny_ea-fitness_type:
+
+""""""""""""
+fitness_type
+""""""""""""
+
+
+Select fitness type
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-coliny_ea-fitness_type-linear_rank
+   method-coliny_ea-fitness_type-merit_function
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+- *Default:* linear_rank
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+--------------------+-----------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword     | Dakota Keyword Description                    |
+|                         | Group              |                    |                                               |
++=========================+====================+====================+===============================================+
+| Required (Choose One)   | Fitness Type       | `linear_rank`__    | Set selection scaling                         |
+|                         |                    +--------------------+-----------------------------------------------+
+|                         |                    | `merit_function`__ | Balance goals of reducing objective function  |
+|                         |                    |                    | and satisfying constraints                    |
++-------------------------+--------------------+--------------------+-----------------------------------------------+
+
+.. __: method-coliny_ea-fitness_type-linear_rank.html
+__ method-coliny_ea-fitness_type-merit_function.html
+
+
+
+**Description**
+
+
+The ``fitness_type`` controls how strongly differences in "fitness" (i.e., the objective function) are weighted in the process of selecting "parents" for crossover. It has two options, ``linear_rank`` and ``merit_function``.
+
+

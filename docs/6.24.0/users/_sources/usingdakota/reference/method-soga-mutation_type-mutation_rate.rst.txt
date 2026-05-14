@@ -1,0 +1,35 @@
+.. _method-soga-mutation_type-mutation_rate:
+
+"""""""""""""
+mutation_rate
+"""""""""""""
+
+
+Set probability of a mutation
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* REAL
+
+- *Default:* 0.08
+
+
+**Description**
+
+
+All mutation types have a ``mutation_rate``, which controls the number of
+mutations performed. For ``replace_uniform`` and all the ``offset_*`` types,
+the number of mutations performed is the product of ``mutation_rate`` and
+``population_size``. For ``bit_random``, it's the product of the
+``mutation_rate``, number of design variables, and population size
+
+

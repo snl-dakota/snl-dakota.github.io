@@ -1,0 +1,58 @@
+.. _method-bayes_calibration-muq-multilevel_mcmc-target_variance:
+
+"""""""""""""""
+target_variance
+"""""""""""""""
+
+
+Target variance for the greedy algorithm
+
+
+
+
+**Topics**
+
+
+bayesian_calibration
+
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* REAL
+
+- *Default:* 1.
+
+
+**Description**
+
+
+The desired variance of the multi-level estimator to achieve to exit the greedy algorithm.
+
+
+
+
+**Examples**
+
+
+
+.. code-block::
+
+    method,
+    bayes_calibration muq
+    multilevel_mcmc
+        initial_chain_samples = 50
+        target_variance = 0.5
+        subsampling_steps = 12 0
+        greedy_resampling_factor = 0.5
+
+
+

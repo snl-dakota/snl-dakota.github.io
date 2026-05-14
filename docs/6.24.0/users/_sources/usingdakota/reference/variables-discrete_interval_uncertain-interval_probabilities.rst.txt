@@ -1,0 +1,33 @@
+.. _variables-discrete_interval_uncertain-interval_probabilities:
+
+""""""""""""""""""""""
+interval_probabilities
+""""""""""""""""""""""
+
+
+Assign probability mass to each interval
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+
+
+**Specification**
+
+- *Alias:* interval_probs range_probabilities range_probs 
+
+- *Arguments:* REALLIST
+
+- *Default:* Equal probability assignments for each interval (1/num_intervals[i])
+
+
+**Description**
+
+
+The basic probability assignments for each interval variable must sum to one.
+For example, if an interval variable is defined with three intervals,
+the probabilities for these intervals could be 0.2, 0.5, and 0.3 which sum to one, but could not be 0.5,0.5, and 0.5 which do not sum to one.
+
+

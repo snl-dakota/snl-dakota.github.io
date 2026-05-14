@@ -1,0 +1,61 @@
+.. _method-multifidelity_sampling-numerical_solve-model_reordering:
+
+""""""""""""""""
+model_reordering
+""""""""""""""""
+
+
+Approach for addressing model misordering during numerical solutions.
+
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-multifidelity_sampling-numerical_solve-model_reordering-auto_reorder
+   method-multifidelity_sampling-numerical_solve-model_reordering-fixed_order
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+--------------------+-----------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword     | Dakota Keyword Description                    |
+|                         | Group              |                    |                                               |
++=========================+====================+====================+===============================================+
+| Required (Choose One)   | Model reordering   | `auto_reorder`__   | Address any model misordering in MFMC         |
+|                         |                    |                    | numerical solutions by reordering on the fly. |
+|                         |                    +--------------------+-----------------------------------------------+
+|                         |                    | `fixed_order`__    | Enforce a prescribed model ordering in MFMC   |
+|                         |                    |                    | numerical solutions through additional linear |
+|                         |                    |                    | constraints.                                  |
++-------------------------+--------------------+--------------------+-----------------------------------------------+
+
+.. __: method-multifidelity_sampling-numerical_solve-model_reordering-auto_reorder.html
+__ method-multifidelity_sampling-numerical_solve-model_reordering-fixed_order.html
+
+
+
+**Description**
+
+
+Multifidelity Monte Carlo is a hierarchical sampling method that
+requires an ordered set of model approximations, whether in terms of
+model response correlations (for analytic solutions) or model sample
+allocations (for estimator variance calculations in numerical
+solutions).  In the latter case of numerical solutions, ordering of
+sample allocations can be accomplished using two different approaches,
+either reordering on the fly (:dakkw:`method-multifidelity_sampling-numerical_solve-model_reordering-auto_reorder`) as dictated by a given
+set of allocations or enforcing a prescribed model ordering
+(:dakkw:`method-multifidelity_sampling-numerical_solve-model_reordering-fixed_order`) through additional linear constraints on the
+numerical solution.
+
+
+

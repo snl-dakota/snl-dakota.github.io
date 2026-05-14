@@ -1,0 +1,116 @@
+.. _environment:
+
+"""""""""""
+environment
+"""""""""""
+
+
+Top-level settings for Dakota execution
+
+
+
+**Topics**
+
+
+block
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   environment-tabular_data
+   environment-output_file
+   environment-error_file
+   environment-read_restart
+   environment-write_restart
+   environment-output_precision
+   environment-results_output
+   environment-graphics
+   environment-check
+   environment-pre_run
+   environment-run
+   environment-post_run
+   environment-top_method_pointer
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+- *Default:* no environment
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+------------------------+-----------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword         | Dakota Keyword Description                    |
+|                         | Group              |                        |                                               |
++=========================+====================+========================+===============================================+
+| Optional                                     | `tabular_data`__       | Write a tabular results file with variable    |
+|                                              |                        | and response history                          |
++----------------------------------------------+------------------------+-----------------------------------------------+
+| Optional                                     | `output_file`__        | Base filename for output redirection          |
++----------------------------------------------+------------------------+-----------------------------------------------+
+| Optional                                     | `error_file`__         | Base filename for error redirection           |
++----------------------------------------------+------------------------+-----------------------------------------------+
+| Optional                                     | `read_restart`__       | Base filename for restart file read           |
++----------------------------------------------+------------------------+-----------------------------------------------+
+| Optional                                     | `write_restart`__      | Base filename for restart file write          |
++----------------------------------------------+------------------------+-----------------------------------------------+
+| Optional                                     | `output_precision`__   | Control the output precision                  |
++----------------------------------------------+------------------------+-----------------------------------------------+
+| Optional                                     | `results_output`__     | (Experimental) Write a summary file           |
+|                                              |                        | containing the final results                  |
++----------------------------------------------+------------------------+-----------------------------------------------+
+| Optional                                     | `graphics`__           | (DEPRECATED) Display plots of variables and   |
+|                                              |                        | responses                                     |
++----------------------------------------------+------------------------+-----------------------------------------------+
+| Optional                                     | `check`__              | Invoke Dakota in input check mode             |
++----------------------------------------------+------------------------+-----------------------------------------------+
+| Optional                                     | `pre_run`__            | Invoke Dakota with pre-run mode active        |
++----------------------------------------------+------------------------+-----------------------------------------------+
+| Optional                                     | `run`__                | Invoke Dakota with run mode active            |
++----------------------------------------------+------------------------+-----------------------------------------------+
+| Optional                                     | `post_run`__           | Invoke Dakota with post-run mode active       |
++----------------------------------------------+------------------------+-----------------------------------------------+
+| Optional                                     | `top_method_pointer`__ | Identify which method leads the Dakota study  |
++----------------------------------------------+------------------------+-----------------------------------------------+
+
+.. __: environment-tabular_data.html
+__ environment-output_file.html
+__ environment-error_file.html
+__ environment-read_restart.html
+__ environment-write_restart.html
+__ environment-output_precision.html
+__ environment-results_output.html
+__ environment-graphics.html
+__ environment-check.html
+__ environment-pre_run.html
+__ environment-run.html
+__ environment-post_run.html
+__ environment-top_method_pointer.html
+
+
+
+**Description**
+
+
+The environment section in a Dakota input file is optional.  It
+specifies the top-level solution environment, optionally including run
+modes, output controls, and identification of the primary iterative
+method ( ``top_method_pointer``).  The output-related keywords address
+generation of tabular and results data, and precision of
+numerical output.
+
+*Run Mode Defaults*
+
+Dakota run phases include ``check``, ``pre_run``, ``run``, and
+``post_run``.  The default behavior is to ``pre_run``, ``run``, and
+``post_run``, though any or all of these may be specified to select
+specific run phases.  Specifying ``check`` will cause Dakota to exit
+before any selected run modes.
+
+

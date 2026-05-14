@@ -1,0 +1,46 @@
+.. _method-polynomial_chaos-p_refinement-dimension_adaptive-decay:
+
+"""""
+decay
+"""""
+
+
+Estimate spectral coefficient decay rates to guide dimension-adaptive refinement.
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+
+**Description**
+
+
+Estimate spectral coefficient decay rates from a rate estimation technique similar to Richardson extrapolation.  These decay rates are used to guide dimension-adaptive refinement, where slower decay rates result in higher dimension preference.
+
+
+
+**Examples**
+
+
+
+.. code-block::
+
+    method,
+            polynomial_chaos
+              sparse_grid_level = 3
+              dimension_adaptive p_refinement decay
+                max_iterations  = 20
+                convergence_tol = 1.e-4
+
+
+
+

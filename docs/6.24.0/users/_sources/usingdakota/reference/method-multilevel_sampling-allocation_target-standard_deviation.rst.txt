@@ -1,0 +1,65 @@
+.. _method-multilevel_sampling-allocation_target-standard_deviation:
+
+""""""""""""""""""
+standard_deviation
+""""""""""""""""""
+
+
+Fit MLMC sample allocation to control the variance of the estimator for the standard deviation.
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-multilevel_sampling-allocation_target-standard_deviation-optimization
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+--------------------+-----------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword     | Dakota Keyword Description                    |
+|                         | Group              |                    |                                               |
++=========================+====================+====================+===============================================+
+| Optional                                     | `optimization`__   | Solve the optimization problem for the sample |
+|                                              |                    | allocation by numerical optimization in the   |
+|                                              |                    | case of sampling estimator targeting the      |
+|                                              |                    | standard_deviation.                           |
++----------------------------------------------+--------------------+-----------------------------------------------+
+
+.. __: method-multilevel_sampling-allocation_target-standard_deviation-optimization.html
+
+
+
+**Description**
+
+
+Computes the variance of the sampling estimator for the standard_deviation and fits sample allocation by solving the corresponding optimization problem.
+
+
+
+**Examples**
+
+
+The following method block
+
+.. code-block::
+
+    method,
+     model_pointer = 'HIERARCH'
+            multilevel_sampling
+       pilot_samples = 20 seed = 1237
+       convergence_tolerance = .01
+       allocation_target = standard_deviation
+
+
+uses the standard_deviation as sample allocation target by computing its variance.
+
+

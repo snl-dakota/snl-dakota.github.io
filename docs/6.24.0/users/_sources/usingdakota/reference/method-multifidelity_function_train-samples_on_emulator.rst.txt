@@ -1,0 +1,50 @@
+.. _method-multifidelity_function_train-samples_on_emulator:
+
+"""""""""""""""""""
+samples_on_emulator
+"""""""""""""""""""
+
+
+Number of samples at which to evaluate an emulator (surrogate)
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+
+
+**Specification**
+
+- *Alias:* samples 
+
+- *Arguments:* INTEGER
+
+
+**Description**
+
+
+How many approximate function evaluations to perform on the emulator
+model, e.g., to compute statistics
+
+*Default Behavior*
+
+The default number of samples is method-dependent.
+
+
+
+**Examples**
+
+
+Perform 10000 samples on the PCE approximation of the true model:
+
+.. code-block::
+
+    method
+      polynomial_chaos
+        quadrature_order    = 2
+        samples_on_emulator = 10000
+
+
+
+

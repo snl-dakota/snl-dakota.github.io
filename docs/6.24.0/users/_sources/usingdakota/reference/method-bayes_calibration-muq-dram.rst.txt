@@ -1,0 +1,104 @@
+.. _method-bayes_calibration-muq-dram:
+
+""""
+dram
+""""
+
+
+Use the DRAM MCMC algorithm
+
+
+
+**Topics**
+
+
+bayesian_calibration
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-bayes_calibration-muq-dram-num_stages
+   method-bayes_calibration-muq-dram-scale_type
+   method-bayes_calibration-muq-dram-delay_scale
+   method-bayes_calibration-muq-dram-period_num_steps
+   method-bayes_calibration-muq-dram-starting_step
+   method-bayes_calibration-muq-dram-adapt_scale
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+- *Default:* dram
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+----------------------+-----------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword       | Dakota Keyword Description                    |
+|                         | Group              |                      |                                               |
++=========================+====================+======================+===============================================+
+| Optional                                     | `num_stages`__       | Number of stages                              |
++----------------------------------------------+----------------------+-----------------------------------------------+
+| Optional                                     | `scale_type`__       | Type of scaling to use                        |
++----------------------------------------------+----------------------+-----------------------------------------------+
+| Optional                                     | `delay_scale`__      | Scaling parameter                             |
++----------------------------------------------+----------------------+-----------------------------------------------+
+| Optional                                     | `period_num_steps`__ | Number of steps between updates of the        |
+|                                              |                      | proposal covariance                           |
++----------------------------------------------+----------------------+-----------------------------------------------+
+| Optional                                     | `starting_step`__    | Number of steps prior to start of proposal    |
+|                                              |                      | covariance adaptation                         |
++----------------------------------------------+----------------------+-----------------------------------------------+
+| Optional                                     | `adapt_scale`__      | Sample covariance scaling used to define      |
+|                                              |                      | proposal covariance                           |
++----------------------------------------------+----------------------+-----------------------------------------------+
+
+.. __: method-bayes_calibration-muq-dram-num_stages.html
+__ method-bayes_calibration-muq-dram-scale_type.html
+__ method-bayes_calibration-muq-dram-delay_scale.html
+__ method-bayes_calibration-muq-dram-period_num_steps.html
+__ method-bayes_calibration-muq-dram-starting_step.html
+__ method-bayes_calibration-muq-dram-adapt_scale.html
+
+
+
+**Description**
+
+
+The type of Markov Chain Monte Carlo used.  This keyword specifies the
+use of DRAM, (Delayed Rejection Adaptive Metropolis) :cite:p:`Haario`.
+
+*Default Behavior*
+
+Five MCMC algorithm variants are supported: ``dram``,
+``delayed_rejection``, ``adaptive_metropolis``, ``metropolis_hastings``, and
+``multilevel``.  The default is ``dram``.
+
+*Usage Tips*
+
+If the user knows very little about the proposal covariance, using
+dram is a recommended strategy.  The proposal covariance is adaptively
+updated, and the delayed rejection may help improve low acceptance
+rates.
+
+
+
+**Examples**
+
+
+
+.. code-block::
+
+    method,
+            bayes_calibration queso
+              dram
+              samples = 10000 seed = 348
+
+
+
+

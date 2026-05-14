@@ -1,0 +1,34 @@
+.. _method-bayes_calibration-muq-dili-initial_weight:
+
+""""""""""""""
+initial_weight
+""""""""""""""
+
+
+Parameter for the DILI MCMC algorithm in MUQ
+
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* INTEGER
+
+- *Default:* 100
+
+
+**Description**
+
+
+"Weight" or number of samples given to the to initial Hessian. The weight on the previous average Hessian estimate is given by :math:`(N+W)/(N+W+1)`,
+where N is the number of MCMC steps taken and W is this parameter. The default value is '100'.
+
+
+

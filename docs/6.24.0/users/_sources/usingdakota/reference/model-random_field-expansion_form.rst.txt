@@ -1,0 +1,59 @@
+.. _model-random_field-expansion_form:
+
+""""""""""""""
+expansion_form
+""""""""""""""
+
+
+Specify the form of the expansion to be used in the random field representation.
+THIS IS AN EXPERIMENTAL CAPABILITY.
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   model-random_field-expansion_form-karhunen_loeve
+   model-random_field-expansion_form-principal_components
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+--------------------------+-----------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword           | Dakota Keyword Description                    |
+|                         | Group              |                          |                                               |
++=========================+====================+==========================+===============================================+
+| Required (Choose One)   | Reduced Basis Type | `karhunen_loeve`__       | Specify Karhunen-Loeve as the expansion form  |
+|                         |                    |                          | to be used in the random field                |
+|                         |                    |                          | representation. THIS IS AN EXPERIMENTAL       |
+|                         |                    |                          | CAPABILITY.                                   |
+|                         |                    +--------------------------+-----------------------------------------------+
+|                         |                    | `principal_components`__ | Specify Principal Components as the form of   |
+|                         |                    |                          | the expansion to be used in the random field  |
+|                         |                    |                          | representation. THIS IS AN EXPERIMENTAL       |
+|                         |                    |                          | CAPABILITY.                                   |
++-------------------------+--------------------+--------------------------+-----------------------------------------------+
+
+.. __: model-random_field-expansion_form-karhunen_loeve.html
+__ model-random_field-expansion_form-principal_components.html
+
+
+
+**Description**
+
+
+This control allows the user to specify the form of
+the random field representation (e.g. either a Karhunen-Loeve or Principal Components expansion).
+THIS IS AN EXPERIMENTAL CAPABILITY UNDER ACTIVE DEVELOPMENT.
+
+*Default Behavior*
+The default expansion form is Karhunen-Loeve.
+
+

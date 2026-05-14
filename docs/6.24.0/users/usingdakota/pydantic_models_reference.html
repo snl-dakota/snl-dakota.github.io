@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JSON Input Reference &mdash; dakota  documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/autodoc_pydantic.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/dakota_theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/sandiaheaderlite.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../_static/doctools.js?v=9bcbadda"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Study" href="pydantic_models_reference/study.html" />
+    <link rel="prev" title="metadata" href="reference/responses-metadata.html" /> 
+  
+  <meta name="sandia.approval_type" content="formal"/>
+  <meta property="sandia.approved" content="SAND2025-14179O"/>
+  <meta name="description" content="The Dakota project delivers both state-of-the-art research and robust, usable software for optimization and UQ."/>
+  <meta name="keywords" content="Dakota, optimization, UQ, uncertainty quantification, parametric analysis, design exploration, model calibration, risk analysis"/>
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> dakota
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../setupdakota.html">Getting Started</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="usingdakota.html">Using Dakota</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="introduction/aboutdakota.html">About Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="introduction/helloworld.html">Dakota Beginner’s Tutorial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html">Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="introduction/couplingtosimulations.html">Coupling Dakota to a Simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="inputfile.html">Dakota Input File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="running.html">Running Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="output.html">Dakota Output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="studytypes.html">Study Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="topics.html">Topics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="advanced.html">Advanced Topics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="theory.html">Dakota Theory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference.html">Keyword Reference</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">JSON Input Reference</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#current-documentation">Current Documentation</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pydantic_models_reference/study.html">Study</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pydantic_models_reference/methods.html">Methods</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pydantic_models_reference/environment.html">Environment</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pydantic_models_reference/interface.html">Interface</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pydantic_models_reference/model.html">Model</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pydantic_models_reference/responses.html">Responses</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pydantic_models_reference/variables.html">Variables</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pydantic_models_reference/shared.html">Shared</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#relationship-to-the-freeform-input-format">Relationship to the Freeform Input Format</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#top-level-organization">Top-level Organization</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#leaf-keywords">Leaf Keywords</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#empty-objects">Empty Objects</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#anchor-keywords-for-groups">“Anchor” keywords for groups</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#argument-keywords">“Argument” keywords</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#nonfinite-numbers">Nonfinite numbers</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#aliases-abbreviations-and-other-features">Aliases, abbreviations, and other features</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#how-to-work-with-the-pydantic-documentation">How to Work with the Pydantic Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#using-dakota-parser-to-bootstrap-json-input">Using <code class="docutils literal notranslate"><span class="pre">dakota_parser</span></code> to Bootstrap JSON Input</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../usingdakotagui/usingdakotagui.html">Using Dakota GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../externaltools/externaltools.html">Using External Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../compiling/compiling.html">Compiling Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developingdakota/developingdakota.html">Developing Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../misc/misc.html">Miscellaneous</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">dakota</a>
+      </nav>
+
+	  <!-- SNL Lite header -->
+	  <div class="snlheader-subsite--wrapper-default">
+		<snlheader class="snlheader-subsite" role="snlbanner">
+		  <div class="wrapper">
+			<a href="https://www.sandia.gov/index.html">
+			  <div class="logo-transparent"><p class="logo">Sandia National Laboratories</p></div>
+			</a>
+			<div class="nav-top">
+			  <a class="visuallyhidden" name="mainnav"></a>
+			  <div aria-label="main navigation" class="core-nav-transparent core-nav-transparent--visible" role="navigation">
+				<ul role="navigation" class="secondary-links">
+				  <li id="search-text-link">
+					<a aria-label="Search" href="https://www.sandia.gov/search/">Search Sandia.gov</a>
+				  </li>
+				  <li id="directory-text-link">
+					<a href="https://www.sandia.gov/directory.html" aria-expanded="false" aria-label="Site Directory">All Sandia Websites</a>
+				  </li>
+				</ul>
+			  </div>
+			</div>
+		  </div> 
+		</snlheader>
+	  </div>	  
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="usingdakota.html">Using Dakota</a></li>
+      <li class="breadcrumb-item active">JSON Input Reference</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/usingdakota/pydantic_models_reference.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="json-input-reference">
+<span id="jsoninput"></span><h1>JSON Input Reference<a class="headerlink" href="#json-input-reference" title="Link to this heading"></a></h1>
+<p>This release introduces JSON as an alternative input format for Dakota.
+JSON input provides a foundation for more structured, tool-friendly
+workflows, including tighter integration with Python-based configuration
+and validation. However, The JSON interface is not yet fully documented or
+polished, and users should expect some rough edges in this initial release.</p>
+<p>JSON input is enabled by <a class="reference external" href="https://pydantic.dev/docs/validation/latest/get-started/">Pydantic</a> models, which have replaced dakota.xml
+as the authoratative statement of Dakota grammar. Ordinary users likely will
+find the Pydantic models themselves to be of limited use for this relesae.</p>
+<section id="current-documentation">
+<h2>Current Documentation<a class="headerlink" href="#current-documentation" title="Link to this heading"></a></h2>
+<p>For this release, the primary reference for JSON input is automatically
+generated documentation of the Pydantic models that define the schema.
+These models describe the valid structure, field names, and types accepted
+by Dakota’s JSON parser.</p>
+<p>This approach has an important limitation: the documentation is organized
+around model classes, not the familiar Dakota keyword hierarchy.
+As a result, it can feel indirect compared to the traditional
+<a class="reference internal" href="reference.html#keyword-reference-area"><span class="std std-ref">keyword reference</span></a>.
+In particular, users will often need to navigate between models to
+understand how nested structures correspond to Dakota concepts.</p>
+<p>The Pydantic model documentation is arranged by module, which
+corresponds roughly to top-level Dakota blocks (environment, method,
+etc). The <cite>DakotaStudy</cite> model in the <cite>Study</cite> section defines the overall
+organization of the input. The <cite>Shared</cite> section documents models
+that are shared via inheritance by other models.</p>
+<p>Before consulting the Pydantic model reference, readers are advised
+to read the remainder of this page. A JSON reference more integrated
+with the existing keyowrd documenation is planned for the next release.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="pydantic_models_reference/study.html">Study</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pydantic_models_reference/methods.html">Methods</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pydantic_models_reference/environment.html">Environment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pydantic_models_reference/interface.html">Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pydantic_models_reference/model.html">Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pydantic_models_reference/responses.html">Responses</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pydantic_models_reference/variables.html">Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pydantic_models_reference/shared.html">Shared</a></li>
+</ul>
+</div>
+</section>
+<section id="relationship-to-the-freeform-input-format">
+<h2>Relationship to the Freeform Input Format<a class="headerlink" href="#relationship-to-the-freeform-input-format" title="Link to this heading"></a></h2>
+<p>A key design goal for Dakota’s JSON format was to mimic freeform
+input as closely as possible. The two formats largely have the same
+key names, hierarchy, argument types, etc, and the JSON format will seem
+familiar to existing Dakota users. However, the mapping is not one-to-one.
+Several differences are especially important and will be illustrated
+using the following example.</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="p">{</span>
+<span class="linenos"> 2</span><span class="w">  </span><span class="nt">&quot;environment&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos"> 3</span><span class="w">    </span><span class="nt">&quot;tabular_data&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span>
+<span class="linenos"> 4</span><span class="w">  </span><span class="p">},</span>
+<span class="linenos"> 5</span><span class="w">  </span><span class="nt">&quot;method&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="linenos"> 6</span><span class="w">    </span><span class="p">{</span>
+<span class="linenos"> 7</span><span class="w">      </span><span class="nt">&quot;optpp_g_newton&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos"> 8</span><span class="w">        </span><span class="nt">&quot;convergence_tolerance&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.0001</span><span class="p">,</span>
+<span class="linenos"> 9</span><span class="w">        </span><span class="nt">&quot;max_iterations&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span>
+<span class="linenos">10</span><span class="w">      </span><span class="p">}</span>
+<span class="linenos">11</span><span class="w">    </span><span class="p">}</span>
+<span class="linenos">12</span><span class="w">  </span><span class="p">],</span>
+<span class="linenos">13</span><span class="w">  </span><span class="nt">&quot;model&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="linenos">14</span><span class="w">    </span><span class="p">{</span>
+<span class="linenos">15</span><span class="w">      </span><span class="nt">&quot;single&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span>
+<span class="linenos">16</span><span class="w">    </span><span class="p">}</span>
+<span class="linenos">17</span><span class="w">  </span><span class="p">],</span>
+<span class="linenos">18</span><span class="w">  </span><span class="nt">&quot;interface&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="linenos">19</span><span class="w">    </span><span class="p">{</span>
+<span class="linenos">20</span><span class="w">      </span><span class="nt">&quot;analysis_drivers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos">21</span><span class="w">        </span><span class="nt">&quot;drivers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="linenos">22</span><span class="w">          </span><span class="s2">&quot;rosenbrock&quot;</span>
+<span class="linenos">23</span><span class="w">        </span><span class="p">],</span>
+<span class="linenos">24</span><span class="w">        </span><span class="nt">&quot;interface_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos">25</span><span class="w">          </span><span class="nt">&quot;direct&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span>
+<span class="linenos">26</span><span class="w">        </span><span class="p">}</span>
+<span class="linenos">27</span><span class="w">      </span><span class="p">}</span>
+<span class="linenos">28</span><span class="w">    </span><span class="p">}</span>
+<span class="linenos">29</span><span class="w">  </span><span class="p">],</span>
+<span class="linenos">30</span><span class="w">  </span><span class="nt">&quot;responses&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="linenos">31</span><span class="w">    </span><span class="p">{</span>
+<span class="linenos">32</span><span class="w">      </span><span class="nt">&quot;gradient_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos">33</span><span class="w">        </span><span class="nt">&quot;analytic_gradients&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span>
+<span class="linenos">34</span><span class="w">      </span><span class="p">},</span>
+<span class="linenos">35</span><span class="w">      </span><span class="nt">&quot;hessian_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos">36</span><span class="w">        </span><span class="nt">&quot;no_hessians&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span>
+<span class="linenos">37</span><span class="w">      </span><span class="p">},</span>
+<span class="linenos">38</span><span class="w">      </span><span class="nt">&quot;response_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos">39</span><span class="w">        </span><span class="nt">&quot;calibration_terms&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos">40</span><span class="w">          </span><span class="nt">&quot;count&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span>
+<span class="linenos">41</span><span class="w">        </span><span class="p">}</span>
+<span class="linenos">42</span><span class="w">      </span><span class="p">}</span>
+<span class="linenos">43</span><span class="w">    </span><span class="p">}</span>
+<span class="linenos">44</span><span class="w">  </span><span class="p">],</span>
+<span class="linenos">45</span><span class="w">  </span><span class="nt">&quot;variables&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="linenos">46</span><span class="w">    </span><span class="p">{</span>
+<span class="linenos">47</span><span class="w">      </span><span class="nt">&quot;continuous_design&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos">48</span><span class="w">        </span><span class="nt">&quot;count&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span>
+<span class="linenos">49</span><span class="w">        </span><span class="nt">&quot;descriptors&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="linenos">50</span><span class="w">          </span><span class="s2">&quot;x1&quot;</span><span class="p">,</span>
+<span class="linenos">51</span><span class="w">          </span><span class="s2">&quot;x2&quot;</span>
+<span class="linenos">52</span><span class="w">        </span><span class="p">],</span>
+<span class="linenos">53</span><span class="w">        </span><span class="nt">&quot;initial_point&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="linenos">54</span><span class="w">          </span><span class="mf">-1.2</span><span class="p">,</span>
+<span class="linenos">55</span><span class="w">          </span><span class="mf">1.0</span>
+<span class="linenos">56</span><span class="w">        </span><span class="p">],</span>
+<span class="linenos">57</span><span class="w">        </span><span class="nt">&quot;lower_bounds&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="linenos">58</span><span class="w">          </span><span class="mf">-2.0</span><span class="p">,</span>
+<span class="linenos">59</span><span class="w">          </span><span class="mf">-2.0</span>
+<span class="linenos">60</span><span class="w">        </span><span class="p">],</span>
+<span class="linenos">61</span><span class="w">        </span><span class="nt">&quot;upper_bounds&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="linenos">62</span><span class="w">          </span><span class="mf">2.0</span><span class="p">,</span>
+<span class="linenos">63</span><span class="w">          </span><span class="mf">2.0</span>
+<span class="linenos">64</span><span class="w">        </span><span class="p">]</span>
+<span class="linenos">65</span><span class="w">      </span><span class="p">}</span>
+<span class="linenos">66</span><span class="w">    </span><span class="p">}</span>
+<span class="linenos">67</span><span class="w">  </span><span class="p">]</span>
+<span class="linenos">68</span><span class="p">}</span>
+</pre></div>
+</div>
+<section id="top-level-organization">
+<h3>Top-level Organization<a class="headerlink" href="#top-level-organization" title="Link to this heading"></a></h3>
+<p>A JSON format input file must contain a single object. As specified in the
+<a class="reference internal" href="pydantic_models_reference/study.html#pydantic-study"><span class="std std-ref">DakotaStudy</span></a> model, this object has:</p>
+<ul class="simple">
+<li><p>an optional <code class="docutils literal notranslate"><span class="pre">environment</span></code> key (line 2), whose value is another object that
+contains configuration information for the environment block.</p></li>
+<li><p>a required <code class="docutils literal notranslate"><span class="pre">method</span></code> key (line 5), whose value is an array of length 1 or more of
+method configuration objects.</p></li>
+<li><p>an optional <code class="docutils literal notranslate"><span class="pre">model</span></code> key (line 13), whose value is an array of length 0
+or more of model configuration objects.</p></li>
+<li><p>required <code class="docutils literal notranslate"><span class="pre">interface</span></code>,``responses``, and <code class="docutils literal notranslate"><span class="pre">interface</span></code>  keys (lines 18, 30, 45),
+whose values are arrays of length 1 or more of configuration objects for those
+blocks</p></li>
+</ul>
+<p>The structure of the overall study is specified by the <cite>DakotaStudy</cite> model.</p>
+</section>
+<section id="leaf-keywords">
+<h3>Leaf Keywords<a class="headerlink" href="#leaf-keywords" title="Link to this heading"></a></h3>
+<p>Keywords that have no children (“leaf” keywords) receive
+a constant <code class="docutils literal notranslate"><span class="pre">true</span></code> argument. In the exapmle input in the
+preceeding section, they keys <code class="docutils literal notranslate"><span class="pre">analytic_gradients</span></code> (line 33) and
+<code class="docutils literal notranslate"><span class="pre">no_hessians</span></code> (line 35) are instances of this.</p>
+</section>
+<section id="empty-objects">
+<h3>Empty Objects<a class="headerlink" href="#empty-objects" title="Link to this heading"></a></h3>
+<p>Empty objects are used when a keyword can have optional
+child keywords, none of which happen to be present in a
+particular study. The <code class="docutils literal notranslate"><span class="pre">tabular_data</span></code> (line 3) and <code class="docutils literal notranslate"><span class="pre">single</span></code> (line 15)
+keys are examples.</p>
+</section>
+<section id="anchor-keywords-for-groups">
+<h3>“Anchor” keywords for groups<a class="headerlink" href="#anchor-keywords-for-groups" title="Link to this heading"></a></h3>
+<p>In places where the freeform syntax allows mutually exclusive keyword
+groups, the JSON representation introduces explicit intermediate objects
+(anchors) to represent those choices. These do not appear in the traditional
+input format but are required in JSON to make the structure unambiguous. In
+the example, <code class="docutils literal notranslate"><span class="pre">gradient_type</span></code> (line 32) and <code class="docutils literal notranslate"><span class="pre">hessian_type</span></code> (line 35)
+are examples of anchor keywords.</p>
+</section>
+<section id="argument-keywords">
+<h3>“Argument” keywords<a class="headerlink" href="#argument-keywords" title="Link to this heading"></a></h3>
+<p>In the freeform format, a keyword may both take a literal argument and
+contain child keywords. JSON does not support this pattern directly, so
+the literal argument is represented as a separate child field (an “argument”
+keyword). As a result, some values that appear inline in the traditional format
+become nested fields in JSON.</p>
+<p>An example of an argument keyword is <code class="docutils literal notranslate"><span class="pre">count</span></code> (line 40), which denotes the number of
+continuous design variables.</p>
+</section>
+<section id="nonfinite-numbers">
+<h3>Nonfinite numbers<a class="headerlink" href="#nonfinite-numbers" title="Link to this heading"></a></h3>
+<p>Nonfinite numbers such as <cite>inf</cite> and <cite>nan</cite> are not natively supported
+by JSON. They must be provided as quoted strings (“inf”, “nan”) in
+Dakota input.</p>
+</section>
+<section id="aliases-abbreviations-and-other-features">
+<h3>Aliases, abbreviations, and other features<a class="headerlink" href="#aliases-abbreviations-and-other-features" title="Link to this heading"></a></h3>
+<p>Some of the convenience features supported in freeform inputs files do not
+work in JSON. These include keyword aliases (e.g. using <cite>nond_sampling</cite> in place of
+<code class="docutils literal notranslate"><a class="reference external" href="../usingdakota/reference/method-sampling.html"><span class="pre">sampling</span></a></code>), abbreviations (e.g. using <cite>analysis_driver</cite> when the full keyword is
+<code class="docutils literal notranslate"><a class="reference external" href="../usingdakota/reference/interface-analysis_drivers.html"><span class="pre">analysis_drivers</span></a></code>), <a class="reference internal" href="inputfile/formatting.html#inputfile-formatting-args"><span class="std std-ref">shortcut notations</span></a>
+such as <cite>N*Value</cite> and <cite>L:S:U</cite> sequences, and input file template pre-processing.</p>
+</section>
+</section>
+<section id="how-to-work-with-the-pydantic-documentation">
+<h2>How to Work with the Pydantic Documentation<a class="headerlink" href="#how-to-work-with-the-pydantic-documentation" title="Link to this heading"></a></h2>
+<p>When using the generated Pydantic documentation, think of each model as
+representing a portion of the Dakota input hierarchy. Field names within
+a model correspond to JSON keys. Nested models represent nested blocks
+of the input structure. Required vs optional fields, default values, and
+allowed types are all defined there.</p>
+<p>In practice, constructing a JSON input using the documentation involves
+starting from the top-level <a class="reference internal" href="pydantic_models_reference/study.html#pydantic-study"><span class="std std-ref">DakotaStudy</span></a> model and working down
+through the nested models.</p>
+<p>In the documentation, fields are followed by a type. Some of the more
+common ones are:</p>
+<ul class="simple">
+<li><p>a primitive type such as <cite>int</cite> or <cite>str</cite> if the keyword takes an argument</p></li>
+<li><p>the hyperlinked name of a model, which indicates that a field has children</p></li>
+<li><p>pipe-delimited models, indicating a Union or “choose one” relationship</p></li>
+<li><p>Literal[True]. These are leaf keywords and must be set to true.</p></li>
+</ul>
+<p>Some fields have defaults, which follow an equal sign. Fields with defaults
+are not required to be set. Others are followed by <cite>| None</cite>, which marks a
+field that is optional but has no specified default.</p>
+</section>
+<section id="using-dakota-parser-to-bootstrap-json-input">
+<h2>Using <code class="docutils literal notranslate"><span class="pre">dakota_parser</span></code> to Bootstrap JSON Input<a class="headerlink" href="#using-dakota-parser-to-bootstrap-json-input" title="Link to this heading"></a></h2>
+<p>To ease the transition, Dakota provides a tool called <cite>dakota_parser</cite> that can
+convert an existing freeform input file into JSON.</p>
+<p>This can be a practical way to get started:</p>
+<ol class="arabic simple">
+<li><p>Begin with a working traditional input file.</p></li>
+<li><p>Run <cite>dakota_parser</cite>, located in the <cite>bin</cite> folder of the Dakota install, to
+generate the corresponding JSON:
+<code class="docutils literal notranslate"><span class="pre">dakota_parser</span> <span class="pre">&lt;freeform</span> <span class="pre">dakota</span> <span class="pre">input&gt;</span> <span class="pre">--json</span></code></p></li>
+<li><p>Use the result as a starting point, modifying it as needed.</p></li>
+<li><p>Refer to the Keyword Reference and Pydantic documentation to
+understand and refine specific fields.</p></li>
+</ol>
+<p>This workflow avoids having to construct JSON inputs from scratch while the
+documentation is still evolving.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="reference/responses-metadata.html" class="btn btn-neutral float-left" title="metadata" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="pydantic_models_reference/study.html" class="btn btn-neutral float-right" title="Study" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <!--
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Sandia National Laboratories.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+  --> 
+
+</footer>
+        </div>
+      </div>
+	  
+	  <div style="background-color: #0f0f0f;color:#fafafa;padding:20px">
+	    <div>
+		  <h2><em>Exceptional service in the national interest</em></h2>
+		</div>
+		<p>© 2023 National Technology and Engineering Solutions of Sandia, LLC. | <a href="https://www.sandia.gov/contact_us/index.html">Questions &amp; Comments</a> | <a href="https://www.sandia.gov/general/privacy-security/index.html">Privacy &amp; Security</a></p>
+		<p><a href="http://energy.gov" rel="noopener noreferrer" target="_blank"><img alt="U.S. Department of Energy" longdesc="https://energy.gov" src="https://www.sandia.gov/_common/images/doe_logo_white.png" style="height:37px; width:140px"></a> <a href="http://nnsa.energy.gov/" rel="noopener noreferrer" target="_blank"> <img alt="National Nuclear Security Administration" longdesc="http://nnsa.gov" src="https://www.sandia.gov/_common/images/nnsa_logo_white.png" style="height:37px; width:116px"></a></p>
+		<p><a href="https://www.sandia.gov">Sandia National Laboratories</a> is a multimission laboratory managed and operated by National Technology and Engineering Solutions of Sandia, LLC., a wholly owned subsidiary of Honeywell International, Inc., for the U.S. Department of Energy’s National Nuclear Security Administration under contract DE-NA-0003525.</p>
+	  </div>	  	  
+	  
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

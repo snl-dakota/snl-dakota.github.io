@@ -1,0 +1,35 @@
+.. _method-coliny_direct-max_boxsize_limit:
+
+"""""""""""""""""
+max_boxsize_limit
+"""""""""""""""""
+
+
+Stopping Criterion based on longest edge of hyperrectangle
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* REAL
+
+- *Default:* 0.0
+
+
+**Description**
+
+
+Each subregion considered by DIRECT has a \b size, which corresponds
+to the longest diagonal of the subregion.
+
+``max_boxsize_limit`` specification terminates DIRECT if the size of
+the largest subregion falls below this threshold.
+
+

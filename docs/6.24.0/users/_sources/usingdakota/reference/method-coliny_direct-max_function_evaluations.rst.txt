@@ -1,0 +1,49 @@
+.. _method-coliny_direct-max_function_evaluations:
+
+""""""""""""""""""""""""
+max_function_evaluations
+""""""""""""""""""""""""
+
+
+Number of function evaluations allowed for optimizers
+
+
+
+**Topics**
+
+
+method_independent_controls
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* INTEGER
+
+- *Default:* 1000
+
+
+**Description**
+
+
+The maximum number of function evaluations is used as a stopping
+criterion for optimizers.  If it has not reached any other stopping
+criteria first, the optimizer will stop after it has performed
+``max_function_evalutions`` evaluations.  See also ``max_iterations``.
+
+Some optimizers (e.g. ``ncsu_direct``) may run past this limit in the course
+of an iteration step that began before ``max_function_evaluations`` was
+exceeded.
+
+*Default Behavior*
+
+Default value is 1000.
+
+

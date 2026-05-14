@@ -1,0 +1,1078 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sensitivity Analysis &mdash; dakota  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/autodoc_pydantic.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/dakota_theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/sandiaheaderlite.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../../_static/doctools.js?v=9bcbadda"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../../_static/copybutton.js?v=f281be69"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Model Calibration" href="modelcalibration.html" />
+    <link rel="prev" title="Optimization" href="optimization.html" /> 
+  
+  <meta name="sandia.approval_type" content="formal"/>
+  <meta property="sandia.approved" content="SAND2025-14179O"/>
+  <meta name="description" content="The Dakota project delivers both state-of-the-art research and robust, usable software for optimization and UQ."/>
+  <meta name="keywords" content="Dakota, optimization, UQ, uncertainty quantification, parametric analysis, design exploration, model calibration, risk analysis"/>
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> dakota
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../setupdakota.html">Getting Started</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../usingdakota.html">Using Dakota</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../introduction/aboutdakota.html">About Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../introduction/helloworld.html">Dakota Beginner’s Tutorial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples.html">Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../introduction/couplingtosimulations.html">Coupling Dakota to a Simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../inputfile.html">Dakota Input File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../running.html">Running Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../output.html">Dakota Output</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../studytypes.html">Study Types</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="uq.html">Uncertainty Quantification</a></li>
+<li class="toctree-l3"><a class="reference internal" href="optimization.html">Optimization</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Sensitivity Analysis</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#local-sensitivity">Local Sensitivity</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#global-sensitivity">Global Sensitivity</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#scatterplots">Scatterplots</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#correlation-coefficients">Correlation coefficients</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#standardized-regression-coefficients">Standardized regression coefficients</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#morris-one-at-a-time-elementary-effects-method">Morris one-at-a-time (elementary effects) method</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#sobol-indices-variance-based-decomposition">Sobol’ Indices/Variance-Based Decomposition</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#parameter-studies">Parameter Studies</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#centered-parameter-study">Centered Parameter Study</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#method-summary">Method Summary</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#usage-guidelines">Usage Guidelines</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#practical-tips">Practical Tips</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#references">References</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#video-resources">Video Resources</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="modelcalibration.html">Model Calibration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="parameterstudies.html">Parameter Studies</a></li>
+<li class="toctree-l3"><a class="reference internal" href="designofexperiments.html">Design of Experiments</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../topics.html">Topics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../advanced.html">Advanced Topics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../theory.html">Dakota Theory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference.html">Keyword Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pydantic_models_reference.html">JSON Input Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../usingdakotagui/usingdakotagui.html">Using Dakota GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../externaltools/externaltools.html">Using External Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../compiling/compiling.html">Compiling Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developingdakota/developingdakota.html">Developing Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../misc/misc.html">Miscellaneous</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">dakota</a>
+      </nav>
+
+	  <!-- SNL Lite header -->
+	  <div class="snlheader-subsite--wrapper-default">
+		<snlheader class="snlheader-subsite" role="snlbanner">
+		  <div class="wrapper">
+			<a href="https://www.sandia.gov/index.html">
+			  <div class="logo-transparent"><p class="logo">Sandia National Laboratories</p></div>
+			</a>
+			<div class="nav-top">
+			  <a class="visuallyhidden" name="mainnav"></a>
+			  <div aria-label="main navigation" class="core-nav-transparent core-nav-transparent--visible" role="navigation">
+				<ul role="navigation" class="secondary-links">
+				  <li id="search-text-link">
+					<a aria-label="Search" href="https://www.sandia.gov/search/">Search Sandia.gov</a>
+				  </li>
+				  <li id="directory-text-link">
+					<a href="https://www.sandia.gov/directory.html" aria-expanded="false" aria-label="Site Directory">All Sandia Websites</a>
+				  </li>
+				</ul>
+			  </div>
+			</div>
+		  </div> 
+		</snlheader>
+	  </div>	  
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../usingdakota.html">Using Dakota</a></li>
+          <li class="breadcrumb-item"><a href="../studytypes.html">Study Types</a></li>
+      <li class="breadcrumb-item active">Sensitivity Analysis</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/usingdakota/studytypes/sensitivityanalysis.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="sensitivity-analysis">
+<span id="sa"></span><h1>Sensitivity Analysis<a class="headerlink" href="#sensitivity-analysis" title="Link to this heading"></a></h1>
+<section id="overview">
+<span id="sa-overview"></span><h2>Overview<a class="headerlink" href="#overview" title="Link to this heading"></a></h2>
+<p>Sensitivity analysis (SA) reveals the extent to which simulation outputs
+depend on each simulation input. The primary goal is to identify the most
+important input variables and their interactions, enabling analysts to
+focus resources on the parameters that matter most. This page summarizes
+SA concepts and terminology, describes <a class="reference internal" href="#sa-local"><span class="std std-ref">local</span></a> and
+<a class="reference internal" href="#sa-global"><span class="std std-ref">global</span></a> methods for SA as well as
+<a class="reference internal" href="#sa-pstudy"><span class="std std-ref">parameter studies</span></a>, and offers
+<a class="reference internal" href="#sa-usage"><span class="std std-ref">usage guidelines</span></a>.</p>
+<p>Sensitivity analysis serves several key purposes in computational modeling:</p>
+<ul class="simple">
+<li><p><strong>Screening and ranking</strong>: Identify the most influential variables to
+down-select for further uncertainty quantification or optimization studies.</p></li>
+<li><p><strong>Resource allocation</strong>: Focus data gathering, model development, code
+development, and uncertainty characterization efforts on the most
+impactful parameters.</p></li>
+<li><p><strong>Model understanding</strong>: Identify key model characteristics such as
+smoothness, nonlinear trends, and robustness, while developing intuition
+about model behavior.</p></li>
+<li><p><strong>Quality assurance</strong>: SA can reveal code and model issues as a side
+effect of systematic parameter exploration.</p></li>
+<li><p><strong>Surrogate construction</strong>: Data generated during SA studies can be
+repurposed to construct surrogate models for subsequent analyses.</p></li>
+</ul>
+<p>Sensitivity analysis methods can be broadly categorized by their scope
+(local vs. global) and by the metrics they produce for quantifying
+parameter influence.</p>
+</section>
+<section id="local-sensitivity">
+<span id="sa-local"></span><h2>Local Sensitivity<a class="headerlink" href="#local-sensitivity" title="Link to this heading"></a></h2>
+<p>Local sensitivity analysis examines how the response changes with
+respect to small perturbations around a single point in parameter space.
+The classic measure of local sensitivity is the partial derivative of
+the response with respect to each parameter:</p>
+<div class="math notranslate nohighlight">
+\[\frac{\partial f}{\partial x_i} \bigg|_{x=x_0}\]</div>
+<p>Local sensitivity provides information about the slope of the response
+surface at the nominal point <span class="math notranslate nohighlight">\(x_0\)</span>. This can be useful for
+understanding instantaneous rates of change, but may not capture the
+full picture if the response is highly nonlinear or if the parameter
+ranges of interest are large relative to the local curvature.</p>
+<p>Dakota supports this type of study through numerical
+finite-differencing or retrieval of analytic gradients computed within
+the analysis code. The desired gradient data is specified in the
+responses section of the Dakota input file and the collection of this
+data at a single point is accomplished through a parameter study method
+with no steps. This approach to sensitivity analysis should be
+distinguished from the activity of augmenting analysis codes to
+internally compute derivatives using techniques such as direct or
+adjoint differentiation, automatic differentiation, or
+complex step modifications. These sensitivity augmentation activities
+are completely separate from Dakota and are outside the scope of this
+manual. However, once completed, Dakota can utilize these analytic
+gradients to perform optimization, uncertainty quantification, and
+related studies more reliably and efficiently.</p>
+</section>
+<section id="global-sensitivity">
+<span id="sa-global"></span><h2>Global Sensitivity<a class="headerlink" href="#global-sensitivity" title="Link to this heading"></a></h2>
+<p>Global sensitivity analysis assesses the relative influence of parameters
+over the entire input space, either between upper and lower bounds or over
+the support of the parameters’ probability distributions. Rather than
+examining behavior at a single point, global SA characterizes how
+parameters affect the response over the range of plausible parameter values.</p>
+<dl class="simple">
+<dt>Global SA addresses questions such as:</dt><dd><ul class="simple">
+<li><p>What is the general trend of the response over all values of a parameter?</p></li>
+<li><p>Does the response depend more nonlinearly on one factor than another?</p></li>
+<li><p>How do parameters interact to influence the response?</p></li>
+</ul>
+</dd>
+</dl>
+<p>Global SA is performed by evaluating the response at well-distributed
+points in the input space and analyzing the resulting input/output pairs.
+Dakota primarily focuses on global sensitivity analysis methods.</p>
+<p>Various metrics and approaches can quantify parameter influence, each with
+different interpretations and computational requirements:</p>
+<section id="scatterplots">
+<span id="sa-global-scatterplots"></span><h3>Scatterplots<a class="headerlink" href="#scatterplots" title="Link to this heading"></a></h3>
+<p>Scatterplots are a simple, but highly effective, visualization-based sensitivity
+analysis technique performed using external software and the input-output samples
+generated by a Dakota study. To generate scatterplots, samples are projected
+down so that one output dimension is plotted against one parameter dimension,
+for each parameter and output in turn. Scatterplots with a uniformly distributed
+cloud of points indicate parameters with little influence on the results, while
+scatterplots with a defined shape to the cloud indicate parameters which are
+more significant.</p>
+<p>Scatterplots are a primary diagnostic tool for interpreting sensitivity
+analysis results. They can reveal:</p>
+<ul class="simple">
+<li><p>Monotonic or non-monotonic relationships</p></li>
+<li><p>Nonlinear trends (e.g., saturation, thresholds)</p></li>
+<li><p>Interaction effects (e.g., changing output variation as a function of multiple inputs)</p></li>
+</ul>
+<figure class="align-center" id="sa-figure01">
+<img alt="An example of scatterplots for a function exhibiting nonmonotonic, nonlinear relationships, and interactions." src="../../_images/scatterplots_only.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 47 </span><span class="caption-text">An example of scatterplots for a function exhibiting nonmonotonic,
+nonlinear relationships, and interactions. Since <span class="math notranslate nohighlight">\(X_3\)</span> exhibits little
+to no trend, it may not be an influential parameter.</span><a class="headerlink" href="#sa-figure01" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>Unlike quantitative sensitivity metrics, scatterplots:</p>
+<ul class="simple">
+<li><p>Don’t provide a scalar measure of importance or ranking</p></li>
+<li><p>Are conditional on the sampled input space</p></li>
+<li><p>Require interpretation</p></li>
+</ul>
+<p>However, they are essential for:</p>
+<ul class="simple">
+<li><p>Validating assumptions behind sensitivity metrics (e.g., monotonicity for correlation)</p></li>
+<li><p>Diagnosing misleading or ambiguous metric values</p></li>
+<li><p>Identifying structure that may motivate surrogate modeling choices</p></li>
+</ul>
+<p>Scatterplots are most effective when used in conjunction with
+sampling-based methods (e.g., Latin hypercube sampling), where the
+input space is well covered.</p>
+<p>Limitations:</p>
+<ul class="simple">
+<li><p>They can become difficult to interpret in high-dimensional problems</p></li>
+<li><p>They don’t isolate interaction effects without additional visualization</p></li>
+</ul>
+</section>
+<section id="correlation-coefficients">
+<span id="sa-global-corr-coeffs"></span><h3>Correlation coefficients<a class="headerlink" href="#correlation-coefficients" title="Link to this heading"></a></h3>
+<p>Correlation coefficients, computed from sampling
+data, measure the strength of linear or monotonic relationships between two
+quantities. Correlations can be computed between input parameters, between
+output responses, and between inputs and outputs. They are inexpensive to
+compute from existing samples. As such, they are computed by default as part
+of the results of a <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-sampling.html"><span class="pre">sampling</span></a></code> study. For the purposes of
+sensitivity analysis, this discussion focuses on correlations between inputs
+and outputs.</p>
+<p>The sample (Pearson) correlation coefficient measures the strength of the
+linear relationship between an input and an output, ignoring all other
+inputs. Their efficacy can break down as a sensitivity measure if the relationship
+is nonlinear.</p>
+<p>The rank (Spearman) correlation coefficient measures the strength of the
+monotonic relationship between an input and an output, ignoring all other
+inputs. For this reason, they are robust to nonlinear monotonic relationships,
+but can break down for non-monotonic cases.</p>
+<p>Partial correlation coefficients measure correlation between inputs and outputs,
+after removing linear effects of other inputs. In this sense, they control for
+other inputs in the computation of correlation between a given input and output.
+However, their accuracy can degrade when the sample size is small relative to
+the number of inputs (e.g., less than 10-20x the number of inputs).</p>
+<p>Correlation coefficients can struggle in the following contexts:</p>
+<ul class="simple">
+<li><p>non-monotonic, nonlinear input-output relationships</p></li>
+<li><p>correlated inputs</p></li>
+<li><p>input-output relationships driven by interactions between inputs</p></li>
+<li><p>noisy input-output relationships</p></li>
+</ul>
+<p>Below are examples, with scatterplots, showing how simple correlations behave
+in a range of scenarios.</p>
+<figure class="align-center" id="sa-figure02">
+<img alt="For the same underlying function, increasing noise in the response decreases the computed correlation coefficient. The Pearson correlation coefficient is shown." src="../../_images/ccs_noise_effects.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 48 </span><span class="caption-text">For the same underlying function, increasing noise in the response decreases
+the computed correlation coefficient. The Pearson correlation coefficient
+<span class="math notranslate nohighlight">\(\rho\)</span> is shown here.</span><a class="headerlink" href="#sa-figure02" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<figure class="align-center" id="sa-figure03">
+<img alt="Correlation coefficients for different variations of y=ax, where the coefficient is always -1 or 1, no matter what a is." src="../../_images/ccs_slope_effects.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 49 </span><span class="caption-text">Correlation coefficients aren’t impacted by the magnitude of slope of a linear
+relationship; they are only influenced by the direction (upward or downward)
+and the strength of the linear relationship (how closely points fall on a line).</span><a class="headerlink" href="#sa-figure03" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<figure class="align-center" id="sa-figure04">
+<img alt="Pearson and Spearman correlation coefficients can diverge for monotonic, nonlinear or discontinuous functions. They both can fail to identify a significant relationship for non-monotonic relationships." src="../../_images/ccs_edge_cases.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 50 </span><span class="caption-text">Pearson and Spearman correlation coefficients (<span class="math notranslate nohighlight">\(\rho\)</span> and <span class="math notranslate nohighlight">\(\rho_s\)</span>,
+respectivey) can diverge for monotonic, nonlinear or discontinuous functions.
+They both can fail to identify a significant relationship for non-monotonic
+relationships.</span><a class="headerlink" href="#sa-figure04" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<figure class="align-center" id="sa-figure05">
+<img alt="Correlation coefficients can fail to identify significant relationships for functions driven by interactions between inputs, as is shown in this example." src="../../_images/ccs_interaction_driven.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 51 </span><span class="caption-text">Correlation coefficients can fail to identify significant relationships for functions
+driven by interactions between inputs, as is shown in this example.</span><a class="headerlink" href="#sa-figure05" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+</section>
+<section id="standardized-regression-coefficients">
+<span id="sa-global-std-regression-coeffs"></span><h3>Standardized regression coefficients<a class="headerlink" href="#standardized-regression-coefficients" title="Link to this heading"></a></h3>
+<p>Standardized regression coefficients,
+computed from sampling data, measure the change in output responses (in
+standard deviation) per standard deviation change in the input. In contrast
+to correlation coefficients, they are robust to correlated inputs.</p>
+<p>They are inexpensive to compute from existing samples, where inputs and
+outputs are standardized (i.e., mean=0, std=1), and a multiple linear
+regression is performed on the standardized quantities. The standardized
+regression coefficients are the coefficients in the linear regression model.</p>
+<p>Standardized regresion coefficients can be optionally computed in the results
+of a random sampling study. Keyword reference:
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-sampling-std_regression_coeffs.html"><span class="pre">std_regression_coeffs</span></a></code></p>
+<p>As with correlation coefficients, the standardized regression coefficients
+are not robust to nonlinear or non-monotonic input-output relationships, or
+relationships driven by interactions between inputs.</p>
+</section>
+<section id="morris-one-at-a-time-elementary-effects-method">
+<span id="sa-global-morris"></span><h3>Morris one-at-a-time (elementary effects) method<a class="headerlink" href="#morris-one-at-a-time-elementary-effects-method" title="Link to this heading"></a></h3>
+<p>The Morris one-at-a-time (MOAT) method is a global approach to screen
+out unimportant inputs. The algorithm is described in detail in
+<a class="reference internal" href="designofexperiments.html#dace-psuade"><span class="std std-ref">the PSUADE MOAT documentation</span></a>.</p>
+<p>At a high level, the method creates a distribution of elementary
+effects for each input. Elementary effects are computed at random points
+using forward finite differences with large step sizes.</p>
+<p>From this sample set, the following metrics are computed:</p>
+<ul class="simple">
+<li><p><strong>Modified mean</strong> (<span class="math notranslate nohighlight">\(\mu^*\)</span>): The average absolute value of
+elementary effects. Large values indicate the input has a
+significant effect on the output.</p></li>
+<li><p><strong>Standard deviation</strong> (<span class="math notranslate nohighlight">\(\sigma\)</span>): The spread of elementary
+effects across the input space. Large values indicate either nonlinear
+effects or interactions with other inputs.</p></li>
+</ul>
+<p>Inputs with high <span class="math notranslate nohighlight">\(\mu^*\)</span> are influential and should be retained
+for subsequent analyses. Inputs with high <span class="math notranslate nohighlight">\(\sigma\)</span> relative to
+<span class="math notranslate nohighlight">\(\mu^*\)</span> exhibit strong nonlinear behavior or interactions.</p>
+<p>The number of model evaluations to compute a size <span class="math notranslate nohighlight">\(r\)</span> ensemble of
+elementary effects for <span class="math notranslate nohighlight">\(d\)</span> inputs is <span class="math notranslate nohighlight">\(N=r(d+1)\)</span>. A common
+first choice for <span class="math notranslate nohighlight">\(r\)</span> is <span class="math notranslate nohighlight">\(\sim 10-20\)</span>, then increasing as needed
+to achieve stability in the computed metrics.</p>
+<p>Morris sensitivity metrics can be a useful tool for screening out unimportant
+inputs at relatively low computational cost while being robust to nonlinear
+input-output relationships and relationships driven by interactions. However,
+they have some downsides:</p>
+<ul class="simple">
+<li><p>Input-output samples generated by the algorithm are not independent, identically distributed, so are poorly suited for reuse in Monte Carlo-based uncertainty analysis.</p></li>
+<li><p>While they can provide an indication of the presence of nonlinearity or interaction effects, they can’t distinguish between the two or attribute output variance to specific inputs.</p></li>
+</ul>
+</section>
+<section id="sobol-indices-variance-based-decomposition">
+<span id="sa-global-vbd"></span><h3>Sobol’ Indices/Variance-Based Decomposition<a class="headerlink" href="#sobol-indices-variance-based-decomposition" title="Link to this heading"></a></h3>
+<p>Sobol’ indices are variance-based global sensitivity measures derived
+from the functional ANOVA decomposition of a model.</p>
+<p>Let <span class="math notranslate nohighlight">\(Y = f(X_1, \ldots, X_d)\)</span>, where the inputs are independent.
+The ANOVA decomposition represents the function as</p>
+<div class="math notranslate nohighlight">
+\[Y = f_0 + \sum_{i=1}^d f_i (X_i) + \sum_{i&lt;j}^d f_{ij}(X_i,X_j) + \cdots + f_{1,\ldots,d}(X_1,\ldots,X_d)\]</div>
+<p>where the functional terms of the decomposition are orthogonal and are defined recursively as</p>
+<div class="math notranslate nohighlight">
+\[f_0 = \mathbb{E}[Y]
+f_i(X_i) = \mathbb{E}[Y \mid X_i] - f_0
+f_{ij}(X_i) = \mathbb{E}[Y \mid X_i,X_j] - f_0 - f_i - f_j\]</div>
+<p>and so on.
+Assuming <span class="math notranslate nohighlight">\(f\)</span> is square integrable, taking variance on both sides gives</p>
+<div class="math notranslate nohighlight">
+\[\mathrm{Var}(Y) = \sum_{i=1}^d V_i + \sum_{i&lt;j}^d V_{ij} + \cdots V_{1\ldots d}\]</div>
+<p>where</p>
+<div class="math notranslate nohighlight">
+\[V_i = \mathrm{Var}(\mathbb{E}[Y \mid X_i])
+V_{ij} = \mathrm{Var}(\mathbb{E}[Y \mid X_i, X_j ]) - V_i - V_j\]</div>
+<p>and so on.</p>
+<p>This variance decomposition shows how the variance in the model output can
+be attributed to each input individually, as well as the effects of interactions between inputs.
+By definition, all terms sum to the total variance of the output.</p>
+<p>First-order (main effect) Sobol’ indices meaure the fraction of total variance in
+<span class="math notranslate nohighlight">\(Y\)</span> that can be attributing to varying <span class="math notranslate nohighlight">\(X_i\)</span> alone. They are defined
+as</p>
+<div class="math notranslate nohighlight">
+\[S_i = \frac{V_i}{\mathrm{Var}(Y)}.\]</div>
+<p>Higher-order Sobol’ indices measure the fraction of variance in <span class="math notranslate nohighlight">\(Y\)</span>
+that can be attributed to interactions between inputs and are defined as:</p>
+<div class="math notranslate nohighlight">
+\[S_{ij} = \frac{V_{ij}}{\mathrm{Var}(Y)}.\]</div>
+<p>Total-effect Sobol’ indices quantify the total contribution of an input to the output
+variance, including all interactions. They are defined as</p>
+<div class="math notranslate nohighlight">
+\[T_i = \frac{\sum_{u \ni i} V_u}{\mathrm{Var}(Y)},\]</div>
+<p>where the numerator is sum of all terms in the ANOVA decomposition involving
+input <span class="math notranslate nohighlight">\(X_i\)</span>.</p>
+<p>Important notes for interpreting Sobol’ indices (assuming inputs are
+statistically independent):</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>All indices are bounded between 0 and 1.</p></li>
+<li><p>Main effects sum to <span class="math notranslate nohighlight">\(\leq 1\)</span>. If they sum to significantly less than one, interaction effects are significant.</p></li>
+<li><p>If <span class="math notranslate nohighlight">\(S_i = T_i\)</span>, there are no interaction effects.</p></li>
+<li><p>If <span class="math notranslate nohighlight">\(S_i\)</span> is close to 0, <span class="math notranslate nohighlight">\(X_i\)</span> may be influential through interaction effects.</p></li>
+<li><p>If <span class="math notranslate nohighlight">\(T_i\)</span> is close to zero, <span class="math notranslate nohighlight">\(X_i\)</span> is not influential.</p></li>
+</ul>
+</div></blockquote>
+<p>More details on the calculations and interpretation of the sensitivity indices can be found
+in <span id="id1">[<a class="reference internal" href="#id260" title="A. Saltelli, S. Tarantola, F. Campolongo, and M. Ratto. Sensitivity Analysis in Practice: A Guide to Assessing Scientific Models. John Wiley &amp; Sons, 2004.">STCR04</a>]</span>.</p>
+<p>Sobol’ indices are robust to nonlinear, non-monotonic input-output relationships
+and to relationships driven by interactions between inputs.
+In contrast to all other previously discussed global sensitivity metrics,
+Sobol’ indices provide quantitative attribution of output variations to inputs,
+enabling assessment of the contribution to variance from individual inputs,
+their interactions, etc.
+However, they can be computationally challenging to compute, and their interpretation
+breaks down for correlated inputs.</p>
+<p>Dakota provides two main approaches for computing Sobol’ indices, a.k.a. variance-based
+decomposition (VBD):</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Polynomial Chaos Expansion (PCE)</p></li>
+<li><p>Sampling-based</p></li>
+</ul>
+</div></blockquote>
+<p>The sampling-based methods are activated via the
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-sampling-variance_based_decomp.html"><span class="pre">variance_based_decomp</span></a></code> keyword for sampling methods.
+There are two sampling-based algorithms available:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Saltelli Pick-and-Freeze</p></li>
+<li><p>Binned</p></li>
+</ul>
+</div></blockquote>
+<p>Implementation details for the Saltelli and PCE-based Sobol’ index estimators
+in Dakota are provided in <span id="id2">[<a class="reference internal" href="../../misc/bibliography.html#id300" title="V. G. Weirs, J. R. Kamm, L. P. Swiler, M. Ratto, S. Tarantola, B. M. Adams, W. J. Rider, and M. S Eldred. Sensitivity analysis techniques applied to a system of hyperbolic conservation laws. Reliability Engineering and System Safety, 107:157–170, 2012.">WKS+12</a>]</span>. Details of the binned implementation
+are provided in <span id="id3">[<a class="reference internal" href="../../misc/bibliography.html#id189" title="Chenzhao Li and Sankaran Mahadevan. An efficient modularized sample-based method to estimate the first-order Sobol׳ index. Reliability Engineering &amp; System Safety, 153:110–121, September 2016. URL: https://www.sciencedirect.com/science/article/pii/S0951832016300266, doi:10.1016/j.ress.2016.04.012.">LM16</a>]</span> (Method B).</p>
+<p><strong>VBD via Polynomial Chaos Expansion</strong>:</p>
+<p>For smooth response functions, polynomial chaos expansions (PCE) provide
+an efficient means of computing Sobol’ indices. Once a PCE surrogate is
+constructed, Sobol’ indices can be computed analytically from the expansion
+coefficients at negligible additional cost.</p>
+<div class="literal-block-wrapper docutils container" id="sa-vbd-pce">
+<div class="code-block-caption"><span class="caption-number">Listing 57 </span><span class="caption-text">VBD via PCE input excerpt</span><a class="headerlink" href="#sa-vbd-pce" title="Link to this code"></a></div>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span><span class="k">method</span>
+  polynomial_chaos
+    quadrature_order 4
+    variance_based_decomp
+
+<span class="k">variables</span>
+  uniform_uncertain 7
+    descriptors   &#39;w&#39;   &#39;t&#39;   &#39;L&#39;    &#39;p&#39;     &#39;E&#39;       &#39;X&#39;    &#39;Y&#39;
+    lower_bounds  0.5   0.5   5.0    450.0   2.4e+7    1.0    5.0
+    upper_bounds  1.5   1.5   15.0   550.0   3.4e+7    10.0   15.0
+</pre></div>
+</div>
+</div>
+<p>PCE-based VBD is particularly attractive when:</p>
+<ul class="simple">
+<li><p>The response is smooth and well-approximated by polynomials</p></li>
+<li><p>The PCE can be reused for other analysis tasks such as uncertainty quantification</p></li>
+<li><p>Interaction effects are important (interaction effects are represented in the PCE basis, subject to truncation scheme)</p></li>
+</ul>
+<p>PCE can also be constructed from pre-existing sampling data using the
+<code class="docutils literal notranslate"><span class="pre">import_build_points_file</span></code> keyword, enabling VBD analysis without
+additional simulation evaluations.</p>
+<p><strong>VBD via Saltelli Pick-and-Freeze</strong>:</p>
+<p>The Saltelli sampling method (which we also call pick-and-freeze) employs
+structured sampling to compute the full set of main- and total-effect Sobol’
+indices for all parameters, using <span class="math notranslate nohighlight">\(N(d+2)\)</span> samples for <span class="math notranslate nohighlight">\(d\)</span> parameters
+for <span class="math notranslate nohighlight">\(N\)</span> independent samples. While the Saltelli method can be used to
+compute interaction effects, the Dakota implementation does not support this.</p>
+<div class="literal-block-wrapper docutils container" id="sa-vbd-saltelli">
+<div class="code-block-caption"><span class="caption-number">Listing 58 </span><span class="caption-text">VBD via Saltelli sampling input excerpt</span><a class="headerlink" href="#sa-vbd-saltelli" title="Link to this code"></a></div>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span><span class="k">method</span>
+  sampling
+    sample_type lhs
+    seed 52983
+    samples 500
+    variance_based_decomp
+      vbd_sampling_method pick_and_freeze
+</pre></div>
+</div>
+</div>
+<p><strong>VBD via Binned Approach</strong>:</p>
+<p>The binned method computes main-effect Sobol’ indices for all parameters using
+<span class="math notranslate nohighlight">\(N\)</span> independent samples.</p>
+<div class="literal-block-wrapper docutils container" id="sa-vbd-binned">
+<div class="code-block-caption"><span class="caption-number">Listing 59 </span><span class="caption-text">VBD via sampling-based binned method input excerpt</span><a class="headerlink" href="#sa-vbd-binned" title="Link to this code"></a></div>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span><span class="k">method</span>
+  sampling
+    sample_type lhs
+    seed 52983
+    samples 500
+    variance_based_decomp
+      vbd_sampling_method binned
+</pre></div>
+</div>
+</div>
+</section>
+</section>
+<section id="parameter-studies">
+<span id="sa-pstudy"></span><h2>Parameter Studies<a class="headerlink" href="#parameter-studies" title="Link to this heading"></a></h2>
+<p>Parameter studies systematically explore the parameter space along
+specified directions or at specified points. While parameter studies
+are described in detail in <a class="reference internal" href="parameterstudies.html#ps"><span class="std std-ref">Parameter Study Methods</span></a>, the
+centered parameter study is particularly useful for initial sensitivity
+screening.</p>
+<section id="centered-parameter-study">
+<h3>Centered Parameter Study<a class="headerlink" href="#centered-parameter-study" title="Link to this heading"></a></h3>
+<p>The <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-centered_parameter_study.html"><span class="pre">centered_parameter_study</span></a></code>
+varies each parameter along its axis, about a central point.</p>
+<p>The centered parameter study requires specifying:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">initial_point</span></code>: The central point around which parameters are varied</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">steps_per_variable</span></code>: Number of steps to take in each direction for
+each parameter</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">step_vector</span></code>: Step size for each parameter</p></li>
+</ul>
+<div class="literal-block-wrapper docutils container" id="sa-centered-pstudy">
+<div class="code-block-caption"><span class="caption-number">Listing 60 </span><span class="caption-text">Centered parameter study input excerpt</span><a class="headerlink" href="#sa-centered-pstudy" title="Link to this code"></a></div>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span><span class="k">method</span>
+  centered_parameter_study
+    steps_per_variable 5 2
+    step_vector        0.1 0.5
+
+<span class="k">variables</span>
+  continuous_design 2
+    descriptors    &#39;power&#39; &#39;expPBM&#39;
+    initial_point  1.0     2.0
+</pre></div>
+</div>
+</div>
+<p>The resulting data shows how the response changes as each parameter
+is varied while holding others constant. Large response variations
+indicate potentially influential parameters, while flat profiles
+suggest parameters may be candidates for fixing at nominal values.</p>
+<p>Note that parameter studies are generally analyzed through visualization
+and don’t provide sensitivity metric or sensitivity ranking like other
+methods described on this page.</p>
+<section id="method-summary">
+<span id="sa-method-summary"></span><h4>Method Summary<a class="headerlink" href="#method-summary" title="Link to this heading"></a></h4>
+<p>The following table summarizes Dakota’s sensitivity analysis methods
+and the metrics they provide:</p>
+<table class="docutils align-default" id="id348">
+<caption><span class="caption-number">Table 9 </span><span class="caption-text">Dakota Sensitivity Analysis Methods</span><a class="headerlink" href="#id348" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 18.2%" />
+<col style="width: 27.3%" />
+<col style="width: 13.6%" />
+<col style="width: 13.6%" />
+<col style="width: 13.6%" />
+<col style="width: 13.6%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Category</p></th>
+<th class="head"><p>Dakota Method</p></th>
+<th class="head"><p>Univariate Trends</p></th>
+<th class="head"><p>Correlations</p></th>
+<th class="head"><p>Morris Metrics</p></th>
+<th class="head"><p>Sobol Indices</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Parameter Studies</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">centered_parameter_study</span></code></p></td>
+<td><p>P</p></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">multidim_parameter_study</span></code></p></td>
+<td></td>
+<td><p>P</p></td>
+<td></td>
+<td><p>P</p></td>
+</tr>
+<tr class="row-even"><td><p>Sampling</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">sampling</span></code></p></td>
+<td><p>P</p></td>
+<td><p>D</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">sampling</span></code> with <code class="docutils literal notranslate"><span class="pre">variance_based_decomp</span></code></p></td>
+<td><p>P</p></td>
+<td><p>D</p></td>
+<td></td>
+<td><p>D</p></td>
+</tr>
+<tr class="row-even"><td><p>Morris</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">psuade_moat</span></code></p></td>
+<td></td>
+<td></td>
+<td><p>D</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>Stochastic Expansions</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">polynomial_chaos</span></code></p></td>
+<td></td>
+<td></td>
+<td></td>
+<td><p>D</p></td>
+</tr>
+</tbody>
+</table>
+<p>D: Dakota-generated; P: Post-processing required with third-party tools</p>
+</section>
+</section>
+</section>
+<section id="usage-guidelines">
+<span id="sa-usage"></span><h2>Usage Guidelines<a class="headerlink" href="#usage-guidelines" title="Link to this heading"></a></h2>
+<p>This section provides guidance for selecting sensitivity analysis methods
+based on model cost, input dimension, response characteristics, and intended
+downstream use.</p>
+<p>Available methods for sensitivity analysis in Dakota, or via postprocessing
+Dakota output, include:</p>
+<ul class="simple">
+<li><p>Centered parameter studies (one-at-a-time, conditional)</p></li>
+<li><p>Scatterplots (visual diagnostics)</p></li>
+<li><p>Morris one-at-a-time (MOAT) screening</p></li>
+<li><p>Random sampling (e.g., Latin hypercube) with:</p>
+<ul>
+<li><p>Correlation coefficients (Pearson, Spearman, partial)</p></li>
+<li><p>Standardized regression coefficients (SRC)</p></li>
+<li><p>Binned Sobol’ main-effect indices</p></li>
+<li><p>Saltelli sampling for Sobol’ indices (main and total effects)</p></li>
+</ul>
+</li>
+<li><p>Polynomial chaos expansions (PCE) for Sobol’ indices</p></li>
+</ul>
+<p>The choice of method depends primarily on:
+- Computational cost per model evaluation
+- Number of input variables
+- Smoothness and structure of the response
+- Whether model evaluations should be reusable
+- Downstream analysis goals (optimization, surrogate modeling, UQ)</p>
+<p><strong>Model cost considerations</strong>
+- <strong>Very Expensive Models</strong></p>
+<blockquote>
+<div><p>When the number of model evaluations is severely limited (i.e., <span class="math notranslate nohighlight">\(N \lesssim 100\)</span> overall or <span class="math notranslate nohighlight">\(N \lesssim 10 \, d\)</span> to <span class="math notranslate nohighlight">\(20 \, d\)</span>  where <span class="math notranslate nohighlight">\(d\)</span> is the number of input variables):</p>
+<ul class="simple">
+<li><p>Use Morris one-at-a-time screening for global sensitivity</p></li>
+<li><p>Supplement with centered parameter sweeps or scatterplots for diagnostics</p></li>
+<li><p>Random sampling-based screening can be effective, but Morris designs generally provide more stable sensitivity rankings for the same computational cost.</p></li>
+</ul>
+<p>Avoid:</p>
+<ul class="simple">
+<li><p>Saltelli Sobol’ indices (high cost)</p></li>
+<li><p>Large random sampling designs</p></li>
+</ul>
+</div></blockquote>
+<ul>
+<li><p><strong>Moderate Cost Models</strong></p>
+<p>When a moderate number of evaluations is feasible (i.e., <span class="math notranslate nohighlight">\(N \sim 100 - 1000\)</span> or <span class="math notranslate nohighlight">\(N \sim 10 \, d\)</span> to <span class="math notranslate nohighlight">\(100 \, d\)</span>):</p>
+<ul class="simple">
+<li><p>Generate a random sample (e.g., Latin hypercube sampling)</p></li>
+<li><p>Compute:</p>
+<ul>
+<li><p>Correlation coefficients</p></li>
+<li><p>Standardized regression coefficients</p></li>
+<li><p>Binned Sobol’ main-effect indices</p></li>
+</ul>
+</li>
+<li><p>Compare to scatter plots to corroborate computed metrics</p></li>
+</ul>
+<p>Advantages:</p>
+<ul class="simple">
+<li><p>A single dataset supports multiple sensitivity metrics</p></li>
+<li><p>Enables reuse for surrogate modeling and uncertainty quantification</p></li>
+</ul>
+</li>
+<li><p><strong>Cheap Models</strong></p>
+<p>When model evaluations are inexpensive:</p>
+<ul class="simple">
+<li><p>Use Saltelli sampling to compute Sobol’ indices (main and total effects)</p></li>
+<li><p>Optionally compare with correlation or regression-based measures</p></li>
+</ul>
+</li>
+</ul>
+<p><strong>Input Dimension Considerations</strong></p>
+<ul>
+<li><p><strong>High-Dimensional Problems</strong> (e.g., <span class="math notranslate nohighlight">\(d \gtrsim 20-30\)</span>)</p>
+<p>Problems with tens to hundreds of inputs are considered high-dimensional.
+In this regime, the number of model evaluations required for many sensitivity
+metrics grows rapidly with the number of inputs.</p>
+<ul class="simple">
+<li><p>Prefer:</p>
+<ul>
+<li><p>Morris screening (cost scales linearly with dimension, but with few samples)</p></li>
+<li><p>Correlation or SRC from random samples (independent of dimension)</p></li>
+</ul>
+</li>
+<li><p>Use caution with:</p>
+<ul>
+<li><p>Saltelli Sobol’ (cost scales with dimension and require more samples)</p></li>
+<li><p>High-order PCE unless sparse/adaptive methods are used</p></li>
+</ul>
+</li>
+<li><p>Recommended goal:</p>
+<ul>
+<li><p>Screen out unimportant variable before applying more expensive methods</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>Moderate-Dimensional Problems</strong> (e.g., <span class="math notranslate nohighlight">\(d \approx 5-20\)</span>)</p>
+<p>In this range, most methods are feasible with moderate computational effort.</p>
+</li>
+</ul>
+<blockquote>
+<div><ul>
+<li><p>Viable approaches:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Random sampling with correlation or SRC</p></li>
+<li><p>Binned Sobol’ indices (main effects only)</p></li>
+<li><p>Morris screening</p></li>
+<li><p>Saltelli Sobol’ indices (budget permitting)</p></li>
+<li><p>PCE (often practical)</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+<blockquote>
+<div><ul class="simple">
+<li><p>Recommended goal:</p>
+<ul>
+<li><p>Combine screening with more quantitative methods as needed</p></li>
+</ul>
+</li>
+</ul>
+</div></blockquote>
+</div></blockquote>
+<p><strong>Low-Dimensional Problems</strong>  (e.g., <span class="math notranslate nohighlight">\(d \lesssim 5-10\)</span>)</p>
+<blockquote>
+<div><p>With relatively few inputs, more comprehensive methods become practical,
+and screening methods such as MOAT are typically unnecessary</p>
+<ul class="simple">
+<li><p>Prefer:</p>
+<ul>
+<li><p>Sobol’ indices (Saltelli can be tractable)</p></li>
+<li><p>PCE-based Sobol’ indices</p></li>
+</ul>
+</li>
+<li><p>Advantages:</p>
+<ul>
+<li><p>Interaction effects can be more fully explored</p></li>
+<li><p>High-fidelity variance decomposition is feasible</p></li>
+</ul>
+</li>
+</ul>
+</div></blockquote>
+<p><strong>Model Smoothness</strong></p>
+<ul>
+<li><p><strong>Smooth Responses</strong></p>
+<p>If the model is smooth and well-approximated by polynomials:</p>
+<ul class="simple">
+<li><p>Use PCE-based Sobol’ indices</p></li>
+</ul>
+<p>Advantages:</p>
+<ul class="simple">
+<li><p>Analytical computation of Sobol’ indices</p></li>
+<li><p>Surrogate can be reused for UQ and optimization</p></li>
+</ul>
+<p>Caveats:</p>
+<ul class="simple">
+<li><p>Efficiency depends on input dimension, since the number of PCE terms (and correspondingly, the number of model evaluations to approximate them) grows rapidly with input dimension and polynomial order.</p></li>
+<li><p>PCEs will be most effective when the response admits a sparse representation (e.g., is dominated by low-order terms and limited interactions).</p></li>
+<li><p>High-dimensional problems may require sparse or adaptive truncation strategies to remain tractable.</p></li>
+</ul>
+</li>
+<li><p><strong>Non-smooth or Unknown Structure</strong></p>
+<ul class="simple">
+<li><p>Start with:</p>
+<ul>
+<li><p>Morris screening</p></li>
+<li><p>Spearman correlation</p></li>
+</ul>
+</li>
+<li><p>Be cautious with:</p>
+<ul>
+<li><p>Regression-based methods</p></li>
+<li><p>Low-order PCE</p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><strong>Downstream Use Cases</strong></p>
+<ul>
+<li><p><strong>Reusable Sampling Designs</strong></p>
+<p>If model evaluations should be reused:</p>
+<ul class="simple">
+<li><p>Prefer random sampling designs (e.g., Latin hypercube)</p></li>
+</ul>
+<p>These support:</p>
+<ul class="simple">
+<li><p>Sensitivity analysis (correlation, SRC, Sobol’)</p></li>
+<li><p>Surrogate modeling</p></li>
+<li><p>Uncertainty quantification</p></li>
+</ul>
+<p>Avoid relying solely on:</p>
+<ul class="simple">
+<li><p>Morris (design-specific)</p></li>
+<li><p>Saltelli sampling (specialized for Sobol’ estimation)</p></li>
+</ul>
+</li>
+<li><p><strong>Surrogate Modeling</strong></p>
+<p>For building surrogate models:</p>
+<ul class="simple">
+<li><p>Use space-filling random samples</p></li>
+<li><p>Optionally construct PCE or other surrogates</p></li>
+</ul>
+<p>Avoid:</p>
+<ul class="simple">
+<li><p>Centered parameter studies</p></li>
+<li><p>Morris designs (poor coverage of input space)</p></li>
+</ul>
+</li>
+<li><p><strong>Optimization</strong></p>
+<p>If optimization is the primary goal:</p>
+<ul class="simple">
+<li><p>Use sensitivity methods for insight and screening:</p>
+<ul>
+<li><p>Centered parameter studies</p></li>
+<li><p>Scatterplots</p></li>
+<li><p>Correlation or MOAT</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>Uncertainty Quantification</strong></p>
+<p>For full uncertainty quantification:</p>
+<ul class="simple">
+<li><p>Prefer:</p>
+<ul>
+<li><p>Sobol’ indices (Saltelli or PCE-based)</p></li>
+<li><p>Surrogate-based sensitivity analysis</p></li>
+</ul>
+</li>
+<li><p>Avoid relying solely on:</p>
+<ul>
+<li><p>Correlation coefficients</p></li>
+<li><p>Morris screening</p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><strong>Method Roles and Limitations</strong></p>
+<ul>
+<li><p><strong>Centered Parameter Sweeps</strong></p>
+<ul>
+<li><p>One-at-a-time variation of a single input over its specified range
+while holding other inputs fixed.</p></li>
+<li><p>Provides a one-dimensional conditional response:</p>
+<div class="math notranslate nohighlight">
+\[f(x_i \mid x_{-i} = x_{-i}^*)\]</div>
+</li>
+<li><p>Useful for:</p>
+<ul class="simple">
+<li><p>Visualizing response shape (linearity, saturation, thresholds)</p></li>
+<li><p>Identifying inputs with strong influence along the chosen slice</p></li>
+<li><p>Diagnosing model behavior</p></li>
+</ul>
+</li>
+</ul>
+<p>Limitations:</p>
+<ul class="simple">
+<li><p>Results are conditional on the fixed values of other inputs</p></li>
+<li><p>Do not account for variability in other inputs</p></li>
+<li><p>Do not capture interactions unless additional sweeps are performed</p></li>
+<li><p>Not a global sensitivity measure</p></li>
+</ul>
+</li>
+<li><p><strong>Scatterplots</strong></p>
+<ul class="simple">
+<li><p>Reveals trends, monotonicity, nonlinear behavior, and interaction effects</p></li>
+<li><p>Useful for exploratory analysis and comparing to computed metrics</p></li>
+</ul>
+</li>
+<li><p><strong>Morris One-at-a-Time</strong></p>
+<ul class="simple">
+<li><p>Efficient global screening method</p></li>
+<li><p>Detects nonlinearity and interactions qualitatively</p></li>
+<li><p>Does not provide variance decomposition</p></li>
+</ul>
+</li>
+<li><p><strong>Correlation and SRC</strong></p>
+<ul class="simple">
+<li><p>Low-cost, easy to compute</p></li>
+<li><p>Suitable for monotonic or near-linear models</p></li>
+<li><p>Limited in capturing interactions and non-monotonic effects</p></li>
+</ul>
+</li>
+<li><p><strong>Binned Sobol’ Indices</strong></p>
+<ul class="simple">
+<li><p>Approximate main effects using existing samples</p></li>
+<li><p>Exploits reusable random samples</p></li>
+<li><p>Don’t provide total-effect indices</p></li>
+</ul>
+</li>
+<li><p><strong>Saltelli Sobol’ Indices</strong></p>
+<ul class="simple">
+<li><p>Provide quantitative main and total effects</p></li>
+<li><p>Capture interactions</p></li>
+<li><p>High computational cost and specialized sampling design</p></li>
+</ul>
+</li>
+<li><p><strong>PCE-Based Sobol’ Indices</strong></p>
+<ul class="simple">
+<li><p>Efficient for smooth models</p></li>
+<li><p>Provide analytical variance decomposition</p></li>
+<li><p>Depend on quality and structure of the surrogate</p></li>
+</ul>
+</li>
+</ul>
+<p><strong>Summary</strong></p>
+<ul class="simple">
+<li><p>Use Morris for low-cost screening</p></li>
+<li><p>Use random sampling when reuse and flexibility are important</p></li>
+<li><p>Use Sobol’ indices for quantitative variance attribution</p></li>
+<li><p>Use PCE when the model is smooth and surrogate reuse is desired</p></li>
+<li><p>Use sweeps and scatterplots for conditional response insight and diagnostics</p></li>
+</ul>
+<section id="practical-tips">
+<h3>Practical Tips<a class="headerlink" href="#practical-tips" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>For studies where the number of model evaluations isn’t influenced by the number of inputs (e.g., random sampling), include a “dummy” variable in your sensitivity analyses that is not used in the model. This lets you assess how well a noninfluential input is identified by your sensitivity metric of interest for your given sample set.</p></li>
+<li><p>Assess convergence of sensitivity metrics by considering incremental increases in the number of model evaluations/samples (incremental studies or increased sample size exploiting Dakota’s restart capability mean you don’t repeat model evaluations).</p></li>
+<li><p>Whenever possible, use plots (e.g., scatter plots) to confirm conclusions.</p></li>
+</ul>
+</section>
+</section>
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Link to this heading"></a></h2>
+<p>For more detailed treatments of sensitivity analysis theory and methods,
+consult:</p>
+<div class="docutils container" id="id4">
+<div role="list" class="citation-list">
+<div class="citation" id="id151" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>HD00<span class="fn-bracket">]</span></span>
+<p>J. C. Helton and F. J. Davis. Sampling-based methods for uncertainty and sensitivity analysis. Technical Report SAND99-2240, Sandia National Laboratories, Albuquerque, NM, 2000.</p>
+</div>
+<div class="citation" id="id260" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">STCR04</a><span class="fn-bracket">]</span></span>
+<p>A. Saltelli, S. Tarantola, F. Campolongo, and M. Ratto. <em>Sensitivity Analysis in Practice: A Guide to Assessing Scientific Models.</em> John Wiley &amp; Sons, 2004.</p>
+</div>
+</div>
+</div>
+<p>Additional information is available in the Dakota User’s Manual sections on:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="parameterstudies.html#ps"><span class="std std-ref">Parameter Study Capabilities</span></a></p></li>
+<li><p><a class="reference internal" href="designofexperiments.html#dace"><span class="std std-ref">Design of Experiments Capabilities</span></a></p></li>
+<li><p><a class="reference internal" href="uq.html#uq"><span class="std std-ref">Uncertainty Quantification Capabilities</span></a></p></li>
+</ul>
+<p>Corresponding keyword reference pages provide detailed information on
+method options and settings.</p>
+</section>
+<section id="video-resources">
+<h2>Video Resources<a class="headerlink" href="#video-resources" title="Link to this heading"></a></h2>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Title</p></th>
+<th class="head"><p>Link</p></th>
+<th class="head"><p>Resources</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Sensitivity Analysis</p></td>
+<td><p><a class="reference external" href="https://digitalops.sandia.gov/Mediasite/Play/PLACEHOLDER"><img alt="Sensitivity Analysis" src="../../_images/SensitivityAnalysisTrainingTeaser.png" /></a></p></td>
+<td><p><a class="reference external" href="https://dakota.sandia.gov/sites/default/files/training/DakotaTraining_SensitivityAnalysis.pdf">Slides</a> /
+<a class="reference external" href="https://dakota.sandia.gov/sites/default/files/training/sensitivity_analysis.zip">Exercises</a></p></td>
+</tr>
+<tr class="row-odd"><td><p>Scatterplot Analyses</p></td>
+<td><p><a class="reference external" href="https://digitalops.sandia.gov/Mediasite/Play/7aade94c468a4a408a69ce4251bc8d4d1d">Sandia ASC V&amp;V/UQ Scatterplots Webinar</a></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>Sobol’ Indices</p></td>
+<td><p><a class="reference external" href="https://digitalops.sandia.gov/Mediasite/Play/8ae40104faa54e429f55dca34c05dee51d">Sandia ASC V&amp;V/UQ Sobol’ Indices Webinar</a></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="optimization.html" class="btn btn-neutral float-left" title="Optimization" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="modelcalibration.html" class="btn btn-neutral float-right" title="Model Calibration" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <!--
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Sandia National Laboratories.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+  --> 
+
+</footer>
+        </div>
+      </div>
+	  
+	  <div style="background-color: #0f0f0f;color:#fafafa;padding:20px">
+	    <div>
+		  <h2><em>Exceptional service in the national interest</em></h2>
+		</div>
+		<p>© 2023 National Technology and Engineering Solutions of Sandia, LLC. | <a href="https://www.sandia.gov/contact_us/index.html">Questions &amp; Comments</a> | <a href="https://www.sandia.gov/general/privacy-security/index.html">Privacy &amp; Security</a></p>
+		<p><a href="http://energy.gov" rel="noopener noreferrer" target="_blank"><img alt="U.S. Department of Energy" longdesc="https://energy.gov" src="https://www.sandia.gov/_common/images/doe_logo_white.png" style="height:37px; width:140px"></a> <a href="http://nnsa.energy.gov/" rel="noopener noreferrer" target="_blank"> <img alt="National Nuclear Security Administration" longdesc="http://nnsa.gov" src="https://www.sandia.gov/_common/images/nnsa_logo_white.png" style="height:37px; width:116px"></a></p>
+		<p><a href="https://www.sandia.gov">Sandia National Laboratories</a> is a multimission laboratory managed and operated by National Technology and Engineering Solutions of Sandia, LLC., a wholly owned subsidiary of Honeywell International, Inc., for the U.S. Department of Energy’s National Nuclear Security Administration under contract DE-NA-0003525.</p>
+	  </div>	  	  
+	  
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

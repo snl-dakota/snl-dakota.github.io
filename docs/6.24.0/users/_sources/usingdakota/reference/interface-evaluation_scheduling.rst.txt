@@ -1,0 +1,54 @@
+.. _interface-evaluation_scheduling:
+
+"""""""""""""""""""""
+evaluation_scheduling
+"""""""""""""""""""""
+
+
+Specify the scheduling of concurrent evaluations when Dakota is run in parallel
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   interface-evaluation_scheduling-dedicated
+   interface-evaluation_scheduling-peer
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+- *Default:* automatic (see discussion)
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+--------------------+-----------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword     | Dakota Keyword Description                    |
+|                         | Group              |                    |                                               |
++=========================+====================+====================+===============================================+
+| Required (Choose One)   | Server Mode        | `dedicated`__      | Specify a dedicated scheduler partition for   |
+|                         |                    |                    | concurrent evaluation scheduling              |
+|                         |                    +--------------------+-----------------------------------------------+
+|                         |                    | `peer`__           | Specify a peer partition for parallel         |
+|                         |                    |                    | evaluation scheduling                         |
++-------------------------+--------------------+--------------------+-----------------------------------------------+
+
+.. __: interface-evaluation_scheduling-dedicated.html
+__ interface-evaluation_scheduling-peer.html
+
+
+
+**Description**
+
+
+When Dakota is run in parallel, the partition type and scheduling for
+the evaluation servers are determined automatically. If these settings
+are undesirable, they may be overridden by the user using the
+``evaluation_scheduling`` keyword.
+
+

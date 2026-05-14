@@ -1,0 +1,119 @@
+.. _method-multilevel_sampling-weighted-search_model_graphs:
+
+"""""""""""""""""""
+search_model_graphs
+"""""""""""""""""""
+
+
+For weighted multilevel Monte Carlo, this option activates a search over possible hierarchical model graphs
+
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-multilevel_sampling-weighted-search_model_graphs-model_selection
+   method-multilevel_sampling-weighted-search_model_graphs-no_recursion
+   method-multilevel_sampling-weighted-search_model_graphs-full_recursion
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+- *Default:* NO_GRAPH_RECURSION
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+---------------------+-----------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword      | Dakota Keyword Description                    |
+|                         | Group              |                     |                                               |
++=========================+====================+=====================+===============================================+
+| Optional                                     | `model_selection`__ | Perform a recursion of admissible model       |
+|                                              |                     | subsets for a given model ensemble            |
++-------------------------+--------------------+---------------------+-----------------------------------------------+
+| Required (Choose One)   | DAG Ensemble       | `no_recursion`__    | Do not recur over admissible DAGs for a given |
+|                         | Generation Option  |                     | model ensemble                                |
+|                         |                    +---------------------+-----------------------------------------------+
+|                         |                    | `full_recursion`__  | Perform a full recursion of all admissible    |
+|                         |                    |                     | DAGs for a given model ensemble               |
++-------------------------+--------------------+---------------------+-----------------------------------------------+
+
+.. __: method-multilevel_sampling-weighted-search_model_graphs-model_selection.html
+__ method-multilevel_sampling-weighted-search_model_graphs-no_recursion.html
+__ method-multilevel_sampling-weighted-search_model_graphs-full_recursion.html
+
+
+
+**Description**
+
+
+Referring to :dakkw:`method-approximate_control_variate-acv_recursive_diff`,
+weighted MLMC is a special case of ACV-RD, resulting in a forward to
+the generalized ACV solver for the case of a fixed hierarchical DAG.
+
+While the use of a hierarchical DAG is required in MLMC, the approximation
+selections and orderings within this DAG can be varied, so generalized
+ACV capabilities for model graph search (see
+:dakkw:`method-multilevel_sampling-weighted-search_model_graphs-full_recursion`)
+and model selection (see
+:dakkw:`method-multilevel_sampling-weighted-search_model_graphs-model_selection`)
+are available.
+
+
+
+
+
+**Examples**
+
+
+Note that the default for weighted MLMC is no search,
+
+.. code-block::
+
+    method,
+        multilevel_sampling
+	  pilot_samples = 20 seed = 1237
+	  weighted
+	  max_function_evaluations = 500
+
+with options to activate search over model ordering,
+
+.. code-block::
+
+    method,
+        multilevel_sampling
+	  pilot_samples = 20 seed = 1237
+	  weighted
+	    search_model_graphs full_recursion
+	  max_function_evaluations = 500
+
+over model subset selection,
+
+.. code-block::
+
+    method,
+        multilevel_sampling
+	  pilot_samples = 20 seed = 1237
+	  weighted
+	    search_model_graphs no_recursion model_selection
+	  max_function_evaluations = 500
+
+or over both.
+
+.. code-block::
+
+    method,
+        multilevel_sampling
+	  pilot_samples = 20 seed = 1237
+	  weighted
+	    search_model_graphs full_recursion model_selection
+	  max_function_evaluations = 500
+
+
+
+

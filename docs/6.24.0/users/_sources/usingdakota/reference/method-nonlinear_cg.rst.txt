@@ -1,0 +1,86 @@
+.. _method-nonlinear_cg:
+
+""""""""""""
+nonlinear_cg
+""""""""""""
+
+
+(Experimental) nonlinear conjugate gradient optimization
+
+
+
+**Topics**
+
+
+local_optimization_methods
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-nonlinear_cg-id_method
+   method-nonlinear_cg-output
+   method-nonlinear_cg-final_solutions
+   method-nonlinear_cg-misc_options
+   method-nonlinear_cg-convergence_tolerance
+   method-nonlinear_cg-max_iterations
+   method-nonlinear_cg-scaling
+   method-nonlinear_cg-model_pointer
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+---------------------------+-----------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword            | Dakota Keyword Description                    |
+|                         | Group              |                           |                                               |
++=========================+====================+===========================+===============================================+
+| Optional                                     | `id_method`__             | Name the method block; helpful when there are |
+|                                              |                           | multiple                                      |
++----------------------------------------------+---------------------------+-----------------------------------------------+
+| Optional                                     | `output`__                | Control how much method information is        |
+|                                              |                           | written to the screen and output file         |
++----------------------------------------------+---------------------------+-----------------------------------------------+
+| Optional                                     | `final_solutions`__       | Number of designs returned as the best        |
+|                                              |                           | solutions                                     |
++----------------------------------------------+---------------------------+-----------------------------------------------+
+| Optional                                     | `misc_options`__          | Options for nonlinear CG optimizer            |
++----------------------------------------------+---------------------------+-----------------------------------------------+
+| Optional                                     | `convergence_tolerance`__ | Stopping criterion based on objective         |
+|                                              |                           | function or statistics convergence            |
++----------------------------------------------+---------------------------+-----------------------------------------------+
+| Optional                                     | `max_iterations`__        | Number of iterations allowed for optimizers   |
+|                                              |                           | and adaptive UQ methods                       |
++----------------------------------------------+---------------------------+-----------------------------------------------+
+| Optional                                     | `scaling`__               | Turn on scaling for variables, responses, and |
+|                                              |                           | constraints                                   |
++----------------------------------------------+---------------------------+-----------------------------------------------+
+| Optional                                     | `model_pointer`__         | Identifier for model block to be used by a    |
+|                                              |                           | method                                        |
++----------------------------------------------+---------------------------+-----------------------------------------------+
+
+.. __: method-nonlinear_cg-id_method.html
+__ method-nonlinear_cg-output.html
+__ method-nonlinear_cg-final_solutions.html
+__ method-nonlinear_cg-misc_options.html
+__ method-nonlinear_cg-convergence_tolerance.html
+__ method-nonlinear_cg-max_iterations.html
+__ method-nonlinear_cg-scaling.html
+__ method-nonlinear_cg-model_pointer.html
+
+
+
+**Description**
+
+
+This method is an incomplete experimental implementation of nonlinear
+conjugate gradient optimization, a local, gradient-based solver.
+
+

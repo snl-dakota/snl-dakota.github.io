@@ -1,0 +1,73 @@
+.. _interface-asynchronous:
+
+""""""""""""
+asynchronous
+""""""""""""
+
+
+Specify local evaluation or analysis concurrency
+
+
+
+**Topics**
+
+
+concurrency_and_parallelism
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   interface-asynchronous-evaluation_concurrency
+   interface-asynchronous-local_evaluation_scheduling
+   interface-asynchronous-analysis_concurrency
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+- *Default:* synchronous interface usage
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+---------------------------------+-----------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword                  | Dakota Keyword Description                    |
+|                         | Group              |                                 |                                               |
++=========================+====================+=================================+===============================================+
+| Optional                                     | `evaluation_concurrency`__      | Determine how many concurrent evaluations     |
+|                                              |                                 | Dakota will schedule                          |
++----------------------------------------------+---------------------------------+-----------------------------------------------+
+| Optional                                     | `local_evaluation_scheduling`__ | Control how local asynchronous jobs are       |
+|                                              |                                 | scheduled                                     |
++----------------------------------------------+---------------------------------+-----------------------------------------------+
+| Optional                                     | `analysis_concurrency`__        | Limit the number of analysis drivers within   |
+|                                              |                                 | an evaluation that Dakota will schedule       |
++----------------------------------------------+---------------------------------+-----------------------------------------------+
+
+.. __: interface-asynchronous-evaluation_concurrency.html
+__ interface-asynchronous-local_evaluation_scheduling.html
+__ interface-asynchronous-analysis_concurrency.html
+
+
+
+**Description**
+
+
+The optional ``asynchronous`` keyword specifies use of asynchronous
+protocols (i.e., background system calls, nonblocking forks, POSIX
+threads) when evaluations or analyses are invoked. Evaluation and
+analysis concurrency can be independently controlled, as can the
+scheduling mode (static vs. dynamic) of the local evaluations.
+
+*Default Behavior*
+
+
+- when running Dakota on a single processor in ``asynchronous`` mode, the default concurrency of evaluations and analyses is all concurrency that is available. The ``evaluation_concurrency`` and ``analysis_concurrency`` specifications can be used to limit this concurrency in order to avoid machine overload or usage policy violation.
+- when running Dakota on multiple processors in message passing mode, the default concurrency of evaluations and analyses on each of the servers is one (i.e., the parallelism is exclusively that of the message passing). With the ``evaluation_concurrency`` and ``analysis_concurrency`` specifications, a hybrid parallelism can be selected through combination of message passing parallelism with asynchronous parallelism on each server.
+
+

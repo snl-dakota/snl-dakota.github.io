@@ -1,0 +1,39 @@
+.. _interface-evaluation_scheduling-peer-static:
+
+""""""
+static
+""""""
+
+
+Specify static scheduling in a peer partition when Dakota is run in parallel.
+
+
+
+**Topics**
+
+
+concurrency_and_parallelism
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+
+**Description**
+
+
+In ``static`` scheduling, all available evaluations are assigned to servers in
+a predetermined fashion. Each completed evaluation is replaced with one
+congruent modulo the evaluation concurrency. For example, with 6 servers, eval
+number 2 will be replaced by eval number 8.
+
+

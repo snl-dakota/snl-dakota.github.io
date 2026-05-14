@@ -1,0 +1,62 @@
+.. _method-bayes_calibration-muq-multilevel_mcmc-greedy_resampling_factor:
+
+""""""""""""""""""""""""
+greedy_resampling_factor
+""""""""""""""""""""""""
+
+
+Greedy resampling factor
+
+
+
+
+**Topics**
+
+
+bayesian_calibration
+
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* REAL
+
+- *Default:* 0.5
+
+
+**Description**
+
+
+MUQ's greedy algorithm frequently recomputes variance at each level. The ``greedy_resampling_factor`` sets the fraction of samples to reuse before computing.
+
+*Default Behavior*
+
+Defaults to 0.5.
+
+
+
+
+**Examples**
+
+
+
+.. code-block::
+
+    method,
+    bayes_calibration muq
+    multilevel_mcmc
+        initial_chain_samples = 50
+        target_variance = 0.5
+        subsampling_steps = 12 0
+        greedy_resampling_factor = 0.5
+
+
+

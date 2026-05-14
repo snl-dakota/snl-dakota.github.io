@@ -1,0 +1,36 @@
+.. _method-coliny_solis_wets-constant_penalty:
+
+""""""""""""""""
+constant_penalty
+""""""""""""""""
+
+
+Use a simple weighted penalty to manage feasibility
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+- *Default:* algorithm dynamically adapts the constraint penalty
+
+
+**Description**
+
+
+Finally, constraint infeasibility can be managed in a somewhat more
+sophisticated manner than the simple weighted penalty function.  If
+the ``constant_penalty`` specification is used, then the simple
+weighted penalty scheme described above is used.  Otherwise, the
+constraint penalty is adapted to the value ``constraint_penalty/L``,
+where L is the the smallest step length used so far.
+
+

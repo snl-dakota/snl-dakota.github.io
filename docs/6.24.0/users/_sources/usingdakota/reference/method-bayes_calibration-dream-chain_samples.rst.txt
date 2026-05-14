@@ -1,0 +1,58 @@
+.. _method-bayes_calibration-dream-chain_samples:
+
+"""""""""""""
+chain_samples
+"""""""""""""
+
+
+Number of Markov Chain Monte Carlo posterior samples
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+
+
+**Specification**
+
+- *Alias:* samples 
+
+- *Arguments:* INTEGER
+
+- *Default:* method-dependent
+
+
+**Description**
+
+
+The ``chain_samples`` keyword indicates the number of draws from the
+posterior distribution to perform.  When an emulator is active, this
+will be the number of samples on the constructed surrogate model.
+
+*Default Behavior*
+
+The default number of chain samples is method-dependent.  QUESO and MUQ
+methods use 1000.  DREAM uses (number of generations) x (number of
+chains), resulting in chain_samples close to that specified.
+
+*Usage Tips*
+
+MCMC methods typically require a large number of chain samples to
+converge, often thousands to millions.
+
+
+
+**Examples**
+
+
+
+.. code-block::
+
+    method
+      bayes_calibration queso
+        chain_samples = 20000
+
+
+
+

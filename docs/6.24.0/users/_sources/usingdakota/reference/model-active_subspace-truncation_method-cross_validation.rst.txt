@@ -1,0 +1,75 @@
+.. _model-active_subspace-truncation_method-cross_validation:
+
+""""""""""""""""
+cross_validation
+""""""""""""""""
+
+
+Truncate the subspace to minimize surrogate cross-validation error
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   model-active_subspace-truncation_method-cross_validation-minimum
+   model-active_subspace-truncation_method-cross_validation-relative
+   model-active_subspace-truncation_method-cross_validation-decrease
+   model-active_subspace-truncation_method-cross_validation-relative_tolerance
+   model-active_subspace-truncation_method-cross_validation-decrease_tolerance
+   model-active_subspace-truncation_method-cross_validation-max_rank
+   model-active_subspace-truncation_method-cross_validation-exhaustive
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+- *Default:* relative
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+------------------------+-----------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword         | Dakota Keyword Description                    |
+|                         | Group              |                        |                                               |
++=========================+====================+========================+===============================================+
+| Optional (Choose One)   | CV Selection       | `minimum`__            | Select subspace to minimize cross-validation  |
+|                         | Criterion          |                        | error                                         |
+|                         |                    +------------------------+-----------------------------------------------+
+|                         |                    | `relative`__           | Choose subspace with cross-validation error   |
+|                         |                    |                        | less than tolerance                           |
+|                         |                    +------------------------+-----------------------------------------------+
+|                         |                    | `decrease`__           | Choose subspace where cross-validation error  |
+|                         |                    |                        | stabilizes                                    |
++-------------------------+--------------------+------------------------+-----------------------------------------------+
+| Optional                                     | `relative_tolerance`__ | Tolerance for cross-validation error value    |
++----------------------------------------------+------------------------+-----------------------------------------------+
+| Optional                                     | `decrease_tolerance`__ | Tolerance for cross-validation error          |
+|                                              |                        | stabilization                                 |
++----------------------------------------------+------------------------+-----------------------------------------------+
+| Optional                                     | `max_rank`__           | Maximum subspace dimension to consider        |
++----------------------------------------------+------------------------+-----------------------------------------------+
+| Optional                                     | `exhaustive`__         | Assess all admissible subspace dimensions     |
++----------------------------------------------+------------------------+-----------------------------------------------+
+
+.. __: model-active_subspace-truncation_method-cross_validation-minimum.html
+__ model-active_subspace-truncation_method-cross_validation-relative.html
+__ model-active_subspace-truncation_method-cross_validation-decrease.html
+__ model-active_subspace-truncation_method-cross_validation-relative_tolerance.html
+__ model-active_subspace-truncation_method-cross_validation-decrease_tolerance.html
+__ model-active_subspace-truncation_method-cross_validation-max_rank.html
+__ model-active_subspace-truncation_method-cross_validation-exhaustive.html
+
+
+
+**Description**
+
+
+Select the subspace dimension that minimizes the 10-fold
+cross-validation error when constructing a moving least squares
+surrogate model.
+
+

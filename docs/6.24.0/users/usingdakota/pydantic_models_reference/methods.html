@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Methods &mdash; dakota  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/autodoc_pydantic.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/dakota_theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/sandiaheaderlite.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../../_static/doctools.js?v=9bcbadda"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="adaptive_sampling" href="methods/adaptive_sampling.html" />
+    <link rel="prev" title="Study" href="study.html" /> 
+  
+  <meta name="sandia.approval_type" content="formal"/>
+  <meta property="sandia.approved" content="SAND2025-14179O"/>
+  <meta name="description" content="The Dakota project delivers both state-of-the-art research and robust, usable software for optimization and UQ."/>
+  <meta name="keywords" content="Dakota, optimization, UQ, uncertainty quantification, parametric analysis, design exploration, model calibration, risk analysis"/>
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> dakota
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../setupdakota.html">Getting Started</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../usingdakota.html">Using Dakota</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../introduction/aboutdakota.html">About Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../introduction/helloworld.html">Dakota Beginner’s Tutorial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples.html">Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../introduction/couplingtosimulations.html">Coupling Dakota to a Simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../inputfile.html">Dakota Input File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../running.html">Running Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../output.html">Dakota Output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../studytypes.html">Study Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../topics.html">Topics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../advanced.html">Advanced Topics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../theory.html">Dakota Theory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference.html">Keyword Reference</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../pydantic_models_reference.html">JSON Input Reference</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="../pydantic_models_reference.html#current-documentation">Current Documentation</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="study.html">Study</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Methods</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="methods/adaptive_sampling.html"><code class="docutils literal notranslate"><span class="pre">adaptive_sampling</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="methods/approximate_control_variate.html"><code class="docutils literal notranslate"><span class="pre">approximate_control_variate</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="methods/asynch_pattern_search.html"><code class="docutils literal notranslate"><span class="pre">asynch_pattern_search</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="methods/bayes_calibration.html"><code class="docutils literal notranslate"><span class="pre">bayes_calibration</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="methods/branch_and_bound.html"><code class="docutils literal notranslate"><span class="pre">branch_and_bound</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="methods/centered_parameter_study.html"><code class="docutils literal notranslate"><span class="pre">centered_parameter_study</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="methods/coliny_beta.html"><code class="docutils literal notranslate"><span class="pre">coliny_beta</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="methods/coliny_cobyla.html"><code class="docutils literal notranslate"><span class="pre">coliny_cobyla</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="methods/coliny_direct.html"><code class="docutils literal notranslate"><span class="pre">coliny_direct</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="methods/coliny_ea.html"><code class="docutils literal notranslate"><span class="pre">coliny_ea</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="methods/coliny_pattern_search.html"><code class="docutils literal notranslate"><span class="pre">coliny_pattern_search</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="methods/coliny_solis_wets.html"><code class="docutils literal notranslate"><span class="pre">coliny_solis_wets</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="methods/conmin_frcg.html"><code class="docutils literal notranslate"><span class="pre">conmin_frcg</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="methods/conmin_mfd.html"><code class="docutils literal notranslate"><span class="pre">conmin_mfd</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="methods/dace.html"><code class="docutils literal notranslate"><span class="pre">dace</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="methods/demo_tpl.html"><code class="docutils literal notranslate"><span class="pre">demo_tpl</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="methods/dl_solver.html"><code class="docutils literal notranslate"><span class="pre">dl_solver</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="methods/dot_bfgs.html"><code class="docutils literal notranslate"><span class="pre">dot_bfgs</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="methods/dot_frcg.html"><code class="docutils literal notranslate"><span class="pre">dot_frcg</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="methods/dot_mmfd.html"><code class="docutils literal notranslate"><span class="pre">dot_mmfd</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="methods/dot_slp.html"><code class="docutils literal notranslate"><span class="pre">dot_slp</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="methods/dot_sqp.html"><code class="docutils literal notranslate"><span class="pre">dot_sqp</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="methods/efficient_global.html"><code class="docutils literal notranslate"><span class="pre">efficient_global</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="methods/external_python.html"><code class="docutils literal notranslate"><span class="pre">external_python</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="methods/fsu_cvt.html"><code class="docutils literal notranslate"><span class="pre">fsu_cvt</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="methods/fsu_quasi_mc.html"><code class="docutils literal notranslate"><span class="pre">fsu_quasi_mc</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="methods/function_train.html"><code class="docutils literal notranslate"><span class="pre">function_train</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="methods/genie_direct.html"><code class="docutils literal notranslate"><span class="pre">genie_direct</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="methods/genie_opt_darts.html"><code class="docutils literal notranslate"><span class="pre">genie_opt_darts</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="methods/global_evidence.html"><code class="docutils literal notranslate"><span class="pre">global_evidence</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="methods/global_interval_est.html"><code class="docutils literal notranslate"><span class="pre">global_interval_est</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="methods/global_reliability.html"><code class="docutils literal notranslate"><span class="pre">global_reliability</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="methods/gpais.html"><code class="docutils literal notranslate"><span class="pre">gpais</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="methods/hybrid.html"><code class="docutils literal notranslate"><span class="pre">hybrid</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="methods/import_points.html"><code class="docutils literal notranslate"><span class="pre">import_points</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="methods/importance_sampling.html"><code class="docutils literal notranslate"><span class="pre">importance_sampling</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="methods/list_parameter_study.html"><code class="docutils literal notranslate"><span class="pre">list_parameter_study</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="methods/local_evidence.html"><code class="docutils literal notranslate"><span class="pre">local_evidence</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="methods/local_interval_est.html"><code class="docutils literal notranslate"><span class="pre">local_interval_est</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="methods/local_reliability.html"><code class="docutils literal notranslate"><span class="pre">local_reliability</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="methods/mesh_adaptive_search.html"><code class="docutils literal notranslate"><span class="pre">mesh_adaptive_search</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="methods/moga.html"><code class="docutils literal notranslate"><span class="pre">moga</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="methods/multi_start.html"><code class="docutils literal notranslate"><span class="pre">multi_start</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="methods/multidim_parameter_study.html"><code class="docutils literal notranslate"><span class="pre">multidim_parameter_study</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="methods/multifidelity_function_train.html"><code class="docutils literal notranslate"><span class="pre">multifidelity_function_train</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="methods/multifidelity_polynomial_chaos.html"><code class="docutils literal notranslate"><span class="pre">multifidelity_polynomial_chaos</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="methods/multifidelity_sampling.html"><code class="docutils literal notranslate"><span class="pre">multifidelity_sampling</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="methods/multifidelity_stoch_collocation.html"><code class="docutils literal notranslate"><span class="pre">multifidelity_stoch_collocation</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="methods/multilevel_blue.html"><code class="docutils literal notranslate"><span class="pre">multilevel_blue</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="methods/multilevel_function_train.html"><code class="docutils literal notranslate"><span class="pre">multilevel_function_train</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="methods/multilevel_multifidelity_sampling.html"><code class="docutils literal notranslate"><span class="pre">multilevel_multifidelity_sampling</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="methods/multilevel_polynomial_chaos.html"><code class="docutils literal notranslate"><span class="pre">multilevel_polynomial_chaos</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="methods/multilevel_sampling.html"><code class="docutils literal notranslate"><span class="pre">multilevel_sampling</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="methods/ncsu_direct.html"><code class="docutils literal notranslate"><span class="pre">ncsu_direct</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="methods/nl2sol.html"><code class="docutils literal notranslate"><span class="pre">nl2sol</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="methods/nlpql_sqp.html"><code class="docutils literal notranslate"><span class="pre">nlpql_sqp</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="methods/nlssol_sqp.html"><code class="docutils literal notranslate"><span class="pre">nlssol_sqp</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="methods/nonlinear_cg.html"><code class="docutils literal notranslate"><span class="pre">nonlinear_cg</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="methods/nowpac.html"><code class="docutils literal notranslate"><span class="pre">nowpac</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="methods/npsol_sqp.html"><code class="docutils literal notranslate"><span class="pre">npsol_sqp</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="methods/optpp_cg.html"><code class="docutils literal notranslate"><span class="pre">optpp_cg</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="methods/optpp_fd_newton.html"><code class="docutils literal notranslate"><span class="pre">optpp_fd_newton</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="methods/optpp_g_newton.html"><code class="docutils literal notranslate"><span class="pre">optpp_g_newton</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="methods/optpp_newton.html"><code class="docutils literal notranslate"><span class="pre">optpp_newton</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="methods/optpp_pds.html"><code class="docutils literal notranslate"><span class="pre">optpp_pds</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="methods/optpp_q_newton.html"><code class="docutils literal notranslate"><span class="pre">optpp_q_newton</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="methods/pareto_set.html"><code class="docutils literal notranslate"><span class="pre">pareto_set</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="methods/pof_darts.html"><code class="docutils literal notranslate"><span class="pre">pof_darts</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="methods/polynomial_chaos.html"><code class="docutils literal notranslate"><span class="pre">polynomial_chaos</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="methods/psuade_moat.html"><code class="docutils literal notranslate"><span class="pre">psuade_moat</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="methods/richardson_extrap.html"><code class="docutils literal notranslate"><span class="pre">richardson_extrap</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="methods/rkd_darts.html"><code class="docutils literal notranslate"><span class="pre">rkd_darts</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="methods/rol.html"><code class="docutils literal notranslate"><span class="pre">rol</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="methods/sampling.html"><code class="docutils literal notranslate"><span class="pre">sampling</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="methods/snowpac.html"><code class="docutils literal notranslate"><span class="pre">snowpac</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="methods/soga.html"><code class="docutils literal notranslate"><span class="pre">soga</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="methods/stoch_collocation.html"><code class="docutils literal notranslate"><span class="pre">stoch_collocation</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="methods/surrogate_based_global.html"><code class="docutils literal notranslate"><span class="pre">surrogate_based_global</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="methods/surrogate_based_local.html"><code class="docutils literal notranslate"><span class="pre">surrogate_based_local</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="methods/surrogate_based_uq.html"><code class="docutils literal notranslate"><span class="pre">surrogate_based_uq</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="methods/vector_parameter_study.html"><code class="docutils literal notranslate"><span class="pre">vector_parameter_study</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="environment.html">Environment</a></li>
+<li class="toctree-l4"><a class="reference internal" href="interface.html">Interface</a></li>
+<li class="toctree-l4"><a class="reference internal" href="model.html">Model</a></li>
+<li class="toctree-l4"><a class="reference internal" href="responses.html">Responses</a></li>
+<li class="toctree-l4"><a class="reference internal" href="variables.html">Variables</a></li>
+<li class="toctree-l4"><a class="reference internal" href="shared.html">Shared</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../pydantic_models_reference.html#relationship-to-the-freeform-input-format">Relationship to the Freeform Input Format</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pydantic_models_reference.html#how-to-work-with-the-pydantic-documentation">How to Work with the Pydantic Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pydantic_models_reference.html#using-dakota-parser-to-bootstrap-json-input">Using <code class="docutils literal notranslate"><span class="pre">dakota_parser</span></code> to Bootstrap JSON Input</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../usingdakotagui/usingdakotagui.html">Using Dakota GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../externaltools/externaltools.html">Using External Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../compiling/compiling.html">Compiling Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developingdakota/developingdakota.html">Developing Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../misc/misc.html">Miscellaneous</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">dakota</a>
+      </nav>
+
+	  <!-- SNL Lite header -->
+	  <div class="snlheader-subsite--wrapper-default">
+		<snlheader class="snlheader-subsite" role="snlbanner">
+		  <div class="wrapper">
+			<a href="https://www.sandia.gov/index.html">
+			  <div class="logo-transparent"><p class="logo">Sandia National Laboratories</p></div>
+			</a>
+			<div class="nav-top">
+			  <a class="visuallyhidden" name="mainnav"></a>
+			  <div aria-label="main navigation" class="core-nav-transparent core-nav-transparent--visible" role="navigation">
+				<ul role="navigation" class="secondary-links">
+				  <li id="search-text-link">
+					<a aria-label="Search" href="https://www.sandia.gov/search/">Search Sandia.gov</a>
+				  </li>
+				  <li id="directory-text-link">
+					<a href="https://www.sandia.gov/directory.html" aria-expanded="false" aria-label="Site Directory">All Sandia Websites</a>
+				  </li>
+				</ul>
+			  </div>
+			</div>
+		  </div> 
+		</snlheader>
+	  </div>	  
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../usingdakota.html">Using Dakota</a></li>
+          <li class="breadcrumb-item"><a href="../pydantic_models_reference.html">JSON Input Reference</a></li>
+      <li class="breadcrumb-item active">Methods</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/usingdakota/pydantic_models_reference/methods.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="methods">
+<h1>Methods<a class="headerlink" href="#methods" title="Link to this heading"></a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="methods/adaptive_sampling.html"><code class="docutils literal notranslate"><span class="pre">adaptive_sampling</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="methods/approximate_control_variate.html"><code class="docutils literal notranslate"><span class="pre">approximate_control_variate</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="methods/asynch_pattern_search.html"><code class="docutils literal notranslate"><span class="pre">asynch_pattern_search</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="methods/bayes_calibration.html"><code class="docutils literal notranslate"><span class="pre">bayes_calibration</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="methods/branch_and_bound.html"><code class="docutils literal notranslate"><span class="pre">branch_and_bound</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="methods/centered_parameter_study.html"><code class="docutils literal notranslate"><span class="pre">centered_parameter_study</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="methods/coliny_beta.html"><code class="docutils literal notranslate"><span class="pre">coliny_beta</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="methods/coliny_cobyla.html"><code class="docutils literal notranslate"><span class="pre">coliny_cobyla</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="methods/coliny_direct.html"><code class="docutils literal notranslate"><span class="pre">coliny_direct</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="methods/coliny_ea.html"><code class="docutils literal notranslate"><span class="pre">coliny_ea</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="methods/coliny_pattern_search.html"><code class="docutils literal notranslate"><span class="pre">coliny_pattern_search</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="methods/coliny_solis_wets.html"><code class="docutils literal notranslate"><span class="pre">coliny_solis_wets</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="methods/conmin_frcg.html"><code class="docutils literal notranslate"><span class="pre">conmin_frcg</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="methods/conmin_mfd.html"><code class="docutils literal notranslate"><span class="pre">conmin_mfd</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="methods/dace.html"><code class="docutils literal notranslate"><span class="pre">dace</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="methods/demo_tpl.html"><code class="docutils literal notranslate"><span class="pre">demo_tpl</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="methods/dl_solver.html"><code class="docutils literal notranslate"><span class="pre">dl_solver</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="methods/dot_bfgs.html"><code class="docutils literal notranslate"><span class="pre">dot_bfgs</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="methods/dot_frcg.html"><code class="docutils literal notranslate"><span class="pre">dot_frcg</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="methods/dot_mmfd.html"><code class="docutils literal notranslate"><span class="pre">dot_mmfd</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="methods/dot_slp.html"><code class="docutils literal notranslate"><span class="pre">dot_slp</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="methods/dot_sqp.html"><code class="docutils literal notranslate"><span class="pre">dot_sqp</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="methods/efficient_global.html"><code class="docutils literal notranslate"><span class="pre">efficient_global</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="methods/external_python.html"><code class="docutils literal notranslate"><span class="pre">external_python</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="methods/fsu_cvt.html"><code class="docutils literal notranslate"><span class="pre">fsu_cvt</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="methods/fsu_quasi_mc.html"><code class="docutils literal notranslate"><span class="pre">fsu_quasi_mc</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="methods/function_train.html"><code class="docutils literal notranslate"><span class="pre">function_train</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="methods/genie_direct.html"><code class="docutils literal notranslate"><span class="pre">genie_direct</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="methods/genie_opt_darts.html"><code class="docutils literal notranslate"><span class="pre">genie_opt_darts</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="methods/global_evidence.html"><code class="docutils literal notranslate"><span class="pre">global_evidence</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="methods/global_interval_est.html"><code class="docutils literal notranslate"><span class="pre">global_interval_est</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="methods/global_reliability.html"><code class="docutils literal notranslate"><span class="pre">global_reliability</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="methods/gpais.html"><code class="docutils literal notranslate"><span class="pre">gpais</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="methods/hybrid.html"><code class="docutils literal notranslate"><span class="pre">hybrid</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="methods/import_points.html"><code class="docutils literal notranslate"><span class="pre">import_points</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="methods/importance_sampling.html"><code class="docutils literal notranslate"><span class="pre">importance_sampling</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="methods/list_parameter_study.html"><code class="docutils literal notranslate"><span class="pre">list_parameter_study</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="methods/local_evidence.html"><code class="docutils literal notranslate"><span class="pre">local_evidence</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="methods/local_interval_est.html"><code class="docutils literal notranslate"><span class="pre">local_interval_est</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="methods/local_reliability.html"><code class="docutils literal notranslate"><span class="pre">local_reliability</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="methods/mesh_adaptive_search.html"><code class="docutils literal notranslate"><span class="pre">mesh_adaptive_search</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="methods/moga.html"><code class="docutils literal notranslate"><span class="pre">moga</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="methods/multi_start.html"><code class="docutils literal notranslate"><span class="pre">multi_start</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="methods/multidim_parameter_study.html"><code class="docutils literal notranslate"><span class="pre">multidim_parameter_study</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="methods/multifidelity_function_train.html"><code class="docutils literal notranslate"><span class="pre">multifidelity_function_train</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="methods/multifidelity_polynomial_chaos.html"><code class="docutils literal notranslate"><span class="pre">multifidelity_polynomial_chaos</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="methods/multifidelity_sampling.html"><code class="docutils literal notranslate"><span class="pre">multifidelity_sampling</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="methods/multifidelity_stoch_collocation.html"><code class="docutils literal notranslate"><span class="pre">multifidelity_stoch_collocation</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="methods/multilevel_blue.html"><code class="docutils literal notranslate"><span class="pre">multilevel_blue</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="methods/multilevel_function_train.html"><code class="docutils literal notranslate"><span class="pre">multilevel_function_train</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="methods/multilevel_multifidelity_sampling.html"><code class="docutils literal notranslate"><span class="pre">multilevel_multifidelity_sampling</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="methods/multilevel_polynomial_chaos.html"><code class="docutils literal notranslate"><span class="pre">multilevel_polynomial_chaos</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="methods/multilevel_sampling.html"><code class="docutils literal notranslate"><span class="pre">multilevel_sampling</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="methods/ncsu_direct.html"><code class="docutils literal notranslate"><span class="pre">ncsu_direct</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="methods/nl2sol.html"><code class="docutils literal notranslate"><span class="pre">nl2sol</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="methods/nlpql_sqp.html"><code class="docutils literal notranslate"><span class="pre">nlpql_sqp</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="methods/nlssol_sqp.html"><code class="docutils literal notranslate"><span class="pre">nlssol_sqp</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="methods/nonlinear_cg.html"><code class="docutils literal notranslate"><span class="pre">nonlinear_cg</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="methods/nowpac.html"><code class="docutils literal notranslate"><span class="pre">nowpac</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="methods/npsol_sqp.html"><code class="docutils literal notranslate"><span class="pre">npsol_sqp</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="methods/optpp_cg.html"><code class="docutils literal notranslate"><span class="pre">optpp_cg</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="methods/optpp_fd_newton.html"><code class="docutils literal notranslate"><span class="pre">optpp_fd_newton</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="methods/optpp_g_newton.html"><code class="docutils literal notranslate"><span class="pre">optpp_g_newton</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="methods/optpp_newton.html"><code class="docutils literal notranslate"><span class="pre">optpp_newton</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="methods/optpp_pds.html"><code class="docutils literal notranslate"><span class="pre">optpp_pds</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="methods/optpp_q_newton.html"><code class="docutils literal notranslate"><span class="pre">optpp_q_newton</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="methods/pareto_set.html"><code class="docutils literal notranslate"><span class="pre">pareto_set</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="methods/pof_darts.html"><code class="docutils literal notranslate"><span class="pre">pof_darts</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="methods/polynomial_chaos.html"><code class="docutils literal notranslate"><span class="pre">polynomial_chaos</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="methods/psuade_moat.html"><code class="docutils literal notranslate"><span class="pre">psuade_moat</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="methods/richardson_extrap.html"><code class="docutils literal notranslate"><span class="pre">richardson_extrap</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="methods/rkd_darts.html"><code class="docutils literal notranslate"><span class="pre">rkd_darts</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="methods/rol.html"><code class="docutils literal notranslate"><span class="pre">rol</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="methods/sampling.html"><code class="docutils literal notranslate"><span class="pre">sampling</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="methods/snowpac.html"><code class="docutils literal notranslate"><span class="pre">snowpac</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="methods/soga.html"><code class="docutils literal notranslate"><span class="pre">soga</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="methods/stoch_collocation.html"><code class="docutils literal notranslate"><span class="pre">stoch_collocation</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="methods/surrogate_based_global.html"><code class="docutils literal notranslate"><span class="pre">surrogate_based_global</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="methods/surrogate_based_local.html"><code class="docutils literal notranslate"><span class="pre">surrogate_based_local</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="methods/surrogate_based_uq.html"><code class="docutils literal notranslate"><span class="pre">surrogate_based_uq</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="methods/vector_parameter_study.html"><code class="docutils literal notranslate"><span class="pre">vector_parameter_study</span></code></a></li>
+</ul>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="study.html" class="btn btn-neutral float-left" title="Study" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="methods/adaptive_sampling.html" class="btn btn-neutral float-right" title="adaptive_sampling" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <!--
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Sandia National Laboratories.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+  --> 
+
+</footer>
+        </div>
+      </div>
+	  
+	  <div style="background-color: #0f0f0f;color:#fafafa;padding:20px">
+	    <div>
+		  <h2><em>Exceptional service in the national interest</em></h2>
+		</div>
+		<p>© 2023 National Technology and Engineering Solutions of Sandia, LLC. | <a href="https://www.sandia.gov/contact_us/index.html">Questions &amp; Comments</a> | <a href="https://www.sandia.gov/general/privacy-security/index.html">Privacy &amp; Security</a></p>
+		<p><a href="http://energy.gov" rel="noopener noreferrer" target="_blank"><img alt="U.S. Department of Energy" longdesc="https://energy.gov" src="https://www.sandia.gov/_common/images/doe_logo_white.png" style="height:37px; width:140px"></a> <a href="http://nnsa.energy.gov/" rel="noopener noreferrer" target="_blank"> <img alt="National Nuclear Security Administration" longdesc="http://nnsa.gov" src="https://www.sandia.gov/_common/images/nnsa_logo_white.png" style="height:37px; width:116px"></a></p>
+		<p><a href="https://www.sandia.gov">Sandia National Laboratories</a> is a multimission laboratory managed and operated by National Technology and Engineering Solutions of Sandia, LLC., a wholly owned subsidiary of Honeywell International, Inc., for the U.S. Department of Energy’s National Nuclear Security Administration under contract DE-NA-0003525.</p>
+	  </div>	  	  
+	  
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

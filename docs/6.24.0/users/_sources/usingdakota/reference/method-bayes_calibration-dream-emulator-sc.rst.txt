@@ -1,0 +1,96 @@
+.. _method-bayes_calibration-dream-emulator-sc:
+
+""
+sc
+""
+
+
+Stochastic Collocation as an emulator model.
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-bayes_calibration-dream-emulator-sc-p_refinement
+   method-bayes_calibration-dream-emulator-sc-h_refinement
+   method-bayes_calibration-dream-emulator-sc-max_refinement_iterations
+   method-bayes_calibration-dream-emulator-sc-quadrature_order
+   method-bayes_calibration-dream-emulator-sc-sparse_grid_level
+   method-bayes_calibration-dream-emulator-sc-piecewise
+   method-bayes_calibration-dream-emulator-sc-askey
+   method-bayes_calibration-dream-emulator-sc-wiener
+   method-bayes_calibration-dream-emulator-sc-use_derivatives
+   method-bayes_calibration-dream-emulator-sc-diagonal_covariance
+   method-bayes_calibration-dream-emulator-sc-full_covariance
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* None
+
+
+**Child Keywords:**
+
++-------------------------+--------------------+-------------------------------+-----------------------------------------------+
+| Required/Optional       | Description of     | Dakota Keyword                | Dakota Keyword Description                    |
+|                         | Group              |                               |                                               |
++=========================+====================+===============================+===============================================+
+| Optional (Choose One)   | Automated          | `p_refinement`__              | Automatic polynomial order refinement         |
+|                         | Refinement Type    +-------------------------------+-----------------------------------------------+
+|                         |                    | `h_refinement`__              | Employ h-refinement to refine the grid        |
++-------------------------+--------------------+-------------------------------+-----------------------------------------------+
+| Optional                                     | `max_refinement_iterations`__ | Maximum number of expansion refinement        |
+|                                              |                               | iterations                                    |
++-------------------------+--------------------+-------------------------------+-----------------------------------------------+
+| Required (Choose One)   | Interpolation Grid | `quadrature_order`__          | Order for tensor-products of Gaussian         |
+|                         | Type               |                               | quadrature rules                              |
+|                         |                    +-------------------------------+-----------------------------------------------+
+|                         |                    | `sparse_grid_level`__         | Level to use in sparse grid integration or    |
+|                         |                    |                               | interpolation                                 |
++-------------------------+--------------------+-------------------------------+-----------------------------------------------+
+| Optional (Choose One)   | Basis Polynomial   | `piecewise`__                 | Use piecewise local basis functions           |
+|                         | Family             +-------------------------------+-----------------------------------------------+
+|                         |                    | `askey`__                     | Select the standardized random variables (and |
+|                         |                    |                               | associated basis polynomials) from the Askey  |
+|                         |                    |                               | family that best match the user-specified     |
+|                         |                    |                               | random variables.                             |
+|                         |                    +-------------------------------+-----------------------------------------------+
+|                         |                    | `wiener`__                    | Use standard normal random variables (along   |
+|                         |                    |                               | with Hermite orthogonal basis polynomials)    |
+|                         |                    |                               | when transforming to a standardized           |
+|                         |                    |                               | probability space.                            |
++-------------------------+--------------------+-------------------------------+-----------------------------------------------+
+| Optional                                     | `use_derivatives`__           | Use derivative data to construct surrogate    |
+|                                              |                               | models                                        |
++-------------------------+--------------------+-------------------------------+-----------------------------------------------+
+| Optional (Choose One)   | Covariance Type    | `diagonal_covariance`__       | Display only the diagonal terms of the        |
+|                         |                    |                               | covariance matrix                             |
+|                         |                    +-------------------------------+-----------------------------------------------+
+|                         |                    | `full_covariance`__           | Display the full covariance matrix            |
++-------------------------+--------------------+-------------------------------+-----------------------------------------------+
+
+.. __: method-bayes_calibration-dream-emulator-sc-p_refinement.html
+__ method-bayes_calibration-dream-emulator-sc-h_refinement.html
+__ method-bayes_calibration-dream-emulator-sc-max_refinement_iterations.html
+__ method-bayes_calibration-dream-emulator-sc-quadrature_order.html
+__ method-bayes_calibration-dream-emulator-sc-sparse_grid_level.html
+__ method-bayes_calibration-dream-emulator-sc-piecewise.html
+__ method-bayes_calibration-dream-emulator-sc-askey.html
+__ method-bayes_calibration-dream-emulator-sc-wiener.html
+__ method-bayes_calibration-dream-emulator-sc-use_derivatives.html
+__ method-bayes_calibration-dream-emulator-sc-diagonal_covariance.html
+__ method-bayes_calibration-dream-emulator-sc-full_covariance.html
+
+
+
+**Description**
+
+
+Selects stochastic collocation (SC) model to use in the Bayesian
+likelihood calculations. Most specification options are carried over
+for using SC as a surrogate within the Bayesian framework.
+
+

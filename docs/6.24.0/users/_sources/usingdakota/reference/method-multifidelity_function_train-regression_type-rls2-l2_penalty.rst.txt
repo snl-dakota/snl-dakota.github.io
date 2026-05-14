@@ -1,0 +1,36 @@
+.. _method-multifidelity_function_train-regression_type-rls2-l2_penalty:
+
+""""""""""
+l2_penalty
+""""""""""
+
+
+Penalty value applied in regularized regression solver for function train approximations
+
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+
+
+**Specification**
+
+- *Alias:* None
+
+- *Arguments:* REAL
+
+
+**Description**
+
+
+Regularized regression applies a penalty to aspects of the recovered solution
+(e.g., cardinality, higher-order oscillatory terms, et al.) to mitigate overfitting.
+This specification provides the scalar penalty parameter (its value is not currently
+adapted or cross-validated).
+
+*Default Behavior*
+
+If this penalty parameter is not specified, then we adopt the internal C3 default.
+
+
