@@ -1,0 +1,22 @@
+.. _model-active_subspace-normalization-mean_gradient:
+
+"""""""""""""
+mean_gradient
+"""""""""""""
+
+Normalize by sample mean of gradient norms
+
+**Specification**
+
+- *Alias:* None
+- *Arguments:* None
+- *JSON argument key:* None
+- *Default:* true
+
+**Description**
+
+For each reponse function :math:`f_i` , normalize its gradient data by
+the mean :math:`m_i`  of the gradient two-norms taken across samples :math:`j=1,...,J` :
+
+
+.. math::  m_i = \frac{1}{J} \sum_{j=1}^{J}{\| \nabla^j f_i \|_2}

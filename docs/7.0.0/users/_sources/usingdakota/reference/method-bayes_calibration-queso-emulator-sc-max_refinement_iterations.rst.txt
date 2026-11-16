@@ -1,0 +1,54 @@
+.. _method-bayes_calibration-queso-emulator-sc-max_refinement_iterations:
+
+"""""""""""""""""""""""""
+max_refinement_iterations
+"""""""""""""""""""""""""
+
+Maximum number of expansion refinement iterations
+
+**Specification**
+
+- *Alias:* None
+- *Arguments:* None
+- *JSON argument key:* None
+- *Default:* 9223372036854775807
+
+**Description**
+
+Limits the number of times the expansion can be refined under various
+refinement strategies.
+
+**Examples**
+
+.. tab:: Freeform
+
+   .. code-block:: dakota
+
+       method,
+         polynomial_chaos
+           dimension_adaptive generalized
+           p_refinement
+             max_refinement_iterations = 20
+             convergence_tol = 1.e-4
+           sparse_grid_level = 1
+
+.. tab:: JSON
+
+   .. code-block:: json
+
+       {
+         "method": [
+           {
+             "polynomial_chaos": {
+               "dimension_adaptive": {
+                 "generalized": {}
+               },
+               "p_refinement": {
+                 "max_refinement_iterations": 20,
+                 "convergence_tol": 1e-4
+               },
+               "sparse_grid_level": 1
+             }
+           }
+         ]
+       }

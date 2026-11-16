@@ -1,0 +1,61 @@
+.. _method-multifidelity_sampling-numerical_solve-model_reordering-fixed_order:
+
+"""""""""""
+fixed_order
+"""""""""""
+
+Enforce a prescribed model ordering in MFMC numerical solutions through additional linear constraints.
+
+**Specification**
+
+- *Alias:* None
+- *Arguments:* None
+- *JSON argument key:* None
+- *Default:* true
+
+**Description**
+
+A model hierarchy is prescribed for MFMC according to the model order
+given in the ensemble surrogate model specification.  Additional
+linear constraints enforce that sample allocations are strictly
+decreasing across the model order from lowest to highest fidelity.
+
+The solution provided is optimal for the MFMC estimator given the
+prescribed model ordering.  Allowing model reordering on the fly
+(the default behavior) may result in lower estimator variance, but
+can complicate comparisons with published MFMC implementations.
+
+**Examples**
+
+.. tab:: Freeform
+
+   .. code-block:: dakota
+
+       method
+         multifidelity_sampling
+           numerical_solve override
+             model_reordering fixed_order
+           solution_mode online_pilot
+           pilot_samples = 50 seed = 8674132
+           max_function_evaluations = 500
+
+.. tab:: JSON
+
+   .. code-block:: json
+
+       {
+         "method": [
+           {
+             "multifidelity_sampling": {
+               "numerical_solve": {
+                 "override": {},
+                 "model_reordering": {"fixed_order": {}}
+               },
+               "solution_mode": {"online_pilot": {}},
+               "pilot_samples": [50],
+               "seed_sequence": [8674132],
+               "max_function_evaluations": 500
+             }
+           }
+         ]
+       }

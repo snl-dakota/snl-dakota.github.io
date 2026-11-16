@@ -1,0 +1,88 @@
+.. _method-bayes_calibration-queso-pre_solve:
+
+"""""""""
+pre_solve
+"""""""""
+
+Perform deterministic optimization for MAP before Bayesian calibration
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-bayes_calibration-queso-pre_solve-sqp
+   method-bayes_calibration-queso-pre_solve-nip
+   method-bayes_calibration-queso-pre_solve-none
+
+**Specification**
+
+- *Alias:* None
+- *Arguments:* None
+- *JSON argument key:* None
+
+**Child Keywords:**
+
++-------------------------+------------------------+--------------------+--------------------------------+------------------------------------------------------------+
+| Required/Optional       | Description of Group   | JSON Group Key     | Dakota Keyword                 | Dakota Keyword Description                                 |
++=========================+========================+====================+================================+============================================================+
+| Optional                |                        |                    | `sqp`__                        | Use a sequential quadratic programming method for solving  |
+|                         |                        |                    |                                | an optimization sub-problem                                |
++-------------------------+------------------------+--------------------+--------------------------------+------------------------------------------------------------+
+| Optional                |                        |                    | `nip`__                        | Use a nonlinear interior point method for solving an       |
+|                         |                        |                    |                                | optimization sub-problem                                   |
++-------------------------+------------------------+--------------------+--------------------------------+------------------------------------------------------------+
+| Optional                |                        |                    | `none`__                       | Deactivates MAP pre-solve prior to initiating the MCMC     |
+|                         |                        |                    |                                | process.                                                   |
++-------------------------+------------------------+--------------------+--------------------------------+------------------------------------------------------------+
+
+.. __: method-bayes_calibration-queso-pre_solve-sqp.html
+__ method-bayes_calibration-queso-pre_solve-nip.html
+__ method-bayes_calibration-queso-pre_solve-none.html
+
+**Description**
+
+When specified, Dakota will perform a deterministic derivative-based
+optimization to maximize the log posterior (minimize the negative log
+posterior = misfit - log_prior + constant normalization factors).  The
+Markov chain in Bayesian calibration will subsequently be started at
+the best point found in the optimization (the MAP point), which can
+eliminate the need for "burn in" of the chain in which some initial
+portion of the chain is discarded.
+
+**Examples**
+
+.. tab:: Freeform
+
+   .. code-block:: dakota
+
+       method
+         bayes_calibration queso
+           samples = 2000 seed = 348
+           delayed_rejection
+           emulator
+             pce sparse_grid_level = 2
+             pre_solve nip
+
+.. tab:: JSON
+
+   .. code-block:: json
+
+       {
+         "method": [
+           {
+             "bayes_calibration": {
+               "queso": {
+                 "samples": 2000,
+                 "seed": 348,
+                 "delayed_rejection": {},
+                 "emulator": {
+                   "pce": {
+                     "sparse_grid_level": 2
+                   },
+                   "pre_solve": {"nip": true}
+                 }
+               }
+             }
+           }
+         ]
+       }

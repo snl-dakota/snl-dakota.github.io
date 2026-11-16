@@ -1,0 +1,1123 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Core &mdash; Dakota 7.0.0 documentation</title>
+      <link rel="stylesheet"
+            href="../../../_static/pygments.css"
+            type="text/css" />
+      <link rel="stylesheet"
+            href="../../../_static/css/theme.css"
+            type="text/css" />
+      <link rel="stylesheet"
+            href="../../../_static/copybutton.css"
+            type="text/css" />
+      <link rel="stylesheet"
+            href="../../../_static/autodoc_pydantic.css"
+            type="text/css" />
+      <link rel="stylesheet"
+            href="../../../_static/tabs.css"
+            type="text/css" />
+      <link rel="stylesheet"
+            href="../../../_static/css/dakota_theme.css"
+            type="text/css" />
+      <link rel="stylesheet"
+            href="../../../_static/css/sandiaheaderlite.css"
+            type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=efe5be6f"></script>
+        <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+        <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../../../_static/copybutton.js?v=f281be69"></script>
+        <script src="../../../_static/tabs.js?v=3ee01567"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Expansion" href="expansion.html" />
+    <link rel="prev" title="Bayesian" href="bayesian.html" /> 
+  
+  <meta name="sandia.approval_type" content="formal"/>
+  <meta property="sandia.approved" content="SAND2025-14179O"/>
+  <meta name="description" content="The Dakota project delivers both state-of-the-art research and robust, usable software for optimization and UQ."/>
+  <meta name="keywords" content="Dakota, optimization, UQ, uncertainty quantification, parametric analysis, design exploration, model calibration, risk analysis"/>
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../index.html" class="icon icon-home"> Dakota
+            <img src="../../../_static/DAKOTAWhiteWEB.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Install</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../setupdakota.html">Download and Install Dakota</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Getting Started with Dakota</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../usingdakota/introduction/aboutdakota.html">What is Dakota?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usingdakota/introduction/studyanatomy.html">Anatomy of a Dakota Study</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usingdakota/introduction/helloworld.html">Tutorial: Your First Dakota Study</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usingdakota/introduction/couplingtosimulations.html">Connecting Your Code: The Analysis Driver</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Using Dakota</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../usingdakota/usingdakota.html">Using Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usingdakotagui/usingdakotagui.html">Using Dakota GUI</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../externaltools.html">Using External Tools</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../dpreproandpyprepro.html">Preprocessing with dprepro and pyprepro</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../restartutility.html">The Dakota Restart Utility</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../pydanticref.html">Pydantic Model Reference</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../study.html">Study</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../methods.html">Methods</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../environment.html">Environment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../interface.html">Interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../model.html">Model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../responses.html">Responses</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../variables.html">Variables</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../shared.html">Shared</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="bayesian.html">Bayesian</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Core</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#dakota.spec.shared.core.DefaultConstraintTolMixin"><code class="docutils literal notranslate"><span class="pre">DefaultConstraintTolMixin</span></code></a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.core.DefaultConstraintTolMixin.model_config"><code class="docutils literal notranslate"><span class="pre">DefaultConstraintTolMixin.model_config</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.core.DefaultConstraintTolMixin.universal_validator"><code class="docutils literal notranslate"><span class="pre">DefaultConstraintTolMixin.universal_validator()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#dakota.spec.shared.core.MethodConvergenceTolMixin"><code class="docutils literal notranslate"><span class="pre">MethodConvergenceTolMixin</span></code></a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.core.MethodConvergenceTolMixin.model_config"><code class="docutils literal notranslate"><span class="pre">MethodConvergenceTolMixin.model_config</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.core.MethodConvergenceTolMixin.universal_validator"><code class="docutils literal notranslate"><span class="pre">MethodConvergenceTolMixin.universal_validator()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#dakota.spec.shared.core.MethodConvergenceTolWithTypeContext1Relative"><code class="docutils literal notranslate"><span class="pre">MethodConvergenceTolWithTypeContext1Relative</span></code></a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.core.MethodConvergenceTolWithTypeContext1Relative.model_config"><code class="docutils literal notranslate"><span class="pre">MethodConvergenceTolWithTypeContext1Relative.model_config</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.core.MethodConvergenceTolWithTypeContext1Relative.universal_validator"><code class="docutils literal notranslate"><span class="pre">MethodConvergenceTolWithTypeContext1Relative.universal_validator()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#dakota.spec.shared.core.MethodConvergenceTolWithTypeContext1Absolute"><code class="docutils literal notranslate"><span class="pre">MethodConvergenceTolWithTypeContext1Absolute</span></code></a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.core.MethodConvergenceTolWithTypeContext1Absolute.model_config"><code class="docutils literal notranslate"><span class="pre">MethodConvergenceTolWithTypeContext1Absolute.model_config</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.core.MethodConvergenceTolWithTypeContext1Absolute.universal_validator"><code class="docutils literal notranslate"><span class="pre">MethodConvergenceTolWithTypeContext1Absolute.universal_validator()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#dakota.spec.shared.core.MethodConvergenceTolWithTypeContext2Relative"><code class="docutils literal notranslate"><span class="pre">MethodConvergenceTolWithTypeContext2Relative</span></code></a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.core.MethodConvergenceTolWithTypeContext2Relative.model_config"><code class="docutils literal notranslate"><span class="pre">MethodConvergenceTolWithTypeContext2Relative.model_config</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.core.MethodConvergenceTolWithTypeContext2Relative.universal_validator"><code class="docutils literal notranslate"><span class="pre">MethodConvergenceTolWithTypeContext2Relative.universal_validator()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#dakota.spec.shared.core.MethodConvergenceTolWithTypeContext2Absolute"><code class="docutils literal notranslate"><span class="pre">MethodConvergenceTolWithTypeContext2Absolute</span></code></a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.core.MethodConvergenceTolWithTypeContext2Absolute.model_config"><code class="docutils literal notranslate"><span class="pre">MethodConvergenceTolWithTypeContext2Absolute.model_config</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.core.MethodConvergenceTolWithTypeContext2Absolute.universal_validator"><code class="docutils literal notranslate"><span class="pre">MethodConvergenceTolWithTypeContext2Absolute.universal_validator()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#dakota.spec.shared.core.MethodConvergenceTolWithTypeContext3Relative"><code class="docutils literal notranslate"><span class="pre">MethodConvergenceTolWithTypeContext3Relative</span></code></a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.core.MethodConvergenceTolWithTypeContext3Relative.model_config"><code class="docutils literal notranslate"><span class="pre">MethodConvergenceTolWithTypeContext3Relative.model_config</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.core.MethodConvergenceTolWithTypeContext3Relative.universal_validator"><code class="docutils literal notranslate"><span class="pre">MethodConvergenceTolWithTypeContext3Relative.universal_validator()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#dakota.spec.shared.core.MethodConvergenceTolWithTypeContext3Absolute"><code class="docutils literal notranslate"><span class="pre">MethodConvergenceTolWithTypeContext3Absolute</span></code></a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.core.MethodConvergenceTolWithTypeContext3Absolute.model_config"><code class="docutils literal notranslate"><span class="pre">MethodConvergenceTolWithTypeContext3Absolute.model_config</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.core.MethodConvergenceTolWithTypeContext3Absolute.universal_validator"><code class="docutils literal notranslate"><span class="pre">MethodConvergenceTolWithTypeContext3Absolute.universal_validator()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#dakota.spec.shared.core.Active"><code class="docutils literal notranslate"><span class="pre">Active</span></code></a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.core.Active.model_config"><code class="docutils literal notranslate"><span class="pre">Active.model_config</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.core.Active.universal_validator"><code class="docutils literal notranslate"><span class="pre">Active.universal_validator()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#dakota.spec.shared.core.StatisticsModeCombined"><code class="docutils literal notranslate"><span class="pre">StatisticsModeCombined</span></code></a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.core.StatisticsModeCombined.model_config"><code class="docutils literal notranslate"><span class="pre">StatisticsModeCombined.model_config</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.core.StatisticsModeCombined.universal_validator"><code class="docutils literal notranslate"><span class="pre">StatisticsModeCombined.universal_validator()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#dakota.spec.shared.core.LevelMappings"><code class="docutils literal notranslate"><span class="pre">LevelMappings</span></code></a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.core.LevelMappings.model_config"><code class="docutils literal notranslate"><span class="pre">LevelMappings.model_config</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.core.LevelMappings.universal_validator"><code class="docutils literal notranslate"><span class="pre">LevelMappings.universal_validator()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#dakota.spec.shared.core.RefinementMetricCov"><code class="docutils literal notranslate"><span class="pre">RefinementMetricCov</span></code></a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.core.RefinementMetricCov.model_config"><code class="docutils literal notranslate"><span class="pre">RefinementMetricCov.model_config</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.core.RefinementMetricCov.universal_validator"><code class="docutils literal notranslate"><span class="pre">RefinementMetricCov.universal_validator()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#dakota.spec.shared.core.NumericalGradientOptionsMethodSourceDakotaRelative"><code class="docutils literal notranslate"><span class="pre">NumericalGradientOptionsMethodSourceDakotaRelative</span></code></a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.core.NumericalGradientOptionsMethodSourceDakotaRelative.model_config"><code class="docutils literal notranslate"><span class="pre">NumericalGradientOptionsMethodSourceDakotaRelative.model_config</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.core.NumericalGradientOptionsMethodSourceDakotaRelative.universal_validator"><code class="docutils literal notranslate"><span class="pre">NumericalGradientOptionsMethodSourceDakotaRelative.universal_validator()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#dakota.spec.shared.core.NumericalGradientOptionsMethodSourceDakotaAbsolute"><code class="docutils literal notranslate"><span class="pre">NumericalGradientOptionsMethodSourceDakotaAbsolute</span></code></a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.core.NumericalGradientOptionsMethodSourceDakotaAbsolute.model_config"><code class="docutils literal notranslate"><span class="pre">NumericalGradientOptionsMethodSourceDakotaAbsolute.model_config</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.core.NumericalGradientOptionsMethodSourceDakotaAbsolute.universal_validator"><code class="docutils literal notranslate"><span class="pre">NumericalGradientOptionsMethodSourceDakotaAbsolute.universal_validator()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#dakota.spec.shared.core.NumericalGradientOptionsMethodSourceDakotaBounds"><code class="docutils literal notranslate"><span class="pre">NumericalGradientOptionsMethodSourceDakotaBounds</span></code></a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.core.NumericalGradientOptionsMethodSourceDakotaBounds.model_config"><code class="docutils literal notranslate"><span class="pre">NumericalGradientOptionsMethodSourceDakotaBounds.model_config</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.core.NumericalGradientOptionsMethodSourceDakotaBounds.universal_validator"><code class="docutils literal notranslate"><span class="pre">NumericalGradientOptionsMethodSourceDakotaBounds.universal_validator()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#dakota.spec.shared.core.NumericalGradientOptionsMethodSourceVendor"><code class="docutils literal notranslate"><span class="pre">NumericalGradientOptionsMethodSourceVendor</span></code></a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.core.NumericalGradientOptionsMethodSourceVendor.model_config"><code class="docutils literal notranslate"><span class="pre">NumericalGradientOptionsMethodSourceVendor.model_config</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.core.NumericalGradientOptionsMethodSourceVendor.universal_validator"><code class="docutils literal notranslate"><span class="pre">NumericalGradientOptionsMethodSourceVendor.universal_validator()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#dakota.spec.shared.core.NumericalGradientOptionsIntervalTypeForward"><code class="docutils literal notranslate"><span class="pre">NumericalGradientOptionsIntervalTypeForward</span></code></a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.core.NumericalGradientOptionsIntervalTypeForward.model_config"><code class="docutils literal notranslate"><span class="pre">NumericalGradientOptionsIntervalTypeForward.model_config</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.core.NumericalGradientOptionsIntervalTypeForward.universal_validator"><code class="docutils literal notranslate"><span class="pre">NumericalGradientOptionsIntervalTypeForward.universal_validator()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#dakota.spec.shared.core.NumericalGradientOptionsIntervalTypeCentral"><code class="docutils literal notranslate"><span class="pre">NumericalGradientOptionsIntervalTypeCentral</span></code></a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.core.NumericalGradientOptionsIntervalTypeCentral.model_config"><code class="docutils literal notranslate"><span class="pre">NumericalGradientOptionsIntervalTypeCentral.model_config</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.core.NumericalGradientOptionsIntervalTypeCentral.universal_validator"><code class="docutils literal notranslate"><span class="pre">NumericalGradientOptionsIntervalTypeCentral.universal_validator()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#dakota.spec.shared.core.ResponseLevelsComputeProbRelGenProbabilities"><code class="docutils literal notranslate"><span class="pre">ResponseLevelsComputeProbRelGenProbabilities</span></code></a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.core.ResponseLevelsComputeProbRelGenProbabilities.model_config"><code class="docutils literal notranslate"><span class="pre">ResponseLevelsComputeProbRelGenProbabilities.model_config</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.core.ResponseLevelsComputeProbRelGenProbabilities.universal_validator"><code class="docutils literal notranslate"><span class="pre">ResponseLevelsComputeProbRelGenProbabilities.universal_validator()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#dakota.spec.shared.core.ResponseLevelsComputeProbRelGenReliabilities"><code class="docutils literal notranslate"><span class="pre">ResponseLevelsComputeProbRelGenReliabilities</span></code></a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.core.ResponseLevelsComputeProbRelGenReliabilities.model_config"><code class="docutils literal notranslate"><span class="pre">ResponseLevelsComputeProbRelGenReliabilities.model_config</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.core.ResponseLevelsComputeProbRelGenReliabilities.universal_validator"><code class="docutils literal notranslate"><span class="pre">ResponseLevelsComputeProbRelGenReliabilities.universal_validator()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#dakota.spec.shared.core.ResponseLevelsComputeProbRelGenGenReliabilities"><code class="docutils literal notranslate"><span class="pre">ResponseLevelsComputeProbRelGenGenReliabilities</span></code></a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.core.ResponseLevelsComputeProbRelGenGenReliabilities.model_config"><code class="docutils literal notranslate"><span class="pre">ResponseLevelsComputeProbRelGenGenReliabilities.model_config</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.core.ResponseLevelsComputeProbRelGenGenReliabilities.universal_validator"><code class="docutils literal notranslate"><span class="pre">ResponseLevelsComputeProbRelGenGenReliabilities.universal_validator()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#dakota.spec.shared.core.ResponseLevelsComputeProbRelGenSystemSeries"><code class="docutils literal notranslate"><span class="pre">ResponseLevelsComputeProbRelGenSystemSeries</span></code></a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.core.ResponseLevelsComputeProbRelGenSystemSeries.model_config"><code class="docutils literal notranslate"><span class="pre">ResponseLevelsComputeProbRelGenSystemSeries.model_config</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.core.ResponseLevelsComputeProbRelGenSystemSeries.universal_validator"><code class="docutils literal notranslate"><span class="pre">ResponseLevelsComputeProbRelGenSystemSeries.universal_validator()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#dakota.spec.shared.core.ResponseLevelsComputeProbRelGenSystemParallel"><code class="docutils literal notranslate"><span class="pre">ResponseLevelsComputeProbRelGenSystemParallel</span></code></a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.core.ResponseLevelsComputeProbRelGenSystemParallel.model_config"><code class="docutils literal notranslate"><span class="pre">ResponseLevelsComputeProbRelGenSystemParallel.model_config</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.core.ResponseLevelsComputeProbRelGenSystemParallel.universal_validator"><code class="docutils literal notranslate"><span class="pre">ResponseLevelsComputeProbRelGenSystemParallel.universal_validator()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#dakota.spec.shared.core.MethodConvergenceTolWithTypeContext1ConvergenceTol"><code class="docutils literal notranslate"><span class="pre">MethodConvergenceTolWithTypeContext1ConvergenceTol</span></code></a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.core.MethodConvergenceTolWithTypeContext1ConvergenceTol.model_config"><code class="docutils literal notranslate"><span class="pre">MethodConvergenceTolWithTypeContext1ConvergenceTol.model_config</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.core.MethodConvergenceTolWithTypeContext1ConvergenceTol.universal_validator"><code class="docutils literal notranslate"><span class="pre">MethodConvergenceTolWithTypeContext1ConvergenceTol.universal_validator()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#dakota.spec.shared.core.MethodConvergenceTolWithTypeContext2ConvergenceTol"><code class="docutils literal notranslate"><span class="pre">MethodConvergenceTolWithTypeContext2ConvergenceTol</span></code></a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.core.MethodConvergenceTolWithTypeContext2ConvergenceTol.model_config"><code class="docutils literal notranslate"><span class="pre">MethodConvergenceTolWithTypeContext2ConvergenceTol.model_config</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.core.MethodConvergenceTolWithTypeContext2ConvergenceTol.universal_validator"><code class="docutils literal notranslate"><span class="pre">MethodConvergenceTolWithTypeContext2ConvergenceTol.universal_validator()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#dakota.spec.shared.core.MethodConvergenceTolWithTypeContext3ConvergenceTol"><code class="docutils literal notranslate"><span class="pre">MethodConvergenceTolWithTypeContext3ConvergenceTol</span></code></a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.core.MethodConvergenceTolWithTypeContext3ConvergenceTol.model_config"><code class="docutils literal notranslate"><span class="pre">MethodConvergenceTolWithTypeContext3ConvergenceTol.model_config</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.core.MethodConvergenceTolWithTypeContext3ConvergenceTol.universal_validator"><code class="docutils literal notranslate"><span class="pre">MethodConvergenceTolWithTypeContext3ConvergenceTol.universal_validator()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#dakota.spec.shared.core.MethodMfRefineStatsModeMixin"><code class="docutils literal notranslate"><span class="pre">MethodMfRefineStatsModeMixin</span></code></a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.core.MethodMfRefineStatsModeMixin.model_config"><code class="docutils literal notranslate"><span class="pre">MethodMfRefineStatsModeMixin.model_config</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.core.MethodMfRefineStatsModeMixin.universal_validator"><code class="docutils literal notranslate"><span class="pre">MethodMfRefineStatsModeMixin.universal_validator()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#dakota.spec.shared.core.MethodRefineMetricTypeMixin"><code class="docutils literal notranslate"><span class="pre">MethodRefineMetricTypeMixin</span></code></a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.core.MethodRefineMetricTypeMixin.model_config"><code class="docutils literal notranslate"><span class="pre">MethodRefineMetricTypeMixin.model_config</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.core.MethodRefineMetricTypeMixin.universal_validator"><code class="docutils literal notranslate"><span class="pre">MethodRefineMetricTypeMixin.universal_validator()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#dakota.spec.shared.core.NumericalGradientOptionsMethodSourceDakotaConfig"><code class="docutils literal notranslate"><span class="pre">NumericalGradientOptionsMethodSourceDakotaConfig</span></code></a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.core.NumericalGradientOptionsMethodSourceDakotaConfig.model_config"><code class="docutils literal notranslate"><span class="pre">NumericalGradientOptionsMethodSourceDakotaConfig.model_config</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.core.NumericalGradientOptionsMethodSourceDakotaConfig.universal_validator"><code class="docutils literal notranslate"><span class="pre">NumericalGradientOptionsMethodSourceDakotaConfig.universal_validator()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#dakota.spec.shared.core.ResponseLevelsComputeProbRelGenCompute"><code class="docutils literal notranslate"><span class="pre">ResponseLevelsComputeProbRelGenCompute</span></code></a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.core.ResponseLevelsComputeProbRelGenCompute.model_config"><code class="docutils literal notranslate"><span class="pre">ResponseLevelsComputeProbRelGenCompute.model_config</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.core.ResponseLevelsComputeProbRelGenCompute.universal_validator"><code class="docutils literal notranslate"><span class="pre">ResponseLevelsComputeProbRelGenCompute.universal_validator()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#dakota.spec.shared.core.MethodConvergenceTolWithTypeContext1Mixin"><code class="docutils literal notranslate"><span class="pre">MethodConvergenceTolWithTypeContext1Mixin</span></code></a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.core.MethodConvergenceTolWithTypeContext1Mixin.model_config"><code class="docutils literal notranslate"><span class="pre">MethodConvergenceTolWithTypeContext1Mixin.model_config</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.core.MethodConvergenceTolWithTypeContext1Mixin.universal_validator"><code class="docutils literal notranslate"><span class="pre">MethodConvergenceTolWithTypeContext1Mixin.universal_validator()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#dakota.spec.shared.core.MethodConvergenceTolWithTypeContext2Mixin"><code class="docutils literal notranslate"><span class="pre">MethodConvergenceTolWithTypeContext2Mixin</span></code></a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.core.MethodConvergenceTolWithTypeContext2Mixin.model_config"><code class="docutils literal notranslate"><span class="pre">MethodConvergenceTolWithTypeContext2Mixin.model_config</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.core.MethodConvergenceTolWithTypeContext2Mixin.universal_validator"><code class="docutils literal notranslate"><span class="pre">MethodConvergenceTolWithTypeContext2Mixin.universal_validator()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#dakota.spec.shared.core.MethodConvergenceTolWithTypeContext3Mixin"><code class="docutils literal notranslate"><span class="pre">MethodConvergenceTolWithTypeContext3Mixin</span></code></a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.core.MethodConvergenceTolWithTypeContext3Mixin.model_config"><code class="docutils literal notranslate"><span class="pre">MethodConvergenceTolWithTypeContext3Mixin.model_config</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.core.MethodConvergenceTolWithTypeContext3Mixin.universal_validator"><code class="docutils literal notranslate"><span class="pre">MethodConvergenceTolWithTypeContext3Mixin.universal_validator()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#dakota.spec.shared.core.NumericalGradientOptionsMethodSourceDakota"><code class="docutils literal notranslate"><span class="pre">NumericalGradientOptionsMethodSourceDakota</span></code></a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.core.NumericalGradientOptionsMethodSourceDakota.model_config"><code class="docutils literal notranslate"><span class="pre">NumericalGradientOptionsMethodSourceDakota.model_config</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.core.NumericalGradientOptionsMethodSourceDakota.universal_validator"><code class="docutils literal notranslate"><span class="pre">NumericalGradientOptionsMethodSourceDakota.universal_validator()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#dakota.spec.shared.core.ResponseLevelsComputeProbRelGenResponseLevels"><code class="docutils literal notranslate"><span class="pre">ResponseLevelsComputeProbRelGenResponseLevels</span></code></a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.core.ResponseLevelsComputeProbRelGenResponseLevels.model_config"><code class="docutils literal notranslate"><span class="pre">ResponseLevelsComputeProbRelGenResponseLevels.model_config</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.core.ResponseLevelsComputeProbRelGenResponseLevels.universal_validator"><code class="docutils literal notranslate"><span class="pre">ResponseLevelsComputeProbRelGenResponseLevels.universal_validator()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#dakota.spec.shared.core.MethodExpConvergenceToleranceMixin"><code class="docutils literal notranslate"><span class="pre">MethodExpConvergenceToleranceMixin</span></code></a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.core.MethodExpConvergenceToleranceMixin.model_config"><code class="docutils literal notranslate"><span class="pre">MethodExpConvergenceToleranceMixin.model_config</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.core.MethodExpConvergenceToleranceMixin.universal_validator"><code class="docutils literal notranslate"><span class="pre">MethodExpConvergenceToleranceMixin.universal_validator()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#dakota.spec.shared.core.MethodMfExpConvergenceToleranceMixin"><code class="docutils literal notranslate"><span class="pre">MethodMfExpConvergenceToleranceMixin</span></code></a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.core.MethodMfExpConvergenceToleranceMixin.model_config"><code class="docutils literal notranslate"><span class="pre">MethodMfExpConvergenceToleranceMixin.model_config</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.core.MethodMfExpConvergenceToleranceMixin.universal_validator"><code class="docutils literal notranslate"><span class="pre">MethodMfExpConvergenceToleranceMixin.universal_validator()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#dakota.spec.shared.core.NumericalGradientOptionsMixin"><code class="docutils literal notranslate"><span class="pre">NumericalGradientOptionsMixin</span></code></a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.core.NumericalGradientOptionsMixin.model_config"><code class="docutils literal notranslate"><span class="pre">NumericalGradientOptionsMixin.model_config</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.core.NumericalGradientOptionsMixin.universal_validator"><code class="docutils literal notranslate"><span class="pre">NumericalGradientOptionsMixin.universal_validator()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#dakota.spec.shared.core.ResponseLevelsComputeProbRelGenMixin"><code class="docutils literal notranslate"><span class="pre">ResponseLevelsComputeProbRelGenMixin</span></code></a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.core.ResponseLevelsComputeProbRelGenMixin.model_config"><code class="docutils literal notranslate"><span class="pre">ResponseLevelsComputeProbRelGenMixin.model_config</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.core.ResponseLevelsComputeProbRelGenMixin.universal_validator"><code class="docutils literal notranslate"><span class="pre">ResponseLevelsComputeProbRelGenMixin.universal_validator()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="expansion.html">Expansion</a></li>
+<li class="toctree-l4"><a class="reference internal" href="formats.html">Formats</a></li>
+<li class="toctree-l4"><a class="reference internal" href="interface.html">Interface</a></li>
+<li class="toctree-l4"><a class="reference internal" href="misc.html">Misc</a></li>
+<li class="toctree-l4"><a class="reference internal" href="optimization.html">Optimization</a></li>
+<li class="toctree-l4"><a class="reference internal" href="responses.html">Responses</a></li>
+<li class="toctree-l4"><a class="reference internal" href="sampling.html">Sampling</a></li>
+<li class="toctree-l4"><a class="reference internal" href="surrogate.html">Surrogate</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../pydanticref.html#how-to-work-with-the-pydantic-documentation">How to Work with the Pydantic Documentation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../inputtools.html">Working with Inputs</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Building and Developing Dakota</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../building/building.html">Building Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../developingdakota/developingdakota.html">Developing Dakota</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">More</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../misc/misc.html">Miscellaneous</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Dakota</a>
+      </nav>
+
+	  <!-- SNL Lite header -->
+	  <div class="snlheader-subsite--wrapper-default">
+		<snlheader class="snlheader-subsite" role="snlbanner">
+		  <div class="wrapper">
+			<a href="https://www.sandia.gov/index.html">
+			  <div class="logo-transparent"><p class="logo">Sandia National Laboratories</p></div>
+			</a>
+			<div class="nav-top">
+			  <a class="visuallyhidden" name="mainnav"></a>
+			  <div aria-label="main navigation" class="core-nav-transparent core-nav-transparent--visible" role="navigation">
+				<ul role="navigation" class="secondary-links">
+				  <li id="search-text-link">
+					<a aria-label="Search" href="https://www.sandia.gov/search/">Search Sandia.gov</a>
+				  </li>
+				  <li id="directory-text-link">
+					<a href="https://www.sandia.gov/directory.html" aria-expanded="false" aria-label="Site Directory">All Sandia Websites</a>
+				  </li>
+				</ul>
+			  </div>
+			</div>
+		  </div> 
+		</snlheader>
+	  </div>	  
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../externaltools.html">Using External Tools</a></li>
+          <li class="breadcrumb-item"><a href="../../pydanticref.html">Pydantic Model Reference</a></li>
+          <li class="breadcrumb-item"><a href="../shared.html">Shared</a></li>
+      <li class="breadcrumb-item active">Core</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../_sources/externaltools/pydanticref/shared/core.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-dakota.spec.shared.core">
+<span id="core"></span><h1>Core<a class="headerlink" href="#module-dakota.spec.shared.core" title="Link to this heading"></a></h1>
+<p>Generated Pydantic models for shared.core</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="dakota.spec.shared.core.DefaultConstraintTolMixin">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">dakota.spec.shared.core.</span></span><span class="sig-name descname"><span class="pre">DefaultConstraintTolMixin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">constraint_tolerance</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Annotated</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">PlainSerializer</span><span class="p"><span class="pre">(</span></span><span class="n"><span class="pre">func</span></span><span class="o"><span class="pre">=</span></span><span class="pre">_serialize_dakota_float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">return_type</span></span><span class="o"><span class="pre">=</span></span><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">when_used</span></span><span class="o"><span class="pre">=</span></span><span class="pre">json</span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.core.DefaultConstraintTolMixin" title="Link to this definition"></a></dt>
+<dd><p>Generated model for DefaultConstraintTolMixin</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dakota.spec.shared.core.DefaultConstraintTolMixin.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'protected_namespaces':</span> <span class="pre">(),</span> <span class="pre">'str_strip_whitespace':</span> <span class="pre">True,</span> <span class="pre">'use_enum_values':</span> <span class="pre">True,</span> <span class="pre">'validate_assignment':</span> <span class="pre">True}</span></span><a class="headerlink" href="#dakota.spec.shared.core.DefaultConstraintTolMixin.model_config" title="Link to this definition"></a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dakota.spec.shared.core.DefaultConstraintTolMixin.universal_validator">
+<span class="sig-name descname"><span class="pre">universal_validator</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.core.DefaultConstraintTolMixin.universal_validator" title="Link to this definition"></a></dt>
+<dd><p>Example universal validator that runs for all models</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dakota.spec.shared.core.MethodConvergenceTolMixin">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">dakota.spec.shared.core.</span></span><span class="sig-name descname"><span class="pre">MethodConvergenceTolMixin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">convergence_tolerance</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Annotated</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">PlainSerializer</span><span class="p"><span class="pre">(</span></span><span class="n"><span class="pre">func</span></span><span class="o"><span class="pre">=</span></span><span class="pre">_serialize_dakota_float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">return_type</span></span><span class="o"><span class="pre">=</span></span><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">when_used</span></span><span class="o"><span class="pre">=</span></span><span class="pre">json</span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">-1.7976931348623157e+308</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.core.MethodConvergenceTolMixin" title="Link to this definition"></a></dt>
+<dd><p>Generated model for MethodConvergenceTolMixin</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dakota.spec.shared.core.MethodConvergenceTolMixin.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'protected_namespaces':</span> <span class="pre">(),</span> <span class="pre">'str_strip_whitespace':</span> <span class="pre">True,</span> <span class="pre">'use_enum_values':</span> <span class="pre">True,</span> <span class="pre">'validate_assignment':</span> <span class="pre">True}</span></span><a class="headerlink" href="#dakota.spec.shared.core.MethodConvergenceTolMixin.model_config" title="Link to this definition"></a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dakota.spec.shared.core.MethodConvergenceTolMixin.universal_validator">
+<span class="sig-name descname"><span class="pre">universal_validator</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.core.MethodConvergenceTolMixin.universal_validator" title="Link to this definition"></a></dt>
+<dd><p>Example universal validator that runs for all models</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dakota.spec.shared.core.MethodConvergenceTolWithTypeContext1Relative">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">dakota.spec.shared.core.</span></span><span class="sig-name descname"><span class="pre">MethodConvergenceTolWithTypeContext1Relative</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">relative</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="k"><span class="pre">True</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.core.MethodConvergenceTolWithTypeContext1Relative" title="Link to this definition"></a></dt>
+<dd><p>Assess convergence in adaptive UQ methods using statistical metrics that are relative to a benchmark</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dakota.spec.shared.core.MethodConvergenceTolWithTypeContext1Relative.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'protected_namespaces':</span> <span class="pre">(),</span> <span class="pre">'str_strip_whitespace':</span> <span class="pre">True,</span> <span class="pre">'use_enum_values':</span> <span class="pre">True,</span> <span class="pre">'validate_assignment':</span> <span class="pre">True}</span></span><a class="headerlink" href="#dakota.spec.shared.core.MethodConvergenceTolWithTypeContext1Relative.model_config" title="Link to this definition"></a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dakota.spec.shared.core.MethodConvergenceTolWithTypeContext1Relative.universal_validator">
+<span class="sig-name descname"><span class="pre">universal_validator</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.core.MethodConvergenceTolWithTypeContext1Relative.universal_validator" title="Link to this definition"></a></dt>
+<dd><p>Example universal validator that runs for all models</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dakota.spec.shared.core.MethodConvergenceTolWithTypeContext1Absolute">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">dakota.spec.shared.core.</span></span><span class="sig-name descname"><span class="pre">MethodConvergenceTolWithTypeContext1Absolute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">absolute</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="k"><span class="pre">True</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.core.MethodConvergenceTolWithTypeContext1Absolute" title="Link to this definition"></a></dt>
+<dd><p>Use absolute statistical metrics for assessing convergence in adaptive UQ methods</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dakota.spec.shared.core.MethodConvergenceTolWithTypeContext1Absolute.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'protected_namespaces':</span> <span class="pre">(),</span> <span class="pre">'str_strip_whitespace':</span> <span class="pre">True,</span> <span class="pre">'use_enum_values':</span> <span class="pre">True,</span> <span class="pre">'validate_assignment':</span> <span class="pre">True}</span></span><a class="headerlink" href="#dakota.spec.shared.core.MethodConvergenceTolWithTypeContext1Absolute.model_config" title="Link to this definition"></a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dakota.spec.shared.core.MethodConvergenceTolWithTypeContext1Absolute.universal_validator">
+<span class="sig-name descname"><span class="pre">universal_validator</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.core.MethodConvergenceTolWithTypeContext1Absolute.universal_validator" title="Link to this definition"></a></dt>
+<dd><p>Example universal validator that runs for all models</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dakota.spec.shared.core.MethodConvergenceTolWithTypeContext2Relative">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">dakota.spec.shared.core.</span></span><span class="sig-name descname"><span class="pre">MethodConvergenceTolWithTypeContext2Relative</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">relative</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="k"><span class="pre">True</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.core.MethodConvergenceTolWithTypeContext2Relative" title="Link to this definition"></a></dt>
+<dd><p>Assess convergence in adaptive UQ methods using statistical metrics that are relative to a benchmark</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dakota.spec.shared.core.MethodConvergenceTolWithTypeContext2Relative.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'protected_namespaces':</span> <span class="pre">(),</span> <span class="pre">'str_strip_whitespace':</span> <span class="pre">True,</span> <span class="pre">'use_enum_values':</span> <span class="pre">True,</span> <span class="pre">'validate_assignment':</span> <span class="pre">True}</span></span><a class="headerlink" href="#dakota.spec.shared.core.MethodConvergenceTolWithTypeContext2Relative.model_config" title="Link to this definition"></a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dakota.spec.shared.core.MethodConvergenceTolWithTypeContext2Relative.universal_validator">
+<span class="sig-name descname"><span class="pre">universal_validator</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.core.MethodConvergenceTolWithTypeContext2Relative.universal_validator" title="Link to this definition"></a></dt>
+<dd><p>Example universal validator that runs for all models</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dakota.spec.shared.core.MethodConvergenceTolWithTypeContext2Absolute">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">dakota.spec.shared.core.</span></span><span class="sig-name descname"><span class="pre">MethodConvergenceTolWithTypeContext2Absolute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">absolute</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="k"><span class="pre">True</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.core.MethodConvergenceTolWithTypeContext2Absolute" title="Link to this definition"></a></dt>
+<dd><p>Use absolute statistical metrics for assessing convergence in adaptive UQ methods</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dakota.spec.shared.core.MethodConvergenceTolWithTypeContext2Absolute.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'protected_namespaces':</span> <span class="pre">(),</span> <span class="pre">'str_strip_whitespace':</span> <span class="pre">True,</span> <span class="pre">'use_enum_values':</span> <span class="pre">True,</span> <span class="pre">'validate_assignment':</span> <span class="pre">True}</span></span><a class="headerlink" href="#dakota.spec.shared.core.MethodConvergenceTolWithTypeContext2Absolute.model_config" title="Link to this definition"></a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dakota.spec.shared.core.MethodConvergenceTolWithTypeContext2Absolute.universal_validator">
+<span class="sig-name descname"><span class="pre">universal_validator</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.core.MethodConvergenceTolWithTypeContext2Absolute.universal_validator" title="Link to this definition"></a></dt>
+<dd><p>Example universal validator that runs for all models</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dakota.spec.shared.core.MethodConvergenceTolWithTypeContext3Relative">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">dakota.spec.shared.core.</span></span><span class="sig-name descname"><span class="pre">MethodConvergenceTolWithTypeContext3Relative</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">relative</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="k"><span class="pre">True</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.core.MethodConvergenceTolWithTypeContext3Relative" title="Link to this definition"></a></dt>
+<dd><p>Assess convergence in adaptive UQ methods using statistical metrics that are relative to a benchmark</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dakota.spec.shared.core.MethodConvergenceTolWithTypeContext3Relative.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'protected_namespaces':</span> <span class="pre">(),</span> <span class="pre">'str_strip_whitespace':</span> <span class="pre">True,</span> <span class="pre">'use_enum_values':</span> <span class="pre">True,</span> <span class="pre">'validate_assignment':</span> <span class="pre">True}</span></span><a class="headerlink" href="#dakota.spec.shared.core.MethodConvergenceTolWithTypeContext3Relative.model_config" title="Link to this definition"></a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dakota.spec.shared.core.MethodConvergenceTolWithTypeContext3Relative.universal_validator">
+<span class="sig-name descname"><span class="pre">universal_validator</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.core.MethodConvergenceTolWithTypeContext3Relative.universal_validator" title="Link to this definition"></a></dt>
+<dd><p>Example universal validator that runs for all models</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dakota.spec.shared.core.MethodConvergenceTolWithTypeContext3Absolute">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">dakota.spec.shared.core.</span></span><span class="sig-name descname"><span class="pre">MethodConvergenceTolWithTypeContext3Absolute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">absolute</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="k"><span class="pre">True</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.core.MethodConvergenceTolWithTypeContext3Absolute" title="Link to this definition"></a></dt>
+<dd><p>Use absolute statistical metrics for assessing convergence in adaptive UQ methods</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dakota.spec.shared.core.MethodConvergenceTolWithTypeContext3Absolute.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'protected_namespaces':</span> <span class="pre">(),</span> <span class="pre">'str_strip_whitespace':</span> <span class="pre">True,</span> <span class="pre">'use_enum_values':</span> <span class="pre">True,</span> <span class="pre">'validate_assignment':</span> <span class="pre">True}</span></span><a class="headerlink" href="#dakota.spec.shared.core.MethodConvergenceTolWithTypeContext3Absolute.model_config" title="Link to this definition"></a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dakota.spec.shared.core.MethodConvergenceTolWithTypeContext3Absolute.universal_validator">
+<span class="sig-name descname"><span class="pre">universal_validator</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.core.MethodConvergenceTolWithTypeContext3Absolute.universal_validator" title="Link to this definition"></a></dt>
+<dd><p>Example universal validator that runs for all models</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dakota.spec.shared.core.Active">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">dakota.spec.shared.core.</span></span><span class="sig-name descname"><span class="pre">Active</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">active</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="k"><span class="pre">True</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.core.Active" title="Link to this definition"></a></dt>
+<dd><p>use statistics for the active expansion within multifidelity refinement</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dakota.spec.shared.core.Active.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'protected_namespaces':</span> <span class="pre">(),</span> <span class="pre">'str_strip_whitespace':</span> <span class="pre">True,</span> <span class="pre">'use_enum_values':</span> <span class="pre">True,</span> <span class="pre">'validate_assignment':</span> <span class="pre">True}</span></span><a class="headerlink" href="#dakota.spec.shared.core.Active.model_config" title="Link to this definition"></a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dakota.spec.shared.core.Active.universal_validator">
+<span class="sig-name descname"><span class="pre">universal_validator</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.core.Active.universal_validator" title="Link to this definition"></a></dt>
+<dd><p>Example universal validator that runs for all models</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dakota.spec.shared.core.StatisticsModeCombined">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">dakota.spec.shared.core.</span></span><span class="sig-name descname"><span class="pre">StatisticsModeCombined</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">combined</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="k"><span class="pre">True</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.core.StatisticsModeCombined" title="Link to this definition"></a></dt>
+<dd><p>use statistics for the combined expansion within multifidelity refinement</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dakota.spec.shared.core.StatisticsModeCombined.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'protected_namespaces':</span> <span class="pre">(),</span> <span class="pre">'str_strip_whitespace':</span> <span class="pre">True,</span> <span class="pre">'use_enum_values':</span> <span class="pre">True,</span> <span class="pre">'validate_assignment':</span> <span class="pre">True}</span></span><a class="headerlink" href="#dakota.spec.shared.core.StatisticsModeCombined.model_config" title="Link to this definition"></a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dakota.spec.shared.core.StatisticsModeCombined.universal_validator">
+<span class="sig-name descname"><span class="pre">universal_validator</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.core.StatisticsModeCombined.universal_validator" title="Link to this definition"></a></dt>
+<dd><p>Example universal validator that runs for all models</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dakota.spec.shared.core.LevelMappings">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">dakota.spec.shared.core.</span></span><span class="sig-name descname"><span class="pre">LevelMappings</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">level_mappings</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="k"><span class="pre">True</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.core.LevelMappings" title="Link to this definition"></a></dt>
+<dd><p>Utilize the level mappings metric for guiding adaptive refinement during UQ.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dakota.spec.shared.core.LevelMappings.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'protected_namespaces':</span> <span class="pre">(),</span> <span class="pre">'str_strip_whitespace':</span> <span class="pre">True,</span> <span class="pre">'use_enum_values':</span> <span class="pre">True,</span> <span class="pre">'validate_assignment':</span> <span class="pre">True}</span></span><a class="headerlink" href="#dakota.spec.shared.core.LevelMappings.model_config" title="Link to this definition"></a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dakota.spec.shared.core.LevelMappings.universal_validator">
+<span class="sig-name descname"><span class="pre">universal_validator</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.core.LevelMappings.universal_validator" title="Link to this definition"></a></dt>
+<dd><p>Example universal validator that runs for all models</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dakota.spec.shared.core.RefinementMetricCov">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">dakota.spec.shared.core.</span></span><span class="sig-name descname"><span class="pre">RefinementMetricCov</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">covariance</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="k"><span class="pre">True</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.core.RefinementMetricCov" title="Link to this definition"></a></dt>
+<dd><p>Utilize the response covariance metric for guiding adaptive refinement during UQ.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dakota.spec.shared.core.RefinementMetricCov.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'protected_namespaces':</span> <span class="pre">(),</span> <span class="pre">'str_strip_whitespace':</span> <span class="pre">True,</span> <span class="pre">'use_enum_values':</span> <span class="pre">True,</span> <span class="pre">'validate_assignment':</span> <span class="pre">True}</span></span><a class="headerlink" href="#dakota.spec.shared.core.RefinementMetricCov.model_config" title="Link to this definition"></a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dakota.spec.shared.core.RefinementMetricCov.universal_validator">
+<span class="sig-name descname"><span class="pre">universal_validator</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.core.RefinementMetricCov.universal_validator" title="Link to this definition"></a></dt>
+<dd><p>Example universal validator that runs for all models</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dakota.spec.shared.core.NumericalGradientOptionsMethodSourceDakotaRelative">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">dakota.spec.shared.core.</span></span><span class="sig-name descname"><span class="pre">NumericalGradientOptionsMethodSourceDakotaRelative</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">relative</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="k"><span class="pre">True</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.core.NumericalGradientOptionsMethodSourceDakotaRelative" title="Link to this definition"></a></dt>
+<dd><p>(Default) Scale step size by the parameter value</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dakota.spec.shared.core.NumericalGradientOptionsMethodSourceDakotaRelative.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'protected_namespaces':</span> <span class="pre">(),</span> <span class="pre">'str_strip_whitespace':</span> <span class="pre">True,</span> <span class="pre">'use_enum_values':</span> <span class="pre">True,</span> <span class="pre">'validate_assignment':</span> <span class="pre">True}</span></span><a class="headerlink" href="#dakota.spec.shared.core.NumericalGradientOptionsMethodSourceDakotaRelative.model_config" title="Link to this definition"></a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dakota.spec.shared.core.NumericalGradientOptionsMethodSourceDakotaRelative.universal_validator">
+<span class="sig-name descname"><span class="pre">universal_validator</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.core.NumericalGradientOptionsMethodSourceDakotaRelative.universal_validator" title="Link to this definition"></a></dt>
+<dd><p>Example universal validator that runs for all models</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dakota.spec.shared.core.NumericalGradientOptionsMethodSourceDakotaAbsolute">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">dakota.spec.shared.core.</span></span><span class="sig-name descname"><span class="pre">NumericalGradientOptionsMethodSourceDakotaAbsolute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">absolute</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="k"><span class="pre">True</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.core.NumericalGradientOptionsMethodSourceDakotaAbsolute" title="Link to this definition"></a></dt>
+<dd><p>Do not scale step-size</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dakota.spec.shared.core.NumericalGradientOptionsMethodSourceDakotaAbsolute.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'protected_namespaces':</span> <span class="pre">(),</span> <span class="pre">'str_strip_whitespace':</span> <span class="pre">True,</span> <span class="pre">'use_enum_values':</span> <span class="pre">True,</span> <span class="pre">'validate_assignment':</span> <span class="pre">True}</span></span><a class="headerlink" href="#dakota.spec.shared.core.NumericalGradientOptionsMethodSourceDakotaAbsolute.model_config" title="Link to this definition"></a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dakota.spec.shared.core.NumericalGradientOptionsMethodSourceDakotaAbsolute.universal_validator">
+<span class="sig-name descname"><span class="pre">universal_validator</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.core.NumericalGradientOptionsMethodSourceDakotaAbsolute.universal_validator" title="Link to this definition"></a></dt>
+<dd><p>Example universal validator that runs for all models</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dakota.spec.shared.core.NumericalGradientOptionsMethodSourceDakotaBounds">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">dakota.spec.shared.core.</span></span><span class="sig-name descname"><span class="pre">NumericalGradientOptionsMethodSourceDakotaBounds</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">bounds</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="k"><span class="pre">True</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.core.NumericalGradientOptionsMethodSourceDakotaBounds" title="Link to this definition"></a></dt>
+<dd><p>Scale step-size by the domain of the parameter</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dakota.spec.shared.core.NumericalGradientOptionsMethodSourceDakotaBounds.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'protected_namespaces':</span> <span class="pre">(),</span> <span class="pre">'str_strip_whitespace':</span> <span class="pre">True,</span> <span class="pre">'use_enum_values':</span> <span class="pre">True,</span> <span class="pre">'validate_assignment':</span> <span class="pre">True}</span></span><a class="headerlink" href="#dakota.spec.shared.core.NumericalGradientOptionsMethodSourceDakotaBounds.model_config" title="Link to this definition"></a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dakota.spec.shared.core.NumericalGradientOptionsMethodSourceDakotaBounds.universal_validator">
+<span class="sig-name descname"><span class="pre">universal_validator</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.core.NumericalGradientOptionsMethodSourceDakotaBounds.universal_validator" title="Link to this definition"></a></dt>
+<dd><p>Example universal validator that runs for all models</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dakota.spec.shared.core.NumericalGradientOptionsMethodSourceVendor">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">dakota.spec.shared.core.</span></span><span class="sig-name descname"><span class="pre">NumericalGradientOptionsMethodSourceVendor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">vendor</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="k"><span class="pre">True</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.core.NumericalGradientOptionsMethodSourceVendor" title="Link to this definition"></a></dt>
+<dd><p>Use non-Dakota fd algorithm</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dakota.spec.shared.core.NumericalGradientOptionsMethodSourceVendor.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'protected_namespaces':</span> <span class="pre">(),</span> <span class="pre">'str_strip_whitespace':</span> <span class="pre">True,</span> <span class="pre">'use_enum_values':</span> <span class="pre">True,</span> <span class="pre">'validate_assignment':</span> <span class="pre">True}</span></span><a class="headerlink" href="#dakota.spec.shared.core.NumericalGradientOptionsMethodSourceVendor.model_config" title="Link to this definition"></a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dakota.spec.shared.core.NumericalGradientOptionsMethodSourceVendor.universal_validator">
+<span class="sig-name descname"><span class="pre">universal_validator</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.core.NumericalGradientOptionsMethodSourceVendor.universal_validator" title="Link to this definition"></a></dt>
+<dd><p>Example universal validator that runs for all models</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dakota.spec.shared.core.NumericalGradientOptionsIntervalTypeForward">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">dakota.spec.shared.core.</span></span><span class="sig-name descname"><span class="pre">NumericalGradientOptionsIntervalTypeForward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">forward</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="k"><span class="pre">True</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.core.NumericalGradientOptionsIntervalTypeForward" title="Link to this definition"></a></dt>
+<dd><p>(Default) Use forward differences</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dakota.spec.shared.core.NumericalGradientOptionsIntervalTypeForward.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'protected_namespaces':</span> <span class="pre">(),</span> <span class="pre">'str_strip_whitespace':</span> <span class="pre">True,</span> <span class="pre">'use_enum_values':</span> <span class="pre">True,</span> <span class="pre">'validate_assignment':</span> <span class="pre">True}</span></span><a class="headerlink" href="#dakota.spec.shared.core.NumericalGradientOptionsIntervalTypeForward.model_config" title="Link to this definition"></a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dakota.spec.shared.core.NumericalGradientOptionsIntervalTypeForward.universal_validator">
+<span class="sig-name descname"><span class="pre">universal_validator</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.core.NumericalGradientOptionsIntervalTypeForward.universal_validator" title="Link to this definition"></a></dt>
+<dd><p>Example universal validator that runs for all models</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dakota.spec.shared.core.NumericalGradientOptionsIntervalTypeCentral">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">dakota.spec.shared.core.</span></span><span class="sig-name descname"><span class="pre">NumericalGradientOptionsIntervalTypeCentral</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">central</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="k"><span class="pre">True</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.core.NumericalGradientOptionsIntervalTypeCentral" title="Link to this definition"></a></dt>
+<dd><p>Use central differences</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dakota.spec.shared.core.NumericalGradientOptionsIntervalTypeCentral.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'protected_namespaces':</span> <span class="pre">(),</span> <span class="pre">'str_strip_whitespace':</span> <span class="pre">True,</span> <span class="pre">'use_enum_values':</span> <span class="pre">True,</span> <span class="pre">'validate_assignment':</span> <span class="pre">True}</span></span><a class="headerlink" href="#dakota.spec.shared.core.NumericalGradientOptionsIntervalTypeCentral.model_config" title="Link to this definition"></a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dakota.spec.shared.core.NumericalGradientOptionsIntervalTypeCentral.universal_validator">
+<span class="sig-name descname"><span class="pre">universal_validator</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.core.NumericalGradientOptionsIntervalTypeCentral.universal_validator" title="Link to this definition"></a></dt>
+<dd><p>Example universal validator that runs for all models</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dakota.spec.shared.core.ResponseLevelsComputeProbRelGenProbabilities">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">dakota.spec.shared.core.</span></span><span class="sig-name descname"><span class="pre">ResponseLevelsComputeProbRelGenProbabilities</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">probabilities</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="k"><span class="pre">True</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.core.ResponseLevelsComputeProbRelGenProbabilities" title="Link to this definition"></a></dt>
+<dd><p>Computes probabilities associated with response levels</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dakota.spec.shared.core.ResponseLevelsComputeProbRelGenProbabilities.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'protected_namespaces':</span> <span class="pre">(),</span> <span class="pre">'str_strip_whitespace':</span> <span class="pre">True,</span> <span class="pre">'use_enum_values':</span> <span class="pre">True,</span> <span class="pre">'validate_assignment':</span> <span class="pre">True}</span></span><a class="headerlink" href="#dakota.spec.shared.core.ResponseLevelsComputeProbRelGenProbabilities.model_config" title="Link to this definition"></a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dakota.spec.shared.core.ResponseLevelsComputeProbRelGenProbabilities.universal_validator">
+<span class="sig-name descname"><span class="pre">universal_validator</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.core.ResponseLevelsComputeProbRelGenProbabilities.universal_validator" title="Link to this definition"></a></dt>
+<dd><p>Example universal validator that runs for all models</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dakota.spec.shared.core.ResponseLevelsComputeProbRelGenReliabilities">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">dakota.spec.shared.core.</span></span><span class="sig-name descname"><span class="pre">ResponseLevelsComputeProbRelGenReliabilities</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">reliabilities</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="k"><span class="pre">True</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.core.ResponseLevelsComputeProbRelGenReliabilities" title="Link to this definition"></a></dt>
+<dd><p>Computes reliabilities associated with response levels</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dakota.spec.shared.core.ResponseLevelsComputeProbRelGenReliabilities.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'protected_namespaces':</span> <span class="pre">(),</span> <span class="pre">'str_strip_whitespace':</span> <span class="pre">True,</span> <span class="pre">'use_enum_values':</span> <span class="pre">True,</span> <span class="pre">'validate_assignment':</span> <span class="pre">True}</span></span><a class="headerlink" href="#dakota.spec.shared.core.ResponseLevelsComputeProbRelGenReliabilities.model_config" title="Link to this definition"></a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dakota.spec.shared.core.ResponseLevelsComputeProbRelGenReliabilities.universal_validator">
+<span class="sig-name descname"><span class="pre">universal_validator</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.core.ResponseLevelsComputeProbRelGenReliabilities.universal_validator" title="Link to this definition"></a></dt>
+<dd><p>Example universal validator that runs for all models</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dakota.spec.shared.core.ResponseLevelsComputeProbRelGenGenReliabilities">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">dakota.spec.shared.core.</span></span><span class="sig-name descname"><span class="pre">ResponseLevelsComputeProbRelGenGenReliabilities</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">gen_reliabilities</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="k"><span class="pre">True</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.core.ResponseLevelsComputeProbRelGenGenReliabilities" title="Link to this definition"></a></dt>
+<dd><p>Computes generalized reliabilities associated with response levels</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dakota.spec.shared.core.ResponseLevelsComputeProbRelGenGenReliabilities.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'protected_namespaces':</span> <span class="pre">(),</span> <span class="pre">'str_strip_whitespace':</span> <span class="pre">True,</span> <span class="pre">'use_enum_values':</span> <span class="pre">True,</span> <span class="pre">'validate_assignment':</span> <span class="pre">True}</span></span><a class="headerlink" href="#dakota.spec.shared.core.ResponseLevelsComputeProbRelGenGenReliabilities.model_config" title="Link to this definition"></a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dakota.spec.shared.core.ResponseLevelsComputeProbRelGenGenReliabilities.universal_validator">
+<span class="sig-name descname"><span class="pre">universal_validator</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.core.ResponseLevelsComputeProbRelGenGenReliabilities.universal_validator" title="Link to this definition"></a></dt>
+<dd><p>Example universal validator that runs for all models</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dakota.spec.shared.core.ResponseLevelsComputeProbRelGenSystemSeries">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">dakota.spec.shared.core.</span></span><span class="sig-name descname"><span class="pre">ResponseLevelsComputeProbRelGenSystemSeries</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">series</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="k"><span class="pre">True</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.core.ResponseLevelsComputeProbRelGenSystemSeries" title="Link to this definition"></a></dt>
+<dd><p>Aggregate response statistics assuming a series system</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dakota.spec.shared.core.ResponseLevelsComputeProbRelGenSystemSeries.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'protected_namespaces':</span> <span class="pre">(),</span> <span class="pre">'str_strip_whitespace':</span> <span class="pre">True,</span> <span class="pre">'use_enum_values':</span> <span class="pre">True,</span> <span class="pre">'validate_assignment':</span> <span class="pre">True}</span></span><a class="headerlink" href="#dakota.spec.shared.core.ResponseLevelsComputeProbRelGenSystemSeries.model_config" title="Link to this definition"></a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dakota.spec.shared.core.ResponseLevelsComputeProbRelGenSystemSeries.universal_validator">
+<span class="sig-name descname"><span class="pre">universal_validator</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.core.ResponseLevelsComputeProbRelGenSystemSeries.universal_validator" title="Link to this definition"></a></dt>
+<dd><p>Example universal validator that runs for all models</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dakota.spec.shared.core.ResponseLevelsComputeProbRelGenSystemParallel">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">dakota.spec.shared.core.</span></span><span class="sig-name descname"><span class="pre">ResponseLevelsComputeProbRelGenSystemParallel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">parallel</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="k"><span class="pre">True</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.core.ResponseLevelsComputeProbRelGenSystemParallel" title="Link to this definition"></a></dt>
+<dd><p>Aggregate response statistics assuming a parallel system</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dakota.spec.shared.core.ResponseLevelsComputeProbRelGenSystemParallel.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'protected_namespaces':</span> <span class="pre">(),</span> <span class="pre">'str_strip_whitespace':</span> <span class="pre">True,</span> <span class="pre">'use_enum_values':</span> <span class="pre">True,</span> <span class="pre">'validate_assignment':</span> <span class="pre">True}</span></span><a class="headerlink" href="#dakota.spec.shared.core.ResponseLevelsComputeProbRelGenSystemParallel.model_config" title="Link to this definition"></a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dakota.spec.shared.core.ResponseLevelsComputeProbRelGenSystemParallel.universal_validator">
+<span class="sig-name descname"><span class="pre">universal_validator</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.core.ResponseLevelsComputeProbRelGenSystemParallel.universal_validator" title="Link to this definition"></a></dt>
+<dd><p>Example universal validator that runs for all models</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dakota.spec.shared.core.MethodConvergenceTolWithTypeContext1ConvergenceTol">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">dakota.spec.shared.core.</span></span><span class="sig-name descname"><span class="pre">MethodConvergenceTolWithTypeContext1ConvergenceTol</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Annotated</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">PlainSerializer</span><span class="p"><span class="pre">(</span></span><span class="n"><span class="pre">func</span></span><span class="o"><span class="pre">=</span></span><span class="pre">_serialize_dakota_float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">return_type</span></span><span class="o"><span class="pre">=</span></span><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">when_used</span></span><span class="o"><span class="pre">=</span></span><span class="pre">json</span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">-1.7976931348623157e+308</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">convergence_tolerance_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#dakota.spec.shared.core.MethodConvergenceTolWithTypeContext1Relative" title="dakota.spec.shared.core.MethodConvergenceTolWithTypeContext1Relative"><span class="pre">MethodConvergenceTolWithTypeContext1Relative</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#dakota.spec.shared.core.MethodConvergenceTolWithTypeContext1Absolute" title="dakota.spec.shared.core.MethodConvergenceTolWithTypeContext1Absolute"><span class="pre">MethodConvergenceTolWithTypeContext1Absolute</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.core.MethodConvergenceTolWithTypeContext1ConvergenceTol" title="Link to this definition"></a></dt>
+<dd><p>Stopping criterion based on relative error</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dakota.spec.shared.core.MethodConvergenceTolWithTypeContext1ConvergenceTol.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'protected_namespaces':</span> <span class="pre">(),</span> <span class="pre">'str_strip_whitespace':</span> <span class="pre">True,</span> <span class="pre">'use_enum_values':</span> <span class="pre">True,</span> <span class="pre">'validate_assignment':</span> <span class="pre">True}</span></span><a class="headerlink" href="#dakota.spec.shared.core.MethodConvergenceTolWithTypeContext1ConvergenceTol.model_config" title="Link to this definition"></a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dakota.spec.shared.core.MethodConvergenceTolWithTypeContext1ConvergenceTol.universal_validator">
+<span class="sig-name descname"><span class="pre">universal_validator</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.core.MethodConvergenceTolWithTypeContext1ConvergenceTol.universal_validator" title="Link to this definition"></a></dt>
+<dd><p>Example universal validator that runs for all models</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dakota.spec.shared.core.MethodConvergenceTolWithTypeContext2ConvergenceTol">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">dakota.spec.shared.core.</span></span><span class="sig-name descname"><span class="pre">MethodConvergenceTolWithTypeContext2ConvergenceTol</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Annotated</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">PlainSerializer</span><span class="p"><span class="pre">(</span></span><span class="n"><span class="pre">func</span></span><span class="o"><span class="pre">=</span></span><span class="pre">_serialize_dakota_float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">return_type</span></span><span class="o"><span class="pre">=</span></span><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">when_used</span></span><span class="o"><span class="pre">=</span></span><span class="pre">json</span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">-1.7976931348623157e+308</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">convergence_tolerance_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#dakota.spec.shared.core.MethodConvergenceTolWithTypeContext2Relative" title="dakota.spec.shared.core.MethodConvergenceTolWithTypeContext2Relative"><span class="pre">MethodConvergenceTolWithTypeContext2Relative</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#dakota.spec.shared.core.MethodConvergenceTolWithTypeContext2Absolute" title="dakota.spec.shared.core.MethodConvergenceTolWithTypeContext2Absolute"><span class="pre">MethodConvergenceTolWithTypeContext2Absolute</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.core.MethodConvergenceTolWithTypeContext2ConvergenceTol" title="Link to this definition"></a></dt>
+<dd><p>Stopping criterion based on objective function or statistics convergence</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dakota.spec.shared.core.MethodConvergenceTolWithTypeContext2ConvergenceTol.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'protected_namespaces':</span> <span class="pre">(),</span> <span class="pre">'str_strip_whitespace':</span> <span class="pre">True,</span> <span class="pre">'use_enum_values':</span> <span class="pre">True,</span> <span class="pre">'validate_assignment':</span> <span class="pre">True}</span></span><a class="headerlink" href="#dakota.spec.shared.core.MethodConvergenceTolWithTypeContext2ConvergenceTol.model_config" title="Link to this definition"></a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dakota.spec.shared.core.MethodConvergenceTolWithTypeContext2ConvergenceTol.universal_validator">
+<span class="sig-name descname"><span class="pre">universal_validator</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.core.MethodConvergenceTolWithTypeContext2ConvergenceTol.universal_validator" title="Link to this definition"></a></dt>
+<dd><p>Example universal validator that runs for all models</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dakota.spec.shared.core.MethodConvergenceTolWithTypeContext3ConvergenceTol">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">dakota.spec.shared.core.</span></span><span class="sig-name descname"><span class="pre">MethodConvergenceTolWithTypeContext3ConvergenceTol</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Annotated</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">PlainSerializer</span><span class="p"><span class="pre">(</span></span><span class="n"><span class="pre">func</span></span><span class="o"><span class="pre">=</span></span><span class="pre">_serialize_dakota_float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">return_type</span></span><span class="o"><span class="pre">=</span></span><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">when_used</span></span><span class="o"><span class="pre">=</span></span><span class="pre">json</span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">-1.7976931348623157e+308</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">convergence_tolerance_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#dakota.spec.shared.core.MethodConvergenceTolWithTypeContext3Relative" title="dakota.spec.shared.core.MethodConvergenceTolWithTypeContext3Relative"><span class="pre">MethodConvergenceTolWithTypeContext3Relative</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#dakota.spec.shared.core.MethodConvergenceTolWithTypeContext3Absolute" title="dakota.spec.shared.core.MethodConvergenceTolWithTypeContext3Absolute"><span class="pre">MethodConvergenceTolWithTypeContext3Absolute</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.core.MethodConvergenceTolWithTypeContext3ConvergenceTol" title="Link to this definition"></a></dt>
+<dd><p>Stopping criterion based on relative error reduction</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dakota.spec.shared.core.MethodConvergenceTolWithTypeContext3ConvergenceTol.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'protected_namespaces':</span> <span class="pre">(),</span> <span class="pre">'str_strip_whitespace':</span> <span class="pre">True,</span> <span class="pre">'use_enum_values':</span> <span class="pre">True,</span> <span class="pre">'validate_assignment':</span> <span class="pre">True}</span></span><a class="headerlink" href="#dakota.spec.shared.core.MethodConvergenceTolWithTypeContext3ConvergenceTol.model_config" title="Link to this definition"></a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dakota.spec.shared.core.MethodConvergenceTolWithTypeContext3ConvergenceTol.universal_validator">
+<span class="sig-name descname"><span class="pre">universal_validator</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.core.MethodConvergenceTolWithTypeContext3ConvergenceTol.universal_validator" title="Link to this definition"></a></dt>
+<dd><p>Example universal validator that runs for all models</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dakota.spec.shared.core.MethodMfRefineStatsModeMixin">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">dakota.spec.shared.core.</span></span><span class="sig-name descname"><span class="pre">MethodMfRefineStatsModeMixin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">statistics_mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#dakota.spec.shared.core.Active" title="dakota.spec.shared.core.Active"><span class="pre">Active</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#dakota.spec.shared.core.StatisticsModeCombined" title="dakota.spec.shared.core.StatisticsModeCombined"><span class="pre">StatisticsModeCombined</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.core.MethodMfRefineStatsModeMixin" title="Link to this definition"></a></dt>
+<dd><p>Generated model for MethodMfRefineStatsModeMixin</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dakota.spec.shared.core.MethodMfRefineStatsModeMixin.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'protected_namespaces':</span> <span class="pre">(),</span> <span class="pre">'str_strip_whitespace':</span> <span class="pre">True,</span> <span class="pre">'use_enum_values':</span> <span class="pre">True,</span> <span class="pre">'validate_assignment':</span> <span class="pre">True}</span></span><a class="headerlink" href="#dakota.spec.shared.core.MethodMfRefineStatsModeMixin.model_config" title="Link to this definition"></a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dakota.spec.shared.core.MethodMfRefineStatsModeMixin.universal_validator">
+<span class="sig-name descname"><span class="pre">universal_validator</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.core.MethodMfRefineStatsModeMixin.universal_validator" title="Link to this definition"></a></dt>
+<dd><p>Example universal validator that runs for all models</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dakota.spec.shared.core.MethodRefineMetricTypeMixin">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">dakota.spec.shared.core.</span></span><span class="sig-name descname"><span class="pre">MethodRefineMetricTypeMixin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">refinement_metric</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#dakota.spec.shared.core.LevelMappings" title="dakota.spec.shared.core.LevelMappings"><span class="pre">LevelMappings</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#dakota.spec.shared.core.RefinementMetricCov" title="dakota.spec.shared.core.RefinementMetricCov"><span class="pre">RefinementMetricCov</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.core.MethodRefineMetricTypeMixin" title="Link to this definition"></a></dt>
+<dd><p>Generated model for MethodRefineMetricTypeMixin</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dakota.spec.shared.core.MethodRefineMetricTypeMixin.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'protected_namespaces':</span> <span class="pre">(),</span> <span class="pre">'str_strip_whitespace':</span> <span class="pre">True,</span> <span class="pre">'use_enum_values':</span> <span class="pre">True,</span> <span class="pre">'validate_assignment':</span> <span class="pre">True}</span></span><a class="headerlink" href="#dakota.spec.shared.core.MethodRefineMetricTypeMixin.model_config" title="Link to this definition"></a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dakota.spec.shared.core.MethodRefineMetricTypeMixin.universal_validator">
+<span class="sig-name descname"><span class="pre">universal_validator</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.core.MethodRefineMetricTypeMixin.universal_validator" title="Link to this definition"></a></dt>
+<dd><p>Example universal validator that runs for all models</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dakota.spec.shared.core.NumericalGradientOptionsMethodSourceDakotaConfig">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">dakota.spec.shared.core.</span></span><span class="sig-name descname"><span class="pre">NumericalGradientOptionsMethodSourceDakotaConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignore_bounds</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="k"><span class="pre">True</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step_scaling</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#dakota.spec.shared.core.NumericalGradientOptionsMethodSourceDakotaRelative" title="dakota.spec.shared.core.NumericalGradientOptionsMethodSourceDakotaRelative"><span class="pre">NumericalGradientOptionsMethodSourceDakotaRelative</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#dakota.spec.shared.core.NumericalGradientOptionsMethodSourceDakotaAbsolute" title="dakota.spec.shared.core.NumericalGradientOptionsMethodSourceDakotaAbsolute"><span class="pre">NumericalGradientOptionsMethodSourceDakotaAbsolute</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#dakota.spec.shared.core.NumericalGradientOptionsMethodSourceDakotaBounds" title="dakota.spec.shared.core.NumericalGradientOptionsMethodSourceDakotaBounds"><span class="pre">NumericalGradientOptionsMethodSourceDakotaBounds</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">&lt;factory&gt;</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.core.NumericalGradientOptionsMethodSourceDakotaConfig" title="Link to this definition"></a></dt>
+<dd><p>(Default) Use internal Dakota finite differences algorithm</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dakota.spec.shared.core.NumericalGradientOptionsMethodSourceDakotaConfig.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'protected_namespaces':</span> <span class="pre">(),</span> <span class="pre">'str_strip_whitespace':</span> <span class="pre">True,</span> <span class="pre">'use_enum_values':</span> <span class="pre">True,</span> <span class="pre">'validate_assignment':</span> <span class="pre">True}</span></span><a class="headerlink" href="#dakota.spec.shared.core.NumericalGradientOptionsMethodSourceDakotaConfig.model_config" title="Link to this definition"></a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dakota.spec.shared.core.NumericalGradientOptionsMethodSourceDakotaConfig.universal_validator">
+<span class="sig-name descname"><span class="pre">universal_validator</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.core.NumericalGradientOptionsMethodSourceDakotaConfig.universal_validator" title="Link to this definition"></a></dt>
+<dd><p>Example universal validator that runs for all models</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dakota.spec.shared.core.ResponseLevelsComputeProbRelGenCompute">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">dakota.spec.shared.core.</span></span><span class="sig-name descname"><span class="pre">ResponseLevelsComputeProbRelGenCompute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">statistic</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#dakota.spec.shared.core.ResponseLevelsComputeProbRelGenProbabilities" title="dakota.spec.shared.core.ResponseLevelsComputeProbRelGenProbabilities"><span class="pre">ResponseLevelsComputeProbRelGenProbabilities</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#dakota.spec.shared.core.ResponseLevelsComputeProbRelGenReliabilities" title="dakota.spec.shared.core.ResponseLevelsComputeProbRelGenReliabilities"><span class="pre">ResponseLevelsComputeProbRelGenReliabilities</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#dakota.spec.shared.core.ResponseLevelsComputeProbRelGenGenReliabilities" title="dakota.spec.shared.core.ResponseLevelsComputeProbRelGenGenReliabilities"><span class="pre">ResponseLevelsComputeProbRelGenGenReliabilities</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">system</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#dakota.spec.shared.core.ResponseLevelsComputeProbRelGenSystemSeries" title="dakota.spec.shared.core.ResponseLevelsComputeProbRelGenSystemSeries"><span class="pre">ResponseLevelsComputeProbRelGenSystemSeries</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#dakota.spec.shared.core.ResponseLevelsComputeProbRelGenSystemParallel" title="dakota.spec.shared.core.ResponseLevelsComputeProbRelGenSystemParallel"><span class="pre">ResponseLevelsComputeProbRelGenSystemParallel</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.core.ResponseLevelsComputeProbRelGenCompute" title="Link to this definition"></a></dt>
+<dd><p>Selection of statistics to compute at each response level</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dakota.spec.shared.core.ResponseLevelsComputeProbRelGenCompute.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'protected_namespaces':</span> <span class="pre">(),</span> <span class="pre">'str_strip_whitespace':</span> <span class="pre">True,</span> <span class="pre">'use_enum_values':</span> <span class="pre">True,</span> <span class="pre">'validate_assignment':</span> <span class="pre">True}</span></span><a class="headerlink" href="#dakota.spec.shared.core.ResponseLevelsComputeProbRelGenCompute.model_config" title="Link to this definition"></a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dakota.spec.shared.core.ResponseLevelsComputeProbRelGenCompute.universal_validator">
+<span class="sig-name descname"><span class="pre">universal_validator</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.core.ResponseLevelsComputeProbRelGenCompute.universal_validator" title="Link to this definition"></a></dt>
+<dd><p>Example universal validator that runs for all models</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dakota.spec.shared.core.MethodConvergenceTolWithTypeContext1Mixin">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">dakota.spec.shared.core.</span></span><span class="sig-name descname"><span class="pre">MethodConvergenceTolWithTypeContext1Mixin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">convergence_tolerance</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#dakota.spec.shared.core.MethodConvergenceTolWithTypeContext1ConvergenceTol" title="dakota.spec.shared.core.MethodConvergenceTolWithTypeContext1ConvergenceTol"><span class="pre">MethodConvergenceTolWithTypeContext1ConvergenceTol</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.core.MethodConvergenceTolWithTypeContext1Mixin" title="Link to this definition"></a></dt>
+<dd><p>Generated model for MethodConvergenceTolWithTypeContext1Mixin</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dakota.spec.shared.core.MethodConvergenceTolWithTypeContext1Mixin.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'protected_namespaces':</span> <span class="pre">(),</span> <span class="pre">'str_strip_whitespace':</span> <span class="pre">True,</span> <span class="pre">'use_enum_values':</span> <span class="pre">True,</span> <span class="pre">'validate_assignment':</span> <span class="pre">True}</span></span><a class="headerlink" href="#dakota.spec.shared.core.MethodConvergenceTolWithTypeContext1Mixin.model_config" title="Link to this definition"></a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dakota.spec.shared.core.MethodConvergenceTolWithTypeContext1Mixin.universal_validator">
+<span class="sig-name descname"><span class="pre">universal_validator</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.core.MethodConvergenceTolWithTypeContext1Mixin.universal_validator" title="Link to this definition"></a></dt>
+<dd><p>Example universal validator that runs for all models</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dakota.spec.shared.core.MethodConvergenceTolWithTypeContext2Mixin">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">dakota.spec.shared.core.</span></span><span class="sig-name descname"><span class="pre">MethodConvergenceTolWithTypeContext2Mixin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">convergence_tolerance</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#dakota.spec.shared.core.MethodConvergenceTolWithTypeContext2ConvergenceTol" title="dakota.spec.shared.core.MethodConvergenceTolWithTypeContext2ConvergenceTol"><span class="pre">MethodConvergenceTolWithTypeContext2ConvergenceTol</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.core.MethodConvergenceTolWithTypeContext2Mixin" title="Link to this definition"></a></dt>
+<dd><p>Generated model for MethodConvergenceTolWithTypeContext2Mixin</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dakota.spec.shared.core.MethodConvergenceTolWithTypeContext2Mixin.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'protected_namespaces':</span> <span class="pre">(),</span> <span class="pre">'str_strip_whitespace':</span> <span class="pre">True,</span> <span class="pre">'use_enum_values':</span> <span class="pre">True,</span> <span class="pre">'validate_assignment':</span> <span class="pre">True}</span></span><a class="headerlink" href="#dakota.spec.shared.core.MethodConvergenceTolWithTypeContext2Mixin.model_config" title="Link to this definition"></a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dakota.spec.shared.core.MethodConvergenceTolWithTypeContext2Mixin.universal_validator">
+<span class="sig-name descname"><span class="pre">universal_validator</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.core.MethodConvergenceTolWithTypeContext2Mixin.universal_validator" title="Link to this definition"></a></dt>
+<dd><p>Example universal validator that runs for all models</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dakota.spec.shared.core.MethodConvergenceTolWithTypeContext3Mixin">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">dakota.spec.shared.core.</span></span><span class="sig-name descname"><span class="pre">MethodConvergenceTolWithTypeContext3Mixin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">convergence_tolerance</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#dakota.spec.shared.core.MethodConvergenceTolWithTypeContext3ConvergenceTol" title="dakota.spec.shared.core.MethodConvergenceTolWithTypeContext3ConvergenceTol"><span class="pre">MethodConvergenceTolWithTypeContext3ConvergenceTol</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.core.MethodConvergenceTolWithTypeContext3Mixin" title="Link to this definition"></a></dt>
+<dd><p>Generated model for MethodConvergenceTolWithTypeContext3Mixin</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dakota.spec.shared.core.MethodConvergenceTolWithTypeContext3Mixin.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'protected_namespaces':</span> <span class="pre">(),</span> <span class="pre">'str_strip_whitespace':</span> <span class="pre">True,</span> <span class="pre">'use_enum_values':</span> <span class="pre">True,</span> <span class="pre">'validate_assignment':</span> <span class="pre">True}</span></span><a class="headerlink" href="#dakota.spec.shared.core.MethodConvergenceTolWithTypeContext3Mixin.model_config" title="Link to this definition"></a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dakota.spec.shared.core.MethodConvergenceTolWithTypeContext3Mixin.universal_validator">
+<span class="sig-name descname"><span class="pre">universal_validator</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.core.MethodConvergenceTolWithTypeContext3Mixin.universal_validator" title="Link to this definition"></a></dt>
+<dd><p>Example universal validator that runs for all models</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dakota.spec.shared.core.NumericalGradientOptionsMethodSourceDakota">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">dakota.spec.shared.core.</span></span><span class="sig-name descname"><span class="pre">NumericalGradientOptionsMethodSourceDakota</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dakota</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#dakota.spec.shared.core.NumericalGradientOptionsMethodSourceDakotaConfig" title="dakota.spec.shared.core.NumericalGradientOptionsMethodSourceDakotaConfig"><span class="pre">NumericalGradientOptionsMethodSourceDakotaConfig</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">&lt;factory&gt;</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.core.NumericalGradientOptionsMethodSourceDakota" title="Link to this definition"></a></dt>
+<dd><p>(Default) Use internal Dakota finite differences algorithm</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dakota.spec.shared.core.NumericalGradientOptionsMethodSourceDakota.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'protected_namespaces':</span> <span class="pre">(),</span> <span class="pre">'str_strip_whitespace':</span> <span class="pre">True,</span> <span class="pre">'use_enum_values':</span> <span class="pre">True,</span> <span class="pre">'validate_assignment':</span> <span class="pre">True}</span></span><a class="headerlink" href="#dakota.spec.shared.core.NumericalGradientOptionsMethodSourceDakota.model_config" title="Link to this definition"></a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dakota.spec.shared.core.NumericalGradientOptionsMethodSourceDakota.universal_validator">
+<span class="sig-name descname"><span class="pre">universal_validator</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.core.NumericalGradientOptionsMethodSourceDakota.universal_validator" title="Link to this definition"></a></dt>
+<dd><p>Example universal validator that runs for all models</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dakota.spec.shared.core.ResponseLevelsComputeProbRelGenResponseLevels">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">dakota.spec.shared.core.</span></span><span class="sig-name descname"><span class="pre">ResponseLevelsComputeProbRelGenResponseLevels</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">values</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">Annotated</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">PlainSerializer</span><span class="p"><span class="pre">(</span></span><span class="n"><span class="pre">func</span></span><span class="o"><span class="pre">=</span></span><span class="pre">_serialize_dakota_float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">return_type</span></span><span class="o"><span class="pre">=</span></span><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">when_used</span></span><span class="o"><span class="pre">=</span></span><span class="pre">json</span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_response_levels</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">compute</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#dakota.spec.shared.core.ResponseLevelsComputeProbRelGenCompute" title="dakota.spec.shared.core.ResponseLevelsComputeProbRelGenCompute"><span class="pre">ResponseLevelsComputeProbRelGenCompute</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.core.ResponseLevelsComputeProbRelGenResponseLevels" title="Link to this definition"></a></dt>
+<dd><p>Values at which to estimate desired statistics for each response</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dakota.spec.shared.core.ResponseLevelsComputeProbRelGenResponseLevels.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'json_schema_extra':</span> <span class="pre">&lt;function</span> <span class="pre">DakotaBaseModel.__init_subclass__.&lt;locals&gt;.combined_schema_extra&gt;,</span> <span class="pre">'protected_namespaces':</span> <span class="pre">(),</span> <span class="pre">'str_strip_whitespace':</span> <span class="pre">True,</span> <span class="pre">'use_enum_values':</span> <span class="pre">True,</span> <span class="pre">'validate_assignment':</span> <span class="pre">True}</span></span><a class="headerlink" href="#dakota.spec.shared.core.ResponseLevelsComputeProbRelGenResponseLevels.model_config" title="Link to this definition"></a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dakota.spec.shared.core.ResponseLevelsComputeProbRelGenResponseLevels.universal_validator">
+<span class="sig-name descname"><span class="pre">universal_validator</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.core.ResponseLevelsComputeProbRelGenResponseLevels.universal_validator" title="Link to this definition"></a></dt>
+<dd><p>Example universal validator that runs for all models</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dakota.spec.shared.core.MethodExpConvergenceToleranceMixin">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">dakota.spec.shared.core.</span></span><span class="sig-name descname"><span class="pre">MethodExpConvergenceToleranceMixin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">refinement_metric</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#dakota.spec.shared.core.LevelMappings" title="dakota.spec.shared.core.LevelMappings"><span class="pre">LevelMappings</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#dakota.spec.shared.core.RefinementMetricCov" title="dakota.spec.shared.core.RefinementMetricCov"><span class="pre">RefinementMetricCov</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">convergence_tolerance</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#dakota.spec.shared.core.MethodConvergenceTolWithTypeContext2ConvergenceTol" title="dakota.spec.shared.core.MethodConvergenceTolWithTypeContext2ConvergenceTol"><span class="pre">MethodConvergenceTolWithTypeContext2ConvergenceTol</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.core.MethodExpConvergenceToleranceMixin" title="Link to this definition"></a></dt>
+<dd><p>Generated model for MethodExpConvergenceToleranceMixin</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dakota.spec.shared.core.MethodExpConvergenceToleranceMixin.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'protected_namespaces':</span> <span class="pre">(),</span> <span class="pre">'str_strip_whitespace':</span> <span class="pre">True,</span> <span class="pre">'use_enum_values':</span> <span class="pre">True,</span> <span class="pre">'validate_assignment':</span> <span class="pre">True}</span></span><a class="headerlink" href="#dakota.spec.shared.core.MethodExpConvergenceToleranceMixin.model_config" title="Link to this definition"></a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dakota.spec.shared.core.MethodExpConvergenceToleranceMixin.universal_validator">
+<span class="sig-name descname"><span class="pre">universal_validator</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.core.MethodExpConvergenceToleranceMixin.universal_validator" title="Link to this definition"></a></dt>
+<dd><p>Example universal validator that runs for all models</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dakota.spec.shared.core.MethodMfExpConvergenceToleranceMixin">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">dakota.spec.shared.core.</span></span><span class="sig-name descname"><span class="pre">MethodMfExpConvergenceToleranceMixin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">refinement_metric</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#dakota.spec.shared.core.LevelMappings" title="dakota.spec.shared.core.LevelMappings"><span class="pre">LevelMappings</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#dakota.spec.shared.core.RefinementMetricCov" title="dakota.spec.shared.core.RefinementMetricCov"><span class="pre">RefinementMetricCov</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">statistics_mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#dakota.spec.shared.core.Active" title="dakota.spec.shared.core.Active"><span class="pre">Active</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#dakota.spec.shared.core.StatisticsModeCombined" title="dakota.spec.shared.core.StatisticsModeCombined"><span class="pre">StatisticsModeCombined</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">convergence_tolerance</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#dakota.spec.shared.core.MethodConvergenceTolWithTypeContext2ConvergenceTol" title="dakota.spec.shared.core.MethodConvergenceTolWithTypeContext2ConvergenceTol"><span class="pre">MethodConvergenceTolWithTypeContext2ConvergenceTol</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.core.MethodMfExpConvergenceToleranceMixin" title="Link to this definition"></a></dt>
+<dd><p>Generated model for MethodMfExpConvergenceToleranceMixin</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dakota.spec.shared.core.MethodMfExpConvergenceToleranceMixin.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'protected_namespaces':</span> <span class="pre">(),</span> <span class="pre">'str_strip_whitespace':</span> <span class="pre">True,</span> <span class="pre">'use_enum_values':</span> <span class="pre">True,</span> <span class="pre">'validate_assignment':</span> <span class="pre">True}</span></span><a class="headerlink" href="#dakota.spec.shared.core.MethodMfExpConvergenceToleranceMixin.model_config" title="Link to this definition"></a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dakota.spec.shared.core.MethodMfExpConvergenceToleranceMixin.universal_validator">
+<span class="sig-name descname"><span class="pre">universal_validator</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.core.MethodMfExpConvergenceToleranceMixin.universal_validator" title="Link to this definition"></a></dt>
+<dd><p>Example universal validator that runs for all models</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dakota.spec.shared.core.NumericalGradientOptionsMixin">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">dakota.spec.shared.core.</span></span><span class="sig-name descname"><span class="pre">NumericalGradientOptionsMixin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method_source</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#dakota.spec.shared.core.NumericalGradientOptionsMethodSourceDakota" title="dakota.spec.shared.core.NumericalGradientOptionsMethodSourceDakota"><span class="pre">NumericalGradientOptionsMethodSourceDakota</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#dakota.spec.shared.core.NumericalGradientOptionsMethodSourceVendor" title="dakota.spec.shared.core.NumericalGradientOptionsMethodSourceVendor"><span class="pre">NumericalGradientOptionsMethodSourceVendor</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interval_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#dakota.spec.shared.core.NumericalGradientOptionsIntervalTypeForward" title="dakota.spec.shared.core.NumericalGradientOptionsIntervalTypeForward"><span class="pre">NumericalGradientOptionsIntervalTypeForward</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#dakota.spec.shared.core.NumericalGradientOptionsIntervalTypeCentral" title="dakota.spec.shared.core.NumericalGradientOptionsIntervalTypeCentral"><span class="pre">NumericalGradientOptionsIntervalTypeCentral</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fd_step_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list[~typing.Annotated[float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">~pydantic.functional_serializers.PlainSerializer(func</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">~dakota.spec.base._serialize_dakota_float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">float</span> <span class="pre">|</span> <span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">when_used</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">json)]]</span> <span class="pre">|</span> <span class="pre">None</span> <span class="pre">=</span> <span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.core.NumericalGradientOptionsMixin" title="Link to this definition"></a></dt>
+<dd><p>Generated model for NumericalGradientOptionsMixin</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dakota.spec.shared.core.NumericalGradientOptionsMixin.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'protected_namespaces':</span> <span class="pre">(),</span> <span class="pre">'str_strip_whitespace':</span> <span class="pre">True,</span> <span class="pre">'use_enum_values':</span> <span class="pre">True,</span> <span class="pre">'validate_assignment':</span> <span class="pre">True}</span></span><a class="headerlink" href="#dakota.spec.shared.core.NumericalGradientOptionsMixin.model_config" title="Link to this definition"></a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dakota.spec.shared.core.NumericalGradientOptionsMixin.universal_validator">
+<span class="sig-name descname"><span class="pre">universal_validator</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.core.NumericalGradientOptionsMixin.universal_validator" title="Link to this definition"></a></dt>
+<dd><p>Example universal validator that runs for all models</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dakota.spec.shared.core.ResponseLevelsComputeProbRelGenMixin">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">dakota.spec.shared.core.</span></span><span class="sig-name descname"><span class="pre">ResponseLevelsComputeProbRelGenMixin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">response_levels</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#dakota.spec.shared.core.ResponseLevelsComputeProbRelGenResponseLevels" title="dakota.spec.shared.core.ResponseLevelsComputeProbRelGenResponseLevels"><span class="pre">ResponseLevelsComputeProbRelGenResponseLevels</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.core.ResponseLevelsComputeProbRelGenMixin" title="Link to this definition"></a></dt>
+<dd><p>Generated model for ResponseLevelsComputeProbRelGenMixin</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dakota.spec.shared.core.ResponseLevelsComputeProbRelGenMixin.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'protected_namespaces':</span> <span class="pre">(),</span> <span class="pre">'str_strip_whitespace':</span> <span class="pre">True,</span> <span class="pre">'use_enum_values':</span> <span class="pre">True,</span> <span class="pre">'validate_assignment':</span> <span class="pre">True}</span></span><a class="headerlink" href="#dakota.spec.shared.core.ResponseLevelsComputeProbRelGenMixin.model_config" title="Link to this definition"></a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dakota.spec.shared.core.ResponseLevelsComputeProbRelGenMixin.universal_validator">
+<span class="sig-name descname"><span class="pre">universal_validator</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.core.ResponseLevelsComputeProbRelGenMixin.universal_validator" title="Link to this definition"></a></dt>
+<dd><p>Example universal validator that runs for all models</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="bayesian.html" class="btn btn-neutral float-left" title="Bayesian" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="expansion.html" class="btn btn-neutral float-right" title="Expansion" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <!--
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Sandia National Laboratories.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+  --> 
+
+</footer>
+        </div>
+      </div>
+	  
+	  <div style="background-color: #0f0f0f;color:#fafafa;padding:20px">
+	    <div>
+		  <h2><em>Exceptional service in the national interest</em></h2>
+		</div>
+		<p>© 2023 National Technology and Engineering Solutions of Sandia, LLC. | <a href="https://www.sandia.gov/contact_us/index.html">Questions &amp; Comments</a> | <a href="https://www.sandia.gov/general/privacy-security/index.html">Privacy &amp; Security</a></p>
+		<p><a href="http://energy.gov" rel="noopener noreferrer" target="_blank"><img alt="U.S. Department of Energy" longdesc="https://energy.gov" src="https://www.sandia.gov/_common/images/doe_logo_white.png" style="height:37px; width:140px"></a> <a href="http://nnsa.energy.gov/" rel="noopener noreferrer" target="_blank"> <img alt="National Nuclear Security Administration" longdesc="http://nnsa.gov" src="https://www.sandia.gov/_common/images/nnsa_logo_white.png" style="height:37px; width:116px"></a></p>
+		<p><a href="https://www.sandia.gov">Sandia National Laboratories</a> is a multimission laboratory managed and operated by National Technology and Engineering Solutions of Sandia, LLC., a wholly owned subsidiary of Honeywell International, Inc., for the U.S. Department of Energy’s National Nuclear Security Administration under contract DE-NA-0003525.</p>
+	  </div>	  	  
+	  
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

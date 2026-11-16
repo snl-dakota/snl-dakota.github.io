@@ -1,0 +1,23 @@
+.. _method-ncsu_direct-volume_boxsize_limit:
+
+""""""""""""""""""""
+volume_boxsize_limit
+""""""""""""""""""""
+
+Stopping criterion based on volume of search space
+
+**Specification**
+
+- *Alias:* None
+- *Arguments:* None
+- *JSON argument key:* None
+- *Default:* -1.0
+
+**Description**
+
+``volume_boxsize_limit`` is a setting that terminates the optimization
+when the volume of a hyperrectangle S with f(c(S)) = fmin is less than
+volume_boxsize_limit percent of the original hyperrectangle.
+Basically, volume_boxsize_limit stops the optimization when the volume
+of the particular rectangle which has fmin is less than a certain
+percentage of the whole volume.

@@ -1,0 +1,54 @@
+.. _method-sampling-wilks-confidence_level:
+
+""""""""""""""""
+confidence_level
+""""""""""""""""
+
+The confidence level to be used when determining sample sizes
+for random sampling using Wilks order statistics.
+
+**Specification**
+
+- *Alias:* None
+- *Arguments:* None
+- *JSON argument key:* None
+- *Default:* 0.95
+
+**Description**
+
+*Default Behavior*
+
+A value of 0.95 (95%) is the default for both confidence level as well
+as probability level resulting in 59 samples for first-order one-sided
+statistics.
+
+**Examples**
+
+.. tab:: Freeform
+
+   .. code-block:: dakota
+
+       method
+         sampling
+           sample_type random
+           wilks
+             confidence_level = 0.99
+
+.. tab:: JSON
+
+   .. code-block:: json
+
+       {
+         "method": [
+           {
+             "sampling": {
+               "sample_type": {
+                 "random": true
+               },
+               "wilks": {
+                 "confidence_level": 0.99
+               }
+             }
+           }
+         ]
+       }

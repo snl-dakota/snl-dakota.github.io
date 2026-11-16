@@ -1,0 +1,58 @@
+.. _method-multilevel_sampling-allocation_target-mean:
+
+""""
+mean
+""""
+
+Fit MLMC sample allocation to control the variance of the estimator for the mean.
+
+**Specification**
+
+- *Alias:* None
+- *Arguments:* None
+- *JSON argument key:* None
+- *Default:* true
+
+**Description**
+
+Computes the variance of the mean estimator and fits sample allocation by solving the corresponding optimization problem. This optimization problem is solved in analitically closed form.
+
+**Examples**
+
+The following method block
+
+.. tab:: Freeform
+
+   .. code-block:: dakota
+
+       method,
+        model_pointer = 'HIERARCH'
+        multilevel_sampling
+          pilot_samples = 20 seed = 1237
+          convergence_tolerance = .01
+          allocation_target = mean
+
+.. tab:: JSON
+
+   .. code-block:: json
+
+       {
+         "method": [
+           {
+             "multilevel_sampling": {
+               "model_pointer": "HIERARCH",
+               "pilot_samples": [20],
+               "seed_sequence": [1237],
+               "convergence_tolerance": {
+                 "value": 0.01
+               },
+               "allocation_target": {
+                 "mean": true
+               }
+             }
+           }
+         ]
+       }
+
+
+uses the mean as sample allocation target by computing its variance.

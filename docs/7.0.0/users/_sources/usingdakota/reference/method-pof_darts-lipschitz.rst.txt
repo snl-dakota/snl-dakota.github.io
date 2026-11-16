@@ -1,0 +1,41 @@
+.. _method-pof_darts-lipschitz:
+
+"""""""""
+lipschitz
+"""""""""
+
+Select the type of Lipschitz estimation (global or local)
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-pof_darts-lipschitz-local_est
+   method-pof_darts-lipschitz-global_est
+
+**Specification**
+
+- *Alias:* None
+- *Arguments:* None
+- *JSON argument key:* None
+
+**Child Keywords:**
+
++-------------------------+------------------------+--------------------+--------------------------------+------------------------------------------------------------+
+| Required/Optional       | Description of Group   | JSON Group Key     | Dakota Keyword                 | Dakota Keyword Description                                 |
++=========================+========================+====================+================================+============================================================+
+| Optional                |                        |                    | `local_est`__                  | Specify local estimation of the Lipschitz constant         |
++-------------------------+------------------------+--------------------+--------------------------------+------------------------------------------------------------+
+| Optional                |                        |                    | `global_est`__                 | Specify global estimation of the Lipschitz estimate        |
++-------------------------+------------------------+--------------------+--------------------------------+------------------------------------------------------------+
+
+.. __: method-pof_darts-lipschitz-local_est.html
+__ method-pof_darts-lipschitz-global_est.html
+
+**Description**
+
+There are two types of Lipschitz estimation used in sizing the disks used in
+POF Darts:  ``global`` and ``local``.  The global approach uses
+one Lipschitz estimate for the entire domain.  The local approach calculates
+the Lipschitz estimate separately for each Voronoi region based on nearby points.
+The local method is more expensive but more accurate.

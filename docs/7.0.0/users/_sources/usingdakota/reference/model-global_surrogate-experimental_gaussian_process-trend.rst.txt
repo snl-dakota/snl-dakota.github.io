@@ -1,0 +1,54 @@
+.. _model-global_surrogate-experimental_gaussian_process-trend:
+
+"""""
+trend
+"""""
+
+This keyword enables the use of deterministic polynomial trend function
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   model-global_surrogate-experimental_gaussian_process-trend-none
+   model-global_surrogate-experimental_gaussian_process-trend-constant
+   model-global_surrogate-experimental_gaussian_process-trend-linear
+   model-global_surrogate-experimental_gaussian_process-trend-reduced_quadratic
+   model-global_surrogate-experimental_gaussian_process-trend-quadratic
+
+**Specification**
+
+- *Alias:* None
+- *Arguments:* None
+- *JSON argument key:* None
+
+**Child Keywords:**
+
++-------------------------+------------------------+--------------------+--------------------------------+------------------------------------------------------------+
+| Required/Optional       | Description of Group   | JSON Group Key     | Dakota Keyword                 | Dakota Keyword Description                                 |
++=========================+========================+====================+================================+============================================================+
+| Optional                |                        |                    | `none`__                       | No trend function                                          |
++-------------------------+------------------------+--------------------+--------------------------------+------------------------------------------------------------+
+| Optional                |                        |                    | `constant`__                   | Constant trend function                                    |
++-------------------------+------------------------+--------------------+--------------------------------+------------------------------------------------------------+
+| Optional                |                        |                    | `linear`__                     | Use a linear polynomial or trend function                  |
++-------------------------+------------------------+--------------------+--------------------------------+------------------------------------------------------------+
+| Optional                |                        |                    | `reduced_quadratic`__          | Quadratic polynomials - main effects only                  |
++-------------------------+------------------------+--------------------+--------------------------------+------------------------------------------------------------+
+| Optional                |                        |                    | `quadratic`__                  | Use a quadratic polynomial or trend function               |
++-------------------------+------------------------+--------------------+--------------------------------+------------------------------------------------------------+
+
+.. __: model-global_surrogate-experimental_gaussian_process-trend-none.html
+__ model-global_surrogate-experimental_gaussian_process-trend-constant.html
+__ model-global_surrogate-experimental_gaussian_process-trend-linear.html
+__ model-global_surrogate-experimental_gaussian_process-trend-reduced_quadratic.html
+__ model-global_surrogate-experimental_gaussian_process-trend-quadratic.html
+
+**Description**
+
+Enable the use of a deterministic polynomial trend function whose coefficients are
+found through regression. The user may choose a constant, linear, or quadratic
+polynomial.
+
+*Default Behavior*
+Defaults to no trend when keyword is absent.

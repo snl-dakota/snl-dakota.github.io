@@ -1,0 +1,50 @@
+.. _method-sampling-wilks-one_sided_lower:
+
+"""""""""""""""
+one_sided_lower
+"""""""""""""""
+
+Specifies one-sided lower portion order statistics to be used when
+determining sample sizes for random sampling using Wilks order statistics.
+
+**Specification**
+
+- *Alias:* None
+- *Arguments:* None
+- *JSON argument key:* None
+
+**Description**
+
+This option causes the sample size to be based on the lowermost N outputs
+for order N statistics (default N=1).
+
+**Examples**
+
+.. tab:: Freeform
+
+   .. code-block:: dakota
+
+       method
+         sampling
+           sample_type random
+           wilks
+             one_sided_lower
+
+.. tab:: JSON
+
+   .. code-block:: json
+
+       {
+         "method": [
+           {
+             "sampling": {
+               "sample_type": {
+                 "random": true
+               },
+               "wilks": {
+                 "one_sided_lower": true
+               }
+             }
+           }
+         ]
+       }

@@ -1,0 +1,54 @@
+.. _method-multilevel_blue-group_throttle-best_conditioned:
+
+""""""""""""""""
+best_conditioned
+""""""""""""""""
+
+Throttle multilevel BLUE to only solve for allocations using the groups with the best conditioning in their group covariances
+
+**Specification**
+
+- *Alias:* None
+- *Arguments:* None
+- *JSON argument key:* None
+
+**Description**
+
+The number of groups in ML BLUE is initially defined using all
+combinations of the model indices, and group covariances are computed
+for every group.  This throttle then retains a number of groups specified
+by the provided count, where the retained groups have the highest inverse
+condition number ("rcond") for their group covariances.  This is closely
+related to :dakkw:`method-multilevel_blue-group_throttle-rcond_tolerance`
+except that the worst-case group conditioning is not controlled directly.
+
+**Examples**
+
+.. tab:: Freeform
+
+   .. code-block:: dakota
+
+       method
+         model_pointer = 'ENSEMBLE'
+         multilevel_blue
+           pilot_samples = 50 seed = 8674132
+           group_throttle best_conditioned = 100
+           max_function_evaluations = 1000
+
+.. tab:: JSON
+
+   .. code-block:: json
+
+       {
+         "method": [
+           {
+             "multilevel_blue": {
+               "model_pointer": "ENSEMBLE",
+               "pilot_samples": {"counts": [50]},
+               "seed_sequence": [8674132],
+               "group_throttle": {"best_conditioned": 100},
+               "max_function_evaluations": 1000
+             }
+           }
+         ]
+       }

@@ -1,0 +1,52 @@
+.. _interface-analysis_drivers-fork-parameters_format-json_format:
+
+"""""""""""
+json_format
+"""""""""""
+
+Use the JSON format for parameters files
+
+**Specification**
+
+- *Alias:* None
+- *Arguments:* None
+- *JSON argument key:* None
+- *Default:* true
+
+**Description**
+
+When this keyword is used, parameters files will be written in JSON 
+format, which is explained :ref:`here <variables:parameters:json>`.
+JSON format files can be decoded by many programming languages,
+which may make them easier to work with than standard or APREPRO
+format parameters files.
+
+**Examples**
+
+.. tab:: Freeform
+
+   .. code-block:: dakota
+
+       interface
+         fork
+         analysis_drivers 'driver.py'
+         parameters_file = "params.in"
+         results_file = "results.out"
+         parameters_format
+           json
+
+.. tab:: JSON
+
+   .. code-block:: json
+
+       {
+         "interface": [
+           {
+             "analysis_drivers": {"drivers": ["driver.py"]},
+             "interface_type": {"fork": {}},
+             "parameters_file": "params.in",
+             "results_file": "results.out",
+             "parameters_format": {"json_format": {}}
+           }
+         ]
+       }

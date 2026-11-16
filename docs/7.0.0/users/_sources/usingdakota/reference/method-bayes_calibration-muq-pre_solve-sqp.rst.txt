@@ -1,0 +1,23 @@
+.. _method-bayes_calibration-muq-pre_solve-sqp:
+
+"""
+sqp
+"""
+
+Use a sequential quadratic programming method for solving an optimization sub-problem
+
+**Specification**
+
+- *Alias:* None
+- *Arguments:* None
+- *JSON argument key:* None
+- *Default:* true
+
+**Description**
+
+Many uncertainty quantification methods solve a constrained
+optimization problem under the hood.  The ``sqp`` keyword directs
+Dakota to use a sequential quadratic programming method to solve the
+subproblem.  A sequential quadratic programming solves a sequence of
+linearly-constrained quadratic programming problems to arrive at the
+optimal solution.

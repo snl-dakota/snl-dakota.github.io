@@ -1,0 +1,23 @@
+.. _model-global_surrogate-function_train-max_rank:
+
+""""""""
+max_rank
+""""""""
+
+Limits the maximum rank that is explored during a rank adaptation.
+
+**Specification**
+
+- *Alias:* None
+- *Arguments:* None
+- *JSON argument key:* None
+- *Default:* 9223372036854775807
+
+**Description**
+
+The ``adapt_rank`` procedure increments the rank on each iteration, and
+the maximum value is limited by ``max_rank``
+
+*Default Behavior*
+
+Max rank is unbounded (adaptive sweep will stop when CV error increases).

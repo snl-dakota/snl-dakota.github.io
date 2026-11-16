@@ -1,0 +1,57 @@
+.. _method-bayes_calibration-gpmsa-proposal_covariance-file-diagonal:
+
+""""""""
+diagonal
+""""""""
+
+Specifies the diagonal matrix format when importing a
+user-specified proposal covariance.
+
+**Specification**
+
+- *Alias:* None
+- *Arguments:* None
+- *JSON argument key:* None
+- *Default:* true
+
+**Description**
+
+When importing the MCMC proposal covariance from a user-specified
+filename, this keyword declares the use of a diagonal matrix format,
+i.e., the user only provides the (positive) values along the diagonal.
+
+**Examples**
+
+.. tab:: Freeform
+
+   .. code-block:: dakota
+
+       method,
+               bayes_calibration queso
+                samples = 1000 seed = 348
+                 dram
+                 proposal_covariance
+                   diagonal filename 'dakota_cantilever_queso.diag.dat'
+
+.. tab:: JSON
+
+   .. code-block:: json
+
+       {
+         "method": [
+           {
+             "bayes_calibration": {
+               "queso": {
+                 "samples": 1000,
+                 "seed": 348,
+                 "dram": {},
+                 "proposal_covariance": {
+                   "diagonal": {
+                     "filename": "dakota_cantilever_queso.diag.dat"
+                   }
+                 }
+               }
+             }
+           }
+         ]
+       }

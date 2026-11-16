@@ -1,0 +1,45 @@
+.. _responses-mixed_hessians-id_quasi_hessians:
+
+"""""""""""""""""
+id_quasi_hessians
+"""""""""""""""""
+
+Identify which quasi-Hessian corresponds to which response
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   responses-mixed_hessians-id_quasi_hessians-bfgs
+   responses-mixed_hessians-id_quasi_hessians-sr1
+
+**Specification**
+
+- *Alias:* None
+- *Arguments:* INTEGER ARRAY
+- *JSON argument key:* values
+
+**Child Keywords:**
+
++-------------------------+------------------------+--------------------+--------------------------------+------------------------------------------------------------+
+| Required/Optional       | Description of Group   | JSON Group Key     | Dakota Keyword                 | Dakota Keyword Description                                 |
++=========================+========================+====================+================================+============================================================+
+| Required (Choose One)   | Approximation          | approximation      | `bfgs`__                       | Use BFGS method to compute quasi-hessians                  |
++                         +                        +                    +--------------------------------+------------------------------------------------------------+
+|                         |                        |                    | `sr1`__                        | Use the Symmetric Rank 1 update method to compute          |
+|                         |                        |                    |                                | quasi-Hessians                                             |
++-------------------------+------------------------+--------------------+--------------------------------+------------------------------------------------------------+
+
+.. __: responses-mixed_hessians-id_quasi_hessians-bfgs.html
+__ responses-mixed_hessians-id_quasi_hessians-sr1.html
+
+**Description**
+
+The ``id_analytic_hessians`` list
+specifies by number the functions which have analytic Hessians, and
+the ``id_numerical_hessians`` and ``id_quasi_hessians`` lists specify by
+number the functions which must use numerical Hessians and
+secant Hessian updates, respectively. Each function identifier,
+from 1 through the total number of functions, must appear once and
+only once within the union of the ``id_analytic_hessians``,
+``id_numerical_hessians``, and ``id_quasi_hessians`` lists.

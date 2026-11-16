@@ -1,0 +1,80 @@
+.. _model-multipoint_surrogate:
+
+""""""""""""""""""""
+multipoint_surrogate
+""""""""""""""""""""
+
+Construct a surrogate from multiple existing training points
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   model-multipoint_surrogate-tana
+   model-multipoint_surrogate-qmea
+   model-multipoint_surrogate-truth_model_pointer
+   model-multipoint_surrogate-id_surrogates
+   model-multipoint_surrogate-id_model
+   model-multipoint_surrogate-variables_pointer
+   model-multipoint_surrogate-responses_pointer
+   model-multipoint_surrogate-hierarchical_tagging
+
+**Specification**
+
+- *Alias:* None
+- *Arguments:* None
+- *JSON argument key:* None
+
+**Child Keywords:**
+
++-------------------------+------------------------+--------------------+--------------------------------+------------------------------------------------------------+
+| Required/Optional       | Description of Group   | JSON Group Key     | Dakota Keyword                 | Dakota Keyword Description                                 |
++=========================+========================+====================+================================+============================================================+
+| Required (Choose One)   | Type                   | type               | `tana`__                       | Local multi-point model via two-point nonlinear            |
+|                         |                        |                    |                                | approximation                                              |
++                         +                        +                    +--------------------------------+------------------------------------------------------------+
+|                         |                        |                    | `qmea`__                       | Multi-point surrogate approximation based on QMEA          |
+|                         |                        |                    |                                | algorithm                                                  |
++-------------------------+------------------------+--------------------+--------------------------------+------------------------------------------------------------+
+| Required                |                        |                    | `truth_model_pointer`__        | Pointer to specify a "truth" model, from which to          |
+|                         |                        |                    |                                | construct a surrogate                                      |
++-------------------------+------------------------+--------------------+--------------------------------+------------------------------------------------------------+
+| Optional                |                        |                    | `id_surrogates`__              | Identifies the subset of the response functions by number  |
+|                         |                        |                    |                                | that are to be approximated (the default is all            |
+|                         |                        |                    |                                | functions).                                                |
++-------------------------+------------------------+--------------------+--------------------------------+------------------------------------------------------------+
+| Optional                |                        |                    | `id_model`__                   | Give the model block an identifying name, in case of       |
+|                         |                        |                    |                                | multiple model blocks                                      |
++-------------------------+------------------------+--------------------+--------------------------------+------------------------------------------------------------+
+| Optional                |                        |                    | `variables_pointer`__          | Specify which variables block will be included with this   |
+|                         |                        |                    |                                | model block                                                |
++-------------------------+------------------------+--------------------+--------------------------------+------------------------------------------------------------+
+| Optional                |                        |                    | `responses_pointer`__          | Specify which reponses block will be used by this model    |
+|                         |                        |                    |                                | block                                                      |
++-------------------------+------------------------+--------------------+--------------------------------+------------------------------------------------------------+
+| Optional                |                        |                    | `hierarchical_tagging`__       | Enables hierarchical evaluation tagging                    |
++-------------------------+------------------------+--------------------+--------------------------------+------------------------------------------------------------+
+
+.. __: model-multipoint_surrogate-tana.html
+__ model-multipoint_surrogate-qmea.html
+__ model-multipoint_surrogate-truth_model_pointer.html
+__ model-multipoint_surrogate-id_surrogates.html
+__ model-multipoint_surrogate-id_model.html
+__ model-multipoint_surrogate-variables_pointer.html
+__ model-multipoint_surrogate-responses_pointer.html
+__ model-multipoint_surrogate-hierarchical_tagging.html
+
+**Description**
+
+Multipoint approximations use data from previous design points to
+improve the accuracy of local approximations. The data often
+comes from the current and previous iterates of a minimization algorithm.
+
+Currently, only the
+Two-point Adaptive Nonlinearity Approximation (TANA-3) method of
+:cite:p:`Xu98` is supported with the ``tana`` keyword.
+
+The
+truth model to be used to generate the value/gradient data used in the
+approximation is identified through the required
+``truth_model_pointer`` specification.

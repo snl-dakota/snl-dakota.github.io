@@ -1,0 +1,26 @@
+.. _method-hybrid_sequential-iterator_scheduling-peer:
+
+""""
+peer
+""""
+
+Specify a peer partition for parallel iterator scheduling
+
+**Topics**
+
+:ref:`concurrency_and_parallelism <topic-concurrency_and_parallelism>`
+
+**Specification**
+
+- *Alias:* None
+- *Arguments:* None
+- *JSON argument key:* None
+- *Default:* true
+
+**Description**
+
+This option overrides the Dakota parallel automatic configuration, forcing
+the use of a peer partition. In a peer partition, all processors are
+available to be assigned to iterator servers. Note that unlike
+the case of ``evaluation_scheduling``, it is not possible to specify ``static``
+or ``dynamic``.

@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Connecting Your Code: The Analysis Driver &mdash; Dakota 7.0.0 documentation</title>
+      <link rel="stylesheet"
+            href="../../_static/pygments.css"
+            type="text/css" />
+      <link rel="stylesheet"
+            href="../../_static/css/theme.css"
+            type="text/css" />
+      <link rel="stylesheet"
+            href="../../_static/copybutton.css"
+            type="text/css" />
+      <link rel="stylesheet"
+            href="../../_static/autodoc_pydantic.css"
+            type="text/css" />
+      <link rel="stylesheet"
+            href="../../_static/tabs.css"
+            type="text/css" />
+      <link rel="stylesheet"
+            href="../../_static/css/dakota_theme.css"
+            type="text/css" />
+      <link rel="stylesheet"
+            href="../../_static/css/sandiaheaderlite.css"
+            type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=efe5be6f"></script>
+        <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+        <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+        <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../../_static/copybutton.js?v=f281be69"></script>
+        <script src="../../_static/tabs.js?v=3ee01567"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Using Dakota" href="../usingdakota.html" />
+    <link rel="prev" title="Tutorial: Your First Dakota Study" href="helloworld.html" /> 
+  
+  <meta name="sandia.approval_type" content="formal"/>
+  <meta property="sandia.approved" content="SAND2025-14179O"/>
+  <meta name="description" content="The Dakota project delivers both state-of-the-art research and robust, usable software for optimization and UQ."/>
+  <meta name="keywords" content="Dakota, optimization, UQ, uncertainty quantification, parametric analysis, design exploration, model calibration, risk analysis"/>
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> Dakota
+            <img src="../../_static/DAKOTAWhiteWEB.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Install</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../setupdakota.html">Download and Install Dakota</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Getting Started with Dakota</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="aboutdakota.html">What is Dakota?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="studyanatomy.html">Anatomy of a Dakota Study</a></li>
+<li class="toctree-l1"><a class="reference internal" href="helloworld.html">Tutorial: Your First Dakota Study</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Connecting Your Code: The Analysis Driver</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#the-three-jobs-of-an-analysis-driver">The three jobs of an analysis driver</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#what-dakota-writes-and-what-it-expects">What Dakota writes and what it expects</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#a-minimal-analysis-driver">A minimal analysis driver</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#telling-dakota-about-the-driver">Telling Dakota about the driver</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#test-your-analysis-driver-before-running-dakota">Test your analysis driver before running Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#other-ways-to-connect">Other ways to connect</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#next-steps">Next steps</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#video-resources">Video Resources</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Using Dakota</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../usingdakota.html">Using Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../usingdakotagui/usingdakotagui.html">Using Dakota GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../externaltools/externaltools.html">Using External Tools</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Building and Developing Dakota</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../building/building.html">Building Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developingdakota/developingdakota.html">Developing Dakota</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">More</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../misc/misc.html">Miscellaneous</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Dakota</a>
+      </nav>
+
+	  <!-- SNL Lite header -->
+	  <div class="snlheader-subsite--wrapper-default">
+		<snlheader class="snlheader-subsite" role="snlbanner">
+		  <div class="wrapper">
+			<a href="https://www.sandia.gov/index.html">
+			  <div class="logo-transparent"><p class="logo">Sandia National Laboratories</p></div>
+			</a>
+			<div class="nav-top">
+			  <a class="visuallyhidden" name="mainnav"></a>
+			  <div aria-label="main navigation" class="core-nav-transparent core-nav-transparent--visible" role="navigation">
+				<ul role="navigation" class="secondary-links">
+				  <li id="search-text-link">
+					<a aria-label="Search" href="https://www.sandia.gov/search/">Search Sandia.gov</a>
+				  </li>
+				  <li id="directory-text-link">
+					<a href="https://www.sandia.gov/directory.html" aria-expanded="false" aria-label="Site Directory">All Sandia Websites</a>
+				  </li>
+				</ul>
+			  </div>
+			</div>
+		  </div> 
+		</snlheader>
+	  </div>	  
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Connecting Your Code: The Analysis Driver</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/usingdakota/introduction/couplingtosimulations.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="connecting-your-code-the-analysis-driver">
+<span id="couplingtosimulations-main"></span><h1>Connecting Your Code: The Analysis Driver<a class="headerlink" href="#connecting-your-code-the-analysis-driver" title="Link to this heading"></a></h1>
+<p>To connect Dakota with your simulation, you provide one <a class="reference internal" href="../../misc/glossary.html#term-analysis-driver"><span class="xref std std-term">analysis driver</span></a>:
+a program that Dakota runs once for each <a class="reference internal" href="../../misc/glossary.html#term-evaluation"><span class="xref std std-term">evaluation</span></a>. In the most common
+interfacing format, Dakota gives the analysis driver two file names as arguments,
+a <a class="reference internal" href="../../misc/glossary.html#term-parameters-file"><span class="xref std std-term">parameters file</span></a> to read and a <a class="reference internal" href="../../misc/glossary.html#term-results-file"><span class="xref std std-term">results file</span></a> to write. Analysis
+drivers are most often scripts (e.g., Python, MATLAB, Bash or Powershell), but
+you can also build one graphically in the Dakota GUI.</p>
+<p>This page builds an analysis driver for a black-box version of the Rosenbrock
+example from <a class="reference internal" href="studyanatomy.html#studyanatomy-rosenbrock"><span class="std std-ref">The example: Rosenbrock</span></a>. Instead of using the function
+built into Dakota, it runs <code class="docutils literal notranslate"><span class="pre">rosenbrock_bb.py</span></code>, a small program that behaves
+like an engineering simulation code: it reads an input deck, <code class="docutils literal notranslate"><span class="pre">ros.in</span></code>, and
+writes a log, <code class="docutils literal notranslate"><span class="pre">ros.out</span></code>.</p>
+<figure class="align-center" id="coupling-figure01">
+<img alt="For each evaluation, Dakota writes a parameters file. The analysis driver pre-processes it with ros.template and dprepro into ros.in, runs rosenbrock_bb.py, and post-processes ros.out into a results file, which Dakota reads." src="../../_images/analysis_driver_flow.svg" />
+<figcaption>
+<p><span class="caption-number">Fig. 7 </span><span class="caption-text">Common steps for a single evaluation with an analysis driver: pre-processing to generate,
+a valid input file for the simulation code, running the simulation, and post-processing to
+extract responses to return to Dakota.</span><a class="headerlink" href="#coupling-figure01" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<section id="the-three-jobs-of-an-analysis-driver">
+<span id="couplingtosimulations-jobs"></span><h2>The three jobs of an analysis driver<a class="headerlink" href="#the-three-jobs-of-an-analysis-driver" title="Link to this heading"></a></h2>
+<p>Every analysis driver does the same three things, in order:</p>
+<ol class="arabic simple">
+<li><p><strong>Pre-process.</strong> Put this evaluation’s parameter values into your code’s
+input. The usual way is a <a class="reference internal" href="../../misc/glossary.html#term-template-file"><span class="xref std std-term">template file</span></a>: a copy of your input file
+with placeholders, such as <code class="docutils literal notranslate"><span class="pre">{x1}</span></code>, that <a class="reference internal" href="../../misc/glossary.html#term-dprepro"><span class="xref std std-term">dprepro</span></a> or <a class="reference internal" href="../../misc/glossary.html#term-pyprepro"><span class="xref std std-term">pyprepro</span></a>
+fills in with the values from the <a class="reference internal" href="../../misc/glossary.html#term-parameters-file"><span class="xref std std-term">parameters file</span></a>.</p></li>
+<li><p><strong>Run.</strong> Run your simulation code.</p></li>
+<li><p><strong>Post-process.</strong> Extract the <a class="reference internal" href="../../misc/glossary.html#term-responses"><span class="xref std std-term">responses</span></a> from your code’s output, and
+write them to the <a class="reference internal" href="../../misc/glossary.html#term-results-file"><span class="xref std std-term">results file</span></a>.</p></li>
+</ol>
+</section>
+<section id="what-dakota-writes-and-what-it-expects">
+<span id="couplingtosimulations-files"></span><h2>What Dakota writes and what it expects<a class="headerlink" href="#what-dakota-writes-and-what-it-expects" title="Link to this heading"></a></h2>
+<p>For each evaluation, Dakota writes a parameters file. Here is the first one
+from the Rosenbrock parameter study, where <code class="docutils literal notranslate"><span class="pre">x1</span></code> and <code class="docutils literal notranslate"><span class="pre">x2</span></code> are both -2:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>                     2 variables
+-2.000000000000000e+00 x1
+-2.000000000000000e+00 x2
+                     1 functions
+                     1 ASV_1:response_fn_1
+                     2 derivative_variables
+                     1 DVV_1:x1
+                     2 DVV_2:x2
+                     0 analysis_components
+                     1 eval_id
+</pre></div>
+</div>
+<p>The first lines give the variable values, each followed by its name. The
+<code class="docutils literal notranslate"><span class="pre">1</span></code> in front of <code class="docutils literal notranslate"><span class="pre">ASV_1:response_fn_1</span></code> means Dakota wants the value of the
+first response. The remaining lines matter only for more advanced studies,
+such as those that need derivatives. You rarely need to read this file
+yourself: <code class="docutils literal notranslate"><span class="pre">dprepro</span></code> and the <code class="docutils literal notranslate"><span class="pre">dakota.interfacing</span></code> Python module read it for
+you.</p>
+<p>Your analysis driver writes a results file with one line per response,
+holding its value. The name after the value is optional:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>3.6090000000000000e+03 response_fn_1
+</pre></div>
+</div>
+<p>Learn more: <a class="reference internal" href="../inputfile/interfaces/analysisdriverdeepdive.html#couplingtosimulations-paramformat"><span class="std std-ref">Parameter File Format</span></a>,
+<a class="reference internal" href="../inputfile/responses.html#responses-results"><span class="std std-ref">Dakota Results File Data Formats</span></a>.</p>
+</section>
+<section id="a-minimal-analysis-driver">
+<span id="couplingtosimulations-minimal"></span><h2>A minimal analysis driver<a class="headerlink" href="#a-minimal-analysis-driver" title="Link to this heading"></a></h2>
+<p>Here is a complete analysis driver for the black-box Rosenbrock example, in
+three languages. Each version does the same three jobs, under the same
+headings. Choose the tab for the language you want to use.</p>
+<div class="tab-set docutils">
+<input checked="True" class="tab-input" id="tab-set--0-input--1" name="tab-set--0" type="radio" /><label class="tab-label" for="tab-set--0-input--1">Python</label><div class="tab-content docutils">
+<p>This version uses Dakota’s <code class="docutils literal notranslate"><span class="pre">dakota.interfacing</span></code> Python module to read
+the parameters file, fill in the template, and write the results file.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python3</span>
+<span class="c1"># Analysis driver for the black-box Rosenbrock example.</span>
+<span class="c1"># Dakota runs it as:  python3 driver.py params.in results.out</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">subprocess</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">dakota.interfacing</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">di</span>
+
+<span class="c1"># Read the parameters file Dakota wrote, and set up the results file.</span>
+<span class="n">params</span><span class="p">,</span> <span class="n">results</span> <span class="o">=</span> <span class="n">di</span><span class="o">.</span><span class="n">read_parameters_file</span><span class="p">()</span>
+
+<span class="c1"># --------------</span>
+<span class="c1"># PRE-PROCESSING</span>
+<span class="c1"># --------------</span>
+<span class="c1"># Put this evaluation's x1 and x2 into the simulation's input file.</span>
+<span class="n">di</span><span class="o">.</span><span class="n">dprepro</span><span class="p">(</span><span class="n">template</span><span class="o">=</span><span class="s2">"ros.template"</span><span class="p">,</span> <span class="n">parameters</span><span class="o">=</span><span class="n">params</span><span class="p">,</span> <span class="n">output</span><span class="o">=</span><span class="s2">"ros.in"</span><span class="p">)</span>
+
+<span class="c1"># ---------</span>
+<span class="c1"># EXECUTION</span>
+<span class="c1"># ---------</span>
+<span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">([</span><span class="n">sys</span><span class="o">.</span><span class="n">executable</span><span class="p">,</span> <span class="s2">"rosenbrock_bb.py"</span><span class="p">],</span> <span class="n">check</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># ---------------</span>
+<span class="c1"># POST-PROCESSING</span>
+<span class="c1"># ---------------</span>
+<span class="c1"># Find the function value in the simulation's output, and return it to</span>
+<span class="c1"># Dakota as the first (and only) response.</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">"ros.out"</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">f</span><span class="p">:</span>
+        <span class="k">if</span> <span class="s2">"Function value"</span> <span class="ow">in</span> <span class="n">line</span><span class="p">:</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">"="</span><span class="p">)[</span><span class="mi">1</span><span class="p">])</span>
+
+<span class="n">results</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">function</span> <span class="o">=</span> <span class="n">value</span>
+<span class="n">results</span><span class="o">.</span><span class="n">write</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<input class="tab-input" id="tab-set--0-input--2" name="tab-set--0" type="radio" /><label class="tab-label" for="tab-set--0-input--2">Bash</label><div class="tab-content docutils">
+<p>This version uses the <code class="docutils literal notranslate"><span class="pre">dprepro</span></code> command to fill in the template, and
+<code class="docutils literal notranslate"><span class="pre">grep</span></code> and <code class="docutils literal notranslate"><span class="pre">awk</span></code> to find the value in the output.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env bash</span>
+<span class="c1"># Analysis driver for the black-box Rosenbrock example.</span>
+<span class="c1"># Dakota runs it as:  driver.sh params.in results.out</span>
+
+<span class="nv">params</span><span class="o">=</span><span class="nv">$1</span>
+<span class="nv">results</span><span class="o">=</span><span class="nv">$2</span>
+
+<span class="c1"># --------------</span>
+<span class="c1"># PRE-PROCESSING</span>
+<span class="c1"># --------------</span>
+<span class="c1"># Put this evaluation's x1 and x2 into the simulation's input file.</span>
+dprepro<span class="w"> </span><span class="s2">"</span><span class="nv">$params</span><span class="s2">"</span><span class="w"> </span>ros.template<span class="w"> </span>ros.in
+
+<span class="c1"># ---------</span>
+<span class="c1"># EXECUTION</span>
+<span class="c1"># ---------</span>
+python3<span class="w"> </span>rosenbrock_bb.py
+
+<span class="c1"># ---------------</span>
+<span class="c1"># POST-PROCESSING</span>
+<span class="c1"># ---------------</span>
+<span class="c1"># Find the function value in the simulation's output, and return it to</span>
+<span class="c1"># Dakota as the first (and only) response.</span>
+grep<span class="w"> </span><span class="s1">'Function value'</span><span class="w"> </span>ros.out<span class="w"> </span><span class="p">|</span><span class="w"> </span>awk<span class="w"> </span><span class="s1">'{print $4}'</span><span class="w"> </span>&gt;<span class="w"> </span><span class="s2">"</span><span class="nv">$results</span><span class="s2">"</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code class="docutils literal notranslate"><span class="pre">dprepro</span></code> runs with the <code class="docutils literal notranslate"><span class="pre">python</span></code> command. If your system has only
+<code class="docutils literal notranslate"><span class="pre">python3</span></code>, use <code class="docutils literal notranslate"><span class="pre">dprepro3</span></code> instead, which runs <code class="docutils literal notranslate"><span class="pre">dprepro</span></code> with
+<code class="docutils literal notranslate"><span class="pre">python3</span></code>.</p>
+</div>
+</div>
+<input class="tab-input" id="tab-set--0-input--3" name="tab-set--0" type="radio" /><label class="tab-label" for="tab-set--0-input--3">Windows (PowerShell)</label><div class="tab-content docutils">
+<p>This version runs <code class="docutils literal notranslate"><span class="pre">dprepro</span></code> with Python to fill in the template, and
+uses <code class="docutils literal notranslate"><span class="pre">Select-String</span></code> to find the value in the output.</p>
+<div class="highlight-powershell notranslate"><div class="highlight"><pre><span></span><span class="c"># Analysis driver for the black-box Rosenbrock example.</span>
+<span class="c"># Dakota runs it as:  powershell.exe -File driver.ps1 params.in results.out</span>
+
+<span class="nv">$params</span> <span class="p">=</span> <span class="nv">$args</span><span class="p">[</span><span class="n">0</span><span class="p">]</span>
+<span class="nv">$results</span> <span class="p">=</span> <span class="nv">$args</span><span class="p">[</span><span class="n">1</span><span class="p">]</span>
+
+<span class="c"># --------------</span>
+<span class="c"># PRE-PROCESSING</span>
+<span class="c"># --------------</span>
+<span class="c"># Put this evaluation's x1 and x2 into the simulation's input file.</span>
+<span class="nv">$dprepro</span> <span class="p">=</span> <span class="p">(</span><span class="nb">Get-Command</span> <span class="s2">"dprepro"</span><span class="p">).</span><span class="n">Path</span>
+<span class="n">python3</span> <span class="nv">$dprepro</span> <span class="nv">$params</span> <span class="n">ros</span><span class="p">.</span><span class="n">template</span> <span class="n">ros</span><span class="p">.</span><span class="k">in</span>
+
+<span class="c"># ---------</span>
+<span class="c"># EXECUTION</span>
+<span class="c"># ---------</span>
+<span class="n">python3</span> <span class="n">rosenbrock_bb</span><span class="p">.</span><span class="n">py</span>
+
+<span class="c"># ---------------</span>
+<span class="c"># POST-PROCESSING</span>
+<span class="c"># ---------------</span>
+<span class="c"># Find the function value in the simulation's output, and return it to</span>
+<span class="c"># Dakota as the first (and only) response.</span>
+<span class="nv">$line</span> <span class="p">=</span> <span class="nb">Select-String</span> <span class="n">-Path</span> <span class="n">ros</span><span class="p">.</span><span class="n">out</span> <span class="n">-Pattern</span> <span class="s2">"Function value"</span>
+<span class="nv">$value</span> <span class="p">=</span> <span class="p">(</span><span class="nv">$line</span><span class="p">.</span><span class="n">Line</span> <span class="n">-split</span> <span class="s2">"="</span><span class="p">)[</span><span class="n">1</span><span class="p">].</span><span class="n">Trim</span><span class="p">()</span>
+<span class="nb">Set-Content</span> <span class="n">-Path</span> <span class="nv">$results</span> <span class="n">-Value</span> <span class="nv">$value</span> <span class="n">-Encoding</span> <span class="n">ASCII</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The template, <code class="docutils literal notranslate"><span class="pre">ros.template</span></code>, is a copy of the simulation’s input deck with
+placeholders where the variable values go. Its last lines are:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>variable 1 {x1}
+variable 2 {x2}
+end
+</pre></div>
+</div>
+<p><strong>Prefer a graphical tool?</strong> You can build an analysis driver as a workflow in
+the Dakota GUI’s <a class="reference internal" href="../../usingdakotagui/ngw/NextGenWorkflow.html#ngw-main"><span class="std std-ref">Next-Gen Workflow</span></a> tool instead of writing a
+script. If your code reads a text input file, the GUI’s
+<a class="reference internal" href="../../usingdakotagui/miscgui/ContextMenuTools.html#gui-context-tools-markup"><span class="std std-ref">Markup File tool</span></a> helps you create the
+template, and the GUI can also read your model’s parameters and responses
+from <a class="reference internal" href="../../usingdakotagui/introduction/simulationmodels.html#gui-simulation-models-ini-json-yaml"><span class="std std-ref">INI, JSON or YAML files</span></a>.</p>
+</section>
+<section id="telling-dakota-about-the-driver">
+<span id="couplingtosimulations-interface"></span><h2>Telling Dakota about the driver<a class="headerlink" href="#telling-dakota-about-the-driver" title="Link to this heading"></a></h2>
+<p>You point Dakota to your analysis driver in the <a class="reference internal" href="../../misc/glossary.html#term-interface"><span class="xref std std-term">interface</span></a> block.
+The value of <code class="docutils literal notranslate"><span class="pre">analysis_drivers</span></code> is the command Dakota runs, which depends on the
+driver’s language:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 70.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Analysis driver</p></th>
+<th class="head"><p><code class="docutils literal notranslate"><span class="pre">analysis_drivers</span></code> value</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Python</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">'python3</span> <span class="pre">driver.py'</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>Bash</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">'driver.sh'</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>Windows (PowerShell)</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">'powershell.exe</span> <span class="pre">-File</span> <span class="pre">driver.ps1'</span></code></p></td>
+</tr>
+</tbody>
+</table>
+<p>On Linux and macOS, a Python driver that starts with <code class="docutils literal notranslate"><span class="pre">#!/usr/bin/env</span> <span class="pre">python3</span></code>
+and is executable can also be named directly, as <code class="docutils literal notranslate"><span class="pre">'driver.py'</span></code>.</p>
+<p>A complete interface block that runs the Python driver looks like this:</p>
+<div class="tab-set docutils">
+<input checked="True" class="tab-input" id="tab-set--1-input--1" name="tab-set--1" type="radio" /><label class="tab-label" for="tab-set--1-input--1">JSON</label><div class="tab-content docutils">
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">"interface"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">"analysis_drivers"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">"drivers"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"python3 driver.py"</span><span class="p">],</span>
+<span class="w">        </span><span class="nt">"interface_type"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">          </span><span class="nt">"fork"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">"parameters_file"</span><span class="p">:</span><span class="w"> </span><span class="s2">"params.in"</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">"results_file"</span><span class="p">:</span><span class="w"> </span><span class="s2">"results.out"</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">"file_save"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">"work_directory"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">              </span><span class="nt">"named"</span><span class="p">:</span><span class="w"> </span><span class="s2">"workdir"</span><span class="p">,</span>
+<span class="w">              </span><span class="nt">"directory_tag"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">              </span><span class="nt">"directory_save"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">              </span><span class="nt">"link_files"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"templatedir/*"</span><span class="p">]</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">          </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">      </span><span class="p">},</span>
+<span class="w">      </span><span class="nt">"concurrency"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">"asynchronous"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">          </span><span class="nt">"evaluation_concurrency"</span><span class="p">:</span><span class="w"> </span><span class="mi">4</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<input class="tab-input" id="tab-set--1-input--2" name="tab-set--1" type="radio" /><label class="tab-label" for="tab-set--1-input--2">Freeform</label><div class="tab-content docutils">
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span><span class="k">interface</span>
+  analysis_drivers = 'python3 driver.py'
+    fork
+      parameters_file = 'params.in'
+      results_file = 'results.out'
+      file_save
+      work_directory
+        named 'workdir'
+        directory_tag
+        directory_save
+        link_files = 'templatedir/*'
+  asynchronous
+    evaluation_concurrency = 4
+</pre></div>
+</div>
+</div>
+</div>
+<p>Here is what each part does:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/interface-analysis_drivers-fork.html"><span class="pre">fork</span></a></code> runs the analysis driver as
+a separate process, and exchanges data with it through files.</p></li>
+<li><p><code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/interface-analysis_drivers-fork-parameters_file.html"><span class="pre">parameters_file</span></a></code>
+and <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/interface-analysis_drivers-fork-results_file.html"><span class="pre">results_file</span></a></code>
+name those files. Without them, Dakota uses temporary names.</p></li>
+<li><p><code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/interface-analysis_drivers-fork-file_save.html"><span class="pre">file_save</span></a></code> keeps the
+parameters and results files after each evaluation, which helps when you’re
+debugging.</p></li>
+<li><p><code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/interface-analysis_drivers-fork-work_directory.html"><span class="pre">work_directory</span></a></code>
+runs each evaluation in its own folder, here <code class="docutils literal notranslate"><span class="pre">workdir.1</span></code>, <code class="docutils literal notranslate"><span class="pre">workdir.2</span></code>
+and so on (<code class="docutils literal notranslate"><span class="pre">named</span></code> sets the name, <code class="docutils literal notranslate"><span class="pre">directory_tag</span></code> adds the number). That
+keeps evaluations from overwriting each other’s files.
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/interface-analysis_drivers-fork-work_directory-link_files.html"><span class="pre">link_files</span></a></code>
+links the files every evaluation needs into each folder: here, everything
+in the <code class="docutils literal notranslate"><span class="pre">templatedir</span></code> folder (the driver, the template and the
+simulation). <code class="docutils literal notranslate"><span class="pre">copy_files</span></code> copies them instead.
+<code class="docutils literal notranslate"><span class="pre">directory_save</span></code> keeps the folders afterwards.</p></li>
+<li><p><code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/interface-asynchronous.html"><span class="pre">asynchronous</span></a></code> with
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/interface-asynchronous-evaluation_concurrency.html"><span class="pre">evaluation_concurrency</span></a></code>
+runs up to four evaluations at the same time.</p></li>
+</ul>
+<p>In the JSON format, <code class="docutils literal notranslate"><span class="pre">asynchronous</span></code> sits inside a <code class="docutils literal notranslate"><span class="pre">concurrency</span></code> group key.
+See <a class="reference internal" href="../inputfile/json.html#jsoninput-groupkeys"><span class="std std-ref">Group keys</span></a>.</p>
+<p>Learn more: <a class="reference internal" href="../inputfile/interfaces.html#interfaces-main"><span class="std std-ref">Interfaces</span></a>, <a class="reference internal" href="../inputfile/interfaces/simulationfilemanagement.html#interfaces-file"><span class="std std-ref">Simulation File Management</span></a>.</p>
+</section>
+<section id="test-your-analysis-driver-before-running-dakota">
+<span id="couplingtosimulations-testing"></span><h2>Test your analysis driver before running Dakota<a class="headerlink" href="#test-your-analysis-driver-before-running-dakota" title="Link to this heading"></a></h2>
+<p>Run your analysis driver by hand on a sample parameters file before you run a
+whole study. Save the parameters file shown above as <code class="docutils literal notranslate"><span class="pre">params.in</span></code>, in the
+folder with your driver, template and simulation, and run:</p>
+<div class="tab-set docutils">
+<input checked="True" class="tab-input" id="tab-set--2-input--1" name="tab-set--2" type="radio" /><label class="tab-label" for="tab-set--2-input--1">Python</label><div class="tab-content docutils">
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">python3 driver.py params.in results.out</span>
+</pre></div>
+</div>
+</div>
+<input class="tab-input" id="tab-set--2-input--2" name="tab-set--2" type="radio" /><label class="tab-label" for="tab-set--2-input--2">Bash</label><div class="tab-content docutils">
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">./driver.sh params.in results.out</span>
+</pre></div>
+</div>
+</div>
+<input class="tab-input" id="tab-set--2-input--3" name="tab-set--2" type="radio" /><label class="tab-label" for="tab-set--2-input--3">Windows (PowerShell)</label><div class="tab-content docutils">
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">powershell.exe -File driver.ps1 params.in results.out</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Then check that <code class="docutils literal notranslate"><span class="pre">results.out</span></code> holds the value 3609, which is the Rosenbrock
+function at (-2, -2).</p>
+<p>If it doesn’t work, check these common problems:</p>
+<ul class="simple">
+<li><p><strong>Permissions.</strong> On Linux and macOS, a driver you name directly, such as
+<code class="docutils literal notranslate"><span class="pre">driver.sh</span></code>, must be executable (<code class="docutils literal notranslate"><span class="pre">chmod</span> <span class="pre">+x</span> <span class="pre">driver.sh</span></code>) and start with a
+<code class="docutils literal notranslate"><span class="pre">#!</span></code> line.</p></li>
+<li><p><strong>Python command.</strong> Some systems have <code class="docutils literal notranslate"><span class="pre">python3</span></code> but no <code class="docutils literal notranslate"><span class="pre">python</span></code>. Use
+the command that exists on yours, and use <code class="docutils literal notranslate"><span class="pre">dprepro3</span></code> instead of
+<code class="docutils literal notranslate"><span class="pre">dprepro</span></code> if there’s no <code class="docutils literal notranslate"><span class="pre">python</span></code>.</p></li>
+<li><p><strong>Finding Dakota’s tools.</strong> <code class="docutils literal notranslate"><span class="pre">dprepro</span></code> must be on your <code class="docutils literal notranslate"><span class="pre">PATH</span></code>, and the
+<code class="docutils literal notranslate"><span class="pre">dakota.interfacing</span></code> module must be on your <code class="docutils literal notranslate"><span class="pre">PYTHONPATH</span></code>. See
+<a class="reference internal" href="../../setupdakota.html#setupdakota-environment"><span class="std std-ref">Setting Your Environment</span></a>.</p></li>
+<li><p><strong>Paths inside work directories.</strong> Each evaluation runs in its own folder,
+so relative paths to your template or simulation must work from there. Use
+<code class="docutils literal notranslate"><span class="pre">link_files</span></code> or <code class="docutils literal notranslate"><span class="pre">copy_files</span></code> to put them in place.</p></li>
+<li><p><strong>Results file format.</strong> One value per line, one line per response, in the
+order of the responses block.</p></li>
+<li><p><strong>Where to look when an evaluation fails.</strong> Dakota’s console output shows
+the failing evaluation. With <code class="docutils literal notranslate"><span class="pre">file_save</span></code> and <code class="docutils literal notranslate"><span class="pre">directory_save</span></code>, its
+parameters file, results file and the simulation’s own output stay behind
+for you to inspect.</p></li>
+</ul>
+</section>
+<section id="other-ways-to-connect">
+<span id="couplingtosimulations-other"></span><h2>Other ways to connect<a class="headerlink" href="#other-ways-to-connect" title="Link to this heading"></a></h2>
+<p>A file-based analysis driver works with nearly any code in any language, so
+it’s where most users start. Dakota can also connect to your code in other
+ways:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 24.0%" />
+<col style="width: 26.0%" />
+<col style="width: 50.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Approach</p></th>
+<th class="head"><p>How data moves</p></th>
+<th class="head"><p>When to use it</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Analysis driver with <code class="docutils literal notranslate"><span class="pre">fork</span></code> or <code class="docutils literal notranslate"><span class="pre">system</span></code></p></td>
+<td><p>Through files</p></td>
+<td><p>Any code in any language. The default, and the focus of this page.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="../advanced/advancedsimulationcodeinterfaces.html#advint-existingdirect-python"><span class="std std-ref">Python direct interface</span></a></p></td>
+<td><p>In memory, via <code class="docutils literal notranslate"><span class="pre">Parameters</span></code> and <code class="docutils literal notranslate"><span class="pre">Results</span></code> objects</p></td>
+<td><p>Models already written in Python; very many or very fast evaluations,
+where file and process overhead dominates; returning analytic
+gradients. Use the <code class="docutils literal notranslate"><span class="pre">&#64;python_interface</span></code> decorator from
+<code class="docutils literal notranslate"><span class="pre">dakota.interfacing</span></code> for the friendliest API.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="../libraryapi.html#library-api"><span class="std std-ref">Library API</span></a></p></td>
+<td><p>In memory, through C++ or Python calls</p></td>
+<td><p>Embedding Dakota in your own application.</p></td>
+</tr>
+</tbody>
+</table>
+<p>With the Python direct interface, Dakota calls a function in your Python
+module, with no parameters or results files. The recommended way to write
+that function is with the <code class="docutils literal notranslate"><span class="pre">&#64;python_interface</span></code> decorator from
+<code class="docutils literal notranslate"><span class="pre">dakota.interfacing</span></code>, which passes friendly <a class="reference internal" href="../inputfile/interfaces/dakotainterfacing.html#Parameters" title="Parameters"><code class="xref py py-class docutils literal notranslate"><span class="pre">Parameters</span></code></a> and
+<a class="reference internal" href="../inputfile/interfaces/dakotainterfacing.html#Results" title="Results"><code class="xref py py-class docutils literal notranslate"><span class="pre">Results</span></code></a> objects instead of raw dictionaries. Here is the same
+Rosenbrock function, in a file named <code class="docutils literal notranslate"><span class="pre">rosen_direct.py</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">dakota.interfacing</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">di</span>
+
+<span class="nd">@di</span><span class="o">.</span><span class="n">python_interface</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">rosenbrock</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">results</span><span class="p">):</span>
+    <span class="n">x1</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="s2">"x1"</span><span class="p">]</span>
+    <span class="n">x2</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="s2">"x2"</span><span class="p">]</span>
+    <span class="n">results</span><span class="p">[</span><span class="s2">"response_fn_1"</span><span class="p">]</span><span class="o">.</span><span class="n">function</span> <span class="o">=</span> <span class="mf">100.0</span> <span class="o">*</span> <span class="p">(</span><span class="n">x2</span> <span class="o">-</span> <span class="n">x1</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="n">x1</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
+    <span class="k">return</span> <span class="n">results</span>
+</pre></div>
+</div>
+<p>The decorator handles all translation between Dakota’s native parameter and
+result dictionaries and the higher-level objects, so your function works
+directly with named variables and named responses.</p>
+<p>The interface block names the module and function, and selects <code class="docutils literal notranslate"><span class="pre">python</span></code>
+instead of <code class="docutils literal notranslate"><span class="pre">fork</span></code>:</p>
+<div class="tab-set docutils">
+<input checked="True" class="tab-input" id="tab-set--3-input--1" name="tab-set--3" type="radio" /><label class="tab-label" for="tab-set--3-input--1">JSON</label><div class="tab-content docutils">
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">"interface"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">"analysis_drivers"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">"drivers"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"rosen_direct.rosenbrock"</span><span class="p">],</span>
+<span class="w">        </span><span class="nt">"interface_type"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">          </span><span class="nt">"python"</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<input class="tab-input" id="tab-set--3-input--2" name="tab-set--3" type="radio" /><label class="tab-label" for="tab-set--3-input--2">Freeform</label><div class="tab-content docutils">
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span><span class="k">interface</span>
+  analysis_drivers = 'rosen_direct.rosenbrock'
+    python
+</pre></div>
+</div>
+</div>
+</div>
+<p>This short function returns only function values, which is enough for
+studies that don’t ask for derivatives. The Python direct interface may not
+be included in pre-built downloads, and must be enabled when compiling Dakota
+from source.</p>
+</section>
+<section id="next-steps">
+<span id="couplingtosimulations-next"></span><h2>Next steps<a class="headerlink" href="#next-steps" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="../inputfile/interfaces/analysisdriverdeepdive.html#analysisdriverdeepdive-main"><span class="std std-ref">Deep Dive into Dakota’s Analysis Driver Process</span></a> covers the parameters file format in
+detail, a compiled analysis driver, and tighter forms of coupling.</p></li>
+<li><p><a class="reference internal" href="../inputfile/interfaces/buildingblackboxinterface.html#interfaces-building"><span class="std std-ref">Building a Black-Box Interface to a Simulation Code</span></a> shows more ways to pre-process and post-process
+files, and <a class="reference internal" href="../inputfile/interfaces/dakotainterfacing.html#interfaces-dakota-interfacing"><span class="std std-ref">The Python dakota.interfacing module</span></a> documents the Python module.</p></li>
+<li><p>The <a class="reference internal" href="../examples/additionalexamples.html#additional-cantilever"><span class="std std-ref">cantilever beam example</span></a> is a more
+realistic engineering example, with several responses.</p></li>
+</ul>
+</section>
+<section id="video-resources">
+<span id="couplingtosimulations-videos"></span><h2>Video Resources<a class="headerlink" href="#video-resources" title="Link to this heading"></a></h2>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Title</p></th>
+<th class="head"><p>Link</p></th>
+<th class="head"><p>Resources</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Interfacing a User’s Simulation to Dakota (Part 1)</p></td>
+<td><p><a class="reference external" href="http://digitalops.sandia.gov/Mediasite/Play/82fa69553ac64d9b997a59316100d23a1d"><img alt="Interfacing a User's Simulation to Dakota (Part 1)" src="../../_images/InterfacingTrainingPart1.png" /></a></p></td>
+<td><p><a class="reference external" href="https://dakota.sandia.gov/sites/default/files/training/DakotaTraining_Interfacing.pdf">Slides</a> /
+<a class="reference external" href="https://dakota.sandia.gov/sites/default/files/training/interfacing-151215.zip">Exercises</a></p></td>
+</tr>
+<tr class="row-odd"><td><p>Interfacing a User’s Simulation to Dakota (Part 2)</p></td>
+<td><p><a class="reference external" href="http://digitalops.sandia.gov/Mediasite/Play/5c5f47304b934159a40347f3ba74ad851d"><img alt="Interfacing a User's Simulation to Dakota (Part 2)" src="../../_images/InterfacingTrainingPart2.png" /></a></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Next:</strong> <a class="reference internal" href="helloworld.html#helloworld-main"><span class="std std-ref">Tutorial: Your First Dakota Study</span></a></p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="helloworld.html" class="btn btn-neutral float-left" title="Tutorial: Your First Dakota Study" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../usingdakota.html" class="btn btn-neutral float-right" title="Using Dakota" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <!--
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Sandia National Laboratories.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+  --> 
+
+</footer>
+        </div>
+      </div>
+	  
+	  <div style="background-color: #0f0f0f;color:#fafafa;padding:20px">
+	    <div>
+		  <h2><em>Exceptional service in the national interest</em></h2>
+		</div>
+		<p>© 2023 National Technology and Engineering Solutions of Sandia, LLC. | <a href="https://www.sandia.gov/contact_us/index.html">Questions &amp; Comments</a> | <a href="https://www.sandia.gov/general/privacy-security/index.html">Privacy &amp; Security</a></p>
+		<p><a href="http://energy.gov" rel="noopener noreferrer" target="_blank"><img alt="U.S. Department of Energy" longdesc="https://energy.gov" src="https://www.sandia.gov/_common/images/doe_logo_white.png" style="height:37px; width:140px"></a> <a href="http://nnsa.energy.gov/" rel="noopener noreferrer" target="_blank"> <img alt="National Nuclear Security Administration" longdesc="http://nnsa.gov" src="https://www.sandia.gov/_common/images/nnsa_logo_white.png" style="height:37px; width:116px"></a></p>
+		<p><a href="https://www.sandia.gov">Sandia National Laboratories</a> is a multimission laboratory managed and operated by National Technology and Engineering Solutions of Sandia, LLC., a wholly owned subsidiary of Honeywell International, Inc., for the U.S. Department of Energy’s National Nuclear Security Administration under contract DE-NA-0003525.</p>
+	  </div>	  	  
+	  
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

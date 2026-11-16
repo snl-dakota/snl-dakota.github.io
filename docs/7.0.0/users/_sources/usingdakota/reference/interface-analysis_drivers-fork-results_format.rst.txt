@@ -1,0 +1,72 @@
+.. _interface-analysis_drivers-fork-results_format:
+
+""""""""""""""
+results_format
+""""""""""""""
+
+Format of the results file
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   interface-analysis_drivers-fork-results_format-standard
+   interface-analysis_drivers-fork-results_format-json_format
+
+**Specification**
+
+- *Alias:* None
+- *Arguments:* None
+- *JSON argument key:* None
+
+**Child Keywords:**
+
++-------------------------+------------------------+--------------------+--------------------------------+------------------------------------------------------------+
+| Required/Optional       | Description of Group   | JSON Group Key     | Dakota Keyword                 | Dakota Keyword Description                                 |
++=========================+========================+====================+================================+============================================================+
+| Optional                |                        |                    | `standard`__                   | Expect results files in standard format                    |
++-------------------------+------------------------+--------------------+--------------------------------+------------------------------------------------------------+
+| Optional                |                        |                    | `json_format`__                | Expect results files in JSON format                        |
++-------------------------+------------------------+--------------------+--------------------------------+------------------------------------------------------------+
+
+.. __: interface-analysis_drivers-fork-results_format-standard.html
+__ interface-analysis_drivers-fork-results_format-json_format.html
+
+**Description**
+
+This keyword group is used to select from among the supported
+results file formats.
+
+*Default Behavior*
+
+By default, the `dakota` format is used.
+
+**Examples**
+
+.. tab:: Freeform
+
+   .. code-block:: dakota
+
+       interface
+         fork
+         analysis_drivers 'driver.py'
+         parameters_file = "params.in"
+         results_file = "results.out"
+         results_format
+           json
+
+.. tab:: JSON
+
+   .. code-block:: json
+
+       {
+         "interface": [
+           {
+             "analysis_drivers": {"drivers": ["driver.py"]},
+             "interface_type": {"fork": {}},
+             "parameters_file": "params.in",
+             "results_file": "results.out",
+             "results_format": {"json_format": {}}
+           }
+         ]
+       }

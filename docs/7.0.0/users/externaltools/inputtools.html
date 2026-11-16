@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Working with Inputs &mdash; Dakota 7.0.0 documentation</title>
+      <link rel="stylesheet"
+            href="../_static/pygments.css"
+            type="text/css" />
+      <link rel="stylesheet"
+            href="../_static/css/theme.css"
+            type="text/css" />
+      <link rel="stylesheet"
+            href="../_static/copybutton.css"
+            type="text/css" />
+      <link rel="stylesheet"
+            href="../_static/autodoc_pydantic.css"
+            type="text/css" />
+      <link rel="stylesheet"
+            href="../_static/tabs.css"
+            type="text/css" />
+      <link rel="stylesheet"
+            href="../_static/css/dakota_theme.css"
+            type="text/css" />
+      <link rel="stylesheet"
+            href="../_static/css/sandiaheaderlite.css"
+            type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=efe5be6f"></script>
+        <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+        <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+        <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../_static/copybutton.js?v=f281be69"></script>
+        <script src="../_static/tabs.js?v=3ee01567"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Building Dakota" href="../building/building.html" />
+    <link rel="prev" title="Surrogate" href="pydanticref/shared/surrogate.html" /> 
+  
+  <meta name="sandia.approval_type" content="formal"/>
+  <meta property="sandia.approved" content="SAND2025-14179O"/>
+  <meta name="description" content="The Dakota project delivers both state-of-the-art research and robust, usable software for optimization and UQ."/>
+  <meta name="keywords" content="Dakota, optimization, UQ, uncertainty quantification, parametric analysis, design exploration, model calibration, risk analysis"/>
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> Dakota
+            <img src="../_static/DAKOTAWhiteWEB.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Install</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../setupdakota.html">Download and Install Dakota</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Getting Started with Dakota</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../usingdakota/introduction/aboutdakota.html">What is Dakota?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usingdakota/introduction/studyanatomy.html">Anatomy of a Dakota Study</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usingdakota/introduction/helloworld.html">Tutorial: Your First Dakota Study</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usingdakota/introduction/couplingtosimulations.html">Connecting Your Code: The Analysis Driver</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Using Dakota</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../usingdakota/usingdakota.html">Using Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usingdakotagui/usingdakotagui.html">Using Dakota GUI</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="externaltools.html">Using External Tools</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="dpreproandpyprepro.html">Preprocessing with dprepro and pyprepro</a></li>
+<li class="toctree-l2"><a class="reference internal" href="restartutility.html">The Dakota Restart Utility</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pydanticref.html">Pydantic Model Reference</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Working with Inputs</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#the-dakota-to-json-tool">The <code class="docutils literal notranslate"><span class="pre">dakota-to-json</span></code> Tool</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#how-it-works">How it works</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#requirements">Requirements</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#python-api">Python API</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#dakota.tools.freeform_to_json.convert"><code class="docutils literal notranslate"><span class="pre">dakota.tools.freeform_to_json.convert()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#the-dakota-parser-executable">The <code class="docutils literal notranslate"><span class="pre">dakota_parser</span></code> Executable</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#usage">Usage</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#input-mode-options">Input mode options</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#output-options">Output options</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#validation-options">Validation options</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#diagnostic-options">Diagnostic options</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#processing-pipeline">Processing pipeline</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#examples">Examples</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Building and Developing Dakota</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../building/building.html">Building Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developingdakota/developingdakota.html">Developing Dakota</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">More</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../misc/misc.html">Miscellaneous</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Dakota</a>
+      </nav>
+
+	  <!-- SNL Lite header -->
+	  <div class="snlheader-subsite--wrapper-default">
+		<snlheader class="snlheader-subsite" role="snlbanner">
+		  <div class="wrapper">
+			<a href="https://www.sandia.gov/index.html">
+			  <div class="logo-transparent"><p class="logo">Sandia National Laboratories</p></div>
+			</a>
+			<div class="nav-top">
+			  <a class="visuallyhidden" name="mainnav"></a>
+			  <div aria-label="main navigation" class="core-nav-transparent core-nav-transparent--visible" role="navigation">
+				<ul role="navigation" class="secondary-links">
+				  <li id="search-text-link">
+					<a aria-label="Search" href="https://www.sandia.gov/search/">Search Sandia.gov</a>
+				  </li>
+				  <li id="directory-text-link">
+					<a href="https://www.sandia.gov/directory.html" aria-expanded="false" aria-label="Site Directory">All Sandia Websites</a>
+				  </li>
+				</ul>
+			  </div>
+			</div>
+		  </div> 
+		</snlheader>
+	  </div>	  
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="externaltools.html">Using External Tools</a></li>
+      <li class="breadcrumb-item active">Working with Inputs</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/externaltools/inputtools.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="working-with-inputs">
+<span id="input-tools"></span><h1>Working with Inputs<a class="headerlink" href="#working-with-inputs" title="Link to this heading"></a></h1>
+<p>Dakota accepts input in two formats: the traditional free-form DSL syntax
+(<code class="docutils literal notranslate"><span class="pre">.in</span></code> files) and JSON (<code class="docutils literal notranslate"><span class="pre">.json</span></code> files).  Both formats are handled by
+the same parser and share the same grammar.  This section describes two
+tools — the <code class="docutils literal notranslate"><span class="pre">dakota-to-json</span></code> conversion utility and the <code class="docutils literal notranslate"><span class="pre">dakota_parser</span></code>
+standalone executable — that are useful for converting freeform inputs to
+JSON and for validating and inspecting Dakota input files.</p>
+<section id="the-dakota-to-json-tool">
+<span id="input-tools-dakota-to-json"></span><h2>The <code class="docutils literal notranslate"><span class="pre">dakota-to-json</span></code> Tool<a class="headerlink" href="#the-dakota-to-json-tool" title="Link to this heading"></a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">dakota-to-json</span></code> converts a freeform Dakota input file to a JSON file
+that <code class="docutils literal notranslate"><span class="pre">dakota</span> <span class="pre">-json</span></code> accepts directly.  It removes the internal and
+computed fields that <code class="docutils literal notranslate"><span class="pre">dakota_parser</span></code> inserts during validation and that
+would cause re-validation to fail, producing output that is accepted by
+<code class="docutils literal notranslate"><span class="pre">dakota</span> <span class="pre">-json</span></code>.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>dakota-to-json<span class="w"> </span>study.in<span class="w"> </span>study.json
+dakota-to-json<span class="w"> </span>study.in<span class="w">              </span><span class="c1"># output defaults to study.json</span>
+dakota-to-json<span class="w"> </span>--help
+</pre></div>
+</div>
+<p><strong>Arguments</strong></p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">input</span></code></dt><dd><p>Path to the freeform Dakota input file.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">output</span></code> <em>(optional)</em></dt><dd><p>Destination path for the JSON output.  Defaults to the input path with
+its extension replaced by <code class="docutils literal notranslate"><span class="pre">.json</span></code>.</p>
+</dd>
+</dl>
+<p><strong>Options</strong></p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">--dakota-parser</span> <span class="pre">EXE</span></code></dt><dd><p>Path to the <code class="docutils literal notranslate"><span class="pre">dakota_parser</span></code> executable.  Defaults to looking up
+<code class="docutils literal notranslate"><span class="pre">dakota_parser</span></code> on <code class="docutils literal notranslate"><span class="pre">PATH</span></code>.</p>
+</dd>
+</dl>
+<section id="how-it-works">
+<h3>How it works<a class="headerlink" href="#how-it-works" title="Link to this heading"></a></h3>
+<p>The conversion runs two steps:</p>
+<ol class="arabic simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">dakota_parser</span> <span class="pre">&lt;input.in&gt;</span> <span class="pre">--json</span></code> validates the input and serializes
+it to the expanded internal JSON representation.</p></li>
+<li><p>A stripping pass removes the internal and computed fields that
+<code class="docutils literal notranslate"><span class="pre">dakota_parser</span></code> inserts — specifically, inferred variable bounds,
+computed initial points, and internal <code class="docutils literal notranslate"><span class="pre">_user_provided</span></code> flags — that
+would cause re-validation to fail.</p></li>
+</ol>
+<p>The output can be used with <code class="docutils literal notranslate"><span class="pre">dakota</span> <span class="pre">-json</span></code>.  Note that it may still
+contain some defaults that were expanded during validation and were not
+present in the original freeform file.</p>
+<section id="requirements">
+<h4>Requirements<a class="headerlink" href="#requirements" title="Link to this heading"></a></h4>
+<p><code class="docutils literal notranslate"><span class="pre">dakota_parser</span></code> must be on <code class="docutils literal notranslate"><span class="pre">PATH</span></code>, or its location must be supplied via
+<code class="docutils literal notranslate"><span class="pre">--dakota-parser</span></code>.  Both executables are installed in Dakota’s <code class="docutils literal notranslate"><span class="pre">bin/</span></code>
+directory.</p>
+</section>
+</section>
+<section id="python-api">
+<h3>Python API<a class="headerlink" href="#python-api" title="Link to this heading"></a></h3>
+<p>The same conversion is available as a Python function:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">dakota.tools.freeform_to_json</span><span class="w"> </span><span class="kn">import</span> <span class="n">convert</span>
+
+<span class="n">convert</span><span class="p">(</span><span class="s2">"study.in"</span><span class="p">,</span> <span class="s2">"study.json"</span><span class="p">)</span>
+
+<span class="c1"># Specify an explicit dakota_parser path</span>
+<span class="n">convert</span><span class="p">(</span><span class="s2">"study.in"</span><span class="p">,</span> <span class="s2">"study.json"</span><span class="p">,</span> <span class="n">dakota_parser</span><span class="o">=</span><span class="s2">"/opt/dakota/bin/dakota_parser"</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="py function">
+<dt class="sig sig-object py" id="dakota.tools.freeform_to_json.convert">
+<span class="sig-prename descclassname"><span class="pre">dakota.tools.freeform_to_json.</span></span><span class="sig-name descname"><span class="pre">convert</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_path</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">dakota_parser</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dakota.tools.freeform_to_json.convert" title="Link to this definition"></a></dt>
+<dd><p>Convert a freeform Dakota input file to clean JSON.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>input_path</strong> (<em>str</em><em> or </em><em>pathlib.Path</em>) – Path to the freeform Dakota input file.</p></li>
+<li><p><strong>output_path</strong> (<em>str</em><em> or </em><em>pathlib.Path</em>) – Destination path for the JSON output.</p></li>
+<li><p><strong>dakota_parser</strong> (<em>str</em><em>, </em><em>pathlib.Path</em><em>, or </em><em>None</em>) – Path to the <code class="docutils literal notranslate"><span class="pre">dakota_parser</span></code> executable.  If
+<code class="docutils literal notranslate"><span class="pre">None</span></code>, <code class="docutils literal notranslate"><span class="pre">dakota_parser</span></code> is looked up on <code class="docutils literal notranslate"><span class="pre">PATH</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>FileNotFoundError</strong> – If <code class="docutils literal notranslate"><span class="pre">dakota_parser</span></code> is not found.</p></li>
+<li><p><strong>subprocess.CalledProcessError</strong> – If <code class="docutils literal notranslate"><span class="pre">dakota_parser</span></code> exits
+non-zero (e.g. the input file contains a syntax error).</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+</section>
+<section id="the-dakota-parser-executable">
+<span id="input-tools-dakota-parser"></span><h2>The <code class="docutils literal notranslate"><span class="pre">dakota_parser</span></code> Executable<a class="headerlink" href="#the-dakota-parser-executable" title="Link to this heading"></a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">dakota_parser</span></code> is the standalone front end to Dakota’s input parser.
+Dakota uses it internally when reading input files, but it can also be run
+directly to validate input and to inspect how a file is parsed.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The JSON output produced by <code class="docutils literal notranslate"><span class="pre">dakota_parser</span> <span class="pre">--json</span></code> is an internal
+validated representation: it contains computed fields and internal-only
+metadata that will cause validation to fail if fed back to the parser.
+It is not a JSON input file and is not intended for direct use with
+<code class="docutils literal notranslate"><span class="pre">dakota</span> <span class="pre">-json</span></code>.  To convert a freeform input file to a JSON file
+suitable for <code class="docutils literal notranslate"><span class="pre">dakota</span> <span class="pre">-json</span></code>, use <a class="reference internal" href="#input-tools-dakota-to-json"><span class="std std-ref">dakota-to-json</span></a>.</p>
+</div>
+<section id="usage">
+<h3>Usage<a class="headerlink" href="#usage" title="Link to this heading"></a></h3>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>dakota_parser<span class="w"> </span><span class="o">[</span>options<span class="o">]</span><span class="w"> </span>&lt;input_file&gt;
+</pre></div>
+</div>
+<p>Input mode is auto-detected from the file extension (<code class="docutils literal notranslate"><span class="pre">.json</span></code> → JSON mode,
+anything else → DSL/freeform mode) and can be overridden explicitly.</p>
+<section id="input-mode-options">
+<h4>Input mode options<a class="headerlink" href="#input-mode-options" title="Link to this heading"></a></h4>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">--json-input</span></code></dt><dd><p>Force JSON input mode regardless of the file extension.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">--dsl-input</span></code></dt><dd><p>Force DSL/freeform input mode even when the file has a <code class="docutils literal notranslate"><span class="pre">.json</span></code>
+extension.</p>
+</dd>
+</dl>
+</section>
+<section id="output-options">
+<h4>Output options<a class="headerlink" href="#output-options" title="Link to this heading"></a></h4>
+<dl>
+<dt><code class="docutils literal notranslate"><span class="pre">--json</span></code></dt><dd><p>Write the parsed and validated input to stdout as the internal JSON
+representation.  Defaults and inferred values are expanded into the
+output.  This flag is implied (and cannot be disabled) when the input
+is JSON.</p>
+<p>Without <code class="docutils literal notranslate"><span class="pre">--json</span></code>, a freeform input is echoed back in canonical DSL
+form after parsing — useful for checking how the parser interpreted
+the file.</p>
+</dd>
+</dl>
+</section>
+<section id="validation-options">
+<h4>Validation options<a class="headerlink" href="#validation-options" title="Link to this heading"></a></h4>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">--no-validate</span></code></dt><dd><p>Skip cross-field constraint validation (e.g. required-field checks and
+inter-keyword consistency rules).  Parsing and semantic analysis still
+run.  Useful for partial inputs during development.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">--no-semantic</span></code></dt><dd><p>Skip semantic analysis.  Parsing and constraint validation still run.</p>
+</dd>
+</dl>
+</section>
+<section id="diagnostic-options">
+<h4>Diagnostic options<a class="headerlink" href="#diagnostic-options" title="Link to this heading"></a></h4>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">--analyze</span></code></dt><dd><p>Analyze the parser grammar for ambiguities or issues and print a
+report.  Exits non-zero if issues are found.  Intended for developers
+working on the grammar.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">--trace</span></code></dt><dd><p>Enable grammar-level tracing (prints each grammar rule as it is
+matched).  Only available in builds configured with
+<code class="docutils literal notranslate"><span class="pre">-DDAKOTA_PARSER_TRACE=ON</span></code>.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">--debug</span></code></dt><dd><p>Print a step-by-step processing summary: input mode, parse result,
+validation, semantic analysis, default expansion, and a block/keyword
+count on completion.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">-h</span></code>, <code class="docutils literal notranslate"><span class="pre">--help</span></code></dt><dd><p>Print usage and exit.</p>
+</dd>
+</dl>
+</section>
+</section>
+<section id="processing-pipeline">
+<h3>Processing pipeline<a class="headerlink" href="#processing-pipeline" title="Link to this heading"></a></h3>
+<p>For a freeform (<code class="docutils literal notranslate"><span class="pre">.in</span></code>) input file, <code class="docutils literal notranslate"><span class="pre">dakota_parser</span></code> runs the following
+steps in order:</p>
+<ol class="arabic simple">
+<li><p><strong>Parse</strong> — the freeform grammar tokenizes and builds an AST.</p></li>
+<li><p><strong>Validate</strong> — cross-field constraint rules are checked
+(skipped with <code class="docutils literal notranslate"><span class="pre">--no-validate</span></code>).</p></li>
+<li><p><strong>Semantic analysis</strong> — higher-level consistency checks
+(skipped with <code class="docutils literal notranslate"><span class="pre">--no-semantic</span></code>).</p></li>
+<li><p><strong>Expand defaults</strong> — schema-defined defaults are filled in.</p></li>
+<li><p><strong>Output</strong> — the AST is echoed as canonical DSL (default) or serialized
+to the internal JSON representation (<code class="docutils literal notranslate"><span class="pre">--json</span></code>).</p></li>
+</ol>
+<p>For a JSON input file the same steps run, except that step 1 converts the
+JSON to the internal AST representation and step 5 always produces JSON
+output.</p>
+</section>
+<section id="examples">
+<h3>Examples<a class="headerlink" href="#examples" title="Link to this heading"></a></h3>
+<p>Validate a freeform input file and echo it in canonical form:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>dakota_parser<span class="w"> </span>study.in
+</pre></div>
+</div>
+<p>Validate an existing JSON input file:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>dakota_parser<span class="w"> </span>study.json
+</pre></div>
+</div>
+<p>Validate but skip semantic analysis:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>dakota_parser<span class="w"> </span>study.in<span class="w"> </span>--no-semantic
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="pydanticref/shared/surrogate.html" class="btn btn-neutral float-left" title="Surrogate" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../building/building.html" class="btn btn-neutral float-right" title="Building Dakota" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <!--
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Sandia National Laboratories.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+  --> 
+
+</footer>
+        </div>
+      </div>
+	  
+	  <div style="background-color: #0f0f0f;color:#fafafa;padding:20px">
+	    <div>
+		  <h2><em>Exceptional service in the national interest</em></h2>
+		</div>
+		<p>© 2023 National Technology and Engineering Solutions of Sandia, LLC. | <a href="https://www.sandia.gov/contact_us/index.html">Questions &amp; Comments</a> | <a href="https://www.sandia.gov/general/privacy-security/index.html">Privacy &amp; Security</a></p>
+		<p><a href="http://energy.gov" rel="noopener noreferrer" target="_blank"><img alt="U.S. Department of Energy" longdesc="https://energy.gov" src="https://www.sandia.gov/_common/images/doe_logo_white.png" style="height:37px; width:140px"></a> <a href="http://nnsa.energy.gov/" rel="noopener noreferrer" target="_blank"> <img alt="National Nuclear Security Administration" longdesc="http://nnsa.gov" src="https://www.sandia.gov/_common/images/nnsa_logo_white.png" style="height:37px; width:116px"></a></p>
+		<p><a href="https://www.sandia.gov">Sandia National Laboratories</a> is a multimission laboratory managed and operated by National Technology and Engineering Solutions of Sandia, LLC., a wholly owned subsidiary of Honeywell International, Inc., for the U.S. Department of Energy’s National Nuclear Security Administration under contract DE-NA-0003525.</p>
+	  </div>	  	  
+	  
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

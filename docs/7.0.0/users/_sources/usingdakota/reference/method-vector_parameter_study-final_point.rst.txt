@@ -1,0 +1,58 @@
+.. _method-vector_parameter_study-final_point:
+
+"""""""""""
+final_point
+"""""""""""
+
+Final variable values defining vector in vector parameter study
+
+**Specification**
+
+- *Alias:* None
+- *Arguments:* None
+- *JSON argument key:* None
+
+**Description**
+
+The ``final_point`` keyword is used to define the final values for each
+variable on the vector to be used in the vector parameter study.  The
+vector's direction and magnitude are determined by the initial value
+from the variables specification, and the ``final_point``.
+
+*Default Behavior*
+
+The user is required to specify either ``final_point`` or
+``step_vector``.  There is no default definition for the vector.
+
+*Usage Tips*
+
+The actual points are determined based on this vector and the number
+of points chosen is given in ``num_points``.
+
+**Examples**
+
+.. tab:: Freeform
+
+   .. code-block:: dakota
+
+       method
+         vector_parameter_study
+           num_steps = 10
+           final_point = 2.0 2.0
+
+.. tab:: JSON
+
+   .. code-block:: json
+
+       {
+         "method": [
+           {
+             "vector_parameter_study": {
+               "step_control": {
+                 "final_point": [2.0, 2.0]
+               },
+               "num_steps": 10
+             }
+           }
+         ]
+       }

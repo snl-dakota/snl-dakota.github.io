@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Confidence Intervals for Nonlinear Least Squares &mdash; Dakota 7.0.0 documentation</title>
+      <link rel="stylesheet"
+            href="../../_static/pygments.css"
+            type="text/css" />
+      <link rel="stylesheet"
+            href="../../_static/css/theme.css"
+            type="text/css" />
+      <link rel="stylesheet"
+            href="../../_static/copybutton.css"
+            type="text/css" />
+      <link rel="stylesheet"
+            href="../../_static/autodoc_pydantic.css"
+            type="text/css" />
+      <link rel="stylesheet"
+            href="../../_static/tabs.css"
+            type="text/css" />
+      <link rel="stylesheet"
+            href="../../_static/css/dakota_theme.css"
+            type="text/css" />
+      <link rel="stylesheet"
+            href="../../_static/css/sandiaheaderlite.css"
+            type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=efe5be6f"></script>
+        <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+        <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+        <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../../_static/copybutton.js?v=f281be69"></script>
+        <script src="../../_static/tabs.js?v=3ee01567"></script>
+        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Surrogate Models" href="surrogates.html" />
+    <link rel="prev" title="Bayesian Methods" href="bayesian.html" /> 
+  
+  <meta name="sandia.approval_type" content="formal"/>
+  <meta property="sandia.approved" content="SAND2025-14179O"/>
+  <meta name="description" content="The Dakota project delivers both state-of-the-art research and robust, usable software for optimization and UQ."/>
+  <meta name="keywords" content="Dakota, optimization, UQ, uncertainty quantification, parametric analysis, design exploration, model calibration, risk analysis"/>
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> Dakota
+            <img src="../../_static/DAKOTAWhiteWEB.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Install</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../setupdakota.html">Download and Install Dakota</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Getting Started with Dakota</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../introduction/aboutdakota.html">What is Dakota?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../introduction/studyanatomy.html">Anatomy of a Dakota Study</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../introduction/helloworld.html">Tutorial: Your First Dakota Study</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../introduction/couplingtosimulations.html">Connecting Your Code: The Analysis Driver</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Using Dakota</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../usingdakota.html">Using Dakota</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../examples.html">Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../inputfile.html">Dakota Input File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraryapi.html">Library APIs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../running.html">Running Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../output.html">Dakota Output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../studytypes.html">Study Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../topics.html">Topics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../advanced.html">Advanced Topics</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../theory.html">Dakota Theory</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="sampling.html">Sampling Methods</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reliability.html">Reliability Methods</a></li>
+<li class="toctree-l3"><a class="reference internal" href="stochastic.html">Stochastic Expansion Methods</a></li>
+<li class="toctree-l3"><a class="reference internal" href="epistemic.html">Epistemic Methods</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bayesian.html">Bayesian Methods</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Confidence Intervals for Nonlinear Least Squares</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#statistical-model">Statistical Model</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#linearization">Linearization</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#estimating-the-error-variance">Estimating the Error Variance</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#standard-errors-and-confidence-intervals">Standard Errors and Confidence Intervals</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#numerical-computation">Numerical Computation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#weighted-error-scaled-and-scaled-residuals">Weighted, Error-Scaled, and Scaled Residuals</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#assumptions-and-limitations">Assumptions and Limitations</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="surrogates.html">Surrogate Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="surrogatebasedoptimization.html">Surrogate-Based Local Minimization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="surrogatebasedglobaloptimization.html">Efficient Global Optimization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dimensionreductionstrategies.html">Dimension Reduction Strategies</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ouu.html">Optimization Under Uncertainty (OUU)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../reference.html">Keyword Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../usingdakotagui/usingdakotagui.html">Using Dakota GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../externaltools/externaltools.html">Using External Tools</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Building and Developing Dakota</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../building/building.html">Building Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developingdakota/developingdakota.html">Developing Dakota</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">More</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../misc/misc.html">Miscellaneous</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Dakota</a>
+      </nav>
+
+	  <!-- SNL Lite header -->
+	  <div class="snlheader-subsite--wrapper-default">
+		<snlheader class="snlheader-subsite" role="snlbanner">
+		  <div class="wrapper">
+			<a href="https://www.sandia.gov/index.html">
+			  <div class="logo-transparent"><p class="logo">Sandia National Laboratories</p></div>
+			</a>
+			<div class="nav-top">
+			  <a class="visuallyhidden" name="mainnav"></a>
+			  <div aria-label="main navigation" class="core-nav-transparent core-nav-transparent--visible" role="navigation">
+				<ul role="navigation" class="secondary-links">
+				  <li id="search-text-link">
+					<a aria-label="Search" href="https://www.sandia.gov/search/">Search Sandia.gov</a>
+				  </li>
+				  <li id="directory-text-link">
+					<a href="https://www.sandia.gov/directory.html" aria-expanded="false" aria-label="Site Directory">All Sandia Websites</a>
+				  </li>
+				</ul>
+			  </div>
+			</div>
+		  </div> 
+		</snlheader>
+	  </div>	  
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../usingdakota.html">Using Dakota</a></li>
+          <li class="breadcrumb-item"><a href="../theory.html">Dakota Theory</a></li>
+      <li class="breadcrumb-item active">Confidence Intervals for Nonlinear Least Squares</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/usingdakota/theory/nlsconfidenceintervals.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="confidence-intervals-for-nonlinear-least-squares">
+<span id="theory-nls-ci"></span><h1>Confidence Intervals for Nonlinear Least Squares<a class="headerlink" href="#confidence-intervals-for-nonlinear-least-squares" title="Link to this heading"></a></h1>
+<p>When a calibration is performed with one of Dakota’s tailored nonlinear
+least squares solvers (see <a class="reference internal" href="../studytypes/modelcalibration.html#nls"><span class="std std-ref">Model Calibration</span></a>), Dakota reports a confidence
+interval for each calibrated parameter at the solution. This chapter
+describes the statistical model behind these intervals, how they are
+computed, and the assumptions that limit their validity. The approach
+is the classical linearization (asymptotic) theory of nonlinear
+regression; see <span class="bibtex-citation" id="id1">[<a class="reference internal" href="../../misc/bibliography.html#id261" title="G. A. F. Seber and C. J. Wild. Nonlinear Regression. Wiley, New Jersey, 2003.">SW03</a>]</span> for a thorough treatment and
+<span class="bibtex-citation" id="id2">[<a class="reference internal" href="../../misc/bibliography.html#id294" title="K. W. Vugrin, L. P. Swiler, R. M. Roberts, N. J. Stuckey-Mack, and S. P Sullivan. Confidence region estimation techniques for nonlinear regression in groundwater flow: three case studies. Water Resources Research, 2007.">VSR+07</a>]</span> for a comparison with alternative confidence region
+techniques.</p>
+<section id="statistical-model">
+<span id="theory-nls-ci-model"></span><h2>Statistical Model<a class="headerlink" href="#statistical-model" title="Link to this heading"></a></h2>
+<p>Consider the least squares problem</p>
+<div class="math notranslate nohighlight">
+\[\hat{\mathbf{x}} = \arg\min_{\mathbf{x} \in \Re^p}
+  f(\mathbf{x}) = \sum_{i=1}^{n} T_i(\mathbf{x})^2
+  = \mathbf{T}(\mathbf{x})^T \mathbf{T}(\mathbf{x}),\]</div>
+<p>where <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> is the vector of <span class="math notranslate nohighlight">\(p\)</span> calibration
+parameters and <span class="math notranslate nohighlight">\(\mathbf{T}(\mathbf{x}) = [T_1(\mathbf{x}), \ldots,
+T_n(\mathbf{x})]^T\)</span> is the vector of <span class="math notranslate nohighlight">\(n\)</span> least squares terms. In
+the most common case each term is a residual between a model prediction
+and an observation,</p>
+<div class="math notranslate nohighlight">
+\[T_i(\mathbf{x}) = R_i(\mathbf{x}) - \bar{R}_i .\]</div>
+<p>To make statistical statements about <span class="math notranslate nohighlight">\(\hat{\mathbf{x}}\)</span>, the
+observations are assumed to be generated by the model at some unknown
+true parameter value <span class="math notranslate nohighlight">\(\mathbf{x}^*\)</span>, corrupted by additive noise:</p>
+<div class="math notranslate nohighlight">
+\[\bar{R}_i = R_i(\mathbf{x}^*) + \epsilon_i, \qquad
+\epsilon_i \overset{iid}{\sim} \mathcal{N}(0, \sigma^2),
+\qquad i = 1, \ldots, n,\]</div>
+<p>with common but unknown error variance <span class="math notranslate nohighlight">\(\sigma^2\)</span>. Under this
+model the least squares estimate <span class="math notranslate nohighlight">\(\hat{\mathbf{x}}\)</span> is also the
+maximum likelihood estimate of <span class="math notranslate nohighlight">\(\mathbf{x}^*\)</span>.</p>
+</section>
+<section id="linearization">
+<span id="theory-nls-ci-linearization"></span><h2>Linearization<a class="headerlink" href="#linearization" title="Link to this heading"></a></h2>
+<p>Let</p>
+<div class="math notranslate nohighlight">
+\[\mathbf{J} = \left[ \frac{\partial T_i}{\partial x_j}
+  \right]_{\mathbf{x} = \hat{\mathbf{x}}} \in \Re^{n \times p}\]</div>
+<p>denote the Jacobian matrix of the least squares terms with respect to
+the parameters, evaluated at the solution. Near <span class="math notranslate nohighlight">\(\hat{\mathbf{x}}\)</span>
+the model is approximated by its first-order Taylor expansion,</p>
+<div class="math notranslate nohighlight">
+\[\mathbf{T}(\mathbf{x}) \approx \mathbf{T}(\hat{\mathbf{x}})
+  + \mathbf{J} \, (\mathbf{x} - \hat{\mathbf{x}}),\]</div>
+<p>so locally the problem is a <em>linear</em> regression with design matrix
+<span class="math notranslate nohighlight">\(\mathbf{J}\)</span>. Applying linear regression theory to this
+approximation gives the approximate sampling distribution of the
+estimator,</p>
+<div class="math notranslate nohighlight">
+\[\hat{\mathbf{x}} \;\dot\sim\; \mathcal{N}\left( \mathbf{x}^*, \;
+  \sigma^2 \left( \mathbf{J}^T \mathbf{J} \right)^{-1} \right).\]</div>
+<p>The matrix <span class="math notranslate nohighlight">\((\mathbf{J}^T \mathbf{J})^{-1}\)</span> is the inverse of the
+Gauss-Newton approximation to the Hessian of <span class="math notranslate nohighlight">\(f/2\)</span>, the same
+matrix used by the Gauss-Newton solution methods (see
+<a class="reference internal" href="../studytypes/modelcalibration.html#nls-formulations"><span class="std std-ref">Nonlinear Least Squares Fomulations</span></a>). The approximation becomes exact as the noise
+level goes to zero or the number of observations grows, and it is exact
+for any <span class="math notranslate nohighlight">\(n\)</span> if the model is linear in the parameters.</p>
+</section>
+<section id="estimating-the-error-variance">
+<span id="theory-nls-ci-variance"></span><h2>Estimating the Error Variance<a class="headerlink" href="#estimating-the-error-variance" title="Link to this heading"></a></h2>
+<p>The error variance <span class="math notranslate nohighlight">\(\sigma^2\)</span> is estimated from the residual sum
+of squares at the solution:</p>
+<div class="math notranslate nohighlight">
+\[\hat{\sigma}^2 = \frac{1}{N_{dof}} \sum_{i=1}^{n} T_i(\hat{\mathbf{x}})^2,
+\qquad N_{dof} = n - p .\]</div>
+<p>Dividing by the residual degrees of freedom <span class="math notranslate nohighlight">\(N_{dof}\)</span> instead of
+<span class="math notranslate nohighlight">\(n\)</span> accounts for the <span class="math notranslate nohighlight">\(p\)</span> parameters fitted to the data, and
+makes <span class="math notranslate nohighlight">\(\hat{\sigma}^2\)</span> unbiased in the linear case. (If
+<span class="math notranslate nohighlight">\(n = p\)</span>, Dakota uses <span class="math notranslate nohighlight">\(N_{dof} = 1\)</span> to avoid dividing by
+zero. Intervals computed this way have essentially no statistical
+meaning.)</p>
+</section>
+<section id="standard-errors-and-confidence-intervals">
+<span id="theory-nls-ci-intervals"></span><h2>Standard Errors and Confidence Intervals<a class="headerlink" href="#standard-errors-and-confidence-intervals" title="Link to this heading"></a></h2>
+<p>The estimated covariance of the parameter estimates is
+<span class="math notranslate nohighlight">\(\hat{\sigma}^2 (\mathbf{J}^T\mathbf{J})^{-1}\)</span>, so the standard
+error of the <span class="math notranslate nohighlight">\(j\)</span>-th parameter is</p>
+<div class="math notranslate nohighlight">
+\[SE_j = \hat{\sigma} \sqrt{ \left( \mathbf{J}^T \mathbf{J} \right)^{-1}_{jj} } .\]</div>
+<p>Because <span class="math notranslate nohighlight">\(\sigma^2\)</span> is estimated rather than known, the
+standardized quantity <span class="math notranslate nohighlight">\((\hat{x}_j - x_j^*)/SE_j\)</span> approximately
+follows a Student’s t-distribution with <span class="math notranslate nohighlight">\(N_{dof}\)</span> degrees of
+freedom. The two-sided <span class="math notranslate nohighlight">\(100(1-\alpha)\%\)</span> confidence interval for
+parameter <span class="math notranslate nohighlight">\(x_j\)</span> is therefore</p>
+<div class="math notranslate nohighlight">
+\[\hat{x}_j \pm t_{1-\alpha/2, \, N_{dof}} \cdot SE_j ,\]</div>
+<p>where <span class="math notranslate nohighlight">\(t_{1-\alpha/2, \, N_{dof}}\)</span> is the <span class="math notranslate nohighlight">\(1-\alpha/2\)</span>
+quantile of the t-distribution. Dakota reports 95% intervals
+(<span class="math notranslate nohighlight">\(\alpha = 0.05\)</span>, so the quantile <span class="math notranslate nohighlight">\(t_{0.975, \, N_{dof}}\)</span> is
+used).</p>
+<p>These are <em>individual</em> (marginal) intervals: each covers its own
+parameter with approximately 95% probability, but the probability that
+all <span class="math notranslate nohighlight">\(p\)</span> intervals cover their parameters at once is generally
+lower. The intervals also ignore correlation between parameter
+estimates, which is described by the off-diagonal entries of
+<span class="math notranslate nohighlight">\((\mathbf{J}^T\mathbf{J})^{-1}\)</span>. Joint regions, such as the
+linearized ellipsoid</p>
+<div class="math notranslate nohighlight">
+\[\left\{ \mathbf{x} : (\mathbf{x} - \hat{\mathbf{x}})^T \mathbf{J}^T
+  \mathbf{J} (\mathbf{x} - \hat{\mathbf{x}}) \le p \, \hat{\sigma}^2
+  F_{1-\alpha;\, p, \, N_{dof}} \right\},\]</div>
+<p>or simultaneous Bonferroni intervals (which replace <span class="math notranslate nohighlight">\(\alpha\)</span> by
+<span class="math notranslate nohighlight">\(\alpha/p\)</span>), are alternatives that Dakota does not currently
+report.</p>
+</section>
+<section id="numerical-computation">
+<span id="theory-nls-ci-qr"></span><h2>Numerical Computation<a class="headerlink" href="#numerical-computation" title="Link to this heading"></a></h2>
+<p>Forming <span class="math notranslate nohighlight">\(\mathbf{J}^T\mathbf{J}\)</span> explicitly squares the condition
+number of <span class="math notranslate nohighlight">\(\mathbf{J}\)</span>, which can cause significant loss of
+precision when parameters are poorly identified. Instead, Dakota takes
+a thin QR factorization</p>
+<div class="math notranslate nohighlight">
+\[\mathbf{J} = \mathbf{Q} \mathbf{R}, \qquad
+\mathbf{Q} \in \Re^{n \times p}, \; \mathbf{Q}^T\mathbf{Q} = \mathbf{I}, \;
+\mathbf{R} \in \Re^{p \times p} \text{ upper triangular}.\]</div>
+<p>Then</p>
+<div class="math notranslate nohighlight">
+\[\left( \mathbf{J}^T \mathbf{J} \right)^{-1}
+= \left( \mathbf{R}^T \mathbf{Q}^T \mathbf{Q} \mathbf{R} \right)^{-1}
+= \mathbf{R}^{-1} \mathbf{R}^{-T},\]</div>
+<p>so the needed diagonal entries are the squared Euclidean norms of the
+rows of the triangular inverse <span class="math notranslate nohighlight">\(\mathbf{R}^{-1}\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\left( \mathbf{J}^T \mathbf{J} \right)^{-1}_{jj}
+= \sum_{k=j}^{p} \left( \mathbf{R}^{-1} \right)_{jk}^2 .\]</div>
+<p>Only <span class="math notranslate nohighlight">\(\mathbf{R}\)</span> must be computed and inverted. If
+<span class="math notranslate nohighlight">\(\mathbf{J}\)</span> is rank deficient (for example, a parameter has no
+effect on any residual, or two parameters have the same effect),
+<span class="math notranslate nohighlight">\(\mathbf{R}\)</span> is singular and the parameters cannot be identified
+from the data. Dakota detects this only when a diagonal entry of
+<span class="math notranslate nohighlight">\(\mathbf{R}\)</span> is exactly zero, in which case it issues a warning and
+reports no intervals. The QR factorization does not use column pivoting
+or a rank tolerance, so in floating point arithmetic a rank deficient or
+nearly rank deficient <span class="math notranslate nohighlight">\(\mathbf{J}\)</span> usually yields small but nonzero
+diagonal entries instead. Dakota then reports intervals, but they are
+extremely wide or numerically meaningless. Very large intervals should
+be taken as a sign that the corresponding parameters are poorly
+identified, not as a reliable measure of uncertainty.</p>
+</section>
+<section id="weighted-error-scaled-and-scaled-residuals">
+<span id="theory-nls-ci-weighting"></span><h2>Weighted, Error-Scaled, and Scaled Residuals<a class="headerlink" href="#weighted-error-scaled-and-scaled-residuals" title="Link to this heading"></a></h2>
+<p>The intervals are computed from the least squares terms that the solver
+actually minimized. When Dakota transforms the residuals before
+handing them to the solver, <span class="math notranslate nohighlight">\(\mathbf{T}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{J}\)</span>
+above refer to the transformed terms. The parameters, however, are
+always in their original (native, unscaled) units, so the intervals
+are reported in the user’s parameter space.</p>
+<p><strong>Observation error covariance.</strong> When observation errors with
+covariance <span class="math notranslate nohighlight">\(\boldsymbol{\Sigma}\)</span> are given with calibration data,
+Dakota computes the Cholesky factorization
+<span class="math notranslate nohighlight">\(\boldsymbol{\Sigma} = \mathbf{L}\mathbf{L}^T\)</span> and whitens the
+raw residuals <span class="math notranslate nohighlight">\(\mathbf{r} = \mathbf{R}(\mathbf{x}) -
+\bar{\mathbf{R}}\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\mathbf{T}(\mathbf{x}) = \mathbf{L}^{-1} \mathbf{r}(\mathbf{x}),
+\qquad
+\mathbf{J} = \mathbf{L}^{-1} \frac{\partial \mathbf{r}}{\partial \mathbf{x}} .\]</div>
+<p>For a diagonal covariance this is the familiar variance-weighted form
+<span class="math notranslate nohighlight">\(T_i = r_i / \sigma_i\)</span>. The minimized objective is the generalized
+least squares misfit <span class="math notranslate nohighlight">\(\mathbf{r}^T\boldsymbol{\Sigma}^{-1}\mathbf{r}\)</span>,
+and <span class="math notranslate nohighlight">\((\mathbf{J}^T\mathbf{J})^{-1}\)</span> becomes
+<span class="math notranslate nohighlight">\((\mathbf{G}^T\boldsymbol{\Sigma}^{-1}\mathbf{G})^{-1}\)</span>, where
+<span class="math notranslate nohighlight">\(\mathbf{G} = \partial\mathbf{r}/\partial\mathbf{x}\)</span>. Dakota still
+estimates <span class="math notranslate nohighlight">\(\hat{\sigma}^2\)</span> from the data rather than fixing it to
+one. The specified covariance therefore sets the <em>relative</em> weighting of
+the observations, and <span class="math notranslate nohighlight">\(\hat{\sigma}^2\)</span> acts as an overall scale
+factor fitted to the data. A value of <span class="math notranslate nohighlight">\(\hat{\sigma}^2\)</span> far from one
+suggests that the specified error magnitudes are inconsistent with the
+observed misfit.</p>
+<p><strong>Residual weights.</strong> User-specified nonnegative weights <span class="math notranslate nohighlight">\(w_i\)</span>
+define the objective <span class="math notranslate nohighlight">\(\sum_i w_i r_i^2\)</span>, which is equivalent to
+least squares terms <span class="math notranslate nohighlight">\(T_i = \sqrt{w_i} \, r_i\)</span> with Jacobian rows
+scaled by <span class="math notranslate nohighlight">\(\sqrt{w_i}\)</span>. Under the statistical model above, this
+corresponds to assuming <span class="math notranslate nohighlight">\(\mathrm{Var}(\epsilon_i) \propto 1/w_i\)</span>.
+A term with zero weight contributes nothing to the residual sum of
+squares or to <span class="math notranslate nohighlight">\(\mathbf{J}\)</span>, but it is still counted in <span class="math notranslate nohighlight">\(n\)</span>
+when computing <span class="math notranslate nohighlight">\(N_{dof} = n - p\)</span>. Zero weights therefore inflate
+<span class="math notranslate nohighlight">\(N_{dof}\)</span>, which makes <span class="math notranslate nohighlight">\(\hat{\sigma}^2\)</span> and the t quantile
+too small and the intervals too narrow.</p>
+<p><strong>Response scaling.</strong> Scaling each residual by a constant <span class="math notranslate nohighlight">\(c_i\)</span>
+has the same effect on the intervals as a weight <span class="math notranslate nohighlight">\(w_i = c_i^2\)</span>. If
+every residual is scaled by the same constant <span class="math notranslate nohighlight">\(c\)</span>,
+<span class="math notranslate nohighlight">\(\hat{\sigma}^2\)</span> is multiplied by <span class="math notranslate nohighlight">\(c^2\)</span> and
+<span class="math notranslate nohighlight">\((\mathbf{J}^T\mathbf{J})^{-1}\)</span> by <span class="math notranslate nohighlight">\(c^{-2}\)</span>, so the
+intervals do not change. This equivalence applies only to value
+(multiplicative) scaling. With logarithmic response scaling the solver
+minimizes the sum of squares of the log-transformed terms, and the
+intervals are those of that transformed problem: <span class="math notranslate nohighlight">\(\mathbf{T}\)</span> and
+<span class="math notranslate nohighlight">\(\mathbf{J}\)</span> are the log-scaled terms and their derivatives, and
+the error model of <a class="reference internal" href="#theory-nls-ci-model"><span class="std std-ref">Statistical Model</span></a> is assumed to hold for the
+log-scaled terms rather than for the original residuals.</p>
+<p><strong>Parameter scaling.</strong> If the solver works with scaled parameters
+<span class="math notranslate nohighlight">\(\mathbf{u} = \mathbf{s}(\mathbf{x})\)</span>, the chain rule converts
+the Jacobian back to native parameters before the intervals are
+formed:</p>
+<div class="math notranslate nohighlight">
+\[\frac{\partial \mathbf{T}}{\partial \mathbf{x}} =
+\frac{\partial \mathbf{T}}{\partial \mathbf{u}}
+\frac{\partial \mathbf{u}}{\partial \mathbf{x}} .\]</div>
+</section>
+<section id="assumptions-and-limitations">
+<span id="theory-nls-ci-limitations"></span><h2>Assumptions and Limitations<a class="headerlink" href="#assumptions-and-limitations" title="Link to this heading"></a></h2>
+<p>The intervals are only as reliable as the assumptions behind them:</p>
+<ul class="simple">
+<li><p><strong>Linearity.</strong> The intervals come from a local linear approximation
+at <span class="math notranslate nohighlight">\(\hat{\mathbf{x}}\)</span>. For strongly nonlinear models, or when
+the noise is large compared with the curvature of the model, the true
+confidence region can be far from the symmetric interval, and its
+actual coverage can differ greatly from 95%. Profile likelihood or
+Bayesian calibration (see <a class="reference internal" href="../studytypes/uq.html#uq-bayesian"><span class="std std-ref">Bayesian Calibration Methods</span></a>) gives a more faithful
+picture in such cases.</p></li>
+<li><p><strong>Error model.</strong> Independent, identically distributed Gaussian errors
+(after any weighting or whitening) are assumed. Model form error,
+correlated errors that are not described by the covariance, or
+heavy-tailed noise all invalidate the nominal coverage.</p></li>
+<li><p><strong>Interior optimum.</strong> The derivation assumes <span class="math notranslate nohighlight">\(\hat{\mathbf{x}}\)</span>
+is an unconstrained local minimum. The intervals ignore parameter
+bounds and other constraints. They are not truncated to the bounds,
+and they may be meaningless when a constraint is active at the
+solution.</p></li>
+<li><p><strong>Derivative accuracy.</strong> <span class="math notranslate nohighlight">\(\mathbf{J}\)</span> must be accurate.
+Intervals are not computed when the solver’s internal (vendor)
+finite differencing is used. Inaccurate gradients give inaccurate
+intervals.</p></li>
+<li><p><strong>Problem size.</strong> At least as many least squares terms as parameters
+(<span class="math notranslate nohighlight">\(n \ge p\)</span>) are required, and <span class="math notranslate nohighlight">\(\mathbf{J}\)</span> must have full
+column rank.</p></li>
+<li><p><strong>Multiple experiments.</strong> With replicate experiments, <span class="math notranslate nohighlight">\(n\)</span>
+counts the residuals from all experiments together, and the formulas
+above are applied to the stacked system. Dakota warns that intervals
+may be inaccurate in this case.</p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="bayesian.html" class="btn btn-neutral float-left" title="Bayesian Methods" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="surrogates.html" class="btn btn-neutral float-right" title="Surrogate Models" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <!--
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Sandia National Laboratories.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+  --> 
+
+</footer>
+        </div>
+      </div>
+	  
+	  <div style="background-color: #0f0f0f;color:#fafafa;padding:20px">
+	    <div>
+		  <h2><em>Exceptional service in the national interest</em></h2>
+		</div>
+		<p>© 2023 National Technology and Engineering Solutions of Sandia, LLC. | <a href="https://www.sandia.gov/contact_us/index.html">Questions &amp; Comments</a> | <a href="https://www.sandia.gov/general/privacy-security/index.html">Privacy &amp; Security</a></p>
+		<p><a href="http://energy.gov" rel="noopener noreferrer" target="_blank"><img alt="U.S. Department of Energy" longdesc="https://energy.gov" src="https://www.sandia.gov/_common/images/doe_logo_white.png" style="height:37px; width:140px"></a> <a href="http://nnsa.energy.gov/" rel="noopener noreferrer" target="_blank"> <img alt="National Nuclear Security Administration" longdesc="http://nnsa.gov" src="https://www.sandia.gov/_common/images/nnsa_logo_white.png" style="height:37px; width:116px"></a></p>
+		<p><a href="https://www.sandia.gov">Sandia National Laboratories</a> is a multimission laboratory managed and operated by National Technology and Engineering Solutions of Sandia, LLC., a wholly owned subsidiary of Honeywell International, Inc., for the U.S. Department of Energy’s National Nuclear Security Administration under contract DE-NA-0003525.</p>
+	  </div>	  	  
+	  
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

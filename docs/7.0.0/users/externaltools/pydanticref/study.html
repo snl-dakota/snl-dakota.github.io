@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Study &mdash; Dakota 7.0.0 documentation</title>
+      <link rel="stylesheet"
+            href="../../_static/pygments.css"
+            type="text/css" />
+      <link rel="stylesheet"
+            href="../../_static/css/theme.css"
+            type="text/css" />
+      <link rel="stylesheet"
+            href="../../_static/copybutton.css"
+            type="text/css" />
+      <link rel="stylesheet"
+            href="../../_static/autodoc_pydantic.css"
+            type="text/css" />
+      <link rel="stylesheet"
+            href="../../_static/tabs.css"
+            type="text/css" />
+      <link rel="stylesheet"
+            href="../../_static/css/dakota_theme.css"
+            type="text/css" />
+      <link rel="stylesheet"
+            href="../../_static/css/sandiaheaderlite.css"
+            type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=efe5be6f"></script>
+        <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+        <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+        <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../../_static/copybutton.js?v=f281be69"></script>
+        <script src="../../_static/tabs.js?v=3ee01567"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Methods" href="methods.html" />
+    <link rel="prev" title="Pydantic Model Reference" href="../pydanticref.html" /> 
+  
+  <meta name="sandia.approval_type" content="formal"/>
+  <meta property="sandia.approved" content="SAND2025-14179O"/>
+  <meta name="description" content="The Dakota project delivers both state-of-the-art research and robust, usable software for optimization and UQ."/>
+  <meta name="keywords" content="Dakota, optimization, UQ, uncertainty quantification, parametric analysis, design exploration, model calibration, risk analysis"/>
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> Dakota
+            <img src="../../_static/DAKOTAWhiteWEB.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Install</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../setupdakota.html">Download and Install Dakota</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Getting Started with Dakota</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../usingdakota/introduction/aboutdakota.html">What is Dakota?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../usingdakota/introduction/studyanatomy.html">Anatomy of a Dakota Study</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../usingdakota/introduction/helloworld.html">Tutorial: Your First Dakota Study</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../usingdakota/introduction/couplingtosimulations.html">Connecting Your Code: The Analysis Driver</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Using Dakota</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../usingdakota/usingdakota.html">Using Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../usingdakotagui/usingdakotagui.html">Using Dakota GUI</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../externaltools.html">Using External Tools</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../dpreproandpyprepro.html">Preprocessing with dprepro and pyprepro</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../restartutility.html">The Dakota Restart Utility</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../pydanticref.html">Pydantic Model Reference</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Study</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#dakota.spec.study.DakotaStudy"><code class="docutils literal notranslate"><span class="pre">DakotaStudy</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#dakota.spec.study.DakotaStudy.wrap_method_configs"><code class="docutils literal notranslate"><span class="pre">DakotaStudy.wrap_method_configs()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#dakota.spec.study.DakotaStudy.wrap_model_configs"><code class="docutils literal notranslate"><span class="pre">DakotaStudy.wrap_model_configs()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#dakota.spec.study.DakotaStudy.model_config"><code class="docutils literal notranslate"><span class="pre">DakotaStudy.model_config</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#dakota.spec.study.DakotaStudy.universal_validator"><code class="docutils literal notranslate"><span class="pre">DakotaStudy.universal_validator()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="methods.html">Methods</a></li>
+<li class="toctree-l3"><a class="reference internal" href="environment.html">Environment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="interface.html">Interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="model.html">Model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="responses.html">Responses</a></li>
+<li class="toctree-l3"><a class="reference internal" href="variables.html">Variables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="shared.html">Shared</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pydanticref.html#how-to-work-with-the-pydantic-documentation">How to Work with the Pydantic Documentation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../inputtools.html">Working with Inputs</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Building and Developing Dakota</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../building/building.html">Building Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developingdakota/developingdakota.html">Developing Dakota</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">More</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../misc/misc.html">Miscellaneous</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Dakota</a>
+      </nav>
+
+	  <!-- SNL Lite header -->
+	  <div class="snlheader-subsite--wrapper-default">
+		<snlheader class="snlheader-subsite" role="snlbanner">
+		  <div class="wrapper">
+			<a href="https://www.sandia.gov/index.html">
+			  <div class="logo-transparent"><p class="logo">Sandia National Laboratories</p></div>
+			</a>
+			<div class="nav-top">
+			  <a class="visuallyhidden" name="mainnav"></a>
+			  <div aria-label="main navigation" class="core-nav-transparent core-nav-transparent--visible" role="navigation">
+				<ul role="navigation" class="secondary-links">
+				  <li id="search-text-link">
+					<a aria-label="Search" href="https://www.sandia.gov/search/">Search Sandia.gov</a>
+				  </li>
+				  <li id="directory-text-link">
+					<a href="https://www.sandia.gov/directory.html" aria-expanded="false" aria-label="Site Directory">All Sandia Websites</a>
+				  </li>
+				</ul>
+			  </div>
+			</div>
+		  </div> 
+		</snlheader>
+	  </div>	  
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../externaltools.html">Using External Tools</a></li>
+          <li class="breadcrumb-item"><a href="../pydanticref.html">Pydantic Model Reference</a></li>
+      <li class="breadcrumb-item active">Study</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/externaltools/pydanticref/study.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-dakota.spec.study">
+<span id="study"></span><span id="pydantic-study"></span><h1>Study<a class="headerlink" href="#module-dakota.spec.study" title="Link to this heading"></a></h1>
+<p>Top-level Dakota study specification</p>
+<p>This module provides the DakotaStudy model that combines all major sections
+of a Dakota input specification.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="dakota.spec.study.DakotaStudy">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">dakota.spec.study.</span></span><span class="sig-name descname"><span class="pre">DakotaStudy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">environment</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="environment.html#dakota.spec.environment.EnvironmentConfig" title="dakota.spec.environment.EnvironmentConfig"><span class="pre">EnvironmentConfig</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="methods/adaptive_sampling.html#dakota.spec.method.adaptive_sampling.AdaptiveSamplingSelection" title="dakota.spec.method.adaptive_sampling.AdaptiveSamplingSelection"><span class="pre">AdaptiveSamplingSelection</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="methods/approximate_control_variate.html#dakota.spec.method.approximate_control_variate.ApproximateControlVariateSelection" title="dakota.spec.method.approximate_control_variate.ApproximateControlVariateSelection"><span class="pre">ApproximateControlVariateSelection</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="methods/asynch_pattern_search.html#dakota.spec.method.asynch_pattern_search.AsynchPatternSearchSelection" title="dakota.spec.method.asynch_pattern_search.AsynchPatternSearchSelection"><span class="pre">AsynchPatternSearchSelection</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="methods/bayes_calibration.html#dakota.spec.method.bayes_calibration.BayesCalibrationSelection" title="dakota.spec.method.bayes_calibration.BayesCalibrationSelection"><span class="pre">BayesCalibrationSelection</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="methods/branch_and_bound.html#dakota.spec.method.branch_and_bound.BranchAndBoundSelection" title="dakota.spec.method.branch_and_bound.BranchAndBoundSelection"><span class="pre">BranchAndBoundSelection</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="methods/centered_parameter_study.html#dakota.spec.method.centered_parameter_study.CenteredParameterStudySelection" title="dakota.spec.method.centered_parameter_study.CenteredParameterStudySelection"><span class="pre">CenteredParameterStudySelection</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="methods/coliny_beta.html#dakota.spec.method.coliny_beta.ColinyBetaSelection" title="dakota.spec.method.coliny_beta.ColinyBetaSelection"><span class="pre">ColinyBetaSelection</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="methods/coliny_cobyla.html#dakota.spec.method.coliny_cobyla.ColinyCobylaSelection" title="dakota.spec.method.coliny_cobyla.ColinyCobylaSelection"><span class="pre">ColinyCobylaSelection</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="methods/coliny_direct.html#dakota.spec.method.coliny_direct.ColinyDirectSelection" title="dakota.spec.method.coliny_direct.ColinyDirectSelection"><span class="pre">ColinyDirectSelection</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="methods/coliny_ea.html#dakota.spec.method.coliny_ea.ColinyEaSelection" title="dakota.spec.method.coliny_ea.ColinyEaSelection"><span class="pre">ColinyEaSelection</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="methods/coliny_pattern_search.html#dakota.spec.method.coliny_pattern_search.ColinyPatternSearchSelection" title="dakota.spec.method.coliny_pattern_search.ColinyPatternSearchSelection"><span class="pre">ColinyPatternSearchSelection</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="methods/coliny_solis_wets.html#dakota.spec.method.coliny_solis_wets.ColinySolisWetsSelection" title="dakota.spec.method.coliny_solis_wets.ColinySolisWetsSelection"><span class="pre">ColinySolisWetsSelection</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="methods/conmin_frcg.html#dakota.spec.method.conmin_frcg.ConminFrcgSelection" title="dakota.spec.method.conmin_frcg.ConminFrcgSelection"><span class="pre">ConminFrcgSelection</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="methods/conmin_mfd.html#dakota.spec.method.conmin_mfd.ConminMfdSelection" title="dakota.spec.method.conmin_mfd.ConminMfdSelection"><span class="pre">ConminMfdSelection</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="methods/dace.html#dakota.spec.method.dace.DaceSelection" title="dakota.spec.method.dace.DaceSelection"><span class="pre">DaceSelection</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="methods/demo_tpl.html#dakota.spec.method.demo_tpl.DemoTplSelection" title="dakota.spec.method.demo_tpl.DemoTplSelection"><span class="pre">DemoTplSelection</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="methods/dot_bfgs.html#dakota.spec.method.dot_bfgs.DotBfgsSelection" title="dakota.spec.method.dot_bfgs.DotBfgsSelection"><span class="pre">DotBfgsSelection</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="methods/dot_frcg.html#dakota.spec.method.dot_frcg.DotFrcgSelection" title="dakota.spec.method.dot_frcg.DotFrcgSelection"><span class="pre">DotFrcgSelection</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="methods/dot_mmfd.html#dakota.spec.method.dot_mmfd.DotMmfdSelection" title="dakota.spec.method.dot_mmfd.DotMmfdSelection"><span class="pre">DotMmfdSelection</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="methods/dot_slp.html#dakota.spec.method.dot_slp.DotSlpSelection" title="dakota.spec.method.dot_slp.DotSlpSelection"><span class="pre">DotSlpSelection</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="methods/dot_sqp.html#dakota.spec.method.dot_sqp.DotSqpSelection" title="dakota.spec.method.dot_sqp.DotSqpSelection"><span class="pre">DotSqpSelection</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="methods/efficient_global.html#dakota.spec.method.efficient_global.EfficientGlobalSelection" title="dakota.spec.method.efficient_global.EfficientGlobalSelection"><span class="pre">EfficientGlobalSelection</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="methods/external_python.html#dakota.spec.method.external_python.ExternalPythonSelection" title="dakota.spec.method.external_python.ExternalPythonSelection"><span class="pre">ExternalPythonSelection</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="methods/fsu_cvt.html#dakota.spec.method.fsu_cvt.FsuCvtSelection" title="dakota.spec.method.fsu_cvt.FsuCvtSelection"><span class="pre">FsuCvtSelection</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="methods/fsu_quasi_mc.html#dakota.spec.method.fsu_quasi_mc.FsuQuasiMcSelection" title="dakota.spec.method.fsu_quasi_mc.FsuQuasiMcSelection"><span class="pre">FsuQuasiMcSelection</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="methods/function_train.html#dakota.spec.method.function_train.FtSelection" title="dakota.spec.method.function_train.FtSelection"><span class="pre">FtSelection</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="methods/genie_direct.html#dakota.spec.method.genie_direct.GenieDirectSelection" title="dakota.spec.method.genie_direct.GenieDirectSelection"><span class="pre">GenieDirectSelection</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="methods/genie_opt_darts.html#dakota.spec.method.genie_opt_darts.GenieOptDartsSelection" title="dakota.spec.method.genie_opt_darts.GenieOptDartsSelection"><span class="pre">GenieOptDartsSelection</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="methods/global_evidence.html#dakota.spec.method.global_evidence.GlobalEvidenceSelection" title="dakota.spec.method.global_evidence.GlobalEvidenceSelection"><span class="pre">GlobalEvidenceSelection</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="methods/global_interval_est.html#dakota.spec.method.global_interval_est.GlobalIntervalEstSelection" title="dakota.spec.method.global_interval_est.GlobalIntervalEstSelection"><span class="pre">GlobalIntervalEstSelection</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="methods/global_reliability.html#dakota.spec.method.global_reliability.GlobalReliabilitySelection" title="dakota.spec.method.global_reliability.GlobalReliabilitySelection"><span class="pre">GlobalReliabilitySelection</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="methods/gpais.html#dakota.spec.method.gpais.GpaisSelection" title="dakota.spec.method.gpais.GpaisSelection"><span class="pre">GpaisSelection</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="methods/hybrid_sequential.html#dakota.spec.method.hybrid_sequential.HybridSequentialSelection" title="dakota.spec.method.hybrid_sequential.HybridSequentialSelection"><span class="pre">HybridSequentialSelection</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="methods/import_points.html#dakota.spec.method.import_points.ImportPointsSelection" title="dakota.spec.method.import_points.ImportPointsSelection"><span class="pre">ImportPointsSelection</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="methods/importance_sampling.html#dakota.spec.method.importance_sampling.ImportanceSamplingSelection" title="dakota.spec.method.importance_sampling.ImportanceSamplingSelection"><span class="pre">ImportanceSamplingSelection</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="methods/list_parameter_study.html#dakota.spec.method.list_parameter_study.ListParameterStudySelection" title="dakota.spec.method.list_parameter_study.ListParameterStudySelection"><span class="pre">ListParameterStudySelection</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="methods/local_evidence.html#dakota.spec.method.local_evidence.LocalEvidenceSelection" title="dakota.spec.method.local_evidence.LocalEvidenceSelection"><span class="pre">LocalEvidenceSelection</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="methods/local_interval_est.html#dakota.spec.method.local_interval_est.LocalIntervalEstSelection" title="dakota.spec.method.local_interval_est.LocalIntervalEstSelection"><span class="pre">LocalIntervalEstSelection</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="methods/local_reliability.html#dakota.spec.method.local_reliability.LocalReliabilitySelection" title="dakota.spec.method.local_reliability.LocalReliabilitySelection"><span class="pre">LocalReliabilitySelection</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="methods/mesh_adaptive_search.html#dakota.spec.method.mesh_adaptive_search.MeshAdaptiveSearchSelection" title="dakota.spec.method.mesh_adaptive_search.MeshAdaptiveSearchSelection"><span class="pre">MeshAdaptiveSearchSelection</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="methods/moga.html#dakota.spec.method.moga.MogaSelection" title="dakota.spec.method.moga.MogaSelection"><span class="pre">MogaSelection</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="methods/multi_start.html#dakota.spec.method.multi_start.MultiStartSelection" title="dakota.spec.method.multi_start.MultiStartSelection"><span class="pre">MultiStartSelection</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="methods/multidim_parameter_study.html#dakota.spec.method.multidim_parameter_study.MultidimParameterStudySelection" title="dakota.spec.method.multidim_parameter_study.MultidimParameterStudySelection"><span class="pre">MultidimParameterStudySelection</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="methods/multifidelity_function_train.html#dakota.spec.method.multifidelity_function_train.MultifidelityFtSelection" title="dakota.spec.method.multifidelity_function_train.MultifidelityFtSelection"><span class="pre">MultifidelityFtSelection</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="methods/multifidelity_polynomial_chaos.html#dakota.spec.method.multifidelity_polynomial_chaos.MfPceSelection" title="dakota.spec.method.multifidelity_polynomial_chaos.MfPceSelection"><span class="pre">MfPceSelection</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="methods/multifidelity_sampling.html#dakota.spec.method.multifidelity_sampling.MultifidelitySamplingSelection" title="dakota.spec.method.multifidelity_sampling.MultifidelitySamplingSelection"><span class="pre">MultifidelitySamplingSelection</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="methods/multifidelity_stoch_collocation.html#dakota.spec.method.multifidelity_stoch_collocation.MultifidelityStochCollocSelection" title="dakota.spec.method.multifidelity_stoch_collocation.MultifidelityStochCollocSelection"><span class="pre">MultifidelityStochCollocSelection</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="methods/multilevel_blue.html#dakota.spec.method.multilevel_blue.MultilevelBlueSelection" title="dakota.spec.method.multilevel_blue.MultilevelBlueSelection"><span class="pre">MultilevelBlueSelection</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="methods/multilevel_function_train.html#dakota.spec.method.multilevel_function_train.MultilevelFtSelection" title="dakota.spec.method.multilevel_function_train.MultilevelFtSelection"><span class="pre">MultilevelFtSelection</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="methods/multilevel_multifidelity_sampling.html#dakota.spec.method.multilevel_multifidelity_sampling.MultilevelMultifidelitySamplingSelection" title="dakota.spec.method.multilevel_multifidelity_sampling.MultilevelMultifidelitySamplingSelection"><span class="pre">MultilevelMultifidelitySamplingSelection</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="methods/multilevel_polynomial_chaos.html#dakota.spec.method.multilevel_polynomial_chaos.MlPceSelection" title="dakota.spec.method.multilevel_polynomial_chaos.MlPceSelection"><span class="pre">MlPceSelection</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="methods/multilevel_sampling.html#dakota.spec.method.multilevel_sampling.MultilevelSamplingSelection" title="dakota.spec.method.multilevel_sampling.MultilevelSamplingSelection"><span class="pre">MultilevelSamplingSelection</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="methods/ncsu_direct.html#dakota.spec.method.ncsu_direct.NcsuDirectSelection" title="dakota.spec.method.ncsu_direct.NcsuDirectSelection"><span class="pre">NcsuDirectSelection</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="methods/nl2sol.html#dakota.spec.method.nl2sol.Nl2solSelection" title="dakota.spec.method.nl2sol.Nl2solSelection"><span class="pre">Nl2solSelection</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="methods/nlpql_sqp.html#dakota.spec.method.nlpql_sqp.NlpqlSqpSelection" title="dakota.spec.method.nlpql_sqp.NlpqlSqpSelection"><span class="pre">NlpqlSqpSelection</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="methods/nlssol_sqp.html#dakota.spec.method.nlssol_sqp.NlssolSqpSelection" title="dakota.spec.method.nlssol_sqp.NlssolSqpSelection"><span class="pre">NlssolSqpSelection</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="methods/nonlinear_cg.html#dakota.spec.method.nonlinear_cg.NonlinearCgSelection" title="dakota.spec.method.nonlinear_cg.NonlinearCgSelection"><span class="pre">NonlinearCgSelection</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="methods/nowpac.html#dakota.spec.method.nowpac.NowpacSelection" title="dakota.spec.method.nowpac.NowpacSelection"><span class="pre">NowpacSelection</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="methods/npsol_sqp.html#dakota.spec.method.npsol_sqp.NpsolSqpSelection" title="dakota.spec.method.npsol_sqp.NpsolSqpSelection"><span class="pre">NpsolSqpSelection</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="methods/optpp_cg.html#dakota.spec.method.optpp_cg.OptppCgSelection" title="dakota.spec.method.optpp_cg.OptppCgSelection"><span class="pre">OptppCgSelection</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="methods/optpp_fd_newton.html#dakota.spec.method.optpp_fd_newton.OptppFdNewtonSelection" title="dakota.spec.method.optpp_fd_newton.OptppFdNewtonSelection"><span class="pre">OptppFdNewtonSelection</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="methods/optpp_g_newton.html#dakota.spec.method.optpp_g_newton.OptppGNewtonSelection" title="dakota.spec.method.optpp_g_newton.OptppGNewtonSelection"><span class="pre">OptppGNewtonSelection</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="methods/optpp_newton.html#dakota.spec.method.optpp_newton.OptppNewtonSelection" title="dakota.spec.method.optpp_newton.OptppNewtonSelection"><span class="pre">OptppNewtonSelection</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="methods/optpp_pds.html#dakota.spec.method.optpp_pds.OptppPdsSelection" title="dakota.spec.method.optpp_pds.OptppPdsSelection"><span class="pre">OptppPdsSelection</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="methods/optpp_q_newton.html#dakota.spec.method.optpp_q_newton.OptppQNewtonSelection" title="dakota.spec.method.optpp_q_newton.OptppQNewtonSelection"><span class="pre">OptppQNewtonSelection</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="methods/pareto_set.html#dakota.spec.method.pareto_set.ParetoSetSelection" title="dakota.spec.method.pareto_set.ParetoSetSelection"><span class="pre">ParetoSetSelection</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="methods/pof_darts.html#dakota.spec.method.pof_darts.PofDartsSelection" title="dakota.spec.method.pof_darts.PofDartsSelection"><span class="pre">PofDartsSelection</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="methods/polynomial_chaos.html#dakota.spec.method.polynomial_chaos.PceSelection" title="dakota.spec.method.polynomial_chaos.PceSelection"><span class="pre">PceSelection</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="methods/psuade_moat.html#dakota.spec.method.psuade_moat.PsuadeMoatSelection" title="dakota.spec.method.psuade_moat.PsuadeMoatSelection"><span class="pre">PsuadeMoatSelection</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="methods/richardson_extrap.html#dakota.spec.method.richardson_extrap.RichardsonExtrapSelection" title="dakota.spec.method.richardson_extrap.RichardsonExtrapSelection"><span class="pre">RichardsonExtrapSelection</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="methods/rkd_darts.html#dakota.spec.method.rkd_darts.RkdDartsSelection" title="dakota.spec.method.rkd_darts.RkdDartsSelection"><span class="pre">RkdDartsSelection</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="methods/rol.html#dakota.spec.method.rol.RolSelection" title="dakota.spec.method.rol.RolSelection"><span class="pre">RolSelection</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="methods/sampling.html#dakota.spec.method.sampling.SamplingSelection" title="dakota.spec.method.sampling.SamplingSelection"><span class="pre">SamplingSelection</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="methods/snowpac.html#dakota.spec.method.snowpac.SnowpacSelection" title="dakota.spec.method.snowpac.SnowpacSelection"><span class="pre">SnowpacSelection</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="methods/soga.html#dakota.spec.method.soga.SogaSelection" title="dakota.spec.method.soga.SogaSelection"><span class="pre">SogaSelection</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="methods/stoch_collocation.html#dakota.spec.method.stoch_collocation.StochCollocSelection" title="dakota.spec.method.stoch_collocation.StochCollocSelection"><span class="pre">StochCollocSelection</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="methods/surrogate_based_global.html#dakota.spec.method.surrogate_based_global.SurrogateBasedGlobalSelection" title="dakota.spec.method.surrogate_based_global.SurrogateBasedGlobalSelection"><span class="pre">SurrogateBasedGlobalSelection</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="methods/surrogate_based_local.html#dakota.spec.method.surrogate_based_local.SurrogateBasedLocalSelection" title="dakota.spec.method.surrogate_based_local.SurrogateBasedLocalSelection"><span class="pre">SurrogateBasedLocalSelection</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="methods/surrogate_based_uq.html#dakota.spec.method.surrogate_based_uq.SurrogateBasedUqSelection" title="dakota.spec.method.surrogate_based_uq.SurrogateBasedUqSelection"><span class="pre">SurrogateBasedUqSelection</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="methods/vector_parameter_study.html#dakota.spec.method.vector_parameter_study.VectorParameterStudySelection" title="dakota.spec.method.vector_parameter_study.VectorParameterStudySelection"><span class="pre">VectorParameterStudySelection</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="model.html#dakota.spec.model.SingleSelection" title="dakota.spec.model.SingleSelection"><span class="pre">SingleSelection</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="model.html#dakota.spec.model.NestedSelection" title="dakota.spec.model.NestedSelection"><span class="pre">NestedSelection</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="model.html#dakota.spec.model.RandomFieldSelection" title="dakota.spec.model.RandomFieldSelection"><span class="pre">RandomFieldSelection</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="model.html#dakota.spec.model.ActiveSubspaceSelection" title="dakota.spec.model.ActiveSubspaceSelection"><span class="pre">ActiveSubspaceSelection</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="model.html#dakota.spec.model.AdaptedBasisSelection" title="dakota.spec.model.AdaptedBasisSelection"><span class="pre">AdaptedBasisSelection</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="model.html#dakota.spec.model.GlobalSurrogateSelection" title="dakota.spec.model.GlobalSurrogateSelection"><span class="pre">GlobalSurrogateSelection</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="model.html#dakota.spec.model.MultipointSurrogateSelection" title="dakota.spec.model.MultipointSurrogateSelection"><span class="pre">MultipointSurrogateSelection</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="model.html#dakota.spec.model.LocalSurrogateSelection" title="dakota.spec.model.LocalSurrogateSelection"><span class="pre">LocalSurrogateSelection</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="model.html#dakota.spec.model.EnsembleSurrogateSelection" title="dakota.spec.model.EnsembleSurrogateSelection"><span class="pre">EnsembleSurrogateSelection</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">variables</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="variables.html#dakota.spec.variables.VariablesConfig" title="dakota.spec.variables.VariablesConfig"><span class="pre">VariablesConfig</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">responses</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="responses.html#dakota.spec.responses.ResponsesConfig" title="dakota.spec.responses.ResponsesConfig"><span class="pre">ResponsesConfig</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interface</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="interface.html#dakota.spec.interface.InterfaceConfig" title="dakota.spec.interface.InterfaceConfig"><span class="pre">InterfaceConfig</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.study.DakotaStudy" title="Link to this definition"></a></dt>
+<dd><p>Complete Dakota study specification</p>
+<p>A Dakota study consists of:
+- environment (optional): Execution environment settings
+- method (required): One or more iterative algorithms
+- model (optional): One or more model configurations (surrogate, nested, etc.)
+- variables (required): One or more variable specifications
+- responses (required): One or more response function definitions
+- interface (optional): One or more simulation interface configurations</p>
+<p>Each section can have multiple instances to support advanced Dakota workflows.</p>
+<p>The method and model fields support three input styles:
+1. Dict with discriminator: method=[{“sampling”: {“samples”: 10}}]
+2. Selection instance: method=[SamplingSelection(sampling=SamplingConfig(samples=10))]
+3. Bare config (auto-wrapped): method=[SamplingConfig(samples=10)]</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="dakota.spec.study.DakotaStudy.wrap_method_configs">
+<span class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">wrap_method_configs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.study.DakotaStudy.wrap_method_configs" title="Link to this definition"></a></dt>
+<dd><p>Auto-wrap bare Config instances and validate method specifications</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dakota.spec.study.DakotaStudy.wrap_model_configs">
+<span class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">wrap_model_configs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.study.DakotaStudy.wrap_model_configs" title="Link to this definition"></a></dt>
+<dd><p>Auto-wrap bare Config instances and validate model specifications</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dakota.spec.study.DakotaStudy.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'protected_namespaces':</span> <span class="pre">(),</span> <span class="pre">'str_strip_whitespace':</span> <span class="pre">True,</span> <span class="pre">'use_enum_values':</span> <span class="pre">True,</span> <span class="pre">'validate_assignment':</span> <span class="pre">True}</span></span><a class="headerlink" href="#dakota.spec.study.DakotaStudy.model_config" title="Link to this definition"></a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dakota.spec.study.DakotaStudy.universal_validator">
+<span class="sig-name descname"><span class="pre">universal_validator</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.study.DakotaStudy.universal_validator" title="Link to this definition"></a></dt>
+<dd><p>Example universal validator that runs for all models</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../pydanticref.html" class="btn btn-neutral float-left" title="Pydantic Model Reference" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="methods.html" class="btn btn-neutral float-right" title="Methods" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <!--
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Sandia National Laboratories.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+  --> 
+
+</footer>
+        </div>
+      </div>
+	  
+	  <div style="background-color: #0f0f0f;color:#fafafa;padding:20px">
+	    <div>
+		  <h2><em>Exceptional service in the national interest</em></h2>
+		</div>
+		<p>© 2023 National Technology and Engineering Solutions of Sandia, LLC. | <a href="https://www.sandia.gov/contact_us/index.html">Questions &amp; Comments</a> | <a href="https://www.sandia.gov/general/privacy-security/index.html">Privacy &amp; Security</a></p>
+		<p><a href="http://energy.gov" rel="noopener noreferrer" target="_blank"><img alt="U.S. Department of Energy" longdesc="https://energy.gov" src="https://www.sandia.gov/_common/images/doe_logo_white.png" style="height:37px; width:140px"></a> <a href="http://nnsa.energy.gov/" rel="noopener noreferrer" target="_blank"> <img alt="National Nuclear Security Administration" longdesc="http://nnsa.gov" src="https://www.sandia.gov/_common/images/nnsa_logo_white.png" style="height:37px; width:116px"></a></p>
+		<p><a href="https://www.sandia.gov">Sandia National Laboratories</a> is a multimission laboratory managed and operated by National Technology and Engineering Solutions of Sandia, LLC., a wholly owned subsidiary of Honeywell International, Inc., for the U.S. Department of Energy’s National Nuclear Security Administration under contract DE-NA-0003525.</p>
+	  </div>	  	  
+	  
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

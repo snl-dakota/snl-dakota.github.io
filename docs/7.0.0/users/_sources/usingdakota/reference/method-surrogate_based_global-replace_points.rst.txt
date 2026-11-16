@@ -1,0 +1,23 @@
+.. _method-surrogate_based_global-replace_points:
+
+""""""""""""""
+replace_points
+""""""""""""""
+
+(Recommended) Replace points in the surrogate training set, instead of appending
+
+**Specification**
+
+- *Alias:* None
+- *Arguments:* None
+- *JSON argument key:* None
+
+**Description**
+
+The user has the option of appending the optimal points from the
+surrogate model to the current set of truth points or using the
+optimal points from the surrogate model to replace the optimal set of
+points from the previous iteration.  Although appending to the set is
+the default behavior, at this time we strongly recommend using the
+option ``replace_points`` because it appears to be more accurate and
+robust.

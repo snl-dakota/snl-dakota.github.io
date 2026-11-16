@@ -1,0 +1,939 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Surrogate &mdash; Dakota 7.0.0 documentation</title>
+      <link rel="stylesheet"
+            href="../../../_static/pygments.css"
+            type="text/css" />
+      <link rel="stylesheet"
+            href="../../../_static/css/theme.css"
+            type="text/css" />
+      <link rel="stylesheet"
+            href="../../../_static/copybutton.css"
+            type="text/css" />
+      <link rel="stylesheet"
+            href="../../../_static/autodoc_pydantic.css"
+            type="text/css" />
+      <link rel="stylesheet"
+            href="../../../_static/tabs.css"
+            type="text/css" />
+      <link rel="stylesheet"
+            href="../../../_static/css/dakota_theme.css"
+            type="text/css" />
+      <link rel="stylesheet"
+            href="../../../_static/css/sandiaheaderlite.css"
+            type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=efe5be6f"></script>
+        <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+        <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../../../_static/copybutton.js?v=f281be69"></script>
+        <script src="../../../_static/tabs.js?v=3ee01567"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Working with Inputs" href="../../inputtools.html" />
+    <link rel="prev" title="Sampling" href="sampling.html" /> 
+  
+  <meta name="sandia.approval_type" content="formal"/>
+  <meta property="sandia.approved" content="SAND2025-14179O"/>
+  <meta name="description" content="The Dakota project delivers both state-of-the-art research and robust, usable software for optimization and UQ."/>
+  <meta name="keywords" content="Dakota, optimization, UQ, uncertainty quantification, parametric analysis, design exploration, model calibration, risk analysis"/>
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../index.html" class="icon icon-home"> Dakota
+            <img src="../../../_static/DAKOTAWhiteWEB.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Install</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../setupdakota.html">Download and Install Dakota</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Getting Started with Dakota</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../usingdakota/introduction/aboutdakota.html">What is Dakota?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usingdakota/introduction/studyanatomy.html">Anatomy of a Dakota Study</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usingdakota/introduction/helloworld.html">Tutorial: Your First Dakota Study</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usingdakota/introduction/couplingtosimulations.html">Connecting Your Code: The Analysis Driver</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Using Dakota</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../usingdakota/usingdakota.html">Using Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usingdakotagui/usingdakotagui.html">Using Dakota GUI</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../externaltools.html">Using External Tools</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../dpreproandpyprepro.html">Preprocessing with dprepro and pyprepro</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../restartutility.html">The Dakota Restart Utility</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../pydanticref.html">Pydantic Model Reference</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../study.html">Study</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../methods.html">Methods</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../environment.html">Environment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../interface.html">Interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../model.html">Model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../responses.html">Responses</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../variables.html">Variables</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../shared.html">Shared</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="bayesian.html">Bayesian</a></li>
+<li class="toctree-l4"><a class="reference internal" href="core.html">Core</a></li>
+<li class="toctree-l4"><a class="reference internal" href="expansion.html">Expansion</a></li>
+<li class="toctree-l4"><a class="reference internal" href="formats.html">Formats</a></li>
+<li class="toctree-l4"><a class="reference internal" href="interface.html">Interface</a></li>
+<li class="toctree-l4"><a class="reference internal" href="misc.html">Misc</a></li>
+<li class="toctree-l4"><a class="reference internal" href="optimization.html">Optimization</a></li>
+<li class="toctree-l4"><a class="reference internal" href="responses.html">Responses</a></li>
+<li class="toctree-l4"><a class="reference internal" href="sampling.html">Sampling</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Surrogate</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#dakota.spec.shared.surrogate.MethodExportApproxFormatCustomAnnotatedConfig"><code class="docutils literal notranslate"><span class="pre">MethodExportApproxFormatCustomAnnotatedConfig</span></code></a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.surrogate.MethodExportApproxFormatCustomAnnotatedConfig.model_config"><code class="docutils literal notranslate"><span class="pre">MethodExportApproxFormatCustomAnnotatedConfig.model_config</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.surrogate.MethodExportApproxFormatCustomAnnotatedConfig.universal_validator"><code class="docutils literal notranslate"><span class="pre">MethodExportApproxFormatCustomAnnotatedConfig.universal_validator()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#dakota.spec.shared.surrogate.MethodExportApproxFormatAnnotated"><code class="docutils literal notranslate"><span class="pre">MethodExportApproxFormatAnnotated</span></code></a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.surrogate.MethodExportApproxFormatAnnotated.model_config"><code class="docutils literal notranslate"><span class="pre">MethodExportApproxFormatAnnotated.model_config</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.surrogate.MethodExportApproxFormatAnnotated.universal_validator"><code class="docutils literal notranslate"><span class="pre">MethodExportApproxFormatAnnotated.universal_validator()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#dakota.spec.shared.surrogate.MethodExportApproxFormatFreeform"><code class="docutils literal notranslate"><span class="pre">MethodExportApproxFormatFreeform</span></code></a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.surrogate.MethodExportApproxFormatFreeform.model_config"><code class="docutils literal notranslate"><span class="pre">MethodExportApproxFormatFreeform.model_config</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.surrogate.MethodExportApproxFormatFreeform.universal_validator"><code class="docutils literal notranslate"><span class="pre">MethodExportApproxFormatFreeform.universal_validator()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#dakota.spec.shared.surrogate.MethodExportApproxPointsFileCustomAnnotatedConfig"><code class="docutils literal notranslate"><span class="pre">MethodExportApproxPointsFileCustomAnnotatedConfig</span></code></a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.surrogate.MethodExportApproxPointsFileCustomAnnotatedConfig.model_config"><code class="docutils literal notranslate"><span class="pre">MethodExportApproxPointsFileCustomAnnotatedConfig.model_config</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.surrogate.MethodExportApproxPointsFileCustomAnnotatedConfig.universal_validator"><code class="docutils literal notranslate"><span class="pre">MethodExportApproxPointsFileCustomAnnotatedConfig.universal_validator()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#dakota.spec.shared.surrogate.MethodExportApproxPointsFileAnnotated"><code class="docutils literal notranslate"><span class="pre">MethodExportApproxPointsFileAnnotated</span></code></a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.surrogate.MethodExportApproxPointsFileAnnotated.model_config"><code class="docutils literal notranslate"><span class="pre">MethodExportApproxPointsFileAnnotated.model_config</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.surrogate.MethodExportApproxPointsFileAnnotated.universal_validator"><code class="docutils literal notranslate"><span class="pre">MethodExportApproxPointsFileAnnotated.universal_validator()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#dakota.spec.shared.surrogate.MethodExportApproxPointsFileFreeform"><code class="docutils literal notranslate"><span class="pre">MethodExportApproxPointsFileFreeform</span></code></a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.surrogate.MethodExportApproxPointsFileFreeform.model_config"><code class="docutils literal notranslate"><span class="pre">MethodExportApproxPointsFileFreeform.model_config</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.surrogate.MethodExportApproxPointsFileFreeform.universal_validator"><code class="docutils literal notranslate"><span class="pre">MethodExportApproxPointsFileFreeform.universal_validator()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#dakota.spec.shared.surrogate.MethodImportApproxFormatCustomAnnotatedConfig"><code class="docutils literal notranslate"><span class="pre">MethodImportApproxFormatCustomAnnotatedConfig</span></code></a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.surrogate.MethodImportApproxFormatCustomAnnotatedConfig.model_config"><code class="docutils literal notranslate"><span class="pre">MethodImportApproxFormatCustomAnnotatedConfig.model_config</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.surrogate.MethodImportApproxFormatCustomAnnotatedConfig.universal_validator"><code class="docutils literal notranslate"><span class="pre">MethodImportApproxFormatCustomAnnotatedConfig.universal_validator()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#dakota.spec.shared.surrogate.MethodImportApproxFormatAnnotated"><code class="docutils literal notranslate"><span class="pre">MethodImportApproxFormatAnnotated</span></code></a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.surrogate.MethodImportApproxFormatAnnotated.model_config"><code class="docutils literal notranslate"><span class="pre">MethodImportApproxFormatAnnotated.model_config</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.surrogate.MethodImportApproxFormatAnnotated.universal_validator"><code class="docutils literal notranslate"><span class="pre">MethodImportApproxFormatAnnotated.universal_validator()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#dakota.spec.shared.surrogate.MethodImportApproxFormatFreeform"><code class="docutils literal notranslate"><span class="pre">MethodImportApproxFormatFreeform</span></code></a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.surrogate.MethodImportApproxFormatFreeform.model_config"><code class="docutils literal notranslate"><span class="pre">MethodImportApproxFormatFreeform.model_config</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.surrogate.MethodImportApproxFormatFreeform.universal_validator"><code class="docutils literal notranslate"><span class="pre">MethodImportApproxFormatFreeform.universal_validator()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#dakota.spec.shared.surrogate.ModelPartialSurrogateExportFormatFormats"><code class="docutils literal notranslate"><span class="pre">ModelPartialSurrogateExportFormatFormats</span></code></a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.surrogate.ModelPartialSurrogateExportFormatFormats.model_config"><code class="docutils literal notranslate"><span class="pre">ModelPartialSurrogateExportFormatFormats.model_config</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.surrogate.ModelPartialSurrogateExportFormatFormats.universal_validator"><code class="docutils literal notranslate"><span class="pre">ModelPartialSurrogateExportFormatFormats.universal_validator()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#dakota.spec.shared.surrogate.TextArchive"><code class="docutils literal notranslate"><span class="pre">TextArchive</span></code></a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.surrogate.TextArchive.model_config"><code class="docutils literal notranslate"><span class="pre">TextArchive.model_config</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.surrogate.TextArchive.universal_validator"><code class="docutils literal notranslate"><span class="pre">TextArchive.universal_validator()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#dakota.spec.shared.surrogate.BinaryArchive"><code class="docutils literal notranslate"><span class="pre">BinaryArchive</span></code></a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.surrogate.BinaryArchive.model_config"><code class="docutils literal notranslate"><span class="pre">BinaryArchive.model_config</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.surrogate.BinaryArchive.universal_validator"><code class="docutils literal notranslate"><span class="pre">BinaryArchive.universal_validator()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#dakota.spec.shared.surrogate.ZerothOrder"><code class="docutils literal notranslate"><span class="pre">ZerothOrder</span></code></a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.surrogate.ZerothOrder.model_config"><code class="docutils literal notranslate"><span class="pre">ZerothOrder.model_config</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.surrogate.ZerothOrder.universal_validator"><code class="docutils literal notranslate"><span class="pre">ZerothOrder.universal_validator()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#dakota.spec.shared.surrogate.CorrectionFirstOrder"><code class="docutils literal notranslate"><span class="pre">CorrectionFirstOrder</span></code></a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.surrogate.CorrectionFirstOrder.model_config"><code class="docutils literal notranslate"><span class="pre">CorrectionFirstOrder.model_config</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.surrogate.CorrectionFirstOrder.universal_validator"><code class="docutils literal notranslate"><span class="pre">CorrectionFirstOrder.universal_validator()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#dakota.spec.shared.surrogate.CorrectionSecondOrder"><code class="docutils literal notranslate"><span class="pre">CorrectionSecondOrder</span></code></a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.surrogate.CorrectionSecondOrder.model_config"><code class="docutils literal notranslate"><span class="pre">CorrectionSecondOrder.model_config</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.surrogate.CorrectionSecondOrder.universal_validator"><code class="docutils literal notranslate"><span class="pre">CorrectionSecondOrder.universal_validator()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#dakota.spec.shared.surrogate.Additive"><code class="docutils literal notranslate"><span class="pre">Additive</span></code></a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.surrogate.Additive.model_config"><code class="docutils literal notranslate"><span class="pre">Additive.model_config</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.surrogate.Additive.universal_validator"><code class="docutils literal notranslate"><span class="pre">Additive.universal_validator()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#dakota.spec.shared.surrogate.Multiplicative"><code class="docutils literal notranslate"><span class="pre">Multiplicative</span></code></a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.surrogate.Multiplicative.model_config"><code class="docutils literal notranslate"><span class="pre">Multiplicative.model_config</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.surrogate.Multiplicative.universal_validator"><code class="docutils literal notranslate"><span class="pre">Multiplicative.universal_validator()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#dakota.spec.shared.surrogate.CorrectionCombined"><code class="docutils literal notranslate"><span class="pre">CorrectionCombined</span></code></a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.surrogate.CorrectionCombined.model_config"><code class="docutils literal notranslate"><span class="pre">CorrectionCombined.model_config</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.surrogate.CorrectionCombined.universal_validator"><code class="docutils literal notranslate"><span class="pre">CorrectionCombined.universal_validator()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#dakota.spec.shared.surrogate.MethodExportApproxFormatCustomAnnotated"><code class="docutils literal notranslate"><span class="pre">MethodExportApproxFormatCustomAnnotated</span></code></a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.surrogate.MethodExportApproxFormatCustomAnnotated.model_config"><code class="docutils literal notranslate"><span class="pre">MethodExportApproxFormatCustomAnnotated.model_config</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.surrogate.MethodExportApproxFormatCustomAnnotated.universal_validator"><code class="docutils literal notranslate"><span class="pre">MethodExportApproxFormatCustomAnnotated.universal_validator()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#dakota.spec.shared.surrogate.MethodExportApproxPointsFileCustomAnnotated"><code class="docutils literal notranslate"><span class="pre">MethodExportApproxPointsFileCustomAnnotated</span></code></a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.surrogate.MethodExportApproxPointsFileCustomAnnotated.model_config"><code class="docutils literal notranslate"><span class="pre">MethodExportApproxPointsFileCustomAnnotated.model_config</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.surrogate.MethodExportApproxPointsFileCustomAnnotated.universal_validator"><code class="docutils literal notranslate"><span class="pre">MethodExportApproxPointsFileCustomAnnotated.universal_validator()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#dakota.spec.shared.surrogate.MethodImportApproxFormatCustomAnnotated"><code class="docutils literal notranslate"><span class="pre">MethodImportApproxFormatCustomAnnotated</span></code></a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.surrogate.MethodImportApproxFormatCustomAnnotated.model_config"><code class="docutils literal notranslate"><span class="pre">MethodImportApproxFormatCustomAnnotated.model_config</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.surrogate.MethodImportApproxFormatCustomAnnotated.universal_validator"><code class="docutils literal notranslate"><span class="pre">MethodImportApproxFormatCustomAnnotated.universal_validator()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#dakota.spec.shared.surrogate.ModelPartialSurrogateExportFormatExportModel"><code class="docutils literal notranslate"><span class="pre">ModelPartialSurrogateExportFormatExportModel</span></code></a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.surrogate.ModelPartialSurrogateExportFormatExportModel.model_config"><code class="docutils literal notranslate"><span class="pre">ModelPartialSurrogateExportFormatExportModel.model_config</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.surrogate.ModelPartialSurrogateExportFormatExportModel.universal_validator"><code class="docutils literal notranslate"><span class="pre">ModelPartialSurrogateExportFormatExportModel.universal_validator()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#dakota.spec.shared.surrogate.ImportModel"><code class="docutils literal notranslate"><span class="pre">ImportModel</span></code></a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.surrogate.ImportModel.model_config"><code class="docutils literal notranslate"><span class="pre">ImportModel.model_config</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.surrogate.ImportModel.universal_validator"><code class="docutils literal notranslate"><span class="pre">ImportModel.universal_validator()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#dakota.spec.shared.surrogate.Correction"><code class="docutils literal notranslate"><span class="pre">Correction</span></code></a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.surrogate.Correction.model_config"><code class="docutils literal notranslate"><span class="pre">Correction.model_config</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.surrogate.Correction.universal_validator"><code class="docutils literal notranslate"><span class="pre">Correction.universal_validator()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#dakota.spec.shared.surrogate.MethodExportApproxFormatMixin"><code class="docutils literal notranslate"><span class="pre">MethodExportApproxFormatMixin</span></code></a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.surrogate.MethodExportApproxFormatMixin.model_config"><code class="docutils literal notranslate"><span class="pre">MethodExportApproxFormatMixin.model_config</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.surrogate.MethodExportApproxFormatMixin.universal_validator"><code class="docutils literal notranslate"><span class="pre">MethodExportApproxFormatMixin.universal_validator()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#dakota.spec.shared.surrogate.MethodExportApproxPointsFileExportApproxPointsFile"><code class="docutils literal notranslate"><span class="pre">MethodExportApproxPointsFileExportApproxPointsFile</span></code></a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.surrogate.MethodExportApproxPointsFileExportApproxPointsFile.model_config"><code class="docutils literal notranslate"><span class="pre">MethodExportApproxPointsFileExportApproxPointsFile.model_config</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.surrogate.MethodExportApproxPointsFileExportApproxPointsFile.universal_validator"><code class="docutils literal notranslate"><span class="pre">MethodExportApproxPointsFileExportApproxPointsFile.universal_validator()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#dakota.spec.shared.surrogate.MethodImportApproxFormatMixin"><code class="docutils literal notranslate"><span class="pre">MethodImportApproxFormatMixin</span></code></a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.surrogate.MethodImportApproxFormatMixin.model_config"><code class="docutils literal notranslate"><span class="pre">MethodImportApproxFormatMixin.model_config</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.surrogate.MethodImportApproxFormatMixin.universal_validator"><code class="docutils literal notranslate"><span class="pre">MethodImportApproxFormatMixin.universal_validator()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#dakota.spec.shared.surrogate.ModelPartialSurrogateExportFormatMixin"><code class="docutils literal notranslate"><span class="pre">ModelPartialSurrogateExportFormatMixin</span></code></a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.surrogate.ModelPartialSurrogateExportFormatMixin.model_config"><code class="docutils literal notranslate"><span class="pre">ModelPartialSurrogateExportFormatMixin.model_config</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.surrogate.ModelPartialSurrogateExportFormatMixin.universal_validator"><code class="docutils literal notranslate"><span class="pre">ModelPartialSurrogateExportFormatMixin.universal_validator()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#dakota.spec.shared.surrogate.ModelSurrogateImportMixin"><code class="docutils literal notranslate"><span class="pre">ModelSurrogateImportMixin</span></code></a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.surrogate.ModelSurrogateImportMixin.model_config"><code class="docutils literal notranslate"><span class="pre">ModelSurrogateImportMixin.model_config</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.surrogate.ModelSurrogateImportMixin.universal_validator"><code class="docutils literal notranslate"><span class="pre">ModelSurrogateImportMixin.universal_validator()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#dakota.spec.shared.surrogate.SurrogateCorrectionMixin"><code class="docutils literal notranslate"><span class="pre">SurrogateCorrectionMixin</span></code></a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.surrogate.SurrogateCorrectionMixin.model_config"><code class="docutils literal notranslate"><span class="pre">SurrogateCorrectionMixin.model_config</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.surrogate.SurrogateCorrectionMixin.universal_validator"><code class="docutils literal notranslate"><span class="pre">SurrogateCorrectionMixin.universal_validator()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#dakota.spec.shared.surrogate.MethodExportApproxPointsFileMixin"><code class="docutils literal notranslate"><span class="pre">MethodExportApproxPointsFileMixin</span></code></a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.surrogate.MethodExportApproxPointsFileMixin.model_config"><code class="docutils literal notranslate"><span class="pre">MethodExportApproxPointsFileMixin.model_config</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.surrogate.MethodExportApproxPointsFileMixin.universal_validator"><code class="docutils literal notranslate"><span class="pre">MethodExportApproxPointsFileMixin.universal_validator()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../pydanticref.html#how-to-work-with-the-pydantic-documentation">How to Work with the Pydantic Documentation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../inputtools.html">Working with Inputs</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Building and Developing Dakota</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../building/building.html">Building Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../developingdakota/developingdakota.html">Developing Dakota</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">More</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../misc/misc.html">Miscellaneous</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Dakota</a>
+      </nav>
+
+	  <!-- SNL Lite header -->
+	  <div class="snlheader-subsite--wrapper-default">
+		<snlheader class="snlheader-subsite" role="snlbanner">
+		  <div class="wrapper">
+			<a href="https://www.sandia.gov/index.html">
+			  <div class="logo-transparent"><p class="logo">Sandia National Laboratories</p></div>
+			</a>
+			<div class="nav-top">
+			  <a class="visuallyhidden" name="mainnav"></a>
+			  <div aria-label="main navigation" class="core-nav-transparent core-nav-transparent--visible" role="navigation">
+				<ul role="navigation" class="secondary-links">
+				  <li id="search-text-link">
+					<a aria-label="Search" href="https://www.sandia.gov/search/">Search Sandia.gov</a>
+				  </li>
+				  <li id="directory-text-link">
+					<a href="https://www.sandia.gov/directory.html" aria-expanded="false" aria-label="Site Directory">All Sandia Websites</a>
+				  </li>
+				</ul>
+			  </div>
+			</div>
+		  </div> 
+		</snlheader>
+	  </div>	  
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../externaltools.html">Using External Tools</a></li>
+          <li class="breadcrumb-item"><a href="../../pydanticref.html">Pydantic Model Reference</a></li>
+          <li class="breadcrumb-item"><a href="../shared.html">Shared</a></li>
+      <li class="breadcrumb-item active">Surrogate</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../_sources/externaltools/pydanticref/shared/surrogate.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-dakota.spec.shared.surrogate">
+<span id="surrogate"></span><h1>Surrogate<a class="headerlink" href="#module-dakota.spec.shared.surrogate" title="Link to this heading"></a></h1>
+<p>Generated Pydantic models for shared.surrogate</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="dakota.spec.shared.surrogate.MethodExportApproxFormatCustomAnnotatedConfig">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">dakota.spec.shared.surrogate.</span></span><span class="sig-name descname"><span class="pre">MethodExportApproxFormatCustomAnnotatedConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">header</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="k"><span class="pre">True</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eval_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="k"><span class="pre">True</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interface_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="k"><span class="pre">True</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.surrogate.MethodExportApproxFormatCustomAnnotatedConfig" title="Link to this definition"></a></dt>
+<dd><p>Selects custom-annotated tabular file format</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dakota.spec.shared.surrogate.MethodExportApproxFormatCustomAnnotatedConfig.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'protected_namespaces':</span> <span class="pre">(),</span> <span class="pre">'str_strip_whitespace':</span> <span class="pre">True,</span> <span class="pre">'use_enum_values':</span> <span class="pre">True,</span> <span class="pre">'validate_assignment':</span> <span class="pre">True}</span></span><a class="headerlink" href="#dakota.spec.shared.surrogate.MethodExportApproxFormatCustomAnnotatedConfig.model_config" title="Link to this definition"></a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dakota.spec.shared.surrogate.MethodExportApproxFormatCustomAnnotatedConfig.universal_validator">
+<span class="sig-name descname"><span class="pre">universal_validator</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.surrogate.MethodExportApproxFormatCustomAnnotatedConfig.universal_validator" title="Link to this definition"></a></dt>
+<dd><p>Example universal validator that runs for all models</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dakota.spec.shared.surrogate.MethodExportApproxFormatAnnotated">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">dakota.spec.shared.surrogate.</span></span><span class="sig-name descname"><span class="pre">MethodExportApproxFormatAnnotated</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">annotated</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="k"><span class="pre">True</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.surrogate.MethodExportApproxFormatAnnotated" title="Link to this definition"></a></dt>
+<dd><p>Selects annotated tabular file format</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dakota.spec.shared.surrogate.MethodExportApproxFormatAnnotated.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'protected_namespaces':</span> <span class="pre">(),</span> <span class="pre">'str_strip_whitespace':</span> <span class="pre">True,</span> <span class="pre">'use_enum_values':</span> <span class="pre">True,</span> <span class="pre">'validate_assignment':</span> <span class="pre">True}</span></span><a class="headerlink" href="#dakota.spec.shared.surrogate.MethodExportApproxFormatAnnotated.model_config" title="Link to this definition"></a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dakota.spec.shared.surrogate.MethodExportApproxFormatAnnotated.universal_validator">
+<span class="sig-name descname"><span class="pre">universal_validator</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.surrogate.MethodExportApproxFormatAnnotated.universal_validator" title="Link to this definition"></a></dt>
+<dd><p>Example universal validator that runs for all models</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dakota.spec.shared.surrogate.MethodExportApproxFormatFreeform">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">dakota.spec.shared.surrogate.</span></span><span class="sig-name descname"><span class="pre">MethodExportApproxFormatFreeform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">freeform</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="k"><span class="pre">True</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.surrogate.MethodExportApproxFormatFreeform" title="Link to this definition"></a></dt>
+<dd><p>Selects freeform file format</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dakota.spec.shared.surrogate.MethodExportApproxFormatFreeform.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'protected_namespaces':</span> <span class="pre">(),</span> <span class="pre">'str_strip_whitespace':</span> <span class="pre">True,</span> <span class="pre">'use_enum_values':</span> <span class="pre">True,</span> <span class="pre">'validate_assignment':</span> <span class="pre">True}</span></span><a class="headerlink" href="#dakota.spec.shared.surrogate.MethodExportApproxFormatFreeform.model_config" title="Link to this definition"></a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dakota.spec.shared.surrogate.MethodExportApproxFormatFreeform.universal_validator">
+<span class="sig-name descname"><span class="pre">universal_validator</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.surrogate.MethodExportApproxFormatFreeform.universal_validator" title="Link to this definition"></a></dt>
+<dd><p>Example universal validator that runs for all models</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dakota.spec.shared.surrogate.MethodExportApproxPointsFileCustomAnnotatedConfig">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">dakota.spec.shared.surrogate.</span></span><span class="sig-name descname"><span class="pre">MethodExportApproxPointsFileCustomAnnotatedConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">header</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="k"><span class="pre">True</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eval_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="k"><span class="pre">True</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interface_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="k"><span class="pre">True</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.surrogate.MethodExportApproxPointsFileCustomAnnotatedConfig" title="Link to this definition"></a></dt>
+<dd><p>Selects custom-annotated tabular file format</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dakota.spec.shared.surrogate.MethodExportApproxPointsFileCustomAnnotatedConfig.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'protected_namespaces':</span> <span class="pre">(),</span> <span class="pre">'str_strip_whitespace':</span> <span class="pre">True,</span> <span class="pre">'use_enum_values':</span> <span class="pre">True,</span> <span class="pre">'validate_assignment':</span> <span class="pre">True}</span></span><a class="headerlink" href="#dakota.spec.shared.surrogate.MethodExportApproxPointsFileCustomAnnotatedConfig.model_config" title="Link to this definition"></a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dakota.spec.shared.surrogate.MethodExportApproxPointsFileCustomAnnotatedConfig.universal_validator">
+<span class="sig-name descname"><span class="pre">universal_validator</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.surrogate.MethodExportApproxPointsFileCustomAnnotatedConfig.universal_validator" title="Link to this definition"></a></dt>
+<dd><p>Example universal validator that runs for all models</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dakota.spec.shared.surrogate.MethodExportApproxPointsFileAnnotated">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">dakota.spec.shared.surrogate.</span></span><span class="sig-name descname"><span class="pre">MethodExportApproxPointsFileAnnotated</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">annotated</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="k"><span class="pre">True</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.surrogate.MethodExportApproxPointsFileAnnotated" title="Link to this definition"></a></dt>
+<dd><p>Selects annotated tabular file format</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dakota.spec.shared.surrogate.MethodExportApproxPointsFileAnnotated.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'protected_namespaces':</span> <span class="pre">(),</span> <span class="pre">'str_strip_whitespace':</span> <span class="pre">True,</span> <span class="pre">'use_enum_values':</span> <span class="pre">True,</span> <span class="pre">'validate_assignment':</span> <span class="pre">True}</span></span><a class="headerlink" href="#dakota.spec.shared.surrogate.MethodExportApproxPointsFileAnnotated.model_config" title="Link to this definition"></a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dakota.spec.shared.surrogate.MethodExportApproxPointsFileAnnotated.universal_validator">
+<span class="sig-name descname"><span class="pre">universal_validator</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.surrogate.MethodExportApproxPointsFileAnnotated.universal_validator" title="Link to this definition"></a></dt>
+<dd><p>Example universal validator that runs for all models</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dakota.spec.shared.surrogate.MethodExportApproxPointsFileFreeform">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">dakota.spec.shared.surrogate.</span></span><span class="sig-name descname"><span class="pre">MethodExportApproxPointsFileFreeform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">freeform</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="k"><span class="pre">True</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.surrogate.MethodExportApproxPointsFileFreeform" title="Link to this definition"></a></dt>
+<dd><p>Selects freeform file format</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dakota.spec.shared.surrogate.MethodExportApproxPointsFileFreeform.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'protected_namespaces':</span> <span class="pre">(),</span> <span class="pre">'str_strip_whitespace':</span> <span class="pre">True,</span> <span class="pre">'use_enum_values':</span> <span class="pre">True,</span> <span class="pre">'validate_assignment':</span> <span class="pre">True}</span></span><a class="headerlink" href="#dakota.spec.shared.surrogate.MethodExportApproxPointsFileFreeform.model_config" title="Link to this definition"></a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dakota.spec.shared.surrogate.MethodExportApproxPointsFileFreeform.universal_validator">
+<span class="sig-name descname"><span class="pre">universal_validator</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.surrogate.MethodExportApproxPointsFileFreeform.universal_validator" title="Link to this definition"></a></dt>
+<dd><p>Example universal validator that runs for all models</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dakota.spec.shared.surrogate.MethodImportApproxFormatCustomAnnotatedConfig">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">dakota.spec.shared.surrogate.</span></span><span class="sig-name descname"><span class="pre">MethodImportApproxFormatCustomAnnotatedConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">header</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="k"><span class="pre">True</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eval_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="k"><span class="pre">True</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interface_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="k"><span class="pre">True</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.surrogate.MethodImportApproxFormatCustomAnnotatedConfig" title="Link to this definition"></a></dt>
+<dd><p>Selects custom-annotated tabular file format</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dakota.spec.shared.surrogate.MethodImportApproxFormatCustomAnnotatedConfig.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'protected_namespaces':</span> <span class="pre">(),</span> <span class="pre">'str_strip_whitespace':</span> <span class="pre">True,</span> <span class="pre">'use_enum_values':</span> <span class="pre">True,</span> <span class="pre">'validate_assignment':</span> <span class="pre">True}</span></span><a class="headerlink" href="#dakota.spec.shared.surrogate.MethodImportApproxFormatCustomAnnotatedConfig.model_config" title="Link to this definition"></a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dakota.spec.shared.surrogate.MethodImportApproxFormatCustomAnnotatedConfig.universal_validator">
+<span class="sig-name descname"><span class="pre">universal_validator</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.surrogate.MethodImportApproxFormatCustomAnnotatedConfig.universal_validator" title="Link to this definition"></a></dt>
+<dd><p>Example universal validator that runs for all models</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dakota.spec.shared.surrogate.MethodImportApproxFormatAnnotated">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">dakota.spec.shared.surrogate.</span></span><span class="sig-name descname"><span class="pre">MethodImportApproxFormatAnnotated</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">annotated</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="k"><span class="pre">True</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.surrogate.MethodImportApproxFormatAnnotated" title="Link to this definition"></a></dt>
+<dd><p>Selects annotated tabular file format</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dakota.spec.shared.surrogate.MethodImportApproxFormatAnnotated.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'protected_namespaces':</span> <span class="pre">(),</span> <span class="pre">'str_strip_whitespace':</span> <span class="pre">True,</span> <span class="pre">'use_enum_values':</span> <span class="pre">True,</span> <span class="pre">'validate_assignment':</span> <span class="pre">True}</span></span><a class="headerlink" href="#dakota.spec.shared.surrogate.MethodImportApproxFormatAnnotated.model_config" title="Link to this definition"></a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dakota.spec.shared.surrogate.MethodImportApproxFormatAnnotated.universal_validator">
+<span class="sig-name descname"><span class="pre">universal_validator</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.surrogate.MethodImportApproxFormatAnnotated.universal_validator" title="Link to this definition"></a></dt>
+<dd><p>Example universal validator that runs for all models</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dakota.spec.shared.surrogate.MethodImportApproxFormatFreeform">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">dakota.spec.shared.surrogate.</span></span><span class="sig-name descname"><span class="pre">MethodImportApproxFormatFreeform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">freeform</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="k"><span class="pre">True</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.surrogate.MethodImportApproxFormatFreeform" title="Link to this definition"></a></dt>
+<dd><p>Selects freeform file format</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dakota.spec.shared.surrogate.MethodImportApproxFormatFreeform.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'protected_namespaces':</span> <span class="pre">(),</span> <span class="pre">'str_strip_whitespace':</span> <span class="pre">True,</span> <span class="pre">'use_enum_values':</span> <span class="pre">True,</span> <span class="pre">'validate_assignment':</span> <span class="pre">True}</span></span><a class="headerlink" href="#dakota.spec.shared.surrogate.MethodImportApproxFormatFreeform.model_config" title="Link to this definition"></a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dakota.spec.shared.surrogate.MethodImportApproxFormatFreeform.universal_validator">
+<span class="sig-name descname"><span class="pre">universal_validator</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.surrogate.MethodImportApproxFormatFreeform.universal_validator" title="Link to this definition"></a></dt>
+<dd><p>Example universal validator that runs for all models</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dakota.spec.shared.surrogate.ModelPartialSurrogateExportFormatFormats">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">dakota.spec.shared.surrogate.</span></span><span class="sig-name descname"><span class="pre">ModelPartialSurrogateExportFormatFormats</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">text_archive</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="k"><span class="pre">True</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">binary_archive</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="k"><span class="pre">True</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.surrogate.ModelPartialSurrogateExportFormatFormats" title="Link to this definition"></a></dt>
+<dd><p>Formats for surrogate model export</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dakota.spec.shared.surrogate.ModelPartialSurrogateExportFormatFormats.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'protected_namespaces':</span> <span class="pre">(),</span> <span class="pre">'str_strip_whitespace':</span> <span class="pre">True,</span> <span class="pre">'use_enum_values':</span> <span class="pre">True,</span> <span class="pre">'validate_assignment':</span> <span class="pre">True}</span></span><a class="headerlink" href="#dakota.spec.shared.surrogate.ModelPartialSurrogateExportFormatFormats.model_config" title="Link to this definition"></a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dakota.spec.shared.surrogate.ModelPartialSurrogateExportFormatFormats.universal_validator">
+<span class="sig-name descname"><span class="pre">universal_validator</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.surrogate.ModelPartialSurrogateExportFormatFormats.universal_validator" title="Link to this definition"></a></dt>
+<dd><p>Example universal validator that runs for all models</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dakota.spec.shared.surrogate.TextArchive">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">dakota.spec.shared.surrogate.</span></span><span class="sig-name descname"><span class="pre">TextArchive</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">text_archive</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="k"><span class="pre">True</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.surrogate.TextArchive" title="Link to this definition"></a></dt>
+<dd><p>Surrogate model plain-text archive file format</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dakota.spec.shared.surrogate.TextArchive.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'protected_namespaces':</span> <span class="pre">(),</span> <span class="pre">'str_strip_whitespace':</span> <span class="pre">True,</span> <span class="pre">'use_enum_values':</span> <span class="pre">True,</span> <span class="pre">'validate_assignment':</span> <span class="pre">True}</span></span><a class="headerlink" href="#dakota.spec.shared.surrogate.TextArchive.model_config" title="Link to this definition"></a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dakota.spec.shared.surrogate.TextArchive.universal_validator">
+<span class="sig-name descname"><span class="pre">universal_validator</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.surrogate.TextArchive.universal_validator" title="Link to this definition"></a></dt>
+<dd><p>Example universal validator that runs for all models</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dakota.spec.shared.surrogate.BinaryArchive">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">dakota.spec.shared.surrogate.</span></span><span class="sig-name descname"><span class="pre">BinaryArchive</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">binary_archive</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="k"><span class="pre">True</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.surrogate.BinaryArchive" title="Link to this definition"></a></dt>
+<dd><p>Surrogate model binary archive file format</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dakota.spec.shared.surrogate.BinaryArchive.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'protected_namespaces':</span> <span class="pre">(),</span> <span class="pre">'str_strip_whitespace':</span> <span class="pre">True,</span> <span class="pre">'use_enum_values':</span> <span class="pre">True,</span> <span class="pre">'validate_assignment':</span> <span class="pre">True}</span></span><a class="headerlink" href="#dakota.spec.shared.surrogate.BinaryArchive.model_config" title="Link to this definition"></a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dakota.spec.shared.surrogate.BinaryArchive.universal_validator">
+<span class="sig-name descname"><span class="pre">universal_validator</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.surrogate.BinaryArchive.universal_validator" title="Link to this definition"></a></dt>
+<dd><p>Example universal validator that runs for all models</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dakota.spec.shared.surrogate.ZerothOrder">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">dakota.spec.shared.surrogate.</span></span><span class="sig-name descname"><span class="pre">ZerothOrder</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">zeroth_order</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="k"><span class="pre">True</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.surrogate.ZerothOrder" title="Link to this definition"></a></dt>
+<dd><p>Specify that truth values must be matched.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dakota.spec.shared.surrogate.ZerothOrder.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'protected_namespaces':</span> <span class="pre">(),</span> <span class="pre">'str_strip_whitespace':</span> <span class="pre">True,</span> <span class="pre">'use_enum_values':</span> <span class="pre">True,</span> <span class="pre">'validate_assignment':</span> <span class="pre">True}</span></span><a class="headerlink" href="#dakota.spec.shared.surrogate.ZerothOrder.model_config" title="Link to this definition"></a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dakota.spec.shared.surrogate.ZerothOrder.universal_validator">
+<span class="sig-name descname"><span class="pre">universal_validator</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.surrogate.ZerothOrder.universal_validator" title="Link to this definition"></a></dt>
+<dd><p>Example universal validator that runs for all models</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dakota.spec.shared.surrogate.CorrectionFirstOrder">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">dakota.spec.shared.surrogate.</span></span><span class="sig-name descname"><span class="pre">CorrectionFirstOrder</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">first_order</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="k"><span class="pre">True</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.surrogate.CorrectionFirstOrder" title="Link to this definition"></a></dt>
+<dd><p>Specify that truth values and gradients must be matched.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dakota.spec.shared.surrogate.CorrectionFirstOrder.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'protected_namespaces':</span> <span class="pre">(),</span> <span class="pre">'str_strip_whitespace':</span> <span class="pre">True,</span> <span class="pre">'use_enum_values':</span> <span class="pre">True,</span> <span class="pre">'validate_assignment':</span> <span class="pre">True}</span></span><a class="headerlink" href="#dakota.spec.shared.surrogate.CorrectionFirstOrder.model_config" title="Link to this definition"></a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dakota.spec.shared.surrogate.CorrectionFirstOrder.universal_validator">
+<span class="sig-name descname"><span class="pre">universal_validator</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.surrogate.CorrectionFirstOrder.universal_validator" title="Link to this definition"></a></dt>
+<dd><p>Example universal validator that runs for all models</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dakota.spec.shared.surrogate.CorrectionSecondOrder">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">dakota.spec.shared.surrogate.</span></span><span class="sig-name descname"><span class="pre">CorrectionSecondOrder</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">second_order</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="k"><span class="pre">True</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.surrogate.CorrectionSecondOrder" title="Link to this definition"></a></dt>
+<dd><p>Specify that truth values, gradients and Hessians must be matched.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dakota.spec.shared.surrogate.CorrectionSecondOrder.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'protected_namespaces':</span> <span class="pre">(),</span> <span class="pre">'str_strip_whitespace':</span> <span class="pre">True,</span> <span class="pre">'use_enum_values':</span> <span class="pre">True,</span> <span class="pre">'validate_assignment':</span> <span class="pre">True}</span></span><a class="headerlink" href="#dakota.spec.shared.surrogate.CorrectionSecondOrder.model_config" title="Link to this definition"></a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dakota.spec.shared.surrogate.CorrectionSecondOrder.universal_validator">
+<span class="sig-name descname"><span class="pre">universal_validator</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.surrogate.CorrectionSecondOrder.universal_validator" title="Link to this definition"></a></dt>
+<dd><p>Example universal validator that runs for all models</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dakota.spec.shared.surrogate.Additive">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">dakota.spec.shared.surrogate.</span></span><span class="sig-name descname"><span class="pre">Additive</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">additive</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="k"><span class="pre">True</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.surrogate.Additive" title="Link to this definition"></a></dt>
+<dd><p>Additive correction factor for local surrogate accuracy</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dakota.spec.shared.surrogate.Additive.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'protected_namespaces':</span> <span class="pre">(),</span> <span class="pre">'str_strip_whitespace':</span> <span class="pre">True,</span> <span class="pre">'use_enum_values':</span> <span class="pre">True,</span> <span class="pre">'validate_assignment':</span> <span class="pre">True}</span></span><a class="headerlink" href="#dakota.spec.shared.surrogate.Additive.model_config" title="Link to this definition"></a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dakota.spec.shared.surrogate.Additive.universal_validator">
+<span class="sig-name descname"><span class="pre">universal_validator</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.surrogate.Additive.universal_validator" title="Link to this definition"></a></dt>
+<dd><p>Example universal validator that runs for all models</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dakota.spec.shared.surrogate.Multiplicative">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">dakota.spec.shared.surrogate.</span></span><span class="sig-name descname"><span class="pre">Multiplicative</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">multiplicative</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="k"><span class="pre">True</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.surrogate.Multiplicative" title="Link to this definition"></a></dt>
+<dd><p>Multiplicative correction factor for local surrogate accuracy.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dakota.spec.shared.surrogate.Multiplicative.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'protected_namespaces':</span> <span class="pre">(),</span> <span class="pre">'str_strip_whitespace':</span> <span class="pre">True,</span> <span class="pre">'use_enum_values':</span> <span class="pre">True,</span> <span class="pre">'validate_assignment':</span> <span class="pre">True}</span></span><a class="headerlink" href="#dakota.spec.shared.surrogate.Multiplicative.model_config" title="Link to this definition"></a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dakota.spec.shared.surrogate.Multiplicative.universal_validator">
+<span class="sig-name descname"><span class="pre">universal_validator</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.surrogate.Multiplicative.universal_validator" title="Link to this definition"></a></dt>
+<dd><p>Example universal validator that runs for all models</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dakota.spec.shared.surrogate.CorrectionCombined">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">dakota.spec.shared.surrogate.</span></span><span class="sig-name descname"><span class="pre">CorrectionCombined</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">combined</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="k"><span class="pre">True</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.surrogate.CorrectionCombined" title="Link to this definition"></a></dt>
+<dd><p>Multipoint correction for a hierarchical surrogate</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dakota.spec.shared.surrogate.CorrectionCombined.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'protected_namespaces':</span> <span class="pre">(),</span> <span class="pre">'str_strip_whitespace':</span> <span class="pre">True,</span> <span class="pre">'use_enum_values':</span> <span class="pre">True,</span> <span class="pre">'validate_assignment':</span> <span class="pre">True}</span></span><a class="headerlink" href="#dakota.spec.shared.surrogate.CorrectionCombined.model_config" title="Link to this definition"></a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dakota.spec.shared.surrogate.CorrectionCombined.universal_validator">
+<span class="sig-name descname"><span class="pre">universal_validator</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.surrogate.CorrectionCombined.universal_validator" title="Link to this definition"></a></dt>
+<dd><p>Example universal validator that runs for all models</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dakota.spec.shared.surrogate.MethodExportApproxFormatCustomAnnotated">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">dakota.spec.shared.surrogate.</span></span><span class="sig-name descname"><span class="pre">MethodExportApproxFormatCustomAnnotated</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">custom_annotated</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#dakota.spec.shared.surrogate.MethodExportApproxFormatCustomAnnotatedConfig" title="dakota.spec.shared.surrogate.MethodExportApproxFormatCustomAnnotatedConfig"><span class="pre">MethodExportApproxFormatCustomAnnotatedConfig</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">&lt;factory&gt;</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.surrogate.MethodExportApproxFormatCustomAnnotated" title="Link to this definition"></a></dt>
+<dd><p>Selects custom-annotated tabular file format</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dakota.spec.shared.surrogate.MethodExportApproxFormatCustomAnnotated.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'protected_namespaces':</span> <span class="pre">(),</span> <span class="pre">'str_strip_whitespace':</span> <span class="pre">True,</span> <span class="pre">'use_enum_values':</span> <span class="pre">True,</span> <span class="pre">'validate_assignment':</span> <span class="pre">True}</span></span><a class="headerlink" href="#dakota.spec.shared.surrogate.MethodExportApproxFormatCustomAnnotated.model_config" title="Link to this definition"></a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dakota.spec.shared.surrogate.MethodExportApproxFormatCustomAnnotated.universal_validator">
+<span class="sig-name descname"><span class="pre">universal_validator</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.surrogate.MethodExportApproxFormatCustomAnnotated.universal_validator" title="Link to this definition"></a></dt>
+<dd><p>Example universal validator that runs for all models</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dakota.spec.shared.surrogate.MethodExportApproxPointsFileCustomAnnotated">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">dakota.spec.shared.surrogate.</span></span><span class="sig-name descname"><span class="pre">MethodExportApproxPointsFileCustomAnnotated</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">custom_annotated</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#dakota.spec.shared.surrogate.MethodExportApproxPointsFileCustomAnnotatedConfig" title="dakota.spec.shared.surrogate.MethodExportApproxPointsFileCustomAnnotatedConfig"><span class="pre">MethodExportApproxPointsFileCustomAnnotatedConfig</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">&lt;factory&gt;</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.surrogate.MethodExportApproxPointsFileCustomAnnotated" title="Link to this definition"></a></dt>
+<dd><p>Selects custom-annotated tabular file format</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dakota.spec.shared.surrogate.MethodExportApproxPointsFileCustomAnnotated.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'protected_namespaces':</span> <span class="pre">(),</span> <span class="pre">'str_strip_whitespace':</span> <span class="pre">True,</span> <span class="pre">'use_enum_values':</span> <span class="pre">True,</span> <span class="pre">'validate_assignment':</span> <span class="pre">True}</span></span><a class="headerlink" href="#dakota.spec.shared.surrogate.MethodExportApproxPointsFileCustomAnnotated.model_config" title="Link to this definition"></a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dakota.spec.shared.surrogate.MethodExportApproxPointsFileCustomAnnotated.universal_validator">
+<span class="sig-name descname"><span class="pre">universal_validator</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.surrogate.MethodExportApproxPointsFileCustomAnnotated.universal_validator" title="Link to this definition"></a></dt>
+<dd><p>Example universal validator that runs for all models</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dakota.spec.shared.surrogate.MethodImportApproxFormatCustomAnnotated">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">dakota.spec.shared.surrogate.</span></span><span class="sig-name descname"><span class="pre">MethodImportApproxFormatCustomAnnotated</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">custom_annotated</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#dakota.spec.shared.surrogate.MethodImportApproxFormatCustomAnnotatedConfig" title="dakota.spec.shared.surrogate.MethodImportApproxFormatCustomAnnotatedConfig"><span class="pre">MethodImportApproxFormatCustomAnnotatedConfig</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">&lt;factory&gt;</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.surrogate.MethodImportApproxFormatCustomAnnotated" title="Link to this definition"></a></dt>
+<dd><p>Selects custom-annotated tabular file format</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dakota.spec.shared.surrogate.MethodImportApproxFormatCustomAnnotated.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'protected_namespaces':</span> <span class="pre">(),</span> <span class="pre">'str_strip_whitespace':</span> <span class="pre">True,</span> <span class="pre">'use_enum_values':</span> <span class="pre">True,</span> <span class="pre">'validate_assignment':</span> <span class="pre">True}</span></span><a class="headerlink" href="#dakota.spec.shared.surrogate.MethodImportApproxFormatCustomAnnotated.model_config" title="Link to this definition"></a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dakota.spec.shared.surrogate.MethodImportApproxFormatCustomAnnotated.universal_validator">
+<span class="sig-name descname"><span class="pre">universal_validator</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.surrogate.MethodImportApproxFormatCustomAnnotated.universal_validator" title="Link to this definition"></a></dt>
+<dd><p>Example universal validator that runs for all models</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dakota.spec.shared.surrogate.ModelPartialSurrogateExportFormatExportModel">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">dakota.spec.shared.surrogate.</span></span><span class="sig-name descname"><span class="pre">ModelPartialSurrogateExportFormatExportModel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename_prefix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'exported_surrogate'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">formats</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#dakota.spec.shared.surrogate.ModelPartialSurrogateExportFormatFormats" title="dakota.spec.shared.surrogate.ModelPartialSurrogateExportFormatFormats"><span class="pre">ModelPartialSurrogateExportFormatFormats</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.surrogate.ModelPartialSurrogateExportFormatExportModel" title="Link to this definition"></a></dt>
+<dd><p>Exports surrogate model in user-specified format(s)</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dakota.spec.shared.surrogate.ModelPartialSurrogateExportFormatExportModel.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'protected_namespaces':</span> <span class="pre">(),</span> <span class="pre">'str_strip_whitespace':</span> <span class="pre">True,</span> <span class="pre">'use_enum_values':</span> <span class="pre">True,</span> <span class="pre">'validate_assignment':</span> <span class="pre">True}</span></span><a class="headerlink" href="#dakota.spec.shared.surrogate.ModelPartialSurrogateExportFormatExportModel.model_config" title="Link to this definition"></a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dakota.spec.shared.surrogate.ModelPartialSurrogateExportFormatExportModel.universal_validator">
+<span class="sig-name descname"><span class="pre">universal_validator</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.surrogate.ModelPartialSurrogateExportFormatExportModel.universal_validator" title="Link to this definition"></a></dt>
+<dd><p>Example universal validator that runs for all models</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dakota.spec.shared.surrogate.ImportModel">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">dakota.spec.shared.surrogate.</span></span><span class="sig-name descname"><span class="pre">ImportModel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename_prefix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'exported_surrogate'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">import_format</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#dakota.spec.shared.surrogate.TextArchive" title="dakota.spec.shared.surrogate.TextArchive"><span class="pre">TextArchive</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#dakota.spec.shared.surrogate.BinaryArchive" title="dakota.spec.shared.surrogate.BinaryArchive"><span class="pre">BinaryArchive</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.surrogate.ImportModel" title="Link to this definition"></a></dt>
+<dd><p>Import surrogate model from archive file</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dakota.spec.shared.surrogate.ImportModel.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'protected_namespaces':</span> <span class="pre">(),</span> <span class="pre">'str_strip_whitespace':</span> <span class="pre">True,</span> <span class="pre">'use_enum_values':</span> <span class="pre">True,</span> <span class="pre">'validate_assignment':</span> <span class="pre">True}</span></span><a class="headerlink" href="#dakota.spec.shared.surrogate.ImportModel.model_config" title="Link to this definition"></a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dakota.spec.shared.surrogate.ImportModel.universal_validator">
+<span class="sig-name descname"><span class="pre">universal_validator</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.surrogate.ImportModel.universal_validator" title="Link to this definition"></a></dt>
+<dd><p>Example universal validator that runs for all models</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dakota.spec.shared.surrogate.Correction">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">dakota.spec.shared.surrogate.</span></span><span class="sig-name descname"><span class="pre">Correction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">correction_order</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#dakota.spec.shared.surrogate.ZerothOrder" title="dakota.spec.shared.surrogate.ZerothOrder"><span class="pre">ZerothOrder</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#dakota.spec.shared.surrogate.CorrectionFirstOrder" title="dakota.spec.shared.surrogate.CorrectionFirstOrder"><span class="pre">CorrectionFirstOrder</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#dakota.spec.shared.surrogate.CorrectionSecondOrder" title="dakota.spec.shared.surrogate.CorrectionSecondOrder"><span class="pre">CorrectionSecondOrder</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">correction_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#dakota.spec.shared.surrogate.Additive" title="dakota.spec.shared.surrogate.Additive"><span class="pre">Additive</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#dakota.spec.shared.surrogate.Multiplicative" title="dakota.spec.shared.surrogate.Multiplicative"><span class="pre">Multiplicative</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#dakota.spec.shared.surrogate.CorrectionCombined" title="dakota.spec.shared.surrogate.CorrectionCombined"><span class="pre">CorrectionCombined</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.surrogate.Correction" title="Link to this definition"></a></dt>
+<dd><p>Correction approaches for surrogate models</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dakota.spec.shared.surrogate.Correction.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'protected_namespaces':</span> <span class="pre">(),</span> <span class="pre">'str_strip_whitespace':</span> <span class="pre">True,</span> <span class="pre">'use_enum_values':</span> <span class="pre">True,</span> <span class="pre">'validate_assignment':</span> <span class="pre">True}</span></span><a class="headerlink" href="#dakota.spec.shared.surrogate.Correction.model_config" title="Link to this definition"></a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dakota.spec.shared.surrogate.Correction.universal_validator">
+<span class="sig-name descname"><span class="pre">universal_validator</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.surrogate.Correction.universal_validator" title="Link to this definition"></a></dt>
+<dd><p>Example universal validator that runs for all models</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dakota.spec.shared.surrogate.MethodExportApproxFormatMixin">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">dakota.spec.shared.surrogate.</span></span><span class="sig-name descname"><span class="pre">MethodExportApproxFormatMixin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">format</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#dakota.spec.shared.surrogate.MethodExportApproxFormatCustomAnnotated" title="dakota.spec.shared.surrogate.MethodExportApproxFormatCustomAnnotated"><span class="pre">MethodExportApproxFormatCustomAnnotated</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#dakota.spec.shared.surrogate.MethodExportApproxFormatAnnotated" title="dakota.spec.shared.surrogate.MethodExportApproxFormatAnnotated"><span class="pre">MethodExportApproxFormatAnnotated</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#dakota.spec.shared.surrogate.MethodExportApproxFormatFreeform" title="dakota.spec.shared.surrogate.MethodExportApproxFormatFreeform"><span class="pre">MethodExportApproxFormatFreeform</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">&lt;factory&gt;</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.surrogate.MethodExportApproxFormatMixin" title="Link to this definition"></a></dt>
+<dd><p>Generated model for MethodExportApproxFormatMixin</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dakota.spec.shared.surrogate.MethodExportApproxFormatMixin.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'protected_namespaces':</span> <span class="pre">(),</span> <span class="pre">'str_strip_whitespace':</span> <span class="pre">True,</span> <span class="pre">'use_enum_values':</span> <span class="pre">True,</span> <span class="pre">'validate_assignment':</span> <span class="pre">True}</span></span><a class="headerlink" href="#dakota.spec.shared.surrogate.MethodExportApproxFormatMixin.model_config" title="Link to this definition"></a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dakota.spec.shared.surrogate.MethodExportApproxFormatMixin.universal_validator">
+<span class="sig-name descname"><span class="pre">universal_validator</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.surrogate.MethodExportApproxFormatMixin.universal_validator" title="Link to this definition"></a></dt>
+<dd><p>Example universal validator that runs for all models</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dakota.spec.shared.surrogate.MethodExportApproxPointsFileExportApproxPointsFile">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">dakota.spec.shared.surrogate.</span></span><span class="sig-name descname"><span class="pre">MethodExportApproxPointsFileExportApproxPointsFile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">format</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#dakota.spec.shared.surrogate.MethodExportApproxPointsFileCustomAnnotated" title="dakota.spec.shared.surrogate.MethodExportApproxPointsFileCustomAnnotated"><span class="pre">MethodExportApproxPointsFileCustomAnnotated</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#dakota.spec.shared.surrogate.MethodExportApproxPointsFileAnnotated" title="dakota.spec.shared.surrogate.MethodExportApproxPointsFileAnnotated"><span class="pre">MethodExportApproxPointsFileAnnotated</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#dakota.spec.shared.surrogate.MethodExportApproxPointsFileFreeform" title="dakota.spec.shared.surrogate.MethodExportApproxPointsFileFreeform"><span class="pre">MethodExportApproxPointsFileFreeform</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">&lt;factory&gt;</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.surrogate.MethodExportApproxPointsFileExportApproxPointsFile" title="Link to this definition"></a></dt>
+<dd><p>Output file for surrogate model value evaluations</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dakota.spec.shared.surrogate.MethodExportApproxPointsFileExportApproxPointsFile.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'protected_namespaces':</span> <span class="pre">(),</span> <span class="pre">'str_strip_whitespace':</span> <span class="pre">True,</span> <span class="pre">'use_enum_values':</span> <span class="pre">True,</span> <span class="pre">'validate_assignment':</span> <span class="pre">True}</span></span><a class="headerlink" href="#dakota.spec.shared.surrogate.MethodExportApproxPointsFileExportApproxPointsFile.model_config" title="Link to this definition"></a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dakota.spec.shared.surrogate.MethodExportApproxPointsFileExportApproxPointsFile.universal_validator">
+<span class="sig-name descname"><span class="pre">universal_validator</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.surrogate.MethodExportApproxPointsFileExportApproxPointsFile.universal_validator" title="Link to this definition"></a></dt>
+<dd><p>Example universal validator that runs for all models</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dakota.spec.shared.surrogate.MethodImportApproxFormatMixin">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">dakota.spec.shared.surrogate.</span></span><span class="sig-name descname"><span class="pre">MethodImportApproxFormatMixin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">format</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#dakota.spec.shared.surrogate.MethodImportApproxFormatCustomAnnotated" title="dakota.spec.shared.surrogate.MethodImportApproxFormatCustomAnnotated"><span class="pre">MethodImportApproxFormatCustomAnnotated</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#dakota.spec.shared.surrogate.MethodImportApproxFormatAnnotated" title="dakota.spec.shared.surrogate.MethodImportApproxFormatAnnotated"><span class="pre">MethodImportApproxFormatAnnotated</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#dakota.spec.shared.surrogate.MethodImportApproxFormatFreeform" title="dakota.spec.shared.surrogate.MethodImportApproxFormatFreeform"><span class="pre">MethodImportApproxFormatFreeform</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">&lt;factory&gt;</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.surrogate.MethodImportApproxFormatMixin" title="Link to this definition"></a></dt>
+<dd><p>Generated model for MethodImportApproxFormatMixin</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dakota.spec.shared.surrogate.MethodImportApproxFormatMixin.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'protected_namespaces':</span> <span class="pre">(),</span> <span class="pre">'str_strip_whitespace':</span> <span class="pre">True,</span> <span class="pre">'use_enum_values':</span> <span class="pre">True,</span> <span class="pre">'validate_assignment':</span> <span class="pre">True}</span></span><a class="headerlink" href="#dakota.spec.shared.surrogate.MethodImportApproxFormatMixin.model_config" title="Link to this definition"></a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dakota.spec.shared.surrogate.MethodImportApproxFormatMixin.universal_validator">
+<span class="sig-name descname"><span class="pre">universal_validator</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.surrogate.MethodImportApproxFormatMixin.universal_validator" title="Link to this definition"></a></dt>
+<dd><p>Example universal validator that runs for all models</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dakota.spec.shared.surrogate.ModelPartialSurrogateExportFormatMixin">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">dakota.spec.shared.surrogate.</span></span><span class="sig-name descname"><span class="pre">ModelPartialSurrogateExportFormatMixin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">export_model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#dakota.spec.shared.surrogate.ModelPartialSurrogateExportFormatExportModel" title="dakota.spec.shared.surrogate.ModelPartialSurrogateExportFormatExportModel"><span class="pre">ModelPartialSurrogateExportFormatExportModel</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.surrogate.ModelPartialSurrogateExportFormatMixin" title="Link to this definition"></a></dt>
+<dd><p>Generated model for ModelPartialSurrogateExportFormatMixin</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dakota.spec.shared.surrogate.ModelPartialSurrogateExportFormatMixin.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'protected_namespaces':</span> <span class="pre">(),</span> <span class="pre">'str_strip_whitespace':</span> <span class="pre">True,</span> <span class="pre">'use_enum_values':</span> <span class="pre">True,</span> <span class="pre">'validate_assignment':</span> <span class="pre">True}</span></span><a class="headerlink" href="#dakota.spec.shared.surrogate.ModelPartialSurrogateExportFormatMixin.model_config" title="Link to this definition"></a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dakota.spec.shared.surrogate.ModelPartialSurrogateExportFormatMixin.universal_validator">
+<span class="sig-name descname"><span class="pre">universal_validator</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.surrogate.ModelPartialSurrogateExportFormatMixin.universal_validator" title="Link to this definition"></a></dt>
+<dd><p>Example universal validator that runs for all models</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dakota.spec.shared.surrogate.ModelSurrogateImportMixin">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">dakota.spec.shared.surrogate.</span></span><span class="sig-name descname"><span class="pre">ModelSurrogateImportMixin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">import_model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#dakota.spec.shared.surrogate.ImportModel" title="dakota.spec.shared.surrogate.ImportModel"><span class="pre">ImportModel</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.surrogate.ModelSurrogateImportMixin" title="Link to this definition"></a></dt>
+<dd><p>Generated model for ModelSurrogateImportMixin</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dakota.spec.shared.surrogate.ModelSurrogateImportMixin.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'protected_namespaces':</span> <span class="pre">(),</span> <span class="pre">'str_strip_whitespace':</span> <span class="pre">True,</span> <span class="pre">'use_enum_values':</span> <span class="pre">True,</span> <span class="pre">'validate_assignment':</span> <span class="pre">True}</span></span><a class="headerlink" href="#dakota.spec.shared.surrogate.ModelSurrogateImportMixin.model_config" title="Link to this definition"></a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dakota.spec.shared.surrogate.ModelSurrogateImportMixin.universal_validator">
+<span class="sig-name descname"><span class="pre">universal_validator</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.surrogate.ModelSurrogateImportMixin.universal_validator" title="Link to this definition"></a></dt>
+<dd><p>Example universal validator that runs for all models</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dakota.spec.shared.surrogate.SurrogateCorrectionMixin">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">dakota.spec.shared.surrogate.</span></span><span class="sig-name descname"><span class="pre">SurrogateCorrectionMixin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">correction</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#dakota.spec.shared.surrogate.Correction" title="dakota.spec.shared.surrogate.Correction"><span class="pre">Correction</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.surrogate.SurrogateCorrectionMixin" title="Link to this definition"></a></dt>
+<dd><p>Generated model for SurrogateCorrectionMixin</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dakota.spec.shared.surrogate.SurrogateCorrectionMixin.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'protected_namespaces':</span> <span class="pre">(),</span> <span class="pre">'str_strip_whitespace':</span> <span class="pre">True,</span> <span class="pre">'use_enum_values':</span> <span class="pre">True,</span> <span class="pre">'validate_assignment':</span> <span class="pre">True}</span></span><a class="headerlink" href="#dakota.spec.shared.surrogate.SurrogateCorrectionMixin.model_config" title="Link to this definition"></a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dakota.spec.shared.surrogate.SurrogateCorrectionMixin.universal_validator">
+<span class="sig-name descname"><span class="pre">universal_validator</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.surrogate.SurrogateCorrectionMixin.universal_validator" title="Link to this definition"></a></dt>
+<dd><p>Example universal validator that runs for all models</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dakota.spec.shared.surrogate.MethodExportApproxPointsFileMixin">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">dakota.spec.shared.surrogate.</span></span><span class="sig-name descname"><span class="pre">MethodExportApproxPointsFileMixin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">export_approx_points_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#dakota.spec.shared.surrogate.MethodExportApproxPointsFileExportApproxPointsFile" title="dakota.spec.shared.surrogate.MethodExportApproxPointsFileExportApproxPointsFile"><span class="pre">MethodExportApproxPointsFileExportApproxPointsFile</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.surrogate.MethodExportApproxPointsFileMixin" title="Link to this definition"></a></dt>
+<dd><p>Generated model for MethodExportApproxPointsFileMixin</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dakota.spec.shared.surrogate.MethodExportApproxPointsFileMixin.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'protected_namespaces':</span> <span class="pre">(),</span> <span class="pre">'str_strip_whitespace':</span> <span class="pre">True,</span> <span class="pre">'use_enum_values':</span> <span class="pre">True,</span> <span class="pre">'validate_assignment':</span> <span class="pre">True}</span></span><a class="headerlink" href="#dakota.spec.shared.surrogate.MethodExportApproxPointsFileMixin.model_config" title="Link to this definition"></a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dakota.spec.shared.surrogate.MethodExportApproxPointsFileMixin.universal_validator">
+<span class="sig-name descname"><span class="pre">universal_validator</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.surrogate.MethodExportApproxPointsFileMixin.universal_validator" title="Link to this definition"></a></dt>
+<dd><p>Example universal validator that runs for all models</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="sampling.html" class="btn btn-neutral float-left" title="Sampling" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../../inputtools.html" class="btn btn-neutral float-right" title="Working with Inputs" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <!--
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Sandia National Laboratories.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+  --> 
+
+</footer>
+        </div>
+      </div>
+	  
+	  <div style="background-color: #0f0f0f;color:#fafafa;padding:20px">
+	    <div>
+		  <h2><em>Exceptional service in the national interest</em></h2>
+		</div>
+		<p>© 2023 National Technology and Engineering Solutions of Sandia, LLC. | <a href="https://www.sandia.gov/contact_us/index.html">Questions &amp; Comments</a> | <a href="https://www.sandia.gov/general/privacy-security/index.html">Privacy &amp; Security</a></p>
+		<p><a href="http://energy.gov" rel="noopener noreferrer" target="_blank"><img alt="U.S. Department of Energy" longdesc="https://energy.gov" src="https://www.sandia.gov/_common/images/doe_logo_white.png" style="height:37px; width:140px"></a> <a href="http://nnsa.energy.gov/" rel="noopener noreferrer" target="_blank"> <img alt="National Nuclear Security Administration" longdesc="http://nnsa.gov" src="https://www.sandia.gov/_common/images/nnsa_logo_white.png" style="height:37px; width:116px"></a></p>
+		<p><a href="https://www.sandia.gov">Sandia National Laboratories</a> is a multimission laboratory managed and operated by National Technology and Engineering Solutions of Sandia, LLC., a wholly owned subsidiary of Honeywell International, Inc., for the U.S. Department of Energy’s National Nuclear Security Administration under contract DE-NA-0003525.</p>
+	  </div>	  	  
+	  
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

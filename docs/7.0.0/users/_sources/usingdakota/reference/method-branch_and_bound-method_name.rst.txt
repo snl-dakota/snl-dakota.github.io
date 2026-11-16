@@ -1,0 +1,36 @@
+.. _method-branch_and_bound-method_name:
+
+"""""""""""
+method_name
+"""""""""""
+
+Specify sub-method by name
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-branch_and_bound-method_name-model_pointer
+
+**Specification**
+
+- *Alias:* None
+- *Arguments:* STRING
+- *JSON argument key:* name
+
+**Child Keywords:**
+
++-------------------------+------------------------+--------------------+--------------------------------+------------------------------------------------------------+
+| Required/Optional       | Description of Group   | JSON Group Key     | Dakota Keyword                 | Dakota Keyword Description                                 |
++=========================+========================+====================+================================+============================================================+
+| Optional                |                        |                    | `model_pointer`__              | Identifier for model block to be used by a method          |
++-------------------------+------------------------+--------------------+--------------------------------+------------------------------------------------------------+
+
+.. __: method-branch_and_bound-method_name-model_pointer.html
+
+**Description**
+
+The ``method_name`` keyword is used to specify a sub-method by Dakota method
+name (e.g. 'npsol_sqp') rather than block pointer. The method will be executed
+using its default settings. The optional ``model_pointer`` specification can be
+used to associate a model block with the method.

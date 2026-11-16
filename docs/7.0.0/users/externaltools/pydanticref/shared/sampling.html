@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sampling &mdash; Dakota 7.0.0 documentation</title>
+      <link rel="stylesheet"
+            href="../../../_static/pygments.css"
+            type="text/css" />
+      <link rel="stylesheet"
+            href="../../../_static/css/theme.css"
+            type="text/css" />
+      <link rel="stylesheet"
+            href="../../../_static/copybutton.css"
+            type="text/css" />
+      <link rel="stylesheet"
+            href="../../../_static/autodoc_pydantic.css"
+            type="text/css" />
+      <link rel="stylesheet"
+            href="../../../_static/tabs.css"
+            type="text/css" />
+      <link rel="stylesheet"
+            href="../../../_static/css/dakota_theme.css"
+            type="text/css" />
+      <link rel="stylesheet"
+            href="../../../_static/css/sandiaheaderlite.css"
+            type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=efe5be6f"></script>
+        <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+        <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../../../_static/copybutton.js?v=f281be69"></script>
+        <script src="../../../_static/tabs.js?v=3ee01567"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Surrogate" href="surrogate.html" />
+    <link rel="prev" title="Responses" href="responses.html" /> 
+  
+  <meta name="sandia.approval_type" content="formal"/>
+  <meta property="sandia.approved" content="SAND2025-14179O"/>
+  <meta name="description" content="The Dakota project delivers both state-of-the-art research and robust, usable software for optimization and UQ."/>
+  <meta name="keywords" content="Dakota, optimization, UQ, uncertainty quantification, parametric analysis, design exploration, model calibration, risk analysis"/>
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../index.html" class="icon icon-home"> Dakota
+            <img src="../../../_static/DAKOTAWhiteWEB.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Install</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../setupdakota.html">Download and Install Dakota</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Getting Started with Dakota</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../usingdakota/introduction/aboutdakota.html">What is Dakota?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usingdakota/introduction/studyanatomy.html">Anatomy of a Dakota Study</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usingdakota/introduction/helloworld.html">Tutorial: Your First Dakota Study</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usingdakota/introduction/couplingtosimulations.html">Connecting Your Code: The Analysis Driver</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Using Dakota</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../usingdakota/usingdakota.html">Using Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usingdakotagui/usingdakotagui.html">Using Dakota GUI</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../externaltools.html">Using External Tools</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../dpreproandpyprepro.html">Preprocessing with dprepro and pyprepro</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../restartutility.html">The Dakota Restart Utility</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../pydanticref.html">Pydantic Model Reference</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../study.html">Study</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../methods.html">Methods</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../environment.html">Environment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../interface.html">Interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../model.html">Model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../responses.html">Responses</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../variables.html">Variables</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../shared.html">Shared</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="bayesian.html">Bayesian</a></li>
+<li class="toctree-l4"><a class="reference internal" href="core.html">Core</a></li>
+<li class="toctree-l4"><a class="reference internal" href="expansion.html">Expansion</a></li>
+<li class="toctree-l4"><a class="reference internal" href="formats.html">Formats</a></li>
+<li class="toctree-l4"><a class="reference internal" href="interface.html">Interface</a></li>
+<li class="toctree-l4"><a class="reference internal" href="misc.html">Misc</a></li>
+<li class="toctree-l4"><a class="reference internal" href="optimization.html">Optimization</a></li>
+<li class="toctree-l4"><a class="reference internal" href="responses.html">Responses</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Sampling</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#dakota.spec.shared.sampling.MlmfPilotSamplesContext1Mixin"><code class="docutils literal notranslate"><span class="pre">MlmfPilotSamplesContext1Mixin</span></code></a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.sampling.MlmfPilotSamplesContext1Mixin.model_config"><code class="docutils literal notranslate"><span class="pre">MlmfPilotSamplesContext1Mixin.model_config</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.sampling.MlmfPilotSamplesContext1Mixin.universal_validator"><code class="docutils literal notranslate"><span class="pre">MlmfPilotSamplesContext1Mixin.universal_validator()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#dakota.spec.shared.sampling.MlmfPilotSamplesContext2Mixin"><code class="docutils literal notranslate"><span class="pre">MlmfPilotSamplesContext2Mixin</span></code></a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.sampling.MlmfPilotSamplesContext2Mixin.model_config"><code class="docutils literal notranslate"><span class="pre">MlmfPilotSamplesContext2Mixin.model_config</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.sampling.MlmfPilotSamplesContext2Mixin.universal_validator"><code class="docutils literal notranslate"><span class="pre">MlmfPilotSamplesContext2Mixin.universal_validator()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#dakota.spec.shared.sampling.SamplesOnEmulatorWithAliasMixin"><code class="docutils literal notranslate"><span class="pre">SamplesOnEmulatorWithAliasMixin</span></code></a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.sampling.SamplesOnEmulatorWithAliasMixin.model_config"><code class="docutils literal notranslate"><span class="pre">SamplesOnEmulatorWithAliasMixin.model_config</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.sampling.SamplesOnEmulatorWithAliasMixin.universal_validator"><code class="docutils literal notranslate"><span class="pre">SamplesOnEmulatorWithAliasMixin.universal_validator()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#dakota.spec.shared.sampling.MethodExportSamplesFormatCustomAnnotatedConfig"><code class="docutils literal notranslate"><span class="pre">MethodExportSamplesFormatCustomAnnotatedConfig</span></code></a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.sampling.MethodExportSamplesFormatCustomAnnotatedConfig.model_config"><code class="docutils literal notranslate"><span class="pre">MethodExportSamplesFormatCustomAnnotatedConfig.model_config</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.sampling.MethodExportSamplesFormatCustomAnnotatedConfig.universal_validator"><code class="docutils literal notranslate"><span class="pre">MethodExportSamplesFormatCustomAnnotatedConfig.universal_validator()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#dakota.spec.shared.sampling.MethodExportSamplesFormatAnnotated"><code class="docutils literal notranslate"><span class="pre">MethodExportSamplesFormatAnnotated</span></code></a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.sampling.MethodExportSamplesFormatAnnotated.model_config"><code class="docutils literal notranslate"><span class="pre">MethodExportSamplesFormatAnnotated.model_config</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.sampling.MethodExportSamplesFormatAnnotated.universal_validator"><code class="docutils literal notranslate"><span class="pre">MethodExportSamplesFormatAnnotated.universal_validator()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#dakota.spec.shared.sampling.MethodExportSamplesFormatFreeform"><code class="docutils literal notranslate"><span class="pre">MethodExportSamplesFormatFreeform</span></code></a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.sampling.MethodExportSamplesFormatFreeform.model_config"><code class="docutils literal notranslate"><span class="pre">MethodExportSamplesFormatFreeform.model_config</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.sampling.MethodExportSamplesFormatFreeform.universal_validator"><code class="docutils literal notranslate"><span class="pre">MethodExportSamplesFormatFreeform.universal_validator()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#dakota.spec.shared.sampling.MethodSampleTypeLhsMcLhs"><code class="docutils literal notranslate"><span class="pre">MethodSampleTypeLhsMcLhs</span></code></a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.sampling.MethodSampleTypeLhsMcLhs.model_config"><code class="docutils literal notranslate"><span class="pre">MethodSampleTypeLhsMcLhs.model_config</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.sampling.MethodSampleTypeLhsMcLhs.universal_validator"><code class="docutils literal notranslate"><span class="pre">MethodSampleTypeLhsMcLhs.universal_validator()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#dakota.spec.shared.sampling.MethodSampleTypeLhsMcRandom"><code class="docutils literal notranslate"><span class="pre">MethodSampleTypeLhsMcRandom</span></code></a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.sampling.MethodSampleTypeLhsMcRandom.model_config"><code class="docutils literal notranslate"><span class="pre">MethodSampleTypeLhsMcRandom.model_config</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.sampling.MethodSampleTypeLhsMcRandom.universal_validator"><code class="docutils literal notranslate"><span class="pre">MethodSampleTypeLhsMcRandom.universal_validator()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#dakota.spec.shared.sampling.Fallback"><code class="docutils literal notranslate"><span class="pre">Fallback</span></code></a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.sampling.Fallback.model_config"><code class="docutils literal notranslate"><span class="pre">Fallback.model_config</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.sampling.Fallback.universal_validator"><code class="docutils literal notranslate"><span class="pre">Fallback.universal_validator()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#dakota.spec.shared.sampling.Override"><code class="docutils literal notranslate"><span class="pre">Override</span></code></a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.sampling.Override.model_config"><code class="docutils literal notranslate"><span class="pre">Override.model_config</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.sampling.Override.universal_validator"><code class="docutils literal notranslate"><span class="pre">Override.universal_validator()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#dakota.spec.shared.sampling.AutoReorder"><code class="docutils literal notranslate"><span class="pre">AutoReorder</span></code></a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.sampling.AutoReorder.model_config"><code class="docutils literal notranslate"><span class="pre">AutoReorder.model_config</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.sampling.AutoReorder.universal_validator"><code class="docutils literal notranslate"><span class="pre">AutoReorder.universal_validator()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#dakota.spec.shared.sampling.FixedOrder"><code class="docutils literal notranslate"><span class="pre">FixedOrder</span></code></a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.sampling.FixedOrder.model_config"><code class="docutils literal notranslate"><span class="pre">FixedOrder.model_config</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.sampling.FixedOrder.universal_validator"><code class="docutils literal notranslate"><span class="pre">FixedOrder.universal_validator()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#dakota.spec.shared.sampling.NumericalSolveSqp"><code class="docutils literal notranslate"><span class="pre">NumericalSolveSqp</span></code></a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.sampling.NumericalSolveSqp.model_config"><code class="docutils literal notranslate"><span class="pre">NumericalSolveSqp.model_config</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.sampling.NumericalSolveSqp.universal_validator"><code class="docutils literal notranslate"><span class="pre">NumericalSolveSqp.universal_validator()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#dakota.spec.shared.sampling.NumericalSolveNip"><code class="docutils literal notranslate"><span class="pre">NumericalSolveNip</span></code></a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.sampling.NumericalSolveNip.model_config"><code class="docutils literal notranslate"><span class="pre">NumericalSolveNip.model_config</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.sampling.NumericalSolveNip.universal_validator"><code class="docutils literal notranslate"><span class="pre">NumericalSolveNip.universal_validator()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#dakota.spec.shared.sampling.NumericalSolveGlobalLocal"><code class="docutils literal notranslate"><span class="pre">NumericalSolveGlobalLocal</span></code></a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.sampling.NumericalSolveGlobalLocal.model_config"><code class="docutils literal notranslate"><span class="pre">NumericalSolveGlobalLocal.model_config</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.sampling.NumericalSolveGlobalLocal.universal_validator"><code class="docutils literal notranslate"><span class="pre">NumericalSolveGlobalLocal.universal_validator()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#dakota.spec.shared.sampling.NumericalSolveCompetedLocal"><code class="docutils literal notranslate"><span class="pre">NumericalSolveCompetedLocal</span></code></a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.sampling.NumericalSolveCompetedLocal.model_config"><code class="docutils literal notranslate"><span class="pre">NumericalSolveCompetedLocal.model_config</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.sampling.NumericalSolveCompetedLocal.universal_validator"><code class="docutils literal notranslate"><span class="pre">NumericalSolveCompetedLocal.universal_validator()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#dakota.spec.shared.sampling.NumericalSolveSolverMetricAverageEstimatorVariance"><code class="docutils literal notranslate"><span class="pre">NumericalSolveSolverMetricAverageEstimatorVariance</span></code></a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.sampling.NumericalSolveSolverMetricAverageEstimatorVariance.model_config"><code class="docutils literal notranslate"><span class="pre">NumericalSolveSolverMetricAverageEstimatorVariance.model_config</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.sampling.NumericalSolveSolverMetricAverageEstimatorVariance.universal_validator"><code class="docutils literal notranslate"><span class="pre">NumericalSolveSolverMetricAverageEstimatorVariance.universal_validator()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#dakota.spec.shared.sampling.NumericalSolveSolverMetricNormEstimatorVarianceConfig"><code class="docutils literal notranslate"><span class="pre">NumericalSolveSolverMetricNormEstimatorVarianceConfig</span></code></a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.sampling.NumericalSolveSolverMetricNormEstimatorVarianceConfig.model_config"><code class="docutils literal notranslate"><span class="pre">NumericalSolveSolverMetricNormEstimatorVarianceConfig.model_config</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.sampling.NumericalSolveSolverMetricNormEstimatorVarianceConfig.universal_validator"><code class="docutils literal notranslate"><span class="pre">NumericalSolveSolverMetricNormEstimatorVarianceConfig.universal_validator()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#dakota.spec.shared.sampling.NumericalSolveSolverMetricMaxEstimatorVariance"><code class="docutils literal notranslate"><span class="pre">NumericalSolveSolverMetricMaxEstimatorVariance</span></code></a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.sampling.NumericalSolveSolverMetricMaxEstimatorVariance.model_config"><code class="docutils literal notranslate"><span class="pre">NumericalSolveSolverMetricMaxEstimatorVariance.model_config</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.sampling.NumericalSolveSolverMetricMaxEstimatorVariance.universal_validator"><code class="docutils literal notranslate"><span class="pre">NumericalSolveSolverMetricMaxEstimatorVariance.universal_validator()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#dakota.spec.shared.sampling.PilotSamples"><code class="docutils literal notranslate"><span class="pre">PilotSamples</span></code></a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.sampling.PilotSamples.model_config"><code class="docutils literal notranslate"><span class="pre">PilotSamples.model_config</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.sampling.PilotSamples.universal_validator"><code class="docutils literal notranslate"><span class="pre">PilotSamples.universal_validator()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#dakota.spec.shared.sampling.MethodExportSamplesFormatCustomAnnotated"><code class="docutils literal notranslate"><span class="pre">MethodExportSamplesFormatCustomAnnotated</span></code></a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.sampling.MethodExportSamplesFormatCustomAnnotated.model_config"><code class="docutils literal notranslate"><span class="pre">MethodExportSamplesFormatCustomAnnotated.model_config</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.sampling.MethodExportSamplesFormatCustomAnnotated.universal_validator"><code class="docutils literal notranslate"><span class="pre">MethodExportSamplesFormatCustomAnnotated.universal_validator()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#dakota.spec.shared.sampling.MethodSampleTypeLhsMcMixin"><code class="docutils literal notranslate"><span class="pre">MethodSampleTypeLhsMcMixin</span></code></a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.sampling.MethodSampleTypeLhsMcMixin.model_config"><code class="docutils literal notranslate"><span class="pre">MethodSampleTypeLhsMcMixin.model_config</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.sampling.MethodSampleTypeLhsMcMixin.universal_validator"><code class="docutils literal notranslate"><span class="pre">MethodSampleTypeLhsMcMixin.universal_validator()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#dakota.spec.shared.sampling.NumericalSolveSolverMetricNormEstimatorVariance"><code class="docutils literal notranslate"><span class="pre">NumericalSolveSolverMetricNormEstimatorVariance</span></code></a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.sampling.NumericalSolveSolverMetricNormEstimatorVariance.model_config"><code class="docutils literal notranslate"><span class="pre">NumericalSolveSolverMetricNormEstimatorVariance.model_config</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.sampling.NumericalSolveSolverMetricNormEstimatorVariance.universal_validator"><code class="docutils literal notranslate"><span class="pre">NumericalSolveSolverMetricNormEstimatorVariance.universal_validator()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#dakota.spec.shared.sampling.MlmfGroupPilotSamplesMixin"><code class="docutils literal notranslate"><span class="pre">MlmfGroupPilotSamplesMixin</span></code></a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.sampling.MlmfGroupPilotSamplesMixin.model_config"><code class="docutils literal notranslate"><span class="pre">MlmfGroupPilotSamplesMixin.model_config</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.sampling.MlmfGroupPilotSamplesMixin.universal_validator"><code class="docutils literal notranslate"><span class="pre">MlmfGroupPilotSamplesMixin.universal_validator()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#dakota.spec.shared.sampling.MethodExportSamplesFormatMixin"><code class="docutils literal notranslate"><span class="pre">MethodExportSamplesFormatMixin</span></code></a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.sampling.MethodExportSamplesFormatMixin.model_config"><code class="docutils literal notranslate"><span class="pre">MethodExportSamplesFormatMixin.model_config</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.sampling.MethodExportSamplesFormatMixin.universal_validator"><code class="docutils literal notranslate"><span class="pre">MethodExportSamplesFormatMixin.universal_validator()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#dakota.spec.shared.sampling.NumericalSolve"><code class="docutils literal notranslate"><span class="pre">NumericalSolve</span></code></a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.sampling.NumericalSolve.model_config"><code class="docutils literal notranslate"><span class="pre">NumericalSolve.model_config</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.sampling.NumericalSolve.universal_validator"><code class="docutils literal notranslate"><span class="pre">NumericalSolve.universal_validator()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#dakota.spec.shared.sampling.MfmcNumericalSolveMixin"><code class="docutils literal notranslate"><span class="pre">MfmcNumericalSolveMixin</span></code></a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.sampling.MfmcNumericalSolveMixin.model_config"><code class="docutils literal notranslate"><span class="pre">MfmcNumericalSolveMixin.model_config</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="#dakota.spec.shared.sampling.MfmcNumericalSolveMixin.universal_validator"><code class="docutils literal notranslate"><span class="pre">MfmcNumericalSolveMixin.universal_validator()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="surrogate.html">Surrogate</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../pydanticref.html#how-to-work-with-the-pydantic-documentation">How to Work with the Pydantic Documentation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../inputtools.html">Working with Inputs</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Building and Developing Dakota</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../building/building.html">Building Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../developingdakota/developingdakota.html">Developing Dakota</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">More</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../misc/misc.html">Miscellaneous</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Dakota</a>
+      </nav>
+
+	  <!-- SNL Lite header -->
+	  <div class="snlheader-subsite--wrapper-default">
+		<snlheader class="snlheader-subsite" role="snlbanner">
+		  <div class="wrapper">
+			<a href="https://www.sandia.gov/index.html">
+			  <div class="logo-transparent"><p class="logo">Sandia National Laboratories</p></div>
+			</a>
+			<div class="nav-top">
+			  <a class="visuallyhidden" name="mainnav"></a>
+			  <div aria-label="main navigation" class="core-nav-transparent core-nav-transparent--visible" role="navigation">
+				<ul role="navigation" class="secondary-links">
+				  <li id="search-text-link">
+					<a aria-label="Search" href="https://www.sandia.gov/search/">Search Sandia.gov</a>
+				  </li>
+				  <li id="directory-text-link">
+					<a href="https://www.sandia.gov/directory.html" aria-expanded="false" aria-label="Site Directory">All Sandia Websites</a>
+				  </li>
+				</ul>
+			  </div>
+			</div>
+		  </div> 
+		</snlheader>
+	  </div>	  
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../externaltools.html">Using External Tools</a></li>
+          <li class="breadcrumb-item"><a href="../../pydanticref.html">Pydantic Model Reference</a></li>
+          <li class="breadcrumb-item"><a href="../shared.html">Shared</a></li>
+      <li class="breadcrumb-item active">Sampling</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../_sources/externaltools/pydanticref/shared/sampling.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-dakota.spec.shared.sampling">
+<span id="sampling"></span><h1>Sampling<a class="headerlink" href="#module-dakota.spec.shared.sampling" title="Link to this heading"></a></h1>
+<p>Generated Pydantic models for shared.sampling</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="dakota.spec.shared.sampling.MlmfPilotSamplesContext1Mixin">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">dakota.spec.shared.sampling.</span></span><span class="sig-name descname"><span class="pre">MlmfPilotSamplesContext1Mixin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">pilot_samples</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.sampling.MlmfPilotSamplesContext1Mixin" title="Link to this definition"></a></dt>
+<dd><p>Generated model for MlmfPilotSamplesContext1Mixin</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dakota.spec.shared.sampling.MlmfPilotSamplesContext1Mixin.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'json_schema_extra':</span> <span class="pre">&lt;function</span> <span class="pre">DakotaBaseModel.__init_subclass__.&lt;locals&gt;.combined_schema_extra&gt;,</span> <span class="pre">'protected_namespaces':</span> <span class="pre">(),</span> <span class="pre">'str_strip_whitespace':</span> <span class="pre">True,</span> <span class="pre">'use_enum_values':</span> <span class="pre">True,</span> <span class="pre">'validate_assignment':</span> <span class="pre">True}</span></span><a class="headerlink" href="#dakota.spec.shared.sampling.MlmfPilotSamplesContext1Mixin.model_config" title="Link to this definition"></a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dakota.spec.shared.sampling.MlmfPilotSamplesContext1Mixin.universal_validator">
+<span class="sig-name descname"><span class="pre">universal_validator</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.sampling.MlmfPilotSamplesContext1Mixin.universal_validator" title="Link to this definition"></a></dt>
+<dd><p>Example universal validator that runs for all models</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dakota.spec.shared.sampling.MlmfPilotSamplesContext2Mixin">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">dakota.spec.shared.sampling.</span></span><span class="sig-name descname"><span class="pre">MlmfPilotSamplesContext2Mixin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">pilot_samples</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.sampling.MlmfPilotSamplesContext2Mixin" title="Link to this definition"></a></dt>
+<dd><p>Generated model for MlmfPilotSamplesContext2Mixin</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dakota.spec.shared.sampling.MlmfPilotSamplesContext2Mixin.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'json_schema_extra':</span> <span class="pre">&lt;function</span> <span class="pre">DakotaBaseModel.__init_subclass__.&lt;locals&gt;.combined_schema_extra&gt;,</span> <span class="pre">'protected_namespaces':</span> <span class="pre">(),</span> <span class="pre">'str_strip_whitespace':</span> <span class="pre">True,</span> <span class="pre">'use_enum_values':</span> <span class="pre">True,</span> <span class="pre">'validate_assignment':</span> <span class="pre">True}</span></span><a class="headerlink" href="#dakota.spec.shared.sampling.MlmfPilotSamplesContext2Mixin.model_config" title="Link to this definition"></a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dakota.spec.shared.sampling.MlmfPilotSamplesContext2Mixin.universal_validator">
+<span class="sig-name descname"><span class="pre">universal_validator</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.sampling.MlmfPilotSamplesContext2Mixin.universal_validator" title="Link to this definition"></a></dt>
+<dd><p>Example universal validator that runs for all models</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dakota.spec.shared.sampling.SamplesOnEmulatorWithAliasMixin">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">dakota.spec.shared.sampling.</span></span><span class="sig-name descname"><span class="pre">SamplesOnEmulatorWithAliasMixin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">samples_on_emulator</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.sampling.SamplesOnEmulatorWithAliasMixin" title="Link to this definition"></a></dt>
+<dd><p>Generated model for SamplesOnEmulatorWithAliasMixin</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dakota.spec.shared.sampling.SamplesOnEmulatorWithAliasMixin.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'protected_namespaces':</span> <span class="pre">(),</span> <span class="pre">'str_strip_whitespace':</span> <span class="pre">True,</span> <span class="pre">'use_enum_values':</span> <span class="pre">True,</span> <span class="pre">'validate_assignment':</span> <span class="pre">True}</span></span><a class="headerlink" href="#dakota.spec.shared.sampling.SamplesOnEmulatorWithAliasMixin.model_config" title="Link to this definition"></a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dakota.spec.shared.sampling.SamplesOnEmulatorWithAliasMixin.universal_validator">
+<span class="sig-name descname"><span class="pre">universal_validator</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.sampling.SamplesOnEmulatorWithAliasMixin.universal_validator" title="Link to this definition"></a></dt>
+<dd><p>Example universal validator that runs for all models</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dakota.spec.shared.sampling.MethodExportSamplesFormatCustomAnnotatedConfig">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">dakota.spec.shared.sampling.</span></span><span class="sig-name descname"><span class="pre">MethodExportSamplesFormatCustomAnnotatedConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">header</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="k"><span class="pre">True</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eval_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="k"><span class="pre">True</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interface_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="k"><span class="pre">True</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.sampling.MethodExportSamplesFormatCustomAnnotatedConfig" title="Link to this definition"></a></dt>
+<dd><p>Selects custom-annotated tabular file format</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dakota.spec.shared.sampling.MethodExportSamplesFormatCustomAnnotatedConfig.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'protected_namespaces':</span> <span class="pre">(),</span> <span class="pre">'str_strip_whitespace':</span> <span class="pre">True,</span> <span class="pre">'use_enum_values':</span> <span class="pre">True,</span> <span class="pre">'validate_assignment':</span> <span class="pre">True}</span></span><a class="headerlink" href="#dakota.spec.shared.sampling.MethodExportSamplesFormatCustomAnnotatedConfig.model_config" title="Link to this definition"></a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dakota.spec.shared.sampling.MethodExportSamplesFormatCustomAnnotatedConfig.universal_validator">
+<span class="sig-name descname"><span class="pre">universal_validator</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.sampling.MethodExportSamplesFormatCustomAnnotatedConfig.universal_validator" title="Link to this definition"></a></dt>
+<dd><p>Example universal validator that runs for all models</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dakota.spec.shared.sampling.MethodExportSamplesFormatAnnotated">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">dakota.spec.shared.sampling.</span></span><span class="sig-name descname"><span class="pre">MethodExportSamplesFormatAnnotated</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">annotated</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="k"><span class="pre">True</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.sampling.MethodExportSamplesFormatAnnotated" title="Link to this definition"></a></dt>
+<dd><p>Selects annotated tabular file format</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dakota.spec.shared.sampling.MethodExportSamplesFormatAnnotated.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'protected_namespaces':</span> <span class="pre">(),</span> <span class="pre">'str_strip_whitespace':</span> <span class="pre">True,</span> <span class="pre">'use_enum_values':</span> <span class="pre">True,</span> <span class="pre">'validate_assignment':</span> <span class="pre">True}</span></span><a class="headerlink" href="#dakota.spec.shared.sampling.MethodExportSamplesFormatAnnotated.model_config" title="Link to this definition"></a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dakota.spec.shared.sampling.MethodExportSamplesFormatAnnotated.universal_validator">
+<span class="sig-name descname"><span class="pre">universal_validator</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.sampling.MethodExportSamplesFormatAnnotated.universal_validator" title="Link to this definition"></a></dt>
+<dd><p>Example universal validator that runs for all models</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dakota.spec.shared.sampling.MethodExportSamplesFormatFreeform">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">dakota.spec.shared.sampling.</span></span><span class="sig-name descname"><span class="pre">MethodExportSamplesFormatFreeform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">freeform</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="k"><span class="pre">True</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.sampling.MethodExportSamplesFormatFreeform" title="Link to this definition"></a></dt>
+<dd><p>Selects freeform file format</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dakota.spec.shared.sampling.MethodExportSamplesFormatFreeform.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'protected_namespaces':</span> <span class="pre">(),</span> <span class="pre">'str_strip_whitespace':</span> <span class="pre">True,</span> <span class="pre">'use_enum_values':</span> <span class="pre">True,</span> <span class="pre">'validate_assignment':</span> <span class="pre">True}</span></span><a class="headerlink" href="#dakota.spec.shared.sampling.MethodExportSamplesFormatFreeform.model_config" title="Link to this definition"></a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dakota.spec.shared.sampling.MethodExportSamplesFormatFreeform.universal_validator">
+<span class="sig-name descname"><span class="pre">universal_validator</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.sampling.MethodExportSamplesFormatFreeform.universal_validator" title="Link to this definition"></a></dt>
+<dd><p>Example universal validator that runs for all models</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dakota.spec.shared.sampling.MethodSampleTypeLhsMcLhs">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">dakota.spec.shared.sampling.</span></span><span class="sig-name descname"><span class="pre">MethodSampleTypeLhsMcLhs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">lhs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="k"><span class="pre">True</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.sampling.MethodSampleTypeLhsMcLhs" title="Link to this definition"></a></dt>
+<dd><p>Uses Latin Hypercube Sampling (LHS) to sample variables</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dakota.spec.shared.sampling.MethodSampleTypeLhsMcLhs.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'protected_namespaces':</span> <span class="pre">(),</span> <span class="pre">'str_strip_whitespace':</span> <span class="pre">True,</span> <span class="pre">'use_enum_values':</span> <span class="pre">True,</span> <span class="pre">'validate_assignment':</span> <span class="pre">True}</span></span><a class="headerlink" href="#dakota.spec.shared.sampling.MethodSampleTypeLhsMcLhs.model_config" title="Link to this definition"></a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dakota.spec.shared.sampling.MethodSampleTypeLhsMcLhs.universal_validator">
+<span class="sig-name descname"><span class="pre">universal_validator</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.sampling.MethodSampleTypeLhsMcLhs.universal_validator" title="Link to this definition"></a></dt>
+<dd><p>Example universal validator that runs for all models</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dakota.spec.shared.sampling.MethodSampleTypeLhsMcRandom">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">dakota.spec.shared.sampling.</span></span><span class="sig-name descname"><span class="pre">MethodSampleTypeLhsMcRandom</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">random</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="k"><span class="pre">True</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.sampling.MethodSampleTypeLhsMcRandom" title="Link to this definition"></a></dt>
+<dd><p>Uses purely random Monte Carlo sampling to sample variables</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dakota.spec.shared.sampling.MethodSampleTypeLhsMcRandom.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'protected_namespaces':</span> <span class="pre">(),</span> <span class="pre">'str_strip_whitespace':</span> <span class="pre">True,</span> <span class="pre">'use_enum_values':</span> <span class="pre">True,</span> <span class="pre">'validate_assignment':</span> <span class="pre">True}</span></span><a class="headerlink" href="#dakota.spec.shared.sampling.MethodSampleTypeLhsMcRandom.model_config" title="Link to this definition"></a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dakota.spec.shared.sampling.MethodSampleTypeLhsMcRandom.universal_validator">
+<span class="sig-name descname"><span class="pre">universal_validator</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.sampling.MethodSampleTypeLhsMcRandom.universal_validator" title="Link to this definition"></a></dt>
+<dd><p>Example universal validator that runs for all models</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dakota.spec.shared.sampling.Fallback">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">dakota.spec.shared.sampling.</span></span><span class="sig-name descname"><span class="pre">Fallback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">fallback</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="k"><span class="pre">True</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.sampling.Fallback" title="Link to this definition"></a></dt>
+<dd><p>Fall back to a numerical solve when needed for mitigation in MFMC</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dakota.spec.shared.sampling.Fallback.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'protected_namespaces':</span> <span class="pre">(),</span> <span class="pre">'str_strip_whitespace':</span> <span class="pre">True,</span> <span class="pre">'use_enum_values':</span> <span class="pre">True,</span> <span class="pre">'validate_assignment':</span> <span class="pre">True}</span></span><a class="headerlink" href="#dakota.spec.shared.sampling.Fallback.model_config" title="Link to this definition"></a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dakota.spec.shared.sampling.Fallback.universal_validator">
+<span class="sig-name descname"><span class="pre">universal_validator</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.sampling.Fallback.universal_validator" title="Link to this definition"></a></dt>
+<dd><p>Example universal validator that runs for all models</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dakota.spec.shared.sampling.Override">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">dakota.spec.shared.sampling.</span></span><span class="sig-name descname"><span class="pre">Override</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">override</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="k"><span class="pre">True</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.sampling.Override" title="Link to this definition"></a></dt>
+<dd><p>Replace MFMC analytic allocation with a numerical solution</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dakota.spec.shared.sampling.Override.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'protected_namespaces':</span> <span class="pre">(),</span> <span class="pre">'str_strip_whitespace':</span> <span class="pre">True,</span> <span class="pre">'use_enum_values':</span> <span class="pre">True,</span> <span class="pre">'validate_assignment':</span> <span class="pre">True}</span></span><a class="headerlink" href="#dakota.spec.shared.sampling.Override.model_config" title="Link to this definition"></a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dakota.spec.shared.sampling.Override.universal_validator">
+<span class="sig-name descname"><span class="pre">universal_validator</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.sampling.Override.universal_validator" title="Link to this definition"></a></dt>
+<dd><p>Example universal validator that runs for all models</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dakota.spec.shared.sampling.AutoReorder">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">dakota.spec.shared.sampling.</span></span><span class="sig-name descname"><span class="pre">AutoReorder</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">auto_reorder</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="k"><span class="pre">True</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.sampling.AutoReorder" title="Link to this definition"></a></dt>
+<dd><p>Reorder models automatically</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dakota.spec.shared.sampling.AutoReorder.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'protected_namespaces':</span> <span class="pre">(),</span> <span class="pre">'str_strip_whitespace':</span> <span class="pre">True,</span> <span class="pre">'use_enum_values':</span> <span class="pre">True,</span> <span class="pre">'validate_assignment':</span> <span class="pre">True}</span></span><a class="headerlink" href="#dakota.spec.shared.sampling.AutoReorder.model_config" title="Link to this definition"></a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dakota.spec.shared.sampling.AutoReorder.universal_validator">
+<span class="sig-name descname"><span class="pre">universal_validator</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.sampling.AutoReorder.universal_validator" title="Link to this definition"></a></dt>
+<dd><p>Example universal validator that runs for all models</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dakota.spec.shared.sampling.FixedOrder">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">dakota.spec.shared.sampling.</span></span><span class="sig-name descname"><span class="pre">FixedOrder</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">fixed_order</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="k"><span class="pre">True</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.sampling.FixedOrder" title="Link to this definition"></a></dt>
+<dd><p>Used a fixed model order</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dakota.spec.shared.sampling.FixedOrder.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'protected_namespaces':</span> <span class="pre">(),</span> <span class="pre">'str_strip_whitespace':</span> <span class="pre">True,</span> <span class="pre">'use_enum_values':</span> <span class="pre">True,</span> <span class="pre">'validate_assignment':</span> <span class="pre">True}</span></span><a class="headerlink" href="#dakota.spec.shared.sampling.FixedOrder.model_config" title="Link to this definition"></a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dakota.spec.shared.sampling.FixedOrder.universal_validator">
+<span class="sig-name descname"><span class="pre">universal_validator</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.sampling.FixedOrder.universal_validator" title="Link to this definition"></a></dt>
+<dd><p>Example universal validator that runs for all models</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dakota.spec.shared.sampling.NumericalSolveSqp">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">dakota.spec.shared.sampling.</span></span><span class="sig-name descname"><span class="pre">NumericalSolveSqp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">sqp</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="k"><span class="pre">True</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.sampling.NumericalSolveSqp" title="Link to this definition"></a></dt>
+<dd><p>Use a sequential quadratic programming method for solving an optimization sub-problem</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dakota.spec.shared.sampling.NumericalSolveSqp.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'protected_namespaces':</span> <span class="pre">(),</span> <span class="pre">'str_strip_whitespace':</span> <span class="pre">True,</span> <span class="pre">'use_enum_values':</span> <span class="pre">True,</span> <span class="pre">'validate_assignment':</span> <span class="pre">True}</span></span><a class="headerlink" href="#dakota.spec.shared.sampling.NumericalSolveSqp.model_config" title="Link to this definition"></a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dakota.spec.shared.sampling.NumericalSolveSqp.universal_validator">
+<span class="sig-name descname"><span class="pre">universal_validator</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.sampling.NumericalSolveSqp.universal_validator" title="Link to this definition"></a></dt>
+<dd><p>Example universal validator that runs for all models</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dakota.spec.shared.sampling.NumericalSolveNip">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">dakota.spec.shared.sampling.</span></span><span class="sig-name descname"><span class="pre">NumericalSolveNip</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">nip</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="k"><span class="pre">True</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.sampling.NumericalSolveNip" title="Link to this definition"></a></dt>
+<dd><p>Use a nonlinear interior point method for solving an optimization sub-problem</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dakota.spec.shared.sampling.NumericalSolveNip.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'protected_namespaces':</span> <span class="pre">(),</span> <span class="pre">'str_strip_whitespace':</span> <span class="pre">True,</span> <span class="pre">'use_enum_values':</span> <span class="pre">True,</span> <span class="pre">'validate_assignment':</span> <span class="pre">True}</span></span><a class="headerlink" href="#dakota.spec.shared.sampling.NumericalSolveNip.model_config" title="Link to this definition"></a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dakota.spec.shared.sampling.NumericalSolveNip.universal_validator">
+<span class="sig-name descname"><span class="pre">universal_validator</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.sampling.NumericalSolveNip.universal_validator" title="Link to this definition"></a></dt>
+<dd><p>Example universal validator that runs for all models</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dakota.spec.shared.sampling.NumericalSolveGlobalLocal">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">dakota.spec.shared.sampling.</span></span><span class="sig-name descname"><span class="pre">NumericalSolveGlobalLocal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">global_local</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="k"><span class="pre">True</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.sampling.NumericalSolveGlobalLocal" title="Link to this definition"></a></dt>
+<dd><p>Use a hybrid global-local scheme for solving an optimization sub-problem</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dakota.spec.shared.sampling.NumericalSolveGlobalLocal.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'protected_namespaces':</span> <span class="pre">(),</span> <span class="pre">'str_strip_whitespace':</span> <span class="pre">True,</span> <span class="pre">'use_enum_values':</span> <span class="pre">True,</span> <span class="pre">'validate_assignment':</span> <span class="pre">True}</span></span><a class="headerlink" href="#dakota.spec.shared.sampling.NumericalSolveGlobalLocal.model_config" title="Link to this definition"></a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dakota.spec.shared.sampling.NumericalSolveGlobalLocal.universal_validator">
+<span class="sig-name descname"><span class="pre">universal_validator</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.sampling.NumericalSolveGlobalLocal.universal_validator" title="Link to this definition"></a></dt>
+<dd><p>Example universal validator that runs for all models</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dakota.spec.shared.sampling.NumericalSolveCompetedLocal">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">dakota.spec.shared.sampling.</span></span><span class="sig-name descname"><span class="pre">NumericalSolveCompetedLocal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">competed_local</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="k"><span class="pre">True</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.sampling.NumericalSolveCompetedLocal" title="Link to this definition"></a></dt>
+<dd><p>Use a competed local solver scheme for solving an optimization sub-problem</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dakota.spec.shared.sampling.NumericalSolveCompetedLocal.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'protected_namespaces':</span> <span class="pre">(),</span> <span class="pre">'str_strip_whitespace':</span> <span class="pre">True,</span> <span class="pre">'use_enum_values':</span> <span class="pre">True,</span> <span class="pre">'validate_assignment':</span> <span class="pre">True}</span></span><a class="headerlink" href="#dakota.spec.shared.sampling.NumericalSolveCompetedLocal.model_config" title="Link to this definition"></a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dakota.spec.shared.sampling.NumericalSolveCompetedLocal.universal_validator">
+<span class="sig-name descname"><span class="pre">universal_validator</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.sampling.NumericalSolveCompetedLocal.universal_validator" title="Link to this definition"></a></dt>
+<dd><p>Example universal validator that runs for all models</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dakota.spec.shared.sampling.NumericalSolveSolverMetricAverageEstimatorVariance">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">dakota.spec.shared.sampling.</span></span><span class="sig-name descname"><span class="pre">NumericalSolveSolverMetricAverageEstimatorVariance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">average_estimator_variance</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="k"><span class="pre">True</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.sampling.NumericalSolveSolverMetricAverageEstimatorVariance" title="Link to this definition"></a></dt>
+<dd><p>Utilize the estimator variance averaged over the QoI as the solver metric for sampling-based multifidelity methods.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dakota.spec.shared.sampling.NumericalSolveSolverMetricAverageEstimatorVariance.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'protected_namespaces':</span> <span class="pre">(),</span> <span class="pre">'str_strip_whitespace':</span> <span class="pre">True,</span> <span class="pre">'use_enum_values':</span> <span class="pre">True,</span> <span class="pre">'validate_assignment':</span> <span class="pre">True}</span></span><a class="headerlink" href="#dakota.spec.shared.sampling.NumericalSolveSolverMetricAverageEstimatorVariance.model_config" title="Link to this definition"></a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dakota.spec.shared.sampling.NumericalSolveSolverMetricAverageEstimatorVariance.universal_validator">
+<span class="sig-name descname"><span class="pre">universal_validator</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.sampling.NumericalSolveSolverMetricAverageEstimatorVariance.universal_validator" title="Link to this definition"></a></dt>
+<dd><p>Example universal validator that runs for all models</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dakota.spec.shared.sampling.NumericalSolveSolverMetricNormEstimatorVarianceConfig">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">dakota.spec.shared.sampling.</span></span><span class="sig-name descname"><span class="pre">NumericalSolveSolverMetricNormEstimatorVarianceConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">norm_order</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Annotated</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Ge</span><span class="p"><span class="pre">(</span></span><span class="n"><span class="pre">ge</span></span><span class="o"><span class="pre">=</span></span><span class="pre">1.0</span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">PlainSerializer</span><span class="p"><span class="pre">(</span></span><span class="n"><span class="pre">func</span></span><span class="o"><span class="pre">=</span></span><span class="pre">_serialize_dakota_float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">return_type</span></span><span class="o"><span class="pre">=</span></span><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">when_used</span></span><span class="o"><span class="pre">=</span></span><span class="pre">json</span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">2.0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.sampling.NumericalSolveSolverMetricNormEstimatorVarianceConfig" title="Link to this definition"></a></dt>
+<dd><p>Utilize a p-norm over the vector of QoI estimator variances as the solver metric for sampling-based multifidelity methods.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dakota.spec.shared.sampling.NumericalSolveSolverMetricNormEstimatorVarianceConfig.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'protected_namespaces':</span> <span class="pre">(),</span> <span class="pre">'str_strip_whitespace':</span> <span class="pre">True,</span> <span class="pre">'use_enum_values':</span> <span class="pre">True,</span> <span class="pre">'validate_assignment':</span> <span class="pre">True}</span></span><a class="headerlink" href="#dakota.spec.shared.sampling.NumericalSolveSolverMetricNormEstimatorVarianceConfig.model_config" title="Link to this definition"></a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dakota.spec.shared.sampling.NumericalSolveSolverMetricNormEstimatorVarianceConfig.universal_validator">
+<span class="sig-name descname"><span class="pre">universal_validator</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.sampling.NumericalSolveSolverMetricNormEstimatorVarianceConfig.universal_validator" title="Link to this definition"></a></dt>
+<dd><p>Example universal validator that runs for all models</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dakota.spec.shared.sampling.NumericalSolveSolverMetricMaxEstimatorVariance">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">dakota.spec.shared.sampling.</span></span><span class="sig-name descname"><span class="pre">NumericalSolveSolverMetricMaxEstimatorVariance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_estimator_variance</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="k"><span class="pre">True</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.sampling.NumericalSolveSolverMetricMaxEstimatorVariance" title="Link to this definition"></a></dt>
+<dd><p>Utilize the maximum estimator variance as the solver metric for sampling-based multifidelity methods.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dakota.spec.shared.sampling.NumericalSolveSolverMetricMaxEstimatorVariance.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'protected_namespaces':</span> <span class="pre">(),</span> <span class="pre">'str_strip_whitespace':</span> <span class="pre">True,</span> <span class="pre">'use_enum_values':</span> <span class="pre">True,</span> <span class="pre">'validate_assignment':</span> <span class="pre">True}</span></span><a class="headerlink" href="#dakota.spec.shared.sampling.NumericalSolveSolverMetricMaxEstimatorVariance.model_config" title="Link to this definition"></a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dakota.spec.shared.sampling.NumericalSolveSolverMetricMaxEstimatorVariance.universal_validator">
+<span class="sig-name descname"><span class="pre">universal_validator</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.sampling.NumericalSolveSolverMetricMaxEstimatorVariance.universal_validator" title="Link to this definition"></a></dt>
+<dd><p>Example universal validator that runs for all models</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dakota.spec.shared.sampling.PilotSamples">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">dakota.spec.shared.sampling.</span></span><span class="sig-name descname"><span class="pre">PilotSamples</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">counts</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">independent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="k"><span class="pre">True</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.sampling.PilotSamples" title="Link to this definition"></a></dt>
+<dd><p>Initial set of samples for groups in the multilevel BLUE sampling method</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dakota.spec.shared.sampling.PilotSamples.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'json_schema_extra':</span> <span class="pre">&lt;function</span> <span class="pre">DakotaBaseModel.__init_subclass__.&lt;locals&gt;.combined_schema_extra&gt;,</span> <span class="pre">'protected_namespaces':</span> <span class="pre">(),</span> <span class="pre">'str_strip_whitespace':</span> <span class="pre">True,</span> <span class="pre">'use_enum_values':</span> <span class="pre">True,</span> <span class="pre">'validate_assignment':</span> <span class="pre">True}</span></span><a class="headerlink" href="#dakota.spec.shared.sampling.PilotSamples.model_config" title="Link to this definition"></a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dakota.spec.shared.sampling.PilotSamples.universal_validator">
+<span class="sig-name descname"><span class="pre">universal_validator</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.sampling.PilotSamples.universal_validator" title="Link to this definition"></a></dt>
+<dd><p>Example universal validator that runs for all models</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dakota.spec.shared.sampling.MethodExportSamplesFormatCustomAnnotated">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">dakota.spec.shared.sampling.</span></span><span class="sig-name descname"><span class="pre">MethodExportSamplesFormatCustomAnnotated</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">custom_annotated</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#dakota.spec.shared.sampling.MethodExportSamplesFormatCustomAnnotatedConfig" title="dakota.spec.shared.sampling.MethodExportSamplesFormatCustomAnnotatedConfig"><span class="pre">MethodExportSamplesFormatCustomAnnotatedConfig</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">&lt;factory&gt;</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.sampling.MethodExportSamplesFormatCustomAnnotated" title="Link to this definition"></a></dt>
+<dd><p>Selects custom-annotated tabular file format</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dakota.spec.shared.sampling.MethodExportSamplesFormatCustomAnnotated.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'protected_namespaces':</span> <span class="pre">(),</span> <span class="pre">'str_strip_whitespace':</span> <span class="pre">True,</span> <span class="pre">'use_enum_values':</span> <span class="pre">True,</span> <span class="pre">'validate_assignment':</span> <span class="pre">True}</span></span><a class="headerlink" href="#dakota.spec.shared.sampling.MethodExportSamplesFormatCustomAnnotated.model_config" title="Link to this definition"></a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dakota.spec.shared.sampling.MethodExportSamplesFormatCustomAnnotated.universal_validator">
+<span class="sig-name descname"><span class="pre">universal_validator</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.sampling.MethodExportSamplesFormatCustomAnnotated.universal_validator" title="Link to this definition"></a></dt>
+<dd><p>Example universal validator that runs for all models</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dakota.spec.shared.sampling.MethodSampleTypeLhsMcMixin">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">dakota.spec.shared.sampling.</span></span><span class="sig-name descname"><span class="pre">MethodSampleTypeLhsMcMixin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">sample_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#dakota.spec.shared.sampling.MethodSampleTypeLhsMcLhs" title="dakota.spec.shared.sampling.MethodSampleTypeLhsMcLhs"><span class="pre">MethodSampleTypeLhsMcLhs</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#dakota.spec.shared.sampling.MethodSampleTypeLhsMcRandom" title="dakota.spec.shared.sampling.MethodSampleTypeLhsMcRandom"><span class="pre">MethodSampleTypeLhsMcRandom</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.sampling.MethodSampleTypeLhsMcMixin" title="Link to this definition"></a></dt>
+<dd><p>Generated model for MethodSampleTypeLhsMcMixin</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dakota.spec.shared.sampling.MethodSampleTypeLhsMcMixin.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'protected_namespaces':</span> <span class="pre">(),</span> <span class="pre">'str_strip_whitespace':</span> <span class="pre">True,</span> <span class="pre">'use_enum_values':</span> <span class="pre">True,</span> <span class="pre">'validate_assignment':</span> <span class="pre">True}</span></span><a class="headerlink" href="#dakota.spec.shared.sampling.MethodSampleTypeLhsMcMixin.model_config" title="Link to this definition"></a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dakota.spec.shared.sampling.MethodSampleTypeLhsMcMixin.universal_validator">
+<span class="sig-name descname"><span class="pre">universal_validator</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.sampling.MethodSampleTypeLhsMcMixin.universal_validator" title="Link to this definition"></a></dt>
+<dd><p>Example universal validator that runs for all models</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dakota.spec.shared.sampling.NumericalSolveSolverMetricNormEstimatorVariance">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">dakota.spec.shared.sampling.</span></span><span class="sig-name descname"><span class="pre">NumericalSolveSolverMetricNormEstimatorVariance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">norm_estimator_variance</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#dakota.spec.shared.sampling.NumericalSolveSolverMetricNormEstimatorVarianceConfig" title="dakota.spec.shared.sampling.NumericalSolveSolverMetricNormEstimatorVarianceConfig"><span class="pre">NumericalSolveSolverMetricNormEstimatorVarianceConfig</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.sampling.NumericalSolveSolverMetricNormEstimatorVariance" title="Link to this definition"></a></dt>
+<dd><p>Utilize a p-norm over the vector of QoI estimator variances as the solver metric for sampling-based multifidelity methods.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dakota.spec.shared.sampling.NumericalSolveSolverMetricNormEstimatorVariance.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'protected_namespaces':</span> <span class="pre">(),</span> <span class="pre">'str_strip_whitespace':</span> <span class="pre">True,</span> <span class="pre">'use_enum_values':</span> <span class="pre">True,</span> <span class="pre">'validate_assignment':</span> <span class="pre">True}</span></span><a class="headerlink" href="#dakota.spec.shared.sampling.NumericalSolveSolverMetricNormEstimatorVariance.model_config" title="Link to this definition"></a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dakota.spec.shared.sampling.NumericalSolveSolverMetricNormEstimatorVariance.universal_validator">
+<span class="sig-name descname"><span class="pre">universal_validator</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.sampling.NumericalSolveSolverMetricNormEstimatorVariance.universal_validator" title="Link to this definition"></a></dt>
+<dd><p>Example universal validator that runs for all models</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dakota.spec.shared.sampling.MlmfGroupPilotSamplesMixin">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">dakota.spec.shared.sampling.</span></span><span class="sig-name descname"><span class="pre">MlmfGroupPilotSamplesMixin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">pilot_samples</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#dakota.spec.shared.sampling.PilotSamples" title="dakota.spec.shared.sampling.PilotSamples"><span class="pre">PilotSamples</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.sampling.MlmfGroupPilotSamplesMixin" title="Link to this definition"></a></dt>
+<dd><p>Generated model for MlmfGroupPilotSamplesMixin</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dakota.spec.shared.sampling.MlmfGroupPilotSamplesMixin.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'protected_namespaces':</span> <span class="pre">(),</span> <span class="pre">'str_strip_whitespace':</span> <span class="pre">True,</span> <span class="pre">'use_enum_values':</span> <span class="pre">True,</span> <span class="pre">'validate_assignment':</span> <span class="pre">True}</span></span><a class="headerlink" href="#dakota.spec.shared.sampling.MlmfGroupPilotSamplesMixin.model_config" title="Link to this definition"></a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dakota.spec.shared.sampling.MlmfGroupPilotSamplesMixin.universal_validator">
+<span class="sig-name descname"><span class="pre">universal_validator</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.sampling.MlmfGroupPilotSamplesMixin.universal_validator" title="Link to this definition"></a></dt>
+<dd><p>Example universal validator that runs for all models</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dakota.spec.shared.sampling.MethodExportSamplesFormatMixin">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">dakota.spec.shared.sampling.</span></span><span class="sig-name descname"><span class="pre">MethodExportSamplesFormatMixin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">format</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#dakota.spec.shared.sampling.MethodExportSamplesFormatCustomAnnotated" title="dakota.spec.shared.sampling.MethodExportSamplesFormatCustomAnnotated"><span class="pre">MethodExportSamplesFormatCustomAnnotated</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#dakota.spec.shared.sampling.MethodExportSamplesFormatAnnotated" title="dakota.spec.shared.sampling.MethodExportSamplesFormatAnnotated"><span class="pre">MethodExportSamplesFormatAnnotated</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#dakota.spec.shared.sampling.MethodExportSamplesFormatFreeform" title="dakota.spec.shared.sampling.MethodExportSamplesFormatFreeform"><span class="pre">MethodExportSamplesFormatFreeform</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">&lt;factory&gt;</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.sampling.MethodExportSamplesFormatMixin" title="Link to this definition"></a></dt>
+<dd><p>Generated model for MethodExportSamplesFormatMixin</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dakota.spec.shared.sampling.MethodExportSamplesFormatMixin.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'protected_namespaces':</span> <span class="pre">(),</span> <span class="pre">'str_strip_whitespace':</span> <span class="pre">True,</span> <span class="pre">'use_enum_values':</span> <span class="pre">True,</span> <span class="pre">'validate_assignment':</span> <span class="pre">True}</span></span><a class="headerlink" href="#dakota.spec.shared.sampling.MethodExportSamplesFormatMixin.model_config" title="Link to this definition"></a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dakota.spec.shared.sampling.MethodExportSamplesFormatMixin.universal_validator">
+<span class="sig-name descname"><span class="pre">universal_validator</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.sampling.MethodExportSamplesFormatMixin.universal_validator" title="Link to this definition"></a></dt>
+<dd><p>Example universal validator that runs for all models</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dakota.spec.shared.sampling.NumericalSolve">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">dakota.spec.shared.sampling.</span></span><span class="sig-name descname"><span class="pre">NumericalSolve</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">numerical_solve_strategy</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#dakota.spec.shared.sampling.Fallback" title="dakota.spec.shared.sampling.Fallback"><span class="pre">Fallback</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#dakota.spec.shared.sampling.Override" title="dakota.spec.shared.sampling.Override"><span class="pre">Override</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_reordering</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#dakota.spec.shared.sampling.AutoReorder" title="dakota.spec.shared.sampling.AutoReorder"><span class="pre">AutoReorder</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#dakota.spec.shared.sampling.FixedOrder" title="dakota.spec.shared.sampling.FixedOrder"><span class="pre">FixedOrder</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">optimization_solver</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#dakota.spec.shared.sampling.NumericalSolveSqp" title="dakota.spec.shared.sampling.NumericalSolveSqp"><span class="pre">NumericalSolveSqp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#dakota.spec.shared.sampling.NumericalSolveNip" title="dakota.spec.shared.sampling.NumericalSolveNip"><span class="pre">NumericalSolveNip</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#dakota.spec.shared.sampling.NumericalSolveGlobalLocal" title="dakota.spec.shared.sampling.NumericalSolveGlobalLocal"><span class="pre">NumericalSolveGlobalLocal</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#dakota.spec.shared.sampling.NumericalSolveCompetedLocal" title="dakota.spec.shared.sampling.NumericalSolveCompetedLocal"><span class="pre">NumericalSolveCompetedLocal</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">solver_metric</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#dakota.spec.shared.sampling.NumericalSolveSolverMetricAverageEstimatorVariance" title="dakota.spec.shared.sampling.NumericalSolveSolverMetricAverageEstimatorVariance"><span class="pre">NumericalSolveSolverMetricAverageEstimatorVariance</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#dakota.spec.shared.sampling.NumericalSolveSolverMetricNormEstimatorVariance" title="dakota.spec.shared.sampling.NumericalSolveSolverMetricNormEstimatorVariance"><span class="pre">NumericalSolveSolverMetricNormEstimatorVariance</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#dakota.spec.shared.sampling.NumericalSolveSolverMetricMaxEstimatorVariance" title="dakota.spec.shared.sampling.NumericalSolveSolverMetricMaxEstimatorVariance"><span class="pre">NumericalSolveSolverMetricMaxEstimatorVariance</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.sampling.NumericalSolve" title="Link to this definition"></a></dt>
+<dd><p>Specify the situations where numerical optimization is used for MFMC sample allocation</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dakota.spec.shared.sampling.NumericalSolve.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'protected_namespaces':</span> <span class="pre">(),</span> <span class="pre">'str_strip_whitespace':</span> <span class="pre">True,</span> <span class="pre">'use_enum_values':</span> <span class="pre">True,</span> <span class="pre">'validate_assignment':</span> <span class="pre">True}</span></span><a class="headerlink" href="#dakota.spec.shared.sampling.NumericalSolve.model_config" title="Link to this definition"></a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dakota.spec.shared.sampling.NumericalSolve.universal_validator">
+<span class="sig-name descname"><span class="pre">universal_validator</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.sampling.NumericalSolve.universal_validator" title="Link to this definition"></a></dt>
+<dd><p>Example universal validator that runs for all models</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dakota.spec.shared.sampling.MfmcNumericalSolveMixin">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">dakota.spec.shared.sampling.</span></span><span class="sig-name descname"><span class="pre">MfmcNumericalSolveMixin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">numerical_solve</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#dakota.spec.shared.sampling.NumericalSolve" title="dakota.spec.shared.sampling.NumericalSolve"><span class="pre">NumericalSolve</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.sampling.MfmcNumericalSolveMixin" title="Link to this definition"></a></dt>
+<dd><p>Generated model for MfmcNumericalSolveMixin</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dakota.spec.shared.sampling.MfmcNumericalSolveMixin.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'protected_namespaces':</span> <span class="pre">(),</span> <span class="pre">'str_strip_whitespace':</span> <span class="pre">True,</span> <span class="pre">'use_enum_values':</span> <span class="pre">True,</span> <span class="pre">'validate_assignment':</span> <span class="pre">True}</span></span><a class="headerlink" href="#dakota.spec.shared.sampling.MfmcNumericalSolveMixin.model_config" title="Link to this definition"></a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dakota.spec.shared.sampling.MfmcNumericalSolveMixin.universal_validator">
+<span class="sig-name descname"><span class="pre">universal_validator</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dakota.spec.shared.sampling.MfmcNumericalSolveMixin.universal_validator" title="Link to this definition"></a></dt>
+<dd><p>Example universal validator that runs for all models</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="responses.html" class="btn btn-neutral float-left" title="Responses" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="surrogate.html" class="btn btn-neutral float-right" title="Surrogate" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <!--
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Sandia National Laboratories.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+  --> 
+
+</footer>
+        </div>
+      </div>
+	  
+	  <div style="background-color: #0f0f0f;color:#fafafa;padding:20px">
+	    <div>
+		  <h2><em>Exceptional service in the national interest</em></h2>
+		</div>
+		<p>© 2023 National Technology and Engineering Solutions of Sandia, LLC. | <a href="https://www.sandia.gov/contact_us/index.html">Questions &amp; Comments</a> | <a href="https://www.sandia.gov/general/privacy-security/index.html">Privacy &amp; Security</a></p>
+		<p><a href="http://energy.gov" rel="noopener noreferrer" target="_blank"><img alt="U.S. Department of Energy" longdesc="https://energy.gov" src="https://www.sandia.gov/_common/images/doe_logo_white.png" style="height:37px; width:140px"></a> <a href="http://nnsa.energy.gov/" rel="noopener noreferrer" target="_blank"> <img alt="National Nuclear Security Administration" longdesc="http://nnsa.gov" src="https://www.sandia.gov/_common/images/nnsa_logo_white.png" style="height:37px; width:116px"></a></p>
+		<p><a href="https://www.sandia.gov">Sandia National Laboratories</a> is a multimission laboratory managed and operated by National Technology and Engineering Solutions of Sandia, LLC., a wholly owned subsidiary of Honeywell International, Inc., for the U.S. Department of Energy’s National Nuclear Security Administration under contract DE-NA-0003525.</p>
+	  </div>	  	  
+	  
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

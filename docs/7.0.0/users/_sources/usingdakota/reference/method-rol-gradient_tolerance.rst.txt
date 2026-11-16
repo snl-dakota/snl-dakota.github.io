@@ -1,0 +1,24 @@
+.. _method-rol-gradient_tolerance:
+
+""""""""""""""""""
+gradient_tolerance
+""""""""""""""""""
+
+Stopping critiera based on L2 norm of gradient
+
+**Specification**
+
+- *Alias:* None
+- *Arguments:* None
+- *JSON argument key:* None
+- *Default:* 0.0001
+
+**Description**
+
+The ``gradient_tolerance`` control defines the
+threshold value on the L2 norm of the objective function gradient
+(for unconstrained minimum or no active constraints) or the
+Lagrangian gradient (for constrained minimum) that
+indicates convergence to a stationary point.
+The ``gradient_tolerance`` control is currently defined
+only for the OPT++ and ROL libraries.

@@ -1,0 +1,25 @@
+.. _method-local_reliability-mpp_search-integration-first_order:
+
+"""""""""""
+first_order
+"""""""""""
+
+First-order integration scheme
+
+**Topics**
+
+:ref:`reliability_methods <topic-reliability_methods>`
+
+**Specification**
+
+- *Alias:* None
+- *Arguments:* None
+- *JSON argument key:* None
+- *Default:* true
+
+**Description**
+
+First-order integration in local reliability methods uses the minimum Euclidean distance
+from the origin to the most probable point (MPP) in transformed space to compute the probability of failure.
+This distance, commonly called the reliability index Beta, is used to calculate the probability of failure
+by calculating the standard normal cumulative distribution function at -Beta.

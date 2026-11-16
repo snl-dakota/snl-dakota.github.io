@@ -1,0 +1,116 @@
+.. _responses-descriptors:
+
+"""""""""""
+descriptors
+"""""""""""
+
+Labels for response functions, calibration terms, objective functions, and constraints
+
+**Specification**
+
+- *Alias:* response_descriptors
+- *Arguments:* None
+- *JSON argument key:* None
+
+**Description**
+
+A list of strings which identify the responses.  These are used in
+console and tabular output.  Response descriptors are ordered by
+primary response functions (objective, calibration, or response
+functions), followed by inequality, then equality constraints, if
+present.
+
+*Default Behavior*
+
+The default descriptor strings use a response type-dependent root
+string plus a one-based numeric identifier:
+
+
+- Objective functions: ``obj_fn_i``
+- Calibration terms: ``least_sq_term_i``
+- Nonlinear inequality constraints: ``nln_ineq_con_i``
+- Nonlinear equality constraints: ``nln_eq_con_i``
+- Response functions: ``response_fn_``
+
+*Expected Output*
+Dakota will label the various response functions in console and
+tabular output.
+
+*Usage Tips*
+When specifying descriptors for scalar and/or field responses, include
+as many descriptors as top-level scalar + field responses, e.g.,
+
+.. tab:: Freeform
+
+   .. code-block:: dakota
+
+       responses
+         descriptors 'scalar1' 'scalar2' 'scalar3' 'field1' 'field2'
+         response_functions 5
+           scalar_responses 3
+           field_responses 2
+             field_lengths 42 24
+
+.. tab:: JSON
+
+   .. code-block:: json
+
+       {
+         "responses": [
+           {
+             "descriptors": ["scalar1", "scalar2", "scalar3", "field1", "field2"],
+             "response_type": {
+               "response_functions": {
+                 "count": 5,
+                 "scalar_responses": 3,
+                 "field_responses": {
+                   "count": 2,
+                   "field_lengths": [42, 24]
+                 }
+               }
+             }
+           }
+         ]
+       }
+
+Dakota will append a numeric identifier for each field entry, for a
+total of 42 field1_j and 24 field2_k in this example.
+
+**Examples**
+
+.. tab:: Freeform
+
+   .. code-block:: dakota
+
+       responses
+         descriptors 'cost' 'impact' 'safety'
+         objective_functions 2
+         nonlinear_inequality_constraints 1
+         no_gradients
+         no_hessians
+
+.. tab:: JSON
+
+   .. code-block:: json
+
+       {
+         "responses": [
+           {
+             "descriptors": ["cost", "impact", "safety"],
+             "response_type": {
+               "objective_functions": {
+                 "count": 2,
+                 "nonlinear_inequality_constraints": {
+                   "count": 1
+                 }
+               }
+             },
+             "gradient_type": {
+               "no_gradients": true
+             },
+             "hessian_type": {
+               "no_hessians": true
+             }
+           }
+         ]
+       }

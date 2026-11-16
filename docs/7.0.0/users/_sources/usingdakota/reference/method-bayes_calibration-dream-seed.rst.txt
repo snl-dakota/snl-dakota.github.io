@@ -1,0 +1,65 @@
+.. _method-bayes_calibration-dream-seed:
+
+""""
+seed
+""""
+
+Seed of the random number generator
+
+**Specification**
+
+- *Alias:* None
+- *Arguments:* None
+- *JSON argument key:* None
+
+**Description**
+
+The random ``seed`` control provides a mechanism for making a
+stochastic method repeatable. That is, the use of the same random seed
+in identical studies will generate identical results.
+
+*Default Behavior*
+
+If not specified, the seed is randomly generated.
+
+*Expected Output*
+
+If ``seed`` is specified, a stochastic study will generate identical
+results when repeated using the same seed value.  Otherwise, results
+are not guaranteed to be the same.
+
+*Usage Tips*
+
+If a stochastic study was run without ``seed`` specified, and the user
+later wishes to repeat the study using the same seed, the value of the
+seed used in the original study can be found in the output Dakota
+prints to the screen.  That value can then be added to the Dakota
+input file.
+
+**Examples**
+
+.. tab:: Freeform
+
+   .. code-block:: dakota
+
+       method
+         sampling
+           sample_type lhs
+           samples = 10
+           seed = 15347
+
+.. tab:: JSON
+
+   .. code-block:: json
+
+       {
+         "method": [
+           {
+             "sampling": {
+               "sample_type": {"lhs": true},
+               "samples": 10,
+               "seed": 15347
+             }
+           }
+         ]
+       }

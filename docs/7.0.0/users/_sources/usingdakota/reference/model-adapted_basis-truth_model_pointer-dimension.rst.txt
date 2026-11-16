@@ -1,0 +1,58 @@
+.. _model-adapted_basis-truth_model_pointer-dimension:
+
+"""""""""
+dimension
+"""""""""
+
+Prescribe the number of active dimensions
+
+**Specification**
+
+- *Alias:* None
+- *Arguments:* None
+- *JSON argument key:* None
+- *Default:* 0
+
+**Description**
+
+If a prescribed dimension for the rotation matrix is desired, this can be specified with the keywork ``dimension``. In this case, the algorithm does not use the ``truncation_method`` or the ``truncation_tolerance`` to determine the truncation of the rotation matrix, but it just selects the first :math:`d`  dimensions, where :math:`d`  is assigned by ``dimension``.
+
+**Examples**
+
+The following block
+
+
+.. tab:: Freeform
+
+   .. code-block:: dakota
+
+       model
+         id_model = 'SUBSPACE'
+         adapted_basis
+           truth_model_pointer = 'FULLSPACE'
+           sparse_grid_level = 1
+           dimension = 3
+
+.. tab:: JSON
+
+   .. code-block:: json
+
+       {
+         "model": [
+           {
+             "adapted_basis": {
+               "id_model": "SUBSPACE",
+               "truth_model_pointer": {
+                 "pointer": "FULLSPACE",
+                 "basis_control": {
+                   "sparse_grid_level": 1
+                 },
+                 "dimension": 3
+               }
+             }
+           }
+         ]
+       }
+
+
+prescribes the selection of the first three most important directions to build the rotation matrix and the reduced model representation.

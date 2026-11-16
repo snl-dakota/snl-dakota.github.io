@@ -1,0 +1,24 @@
+.. _method-approximate_control_variate-competed_local:
+
+""""""""""""""
+competed_local
+""""""""""""""
+
+Use a competed local solver scheme for solving an optimization sub-problem
+
+**Specification**
+
+- *Alias:* None
+- *Arguments:* None
+- *JSON argument key:* None
+- *Default:* true
+
+**Description**
+
+This sub-problem solver option employs multiple local solvers initiated
+from multiple initial guesses.  For each initial guess, competed local
+solves are performed using sequentual quadratic programming (``sqp``) and
+nonlinear interior point (``nip``), from NSPOL and OPT++ respectively.
+
+Note that the alternative ``global_local`` option replaces multiple
+initial guesses with a preceding global search.

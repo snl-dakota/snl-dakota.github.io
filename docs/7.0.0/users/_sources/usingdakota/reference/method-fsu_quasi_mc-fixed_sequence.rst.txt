@@ -1,0 +1,22 @@
+.. _method-fsu_quasi_mc-fixed_sequence:
+
+""""""""""""""
+fixed_sequence
+""""""""""""""
+
+Reuse the same sequence and samples for multiple sampling sets
+
+**Specification**
+
+- *Alias:* None
+- *Arguments:* None
+- *JSON argument key:* None
+
+**Description**
+
+The ``fixed_sequence`` control is similar to ``fixed_seed`` for other sampling
+methods. If ``fixed_sequence`` is specified, the user will get the same
+sequence (meaning the same set of samples) for subsequent calls of
+the QMC sampling method (for example, this might be used in a surrogate
+based optimization method or a parameter study where one wants to
+fix the uncertain variables).

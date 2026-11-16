@@ -1,0 +1,52 @@
+.. _method-sampling-d_optimal-candidate_designs:
+
+"""""""""""""""""
+candidate_designs
+"""""""""""""""""
+
+Number of candidate sampling designs from which to select the most D-optimal
+
+**Specification**
+
+- *Alias:* None
+- *Arguments:* None
+- *JSON argument key:* None
+
+**Description**
+
+Dakota will generate ``candidate_designs`` using the specified sampling
+strategy and select the one that is more determinant-optimal
+(D-optimal)
+
+**Examples**
+
+.. tab:: Freeform
+
+   .. code-block:: dakota
+
+       method
+         sampling
+           sample_type random
+           samples = 20
+           d_optimal
+             candidate_designs = 500
+
+.. tab:: JSON
+
+   .. code-block:: json
+
+       {
+         "method": [
+           {
+             "sampling": {
+               "sample_type": {
+                 "random": true
+               },
+               "samples": 20,
+               "d_optimal": {
+                 "candidate_designs": 500
+               }
+             }
+           }
+         ]
+       }

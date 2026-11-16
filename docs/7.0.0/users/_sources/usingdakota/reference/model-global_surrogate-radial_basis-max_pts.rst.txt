@@ -1,0 +1,25 @@
+.. _model-global_surrogate-radial_basis-max_pts:
+
+"""""""
+max_pts
+"""""""
+
+Maximum number of RBF CVT points
+
+**Topics**
+
+:ref:`surrogate_models <topic-surrogate_models>`
+
+**Specification**
+
+- *Alias:* None
+- *Arguments:* None
+- *JSON argument key:* None
+- *Default:* 0
+
+**Description**
+
+Maximum number of CVT points to use in generating each RBF
+center. basis computing centroid of each.  Defaults to 10 * (
+:dakkw:`model-global_surrogate-radial_basis-bases`).  Reducing this will reduce
+model build time.

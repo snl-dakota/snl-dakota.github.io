@@ -1,0 +1,57 @@
+.. _method-sampling-d_optimal-leja_oversample_ratio:
+
+"""""""""""""""""""""
+leja_oversample_ratio
+"""""""""""""""""""""
+
+Oversampling ratio for generating candidate point set
+
+**Specification**
+
+- *Alias:* None
+- *Arguments:* None
+- *JSON argument key:* None
+
+**Description**
+
+When generating a D-Optimal point set of size N, the
+``oversample_ratio`` R controls the number of candidate points R x N from
+which the D-Optimal points are chosen.
+
+*Default Behavior*
+
+The default when not specified is to perform candidate-based sample
+design selection (non-Leja)
+
+**Examples**
+
+.. tab:: Freeform
+
+   .. code-block:: dakota
+
+       method
+         sampling
+           sample_type random
+           samples = 20
+           d_optimal
+             leja_oversample_ratio = 2.0
+
+.. tab:: JSON
+
+   .. code-block:: json
+
+       {
+         "method": [
+           {
+             "sampling": {
+               "sample_type": {
+                 "random": true
+               },
+               "samples": 20,
+               "d_optimal": {
+                 "leja_oversample_ratio": 2.0
+               }
+             }
+           }
+         ]
+       }

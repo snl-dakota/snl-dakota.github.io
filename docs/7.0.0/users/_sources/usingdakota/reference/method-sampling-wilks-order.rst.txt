@@ -1,0 +1,52 @@
+.. _method-sampling-wilks-order:
+
+"""""
+order
+"""""
+
+The order of the statistics to use when determining sample sizes
+for random sampling using Wilks order statistics.
+
+**Specification**
+
+- *Alias:* None
+- *Arguments:* None
+- *JSON argument key:* None
+- *Default:* 1
+
+**Description**
+
+*Default Behavior*
+
+The default order is 1.
+
+**Examples**
+
+.. tab:: Freeform
+
+   .. code-block:: dakota
+
+       method
+         sampling
+           sample_type random
+           wilks
+             order = 2
+
+.. tab:: JSON
+
+   .. code-block:: json
+
+       {
+         "method": [
+           {
+             "sampling": {
+               "sample_type": {
+                 "random": true
+               },
+               "wilks": {
+                 "order": 2
+               }
+             }
+           }
+         ]
+       }

@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tutorial: Your First Dakota Study &mdash; Dakota 7.0.0 documentation</title>
+      <link rel="stylesheet"
+            href="../../_static/pygments.css"
+            type="text/css" />
+      <link rel="stylesheet"
+            href="../../_static/css/theme.css"
+            type="text/css" />
+      <link rel="stylesheet"
+            href="../../_static/copybutton.css"
+            type="text/css" />
+      <link rel="stylesheet"
+            href="../../_static/autodoc_pydantic.css"
+            type="text/css" />
+      <link rel="stylesheet"
+            href="../../_static/tabs.css"
+            type="text/css" />
+      <link rel="stylesheet"
+            href="../../_static/css/dakota_theme.css"
+            type="text/css" />
+      <link rel="stylesheet"
+            href="../../_static/css/sandiaheaderlite.css"
+            type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=efe5be6f"></script>
+        <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+        <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+        <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../../_static/copybutton.js?v=f281be69"></script>
+        <script src="../../_static/tabs.js?v=3ee01567"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Connecting Your Code: The Analysis Driver" href="couplingtosimulations.html" />
+    <link rel="prev" title="Anatomy of a Dakota Study" href="studyanatomy.html" /> 
+  
+  <meta name="sandia.approval_type" content="formal"/>
+  <meta property="sandia.approved" content="SAND2025-14179O"/>
+  <meta name="description" content="The Dakota project delivers both state-of-the-art research and robust, usable software for optimization and UQ."/>
+  <meta name="keywords" content="Dakota, optimization, UQ, uncertainty quantification, parametric analysis, design exploration, model calibration, risk analysis"/>
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> Dakota
+            <img src="../../_static/DAKOTAWhiteWEB.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Install</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../setupdakota.html">Download and Install Dakota</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Getting Started with Dakota</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="aboutdakota.html">What is Dakota?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="studyanatomy.html">Anatomy of a Dakota Study</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Tutorial: Your First Dakota Study</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#part-a-run-a-built-in-example">Part A: Run a built-in example</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#what-happened">What happened</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#part-b-the-same-problem-as-a-black-box">Part B: The same problem as a black box</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#part-c-one-interface-many-methods">Part C: One interface, many methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#next-steps">Next steps</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#video-resources">Video Resources</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="couplingtosimulations.html">Connecting Your Code: The Analysis Driver</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Using Dakota</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../usingdakota.html">Using Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../usingdakotagui/usingdakotagui.html">Using Dakota GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../externaltools/externaltools.html">Using External Tools</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Building and Developing Dakota</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../building/building.html">Building Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developingdakota/developingdakota.html">Developing Dakota</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">More</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../misc/misc.html">Miscellaneous</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Dakota</a>
+      </nav>
+
+	  <!-- SNL Lite header -->
+	  <div class="snlheader-subsite--wrapper-default">
+		<snlheader class="snlheader-subsite" role="snlbanner">
+		  <div class="wrapper">
+			<a href="https://www.sandia.gov/index.html">
+			  <div class="logo-transparent"><p class="logo">Sandia National Laboratories</p></div>
+			</a>
+			<div class="nav-top">
+			  <a class="visuallyhidden" name="mainnav"></a>
+			  <div aria-label="main navigation" class="core-nav-transparent core-nav-transparent--visible" role="navigation">
+				<ul role="navigation" class="secondary-links">
+				  <li id="search-text-link">
+					<a aria-label="Search" href="https://www.sandia.gov/search/">Search Sandia.gov</a>
+				  </li>
+				  <li id="directory-text-link">
+					<a href="https://www.sandia.gov/directory.html" aria-expanded="false" aria-label="Site Directory">All Sandia Websites</a>
+				  </li>
+				</ul>
+			  </div>
+			</div>
+		  </div> 
+		</snlheader>
+	  </div>	  
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Tutorial: Your First Dakota Study</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/usingdakota/introduction/helloworld.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="tutorial-your-first-dakota-study">
+<span id="helloworld-main"></span><h1>Tutorial: Your First Dakota Study<a class="headerlink" href="#tutorial-your-first-dakota-study" title="Link to this heading"></a></h1>
+<p>In this tutorial you run three different Dakota studies: with a function built into
+Dakota (a direct interface), with the same function run as a black-box simulation through
+an analysis driver, and with the same analysis driver but changing the method.</p>
+<p><strong>Prerequisites:</strong> Dakota installed, with its <code class="docutils literal notranslate"><span class="pre">bin</span></code> folder on your <code class="docutils literal notranslate"><span class="pre">PATH</span></code>
+(see <a class="reference internal" href="../../setupdakota.html#setupdakota-installation"><span class="std std-ref">Installation</span></a> and <a class="reference internal" href="../../setupdakota.html#setupdakota-environment"><span class="std std-ref">Setting Your Environment</span></a>).
+For Part B you also need Python 3, with Dakota’s Python folder on your
+<code class="docutils literal notranslate"><span class="pre">PYTHONPATH</span></code>.</p>
+<p>The example throughout is Rosenbrock’s function of two variables, <code class="docutils literal notranslate"><span class="pre">x1</span></code> and
+<code class="docutils literal notranslate"><span class="pre">x2</span></code>. If you haven’t been introduced to it yet, see <a class="reference internal" href="studyanatomy.html#studyanatomy-rosenbrock"><span class="std std-ref">The example: Rosenbrock</span></a>.</p>
+<p>Every input file below is shown in both of Dakota’s input formats. Choose the
+<span class="guilabel">JSON</span> or <span class="guilabel">Freeform</span> tab, and the whole page follows your
+choice.</p>
+<section id="part-a-run-a-built-in-example">
+<span id="helloworld-parta"></span><h2>Part A: Run a built-in example<a class="headerlink" href="#part-a-run-a-built-in-example" title="Link to this heading"></a></h2>
+<ol class="arabic">
+<li><p>Check that Dakota runs. This command prints Dakota’s version:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">dakota -v</span>
+</pre></div>
+</div>
+</li>
+<li><p>Create an empty folder for this part, and open a terminal in it.</p></li>
+<li><p>Create the input file:</p>
+<div class="tab-set docutils">
+<input checked="True" class="tab-input" id="tab-set--0-input--1" name="tab-set--0" type="radio" /><label class="tab-label" for="tab-set--0-input--1">JSON</label><div class="tab-content docutils">
+<p>Save this as <code class="docutils literal notranslate"><span class="pre">rosen_multidim.json</span></code>:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">"environment"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">"tabular_data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">"tabular_data_file"</span><span class="p">:</span><span class="w"> </span><span class="s2">"rosen_multidim.dat"</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">"method"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">"multidim_parameter_study"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">"partitions"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">8</span><span class="p">,</span><span class="w"> </span><span class="mi">8</span><span class="p">]</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">],</span>
+<span class="w">  </span><span class="nt">"model"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">"single"</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">],</span>
+<span class="w">  </span><span class="nt">"variables"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">"continuous_design"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">"count"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">"descriptors"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"x1"</span><span class="p">,</span><span class="w"> </span><span class="s2">"x2"</span><span class="p">],</span>
+<span class="w">        </span><span class="nt">"lower_bounds"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">-2.0</span><span class="p">,</span><span class="w"> </span><span class="mf">-2.0</span><span class="p">],</span>
+<span class="w">        </span><span class="nt">"upper_bounds"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">2.0</span><span class="p">,</span><span class="w"> </span><span class="mf">2.0</span><span class="p">]</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">],</span>
+<span class="w">  </span><span class="nt">"interface"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">"analysis_drivers"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">"drivers"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"rosenbrock"</span><span class="p">],</span>
+<span class="w">        </span><span class="nt">"interface_type"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">          </span><span class="nt">"direct"</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">],</span>
+<span class="w">  </span><span class="nt">"responses"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">"gradient_type"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">"no_gradients"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span>
+<span class="w">      </span><span class="p">},</span>
+<span class="w">      </span><span class="nt">"hessian_type"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">"no_hessians"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span>
+<span class="w">      </span><span class="p">},</span>
+<span class="w">      </span><span class="nt">"response_type"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">"response_functions"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">          </span><span class="nt">"count"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<input class="tab-input" id="tab-set--0-input--2" name="tab-set--0" type="radio" /><label class="tab-label" for="tab-set--0-input--2">Freeform</label><div class="tab-content docutils">
+<p>Copy <code class="docutils literal notranslate"><span class="pre">rosen_multidim.in</span></code> from the <code class="docutils literal notranslate"><span class="pre">share/dakota/examples/users/</span></code>
+folder of your Dakota installation, or save this as
+<code class="docutils literal notranslate"><span class="pre">rosen_multidim.in</span></code>:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span><span class="c"># Dakota Input File: rosen_multidim.in</span>
+<span class="c"># Usage:</span>
+<span class="c">#   dakota -i rosen_multidim.in -o rosen_multidim.out &gt; rosen_multidim.stdout</span>
+
+<span class="k">environment</span>
+  tabular_data
+    tabular_data_file = 'rosen_multidim.dat'
+
+<span class="k">method</span>
+  multidim_parameter_study
+    partitions = 8 8
+
+<span class="k">model</span>
+  single
+
+<span class="k">variables</span>
+  continuous_design = 2
+    lower_bounds     -2.0     -2.0
+    upper_bounds      2.0      2.0
+    descriptors       'x1'     "x2"
+
+<span class="k">interface</span>
+  analysis_drivers = 'rosenbrock'
+    direct
+
+<span class="k">responses</span>
+  response_functions = 1
+  no_gradients
+  no_hessians
+</pre></div>
+</div>
+</div>
+</div>
+<p>It describes an 81-point grid study of Rosenbrock’s function, using the
+copy of the function built into Dakota. <a class="reference internal" href="studyanatomy.html#studyanatomy-main"><span class="std std-ref">Anatomy of a Dakota Study</span></a> explains
+each block.</p>
+</li>
+<li><p>Run Dakota:</p>
+<div class="tab-set docutils">
+<input checked="True" class="tab-input" id="tab-set--1-input--1" name="tab-set--1" type="radio" /><label class="tab-label" for="tab-set--1-input--1">JSON</label><div class="tab-content docutils">
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">dakota -json rosen_multidim.json -o rosen_multidim.out &gt; rosen_multidim.stdout</span>
+</pre></div>
+</div>
+</div>
+<input class="tab-input" id="tab-set--1-input--2" name="tab-set--1" type="radio" /><label class="tab-label" for="tab-set--1-input--2">Freeform</label><div class="tab-content docutils">
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">dakota -i rosen_multidim.in -o rosen_multidim.out &gt; rosen_multidim.stdout</span>
+</pre></div>
+</div>
+</div>
+</div>
+</li>
+</ol>
+<section id="what-happened">
+<span id="helloworld-results"></span><h3>What happened<a class="headerlink" href="#what-happened" title="Link to this heading"></a></h3>
+<p>Dakota ran Rosenbrock’s function 81 times and wrote four files:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">rosen_multidim.stdout</span></code>: Dakota’s progress messages, which would
+otherwise appear on the screen.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">rosen_multidim.out</span></code>: details of each evaluation, and a summary at the
+end.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">rosen_multidim.dat</span></code>: the <a class="reference internal" href="../../misc/glossary.html#term-tabular-data-file"><span class="xref std std-term">tabular data file</span></a>, with one row per
+evaluation. Its first rows are:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>%eval_id interface             x1             x2  response_fn_1
+1            NO_ID             -2             -2           3609
+2            NO_ID           -1.5             -2         1812.5
+3            NO_ID             -1             -2            904
+</pre></div>
+</div>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">dakota.rst</span></code>: a binary <a class="reference internal" href="../../misc/glossary.html#term-restart-file"><span class="xref std std-term">restart file</span></a>. If a study is interrupted,
+Dakota can use it to continue without repeating finished evaluations.</p></li>
+</ul>
+<p>The 81 points form a 9 × 9 grid over the range of <code class="docutils literal notranslate"><span class="pre">x1</span></code> and <code class="docutils literal notranslate"><span class="pre">x2</span></code>:</p>
+<figure class="align-center" id="id1">
+<a class="reference internal image-reference" href="../../_images/rosen_2d_pts.png"><img alt="An evenly spaced 9 by 9 grid of points over x1 and x2 from -2 to 2, drawn over a contour plot of Rosenbrock's function." src="../../_images/rosen_2d_pts.png" width="400" />
+</a>
+<figcaption>
+<p><span class="caption-number">Fig. 6 </span><span class="caption-text">The points evaluated by the grid study.</span><a class="headerlink" href="#id1" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>You can open the tabular data file in a spreadsheet or plotting tool to
+explore the results. <a class="reference internal" href="../output.html#output"><span class="std std-ref">Dakota Output</span></a> describes all of Dakota’s output files.</p>
+</section>
+</section>
+<section id="part-b-the-same-problem-as-a-black-box">
+<span id="helloworld-partb"></span><h2>Part B: The same problem as a black box<a class="headerlink" href="#part-b-the-same-problem-as-a-black-box" title="Link to this heading"></a></h2>
+<p>Now run the same study, but Dakota treats Rosenbrock’s function as a
+<a class="reference internal" href="../../misc/glossary.html#term-black-box"><span class="xref std std-term">black box</span></a>: a separate program that reads an input file and writes an
+output file, like an engineering simulation code. Dakota connects to it
+through an <a class="reference internal" href="../../misc/glossary.html#term-analysis-driver"><span class="xref std std-term">analysis driver</span></a>. <a class="reference internal" href="couplingtosimulations.html#couplingtosimulations-main"><span class="std std-ref">Connecting Your Code: The Analysis Driver</span></a> explains
+the ideas behind each step.</p>
+<ol class="arabic">
+<li><p>Create a new, empty folder for this part, open a terminal in it, and copy
+in the black-box simulation and its input template from your Dakota
+installation:</p>
+<div class="tab-set docutils">
+<input checked="True" class="tab-input" id="tab-set--2-input--1" name="tab-set--2" type="radio" /><label class="tab-label" for="tab-set--2-input--1">Linux / macOS</label><div class="tab-content docutils">
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">cp &lt;install_dir&gt;/share/dakota/examples/official/drivers/bash/templatedir/* .</span>
+</pre></div>
+</div>
+</div>
+<input class="tab-input" id="tab-set--2-input--2" name="tab-set--2" type="radio" /><label class="tab-label" for="tab-set--2-input--2">Windows</label><div class="tab-content docutils">
+<div class="highlight-powershell notranslate"><div class="highlight"><pre><span></span><span class="nb">Copy-Item</span> <span class="s2">"&lt;install_dir&gt;\share\dakota\examples\official\drivers\bash\templatedir\*"</span> <span class="p">.</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Replace <code class="docutils literal notranslate"><span class="pre">&lt;install_dir&gt;</span></code> with the folder where you installed Dakota. You
+now have two files:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">rosenbrock_bb.py</span></code>, the simulation. It reads an input deck,
+<code class="docutils literal notranslate"><span class="pre">ros.in</span></code>, and writes a log, <code class="docutils literal notranslate"><span class="pre">ros.out</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ros.template</span></code>, a copy of the input deck with <code class="docutils literal notranslate"><span class="pre">{x1}</span></code> and <code class="docutils literal notranslate"><span class="pre">{x2}</span></code>
+where the variable values go.</p></li>
+</ul>
+</li>
+<li><p>Save one of these analysis drivers in the same folder, as <code class="docutils literal notranslate"><span class="pre">driver.py</span></code>,
+<code class="docutils literal notranslate"><span class="pre">driver.sh</span></code> or <code class="docutils literal notranslate"><span class="pre">driver.ps1</span></code>:</p>
+<div class="tab-set docutils">
+<input checked="True" class="tab-input" id="tab-set--3-input--1" name="tab-set--3" type="radio" /><label class="tab-label" for="tab-set--3-input--1">Python</label><div class="tab-content docutils">
+<p>This version uses Dakota’s <code class="docutils literal notranslate"><span class="pre">dakota.interfacing</span></code> Python module to read
+the parameters file, fill in the template, and write the results file.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python3</span>
+<span class="c1"># Analysis driver for the black-box Rosenbrock example.</span>
+<span class="c1"># Dakota runs it as:  python3 driver.py params.in results.out</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">subprocess</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">dakota.interfacing</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">di</span>
+
+<span class="c1"># Read the parameters file Dakota wrote, and set up the results file.</span>
+<span class="n">params</span><span class="p">,</span> <span class="n">results</span> <span class="o">=</span> <span class="n">di</span><span class="o">.</span><span class="n">read_parameters_file</span><span class="p">()</span>
+
+<span class="c1"># --------------</span>
+<span class="c1"># PRE-PROCESSING</span>
+<span class="c1"># --------------</span>
+<span class="c1"># Put this evaluation's x1 and x2 into the simulation's input file.</span>
+<span class="n">di</span><span class="o">.</span><span class="n">dprepro</span><span class="p">(</span><span class="n">template</span><span class="o">=</span><span class="s2">"ros.template"</span><span class="p">,</span> <span class="n">parameters</span><span class="o">=</span><span class="n">params</span><span class="p">,</span> <span class="n">output</span><span class="o">=</span><span class="s2">"ros.in"</span><span class="p">)</span>
+
+<span class="c1"># ---------</span>
+<span class="c1"># EXECUTION</span>
+<span class="c1"># ---------</span>
+<span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">([</span><span class="n">sys</span><span class="o">.</span><span class="n">executable</span><span class="p">,</span> <span class="s2">"rosenbrock_bb.py"</span><span class="p">],</span> <span class="n">check</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># ---------------</span>
+<span class="c1"># POST-PROCESSING</span>
+<span class="c1"># ---------------</span>
+<span class="c1"># Find the function value in the simulation's output, and return it to</span>
+<span class="c1"># Dakota as the first (and only) response.</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">"ros.out"</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">f</span><span class="p">:</span>
+        <span class="k">if</span> <span class="s2">"Function value"</span> <span class="ow">in</span> <span class="n">line</span><span class="p">:</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">"="</span><span class="p">)[</span><span class="mi">1</span><span class="p">])</span>
+
+<span class="n">results</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">function</span> <span class="o">=</span> <span class="n">value</span>
+<span class="n">results</span><span class="o">.</span><span class="n">write</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<input class="tab-input" id="tab-set--3-input--2" name="tab-set--3" type="radio" /><label class="tab-label" for="tab-set--3-input--2">Bash</label><div class="tab-content docutils">
+<p>This version uses the <code class="docutils literal notranslate"><span class="pre">dprepro</span></code> command to fill in the template, and
+<code class="docutils literal notranslate"><span class="pre">grep</span></code> and <code class="docutils literal notranslate"><span class="pre">awk</span></code> to find the value in the output.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env bash</span>
+<span class="c1"># Analysis driver for the black-box Rosenbrock example.</span>
+<span class="c1"># Dakota runs it as:  driver.sh params.in results.out</span>
+
+<span class="nv">params</span><span class="o">=</span><span class="nv">$1</span>
+<span class="nv">results</span><span class="o">=</span><span class="nv">$2</span>
+
+<span class="c1"># --------------</span>
+<span class="c1"># PRE-PROCESSING</span>
+<span class="c1"># --------------</span>
+<span class="c1"># Put this evaluation's x1 and x2 into the simulation's input file.</span>
+dprepro<span class="w"> </span><span class="s2">"</span><span class="nv">$params</span><span class="s2">"</span><span class="w"> </span>ros.template<span class="w"> </span>ros.in
+
+<span class="c1"># ---------</span>
+<span class="c1"># EXECUTION</span>
+<span class="c1"># ---------</span>
+python3<span class="w"> </span>rosenbrock_bb.py
+
+<span class="c1"># ---------------</span>
+<span class="c1"># POST-PROCESSING</span>
+<span class="c1"># ---------------</span>
+<span class="c1"># Find the function value in the simulation's output, and return it to</span>
+<span class="c1"># Dakota as the first (and only) response.</span>
+grep<span class="w"> </span><span class="s1">'Function value'</span><span class="w"> </span>ros.out<span class="w"> </span><span class="p">|</span><span class="w"> </span>awk<span class="w"> </span><span class="s1">'{print $4}'</span><span class="w"> </span>&gt;<span class="w"> </span><span class="s2">"</span><span class="nv">$results</span><span class="s2">"</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code class="docutils literal notranslate"><span class="pre">dprepro</span></code> runs with the <code class="docutils literal notranslate"><span class="pre">python</span></code> command. If your system has only
+<code class="docutils literal notranslate"><span class="pre">python3</span></code>, use <code class="docutils literal notranslate"><span class="pre">dprepro3</span></code> instead, which runs <code class="docutils literal notranslate"><span class="pre">dprepro</span></code> with
+<code class="docutils literal notranslate"><span class="pre">python3</span></code>.</p>
+</div>
+</div>
+<input class="tab-input" id="tab-set--3-input--3" name="tab-set--3" type="radio" /><label class="tab-label" for="tab-set--3-input--3">Windows (PowerShell)</label><div class="tab-content docutils">
+<p>This version runs <code class="docutils literal notranslate"><span class="pre">dprepro</span></code> with Python to fill in the template, and
+uses <code class="docutils literal notranslate"><span class="pre">Select-String</span></code> to find the value in the output.</p>
+<div class="highlight-powershell notranslate"><div class="highlight"><pre><span></span><span class="c"># Analysis driver for the black-box Rosenbrock example.</span>
+<span class="c"># Dakota runs it as:  powershell.exe -File driver.ps1 params.in results.out</span>
+
+<span class="nv">$params</span> <span class="p">=</span> <span class="nv">$args</span><span class="p">[</span><span class="n">0</span><span class="p">]</span>
+<span class="nv">$results</span> <span class="p">=</span> <span class="nv">$args</span><span class="p">[</span><span class="n">1</span><span class="p">]</span>
+
+<span class="c"># --------------</span>
+<span class="c"># PRE-PROCESSING</span>
+<span class="c"># --------------</span>
+<span class="c"># Put this evaluation's x1 and x2 into the simulation's input file.</span>
+<span class="nv">$dprepro</span> <span class="p">=</span> <span class="p">(</span><span class="nb">Get-Command</span> <span class="s2">"dprepro"</span><span class="p">).</span><span class="n">Path</span>
+<span class="n">python3</span> <span class="nv">$dprepro</span> <span class="nv">$params</span> <span class="n">ros</span><span class="p">.</span><span class="n">template</span> <span class="n">ros</span><span class="p">.</span><span class="k">in</span>
+
+<span class="c"># ---------</span>
+<span class="c"># EXECUTION</span>
+<span class="c"># ---------</span>
+<span class="n">python3</span> <span class="n">rosenbrock_bb</span><span class="p">.</span><span class="n">py</span>
+
+<span class="c"># ---------------</span>
+<span class="c"># POST-PROCESSING</span>
+<span class="c"># ---------------</span>
+<span class="c"># Find the function value in the simulation's output, and return it to</span>
+<span class="c"># Dakota as the first (and only) response.</span>
+<span class="nv">$line</span> <span class="p">=</span> <span class="nb">Select-String</span> <span class="n">-Path</span> <span class="n">ros</span><span class="p">.</span><span class="n">out</span> <span class="n">-Pattern</span> <span class="s2">"Function value"</span>
+<span class="nv">$value</span> <span class="p">=</span> <span class="p">(</span><span class="nv">$line</span><span class="p">.</span><span class="n">Line</span> <span class="n">-split</span> <span class="s2">"="</span><span class="p">)[</span><span class="n">1</span><span class="p">].</span><span class="n">Trim</span><span class="p">()</span>
+<span class="nb">Set-Content</span> <span class="n">-Path</span> <span class="nv">$results</span> <span class="n">-Value</span> <span class="nv">$value</span> <span class="n">-Encoding</span> <span class="n">ASCII</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>On Linux and macOS, make a Bash driver executable with
+<code class="docutils literal notranslate"><span class="pre">chmod</span> <span class="pre">+x</span> <span class="pre">driver.sh</span></code>.</p>
+</li>
+<li><p>Test the analysis driver by hand. Save this sample parameters file as
+<code class="docutils literal notranslate"><span class="pre">params.in</span></code>. It is what Dakota writes for the first evaluation, where
+<code class="docutils literal notranslate"><span class="pre">x1</span></code> and <code class="docutils literal notranslate"><span class="pre">x2</span></code> are both -2:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>                     2 variables
+-2.000000000000000e+00 x1
+-2.000000000000000e+00 x2
+                     1 functions
+                     1 ASV_1:response_fn_1
+                     2 derivative_variables
+                     1 DVV_1:x1
+                     2 DVV_2:x2
+                     0 analysis_components
+                     1 eval_id
+</pre></div>
+</div>
+<p>Then run your analysis driver on it:</p>
+<div class="tab-set docutils">
+<input checked="True" class="tab-input" id="tab-set--4-input--1" name="tab-set--4" type="radio" /><label class="tab-label" for="tab-set--4-input--1">Python</label><div class="tab-content docutils">
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">python3 driver.py params.in results.out</span>
+</pre></div>
+</div>
+</div>
+<input class="tab-input" id="tab-set--4-input--2" name="tab-set--4" type="radio" /><label class="tab-label" for="tab-set--4-input--2">Bash</label><div class="tab-content docutils">
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">./driver.sh params.in results.out</span>
+</pre></div>
+</div>
+</div>
+<input class="tab-input" id="tab-set--4-input--3" name="tab-set--4" type="radio" /><label class="tab-label" for="tab-set--4-input--3">Windows (PowerShell)</label><div class="tab-content docutils">
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">powershell.exe -File driver.ps1 params.in results.out</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Look at the files the driver created:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">ros.in</span></code>: the template, with -2 filled in for both variables;</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ros.out</span></code>: the simulation’s log, including the line
+<code class="docutils literal notranslate"><span class="pre">Function</span> <span class="pre">value</span> <span class="pre">=</span>&#160; <span class="pre">3.6090000000000000e+03</span></code>;</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">results.out</span></code>: the value 3609, ready for Dakota.</p></li>
+</ul>
+<p>If something goes wrong, see <a class="reference internal" href="couplingtosimulations.html#couplingtosimulations-testing"><span class="std std-ref">Test your analysis driver before running Dakota</span></a>.</p>
+</li>
+<li><p>Create the input file. It is the same as Part A’s, except for the
+highlighted interface block, which now runs your analysis driver:</p>
+<div class="tab-set docutils">
+<input checked="True" class="tab-input" id="tab-set--5-input--1" name="tab-set--5" type="radio" /><label class="tab-label" for="tab-set--5-input--1">JSON</label><div class="tab-content docutils">
+<p>Save this as <code class="docutils literal notranslate"><span class="pre">rosen_blackbox.json</span></code>:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">"environment"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">"tabular_data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">"tabular_data_file"</span><span class="p">:</span><span class="w"> </span><span class="s2">"rosen_multidim.dat"</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">"method"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">"multidim_parameter_study"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">"partitions"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">8</span><span class="p">,</span><span class="w"> </span><span class="mi">8</span><span class="p">]</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">],</span>
+<span class="w">  </span><span class="nt">"model"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">"single"</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">],</span>
+<span class="w">  </span><span class="nt">"variables"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">"continuous_design"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">"count"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">"descriptors"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"x1"</span><span class="p">,</span><span class="w"> </span><span class="s2">"x2"</span><span class="p">],</span>
+<span class="w">        </span><span class="nt">"lower_bounds"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">-2.0</span><span class="p">,</span><span class="w"> </span><span class="mf">-2.0</span><span class="p">],</span>
+<span class="w">        </span><span class="nt">"upper_bounds"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">2.0</span><span class="p">,</span><span class="w"> </span><span class="mf">2.0</span><span class="p">]</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">],</span>
+<span class="hll"><span class="w">  </span><span class="nt">"interface"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+</span><span class="hll"><span class="w">    </span><span class="p">{</span>
+</span><span class="hll"><span class="w">      </span><span class="nt">"analysis_drivers"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+</span><span class="hll"><span class="w">        </span><span class="nt">"drivers"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"python3 driver.py"</span><span class="p">],</span>
+</span><span class="hll"><span class="w">        </span><span class="nt">"interface_type"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+</span><span class="hll"><span class="w">          </span><span class="nt">"fork"</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span>
+</span><span class="hll"><span class="w">        </span><span class="p">}</span>
+</span><span class="hll"><span class="w">      </span><span class="p">}</span>
+</span><span class="hll"><span class="w">    </span><span class="p">}</span>
+</span><span class="hll"><span class="w">  </span><span class="p">],</span>
+</span><span class="w">  </span><span class="nt">"responses"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">"gradient_type"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">"no_gradients"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span>
+<span class="w">      </span><span class="p">},</span>
+<span class="w">      </span><span class="nt">"hessian_type"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">"no_hessians"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span>
+<span class="w">      </span><span class="p">},</span>
+<span class="w">      </span><span class="nt">"response_type"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">"response_functions"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">          </span><span class="nt">"count"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<input class="tab-input" id="tab-set--5-input--2" name="tab-set--5" type="radio" /><label class="tab-label" for="tab-set--5-input--2">Freeform</label><div class="tab-content docutils">
+<p>Save this as <code class="docutils literal notranslate"><span class="pre">rosen_blackbox.in</span></code>:</p>
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span><span class="k">environment</span>
+  tabular_data
+    tabular_data_file = 'rosen_multidim.dat'
+
+<span class="k">method</span>
+  multidim_parameter_study
+    partitions = 8 8
+
+<span class="k">model</span>
+  single
+
+<span class="k">variables</span>
+  continuous_design = 2
+    lower_bounds     -2.0     -2.0
+    upper_bounds      2.0      2.0
+    descriptors       'x1'     'x2'
+
+<span class="hll"><span class="k">interface</span>
+</span><span class="hll">  analysis_drivers = 'python3 driver.py'
+</span><span class="hll">    fork
+</span>
+<span class="k">responses</span>
+  response_functions = 1
+  no_gradients
+  no_hessians
+</pre></div>
+</div>
+</div>
+</div>
+<p>If you saved the Bash or PowerShell driver, change the <code class="docutils literal notranslate"><span class="pre">analysis_drivers</span></code>
+value to <code class="docutils literal notranslate"><span class="pre">'driver.sh'</span></code> or <code class="docutils literal notranslate"><span class="pre">'powershell.exe</span> <span class="pre">-File</span> <span class="pre">driver.ps1'</span></code>.</p>
+</li>
+<li><p>Run Dakota:</p>
+<div class="tab-set docutils">
+<input checked="True" class="tab-input" id="tab-set--6-input--1" name="tab-set--6" type="radio" /><label class="tab-label" for="tab-set--6-input--1">JSON</label><div class="tab-content docutils">
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">dakota -json rosen_blackbox.json -o rosen_blackbox.out &gt; rosen_blackbox.stdout</span>
+</pre></div>
+</div>
+</div>
+<input class="tab-input" id="tab-set--6-input--2" name="tab-set--6" type="radio" /><label class="tab-label" for="tab-set--6-input--2">Freeform</label><div class="tab-content docutils">
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">dakota -i rosen_blackbox.in -o rosen_blackbox.out &gt; rosen_blackbox.stdout</span>
+</pre></div>
+</div>
+</div>
+</div>
+</li>
+<li><p>Compare <code class="docutils literal notranslate"><span class="pre">rosen_multidim.dat</span></code> in this folder with the one from Part A.
+The values are the same: Dakota ran the black-box simulation 81 times
+through your analysis driver, and got the same answers as the built-in
+function.</p></li>
+</ol>
+</section>
+<section id="part-c-one-interface-many-methods">
+<span id="helloworld-partc"></span><h2>Part C: One interface, many methods<a class="headerlink" href="#part-c-one-interface-many-methods" title="Link to this heading"></a></h2>
+<p>Your analysis driver works with any Dakota method. In the Part B folder,
+replace the method block of your input file with this one, and leave
+everything else unchanged:</p>
+<div class="tab-set docutils">
+<input checked="True" class="tab-input" id="tab-set--7-input--1" name="tab-set--7" type="radio" /><label class="tab-label" for="tab-set--7-input--1">JSON</label><div class="tab-content docutils">
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">"method"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">"sampling"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">"samples"</span><span class="p">:</span><span class="w"> </span><span class="mi">20</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">"seed"</span><span class="p">:</span><span class="w"> </span><span class="mi">52983</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<input class="tab-input" id="tab-set--7-input--2" name="tab-set--7" type="radio" /><label class="tab-label" for="tab-set--7-input--2">Freeform</label><div class="tab-content docutils">
+<div class="highlight-dakota notranslate"><div class="highlight"><pre><span></span><span class="k">method</span>
+  sampling
+    samples = 20
+    seed = 52983
+</pre></div>
+</div>
+</div>
+</div>
+<p>Run Dakota again with the same command as in Part B. Instead of a grid,
+<code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-sampling.html"><span class="pre">sampling</span></a></code> runs 20 points spread through the range of <code class="docutils literal notranslate"><span class="pre">x1</span></code>
+and <code class="docutils literal notranslate"><span class="pre">x2</span></code> by Latin hypercube sampling. The new <code class="docutils literal notranslate"><span class="pre">rosen_multidim.dat</span></code> has 20
+rows. Fixing the <code class="docutils literal notranslate"><span class="pre">seed</span></code> makes the points the same each time you run.</p>
+<p>You changed the method without touching your code or your analysis driver.
+That is the main idea behind Dakota: build one interface, then use many
+methods. To see which methods Dakota offers, and which questions each kind of
+study answers, see <a class="reference internal" href="../studytypes.html#studytypes-main"><span class="std std-ref">Study Types</span></a>.</p>
+</section>
+<section id="next-steps">
+<span id="helloworld-next"></span><h2>Next steps<a class="headerlink" href="#next-steps" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="../examples/gettingstarted.html#examples-gettingstarted-main"><span class="std std-ref">&quot;Getting Started&quot; Examples</span></a> runs more studies on Rosenbrock’s
+function, including optimization.</p></li>
+<li><p>The <a class="reference internal" href="../examples/additionalexamples.html#additional-cantilever"><span class="std std-ref">cantilever beam example</span></a> is a more
+realistic engineering problem, with several responses.</p></li>
+<li><p>To connect your own code, start from your analysis driver in Part B, and
+see <a class="reference internal" href="couplingtosimulations.html#couplingtosimulations-main"><span class="std std-ref">Connecting Your Code: The Analysis Driver</span></a>.</p></li>
+</ul>
+</section>
+<section id="video-resources">
+<h2>Video Resources<a class="headerlink" href="#video-resources" title="Link to this heading"></a></h2>
+<a class="reference external image-reference" href="https://www.youtube.com/watch?v=ofi13UTq_Is&amp;list=PLouetuxaIMDo-NMFXT-hlHYhOkePLrayY&amp;index=1"><img alt="Watch Screencast 1.1: Running a Simple Example in Dakota" src="../../_images/DakotaSimpleExampleScreencastTeaser.png" />
+</a>
+<p><strong>Next:</strong> <a class="reference internal" href="../studytypes.html#studytypes-main"><span class="std std-ref">Study Types</span></a></p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="studyanatomy.html" class="btn btn-neutral float-left" title="Anatomy of a Dakota Study" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="couplingtosimulations.html" class="btn btn-neutral float-right" title="Connecting Your Code: The Analysis Driver" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <!--
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Sandia National Laboratories.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+  --> 
+
+</footer>
+        </div>
+      </div>
+	  
+	  <div style="background-color: #0f0f0f;color:#fafafa;padding:20px">
+	    <div>
+		  <h2><em>Exceptional service in the national interest</em></h2>
+		</div>
+		<p>© 2023 National Technology and Engineering Solutions of Sandia, LLC. | <a href="https://www.sandia.gov/contact_us/index.html">Questions &amp; Comments</a> | <a href="https://www.sandia.gov/general/privacy-security/index.html">Privacy &amp; Security</a></p>
+		<p><a href="http://energy.gov" rel="noopener noreferrer" target="_blank"><img alt="U.S. Department of Energy" longdesc="https://energy.gov" src="https://www.sandia.gov/_common/images/doe_logo_white.png" style="height:37px; width:140px"></a> <a href="http://nnsa.energy.gov/" rel="noopener noreferrer" target="_blank"> <img alt="National Nuclear Security Administration" longdesc="http://nnsa.gov" src="https://www.sandia.gov/_common/images/nnsa_logo_white.png" style="height:37px; width:116px"></a></p>
+		<p><a href="https://www.sandia.gov">Sandia National Laboratories</a> is a multimission laboratory managed and operated by National Technology and Engineering Solutions of Sandia, LLC., a wholly owned subsidiary of Honeywell International, Inc., for the U.S. Department of Energy’s National Nuclear Security Administration under contract DE-NA-0003525.</p>
+	  </div>	  	  
+	  
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

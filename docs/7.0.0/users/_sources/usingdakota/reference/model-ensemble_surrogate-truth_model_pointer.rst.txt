@@ -1,0 +1,42 @@
+.. _model-ensemble_surrogate-truth_model_pointer:
+
+"""""""""""""""""""
+truth_model_pointer
+"""""""""""""""""""
+
+Pointer to specify a "truth" model, from which to construct a surrogate
+
+**Topics**
+
+:ref:`block_pointer <topic-block_pointer>`
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   model-ensemble_surrogate-truth_model_pointer-approximation_models
+
+**Specification**
+
+- *Alias:* actual_model_pointer
+- *Arguments:* STRING
+- *JSON argument key:* pointer
+
+**Child Keywords:**
+
++-------------------------+------------------------+--------------------+--------------------------------+------------------------------------------------------------+
+| Required/Optional       | Description of Group   | JSON Group Key     | Dakota Keyword                 | Dakota Keyword Description                                 |
++=========================+========================+====================+================================+============================================================+
+| Optional                |                        |                    | `approximation_models`__       | Specification of an unordered ensemble of low-fidelity     |
+|                         |                        |                    |                                | approximations                                             |
++-------------------------+------------------------+--------------------+--------------------------------+------------------------------------------------------------+
+
+.. __: model-ensemble_surrogate-truth_model_pointer-approximation_models.html
+
+**Description**
+
+This must point to a model block, identified by :dakkw:`model-id_model`.
+That model will be run to generate training data, from which a
+surrogate model will be constructed.
+
+See :ref:`topic-block_pointer` for details about pointers.

@@ -1,0 +1,81 @@
+.. _method-bayes_calibration-sub_sampling_period:
+
+"""""""""""""""""""
+sub_sampling_period
+"""""""""""""""""""
+
+Specify a sub-sampling of the MCMC chain
+
+**Specification**
+
+- *Alias:* None
+- *Arguments:* None
+- *JSON argument key:* None
+- *Default:* 1
+
+**Description**
+
+If a ``sub_sampling_period`` is specified, the MCMC chain is filtered such that
+only the sample at the beginning of each period is in the final MCMC chain.
+The ``sub_sampling_period`` should therefore be greater than or equal to the
+correlation length of the samples.
+
+*Default Behavior*
+
+If not specified, all MCMC samples are included in the final chain.
+
+*Expected Output*
+
+If specified, an additional tabular output file containing the final (sub-
+sampled) MCMC chain is generated.
+
+**Examples**
+
+Generate and then filter a 1000 sample MCMC chain, retainining the
+first accepted sample and every 100th sample thereafter.
+
+An example method block of a Dakota input file is given below
+
+
+.. tab:: Freeform
+
+   .. code-block:: dakota
+
+       method,
+        bayes_calibration queso
+          chain_samples = 1000 seed = 348
+          dram
+        proposal_covariance
+          diagonal values 1.0e6 1.0e-1
+        sub_sampling_period 100
+
+.. tab:: JSON
+
+   .. code-block:: json
+
+       {
+         "method": [
+           {
+             "bayes_calibration": {
+               "sub_sampling_period": 100,
+               "sub_method": {
+                 "queso": {
+                   "chain_samples": 1000,
+                   "seed": 348,
+                   "mcmc_algorithm": {
+                     "dram": true
+                   },
+                   "proposal_covariance": {
+                     "values": {
+                       "elements": [1000000.0, 0.1],
+                       "covariance_form": {
+                         "diagonal": true
+                       }
+                     }
+                   }
+                 }
+               }
+             }
+           }
+         ]
+       }

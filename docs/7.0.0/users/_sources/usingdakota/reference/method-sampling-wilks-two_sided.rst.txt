@@ -1,0 +1,53 @@
+.. _method-sampling-wilks-two_sided:
+
+"""""""""
+two_sided
+"""""""""
+
+Specifies two-sided order statistics (an interval) to be used when
+determining sample sizes for random sampling using Wilks order statistics.
+
+**Specification**
+
+- *Alias:* None
+- *Arguments:* None
+- *JSON argument key:* None
+
+**Description**
+
+This option causes the sample size to be based on the interval defined by
+the lowest N and uppermost N outputs for order N statistics (default N=1).
+
+*Default Behavior*
+The default for Wilks is one_sided_upper.
+
+**Examples**
+
+.. tab:: Freeform
+
+   .. code-block:: dakota
+
+       method
+         sampling
+           sample_type random
+           wilks
+             two_sided
+
+.. tab:: JSON
+
+   .. code-block:: json
+
+       {
+         "method": [
+           {
+             "sampling": {
+               "sample_type": {
+                 "random": true
+               },
+               "wilks": {
+                 "two_sided": true
+               }
+             }
+           }
+         ]
+       }

@@ -1,0 +1,21 @@
+.. _method-adaptive_sampling-fitness_metric-gradient:
+
+""""""""
+gradient
+""""""""
+
+Fill the range space of the surrogate
+
+**Specification**
+
+- *Alias:* None
+- *Arguments:* None
+- *JSON argument key:* None
+- *Default:* true
+
+**Description**
+
+The gradient metric calculates the score as the absolute value of the difference
+in range space (the outputs) of the two points. The output values used are
+predicted from the surrogate model.
+This method attempts to evenly fill the range space of the surrogate.

@@ -1,0 +1,74 @@
+.. _method-sampling-variance_based_decomp-vbd_sampling_method:
+
+"""""""""""""""""""
+vbd_sampling_method
+"""""""""""""""""""
+
+The method to use for variance-based decomposition
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   method-sampling-variance_based_decomp-vbd_sampling_method-binned
+   method-sampling-variance_based_decomp-vbd_sampling_method-pick_and_freeze
+
+**Specification**
+
+- *Alias:* None
+- *Arguments:* None
+- *JSON argument key:* None
+
+**Child Keywords:**
+
++-------------------------+------------------------+--------------------+--------------------------------+------------------------------------------------------------+
+| Required/Optional       | Description of Group   | JSON Group Key     | Dakota Keyword                 | Dakota Keyword Description                                 |
++=========================+========================+====================+================================+============================================================+
+| Optional                |                        |                    | `binned`__                     | Computes Sobol' main effects using a binned approach       |
++-------------------------+------------------------+--------------------+--------------------------------+------------------------------------------------------------+
+| Optional                |                        |                    | `pick_and_freeze`__            | Use the pick-and-freeze variance-based decomposition       |
+|                         |                        |                    |                                | method                                                     |
++-------------------------+------------------------+--------------------+--------------------------------+------------------------------------------------------------+
+
+.. __: method-sampling-variance_based_decomp-vbd_sampling_method-binned.html
+__ method-sampling-variance_based_decomp-vbd_sampling_method-pick_and_freeze.html
+
+**Description**
+
+Allows the user to select between ``pick_and_freeze``
+and ``binned`` for variance-based decomposition.
+
+**Default Behavior**
+
+Default method is ``pick_and_freeze``.
+
+**Examples**
+
+.. tab:: Freeform
+
+   .. code-block:: dakota
+
+       method,
+         sampling
+           sample_type lhs
+           samples = 100
+           variance_based_decomp
+             vbd_sampling_method pick_and_freeze
+
+.. tab:: JSON
+
+   .. code-block:: json
+
+       {
+         "method": [
+           {
+             "sampling": {
+               "sample_type": {"lhs": true},
+               "samples": 100,
+               "variance_based_decomp": {
+                 "vbd_sampling_method": {"pick_and_freeze": {}}
+               }
+             }
+           }
+         ]
+       }

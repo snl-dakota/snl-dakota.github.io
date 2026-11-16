@@ -1,0 +1,26 @@
+.. _interface-analysis_scheduling-dedicated:
+
+"""""""""
+dedicated
+"""""""""
+
+Specify a dedicated scheduler partition for concurrent analysis executions
+
+**Topics**
+
+:ref:`concurrency_and_parallelism <topic-concurrency_and_parallelism>`
+
+**Specification**
+
+- *Alias:* None
+- *Arguments:* None
+- *JSON argument key:* None
+- *Default:* true
+
+**Description**
+
+This option overrides the Dakota parallel automatic configuration, forcing
+the use of a dedicated scheduler partition. In this partition, one processor
+(the "dedicated scheduler") dynamically schedules work on the analysis
+servers. This reduces the number of processors available to create servers
+by 1.

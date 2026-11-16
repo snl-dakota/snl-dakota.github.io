@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>What is Dakota? &mdash; Dakota 7.0.0 documentation</title>
+      <link rel="stylesheet"
+            href="../../_static/pygments.css"
+            type="text/css" />
+      <link rel="stylesheet"
+            href="../../_static/css/theme.css"
+            type="text/css" />
+      <link rel="stylesheet"
+            href="../../_static/copybutton.css"
+            type="text/css" />
+      <link rel="stylesheet"
+            href="../../_static/autodoc_pydantic.css"
+            type="text/css" />
+      <link rel="stylesheet"
+            href="../../_static/tabs.css"
+            type="text/css" />
+      <link rel="stylesheet"
+            href="../../_static/css/dakota_theme.css"
+            type="text/css" />
+      <link rel="stylesheet"
+            href="../../_static/css/sandiaheaderlite.css"
+            type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=efe5be6f"></script>
+        <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+        <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+        <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../../_static/copybutton.js?v=f281be69"></script>
+        <script src="../../_static/tabs.js?v=3ee01567"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Anatomy of a Dakota Study" href="studyanatomy.html" />
+    <link rel="prev" title="Download and Install Dakota" href="../../setupdakota.html" /> 
+  
+  <meta name="sandia.approval_type" content="formal"/>
+  <meta property="sandia.approved" content="SAND2025-14179O"/>
+  <meta name="description" content="The Dakota project delivers both state-of-the-art research and robust, usable software for optimization and UQ."/>
+  <meta name="keywords" content="Dakota, optimization, UQ, uncertainty quantification, parametric analysis, design exploration, model calibration, risk analysis"/>
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> Dakota
+            <img src="../../_static/DAKOTAWhiteWEB.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Install</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../setupdakota.html">Download and Install Dakota</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Getting Started with Dakota</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">What is Dakota?</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#dakota-enables-outer-loop-analyses">Dakota enables outer-loop analyses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#build-one-interface-use-many-methods">Build one interface, use many methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#questions-dakota-helps-answer">Questions Dakota helps answer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#why-use-dakota">Why use Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#beyond-the-black-box">Beyond the black box</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#pedigree">Pedigree</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="studyanatomy.html">Anatomy of a Dakota Study</a></li>
+<li class="toctree-l1"><a class="reference internal" href="helloworld.html">Tutorial: Your First Dakota Study</a></li>
+<li class="toctree-l1"><a class="reference internal" href="couplingtosimulations.html">Connecting Your Code: The Analysis Driver</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Using Dakota</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../usingdakota.html">Using Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../usingdakotagui/usingdakotagui.html">Using Dakota GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../externaltools/externaltools.html">Using External Tools</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Building and Developing Dakota</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../building/building.html">Building Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developingdakota/developingdakota.html">Developing Dakota</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">More</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../misc/misc.html">Miscellaneous</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Dakota</a>
+      </nav>
+
+	  <!-- SNL Lite header -->
+	  <div class="snlheader-subsite--wrapper-default">
+		<snlheader class="snlheader-subsite" role="snlbanner">
+		  <div class="wrapper">
+			<a href="https://www.sandia.gov/index.html">
+			  <div class="logo-transparent"><p class="logo">Sandia National Laboratories</p></div>
+			</a>
+			<div class="nav-top">
+			  <a class="visuallyhidden" name="mainnav"></a>
+			  <div aria-label="main navigation" class="core-nav-transparent core-nav-transparent--visible" role="navigation">
+				<ul role="navigation" class="secondary-links">
+				  <li id="search-text-link">
+					<a aria-label="Search" href="https://www.sandia.gov/search/">Search Sandia.gov</a>
+				  </li>
+				  <li id="directory-text-link">
+					<a href="https://www.sandia.gov/directory.html" aria-expanded="false" aria-label="Site Directory">All Sandia Websites</a>
+				  </li>
+				</ul>
+			  </div>
+			</div>
+		  </div> 
+		</snlheader>
+	  </div>	  
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">What is Dakota?</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/usingdakota/introduction/aboutdakota.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="what-is-dakota">
+<span id="aboutdakota-main"></span><h1>What is Dakota?<a class="headerlink" href="#what-is-dakota" title="Link to this heading"></a></h1>
+<p>Dakota is open-source software from Sandia National Laboratories, released
+under the GNU Lesser General Public License (LGPL). It enables outer-loop
+analyses (e.g., optimization, uncertainty quantification (UQ), sensitivity
+analysis, and calibration) for simulations. Dakota treats your simulation as a
+<a class="reference internal" href="../../misc/glossary.html#term-black-box"><span class="xref std std-term">black box</span></a>: it supplies parameter values and gets back results, and it
+needs no further information about how your code works.</p>
+<section id="dakota-enables-outer-loop-analyses">
+<h2>Dakota enables outer-loop analyses<a class="headerlink" href="#dakota-enables-outer-loop-analyses" title="Link to this heading"></a></h2>
+<p>Most questions about a simulation can’t be answered by a single run. Dakota
+runs <a class="reference internal" href="../../misc/glossary.html#term-outer-loop-analysis"><span class="xref std std-term">outer-loop analyses</span></a>, generating many runs
+of a simulation code with different input values. For each run, Dakota chooses
+the parameter values, manages the run, and collects the simulation outputs, or
+<a class="reference internal" href="../../misc/glossary.html#term-responses"><span class="xref std std-term">responses</span></a>. It then analyzes this <a class="reference internal" href="../../misc/glossary.html#term-ensemble"><span class="xref std std-term">ensemble</span></a> of input–output
+pairs to extract useful information, such as optimal values or response
+statistics.</p>
+<figure class="align-center" id="id1">
+<img alt="Dakota sends variable values x1 and x2 to your simulation, which is treated as a black box, and receives the response f; repeating this builds a table of input--output pairs with one row per run." src="../../_images/ensemble_loop.svg" />
+<figcaption>
+<p><span class="caption-number">Fig. 2 </span><span class="caption-text">Dakota sends variable values to your simulation and receives responses.
+Each run adds a row to the ensemble containing a given input–output pair.</span><a class="headerlink" href="#id1" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>Any code that takes inputs and produces outputs can be interfaced with Dakota:
+black-box executables with input files, Python scripts, Matlab functions, etc.</p>
+</section>
+<section id="build-one-interface-use-many-methods">
+<h2>Build one interface, use many methods<a class="headerlink" href="#build-one-interface-use-many-methods" title="Link to this heading"></a></h2>
+<p>You connect your simulation to Dakota once through an <a class="reference internal" href="../../misc/glossary.html#term-analysis-driver"><span class="xref std std-term">analysis driver</span></a>,
+the program Dakota runs for each evaluation to map from parameter values to
+responses. Once you have a functioning analysis driver, every Dakota method can
+use it. Switching from a sensitivity study to an optimization requires only a
+change to the Dakota study, not to your code.</p>
+<figure class="align-center" id="id2">
+<img alt="Five Dakota method families (parameter studies, sensitivity analysis, uncertainty quantification, optimization and calibration) all connect through one analysis driver to your simulation." src="../../_images/one_interface_many_methods.svg" />
+<figcaption>
+<p><span class="caption-number">Fig. 3 </span><span class="caption-text">One analysis driver connects your simulation to every Dakota method.</span><a class="headerlink" href="#id2" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+</section>
+<section id="questions-dakota-helps-answer">
+<span id="aboutdakota-use"></span><h2>Questions Dakota helps answer<a class="headerlink" href="#questions-dakota-helps-answer" title="Link to this heading"></a></h2>
+<p>Dakota supports four main kinds of studies, which answer different questions:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 50.0%" />
+<col style="width: 50.0%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>Sensitivity analysis</strong></p>
+<p>Which inputs matter most?</p>
+<p><a class="reference internal" href="../studytypes/sensitivityanalysis.html#sa"><span class="std std-ref">Learn more</span></a></p>
+</td>
+<td><p><strong>Uncertainty quantification</strong></p>
+<p>How do uncertain inputs affect my results, and how confident can I be
+in them?</p>
+<p><a class="reference internal" href="../studytypes/uq.html#uq"><span class="std std-ref">Learn more</span></a></p>
+</td>
+</tr>
+<tr class="row-even"><td><p><strong>Optimization</strong></p>
+<p>What is the best design?</p>
+<p><a class="reference internal" href="../studytypes/optimization.html#opt"><span class="std std-ref">Learn more</span></a></p>
+</td>
+<td><p><strong>Calibration</strong></p>
+<p>Which parameter values best match my data?</p>
+<p><a class="reference internal" href="../studytypes/modelcalibration.html#nls"><span class="std std-ref">Learn more</span></a></p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>In addition to these four main kinds of studies, <a class="reference internal" href="../studytypes/parameterstudies.html#ps"><span class="std std-ref">parameter studies</span></a>
+and <a class="reference internal" href="../studytypes/designofexperiments.html#dace"><span class="std std-ref">design of experiments</span></a> explore how your responses change over
+a range or grid of inputs.</p>
+</section>
+<section id="why-use-dakota">
+<h2>Why use Dakota<a class="headerlink" href="#why-use-dakota" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>Practical for costly simulations.</strong> Many methods are designed to reach an
+answer in as few simulation runs as possible.</p></li>
+<li><p><strong>Deterministic and probabilistic analysis in one tool.</strong> For example, you
+can optimize a design while accounting for uncertainty in its inputs.</p></li>
+<li><p><strong>Robust to difficult responses.</strong> Derivative-free and global methods handle
+responses that are noisy, non-smooth or have several local optima.</p></li>
+<li><p><strong>Surrogate and multifidelity methods.</strong> Dakota can replace an expensive
+simulation with a cheap approximation, or combine models of different cost
+and accuracy.</p></li>
+<li><p><strong>Parallel from desktop to supercomputer.</strong> Dakota can run many simulations
+at once, on a laptop or on a large distributed cluster.</p></li>
+<li><p><strong>Production software.</strong> Dakota is tested and maintained, with a new release
+every May and November.</p></li>
+</ul>
+</section>
+<section id="beyond-the-black-box">
+<h2>Beyond the black box<a class="headerlink" href="#beyond-the-black-box" title="Link to this heading"></a></h2>
+<p>Most users start with an analysis driver that exchanges files with their code,
+because this form of interfacing works with nearly any code. If your model is
+written in Python, Dakota can also call it directly and exchange values in
+memory. This approach avoids file input and output for more rapid model
+evaluations. This <a class="reference internal" href="../advanced/advancedsimulationcodeinterfaces.html#advint-existingdirect-python"><span class="std std-ref">Python direct interface</span></a>
+may not be included in pre-built downloads and must be enabled when compiling
+Dakota from source. You can also embed Dakota in your own C++ or Python
+application through its <a class="reference internal" href="../libraryapi.html#library-api"><span class="std std-ref">library API</span></a>.</p>
+</section>
+<section id="pedigree">
+<h2>Pedigree<a class="headerlink" href="#pedigree" title="Link to this heading"></a></h2>
+<p>Dakota was created at Sandia National Laboratories in 1994 to give engineers a
+common set of optimization tools, instead of a new custom interface for every
+project. It has since grown to include sensitivity analysis, uncertainty
+quantification, calibration and advanced combined strategies. Dakota is used
+in fields including defense, climate modeling, materials, nuclear power and
+renewable energy. Read more in <a class="reference internal" href="../../misc/history.html#history-main"><span class="std std-ref">Dakota History and Motivation</span></a>.</p>
+<p><strong>Next:</strong> <a class="reference internal" href="studyanatomy.html#studyanatomy-main"><span class="std std-ref">Anatomy of a Dakota Study</span></a></p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../../setupdakota.html" class="btn btn-neutral float-left" title="Download and Install Dakota" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="studyanatomy.html" class="btn btn-neutral float-right" title="Anatomy of a Dakota Study" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <!--
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Sandia National Laboratories.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+  --> 
+
+</footer>
+        </div>
+      </div>
+	  
+	  <div style="background-color: #0f0f0f;color:#fafafa;padding:20px">
+	    <div>
+		  <h2><em>Exceptional service in the national interest</em></h2>
+		</div>
+		<p>© 2023 National Technology and Engineering Solutions of Sandia, LLC. | <a href="https://www.sandia.gov/contact_us/index.html">Questions &amp; Comments</a> | <a href="https://www.sandia.gov/general/privacy-security/index.html">Privacy &amp; Security</a></p>
+		<p><a href="http://energy.gov" rel="noopener noreferrer" target="_blank"><img alt="U.S. Department of Energy" longdesc="https://energy.gov" src="https://www.sandia.gov/_common/images/doe_logo_white.png" style="height:37px; width:140px"></a> <a href="http://nnsa.energy.gov/" rel="noopener noreferrer" target="_blank"> <img alt="National Nuclear Security Administration" longdesc="http://nnsa.gov" src="https://www.sandia.gov/_common/images/nnsa_logo_white.png" style="height:37px; width:116px"></a></p>
+		<p><a href="https://www.sandia.gov">Sandia National Laboratories</a> is a multimission laboratory managed and operated by National Technology and Engineering Solutions of Sandia, LLC., a wholly owned subsidiary of Honeywell International, Inc., for the U.S. Department of Energy’s National Nuclear Security Administration under contract DE-NA-0003525.</p>
+	  </div>	  	  
+	  
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

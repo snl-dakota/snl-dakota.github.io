@@ -1,0 +1,22 @@
+.. _model-active_subspace-normalization-mean_value:
+
+""""""""""
+mean_value
+""""""""""
+
+Normalize by sample mean of function values
+
+**Specification**
+
+- *Alias:* None
+- *Arguments:* None
+- *JSON argument key:* None
+- *Default:* true
+
+**Description**
+
+For each reponse function :math:`f_i` , normalize its gradient data by
+the mean :math:`m_i`  of the function values taken across samples :math:`j=1,...,J` :
+
+
+.. math::  m_i = \frac{1}{J} \sum_{j=1}^{J}{f_i^j}

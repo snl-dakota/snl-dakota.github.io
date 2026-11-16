@@ -1,0 +1,21 @@
+.. _method-stoch_collocation-probability_refinement-importance:
+
+""""""""""
+importance
+""""""""""
+
+Importance sampling option for probability refinement
+
+**Specification**
+
+- *Alias:* None
+- *Arguments:* None
+- *JSON argument key:* None
+- *Default:* true
+
+**Description**
+
+``import`` centers a sampling
+density at one of the initial LHS samples identified in the failure region.
+It then generates the importance samples, weights them by their probability of occurence
+given the original density, and calculates the required probability (CDF or CCDF level).

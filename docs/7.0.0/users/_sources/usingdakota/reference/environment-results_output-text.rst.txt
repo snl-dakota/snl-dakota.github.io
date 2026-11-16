@@ -1,0 +1,54 @@
+.. _environment-results_output-text:
+
+""""
+text
+""""
+
+Write results to file in text format
+
+**Topics**
+
+:ref:`dakota_output <topic-dakota_output>`
+
+**Specification**
+
+- *Alias:* None
+- *Arguments:* None
+- *JSON argument key:* None
+
+**Description**
+
+When this keyword is present, Dakota will right (some) final
+method results to disk in a custom structured text format instead
+of just to the console. Support for text format results output
+will be deprecated in a future release, and the contents and
+organization of the output file is subject to change.
+
+The default name of the file is ``dakota_results``.txt. This can
+be changed using the ``results_output_file`` keyword.
+
+**Examples**
+
+.. tab:: Freeform
+
+   .. code-block:: dakota
+
+       environment
+         results_output
+             text
+             results_output_file 'my_results'  # The .txt extension will be added
+
+.. tab:: JSON
+
+   .. code-block:: json
+
+       {
+         "environment": {
+           "results_output": {
+             "format": {
+               "text": true
+             },
+             "results_output_file": "my_results"
+           }
+         }
+       }

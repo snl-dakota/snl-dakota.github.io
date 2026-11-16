@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Version 7.0 (2026/11/17) &mdash; Dakota 7.0.0 documentation</title>
+      <link rel="stylesheet"
+            href="../../_static/pygments.css"
+            type="text/css" />
+      <link rel="stylesheet"
+            href="../../_static/css/theme.css"
+            type="text/css" />
+      <link rel="stylesheet"
+            href="../../_static/copybutton.css"
+            type="text/css" />
+      <link rel="stylesheet"
+            href="../../_static/autodoc_pydantic.css"
+            type="text/css" />
+      <link rel="stylesheet"
+            href="../../_static/tabs.css"
+            type="text/css" />
+      <link rel="stylesheet"
+            href="../../_static/css/dakota_theme.css"
+            type="text/css" />
+      <link rel="stylesheet"
+            href="../../_static/css/sandiaheaderlite.css"
+            type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=efe5be6f"></script>
+        <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+        <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+        <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../../_static/copybutton.js?v=f281be69"></script>
+        <script src="../../_static/tabs.js?v=3ee01567"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Version 6.24 (2026/05/15)" href="624.html" />
+    <link rel="prev" title="Release Notes" href="../releasenotes.html" /> 
+  
+  <meta name="sandia.approval_type" content="formal"/>
+  <meta property="sandia.approved" content="SAND2025-14179O"/>
+  <meta name="description" content="The Dakota project delivers both state-of-the-art research and robust, usable software for optimization and UQ."/>
+  <meta name="keywords" content="Dakota, optimization, UQ, uncertainty quantification, parametric analysis, design exploration, model calibration, risk analysis"/>
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> Dakota
+            <img src="../../_static/DAKOTAWhiteWEB.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Install</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../setupdakota.html">Download and Install Dakota</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Getting Started with Dakota</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../usingdakota/introduction/aboutdakota.html">What is Dakota?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../usingdakota/introduction/studyanatomy.html">Anatomy of a Dakota Study</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../usingdakota/introduction/helloworld.html">Tutorial: Your First Dakota Study</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../usingdakota/introduction/couplingtosimulations.html">Connecting Your Code: The Analysis Driver</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Using Dakota</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../usingdakota/usingdakota.html">Using Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../usingdakotagui/usingdakotagui.html">Using Dakota GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../externaltools/externaltools.html">Using External Tools</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Building and Developing Dakota</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../building/building.html">Building Dakota</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developingdakota/developingdakota.html">Developing Dakota</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">More</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../misc.html">Miscellaneous</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../help.html">Help Resources</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../glossary.html">Glossary</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../aboutteam.html">About the Team</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../history.html">Dakota History and Motivation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../contributing.html">Contributing to Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../contributors.html">Contributors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../license.html">License</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../citing.html">Citing Dakota</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../publications.html">Publications</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../releasenotes.html">Release Notes</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="../releasenotes.html#dakota">Dakota</a><ul class="current">
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Version 7.0 (2026/11/17)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="624.html">Version 6.24 (2026/05/15)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="623.html">Version 6.23 (2025/11/17)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="622.html">Version 6.22 (2025/05/15)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="621.html">Version 6.21 (2024/11/14)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="620.html">Version 6.20 (2024/05/15)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="619.html">Version 6.19 (2023/11/15)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="618.html">Version 6.18 (2023/05/15)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="617.html">Version 6.17 (2022/11/15)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="616.html">Version 6.16 (2022/05/16)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="615.html">Version 6.15 (2021/11/15)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="614.html">Version 6.14 (2021/05/17)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="613.html">Version 6.13 (2020/11/15)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="612.html">Version 6.12 (2020/06/15)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="611.html">Version 6.11 (2019/11/15)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="610.html">Version 6.10 (2019/05/15)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="69.html">Version 6.9 (2018/11/15)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="68.html">Version 6.8 (2018/05/15)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="67.html">Version 6.7 (2017/11/15)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="66.html">Version 6.6 (2017/05/15)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="65.html">Version 6.5 (2016/11/15)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="64.html">Version 6.4 (2016/05/16)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="63.html">Version 6.3 (2015/11/16)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="62.html">Version 6.2 (2015/05/15)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="61.html">Version 6.1 (2014/11/15)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="60.html">Version 6.0 (2014/05/15)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="54.html">Version 5.4 (2013/11/15)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="531.html">Version 5.3.1 (2013/05/15)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="53.html">Version 5.3 (2013/01/31)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="52.html">Version 5.2 (2011/11/30)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="51.html">Version 5.1 (2010/12/21)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="50.html">Version 5.0 (2009/12/21)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="42.html">Version 4.2 (2008/11/05)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="41.html">Version 4.1 (2007/09/21)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="40.html">Version 4.0 (2006/05/12)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="33.html">Version 3.3 (2004/12/23)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="32.html">Version 3.2 (2004/07/21)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="312.html">Version 3.1.2 (2003/07/09)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="311.html">Version 3.1.1 (2003/05/21)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="31.html">Version 3.1 (2003/04/04)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="30.html">Version 3.0 (2002/03/30)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="30beta.html">Version 3.0 beta (2001/11/29)</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../releasenotes.html#dakota-gui">Dakota GUI</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../bibliography.html">Bibliography</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../classictoc.html">I’m Lost!</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Dakota</a>
+      </nav>
+
+	  <!-- SNL Lite header -->
+	  <div class="snlheader-subsite--wrapper-default">
+		<snlheader class="snlheader-subsite" role="snlbanner">
+		  <div class="wrapper">
+			<a href="https://www.sandia.gov/index.html">
+			  <div class="logo-transparent"><p class="logo">Sandia National Laboratories</p></div>
+			</a>
+			<div class="nav-top">
+			  <a class="visuallyhidden" name="mainnav"></a>
+			  <div aria-label="main navigation" class="core-nav-transparent core-nav-transparent--visible" role="navigation">
+				<ul role="navigation" class="secondary-links">
+				  <li id="search-text-link">
+					<a aria-label="Search" href="https://www.sandia.gov/search/">Search Sandia.gov</a>
+				  </li>
+				  <li id="directory-text-link">
+					<a href="https://www.sandia.gov/directory.html" aria-expanded="false" aria-label="Site Directory">All Sandia Websites</a>
+				  </li>
+				</ul>
+			  </div>
+			</div>
+		  </div> 
+		</snlheader>
+	  </div>	  
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../misc.html">Miscellaneous</a></li>
+          <li class="breadcrumb-item"><a href="../releasenotes.html">Release Notes</a></li>
+      <li class="breadcrumb-item active">Version 7.0 (2026/11/17)</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/misc/releasenotes/70.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="version-7-0-2026-11-17">
+<span id="releasenotes-70"></span><h1>Version 7.0 (2026/11/17)<a class="headerlink" href="#version-7-0-2026-11-17" title="Link to this heading"></a></h1>
+<p><strong>Highlight: Python API</strong></p>
+<p>Dakota 7.0 introduces a Python API that allows studies to be
+constructed and run programmatically without writing a Dakota input file.
+Study components — methods, models, variables, interfaces — are ordinary
+Python or C++ objects, enabling Dakota to be embedded inside larger
+applications, automation pipelines, and agentic AI workflows. Python bindings
+are provided for nearly all iterators and models, including parameter studies,
+UQ methods, calibration, optimization, surrogate-based methods, ensemble surrogates,
+and meta-iterators.</p>
+<p>The APIs share the same configuration grammar as JSON input but replace
+pointer-based <code class="docutils literal notranslate"><span class="pre">id_*</span></code> / <code class="docutils literal notranslate"><span class="pre">*_pointer</span></code> relationships with direct object
+references.  Kwargs and Pydantic model configurations are both supported for
+setting keyword options.</p>
+<p>The <a class="reference internal" href="../../externaltools/inputtools.html#input-tools-dakota-to-json"><span class="std std-ref">dakota-to-json</span></a> command-line tool
+and its backing Python module <code class="docutils literal notranslate"><span class="pre">dakota.tools.freeform_to_json</span></code> can convert an
+existing freeform Dakota input to a JSON file that Dakota accepts directly
+with <code class="docutils literal notranslate"><span class="pre">dakota</span> <span class="pre">-json</span></code> and that can serve as a starting point for a
+Python-based study.</p>
+<p>To simplify the API, a few noteworthy changes were made to Dakota’s input
+spec. These changes affect not only the API and JSON input formats, but
+also the freeform format.</p>
+<p>First, the four surrogate types (global, local, multipoint, ensemble)  were
+promoted to model types. Instead of <code class="docutils literal notranslate"><span class="pre">model</span> <span class="pre">surrogate</span> <span class="pre">global</span></code>, it’s now
+necessary to specify <code class="docutils literal notranslate"><span class="pre">model</span> <span class="pre">global_surrogate</span></code>.</p>
+<p>Similarly, <code class="docutils literal notranslate"><span class="pre">method</span> <span class="pre">hybrid</span> <span class="pre">sequential</span></code> was promoted to <code class="docutils literal notranslate"><span class="pre">method</span> <span class="pre">hybrid_sequential</span></code>.</p>
+<p><em>Enabling / Accessing:</em></p>
+<ul class="simple">
+<li><p>Follow the instructions to
+<a class="reference internal" href="../../setupdakota.html#setupdakota-installation"><span class="std std-ref">install a pre-built package</span></a>, including setting
+your <code class="docutils literal notranslate"><span class="pre">PYTHONPATH</span></code>. Dakota’s compiled Python modules were built using
+Python 3.13, and compatible only with this Major.minor version.</p></li>
+<li><p>Or, build Dakota with the <code class="docutils literal notranslate"><span class="pre">DAKOTA_PYTHON_STUDY</span></code> CMake option enabled, and
+build the <code class="docutils literal notranslate"><span class="pre">install-python</span></code> target to install Dakota’s Python package into
+your environment. A minimum of Python 3.10 is required.</p></li>
+</ul>
+<p><em>Documentation:</em> <a class="reference internal" href="../../usingdakota/libraryapi.html#library-api"><span class="std std-ref">Library APIs</span></a> in the User’s Manual (construction guide,
+tutorial, and Python reference).</p>
+<p><strong>Highlight: Rewritten Introduction and Tutorial</strong></p>
+<p>The introductory and tutorial sections of the User’s Manual have been
+completely rewritten. The new material covers how to run your first Dakota
+study step by step, how to connect your own simulation code as an analysis
+driver, and how the main study types differ, all with examples in both
+JSON and freeform input formats. Existing users will find the restructured
+content easier to navigate; new users get a more direct path from installation
+to a working study.</p>
+<p><em>Documentation:</em> <a class="reference internal" href="../../usingdakota/introduction/helloworld.html#helloworld-main"><span class="std std-ref">Tutorial: Your First Dakota Study</span></a> and <a class="reference internal" href="../../usingdakota/introduction/couplingtosimulations.html#couplingtosimulations-main"><span class="std std-ref">Connecting Your Code: The Analysis Driver</span></a>
+in the User’s Manual.</p>
+<p><strong>Improvements by Category</strong></p>
+<p><em>Interfaces, Input/Output</em></p>
+<ul class="simple">
+<li><p>JSON input files are now checked for required fields and array item types,
+with improved validation of union member constants and alternatives.</p></li>
+<li><p>Integer fields in both JSON and free-form input now require whole-number
+values.</p></li>
+<li><p>The JSON parser now correctly handles <code class="docutils literal notranslate"><span class="pre">true</span></code>/<code class="docutils literal notranslate"><span class="pre">false</span></code> and <code class="docutils literal notranslate"><span class="pre">{}</span></code> based on
+the declared schema type.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">import_points</span></code> results are now correctly archived in HDF5 output.</p></li>
+<li><p>Dakota will now raise an error when two concurrent studies would produce
+colliding results output filenames.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ResultsManager</span></code> and <code class="docutils literal notranslate"><span class="pre">EvaluationStore</span></code> instances are now study-specific,
+enabling safe concurrent use in library API contexts.</p></li>
+<li><p>Fixed an HDF5 close issue that could leave output files in an inconsistent
+state.</p></li>
+</ul>
+<p><em>Models</em></p>
+<ul class="simple">
+<li><p>Surrogate model types are now promoted to first-class model types in the
+input grammar and documentation (e.g. <code class="docutils literal notranslate"><span class="pre">model</span> <span class="pre">surrogate</span> <span class="pre">global</span></code> is now
+<code class="docutils literal notranslate"><span class="pre">model</span> <span class="pre">global_surrogate</span></code>.</p></li>
+<li><p>Fixed: honor per-component ASV for field approximations.</p></li>
+<li><p>Fixed: out-of-range model form in <code class="docutils literal notranslate"><span class="pre">NonDExpansion</span></code> online cost averaging.</p></li>
+</ul>
+<p><em>Optimization Methods</em></p>
+<ul class="simple">
+<li><p><strong>ROL</strong> (Rapid Optimization Library): Updated to use Trilinos 16.2. The old
+monolithic ROL interface has been removed; the modular interface is now the
+only supported path. Evaluation cache management moved to <code class="docutils literal notranslate"><span class="pre">ROLOptimizer</span></code>;
+several memory errors identified by valgrind have been fixed.</p></li>
+<li><p><strong>EGO</strong> (Efficient Global Optimizer): Fixed a bug where merit-function
+updates after convergence corrupted best-point selection when nonlinear
+constraints are present (contributed by Werner Van Geit).</p></li>
+<li><p>Fixed: CONMIN constraint maps are now reset correctly between multiple
+successive runs.</p></li>
+<li><p>Fixed: NOMAD best-point loop now correctly indexes <code class="docutils literal notranslate"><span class="pre">discRealVars[j]</span></code>.</p></li>
+<li><p>Fixed: In least-squares calibration with nonlinear constraints and scaling
+enabled, <code class="docutils literal notranslate"><span class="pre">LeastSq::post_run</span></code> was unscaling best-point constraints from
+<code class="docutils literal notranslate"><span class="pre">iter_resp</span></code> (the model’s last evaluation) rather than from the
+solver-cached best response in <code class="docutils literal notranslate"><span class="pre">best_resp</span></code>, overwriting correct best
+constraints with stale values. The fix stages the scaled best constraints
+from <code class="docutils literal notranslate"><span class="pre">best_resp</span></code> into <code class="docutils literal notranslate"><span class="pre">iter_resp</span></code> before the in-place unscale.</p></li>
+</ul>
+<p><em>UQ Methods</em></p>
+<ul class="simple">
+<li><p><strong>Adaptive Sampling</strong>: Fixed multiple pre-existing correctness bugs including
+constant-liar pop count, duplicate batch picks, and topology fallback
+distances. Asynchronous evaluation support added.</p></li>
+<li><p>Fixed: In the per-response-file branch of <code class="docutils literal notranslate"><span class="pre">ExperimentData::load_experiment</span></code>,
+omitting <code class="docutils literal notranslate"><span class="pre">experiment_variance_type</span></code> left <code class="docutils literal notranslate"><span class="pre">sigma_scalars</span></code> zero-filled,
+caching a zero covariance determinant (log det = −∞) that corrupts the
+Bayesian log-likelihood for every sample. Per-response-file inputs now
+default to unit variance, matching the scalar-data-file branch.</p></li>
+<li><p>Fixed: <code class="docutils literal notranslate"><span class="pre">Variables::load</span></code> now validates each array length from the restart
+archive against the <code class="docutils literal notranslate"><span class="pre">SharedVariablesData</span></code>-derived counts and aborts with
+an error on mismatch, preventing out-of-bounds Teuchos views from a restart
+file whose variable counts are inconsistent with the current input.</p></li>
+<li><p>Fixed: In <code class="docutils literal notranslate"><span class="pre">NestedModel::iterator_response_overlay</span></code>, the identity-map
+branch for secondary (constraint) gradients was writing <code class="docutils literal notranslate"><span class="pre">mapped_grad[m_index]</span></code>
+inside the loop over derivative variables <code class="docutils literal notranslate"><span class="pre">j</span></code>, leaving most gradient entries
+zero and writing out of bounds when <code class="docutils literal notranslate"><span class="pre">m_index</span> <span class="pre">&gt;=</span> <span class="pre">num_mapped_deriv_vars</span></code>.
+The index is now <code class="docutils literal notranslate"><span class="pre">mapped_grad[j]</span></code>, matching the primary identity branch.</p></li>
+<li><p>Fixed: In <code class="docutils literal notranslate"><span class="pre">Constraints::reshape_update_linear</span></code>, contracting from an ALL
+view to a non-ALL view with both linear inequality and equality constraints
+present used two separate <code class="docutils literal notranslate"><span class="pre">cv</span></code>-section loops that shared <code class="docutils literal notranslate"><span class="pre">curr_cntr</span></code>/
+<code class="docutils literal notranslate"><span class="pre">prev_cntr</span></code>, causing the equality matrix to be copied from the wrong
+columns and indexing past <code class="docutils literal notranslate"><span class="pre">num_av</span></code>. Both matrices are now copied in a
+single loop per column section.</p></li>
+</ul>
+<p><em>Solution Verification</em></p>
+<ul class="simple">
+<li><p>Fixed: <code class="docutils literal notranslate"><span class="pre">RichExtrapVerification::converge_order</span></code> and <code class="docutils literal notranslate"><span class="pre">converge_qoi</span></code>
+initialized the convergence tolerance, iteration counter, and (for
+<code class="docutils literal notranslate"><span class="pre">converge_order</span></code>) <code class="docutils literal notranslate"><span class="pre">prev_order</span></code> once outside the per-factor loop.
+After the first factor converged, all subsequent factors skipped
+refinement entirely and <code class="docutils literal notranslate"><span class="pre">extrapolate_result</span></code> reported uninitialized
+<code class="docutils literal notranslate"><span class="pre">convOrder</span></code>/<code class="docutils literal notranslate"><span class="pre">extrapQOI</span></code>/<code class="docutils literal notranslate"><span class="pre">numErrorQOI</span></code> values.  Each factor now
+resets these variables independently at the start of its refinement loop.</p></li>
+</ul>
+<p><em>Sensitivity Analysis</em></p>
+<ul class="simple">
+<li><p>The <code class="docutils literal notranslate"><a class="reference external" href="../../usingdakota/reference/method-sampling-variance_based_decomp-vbd_sampling_method-binned.html"><span class="pre">binned</span></a></code>
+approach to variance-based decomposition now works with discrete variables.</p></li>
+</ul>
+<p><em>Calibration</em></p>
+<ul class="simple">
+<li><p>Documentation added explaining how Dakota computes confidence intervals on
+calibration parameters, including derivation, numerical computation, and
+assumptions. See the NLS confidence intervals section of the Theory Manual.</p></li>
+</ul>
+<p><em>Hybrid Methods</em></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">hybrid_collaborative</span></code> and <code class="docutils literal notranslate"><span class="pre">hybrid_embedded</span></code> method types have been
+removed. Hybrid sub-methods are now promoted to first-class method types and
+should be specified directly. Use <code class="docutils literal notranslate"><span class="pre">hybrid_sequential</span></code> (keyword
+<code class="docutils literal notranslate"><span class="pre">method</span> <span class="pre">&gt;</span> <span class="pre">hybrid</span> <span class="pre">&gt;</span> <span class="pre">sequential</span></code>) for sequential hybrid strategies.</p></li>
+</ul>
+<p><strong>Miscellaneous Enhancements and Bugfixes</strong></p>
+<ul class="simple">
+<li><p>DOT optimizer: bumped to version 3.71; ALPSAV state is now saved between
+calls, correcting behavior in constrained problems.</p></li>
+<li><p>Fixed uninitialized pointer issues identified across several model
+constructors.</p></li>
+<li><p>Fixed <code class="docutils literal notranslate"><span class="pre">pyprepro</span></code> function name typo.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ext_python</span></code> module moved from <code class="docutils literal notranslate"><span class="pre">src/</span></code> to the <code class="docutils literal notranslate"><span class="pre">python/</span></code> package.</p></li>
+<li><p>Resolved duplicate-RPATH install errors and build-tree RPATH issues on macOS.</p></li>
+<li><p>Fixed Python API shared library loading on macOS and Linux.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">libpython</span></code> is no longer linked into <code class="docutils literal notranslate"><span class="pre">libdakota_surrogates</span></code> on macOS
+(resolves JNI linking issues).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">EXT_TPL_LIBS</span></code> is now linked into <code class="docutils literal notranslate"><span class="pre">libdakota_src.so</span></code> to enable Python
+import.</p></li>
+<li><p>Added a <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">install-python</span></code> CMake target that installs the Dakota Python
+package into the active Python environment (run <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">install</span></code> first).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">dakota_parser</span></code> now inherits C++ compiler flags from the parent build and
+probes for Python 3 automatically.</p></li>
+<li><p>Legacy input <code class="docutils literal notranslate"><span class="pre">Data</span></code> classes have been removed; construction throughout
+Dakota now uses the <code class="docutils literal notranslate"><span class="pre">IRStore</span></code> path, laying the foundation for fully
+decoupled library-API component construction.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">DL_Solver</span></code> dynamically loadable solver interface has been removed.</p></li>
+</ul>
+<p><strong>Deprecated and Changed</strong></p>
+<ul class="simple">
+<li><p><strong>NIDR parser removed.</strong> The <code class="docutils literal notranslate"><span class="pre">-parser</span> <span class="pre">legacy</span></code> command-line argument is no
+longer available. All input, whether free-form or JSON, is processed by the
+new parser.</p></li>
+<li><p><strong>``hybrid_collaborative`` and ``hybrid_embedded`` removed.</strong> Workflows using
+these types must be migrated to use their constituent methods directly, or to
+<code class="docutils literal notranslate"><span class="pre">hybrid_sequential</span></code>.</p></li>
+<li><p><strong>C++20 required.</strong> The minimum C++ standard for building Dakota has been
+raised from C++17 to C++20.</p></li>
+<li><p><strong>Boost minimum raised to 1.75.</strong></p></li>
+<li><p><strong>Trilinos updated to 16.2</strong> (required when ROL is enabled).</p></li>
+</ul>
+<p><strong>Compatibility</strong></p>
+<ul class="simple">
+<li><p>A C++20-capable compiler is now required to build Dakota from source.</p></li>
+<li><p>Boost 1.75 or newer is required.</p></li>
+<li><p>Trilinos 16.2 or newer is required when building with ROL enabled.</p></li>
+<li><p>Python 3.9 or newer is needed to build Dakota.</p></li>
+<li><p>Python 3.10 or newer and Pydantic 2.12 or newer are required to regenerate or
+modify Dakota’s input grammar (<code class="docutils literal notranslate"><span class="pre">python/dakota/spec/</span></code>).</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">-parser</span> <span class="pre">legacy</span></code> command-line flag has been removed; input files that
+relied on NIDR-specific parsing behavior may need minor adjustment.</p></li>
+</ul>
+<p><strong>Other Notes and Known Issues</strong></p>
+<ul class="simple">
+<li><p>The library APIs are public and supported but are still evolving; interfaces
+may change in upcoming releases.</p></li>
+<li><p>Support for plugging in user-supplied methods, models, and surrogates from
+third-party libraries is planned for a future release, as is availability of
+the Python API through PyPI.</p></li>
+</ul>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../releasenotes.html" class="btn btn-neutral float-left" title="Release Notes" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="624.html" class="btn btn-neutral float-right" title="Version 6.24 (2026/05/15)" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <!--
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Sandia National Laboratories.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+  --> 
+
+</footer>
+        </div>
+      </div>
+	  
+	  <div style="background-color: #0f0f0f;color:#fafafa;padding:20px">
+	    <div>
+		  <h2><em>Exceptional service in the national interest</em></h2>
+		</div>
+		<p>© 2023 National Technology and Engineering Solutions of Sandia, LLC. | <a href="https://www.sandia.gov/contact_us/index.html">Questions &amp; Comments</a> | <a href="https://www.sandia.gov/general/privacy-security/index.html">Privacy &amp; Security</a></p>
+		<p><a href="http://energy.gov" rel="noopener noreferrer" target="_blank"><img alt="U.S. Department of Energy" longdesc="https://energy.gov" src="https://www.sandia.gov/_common/images/doe_logo_white.png" style="height:37px; width:140px"></a> <a href="http://nnsa.energy.gov/" rel="noopener noreferrer" target="_blank"> <img alt="National Nuclear Security Administration" longdesc="http://nnsa.gov" src="https://www.sandia.gov/_common/images/nnsa_logo_white.png" style="height:37px; width:116px"></a></p>
+		<p><a href="https://www.sandia.gov">Sandia National Laboratories</a> is a multimission laboratory managed and operated by National Technology and Engineering Solutions of Sandia, LLC., a wholly owned subsidiary of Honeywell International, Inc., for the U.S. Department of Energy’s National Nuclear Security Administration under contract DE-NA-0003525.</p>
+	  </div>	  	  
+	  
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

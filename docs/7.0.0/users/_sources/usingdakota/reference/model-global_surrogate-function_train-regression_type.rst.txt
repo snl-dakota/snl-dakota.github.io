@@ -1,0 +1,46 @@
+.. _model-global_surrogate-function_train-regression_type:
+
+"""""""""""""""
+regression_type
+"""""""""""""""
+
+Type of solver for forming function train approximations by regression
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   model-global_surrogate-function_train-regression_type-ls
+   model-global_surrogate-function_train-regression_type-rls2
+
+**Specification**
+
+- *Alias:* None
+- *Arguments:* None
+- *JSON argument key:* None
+
+**Child Keywords:**
+
++-------------------------+------------------------+--------------------+--------------------------------+------------------------------------------------------------+
+| Required/Optional       | Description of Group   | JSON Group Key     | Dakota Keyword                 | Dakota Keyword Description                                 |
++=========================+========================+====================+================================+============================================================+
+| Optional                |                        |                    | `ls`__                         | Use least squares solver for forming function train        |
+|                         |                        |                    |                                | approximations by regression                               |
++-------------------------+------------------------+--------------------+--------------------------------+------------------------------------------------------------+
+| Optional                |                        |                    | `rls2`__                       | Use regularized regression solver for forming function     |
+|                         |                        |                    |                                | train approximations                                       |
++-------------------------+------------------------+--------------------+--------------------------------+------------------------------------------------------------+
+
+.. __: model-global_surrogate-function_train-regression_type-ls.html
+__ model-global_surrogate-function_train-regression_type-rls2.html
+
+**Description**
+
+Function train approximations are formed based on regression for the set of
+coefficients described at :dakkw:`model-global_surrogate-function_train`.  Solver
+options include least squares and regularized regression, where the latter
+penalizes high-order terms to mitigate overfitting.
+
+*Default Behavior*
+
+The default regression solver is least squares.
