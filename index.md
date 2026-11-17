@@ -1,12 +1,17 @@
 # Dakota Documentation
 Sandia National Laboratories
 
-![Dakota logo and tagline](./images/DAKOTA_Arrow_Name_Tag_horiz.jpg)
+![Dakota logo and tagline](./images/DAKOTA_logo.jpg)
 
 This site hosts the Dakota documentation, whereas this is the primary
 [Dakota Website](https://dakota.sandia.gov). Other references appear below for convenience.
 
 ## Dakota Manuals
+
+* Dakota Version 7.0.0
+  - [User Guide](./docs/7.0.0/users/) \| [download](./docs/7.0.0/downloads/user-html-7.0.0.tar.gz)
+  - [C++ Developer Guide](./docs/7.0.0/developers/) \| [download](./docs/7.0.0/downloads/html-dev-7.0.0.tar.gz)
+
 
 * Dakota Version 6.24.0 
   - [User Guide](./docs/6.24.0/users/) \| [download](./docs/6.24.0/downloads/user-html-6.24.0.tar.gz)
